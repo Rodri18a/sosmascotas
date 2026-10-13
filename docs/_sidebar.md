@@ -28,6 +28,9 @@
   - [RENAC](investigacion/renac.md)
   - [Entrevistas](investigacion/entrevistas.md)
 
+- **Proyecto**
+  - [Publicación de esta web](PUBLICACION.md)
+
 - **Referencia**
   - [Prototipo (HTML)](../reference/sos-mascota.html ':ignore')
   - [Brief anterior](../reference/SOS-Mascota-brief.md ':ignore')
