@@ -1,40 +1,44 @@
 # Publicación de la web de documentación
 
-La web se publica con **Cloudflare Pages** (gratis), conectada al repositorio privado de GitHub. **Se actualiza sola en cada `git push` a `main`.** El acceso está protegido con **Cloudflare Access**: solo entran los emails autorizados.
+## Estado actual (13/10/2026)
 
-- Dirección: `https://<proyecto>.pages.dev` (se completa al terminar la configuración)
-- Local: `./ver-docs.sh` → `http://localhost:3000/docs/`
+El repositorio es **privado** y se queda así (decisión D44). Por ahora la documentación se lee:
 
-## Configuración (una sola vez)
+- **En GitHub** (privado, con tu cuenta, desde cualquier máquina o celular): <https://github.com/Rodri18a/sosmascotas/tree/main/docs>. Muestra los `.md` con formato; no tiene el menú lateral ni el panel "Estás acá" (para el panel, abrir `PROGRESO.md` y buscar "ESTÁS ACÁ").
+- **Local, con la web completa:** `./ver-docs.sh` → `http://localhost:3000/docs/`.
 
-### 1. Crear la cuenta y conectar GitHub
-1. Crear una cuenta gratis en <https://dash.cloudflare.com/sign-up>.
-2. En el panel: **Workers y Pages → Crear → Pages → Conectar a Git**.
-3. Autorizar GitHub y dar acceso **solo** al repositorio `Rodri18a/sosmascotas`.
-4. Configuración de compilación:
-   - Nombre del proyecto: `sosmascotas` (queda `sosmascotas.pages.dev`; si está tomado, elegir otro)
-   - Rama de producción: `main`
-   - Framework: **Ninguno**
-   - Comando de compilación: **vacío**
-   - Directorio de salida: **`/`** (la raíz)
-5. **Guardar e implementar.** En un minuto queda publicada.
+> **¿Por qué no GitHub Pages?** Con la cuenta gratis no funciona en repos privados, y aun pagando, la web queda pública para cualquiera con el link (el login solo existe en GitHub Enterprise). Hacer público el repo expondría la estrategia, los precios y el plan.
 
-### 2. Protegerla con login (Cloudflare Access)
-1. En el panel: **Zero Trust** (la primera vez pide elegir un nombre de equipo y el plan **Free**, hasta 50 usuarios; puede pedir una tarjeta aunque no cobra).
-2. **Access → Aplicaciones → Agregar aplicación → Autoalojada (Self-hosted)**.
-3. Dominios a proteger:
-   - `sosmascotas.pages.dev`
-   - `*.sosmascotas.pages.dev` (las vistas previas)
-4. Política: **Permitir** → regla **Emails** → tu email (y los de quien quieras sumar).
-5. Método de login: **One-time PIN** (llega un código al email; no hace falta otra cuenta).
-6. Guardar. Probar en una ventana de incógnito: tiene que pedir el email.
+## Pendiente (opcional): web online con login en Cloudflare
 
-> Los nombres de los menús de Cloudflare pueden cambiar un poco; la lógica es la misma.
+Ya está casi todo preparado:
 
-## Cómo se actualiza
+- [x] Cuenta de Cloudflare creada.
+- [x] Publicación automática armada en `.github/workflows/publicar-docs.yml` (sube solo `docs/`, `reference/` e `index.html`).
+- [x] Permiso `workflow` de GitHub autorizado en esta máquina.
+- [ ] **Falta:** activar Zero Trust (plan Free) y crear el token de Cloudflare.
 
-Cada cambio que se sube con `git push` a `main` dispara una nueva publicación automática (1–2 minutos). No hay que hacer nada más.
+### Lo que hace el dueño del proyecto (5 minutos)
 
-## Sumar a alguien
+1. **Zero Trust:** en el panel de Cloudflare, menú **Zero Trust** → elegir nombre de equipo (`sosmascotas`) → plan **Free** (puede pedir tarjeta; no cobra).
+2. **Token:** <https://dash.cloudflare.com/profile/api-tokens> → **Create Token** → **Create Custom Token** con estos permisos:
+
+   | Tipo | Permiso | Nivel |
+   |---|---|---|
+   | Account | Cloudflare Pages | Edit |
+   | Account | Access: Apps and Policies | Edit |
+   | Account | Account Settings | Read |
+
+3. Pegarlo en `~/.config/sosmascotas/cloudflare.env` (fuera del repo, **nunca** en el chat ni en un commit) y decirle a Claude "listo".
+
+### Lo que hace Claude después
+
+1. Crea el proyecto `sosmascotas` en Cloudflare Pages.
+2. Guarda el token y el ID de cuenta como secretos del repo en GitHub.
+3. Activa el disparo automático en cada push (hoy el workflow está solo en modo manual, para que no falle sin el token).
+4. Crea la aplicación de Access con login por **código al email (One-time PIN)**, solo para tu email, sobre `sosmascotas.pages.dev` y `*.sosmascotas.pages.dev`.
+5. Prueba que pida el login y anota acá la dirección final.
+
+## Sumar a alguien (cuando esté online)
 
 En **Zero Trust → Access → Aplicaciones → sosmascotas → Política**, agregar su email.

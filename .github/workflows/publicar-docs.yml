@@ -1,0 +1,28 @@
+# Publica la web de documentación en Cloudflare Pages en cada push a main.
+# Solo sube docs/, reference/ e index.html (nada de CLAUDE.md ni configuración).
+# Necesita los secretos CLOUDFLARE_API_TOKEN y CLOUDFLARE_ACCOUNT_ID en GitHub.
+name: Publicar documentación
+
+# Por ahora solo manual: el disparo en cada push se activa cuando estén los secretos
+# (ver docs/PUBLICACION.md).
+on:
+  workflow_dispatch:
+  # push:
+  #   branches: [main]
+  #   paths: ['docs/**', 'reference/**', 'index.html', '.github/workflows/publicar-docs.yml']
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Armar el sitio
+        run: |
+          mkdir _sitio
+          cp -r docs reference index.html _sitio/
+      - name: Subir a Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy _sitio --project-name=sosmascotas --branch=main

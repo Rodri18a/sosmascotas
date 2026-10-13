@@ -16,11 +16,14 @@ Plataforma para dueños de mascotas y empresas del rubro: mapa, mascotas perdida
 
 ## Ver la documentación como web
 
+- **Desde cualquier lado:** en GitHub, carpeta [`docs/`](docs/) (el repo es privado; entrás con tu cuenta).
+- **Web completa, local:**
+
 ```bash
 ./ver-docs.sh        # abre http://localhost:3000/docs/
 ```
 
-Lee los `.md` en vivo: si cambia la documentación, recargá la página. Necesita Python 3 y conexión a internet.
+Lee los `.md` en vivo: si cambia la documentación, recargá la página. Necesita Python 3 y conexión a internet. La web online con login está preparada y pendiente: ver [`docs/PUBLICACION.md`](docs/PUBLICACION.md).
 
 ## Continuar en otra máquina
 

@@ -46,4 +46,5 @@ Cada decisión indica la fecha y el motivo. Si cambia, se agrega una nueva fila 
 | D41 | 2026-10-13 | **Contacto inverso** en SOS y QR: quien contacta deja sus datos y el dueño decide; email de respaldo; WhatsApp directo solo opcional | Redirigir a `wa.me` expone el número y no evita estafas | D11 (contacto por redirección) |
 | D42 | 2026-10-13 | Antes del lanzamiento: identidad mínima, asesoría legal desde el principio, formalización antes del primer cobro, canal de soporte con guardia de fin de año | Huecos detectados en el análisis de puntos débiles | — |
 | D43 | 2026-10-13 | **Criterios de corte** de la validación escritos en la hoja de ruta | Que las entrevistas cambien el plan si hace falta | — |
+| D44 | 2026-10-13 | El repositorio **queda privado**; la documentación se lee en GitHub (privado) o local con `./ver-docs.sh`. La web online con login (Cloudflare Pages + Access) queda preparada y pendiente del token | Hacerlo público expone estrategia, precios y plan; GitHub Pages no admite login en el plan gratis | — |
 | D28 | 2026-10-12 | Todas las fotos se suben sin metadatos de ubicación (EXIF) | Evitar revelar dónde vive una mascota | — |
