@@ -1,0 +1,201 @@
+# 03 · Funcionalidades de la app
+
+Cada función indica la **fase** en la que se construye (ver `11-roadmap.md`) y si es **gratis** o de un **plan pago** (ver `06-reglas-negocio.md`).
+
+## Navegación (modo dueño)
+
+Barra inferior: **Explorar** (mapa) · **Noticias** · **SOS** (en rojo) · **Mascotas** · **Ajustes**. Arriba, una fila con las mascotas del usuario, la opción "Todas" y "＋".
+
+Pantalla inicial: logo (🐾 sobre un cuadrado verde redondeado) durante 1,5 segundos.
+
+---
+
+## 1. Cuenta — Fase 0
+
+- Login con **Google** y **correo con enlace mágico**. **Apple** se suma al publicar en iPhone (Fase 1), porque Apple lo exige si se ofrece Google.
+- **No se pide teléfono al registrarse.** Solo se pide al publicar un SOS, al configurar el contacto del QR o al registrar un negocio.
+- Consentimiento de términos y privacidad al registrarse.
+- **Descargar mis datos** y **borrar mi cuenta** (Ley 18.331).
+- Ajustes: idioma (español por ahora), notificaciones, radio de avisos SOS, y color y tamaño de letra (Pro).
+
+## 2. Mascotas — Fase 0 (básico) / Fase 1 (libreta)
+
+- Varias mascotas por usuario. El plan Gratis permite **hasta 2** y el Pro, ilimitadas.
+- Ficha: nombre, especie, raza, sexo, color, señas particulares, fecha de nacimiento (se muestra la edad), **foto (gratis)**, microchip (opcional), castrado/a, notas.
+- **Microchip (Fase 0):** número de 15 dígitos, validado (ISO 11784).
+- **RENAC (Fase 1):** estado declarado (registrado / no registrado / no sé), guía "Cómo registrar a tu mascota", recordatorio si no está registrada, y botón **"Verificar en el RENAC"**, que abre la consulta pública oficial. Ver `investigacion/renac.md`.
+- **Libreta sanitaria (Fase 1):** vacunas, desparasitaciones, controles, alergias, medicación actual, veterinaria asociada.
+- Semáforo de próximos controles: rojo a 7 días o menos, amarillo hasta 30 días, verde si falta más, y "vencido" si pasó la fecha.
+
+## 3. Chapita QR — Fase 0
+
+- Cada mascota tiene un **código QR único** (enlace a `sosmascotas.uy/m/<código>`).
+- El dueño puede **descargar o imprimir** el QR gratis.
+- **Chapitas físicas pre-codificadas:** se fabrican por **lotes** con códigos únicos sin mascota asignada. El dueño **escanea la chapita y la vincula** a su mascota ("Activar chapita"). Si la pierde, la desvincula y activa otra. Así se pueden repartir en veterinarias, ferias de adopción o eventos sin saber de quién va a ser cada una.
+- **Formas de conseguir la chapita física:**
+  - **Pedido con retiro en la veterinaria asociada** (Fase 1): el dueño la pide en la app y la retira en su veterinaria. Ideal para las personalizadas (nombre, colores).
+  - **Stock en la veterinaria** (Fase 1–2): la veterinaria tiene chapitas en blanco y el dueño la activa en el local. SOS Mascota **no ofrece ni coloca microchips**: eso lo hace la veterinaria por su cuenta. La app solo guarda el número que carga el dueño.
+  - **Patrocinada** (Fase 2): una empresa financia un lote. Lleva su logo en el reverso y un "Chapita cortesía de X" discreto en la página del QR.
+  - **Venta directa** (Fase 2): diseños con colores, nombre grabado o formas, con descuento para Pro y Familia.
+- **Producción:** al inicio, con un amigo que tiene una empresa de impresión 3D. Requisitos: material resistente (PETG o TPU), QR de alto contraste (dos colores, grabado láser o etiqueta resinada, nunca en relieve del mismo color), unos 3 cm como mínimo y corrección de errores alta.
+- **Página pública del QR** (no requiere app ni cuenta):
+  - Foto y nombre de la mascota.
+  - Cartel "**Estoy perdido 🆘**" si la mascota tiene un SOS activo.
+  - Datos de salud que el dueño elija mostrar ("toma medicación", "es alérgico a…").
+  - Botón **"Avisar a mi familia"** (**contacto inverso**, ver la sección 4): quien escanea deja un mensaje y su contacto, y **el dueño decide si llama**. El número del dueño nunca se muestra.
+  - Opción de **compartir ubicación** con el dueño.
+- Cada escaneo **notifica al dueño**, con la ubicación aproximada si quien escanea la compartió.
+
+## 4. SOS: perdidos y encontrados — Fase 0
+
+- **Reportar:** perdida o encontrada; mascota propia (precarga los datos) u otra; especie, raza, nombre, color, señas, descripción, **al menos una foto**, fecha, **ubicación tocando el mapa** (se publica una zona aproximada), recompensa opcional y contacto.
+- **Lista** ordenada por cercanía y **pines en el mapa** (capa activable).
+- **Contacto inverso (Fase 0):** el número del autor **nunca se muestra**, ni siquiera a quien quiere contactarlo.
+  1. Quien vio o encontró al animal toca **"Avisar al dueño"** (en el reporte o en la página del QR). **No necesita cuenta.**
+  2. Completa: **mensaje** (obligatorio), **su nombre y teléfono o WhatsApp** (obligatorio, con aceptación explícita de compartirlo con el dueño), **foto** y **ubicación** (opcionales).
+  3. El dueño recibe un **push** y un **email** (respaldo por si el push falla), y el aviso queda en su bandeja **"Avisos"**.
+  4. **El dueño decide** si llama o escribe. Su número solo lo ve quien él elija contactar.
+  - Junto a cada aviso, el dueño ve un recordatorio anti-estafa: *"Nunca pagues por adelantado ni envíes dinero para recuperar a tu mascota"*.
+  - **Opcional y desactivado por defecto:** el dueño puede mostrar su WhatsApp directo en un reporte, con una advertencia del riesgo de estafas.
+  - Desde la Fase 1 se suma el **chat dentro de la app** (chat híbrido), que es la vía principal entre usuarios con cuenta.
+- **Microchip:** si la mascota tiene chip, el reporte lo indica, y a quien la encuentra se le aconseja **llevarla a una veterinaria para leer el chip**. Al dueño se le sugiere marcarla también como **extraviada en el RENAC**.
+- **Avisos por zona:** al publicar un reporte, se notifica a los usuarios a **5 km o menos** (radio configurable).
+- **Seguir una búsqueda (Fase 1):** cualquier usuario puede seguir un reporte y recibe aviso cuando hay novedades o cuando la mascota aparece.
+- **Resolver:** el autor marca "¡Apareció!" y el reporte pasa a resuelto y se archiva. Se avisa a los seguidores.
+- **Vencimiento:** si no hay actividad en 60 días, se le pregunta al autor si sigue vigente. Si no responde, se archiva (valor a confirmar).
+- **Compartir:** cada reporte tiene una página web pública para compartir en Facebook y WhatsApp.
+- **Ayuda:** directorio de refugios, protectoras y grupos de Pando, y aviso de llamar al **911** si hay una persona en riesgo (la app es solo para animales).
+
+## 5. Mapa integral (Explorar) — Fase 0 (perdidos + urgencias) / Fase 1 (completo)
+
+- Vistas: **Mapa**, **Lista** y **Sin local** (tiendas online y servicios a domicilio).
+- **Capas / categorías:** veterinarias (y urgencias 24 h), petshops, farmacias veterinarias, peluquerías, paseadores, hoteles y guarderías, adiestradores, **lugares que aceptan mascotas** (bares, restaurantes, alojamientos), refugios, eventos, perdidos y encontrados.
+- Filtros: categoría, especie de la mascota activa, distancia (300 m, 800 m, 2,5 km, todo), "Abierto ahora", favoritos, **"Coloca microchip"** (veterinarias con la insignia Operador RENAC, Fase 1).
+- **Guardar filtros y favoritos:** función Pro.
+- **Estados de un lugar:** sin reclamar (gris) · no verificado · verificado ✔️ · destacado (naranja, plan pago).
+- **Marcar lugar (Fase 1):** el usuario elige el rubro, toca el mapa y puede pegar un link de Google. **No puede ponerle nombre.** Queda "sin reclamar", con el texto "marcado por N usuarios".
+- **Ficha del lugar:** sube desde abajo; horario, dirección, distancia, especies que atiende, promoción, contactos, reseñas, favorito, "fui", "**cómo llegar**" (enlace a Google Maps) y "es la veterinaria de mi mascota".
+- **Fase 0:** el mapa muestra solo perdidos y encontrados + **veterinarias de urgencia cargadas a mano**.
+
+## 6. Recordatorios — Fase 1
+
+- **Medicación:** nombre, dosis, frecuencia (cada X horas, diaria, semanal), fecha de fin. Al sonar: **"✅ Ya se la di"**, con historial.
+- **Alimentación:** horarios fijos y porción opcional.
+- **Vacunas, desparasitación y controles:** por fecha.
+- Son **notificaciones locales**: funcionan sin internet y no tienen costo de servidor.
+- **Gratis** para todos. Los recordatorios que manda la veterinaria (módulo Socios) llegan en la Fase 2.
+
+## 7. Hogar compartido — Fase 1 (función) / Fase 2 (cobro, plan Familia)
+
+- Invitar hasta 5 integrantes al hogar. Comparten mascotas, libreta y recordatorios.
+- Cuando alguien marca "ya se la di", lo ven todos. **Evita dosis dobles.**
+- Registro de quién paseó o alimentó, y cuándo. Asignar tareas ("hoy pasea Juan").
+- **Cuidador temporal** con acceso por X días.
+- 30 días de prueba gratis al invitar al primer integrante. Paga quien invita y los invitados no.
+
+## 8. Chat híbrido — Fase 1
+
+- Chat dentro de la app entre usuarios, y entre usuarios y empresas. Es la vía principal.
+- El usuario o la empresa puede mostrar además su **WhatsApp** de forma opcional.
+- Enviar fotos y ubicación. Bloquear y reportar.
+
+## 9. Reseñas — Fase 1
+
+- De 1 a 5 estrellas y comentario, **solo si hubo contacto real** (chat, reserva, pedido o "fui" verificado).
+- La empresa responde una vez y en público. No puede borrar reseñas, pero sí reportarlas.
+
+## 10. Noticias — Fase 2
+
+- Grilla de tarjetas filtrada por la especie de la mascota activa.
+- Mezcla novedades de la comunidad, eventos y **promociones de marcas** con la etiqueta "Promocionado".
+
+## 11. Adopción responsable — Fase 1 (directorio) / Fase 2 (proceso) / Fase 3 (packs y tránsito)
+
+El objetivo no es solo publicar animales: es que **la adopción salga bien y el animal no vuelva a la calle**.
+
+**Fase 1:** el directorio de Ayuda enlaza a las adopciones de cada refugio de la zona (sin desarrollo propio).
+
+**Fase 2 — el proceso completo:**
+
+1. **Preparar al adoptante**
+   - Guía **"¿Estoy listo para adoptar?"**: tiempo, espacio, acuerdo de toda la casa, vacaciones, mudanzas.
+   - **Calculadora de costos** mensuales por especie y tamaño (comida, vacunas, castración, veterinaria).
+   - **Perfil de adoptante**: un cuestionario que se completa una vez y se reutiliza (vivienda, patio, horas solo, experiencia, otros animales, niños).
+2. **Publicación**
+   - Ficha: especie, raza, edad, tamaño, energía, salud (vacunas, castrado, chip), convivencia (niños, perros, gatos), necesidades especiales, requisitos, fotos.
+   - **Aporte** (solo refugios y ONG): monto y qué cubre, a la vista ("$800 — cubre castración y vacunas").
+   - **Camadas**: una publicación con varios animales.
+3. **Compatibilidad**: cruza el perfil del adoptante con la ficha y orienta ("Buena compatibilidad" / "Ojo: necesita patio y vos indicaste apartamento"). No bloquea.
+4. **Proceso por etapas**: Me interesa → Cuestionario → Chat / entrevista → Visita → Adopción → Seguimiento. Quien publica gestiona sus solicitudes y toma notas **privadas**.
+5. **Compromiso de adopción** (aceptación digital): castración (Ley 19.889) con fecha límite si no está castrado, microchip y registro en el RENAC, vacunas al día, no abandonar y avisar a quien lo dio si no puede seguir.
+6. **Después de adoptar**
+   - La mascota **pasa al perfil del adoptante** con su libreta y su **chapita QR**.
+   - Se crean solos los **recordatorios** de castración, vacunas y chip.
+   - **Seguimiento a los 7, 30 y 90 días**: foto y "¿cómo va?". Quien la dio en adopción ve las respuestas.
+
+**Fase 3:**
+- **"Pack adopción"**: veterinarias (primera consulta o castración con descuento) y petshops (kit de bienvenida) para animales adoptados por la app.
+- **Apadrinamiento** de refugios y ferias de adopción por empresas.
+- **Hogares de tránsito**: personas que cuidan temporalmente a un animal hasta que se adopte.
+
+## 11b. Eventos y denuncias — Fase 2
+
+- **Eventos:** jornadas de castración, ferias de adopción, encuentros. Aparecen en el mapa.
+- **Denuncias de maltrato:** formulario con fotos y ubicación, más información sobre a quién recurrir (INBA y autoridades). La app no reemplaza a la denuncia oficial.
+
+## 12. Turnos, pedidos y servicios — Fase 3
+
+- **Reservar turno:** día, horario libre, servicio y mascota. El comercio confirma o rechaza.
+- **Catálogo y pedidos:** cantidades y total. Estados: nuevo → preparando → listo → entregado. El pago se hace directo al comercio (pago en la app en la Fase 4).
+- **Contratar paseadores, hoteles y cuidadores:** solicitud por chat y reserva. El pago es entre las partes hasta la Fase 4.
+- "**Mis turnos y pedidos**" con el estado en vivo.
+
+## 13. Comunidad por raza y especie — Fase 3
+
+- **Grupos** por raza ("Bulldog Francés Uruguay"), especie ("Gatos de Pando") o tema (adopción, salud senior).
+- Publicaciones con fotos, preguntas, consejos y experiencias; comentarios.
+- Eventos de grupo (por ejemplo, encuentro de una raza), que pueden patrocinar petshops o marcas.
+- **Seguridad (prevención de robos y cría irregular):**
+  - **No** hay listados de "mascotas cerca" ni perfiles de mascota buscables por ubicación.
+  - Las fotos se suben **sin metadatos de ubicación** (se borra el EXIF).
+  - Prohibido publicar **cruzas, venta de animales** o datos de ubicación de una mascota (ver `06-reglas-negocio.md`).
+  - Contacto entre personas solo por el chat de la app, con un **saludo que el otro acepta** antes de abrir la conversación.
+- Moderación de siempre: reportar, ocultamiento automático y revisión del administrador.
+
+> **En espera:** "compañeros de paseo / juego" (listado de mascotas cercanas para socializar). Se pausó por el riesgo de que se use para robar animales o para cruzas. Ver `13-riesgos-pendientes.md`.
+> **Excluido:** cruza o reproducción entre mascotas.
+
+## 14. "Busco veterinaria" — Fase 2
+
+Conecta mascotas sin veterinaria con veterinarias cercanas, **solo con permiso del dueño**.
+
+- **Disparador discreto:** si una mascota no tiene veterinaria asociada, en un momento natural (al cargar una vacuna o un control) aparece una tarjeta que se puede cerrar: *"¿Toby todavía no tiene veterinaria? Podés recibir propuestas de veterinarias cercanas"* → **[Quiero recibir propuestas]** / **[Ahora no]**.
+- "Ahora no" → plan Gratis: no se vuelve a preguntar por **90 días**. Planes Pro y Familia: **no se vuelve a preguntar nunca**. En ambos casos se puede activar en cualquier momento desde Ajustes o la ficha de la mascota.
+- Al aceptar se registra el **consentimiento** (fecha y alcance). Se revoca desde Ajustes o desde la ficha de la mascota.
+- Bandeja **"Propuestas para Toby"** con un **máximo de 3 propuestas por mes**.
+- Al aceptar una propuesta, se abre el chat con la veterinaria o la mascota pasa a ser **socia** (módulo Socios).
+- Al principio solo para **veterinarias**. La mecánica queda preparada para sumar peluquerías, paseadores y petshops.
+
+**Del lado de la veterinaria (plan Plus):**
+- Dato **anónimo y agregado**: *"Hay 14 mascotas sin veterinaria a menos de 2 km tuyo (9 perros, 5 gatos)"*.
+- Enviar una propuesta a ese grupo ("Primera consulta 20% off").
+- **No ve la identidad** de nadie hasta que el usuario acepta.
+- Resultados: enviadas, vistas, aceptadas.
+
+## 15. Tienda — Fase 2 (catálogo) / Fase 4 (marketplace)
+
+- Fase 2: catálogo de cada petshop con fotos, precios y botón "Consultar" (chat o WhatsApp).
+- Fase 4: carrito, pago con Mercado Pago y envío.
+
+---
+
+## Modo comercio (dentro de la app) — Fase 1 en adelante
+
+Barra inferior: **Panel** · **Agenda** · **Catálogo** · **Pedidos** · **Negocio**. Cabecera con el nombre, el tipo, el plan y la insignia de verificación, más un botón para volver al modo dueño.
+
+- **Alta del negocio (opción C):** elegir el tipo, el nombre y la ubicación (marcar en el mapa o **reclamar un lugar sin reclamar** del mismo rubro). Si no tiene local, indicar la zona de cobertura. Aparece al instante como "no verificado". Para recibir la insignia ✔️, el administrador valida el RUT y que el reclamo sea legítimo.
+- **Negocio:** datos, horario estructurado por día, especies que atiende, fotos, contactos (web, Instagram, Facebook, WhatsApp), promoción (planes pagos).
+- **Módulos según el tipo de negocio y el plan** (ver `06-reglas-negocio.md`): catálogo y pedidos, agenda de turnos, socios y recordatorios.
+- **Panel:** plan, módulos, resumen (turnos pendientes, pedidos nuevos, socios, productos) y **estadísticas** (planes pagos): vistas, contactos, clics y comparación mensual.
+- **Reseñas:** ver y responder.
+- **Socios (veterinarias):** mascotas que eligieron esa veterinaria. Botón "Recordar" para avisar del próximo control.

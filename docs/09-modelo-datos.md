@@ -1,0 +1,123 @@
+# 09 · Modelo de datos (Supabase / Postgres + PostGIS)
+
+Propuesta inicial. Se ajusta al implementar cada fase. **RLS activado en todas las tablas.** Las ubicaciones usan `geography(Point)` de PostGIS. Todas las tablas tienen `created_at` y `updated_at`.
+
+## Cuentas y zonas
+
+| Tabla | Campos clave | Fase |
+|---|---|---|
+| `zones` | id, name, country, timezone, currency, area (polígono), active | 0 |
+| `profiles` | id (auth), display_name, avatar_path, role (`user`, `admin`), zone_id, plan (`free`, `pro`, `family`), prefs (idioma, color, letra), approx_location, alert_radius_km, created_at | 0 |
+| `private_contacts` | user_id, phone, whatsapp, show_whatsapp_direct (bool, por defecto `false`) — **solo accesible desde Edge Functions** | 0 |
+| `push_tokens` | user_id, token, platform | 0 |
+
+## Mascotas y hogar
+
+| Tabla | Campos clave | Fase |
+|---|---|---|
+| `species` | id, name, icon | 0 |
+| `breeds` | id, species_id, name | 0 |
+| `pets` | id, household_id, owner_id, name, species_id, breed_id, breed_other, sex, color, marks, birth, photo_path, microchip (15 dígitos), renac_status (`registered`, `not_registered`, `unknown`, Fase 1), neutered, notes, vet_business_id | 0 |
+| `qr_tags` | id, code (único), pet_id (**nullable** hasta activarse), kind (`digital`, `physical`), batch_id, active, activated_at, show_health (json de qué mostrar) | 0 (digital) / 1 (física) |
+| `qr_batches` | id, quantity, producer, material, sponsor_id (opcional), unit_cost, created_at | 1 |
+| `qr_pickups` | id, order_id o tag_id, business_id (veterinaria punto de retiro), status (`sent`, `ready`, `delivered`), delivered_at | 1 |
+| `qr_scans` | id, qr_id, approx_location, shared_location, contacted, created_at | 0 |
+| `households` | id, owner_id, plan_status, trial_until | 1 |
+| `household_members` | household_id, user_id, role (`owner`, `member`, `temp_caregiver`), access_until | 1 |
+| `health_records` | id, pet_id, kind (`vaccine`, `deworming`, `checkup`, `allergy`, `other`), name, date, next_date, notes | 1 |
+| `reminders` | id, pet_id, kind (`medication`, `food`, `vaccine`, `checkup`), title, dose, schedule (rrule), start, end, assigned_to | 1 |
+| `reminder_logs` | id, reminder_id, done_by, done_at | 1 |
+| `household_tasks` | id, household_id, pet_id, kind (`walk`, `food`, …), assigned_to, date, done_by, done_at | 1 |
+
+## SOS
+
+| Tabla | Campos clave | Fase |
+|---|---|---|
+| `sos_reports` | id, kind (`lost`, `found`), user_id, pet_id (opcional), species_id, breed_id, name, color, marks, description, reward, exact_location (privada), public_location (aproximada), zone_id, lost_at, status (`active`, `resolved`, `archived`, `hidden`), last_activity_at | 0 |
+| `sos_photos` | id, report_id, path, order | 0 |
+| `owner_alerts` | id, target_type (`sos`, `qr`), target_id, owner_id, from_user_id (nullable), sender_name, sender_contact (**privada**, solo la ve el dueño), message, photo_path, location, device_hash, status (`new`, `seen`, `replied`, `scam_reported`), created_at | 0 |
+| `sos_followers` | report_id, user_id | 1 |
+| `help_directory` | id, zone_id, name, kind (refugio, protectora, grupo, emergencia), contact, link | 0 |
+
+## Empresas y lugares
+
+| Tabla | Campos clave | Fase |
+|---|---|---|
+| `businesses` | id, owner_id, kind (`local`, `online`, `domicilio`), business_type, name, description, address, location, coverage_area, zone_id, hours (json por día), is_24h, species_ids[], plan (`basic`, `featured`, `plus`), verification (`unverified`, `pending`, `verified`), rut, renac_operator (bool, verificado por admin), founder_until, promo, web, instagram, facebook, status (`active`, `hidden`) | 0 (mínima) / 1 |
+| `business_contacts_private` | business_id, whatsapp, phone | 1 |
+| `business_photos` | id, business_id, path, order | 1 |
+| `place_marks` | id, user_id, category, location, google_link, business_id (cuando se reclama) | 1 |
+| `claims` | id, business_id o place_mark_id, user_id, rut, evidence_path, status | 1 |
+| `business_modules` | business_id, module (`catalog`, `agenda`, `members`), enabled | 2 |
+| `user_places` | user_id, business_id, favorite, visited, is_my_vet | 1 |
+| `reviews` | id, business_id, user_id, rating, comment, reply, reply_at, status | 1 |
+| `promotions` | id, business_id, title, body, starts_at, ends_at, species_ids[], code | 2 |
+| `pet_friendly_places` | se modelan como `businesses` con business_type `pet_friendly` | 2 |
+
+## Chat
+
+| Tabla | Campos clave | Fase |
+|---|---|---|
+| `conversations` | id, kind (`sos`, `business`, `user`), context_id, created_by | 1 |
+| `conversation_members` | conversation_id, user_id, last_read_at, blocked | 1 |
+| `messages` | id, conversation_id, sender_id, body, attachment_path, location, created_at | 1 |
+
+## Comercio: catálogo, agenda, pedidos, socios
+
+| Tabla | Campos clave | Fase |
+|---|---|---|
+| `catalog_items` | id, business_id, name, description, price, photo_path, available, species_ids[] | 2 |
+| `agenda_config` | business_id, days[], from_time, to_time, slot_minutes, services[] | 3 |
+| `bookings` | id, business_id, user_id, pet_id, date, time, service, status (`pending`, `confirmed`, `rejected`, `cancelled`, `done`) | 3 |
+| `orders` / `order_items` | cliente, negocio, estado (`new`, `preparing`, `ready`, `delivered`), total, ítems | 3 |
+| `vet_members` | business_id, pet_id, since | 2 |
+| `offer_consents` | pet_id, user_id, scope (`vet`, luego otros rubros), granted_at, revoked_at, last_prompt_at, snoozed_until | 2 |
+| `business_offers` | id, business_id, title, body, target (zona, radio, especies), starts_at, ends_at | 2 |
+| `offer_deliveries` | offer_id, pet_id, delivered_at, seen_at, status (`sent`, `seen`, `accepted`, `dismissed`) | 2 |
+
+## Comunidad y contenido
+
+| Tabla | Campos clave | Fase |
+|---|---|---|
+| `adoptions` | id, publisher_id, publisher_kind (`shelter`, `individual`), is_litter, description, requirements, contribution_amount, contribution_covers, zone_id, status (`active`, `paused`, `adopted`, `hidden`) | 2 |
+| `adoption_animals` | id, adoption_id, name, species_id, breed_id, age, size, energy, neutered, vaccinated, microchip, good_with (niños, perros, gatos), special_needs, photos, adopted_pet_id | 2 |
+| `adopter_profiles` | user_id, housing, has_yard, hours_alone, experience, other_pets, kids, household_agrees, updated_at | 2 |
+| `adoption_requests` | id, adoption_animal_id, adopter_id, stage (`interest`, `questionnaire`, `interview`, `visit`, `adopted`, `rejected`, `withdrawn`), compatibility, private_notes (solo publicador) | 2 |
+| `adoption_commitments` | request_id, accepted_at, text_version, neuter_deadline | 2 |
+| `adoption_followups` | request_id, day (7, 30, 90), photo_path, answer, answered_at | 2 |
+| `foster_homes` | user_id, species_ids[], capacity, available, zone_id | 3 |
+| `community_events` | id, organizer_id, title, kind, location, starts_at, ends_at | 2 |
+| `abuse_reports` | id, user_id, description, location, photos, status | 2 |
+| `news` | id, title, source, body, species_ids[], sponsored, sponsor_id, zone_id, published_at | 2 |
+| `groups` | id, name, kind (`breed`, `species`, `topic`), species_id, breed_id, zone_id (opcional) | 3 |
+| `group_members` | group_id, user_id, role | 3 |
+| `posts` / `comments` | id, group_id, author_id, body, photos (sin EXIF), status | 3 |
+| `contact_requests` | id, from_user, to_user, context, status (`pending`, `accepted`, `rejected`) — saludo previo al chat | 3 |
+
+## Moderación
+
+| Tabla | Campos clave | Fase |
+|---|---|---|
+| `flags` | id, target_type, target_id, reporter_id, reason, created_at (un usuario reporta una vez por contenido) | 0 |
+| `moderation_actions` | id, target_type, target_id, admin_id, action, note | 1 |
+| `user_sanctions` | user_id, kind (`warning`, `blocked`), until, reason | 1 |
+
+Trigger: con 3 `flags` de usuarios distintos, el contenido pasa a `hidden`.
+
+## Monetización
+
+| Tabla | Campos clave | Fase |
+|---|---|---|
+| `subscriptions` | id, owner_type (`user`, `household`, `business`), owner_id, plan, status, period_start, period_end, provider (`manual`, `google_play`, `app_store`, `mercadopago`), founder | 2 |
+| `payments` | id, subscription_id, amount, currency, method, reference, paid_at | 2 |
+| `qr_orders` | id, user_id, pet_id, design (genérica, personalizada), paid_by (`user`, `sponsor`, `vet`), status (`ordered`, `paid`, `printed`, `sent`, `delivered`), delivery (`vet_pickup`, `shipping`), pickup_business_id, address | 1 (retiro) / 2 (venta) |
+
+## Métricas y ventas
+
+| Tabla | Campos clave | Fase |
+|---|---|---|
+| `events` | id, name, user_id (nullable), anon_id, zone_id, business_id, target_id, props (json), created_at | **0** |
+| `daily_stats` | date, zone_id, business_id, metric, value | 2 |
+| `prospects` | id, name, business_type, zone_id, location, contact, stage (`prospect`, `contacted`, `demo`, `founder`, `paying`, `renewed`, `lost`), business_id, next_contact_at, owner_admin_id | 1 |
+| `prospect_notes` | id, prospect_id, admin_id, note, created_at | 1 |
+| `admin_audit_log` | id, admin_id, action, target, data, created_at | 3 |

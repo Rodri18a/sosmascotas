@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SOS Mascota</title>
+<style>
+:root{--bg:#f6f7f4;--card:#fff;--tx:#1d2a24;--mu:#6b7a72;--ac:#1f8a5b;--bd:#e2e6e1;--map:#eef3ea;--st:#fff;--wa:#cfe6f5;--pk:#d9ecd0;--pr:#f4a52a;--pe:#9aa5a0;--acs:color-mix(in srgb,var(--ac) 14%,var(--card));
+color-scheme:light dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101613;--card:#1b2420;--tx:#e8efe9;--mu:#8fa196;--ac:#3cc088;--bd:#2c3832;--map:#1a2420;--st:#2a362f;--wa:#1d3340;--pk:#203528}}
+:root[data-theme="dark"]{--bg:#101613;--card:#1b2420;--tx:#e8efe9;--mu:#8fa196;--ac:#3cc088;--bd:#2c3832;--map:#1a2420;--st:#2a362f;--wa:#1d3340;--pk:#203528}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;overflow:hidden}
+html{font-size:var(--fs,16px)}
+#app{height:100%;max-width:520px;margin:0 auto;display:flex;flex-direction:column}
+#hd{padding:8px 10px 2px;flex:none}#mn{flex:1;min-height:0;display:flex;flex-direction:column;position:relative}
+.rows{display:flex;flex-direction:column;gap:6px;padding:6px 10px;flex:none}
+.fl{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}.fl::-webkit-scrollbar,.seg::-webkit-scrollbar{display:none}
+.seg{display:flex;flex:none;background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:3px;gap:2px;overflow-x:auto;scrollbar-width:none;max-width:100%}
+.seg button{flex:none;border:0;background:none;color:var(--tx);padding:.4rem .65rem;border-radius:9px;font:inherit;font-size:.85rem;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:4px}
+.seg button.on{background:var(--ac);color:#fff}
+.mapw{position:relative;flex:1;min-height:0;margin:0 10px 8px;border:1px solid var(--bd);border-radius:14px;overflow:hidden;background:var(--map)}
+.mapw svg{position:absolute;inset:0;width:100%;height:100%}.pin{cursor:pointer}
+.fab{position:absolute;right:10px;top:10px;border:0;background:var(--ac);color:#fff;border-radius:999px;padding:.55rem .9rem;font:inherit;font-size:.85rem;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,.25);cursor:pointer}
+.scr{flex:1;min-height:0;overflow:auto;padding:8px 10px 14px}
+.sheet{position:absolute;left:0;right:0;bottom:0;max-height:64%;overflow:auto;background:var(--card);border-top:1px solid var(--bd);border-radius:18px 18px 0 0;padding:14px;box-shadow:0 -8px 24px rgba(0,0,0,.18)}
+.sheet h2{margin:0 28px 2px 0;font-size:1.1rem}.x{position:absolute;right:10px;top:8px;border:0;background:none;color:var(--mu);font-size:1.1rem;padding:6px;cursor:pointer}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:10px}
+h1{font-size:1.3rem;margin:0 0 4px}.mu{color:var(--mu);font-size:.85rem}.dist{color:var(--mu);font-size:.8rem;margin-top:2px}.op{color:var(--ac);font-size:.8rem;margin-top:2px}
+label{display:block;font-size:.8rem;color:var(--mu);margin:10px 0 5px}
+input,select{width:100%;padding:.7rem;border:1px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx);font:inherit;font-size:1rem}input+input{margin-top:6px}
+.btn{width:100%;margin-top:12px;padding:.8rem;border:0;border-radius:12px;background:var(--ac);color:#fff;font:inherit;font-weight:600;cursor:pointer}.btn.o{background:var(--pr);color:#3a2500}.btn.g{background:var(--acs);color:var(--tx)}
+.mini{border:0;background:var(--ac);color:#fff;border-radius:999px;padding:.4rem .8rem;font:inherit;font-size:.8rem;cursor:pointer}
+.chip{border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:999px;padding:.4rem .8rem;font:inherit;font-size:.85rem;cursor:pointer}.chip.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.pc{display:flex;flex-wrap:wrap;gap:6px}
+.row{font-size:.9rem;margin-top:6px}.promo{margin-top:10px;background:#fff3dc;color:#6b4300;border-radius:10px;padding:.6rem;font-size:.9rem}
+.tag{display:inline-block;font-size:.65rem;background:var(--pr);color:#3a2500;border-radius:6px;padding:2px 6px;margin-left:6px;vertical-align:middle}.tag.p{background:var(--pe);color:#fff}
+.li{display:flex;align-items:center;gap:10px;padding:.65rem 0;border-top:1px solid var(--bd);cursor:pointer}.li:first-child{border-top:0}
+.ic{width:36px;height:36px;border-radius:50%;background:var(--acs);display:flex;align-items:center;justify-content:center;flex:none}.f1{flex:1;min-width:0}.nw{white-space:nowrap}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.nc{background:var(--card);border:1px solid var(--bd);border-radius:14px;overflow:hidden}
+.nt{height:66px;display:flex;align-items:center;justify-content:center;font-size:2rem;position:relative}.nt .tag{position:absolute;top:6px;left:0;margin:0 0 0 6px}
+.nb{padding:.6rem}.nb b{font-size:.9rem}.cl{font-size:.8rem;color:var(--mu);margin-top:4px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.hero{display:flex;gap:14px;align-items:center}.avw{position:relative;display:block;margin:0;cursor:pointer;flex:none}
+.av{border-radius:50%;object-fit:cover;background:var(--acs);display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;flex:none}
+.cam{position:absolute;right:-4px;bottom:-4px;background:var(--card);border:1px solid var(--bd);border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:.8rem}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}.full{grid-column:1/-1}
+.pill{border-radius:12px;padding:.65rem .8rem;margin-bottom:10px;font-size:.9rem}.pill.r{background:#fde4e4;color:#7a1f1f}.pill.y{background:#fff3dc;color:#6b4300}.pill.g{background:var(--acs)}
+.err{background:#fde4e4;color:#7a1f1f;border-radius:10px;padding:.55rem .7rem;margin-top:10px;font-size:.85rem}.ok{background:var(--acs);border-radius:10px;padding:.7rem;font-size:.9rem}
+.sw{width:34px;height:34px;border-radius:50%;border:3px solid var(--card);outline:2px solid transparent;flex:none;cursor:pointer}.sw.on{outline-color:var(--tx)}
+#ad{flex:none;display:flex;align-items:center;gap:8px;padding:.35rem .75rem;background:var(--acs);font-size:.78rem;border-top:1px solid var(--bd)}#ad .tag{margin:0}#ad span+span{flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}#ad button{border:0;background:none;color:var(--mu);font-size:1rem;cursor:pointer}
+#nv{flex:none;display:flex;border-top:1px solid var(--bd);background:var(--card)}
+#nv button{flex:1;border:0;background:none;padding:.45rem 0 .35rem;color:var(--mu);font:inherit;font-size:.68rem;display:flex;flex-direction:column;align-items:center;gap:1px;position:relative;cursor:pointer}
+#nv button span{font-size:1.3rem;line-height:1.3}#nv button.on{color:var(--ac);font-weight:600}
+.dot{position:absolute;top:4px;left:calc(50% + 8px);width:9px;height:9px;border-radius:50%;background:#e5484d}
+a{color:var(--ac)}.rp{width:100%;max-height:170px;object-fit:cover;border-radius:12px;margin-top:8px}#nv button[data-v="sos"]{color:#e5484d}.splash{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;cursor:pointer}.splash .lg{font-size:4rem;width:120px;height:120px;border-radius:34px;background:var(--ac);display:flex;align-items:center;justify-content:center;animation:pop .7s ease}.splash .nm{font-size:1.5rem;font-weight:700}@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+</style></head><body><div id="app"></div>
+<script>
+var TYPES=[["perro","🐶"],["gato","🐱"],["tortuga","🐢"],["pez","🐟"],["ave","🦜"],["otro","🐾"]];
+var CATS=[["comida","Comida","🍖"],["vet","Veterinaria","🩺"],["peluqueria","Peluquería","✂️"],["accesorios","Accesorios","🦴"],["farmacia","Farmacia","💊"]];
+var ALL=TYPES.map(function(t){return t[0]});var COLORS=["#1f8a5b","#2f7bf0","#7c4dff","#e0457b","#e07a1f"];
+var P=[
+{n:"Veterinaria Patitas",c:"vet",x:30,y:30,p:ALL,h:"Lun a Sáb 9:00–19:00",a:"Calle Ejemplo 1234",pr:"10% off en la primera consulta",st:"dest",web:"https://example.com",ig:"https://instagram.com/ejemplo",wa:"59899123456"},
+{n:"Veterinaria Del Parque",c:"vet",x:70,y:62,p:["perro","gato","ave"],h:"Lun a Vie 8:30–18:00 · Urgencias 24 h",a:"Av. Ejemplo 880",st:"free"},
+{n:"Super Central",c:"comida",x:50,y:36,p:["perro","gato","pez"],h:"Todos los días 8:00–22:00",a:"Bvar. Ejemplo 450",st:"free"},
+{n:"Agroveterinaria El Campo",c:"comida",x:22,y:68,p:["perro","gato","ave","otro"],h:"Lun a Sáb 8:00–20:00",a:"Ruta Ejemplo km 3",pr:"Bolsa de ración 15 kg con 12% de descuento",st:"dest"},
+{n:"Acuario Mar Azul",c:"comida",x:78,y:25,p:["pez","tortuga"],h:"Mar a Dom 10:00–19:00",a:"Calle Ejemplo 77",st:"free"},
+{n:"Pet Shop Colitas",c:"accesorios",x:40,y:18,p:["perro","gato","ave","otro"],h:"Lun a Sáb 10:00–20:00",a:"Calle Ejemplo 321",st:"free"},
+{n:"",c:"vet",x:34,y:60,v:3,link:"https://maps.google.com/?q=veterinaria",st:"pend"},
+{n:"",c:"comida",x:88,y:44,v:1,st:"pend"}];
+var O=[
+{n:"Alimentos Premium Online",c:"comida",via:"Web propia",link:"https://example.com",z:"Envíos a todo el país",p:["perro","gato"],pr:"Envío gratis en compras desde $1500",st:"dest",ig:"https://instagram.com/ejemplo",wa:"59899123456"},
+{n:"Acuarismo Uruguay",c:"comida",via:"Mercado Libre",link:"https://example.com",z:"Montevideo y Canelones",p:["pez","tortuga"],pr:"",st:"free"},
+{n:"Mundo Gatuno",c:"accesorios",via:"Instagram / WhatsApp",link:"https://example.com",z:"Solo Montevideo",p:["gato"],pr:"",st:"free"},
+{n:"Peluquería Canina a Domicilio",c:"peluqueria",k:"dom",via:"Servicio a domicilio",link:"https://example.com",z:"Cubre zona centro y este",p:["perro","gato"],pr:"10% off en el primer servicio",st:"dest",wa:"59899777888"}];
+var N=[
+{i:"📣",t:"Nueva línea de alimento para perros senior",s:"Marca de ejemplo",d:"2026-10-06",b:1,p:["perro"],x:"Fórmula con control de peso y cuidado de articulaciones. Cupón de 10% en comercios adheridos."},
+{i:"🌳",t:"Se inauguró un parque para mascotas en tu zona",s:"Comunidad",d:"2026-10-05",x:"Espacio cercado con bebederos y una zona separada para perros pequeños."},
+{i:"💉",t:"Jornada de vacunación con precio especial",s:"Veterinarias adheridas",d:"2026-10-02",p:["perro","gato"],x:"Con turno previo, en las veterinarias participantes."},
+{i:"📣",t:"Promo en acuarios: kit de filtro con 15% off",s:"Marca de ejemplo",d:"2026-09-25",b:1,p:["pez"],x:"Válido en tiendas adheridas."},
+{i:"🐢",t:"Cuidados de tu tortuga al cambiar de estación",s:"Comunidad",d:"2026-09-22",p:["tortuga"],x:"Cómo ajustar luz, temperatura y alimentación con la primavera."}];
+function dAgo(n){return new Date(Date.now()-n*864e5).toISOString().slice(0,10)}
+var R=[
+{id:1,k:"lost",type:"perro",name:"Rocky",desc:"Labrador marrón, collar rojo",zone:"Cerca de Calle Ejemplo 77",x:42,y:44,d:dAgo(2),wa:"59899111222"},
+{id:2,k:"found",type:"gato",name:"",desc:"Gato gris atigrado, muy manso",zone:"Plaza del barrio",x:63,y:30,d:dAgo(1),wa:"59898333444"},
+{id:3,k:"lost",type:"tortuga",name:"Manuelita",desc:"Tortuga terrestre mediana",zone:"Patio, zona norte",x:25,y:55,d:dAgo(5),wa:"59897555666"}];
+var AY=[["Refugio de ejemplo","Refugio","https://example.com"],["Protectora de animales (ejemplo)","Protectora","https://example.com"],["Grupo de mascotas perdidas de tu zona (ejemplo)","Grupo en redes","https://example.com"],["Veterinaria de urgencias 24 h (ejemplo)","Urgencias","https://example.com"]];
+var S={splash:true,sos:true,st:"lost",rep:null,rsel:null,tab:"map",view:"map",cat:null,rad:0,op:false,fv:false,sel:null,add:null,cur:0,pets:[],claim:null,onl:null,msg:"",mb:null,err:"",setup:false,suName:"",suT:null,lt:""};
+var CFG={pro:false,color:COLORS[0],fs:16},RV={};
+var app=document.getElementById("app");
+function load(k,d){try{var r=localStorage.getItem(k);return r?JSON.parse(r):d}catch(e){return d}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+S.pets=load("sosm2",null);if(!S.pets){var o1=load("sosm",null);S.pets=o1?[o1]:[]}if(!Array.isArray(S.pets))S.pets=[];
+RV=load("sosm_rv",{});R=R.concat(load("sosm_r",[]));CFG=Object.assign(CFG,load("sosm_cfg",{}));
+function applyCfg(){var s=document.documentElement.style;s.setProperty("--fs",CFG.fs+"px");if(CFG.pro&&CFG.color!=COLORS[0])s.setProperty("--ac",CFG.color);else s.removeProperty("--ac")}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function on(b){return b?' class="on"':''}
+function emoji(t){for(var i=0;i<TYPES.length;i++)if(TYPES[i][0]==t)return TYPES[i][1];return"🐾"}
+function cat(c){return CATS.filter(function(x){return x[0]==c})[0]}
+function tg(a,v){var i=a.indexOf(v);if(i>-1)a.splice(i,1);else a.push(v)}
+function nu(v,b){v=(v||"").trim();if(!v)return"";if(/^https?:\/\//.test(v))return v;return b?b+v.replace(/^@/,""):"https://"+v}
+function waN(v){var d=(v||"").replace(/\D/g,"");if(d.charAt(0)=="0")d="598"+d.slice(1);return d}
+function types(){return S.cur<0&&S.pets.length>1?S.pets.map(function(q){return q.type}):[S.pets[Math.max(S.cur,0)].type]}
+function fits(o){if(!o.p)return true;var t=types();return o.p.some(function(x){return t.indexOf(x)>-1})}
+function dist(p){return Math.round(Math.hypot(p.x-50,p.y-50)*40)}
+function fd(m){return m<1000?m+" m":(m/1000).toFixed(1).replace(".",",")+" km"}
+function openInfo(p){var h=p.h||"";if(/24 horas/.test(h))return{o:true,t:"Abierto 24 h"};var m=h.match(/(\d{1,2}):\d\d\s*–\s*(\d{1,2}):\d\d/);if(!m)return null;var n=new Date().getHours(),a=+m[1],c=+m[2],o=n>=a&&n<c;return{o:o,t:o?"Abierto ahora · cierra "+c+":00":"Cerrado · abre "+a+":00"}}
+function mons(b){var d=new Date(b),n=new Date();if(!b||isNaN(d))return null;var m=(n.getFullYear()-d.getFullYear())*12+n.getMonth()-d.getMonth();if(n.getDate()<d.getDate())m--;return m}
+function age(b){var m=mons(b);if(m===null||m<0)return"";var y=Math.floor(m/12),k=m%12;return(y?y+(y>1?" años":" año"):"")+(y&&k?" y ":"")+(k||!y?k+(k==1?" mes":" meses"):"")}
+function daysTo(b){if(!b)return null;var d=new Date(b+"T00:00:00"),n=new Date();if(isNaN(d))return null;n.setHours(0,0,0,0);return Math.round((d-n)/864e5)}
+function mk(p){var v=RV[p.n];if(!v)return"";return(v.fav?" ❤️":"")+(v.r?' <span class="mu">★'+v.r+'</span>':'')+(v.been&&!v.r?' <span class="mu">✓</span>':'')}
+function links(o){var a=[];if(o.web)a.push(["🌐 Web",o.web]);if(o.ig)a.push(["📷 Instagram",o.ig]);if(o.fb)a.push(["👍 Facebook",o.fb]);if(o.wa)a.push(["💬 WhatsApp","https://wa.me/"+o.wa]);
+ return a.length?'<div class="row">'+a.map(function(x){return'<a href="'+esc(x[1])+'" target="_blank" rel="noopener">'+x[0]+'</a>'}).join(' · ')+'</div>':''}
+function seg(items,sel,a){return'<div class="seg">'+items.map(function(x){return'<button'+on(String(sel==null?"":sel)===String(x[0]))+' data-a="'+a+'" data-v="'+esc(x[0])+'">'+x[1]+'</button>'}).join('')+'</div>'}
+function segCats(sel,a,all){return seg((all?[["","Todo"]]:[]).concat(CATS.map(function(c){return[c[0],c[2]+' '+c[1]]})),sel,a)}
+function pcs(arr,a){return'<div class="pc">'+TYPES.map(function(t){return'<button class="chip'+(arr.indexOf(t[0])>-1?' on':'')+'" data-a="'+a+'" data-v="'+t[0]+'">'+t[1]+' '+t[0]+'</button>'}).join('')+'</div>'}
+function av(q,z){return q.photo?'<img class="av" style="width:'+z+'px;height:'+z+'px" src="'+esc(q.photo)+'" alt="">':'<span class="av" style="width:'+z+'px;height:'+z+'px;font-size:'+Math.round(z*.6)+'px">'+emoji(q.type)+'</span>'}
+function lab(t){return'<label>'+t+'</label>'}
+function ip(k,f,v,ph,x){return'<input data-k="'+k+'" data-f="'+f+'" value="'+esc(v)+'" placeholder="'+esc(ph)+'" '+(x||'')+'>'}
+function inp(l,k,f,v,ph,x){return lab(l)+ip(k,f,v,ph,x)}
+function err(){return S.err?'<div class="err">'+esc(S.err)+'</div>':''}
+function rk(p){var i=openInfo(p);return i?(i.o?0:2):1}
+function list(){return P.filter(function(p){if(!fits(p))return false;if(S.fv&&!(RV[p.n]&&RV[p.n].fav))return false;if(S.cat&&p.c!=S.cat)return false;if(S.rad&&dist(p)>S.rad)return false;if(S.op&&rk(p)!=0)return false;return true}).sort(function(a,b){return rk(a)-rk(b)||dist(a)-dist(b)})}
+function petBar(){if(S.tab=="biz"||S.tab=="set"||S.tab=="sos")return'';var it=(S.pets.length>1?[["-1","🐾 Todas"]]:[]).concat(S.pets.map(function(q,i){return[String(i),av(q,18)+' '+esc(q.name)]})).concat([["+","＋"]]);return seg(it,S.cur,"pet")}
+function nav(){var due=S.pets.some(function(q){var d=daysTo(q.next);return d!==null&&d<=30});return'<nav id="nv">'+[["map","🗺️","Explorar"],["news","📰","Noticias"],["sos","🆘","SOS"],["pets","🐾","Mascotas"],["biz","🏪","Comercio"],["set","⚙️","Ajustes"]].map(function(t){return'<button'+on(S.tab==t[0])+' data-a="tab" data-v="'+t[0]+'"><span>'+t[1]+'</span>'+t[2]+(t[0]=="pets"&&due?'<i class="dot"></i>':'')+'</button>'}).join('')+'</nav>'}
+function ad(){return'<div id="ad"><span class="tag">Anuncio</span><span>Pedigree (ejemplo) · 10% off en tu primera bolsa</span><button data-a="tab" data-v="set" title="Quitar publicidad">✕</button></div>'}
+function pin(p){var i=P.indexOf(p),on2=S.sel==i,col=p.st=="dest"?"var(--pr)":p.st=="pend"?"var(--pe)":"var(--ac)";return'<g class="pin" data-a="pin" data-v="'+i+'" transform="translate('+p.x+','+p.y+')"><circle r="'+(on2?5.4:4.2)+'" fill="'+col+'" stroke="#fff" stroke-width=".8"'+(p.st=="pend"?' stroke-dasharray="1.2 .8"':'')+'/><text y="1.6" font-size="4.6" text-anchor="middle">'+cat(p.c)[2]+'</text></g>'}
+function mapHtml(L){var h='<div class="mapw"><svg id="sv0" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice"><rect width="100" height="100" fill="var(--map)"/><path d="M0 90 Q25 80 50 92 T100 86 V100 H0Z" fill="var(--wa)"/><rect x="58" y="52" width="22" height="16" rx="3" fill="var(--pk)"/>';
+ [[0,25,100,25],[0,50,100,50],[0,75,100,75],[20,0,20,100],[45,0,45,100],[75,0,75,100]].forEach(function(l){h+='<line x1="'+l[0]+'" y1="'+l[1]+'" x2="'+l[2]+'" y2="'+l[3]+'" stroke="var(--st)" stroke-width="2.2"/>'});
+ if(S.rad)h+='<circle cx="50" cy="50" r="'+S.rad/40+'" fill="#2f7bf0" fill-opacity=".08" stroke="#2f7bf0" stroke-width=".5" stroke-dasharray="1.5 1"/>';
+ h+='<circle cx="50" cy="50" r="2.2" fill="#2f7bf0" stroke="#fff" stroke-width=".8"/>';(S.add?P:L).forEach(function(p){h+=pin(p)});if(S.sos&&!S.add)reps().forEach(function(r){h+=rpin(r)});
+ if(S.add&&S.add.x!=null)h+='<circle cx="'+S.add.x+'" cy="'+S.add.y+'" r="4.6" fill="none" stroke="#2f7bf0" stroke-width="1.3"/><text x="'+S.add.x+'" y="'+(S.add.y+1.6)+'" font-size="4.6" text-anchor="middle">'+cat(S.add.c)[2]+'</text>';
+ return h+'</svg>'+(S.add?'':'<button class="fab" data-a="fab">＋ Marcar lugar</button>')+'</div>'}
+function row(p){var i=P.indexOf(p),c=cat(p.c),oi=openInfo(p),pe=p.st=="pend";return'<div class="li" data-a="pin" data-v="'+i+'"><span class="ic">'+c[2]+'</span><span class="f1"><b>'+(pe?c[1]+' <span class="mu">(sin nombre)</span>':esc(p.n))+'</b>'+(pe?'<span class="tag p">Sin reclamar</span>':mk(p)+(p.st=="dest"?'<span class="tag">Destacado</span>':''))+(oi?'<div class="'+(oi.o?'op':'dist')+'">'+oi.t+'</div>':'')+'</span><span class="dist nw">'+fd(dist(p))+'</span></div>'}
+function listHtml(L){return'<div class="scr">'+(L.length?'<div class="card" style="padding:2px 12px">'+L.map(row).join('')+'</div>':'<div class="mu" style="padding:16px 4px">No hay lugares con esos filtros.</div>')+'</div>'}
+function onlHtml(){var A=O.filter(fits).filter(function(o){return!S.cat||o.c==S.cat}).sort(function(a,b){return(a.st=="dest"?0:1)-(b.st=="dest"?0:1)});
+ return'<div class="card" style="padding:2px 12px">'+(A.length?A.map(function(o){var c=cat(o.c);return'<div class="li" style="cursor:default;align-items:flex-start"><span class="ic">'+c[2]+'</span><span class="f1"><b>'+esc(o.n)+'</b>'+(o.st=="dest"?'<span class="tag">Destacado</span>':'')+'<div class="dist">'+c[1]+' · '+esc(o.via)+'</div><div class="dist">'+(o.k=="dom"?'📍 ':'🚚 ')+esc(o.z)+'</div>'+(o.pr?'<div class="promo">🎁 '+esc(o.pr)+'</div>':'')+links(o)+'</span><a href="'+esc(o.link)+'" target="_blank" rel="noopener" class="nw">Ver ›</a></div>'}).join(''):'<div class="mu" style="padding:12px 0">No hay negocios sin local con ese filtro.</div>')+'</div>'}
+function sheet(i){var p=P[i],c=cat(p.c),h='<div class="sheet"><button class="x" data-a="close">✕</button>';
+ if(p.st=="pend")return h+'<h2>'+c[2]+' '+c[1]+'<span class="tag p">Sin reclamar</span></h2><div class="mu">Marcado por '+p.v+(p.v>1?' usuarios':' usuario')+'. Todavía no tiene nombre ni datos.</div>'+(p.link?'<div class="row">🔗 <a href="'+esc(p.link)+'" target="_blank" rel="noopener">Ver en Google Maps</a></div>':'')+'<button class="btn o" data-a="claim" data-v="'+i+'">Soy el dueño: reclamar y destacar</button></div>';
+ var oi=openInfo(p),v=RV[p.n]||{},q=S.pets[S.cur],mine=S.pets.some(function(x){return x.vet==p.n});
+ h+='<h2>'+esc(p.n)+(p.st=="dest"?'<span class="tag">Destacado</span>':'')+'</h2><div class="mu">'+c[2]+' '+c[1]+(mine?' · ⭐ Tu veterinaria':'')+'</div>'+(oi?'<div class="'+(oi.o?'op':'dist')+'">'+oi.t+'</div>':'')+'<div class="row">🕒 '+esc(p.h)+'</div><div class="row">📍 '+esc(p.a)+' · '+fd(dist(p))+'</div><div class="row">Atiende: '+p.p.map(emoji).join(' ')+'</div>'+links(p)+(p.pr?'<div class="promo">🎁 '+esc(p.pr)+'</div>':'');
+ h+='<div class="pc" style="margin-top:12px"><button class="chip'+(v.fav?' on':'')+'" data-a="fav" data-v="'+i+'">'+(v.fav?'❤️ Favorito':'🤍 Favorito')+'</button><button class="chip'+(v.been?' on':'')+'" data-a="been" data-v="'+i+'">'+(v.been?'✅ Fui':'Marcar que fui')+'</button>'+(p.c=="vet"&&q?'<button class="chip'+(q.vet==p.n?' on':'')+'" data-a="mv" data-v="'+i+'">'+(q.vet==p.n?'🩺 Veterinaria de '+esc(q.name):'🩺 Es la veterinaria de '+esc(q.name))+'</button>':'')+'</div>';
+ if(v.been){h+=lab("Mi calificación (opcional)")+'<div class="pc">';for(var k=1;k<=5;k++)h+='<button class="chip'+(v.r>=k?' on':'')+'" data-a="star" data-v="'+i+':'+k+'">'+(v.r>=k?'★':'☆')+'</button>';h+='</div>'+lab("Mi nota (opcional)")+ip("nt","",v.note,"Ej: buen precio, atienden rápido",'data-v="'+i+'" maxlength="120"')}
+ return h+'</div>'}
+function addSheet(){if(S.add.x==null)return'';return'<div class="sheet"><b>Marcar un lugar</b><div class="mu">Los usuarios marcan el tipo de lugar; el nombre lo completa el comercio al reclamarlo.</div>'+inp("Link de Google Maps (opcional)","lk","",S.add.link,"https://maps.google.com/...")+'<button class="btn" data-a="addsave">Guardar lugar</button><button class="btn g" data-a="addcancel">Cancelar</button></div>'}
+function scrMap(){var L=list();
+ if(S.add)return'<div class="rows">'+'<div class="fl">'+segCats(S.add.c,"nc",false)+'</div><div class="mu" style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span>'+(S.add.x==null?'Tocá el mapa donde está el lugar y elegí el tipo.':'Punto marcado.')+'</span><button class="mini" data-a="addcancel">Cancelar</button></div></div>'+mapHtml(L)+addSheet();
+ var h='<div class="rows"><div class="fl">'+segCats(S.cat,"cat",true)+'</div><div class="fl">'+seg([["map","🗺️ Mapa"],["list","📋 Lista"],["online","🌐 Sin local"]],S.view,"view")+seg([[300,"300 m"],[800,"800 m"],[2500,"2,5 km"],[0,"Todo"]],S.rad,"rad")+'<div class="seg"><button'+on(S.op)+' data-a="op" title="Abierto ahora">🕒</button><button'+on(S.fv)+' data-a="fv" title="Favoritos">❤️</button><button'+on(S.sos)+' data-a="sos" title="Perdidas y encontradas">🆘</button></div></div></div>';
+ h+=S.view=="map"?mapHtml(L):S.view=="list"?listHtml(L):'<div class="scr">'+onlHtml()+'</div>';
+ if(S.view!="online"&&S.sel!==null&&L.indexOf(P[S.sel])>-1)h+=sheet(S.sel);if(S.view!="online"&&S.rsel!=null)h+=repSheet(S.rsel);return h}
+function scrNews(){var A=N.filter(fits).sort(function(a,b){return a.d<b.d?1:-1});
+ return'<div class="scr"><div class="grid">'+(A.length?A.map(function(n){return'<div class="nc"><div class="nt" style="background:'+(n.b?'color-mix(in srgb,var(--pr) 30%,var(--card))':'var(--acs)')+'">'+n.i+(n.b?'<span class="tag">Promocionado</span>':'')+'</div><div class="nb"><b>'+esc(n.t)+'</b><div class="dist">'+esc(n.s)+' · '+n.d.slice(8)+'/'+n.d.slice(5,7)+'</div><div class="cl">'+esc(n.x)+'</div></div></div>'}).join(''):'<div class="mu">No hay noticias para esta mascota todavía.</div>')+'</div></div>'}
+function fld(q,l,t,f,full){return'<div'+(full?' class="full"':'')+'>'+lab(l)+'<input type="'+t+'" data-k="pf" data-f="'+f+'" value="'+esc(q[f])+'" maxlength="80"></div>'}
+function scrPets(){if(S.cur<0||!S.pets[S.cur])return'<div class="scr"><div class="card mu">Elegí una mascota arriba para ver o editar su ficha.</div></div>';
+ var q=S.pets[S.cur],d=daysTo(q.next),h='<div class="scr"><div class="card hero">'+(CFG.pro?'<label class="avw">'+av(q,76)+'<span class="cam">📷</span><input type="file" accept="image/*" id="ph" hidden></label>':'<span class="avw" data-a="tab" data-v="set">'+av(q,76)+'<span class="cam">🔒</span></span>')+'<div><b style="font-size:1.15rem">'+esc(q.name)+'</b><div class="mu">'+esc(q.type)+(q.breed?' · '+esc(q.breed):'')+'</div><div class="mu">'+(q.birth&&age(q.birth)?'🎂 '+age(q.birth):'Sin fecha de nacimiento')+'</div>'+(CFG.pro?'':'<div class="dist">🔒 Foto con Pro</div>')+'</div></div>';
+ if(d!==null)h+='<div class="pill '+(d<=7?'r':d<=30?'y':'g')+'">'+(d<0?'🔔 Control o refuerzo vencido hace '+(-d)+(d==-1?' día':' días'):d==0?'🔔 Hoy toca control o refuerzo':'🔔 Próximo control o refuerzo en '+d+(d==1?' día':' días'))+'<div class="mu">En la app real te llega como notificación, también a tu veterinaria.</div></div>';
+ var vets='<option value="">— ninguna —</option>'+P.filter(function(p){return p.c=="vet"&&p.n}).map(function(p){return'<option value="'+esc(p.n)+'"'+(q.vet==p.n?' selected':'')+'>'+esc(p.n)+'</option>'}).join('');
+ h+='<div class="card"><div class="g2">'+fld(q,"Raza","text","breed")+fld(q,"Nacimiento","date","birth")+fld(q,"Último control","date","ctrl")+fld(q,"Próximo control o refuerzo","date","next")+fld(q,"Última vacuna","text","vac")+fld(q,"Fecha de esa vacuna","date","vdate")+'<div class="full">'+lab("Veterinaria (soy socio de)")+'<select data-k="pf" data-f="vet">'+vets+'</select></div>'+fld(q,"Notas","text","nota",1)+'</div></div><button class="btn g" data-a="rmpet">Quitar a '+esc(q.name)+'</button></div>';return h}
+function contactF(q,k,web){return lab("Contacto y redes (opcional)")+(web?ip(k,"web",q.web,"Sitio web: tutienda.com"):'')+ip(k,"ig",q.ig,"Instagram: @usuario")+ip(k,"fb",q.fb,"Facebook: nombre de la página")+ip(k,"wa",q.wa,"WhatsApp: 099 123 456",'inputmode="tel"')}
+function claimForm(){var q=S.claim,c=cat(P[q.id].c);return'<div class="card"><b>Reclamar: '+c[2]+' '+c[1]+'</b>'+err()+lab("Plan")+seg([["free","Básica · gratis"],["dest","⭐ Destacada · pago"]],q.plan,"plan")+'<div class="mu" style="margin-top:6px">'+(q.plan=="dest"?'Pin naranja, aparece primero, promos y datos de contacto (web, redes, WhatsApp).':'Tu ficha aparece en el mapa con nombre, dirección y horario.')+'</div>'+inp("Nombre del comercio","cf","n",q.n,"Ej: Veterinaria Juancito")+inp("Dirección","cf","a",q.a,"Calle y número")+inp("Horario","cf","h",q.h,"Lun a Sáb 9:00–19:00")+lab("Mascotas que atendés")+pcs(q.pets,"cp")+(q.plan=="dest"?inp("Promoción o descuento","cf","pr",q.pr,"Ej: 10% off en baño y corte")+contactF(q,"cf",true):'')+'<button class="btn'+(q.plan=="dest"?' o':'')+'" data-a="claimsave">'+(q.plan=="dest"?'Pagar y publicar (simulado)':'Publicar gratis')+'</button><button class="btn g" data-a="cancel">Cancelar</button></div>'}
+function onlForm(){var q=S.onl;return'<div class="card"><b>Registrar negocio sin local</b><div class="mu">Tiendas online o servicios que van a domicilio.</div>'+err()+lab("Tipo")+seg([["online","Venta online"],["dom","Servicio a domicilio"]],q.k,"xk")+lab("Plan")+seg([["free","Básica · gratis"],["dest","⭐ Destacada · pago"]],q.plan,"plan")+lab("Rubro")+'<div class="fl">'+segCats(q.c,"xc",false)+'</div>'+(q.k=="dom"?'':lab("¿Dónde vendés?")+'<div class="fl">'+seg([["Web propia","Web propia"],["Mercado Libre","Mercado Libre"],["Instagram / WhatsApp","Instagram / WhatsApp"]],q.via,"xv")+'</div>')+inp(q.k=="dom"?"Nombre del servicio":"Nombre de la tienda","xf","n",q.n,q.k=="dom"?"Ej: Peluquería a domicilio":"Ej: Alimentos Premium")+inp("Link (web o red social)","xf","link",q.link,"https://...")+inp(q.k=="dom"?"Zona de cobertura":"Zona de envío","xf","z",q.z,q.k=="dom"?"Ej: Centro y Pocitos":"Ej: Todo el país")+lab("Mascotas que atendés")+pcs(q.pets,"xpp")+(q.plan=="dest"?inp("Promoción o descuento","xf","pr",q.pr,"Ej: Envío gratis desde $1500")+contactF(q,"xf",false):'')+'<button class="btn'+(q.plan=="dest"?' o':'')+'" data-a="onlsave">'+(q.plan=="dest"?'Pagar y publicar (simulado)':'Publicar gratis')+'</button><button class="btn g" data-a="cancel">Cancelar</button></div>'}
+function scrBiz(){var h='<div class="scr">';
+ if(S.msg)h+='<div class="ok" style="margin-bottom:10px">'+esc(S.msg)+(S.mb?'<button class="btn" data-a="'+S.mb[0]+'" data-v="'+(S.mb[1]==null?'':S.mb[1])+'">'+(S.mb[0]=="go"?'Ver en el mapa':'Ver en Sin local')+'</button>':'')+'</div>';
+ if(S.claim)return h+claimForm()+'</div>';if(S.onl)return h+onlForm()+'</div>';
+ var pe=[];P.forEach(function(p,i){if(p.st=="pend")pe.push(i)});
+ h+='<div class="card"><b>🏪 Tu comercio en SOS Mascota</b><div class="mu" style="margin-top:4px">Reclamá un lugar que marcaron los usuarios o registrá tu negocio sin local (tienda online o servicio a domicilio). El plan básico es gratis; el Destacado suma pin naranja, promos y contacto.</div></div>';
+ h+='<div class="card"><b>Lugares sin reclamar</b>'+(pe.length?pe.map(function(i){var p=P[i],c=cat(p.c);return'<div class="li" style="cursor:default"><span class="ic">'+c[2]+'</span><span class="f1"><b>'+c[1]+'</b><div class="dist">Marcado por '+p.v+(p.v>1?' usuarios':' usuario')+'</div></span><button class="mini" data-a="claim" data-v="'+i+'">Reclamar</button></div>'}).join(''):'<div class="mu" style="margin-top:6px">No hay lugares pendientes.</div>')+'</div>';
+ return h+'<button class="btn g" data-a="onl">🌐 Registrar negocio sin local</button></div>'}
+function scrSet(){var h='<div class="scr"><div class="card"><b>⭐ Versión Pro</b><div class="mu" style="margin:4px 0 8px">Pago único (simulado): foto de tu mascota, sin publicidad y personalización de color y tamaño de letra.</div>'+(CFG.pro?'<div class="ok">Pro activo ✅</div>':'<button class="btn o" data-a="pro" style="margin-top:0">Activar Pro (simulado)</button>')+'</div>';
+ h+='<div class="card"><b>🎨 Personalizar</b>'+(CFG.pro?lab("Color")+'<div class="fl">'+COLORS.map(function(c){return'<button class="sw'+(CFG.color==c?' on':'')+'" style="background:'+c+'" data-a="col" data-v="'+c+'"></button>'}).join('')+'</div>'+lab("Tamaño de letra")+seg([[14,"A−"],[16,"A"],[18,"A+"]],CFG.fs,"fs"):'<div class="mu" style="margin-top:6px">🔒 Disponible con Pro.</div>')+'</div>';
+ return h+'<div class="card"><b>Sobre esta versión</b><div class="mu" style="margin-top:4px">Versión de prueba: lugares, noticias, distancias y promos son de ejemplo, el mapa es esquemático, "abierto ahora" usa la hora de tu teléfono y los pagos son simulados. Tus mascotas, favoritos y ajustes se guardan solo en este teléfono.</div><button class="btn g" data-a="reset">Borrar mis datos</button></div></div>'}
+function setupHtml(){return'<div class="scr" style="padding-top:24px"><h1>🐾 SOS Mascota</h1><div class="mu">'+(S.pets.length?'Agregá otra mascota.':'Registrá a tu mascota y encontrá lo que necesita cerca tuyo.')+'</div><div class="card" style="margin-top:14px">'+err()+inp("Nombre de tu mascota","su","",S.suName,"Ej: Luna",'maxlength="24"')+lab("¿Qué tipo de animal es?")+'<div class="pc">'+TYPES.map(function(t){return'<button class="chip'+(S.suT==t[0]?' on':'')+'" data-a="sut" data-v="'+t[0]+'">'+t[1]+' '+t[0]+'</button>'}).join('')+'</div><button class="btn" data-a="sugo">'+(S.pets.length?'Agregar mascota':'Entrar')+'</button>'+(S.pets.length?'<button class="btn g" data-a="sucancel">Cancelar</button>':'')+'</div></div>'}
+function render(){if(S.splash){app.innerHTML='<div class="splash" data-a="skip"><div class="lg">🐾</div><div class="nm">SOS Mascota</div></div>';return}var sc=document.querySelector(".scr"),st=sc?sc.scrollTop:0;
+ if(!S.pets.length||S.setup){app.innerHTML=setupHtml();return}
+ var pb=petBar(),scr={map:scrMap,news:scrNews,sos:scrSos,pets:scrPets,biz:scrBiz,set:scrSet}[S.tab]();
+ app.innerHTML=(pb?'<div id="hd">'+pb+'</div>':'')+'<div id="mn">'+scr+'</div>'+(CFG.pro?'':ad())+nav();
+ var n=document.querySelector(".scr");if(n&&S.lt==S.tab&&st)n.scrollTop=st;S.lt=S.tab}
+function reps(){return R.filter(function(r){return r.st!="done"})}
+function rget(id){return R.filter(function(r){return r.id==id})[0]}
+function mask(n){return"*** *** "+String(n||"").replace(/\D/g,"").slice(-3)}
+function rago(d){var n=Math.round((new Date()-new Date(d+"T00:00:00"))/864e5);return n<=0?"hoy":n==1?"ayer":"hace "+n+" días"}
+function waLink(r){return"https://wa.me/"+String(r.wa).replace(/\D/g,"")+"?text="+encodeURIComponent("Hola, te escribo por la mascota que publicaste en SOS Mascota")}
+function saveR(){save("sosm_r",R.filter(function(r){return r.mine}))}
+function rpin(r){var c=r.k=="lost"?"#e5484d":"#2f7bf0";return'<g class="pin" data-a="rp" data-v="'+r.id+'" transform="translate('+r.x+','+r.y+')"><circle r="6.2" fill="none" stroke="'+c+'" stroke-width=".9" stroke-dasharray="1.2 1"/><circle r="4.4" fill="'+c+'" stroke="#fff" stroke-width=".8"/><text y="1.6" font-size="4.6" text-anchor="middle">'+emoji(r.type)+'</text></g>'}
+function repSheet(id){var r=rget(id);if(!r)return'';var lost=r.k=="lost";
+ return'<div class="sheet"><button class="x" data-a="close">✕</button><h2>'+(lost?'🆘 Perdida: ':'🔎 Encontrada: ')+emoji(r.type)+' '+esc(r.name||r.type)+'</h2><div class="mu">'+rago(r.d)+' · '+fd(dist(r))+' · '+esc(r.zone)+'</div>'+(r.photo?'<img class="rp" src="'+esc(r.photo)+'" alt="">':'')+'<div class="row">'+esc(r.desc)+'</div><a class="btn" style="display:block;text-align:center;text-decoration:none" href="'+esc(waLink(r))+'" target="_blank" rel="noopener">💬 Escribir por WhatsApp · '+mask(r.wa)+'</a>'+(r.mine?'<button class="btn g" data-a="rdone" data-v="'+r.id+'">'+(lost?'Ya la encontré ✅':'Ya la entregué ✅')+'</button>':'')+'</div>'}
+function rrow(r){return'<div class="li" style="cursor:default;align-items:flex-start"><span class="ic" style="width:46px;height:46px">'+(r.photo?'<img class="av" style="width:46px;height:46px" src="'+esc(r.photo)+'" alt="">':emoji(r.type))+'</span><span class="f1"><b>'+esc(r.name||r.type)+'</b>'+(r.mine?'<span class="tag p">Tuyo</span>':'')+'<div class="dist">'+rago(r.d)+' · '+fd(dist(r))+' · '+esc(r.zone)+'</div><div class="row">'+esc(r.desc)+'</div><div class="pc" style="margin-top:8px"><a class="mini" style="text-decoration:none" href="'+esc(waLink(r))+'" target="_blank" rel="noopener">💬 '+mask(r.wa)+'</a><button class="mini" style="background:var(--acs);color:var(--tx)" data-a="rgo" data-v="'+r.id+'">🗺️ Ver en el mapa</button>'+(r.mine?'<button class="mini" style="background:var(--acs);color:var(--tx)" data-a="rdone" data-v="'+r.id+'">Resuelto ✅</button>':'')+'</div></span></div>'}
+function miniMap(q){var h='<div class="mapw" style="height:190px;flex:none;margin:0"><svg id="sv1" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice"><rect width="100" height="100" fill="var(--map)"/><path d="M0 90 Q25 80 50 92 T100 86 V100 H0Z" fill="var(--wa)"/>';
+ [[0,25,100,25],[0,50,100,50],[0,75,100,75],[20,0,20,100],[45,0,45,100],[75,0,75,100]].forEach(function(l){h+='<line x1="'+l[0]+'" y1="'+l[1]+'" x2="'+l[2]+'" y2="'+l[3]+'" stroke="var(--st)" stroke-width="2.2"/>'});
+ h+='<circle cx="50" cy="50" r="2.2" fill="#2f7bf0" stroke="#fff" stroke-width=".8"/>';if(q.x!=null)h+='<circle cx="'+q.x+'" cy="'+q.y+'" r="4.6" fill="#e5484d" stroke="#fff" stroke-width=".9"/>';return h+'</svg></div>'}
+function repForm(){var q=S.rep,lost=q.k=="lost";
+ var pets=S.pets.map(function(p,i){return'<option value="'+i+'"'+(String(q.pi)==String(i)?' selected':'')+'>'+emoji(p.type)+' '+esc(p.name)+'</option>'}).join('');
+ return'<div class="card"><b>'+(lost?'🆘 Reportar mascota perdida':'🔎 Reportar mascota encontrada')+'</b>'+err()+(lost&&S.pets.length?lab("¿Cuál de tus mascotas?")+'<select data-k="rp" data-f="pi"><option value="">— otra —</option>'+pets+'</select>':'')+lab("Tipo de animal")+'<div class="pc">'+TYPES.map(function(t){return'<button class="chip'+(q.type==t[0]?' on':'')+'" data-a="rt" data-v="'+t[0]+'">'+t[1]+' '+t[0]+'</button>'}).join('')+'</div>'+(lost?inp("Nombre","rp","name",q.name,"Ej: Rocky"):'')+inp("Descripción (color, rasgos, collar)","rp","desc",q.desc,"Ej: Labrador marrón, collar rojo")+inp("Zona o referencia","rp","zone",q.zone,"Ej: Cerca de la plaza")+lab("Ubicación: tocá el mapa donde fue")+miniMap(q)+lab("Foto")+'<label class="chip" style="display:inline-block;cursor:pointer;margin:0">'+(q.photo?'✅ Foto cargada · cambiar':'📷 Cargar foto')+'<input type="file" accept="image/*" id="rph" hidden></label>'+(q.photo?'<img class="rp" src="'+esc(q.photo)+'" alt="">':'')+inp("Tu WhatsApp (se muestra oculto: *** *** 123)","rp","wa",q.wa,"099 123 456",'inputmode="tel"')+'<button class="btn" style="background:#e5484d" data-a="repsave">Publicar reporte</button><button class="btn g" data-a="repcancel">Cancelar</button></div>'}
+function scrSos(){if(S.rep)return'<div class="scr">'+repForm()+'</div>';
+ var h='<div class="rows"><div class="fl">'+seg([["lost","🆘 Perdidas"],["found","🔎 Encontradas"],["help","🤝 Ayuda"]],S.st,"st")+'</div></div><div class="scr">'+(S.msg?'<div class="ok" style="margin-bottom:10px">'+esc(S.msg)+'</div>':'');
+ if(S.st=="help")return h+'<div class="card" style="padding:2px 12px">'+AY.map(function(a){return'<div class="li" style="cursor:default"><span class="ic">🤝</span><span class="f1"><b>'+esc(a[0])+'</b><div class="dist">'+esc(a[1])+'</div></span><a href="'+esc(a[2])+'" target="_blank" rel="noopener" class="nw">Ver ›</a></div>'}).join('')+'</div><div class="mu" style="padding:0 4px">Datos de ejemplo. Si hay una persona en riesgo, llamá al 911.</div></div>';
+ var A=reps().filter(function(r){return r.k==S.st}).sort(function(a,b){return dist(a)-dist(b)});
+ return h+(A.length?'<div class="card" style="padding:2px 12px">'+A.map(rrow).join('')+'</div>':'<div class="mu" style="padding:12px 4px">No hay reportes por ahora.</div>')+'<button class="btn" style="background:#e5484d" data-a="rep">＋ Reportar '+(S.st=="found"?'una mascota encontrada':'una mascota perdida')+'</button></div>'}
+function repTap(e){var sv=document.getElementById("sv1"),x,y;try{var pt=sv.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;var m=pt.matrixTransform(sv.getScreenCTM().inverse());x=m.x;y=m.y}catch(er){var b=sv.getBoundingClientRect();x=(e.clientX-b.left)/b.width*100;y=(e.clientY-b.top)/b.height*100}if(!isFinite(x)||!isFinite(y)){x=50;y=50}S.rep.x=Math.round(Math.max(3,Math.min(97,x)));S.rep.y=Math.round(Math.max(3,Math.min(97,y)));render()}
+function rphoto(t){var f=t.files&&t.files[0];if(!f)return;var rd=new FileReader();rd.onload=function(){var im=new Image();im.onload=function(){try{var c=document.createElement("canvas"),s=Math.min(1,320/Math.max(im.width,im.height));c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);c.getContext("2d").drawImage(im,0,0,c.width,c.height);S.rep.photo=c.toDataURL("image/jpeg",.7);render()}catch(e){}};im.src=rd.result};rd.readAsDataURL(f)}
+function rvo(i){var k=P[+i].n;return RV[k]||(RV[k]={})}
+function claimSave(){var q=S.claim,p=P[q.id];if(!q.n.trim()){S.err="Poné el nombre del comercio";return}if(!q.pets.length){S.err="Elegí al menos un tipo de mascota";return}
+ p.n=q.n.trim();p.a=q.a.trim()||"Sin dirección";p.h=q.h.trim()||"Horario a confirmar";p.p=q.pets.slice();p.st=q.plan;p.pr=q.plan=="dest"?q.pr.trim():"";
+ if(q.plan=="dest"){p.web=nu(q.web);p.ig=nu(q.ig,"https://instagram.com/");p.fb=nu(q.fb,"https://facebook.com/");p.wa=waN(q.wa)}
+ S.err="";S.claim=null;S.msg="¡Listo! "+p.n+" ya tiene su ficha"+(p.st=="dest"?" destacada (pin naranja)":"")+".";S.mb=["go",q.id]}
+function onlSave(){var q=S.onl;if(!q.n.trim()){S.err="Poné el nombre de la tienda";return}if(!/^https?:\/\//.test(q.link.trim())){S.err="Poné el link de tu negocio (empieza con https://)";return}if(!q.pets.length){S.err="Elegí al menos un tipo de mascota";return}
+ var d=q.plan=="dest";O.push({n:q.n.trim(),c:q.c,k:q.k,via:q.k=="dom"?"Servicio a domicilio":q.via,link:q.link.trim(),z:q.z.trim()||"A coordinar",pr:d?q.pr.trim():"",st:q.plan,p:q.pets.slice(),ig:d?nu(q.ig,"https://instagram.com/"):"",fb:d?nu(q.fb,"https://facebook.com/"):"",wa:d?waN(q.wa):""});
+ S.err="";S.onl=null;S.msg="Listo: tu negocio ya aparece en Explorar › Sin local.";S.mb=["goonl",null]}
+function setupGo(){if(!S.suName.trim()||!S.suT){S.err="Poné un nombre y elegí el tipo de animal";return}S.pets.push({name:S.suName.trim(),type:S.suT});S.cur=S.pets.length-1;save("sosm2",S.pets);S.setup=false;S.err=""}
+function act(a,v){
+ switch(a){
+ case"tab":S.tab=v;S.sel=null;S.rsel=null;S.rep=null;S.add=null;S.msg="";S.mb=null;S.err="";break;
+ case"pet":if(v=="+"){S.setup=true;S.suName="";S.suT=null;S.err=""}else S.cur=+v;S.sel=null;break;
+ case"cat":S.cat=v||null;S.sel=null;break;case"view":S.view=v;S.sel=null;break;case"rad":S.rad=+v;S.sel=null;break;
+ case"op":S.op=!S.op;S.sel=null;break;case"fv":S.fv=!S.fv;S.sel=null;break;
+ case"pin":if(S.add)return;S.sel=+v;S.rsel=null;break;case"close":S.sel=null;S.rsel=null;break;
+ case"fab":S.add={c:S.cat||"vet",x:null,y:null,link:""};S.sel=null;break;
+ case"nc":S.add.c=v;break;case"addcancel":S.add=null;break;
+ case"addsave":P.push({n:"",c:S.add.c,x:S.add.x,y:S.add.y,v:1,link:nu(S.add.link),st:"pend"});S.sel=P.length-1;S.cat=null;S.rad=0;S.op=false;S.fv=false;S.view="map";S.add=null;break;
+ case"fav":var r1=rvo(v);r1.fav=!r1.fav;save("sosm_rv",RV);break;
+ case"been":var r2=rvo(v);r2.been=!r2.been;if(!r2.been)r2.r=0;save("sosm_rv",RV);break;
+ case"star":var z=v.split(":"),r3=rvo(z[0]);r3.r=r3.r==+z[1]?0:+z[1];save("sosm_rv",RV);break;
+ case"mv":var q=S.pets[S.cur],nm=P[+v].n;q.vet=q.vet==nm?"":nm;save("sosm2",S.pets);break;
+ case"claim":S.claim={id:+v,plan:"dest",n:"",a:"",h:"",pr:"",pets:ALL.slice(),web:"",ig:"",fb:"",wa:""};S.onl=null;S.tab="biz";S.sel=null;S.msg="";S.err="";break;
+ case"onl":S.onl={plan:"dest",k:"online",c:"comida",via:"Web propia",n:"",link:"",z:"",pr:"",pets:ALL.slice(),ig:"",fb:"",wa:""};S.claim=null;S.msg="";S.err="";break;
+ case"cancel":S.claim=null;S.onl=null;S.err="";break;
+ case"plan":(S.claim||S.onl).plan=v;break;case"cp":tg(S.claim.pets,v);break;case"xc":S.onl.c=v;break;case"xv":S.onl.via=v;break;case"xk":S.onl.k=v;break;case"xpp":tg(S.onl.pets,v);break;
+ case"claimsave":claimSave();break;case"onlsave":onlSave();break;
+ case"go":S.tab="map";S.view="map";S.cat=null;S.rad=0;S.op=false;S.fv=false;S.sel=+v;S.msg="";S.mb=null;break;
+ case"goonl":S.tab="map";S.view="online";S.cat=null;S.msg="";S.mb=null;break;
+ case"sut":S.suT=v;break;case"sugo":setupGo();break;case"sucancel":S.setup=false;S.err="";break;
+ case"rmpet":S.pets.splice(S.cur,1);save("sosm2",S.pets);S.cur=Math.max(0,Math.min(S.cur,S.pets.length-1));break;
+ case"pro":CFG.pro=true;save("sosm_cfg",CFG);applyCfg();break;
+ case"col":CFG.color=v;save("sosm_cfg",CFG);applyCfg();break;case"fs":CFG.fs=+v;save("sosm_cfg",CFG);applyCfg();break;
+ case"skip":S.splash=false;break;
+ case"sos":S.sos=!S.sos;S.rsel=null;break;
+ case"st":S.st=v;S.msg="";break;
+ case"rp":S.rsel=+v;S.sel=null;break;
+ case"rgo":S.tab="map";S.view="map";S.sos=true;S.cat=null;S.rad=0;S.op=false;S.fv=false;S.rsel=+v;S.sel=null;S.msg="";break;
+ case"rep":S.rep={k:S.st=="found"?"found":"lost",pi:"",type:null,name:"",desc:"",zone:"",x:null,y:null,wa:"",photo:""};if(S.rep.k=="lost"&&S.pets.length){var pp=S.pets[Math.max(S.cur,0)];S.rep.pi=String(Math.max(S.cur,0));S.rep.type=pp.type;S.rep.name=pp.name;S.rep.photo=pp.photo||""}S.err="";S.msg="";break;
+ case"rt":S.rep.type=v;break;
+ case"repcancel":S.rep=null;S.err="";break;
+ case"repsave":var q2=S.rep;if(!q2.type){S.err="Elegí el tipo de animal";break}if(q2.x==null){S.err="Tocá el mapa para marcar dónde fue";break}if(waN(q2.wa).length<8){S.err="Poné un WhatsApp de contacto";break}
+  R.push({id:Date.now(),k:q2.k,type:q2.type,name:(q2.name||"").trim(),desc:(q2.desc||"").trim()||"Sin descripción",zone:(q2.zone||"").trim()||"Ver en el mapa",x:q2.x,y:q2.y,d:dAgo(0),wa:waN(q2.wa),photo:q2.photo||"",mine:true,st:"open"});saveR();S.st=q2.k;S.rep=null;S.err="";S.msg="Reporte publicado. Ya aparece en la lista y en el mapa.";break;
+ case"rdone":var rr=rget(+v);if(rr){rr.st="done";saveR()}S.rsel=null;S.msg="¡Qué bueno! Marcamos el reporte como resuelto.";break;
+ case"reset":try{localStorage.clear()}catch(e){}location.reload();return}
+ render()}
+function mapTap(e){var sv=document.getElementById("sv0"),x,y;
+ try{var pt=sv.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;var m=pt.matrixTransform(sv.getScreenCTM().inverse());x=m.x;y=m.y}catch(er){var r=sv.getBoundingClientRect();x=(e.clientX-r.left)/r.width*100;y=(e.clientY-r.top)/r.height*100}
+ if(!isFinite(x)||!isFinite(y)){x=50;y=50}if(S.add){S.add.x=Math.round(Math.max(3,Math.min(97,x)));S.add.y=Math.round(Math.max(3,Math.min(97,y)));render()}else if(S.sel!==null||S.rsel!=null){S.sel=null;S.rsel=null;render()}}
+function photo(t){if(!CFG.pro)return;var f=t.files&&t.files[0];if(!f)return;var rd=new FileReader();rd.onload=function(){var im=new Image();im.onload=function(){try{var c=document.createElement("canvas"),s=Math.min(1,160/Math.max(im.width,im.height));c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);c.getContext("2d").drawImage(im,0,0,c.width,c.height);S.pets[S.cur].photo=c.toDataURL("image/jpeg",.7);save("sosm2",S.pets);render()}catch(e){}};im.src=rd.result};rd.readAsDataURL(f)}
+app.addEventListener("click",function(e){var t=e.target.closest("[data-a]");if(t){act(t.dataset.a,t.dataset.v);return}if(e.target.closest("#sv0"))mapTap(e);else if(e.target.closest("#sv1"))repTap(e)});
+app.addEventListener("input",function(e){var t=e.target,k=t.dataset.k;if(!k)return;var f=t.dataset.f,v=t.value;
+ if(k=="pf"){S.pets[S.cur][f]=v;save("sosm2",S.pets)}else if(k=="cf")S.claim[f]=v;else if(k=="xf")S.onl[f]=v;else if(k=="lk")S.add.link=v;else if(k=="su")S.suName=v;else if(k=="rp"&&f!="pi")S.rep[f]=v;else if(k=="nt"){rvo(t.dataset.v).note=v;save("sosm_rv",RV)}});
+app.addEventListener("change",function(e){var t=e.target;if(t.id=="ph"){photo(t);return}if(t.id=="rph"){rphoto(t);return}if(t.dataset.k=="rp"&&t.dataset.f=="pi"){S.rep.pi=t.value;if(t.value!==""){var pp=S.pets[+t.value];S.rep.type=pp.type;S.rep.name=pp.name;if(pp.photo)S.rep.photo=pp.photo}render();return}if(t.dataset.k=="pf"&&(t.type=="date"||t.tagName=="SELECT")){S.pets[S.cur][t.dataset.f]=t.value;save("sosm2",S.pets);render()}});
+applyCfg();render();setTimeout(function(){if(S.splash){S.splash=false;render()}},1500);
+</script><script>
+/* ===== Extensión: roles, módulos de comercio, catálogo, agenda y pedidos ===== */
+var BT={
+vet:{n:"Veterinaria",e:"🩺",c:"vet",loc:1,cs:["vet"],m:["cat","ag","soc"],nm:"Veterinaria Ejemplo"},
+petshop:{n:"Pet shop",e:"🛍️",c:"accesorios",loc:1,cs:["comida","accesorios"],m:["cat"],nm:"Pet Shop Ejemplo"},
+groom:{n:"Peluquería",e:"✂️",c:"peluqueria",loc:1,cs:["peluqueria"],m:["ag"],nm:"Peluquería Ejemplo"},
+farm:{n:"Farmacia veterinaria",e:"💊",c:"farmacia",loc:1,cs:["farmacia"],m:["cat"],nm:"Farmacia Ejemplo"},
+online:{n:"Tienda online",e:"🌐",c:"comida",k:"online",m:["cat"],nm:"Tienda Online Ejemplo"},
+dom:{n:"Servicio a domicilio",e:"🚐",c:"peluqueria",k:"dom",m:["ag"],nm:"Servicio a Domicilio Ejemplo"}};
+var MODS=[["cat","🛍️","Catálogo y pedidos","Tus productos y los pedidos de tus clientes"],["ag","🗓️","Agenda de turnos","Horarios de atención y reservas"],["soc","👥","Socios y recordatorios","Mascotas asociadas y avisos de control"]];
+var PLANS=[["free","Básico","Gratis","Ficha en el mapa"],["dest","Destacado","$ 600 por mes (ej.)","Pin naranja, promos y contacto"],["plus","Plus","$ 1.200 por mes (ej.)","Todo lo anterior más catálogo, agenda y socios"]];
+var DN=["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"],STO=["Nuevo","Preparando","Listo","Entregado"],STN=["Preparar","Marcar listo","Marcar entregado"];
+S.role=null;S.biz=null;S.bt="pan";S.bw=null;S.bmsg="";S.ov=null;S.myBk=[];S.myOrd=[];S.np={n:"",pr:""};
+function pad(n){return(n<10?"0":"")+n}
+function dstr(d){return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())}
+function fdate(d){var x=new Date(d+"T00:00:00");return DN[x.getDay()]+" "+x.getDate()+"/"+(x.getMonth()+1)}
+function fm(n){return"$ "+String(n).replace(/\B(?=(\d{3})+(?!\d))/g,".")}
+function rank(b){return b.plus?2:b.st=="dest"?1:0}
+function mon(b,k){return!!(b.mods&&b.mods[k]&&rank(b)>=2)}
+function ens(b){b.mods=b.mods||{};b.cat=b.cat||[];b.ord=b.ord||[];b.bk=b.bk||[];b.soc=b.soc||[];b.ag=b.ag||{days:[1,2,3,4,5],from:9,to:18,dur:30,svc:"Consulta, Vacunación"}}
+function bz(){return S.biz?(S.biz.k=="P"?P[S.biz.i]:O[S.biz.i]):null}
+function refObj(r){var a=r.split(":");return a[0]=="P"?P[+a[1]]:O[+a[1]]}
+function bkf(id){return bz().bk.filter(function(x){return x.id==id})[0]}
+(function(){var t=dstr(new Date(Date.now()+864e5));
+ P.forEach(function(p){if(p.st!="pend"){ens(p);p.bt=p.c=="vet"?"vet":p.c=="peluqueria"?"groom":p.c=="farmacia"?"farm":"petshop"}});
+ O.forEach(function(o){ens(o);o.bt=o.k=="dom"?"dom":"online"});
+ P[0].plus=true;P[0].mods={cat:true,ag:true,soc:true};
+ P[0].cat=[{id:1,n:"Alimento premium 3 kg",pr:690,on:true},{id:2,n:"Antipulgas pipeta",pr:420,on:true},{id:3,n:"Shampoo medicado",pr:350,on:true}];
+ P[0].bk=[{id:1,d:t,h:"10:00",pet:"Toby",pt:"perro",svc:"Vacunación",who:"María",st:"pend"},{id:2,d:t,h:"11:30",pet:"Mishi",pt:"gato",svc:"Consulta",who:"Lucía",st:"ok"}];
+ P[0].soc=[{n:"Toby",type:"perro",owner:"María",next:5},{n:"Mishi",type:"gato",owner:"Lucía",next:21}];
+ P[0].ord=[{id:1001,items:[{n:"Alimento premium 3 kg",q:2,pr:690}],tot:1380,st:0,who:"Lucía"}];
+ P[3].plus=true;P[3].mods={cat:true};P[3].cat=[{id:1,n:"Ración adulto 15 kg",pr:1850,on:true},{id:2,n:"Ración cachorro 7 kg",pr:1090,on:true},{id:3,n:"Arena sanitaria 10 kg",pr:560,on:true}];
+ O[0].plus=true;O[0].mods={cat:true};O[0].cat=[{id:1,n:"Alimento super premium 10 kg",pr:2400,on:true},{id:2,n:"Snacks dentales x12",pr:380,on:true}];
+ O[3].plus=true;O[3].mods={ag:true};O[3].ag={days:[1,3,5],from:9,to:17,dur:60,svc:"Baño y corte, Corte de uñas"};
+})();
+/* ---- entrada ---- */
+function roleHtml(){return'<div class="scr" style="padding-top:36px"><div style="width:96px;height:96px;border-radius:28px;background:var(--ac);display:flex;align-items:center;justify-content:center;font-size:3rem;margin:0 auto 12px">🐾</div><h1 style="text-align:center">SOS Mascota</h1><div class="mu" style="text-align:center;margin-bottom:18px">¿Cómo querés entrar?</div><div class="card" data-a="role" data-v="user" style="cursor:pointer"><b style="font-size:1.1rem">👤 Soy dueño de mascota</b><div class="mu" style="margin-top:4px">Mapa, fichas de tus mascotas, SOS de perdidas, turnos y pedidos.</div></div><div class="card" data-a="role" data-v="biz" style="cursor:pointer"><b style="font-size:1.1rem">🏪 Soy comercio</b><div class="mu" style="margin-top:4px">Veterinaria, pet shop, peluquería, tienda online o servicio a domicilio. Activás los módulos que te sirven.</div></div></div>'}
+/* ---- alta de negocio ---- */
+function miniMap2(w){var h='<div class="mapw" style="height:170px;flex:none;margin:8px 0 0"><svg id="sv2" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice"><rect width="100" height="100" fill="var(--map)"/><path d="M0 90 Q25 80 50 92 T100 86 V100 H0Z" fill="var(--wa)"/>';
+ [[0,25,100,25],[0,50,100,50],[0,75,100,75],[20,0,20,100],[45,0,45,100],[75,0,75,100]].forEach(function(l){h+='<line x1="'+l[0]+'" y1="'+l[1]+'" x2="'+l[2]+'" y2="'+l[3]+'" stroke="var(--st)" stroke-width="2.2"/>'});
+ h+='<circle cx="50" cy="50" r="2.2" fill="#2f7bf0" stroke="#fff" stroke-width=".8"/>';if(w.x!=null)h+='<circle cx="'+w.x+'" cy="'+w.y+'" r="4.6" fill="var(--pr)" stroke="#fff" stroke-width=".9"/>';return h+'</svg></div>'}
+function wizHtml(){var w=S.bw=S.bw||{t:"vet",nm:BT.vet.nm,auto:true,mode:"map",pe:null,x:null,y:null,z:""},T=BT[w.t],pe=[];
+ P.forEach(function(p,i){if(p.st=="pend"&&T.cs&&T.cs.indexOf(p.c)>-1)pe.push(i)});
+ var h='<div class="scr" style="padding-top:18px"><h1>🏪 Tu negocio</h1><div class="mu">Elegí el tipo: según cuál sea, se habilitan unos módulos u otros.</div><div class="card" style="margin-top:12px">'+err()+lab("Tipo de negocio")+'<div class="pc">'+Object.keys(BT).map(function(k){return'<button class="chip'+(w.t==k?' on':'')+'" data-a="bwt" data-v="'+k+'">'+BT[k].e+' '+BT[k].n+'</button>'}).join('')+'</div>'+inp("Nombre del negocio","bw","nm",w.nm,T.nm);
+ if(T.loc){h+=lab("Ubicación")+seg([["map","Marcar en el mapa"],["claim","Reclamar uno marcado ("+pe.length+")"]],w.mode,"bwm");
+  if(w.mode=="claim")h+=pe.length?'<div style="margin-top:8px">'+pe.map(function(i){var c=cat(P[i].c);return'<div class="li" data-a="bwp" data-v="'+i+'"><span class="ic">'+c[2]+'</span><span class="f1"><b>'+c[1]+'</b><div class="dist">'+fd(dist(P[i]))+'</div></span><span>'+(w.pe==i?'✅':'')+'</span></div>'}).join('')+'</div>':'<div class="mu" style="margin-top:8px">No hay lugares sin reclamar de este rubro.</div>';
+  else h+='<div class="mu" style="margin-top:8px">Tocá el mapa donde está. Si no marcás, usamos una ubicación de ejemplo.</div>'+miniMap2(w)}
+ else h+=inp(T.k=="dom"?"Zona de cobertura":"Zona de envío","bw","z",w.z,"Ej: Montevideo y Canelones");
+ return h+'<button class="btn" data-a="bwgo">Crear mi negocio</button></div><button class="btn g" data-a="role" data-v="">Volver</button></div>'}
+function bwTap(e){var sv=document.getElementById("sv2"),x,y;try{var pt=sv.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;var m=pt.matrixTransform(sv.getScreenCTM().inverse());x=m.x;y=m.y}catch(er){var b=sv.getBoundingClientRect();x=(e.clientX-b.left)/b.width*100;y=(e.clientY-b.top)/b.height*100}if(!isFinite(x)||!isFinite(y)){x=50;y=50}S.bw.x=Math.round(Math.max(3,Math.min(97,x)));S.bw.y=Math.round(Math.max(3,Math.min(97,y)));render()}
+/* ---- panel del comercio ---- */
+function lockCard(k){var b=bz(),T=BT[b.bt],m=MODS.filter(function(x){return x[0]==k})[0];return'<div class="scr"><div class="card"><b>'+m[1]+' '+m[2]+'</b><div class="mu" style="margin-top:6px">'+(T.m.indexOf(k)<0?'Tu tipo de negocio ('+T.n+') no usa este módulo.':rank(b)<2?'Requiere el plan Plus. Activalo desde el Panel.':'Está desactivado. Activalo desde el Panel.')+'</div><button class="btn g" data-a="bt" data-v="pan">Ir al Panel</button></div></div>'}
+function socList(b){return b.soc.map(function(s,i){return{t:"s",i:i,n:s.n,type:s.type,owner:s.owner,next:s.next,sent:s.sent}}).concat(S.pets.map(function(q,i){return{q:q,i:i}}).filter(function(x){return x.q.vet==b.n}).map(function(x){return{t:"p",i:x.i,n:x.q.name,type:x.q.type,owner:"Vos (demo)",next:daysTo(x.q.next),sent:x.q.rem}}))}
+function bPanel(){var b=bz(),T=BT[b.bt],rk=rank(b),h='<div class="scr">'+(S.bmsg?'<div class="ok" style="margin-bottom:10px">'+esc(S.bmsg)+'</div>':'');
+ h+='<div class="card"><b>Tu plan</b><div style="margin-top:8px">'+seg(PLANS.map(function(p){return[p[0],p[1]]}),["free","dest","plus"][rk],"bplan")+'</div><div class="mu" style="margin-top:8px">'+PLANS[rk][2]+' · '+PLANS[rk][3]+'. Precios de ejemplo; el pago es simulado.</div></div>';
+ h+='<div class="card" style="padding:2px 12px"><div style="padding:12px 0 4px"><b>Módulos de tu negocio</b><div class="mu">'+T.e+' '+T.n+': se habilitan los que aplican a tu tipo.</div></div><div class="li" style="cursor:default"><span class="ic">⭐</span><span class="f1"><b>Destacado</b><div class="dist">Pin naranja, promo y contacto</div></span>'+(rk>=1?'<span class="tag" style="background:var(--ac);color:#fff">Incluido</span>':'<button class="mini" data-a="bplan" data-v="dest">Requiere Destacado</button>')+'</div>';
+ h+=MODS.map(function(m){var ok=T.m.indexOf(m[0])>-1,a=mon(b,m[0]);return'<div class="li" style="cursor:default"><span class="ic">'+m[1]+'</span><span class="f1"><b>'+m[2]+'</b><div class="dist">'+m[3]+'</div></span>'+(!ok?'<span class="tag p">No aplica</span>':rk<2?'<button class="mini" data-a="bplan" data-v="plus">Requiere Plus</button>':'<div class="seg"><button'+on(a)+' data-a="bmod" data-v="'+m[0]+':1">Sí</button><button'+on(!a)+' data-a="bmod" data-v="'+m[0]+':0">No</button></div>')+'</div>'}).join('')+'</div>';
+ var pend=b.bk.filter(function(x){return x.st=="pend"}).length,nw=b.ord.filter(function(x){return x.st==0}).length,soc=socList(b);
+ h+='<div class="card"><b>Resumen</b><div class="g2"><div>'+lab("Turnos pendientes")+'<b style="font-size:1.4rem">'+(mon(b,"ag")?pend:"—")+'</b></div><div>'+lab("Pedidos nuevos")+'<b style="font-size:1.4rem">'+(mon(b,"cat")?nw:"—")+'</b></div><div>'+lab("Socios")+'<b style="font-size:1.4rem">'+(mon(b,"soc")?soc.length:"—")+'</b></div><div>'+lab("Productos")+'<b style="font-size:1.4rem">'+(mon(b,"cat")?b.cat.length:"—")+'</b></div></div></div>';
+ if(mon(b,"soc"))h+='<div class="card" style="padding:2px 12px"><div style="padding:12px 0 4px"><b>👥 Socios y recordatorios</b><div class="mu">Los dueños que te marcan como su veterinaria aparecen acá.</div></div>'+(soc.length?soc.map(function(s){return'<div class="li" style="cursor:default"><span class="ic">'+emoji(s.type)+'</span><span class="f1"><b>'+esc(s.n)+'</b><div class="dist">'+esc(s.owner)+' · '+(s.next==null?'sin próximo control':s.next<0?'control vencido':'control en '+s.next+' días')+'</div></span><button class="mini" style="'+(s.sent?'background:var(--acs);color:var(--tx)':'')+'" data-a="soc" data-v="'+s.t+':'+s.i+'">'+(s.sent?'Enviado ✅':'Recordar')+'</button></div>'}).join(''):'<div class="mu" style="padding:8px 0 12px">Todavía no hay socios.</div>')+'</div>';
+ return h+'</div>'}
+function hourSel(f,v){var o='';for(var i=6;i<=22;i++)o+='<option value="'+i+'"'+(i==v?' selected':'')+'>'+pad(i)+':00</option>';return'<select data-k="ag" data-f="'+f+'">'+o+'</select>'}
+function bAg(){var b=bz();if(!mon(b,"ag"))return lockCard("ag");var g=b.ag,days=[[1,"L"],[2,"M"],[3,"X"],[4,"J"],[5,"V"],[6,"S"],[0,"D"]];
+ var h='<div class="scr"><div class="card"><b>🗓️ Horario de atención</b>'+lab("Días")+'<div class="pc">'+days.map(function(d){return'<button class="chip'+(g.days.indexOf(d[0])>-1?' on':'')+'" data-a="bday" data-v="'+d[0]+'">'+d[1]+'</button>'}).join('')+'</div><div class="g2"><div>'+lab("Desde")+hourSel("from",g.from)+'</div><div>'+lab("Hasta")+hourSel("to",g.to)+'</div></div>'+lab("Duración del turno")+seg([[15,"15 min"],[30,"30 min"],[60,"60 min"]],g.dur,"bdur")+inp("Servicios (separados por coma)","ag","svc",g.svc,"Consulta, Vacunación")+'</div>';
+ var bk=b.bk.slice().sort(function(a,c){return(a.d+a.h)<(c.d+c.h)?-1:1});
+ return h+'<div class="card" style="padding:2px 12px"><div style="padding:12px 0 4px"><b>Turnos reservados</b></div>'+(bk.length?bk.map(function(x){var st=x.st=="ok"?'<span class="tag" style="background:var(--ac);color:#fff">Confirmado</span>':x.st=="no"?'<span class="tag p">Rechazado</span>':'<span class="tag">Pendiente</span>';return'<div class="li" style="cursor:default;align-items:flex-start"><span class="ic">'+emoji(x.pt)+'</span><span class="f1"><b>'+fdate(x.d)+' · '+x.h+'</b>'+st+'<div class="dist">'+esc(x.pet)+' · '+esc(x.svc)+'</div><div class="dist">'+esc(x.who)+'</div>'+(x.st=="pend"?'<div class="pc" style="margin-top:8px"><button class="mini" data-a="bkok" data-v="'+x.id+'">Confirmar</button><button class="mini" style="background:var(--acs);color:var(--tx)" data-a="bkno" data-v="'+x.id+'">Rechazar</button></div>':'')+'</span></div>'}).join(''):'<div class="mu" style="padding:8px 0 12px">Todavía no hay reservas.</div>')+'</div></div>'}
+function bCat(){var b=bz();if(!mon(b,"cat"))return lockCard("cat");
+ return'<div class="scr"><div class="card"><b>🏷️ Agregar producto</b>'+inp("Nombre","np","n",S.np.n,"Ej: Alimento adulto 15 kg")+inp("Precio (pesos)","np","pr",S.np.pr,"Ej: 1500",'inputmode="numeric"')+'<button class="btn" data-a="pradd">Agregar</button></div><div class="card" style="padding:2px 12px">'+(b.cat.length?b.cat.map(function(p){return'<div class="li" style="cursor:default"><span class="ic">🛍️</span><span class="f1"><b>'+esc(p.n)+'</b><div class="dist">'+fm(p.pr)+(p.on?'':' · Agotado')+'</div></span><button class="mini" style="background:var(--acs);color:var(--tx)" data-a="prtog" data-v="'+p.id+'">'+(p.on?'Agotado':'Disponible')+'</button><button class="mini" style="background:var(--acs);color:var(--tx)" data-a="prdel" data-v="'+p.id+'">✕</button></div>'}).join(''):'<div class="mu" style="padding:12px 0">Todavía no hay productos.</div>')+'</div></div>'}
+function bOrd(){var b=bz();if(!mon(b,"cat"))return lockCard("cat");var o=b.ord.slice().reverse();
+ return'<div class="scr"><div class="card" style="padding:2px 12px">'+(o.length?o.map(function(x){return'<div class="li" style="cursor:default;align-items:flex-start"><span class="ic">🛒</span><span class="f1"><b>Pedido #'+String(x.id).slice(-4)+' · '+fm(x.tot)+'</b><span class="tag'+(x.st==3?' p':'')+'">'+STO[x.st]+'</span><div class="dist">'+esc(x.who)+'</div><div class="row">'+x.items.map(function(i){return i.q+' × '+esc(i.n)}).join('<br>')+'</div>'+(x.st<3?'<button class="mini" style="margin-top:8px" data-a="ordnext" data-v="'+x.id+'">'+STN[x.st]+'</button>':'')+'</span></div>'}).join(''):'<div class="mu" style="padding:12px 0">Todavía no hay pedidos.</div>')+'</div></div>'}
+function bNeg(){var b=bz(),T=BT[b.bt],rk=rank(b);
+ return'<div class="scr"><div class="card"><b>'+T.e+' '+T.n+'</b>'+inp("Nombre","bf","n",b.n,"Nombre del negocio")+(T.loc?inp("Dirección","bf","a",b.a,"Calle y número")+inp("Horario","bf","h",b.h,"Lun a Sáb 9:00–19:00"):inp(T.k=="dom"?"Zona de cobertura":"Zona de envío","bf","z",b.z,"Ej: Montevideo"))+lab("Mascotas que atendés")+pcs(b.p||ALL,"bpet")+(rk>=1?inp("Promoción o descuento","bf","pr",b.pr,"Ej: 10% off")+inp("WhatsApp de contacto","bf","wa",b.wa,"099 123 456",'inputmode="tel"'):'<div class="mu" style="margin-top:10px">🔒 Promo y contacto con el plan Destacado.</div>')+'</div><button class="btn g" data-a="viewbiz">👁️ Ver mi ficha como dueño de mascota</button><button class="btn g" data-a="role" data-v="user">👤 Cambiar a modo dueño</button><button class="btn g" data-a="bdel">🗑️ Quitar este negocio (demo)</button></div>'}
+function renderBiz(){if(!S.biz){app.innerHTML=wizHtml();return}
+ var b=bz(),T=BT[b.bt],sc=document.querySelector(".scr"),st=sc?sc.scrollTop:0,pend=mon(b,"ag")?b.bk.filter(function(x){return x.st=="pend"}).length:0,nw=mon(b,"cat")?b.ord.filter(function(x){return x.st==0}).length:0;
+ var tabs=[["pan","📊","Panel",0],["ag","🗓️","Agenda",pend],["cat","🏷️","Catálogo",0],["ord","🛒","Pedidos",nw],["neg","⚙️","Negocio",0]];
+ var scr={pan:bPanel,ag:bAg,cat:bCat,ord:bOrd,neg:bNeg}[S.bt]();
+ app.innerHTML='<div id="hd"><div style="display:flex;align-items:center;gap:10px"><span class="ic">'+T.e+'</span><div style="flex:1;min-width:0"><b>'+esc(b.n)+'</b><div class="mu">'+T.n+' · Plan '+PLANS[rank(b)][1]+'</div></div><button class="mini" data-a="role" data-v="user">👤 Modo dueño</button></div></div><div id="mn">'+scr+'</div><nav id="nv">'+tabs.map(function(t){return'<button'+on(S.bt==t[0])+' data-a="bt" data-v="'+t[0]+'"><span>'+t[1]+'</span>'+t[2]+(t[3]?'<i class="dot"></i>':'')+'</button>'}).join('')+'</nav>';
+ var n=document.querySelector(".scr");if(n&&S.lt=="b"+S.bt&&st)n.scrollTop=st;S.lt="b"+S.bt}
+/* ---- lado dueño: catálogo, turnos, actividad ---- */
+function btns(r,p){return(mon(p,"cat")?'<button class="chip on" data-a="shop" data-v="'+r+'">🛍️ Ver catálogo</button>':'')+(mon(p,"ag")?'<button class="chip on" data-a="book" data-v="'+r+'">🗓️ Reservar turno</button>':'')}
+var _sheet=sheet;sheet=function(i){var h=_sheet(i),p=P[i],b=p.st=="pend"?"":btns("P:"+i,p);return b?h.slice(0,-6)+'<div class="pc" style="margin-top:12px">'+b+'</div></div>':h};
+onlHtml=function(){var A=O.filter(fits).filter(function(o){return!S.cat||o.c==S.cat}).sort(function(a,b){return(a.st=="dest"?0:1)-(b.st=="dest"?0:1)});
+ return'<div class="card" style="padding:2px 12px">'+(A.length?A.map(function(o){var c=cat(o.c),bt=btns("O:"+O.indexOf(o),o);return'<div class="li" style="cursor:default;align-items:flex-start"><span class="ic">'+c[2]+'</span><span class="f1"><b>'+esc(o.n)+'</b>'+(o.st=="dest"?'<span class="tag">Destacado</span>':'')+'<div class="dist">'+c[1]+' · '+esc(o.via)+'</div><div class="dist">'+(o.k=="dom"?'📍 ':'🚚 ')+esc(o.z)+'</div>'+(o.pr?'<div class="promo">🎁 '+esc(o.pr)+'</div>':'')+links(o)+(bt?'<div class="pc" style="margin-top:10px">'+bt+'</div>':'')+'</span><a href="'+esc(o.link)+'" target="_blank" rel="noopener" class="nw">Ver ›</a></div>'}).join(''):'<div class="mu" style="padding:12px 0">No hay negocios sin local con ese filtro.</div>')+'</div>'};
+function slots(b,d){var g=b.ag,out=[],now=new Date(),isT=d==dstr(now),m=g.from*60;for(;m+g.dur<=g.to*60;m+=g.dur){var t=pad(Math.floor(m/60))+":"+pad(m%60);if(isT&&m<=now.getHours()*60+now.getMinutes())continue;if(b.bk.some(function(x){return x.d==d&&x.h==t&&x.st!="no"}))continue;out.push(t)}return out}
+function shopHtml(){var o=S.ov,b=refObj(o.ref),tot=0,items=b.cat.filter(function(p){return p.on});
+ var h='<div class="scr"><button class="mini" data-a="ovx">← Volver</button><h1 style="margin-top:12px">🛍️ '+esc(b.n)+'</h1><div class="mu">Catálogo · hacé tu pedido y el comercio lo confirma</div><div class="card" style="padding:2px 12px;margin-top:12px">'+(items.length?items.map(function(p){var q=o.q[p.id]||0;tot+=q*p.pr;return'<div class="li" style="cursor:default"><span class="ic">🛍️</span><span class="f1"><b>'+esc(p.n)+'</b><div class="dist">'+fm(p.pr)+'</div></span><span class="pc" style="flex-wrap:nowrap;align-items:center"><button class="mini" data-a="qm" data-v="'+p.id+'">−</button><b>'+q+'</b><button class="mini" data-a="qp" data-v="'+p.id+'">＋</button></span></div>'}).join(''):'<div class="mu" style="padding:12px 0">El comercio todavía no cargó productos.</div>')+'</div>';
+ return h+(tot?'<div class="card"><b>Total: '+fm(tot)+'</b><div class="mu" style="margin-top:4px">Pagás directo al comercio (por ejemplo al retirar). El pago dentro de la app queda para más adelante.</div><button class="btn" data-a="ordgo">Hacer pedido</button></div>':'')+'</div>'}
+function bookHtml(){var o=S.ov,b=refObj(o.ref),g=b.ag,ds=[],i,d;for(i=0;i<14&&ds.length<7;i++){d=new Date(Date.now()+i*864e5);if(g.days.indexOf(d.getDay())>-1)ds.push(dstr(d))}
+ if(!o.d||ds.indexOf(o.d)<0){o.d=ds[0]||null;o.h=null}var sl=o.d?slots(b,o.d):[],sv=String(g.svc||"Consulta").split(",").map(function(s){return s.trim()}).filter(Boolean);if(!o.s||sv.indexOf(o.s)<0)o.s=sv[0];
+ return'<div class="scr"><button class="mini" data-a="ovx">← Volver</button><h1 style="margin-top:12px">🗓️ Reservar turno</h1><div class="mu">'+esc(b.n)+'</div><div class="card">'+lab("Día")+'<div class="pc">'+(ds.length?ds.map(function(x){return'<button class="chip'+(o.d==x?' on':'')+'" data-a="bkd" data-v="'+x+'">'+fdate(x)+'</button>'}).join(''):'<span class="mu">No hay días con atención.</span>')+'</div>'+lab("Horario")+'<div class="pc">'+(sl.length?sl.map(function(t){return'<button class="chip'+(o.h==t?' on':'')+'" data-a="bkh" data-v="'+t+'">'+t+'</button>'}).join(''):'<span class="mu">No hay horarios libres este día.</span>')+'</div>'+lab("Servicio")+'<div class="pc">'+sv.map(function(s){return'<button class="chip'+(o.s==s?' on':'')+'" data-a="bks" data-v="'+esc(s)+'">'+esc(s)+'</button>'}).join('')+'</div>'+(S.pets.length>1?lab("Mascota")+'<div class="pc">'+S.pets.map(function(q,i){return'<button class="chip'+(o.p==i?' on':'')+'" data-a="bkp" data-v="'+i+'">'+emoji(q.type)+' '+esc(q.name)+'</button>'}).join('')+'</div>':'')+'<button class="btn" data-a="bkgo">Reservar</button></div></div>'}
+function doneHtml(){return'<div class="scr"><div class="ok" style="margin-top:12px">'+esc(S.ov.msg)+'</div><button class="btn" data-a="mytab">Ver mis turnos y pedidos</button><button class="btn g" data-a="ovx">Volver al mapa</button></div>'}
+function ovHtml(){return S.ov.t=="shop"?shopHtml():S.ov.t=="book"?bookHtml():doneHtml()}
+function myAct(){var h='<div class="card"><b>📅 Mis turnos y pedidos</b>',any=false;
+ S.myBk.forEach(function(r){var b=refObj(r.ref),x=b.bk.filter(function(y){return y.id==r.id})[0];if(!x)return;any=true;h+='<div class="li" style="cursor:default"><span class="ic">🗓️</span><span class="f1"><b>'+esc(b.n)+'</b><div class="dist">'+fdate(x.d)+' · '+x.h+' · '+esc(x.pet)+'</div></span><span class="tag'+(x.st=="no"?' p':'')+'">'+(x.st=="ok"?"Confirmado":x.st=="no"?"Rechazado":"Pendiente")+'</span></div>'});
+ S.myOrd.forEach(function(r){var b=refObj(r.ref),x=b.ord.filter(function(y){return y.id==r.id})[0];if(!x)return;any=true;h+='<div class="li" style="cursor:default"><span class="ic">🛒</span><span class="f1"><b>'+esc(b.n)+'</b><div class="dist">'+x.items.length+' producto(s) · '+fm(x.tot)+'</div></span><span class="tag'+(x.st==3?' p':'')+'">'+STO[x.st]+'</span></div>'});
+ S.pets.filter(function(q){return q.rem&&q.vet}).forEach(function(q){any=true;h+='<div class="pill y" style="margin:8px 0 0">🔔 '+esc(q.vet)+' te recordó el control de '+esc(q.name)+'</div>'});
+ return h+(any?'':'<div class="mu" style="margin-top:6px">Todavía no reservaste turnos ni hiciste pedidos. Probá desde un lugar con catálogo o agenda.</div>')+'</div>'}
+var _scrPets=scrPets;scrPets=function(){return _scrPets().replace('<div class="scr">','<div class="scr">'+myAct())};
+var _scrSet=scrSet;scrSet=function(){var h=_scrSet();return h.slice(0,-6)+'<div class="card"><b>🏪 ¿Tenés un comercio?</b><div class="mu" style="margin:4px 0 8px">Entrá en modo comercio para activar catálogo, agenda y más, según tu tipo de negocio.</div><button class="btn" style="margin-top:0" data-a="role" data-v="biz">Entrar como comercio</button></div></div>'};
+nav=function(){var due=S.pets.some(function(q){var d=daysTo(q.next);return d!==null&&d<=30});return'<nav id="nv">'+[["map","🗺️","Explorar"],["news","📰","Noticias"],["sos","🆘","SOS"],["pets","🐾","Mascotas"],["set","⚙️","Ajustes"]].map(function(t){return'<button'+on(S.tab==t[0])+' data-a="tab" data-v="'+t[0]+'"><span>'+t[1]+'</span>'+t[2]+(t[0]=="pets"&&due?'<i class="dot"></i>':'')+'</button>'}).join('')+'</nav>'};
+/* ---- render y acciones ---- */
+var _render=render;
+render=function(){if(S.splash){_render();return}if(!S.role){app.innerHTML=roleHtml();return}if(S.role=="biz"){renderBiz();return}_render();var mn=document.getElementById("mn");if(mn&&S.ov)mn.innerHTML=ovHtml()};
+var NA={
+role:function(v){S.role=v||null;S.ov=null;S.sel=null;S.rsel=null;S.err="";S.bmsg=""},
+bt:function(v){S.bt=v;S.bmsg=""},
+bwt:function(v){S.bw.t=v;S.bw.pe=null;S.err="";if(!S.bw.nm||S.bw.auto){S.bw.nm=BT[v].nm;S.bw.auto=true}},
+bwm:function(v){S.bw.mode=v},bwp:function(v){S.bw.pe=+v},
+bwgo:function(){var w=S.bw,T=BT[w.t],b;if(!w.nm.trim()){S.err="Poné el nombre de tu negocio";return}
+ if(T.loc){if(w.mode=="claim"&&w.pe!=null){b=P[w.pe];b.n=w.nm.trim();b.a=b.a||"Sin dirección";b.h=b.h||"Horario a confirmar";b.p=ALL.slice();b.st="free";S.biz={k:"P",i:w.pe}}
+  else{b={n:w.nm.trim(),c:T.c,x:w.x!=null?w.x:55,y:w.y!=null?w.y:45,p:ALL.slice(),h:"Lun a Vie 9:00–18:00",a:"Sin dirección",st:"free"};P.push(b);S.biz={k:"P",i:P.length-1}}}
+ else{b={n:w.nm.trim(),c:T.c,k:T.k,via:T.k=="dom"?"Servicio a domicilio":"Web propia",link:"https://example.com",z:w.z.trim()||"A coordinar",p:ALL.slice(),pr:"",st:"free"};O.push(b);S.biz={k:"O",i:O.length-1}}
+ b.bt=w.t;b.plus=false;b.mods={};ens(b);S.bt="pan";S.err="";S.bw=null;S.bmsg="Creaste tu negocio. Mejorá el plan y activá los módulos que te sirvan."},
+bplan:function(v){var b=bz();b.st=v=="free"?"free":"dest";b.plus=v=="plus";if(v=="free")b.pr="";S.bmsg=v=="free"?"Volviste al plan Básico.":"Plan "+(v=="plus"?"Plus":"Destacado")+" activado (pago simulado)."},
+bmod:function(v){var a=v.split(":");bz().mods[a[0]]=a[1]=="1";S.bmsg=""},
+bday:function(v){var g=bz().ag,i=g.days.indexOf(+v);if(i>-1)g.days.splice(i,1);else g.days.push(+v)},
+bdur:function(v){bz().ag.dur=+v},
+bkok:function(v){bkf(v).st="ok"},bkno:function(v){bkf(v).st="no"},
+pradd:function(){var b=bz(),n=S.np.n.trim(),p=parseInt(String(S.np.pr).replace(/\D/g,""),10);if(!n||!p)return;b.cat.push({id:Date.now(),n:n,pr:p,on:true});S.np={n:"",pr:""}},
+prtog:function(v){bz().cat.forEach(function(p){if(p.id==v)p.on=!p.on})},
+prdel:function(v){var b=bz();b.cat=b.cat.filter(function(p){return p.id!=v})},
+ordnext:function(v){bz().ord.forEach(function(x){if(x.id==v&&x.st<3)x.st++})},
+soc:function(v){var a=v.split(":");if(a[0]=="s"){var s=bz().soc[+a[1]];s.sent=!s.sent}else{var q=S.pets[+a[1]];q.rem=!q.rem;save("sosm2",S.pets)}},
+bpet:function(v){var b=bz();b.p=b.p||ALL.slice();tg(b.p,v)},
+viewbiz:function(){S.role="user";S.tab="map";S.view=S.biz.k=="P"?"map":"online";S.cat=null;S.rad=0;S.op=false;S.fv=false;S.sel=S.biz.k=="P"?S.biz.i:null},
+bdel:function(){S.biz=null;S.bw=null;S.bt="pan"},
+shop:function(v){S.ov={t:"shop",ref:v,q:{}}},
+book:function(v){S.ov={t:"book",ref:v,d:null,h:null,s:null,p:Math.max(S.cur,0)}},
+ovx:function(){S.ov=null},mytab:function(){S.ov=null;S.tab="pets"},
+qp:function(v){S.ov.q[v]=(S.ov.q[v]||0)+1},qm:function(v){S.ov.q[v]=Math.max(0,(S.ov.q[v]||0)-1)},
+ordgo:function(){var o=S.ov,b=refObj(o.ref),its=[],tot=0;b.cat.forEach(function(p){var q=o.q[p.id]||0;if(q&&p.on){its.push({n:p.n,q:q,pr:p.pr});tot+=q*p.pr}});if(!its.length)return;var id=Date.now();b.ord.push({id:id,items:its,tot:tot,st:0,who:"Vos (demo)"});S.myOrd.push({ref:o.ref,id:id});S.ov={t:"done",msg:"Pedido enviado a "+b.n+" por "+fm(tot)+". Lo ves en Mascotas › Mis turnos y pedidos."}},
+bkd:function(v){S.ov.d=v;S.ov.h=null},bkh:function(v){S.ov.h=v},bks:function(v){S.ov.s=v},bkp:function(v){S.ov.p=+v},
+bkgo:function(){var o=S.ov,b=refObj(o.ref);if(!o.d||!o.h)return;var q=S.pets[o.p]||S.pets[0]||{name:"Mi mascota",type:"otro"},id=Date.now();b.bk.push({id:id,d:o.d,h:o.h,pet:q.name,pt:q.type,svc:o.s,who:"Vos (demo)",st:"pend"});S.myBk.push({ref:o.ref,id:id});S.ov={t:"done",msg:"Turno solicitado a "+b.n+" para "+fdate(o.d)+" a las "+o.h+". El comercio lo confirma y lo ves en Mascotas › Mis turnos y pedidos."}}
+};
+var _act=act;
+act=function(a,v){if(a=="tab")S.ov=null;if(NA[a]){NA[a](v);render();return}_act(a,v)};
+app.addEventListener("input",function(e){var t=e.target,k=t.dataset.k;if(!k)return;var f=t.dataset.f,v=t.value;
+ if(k=="bw"){S.bw[f]=v;if(f=="nm")S.bw.auto=false}else if(k=="np")S.np[f]=v;else if(k=="bf")bz()[f]=f=="wa"?waN(v):v;else if(k=="ag"&&f=="svc")bz().ag.svc=v});
+app.addEventListener("change",function(e){var t=e.target;if(t.dataset.k=="ag"&&t.tagName=="SELECT"){bz().ag[t.dataset.f]=+t.value;render()}});
+app.addEventListener("click",function(e){if(!e.target.closest("[data-a]")&&e.target.closest("#sv2"))bwTap(e)});
+</script></body></html>

@@ -1,0 +1,25 @@
+# Secretos y variables de entorno
+.env
+.env.*
+!.env.example
+
+# Configuración local de Claude Code (propia de cada máquina)
+.claude/settings.local.json
+
+# Sistema operativo y editores
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Flutter / Dart (para cuando arranque el código)
+.dart_tool/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+*.iml
+
+# Supabase local
+supabase/.temp/
+supabase/.branches/

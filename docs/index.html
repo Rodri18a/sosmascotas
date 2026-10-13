@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>SOS Mascota · Documentación</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4.13.1/lib/themes/vue.css">
+  <style>
+    :root { --theme-color: #1f8a5b; --sos: #d64545; --warn: #e8912d; }
+    body { font-size: 16px; }
+    .sidebar { padding-top: 16px; }
+    .sidebar > h1 { margin: 0 0 12px; font-size: 1.4em; }
+    .sidebar > h1 a { color: var(--theme-color); }
+    .markdown-section { max-width: 920px; }
+    .markdown-section table { display: table; width: 100%; font-size: 0.93em; }
+    .markdown-section td, .markdown-section th { vertical-align: top; }
+    .markdown-section h2 { border-bottom: 2px solid #e8f3ee; padding-bottom: 6px; }
+    .markdown-section blockquote { border-left-color: var(--theme-color); background: #f3faf6; padding: 8px 16px; }
+    .markdown-section ul.task-list, .markdown-section li.task-list-item { list-style: none; }
+    .markdown-section li.task-list-item input { margin-right: 6px; }
+    .markdown-section strong { color: #234; }
+
+    /* Panel de estado en la portada */
+    .estado { display: grid; gap: 16px; margin: 16px 0 28px; }
+    .estado-actual { background: #1f8a5b; color: #fff; border-radius: 12px; padding: 18px 20px; }
+    .estado-actual small { opacity: .85; text-transform: uppercase; letter-spacing: .05em; font-size: .75em; }
+    .estado-actual .paso { font-size: 1.2em; font-weight: 600; margin: 4px 0 8px; }
+    .estado-actual .sig { opacity: .9; font-size: .92em; }
+    .fases { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+    .fase { border: 1px solid #e3e8e6; border-radius: 10px; padding: 12px 14px; background: #fff; }
+    .fase .nombre { font-weight: 600; font-size: .95em; }
+    .fase .num { font-size: .82em; color: #667; margin-top: 2px; }
+    .barra { height: 8px; background: #edf1ef; border-radius: 4px; margin-top: 8px; overflow: hidden; }
+    .barra > div { height: 100%; background: var(--theme-color); }
+    .estado-error { color: var(--sos); }
+    .ultima { font-size: .85em; color: #667; }
+  </style>
+</head>
+<body>
+  <div id="app">Cargando documentación…</div>
+  <script>
+    // Lee PROGRESO.md en vivo y arma el panel de estado de la portada.
+    function panelDeEstado(hook) {
+      hook.doneEach(function () {
+        var cont = document.getElementById('estado');
+        if (!cont) return;
+        fetch('PROGRESO.md', { cache: 'no-store' })
+          .then(function (r) { return r.text(); })
+          .then(function (md) {
+            var fases = [], actual = null, siguiente = null, encontrado = false;
+            md.split('\n').forEach(function (l) {
+              var f = l.match(/^## (FASE \d+[^—\n]*)/);
+              if (f) { fases.push({ nombre: f[1].trim(), hechos: 0, total: 0 }); return; }
+              var t = l.match(/^\s*- \[( |x)\] (.*)$/);
+              if (!t || !fases.length) return;
+              var fase = fases[fases.length - 1];
+              fase.total++;
+              if (t[1] === 'x') fase.hechos++;
+              var texto = t[2].replace(/\*\*/g, '').replace(/← ESTÁS ACÁ/, '').trim();
+              if (/ESTÁS ACÁ/.test(l)) { actual = texto; encontrado = true; return; }
+              if (encontrado && !siguiente && t[1] === ' ') siguiente = texto;
+            });
+            var html = '<div class="estado-actual"><small>Estás acá</small>' +
+              '<div class="paso">' + (actual || 'Sin marcador en PROGRESO.md') + '</div>' +
+              (siguiente ? '<div class="sig">Sigue: ' + siguiente + '</div>' : '') + '</div>';
+            html += '<div class="fases">' + fases.map(function (f) {
+              var p = f.total ? Math.round(f.hechos * 100 / f.total) : 0;
+              return '<div class="fase"><div class="nombre">' + f.nombre + '</div>' +
+                '<div class="num">' + f.hechos + ' de ' + f.total + ' pasos · ' + p + '%</div>' +
+                '<div class="barra"><div style="width:' + p + '%"></div></div></div>';
+            }).join('') + '</div>';
+            cont.innerHTML = html;
+          })
+          .catch(function () {
+            cont.innerHTML = '<p class="estado-error">No se pudo leer PROGRESO.md. ¿Abriste la web con el servidor local (ver-docs.sh)?</p>';
+          });
+      });
+    }
+
+    window.$docsify = {
+      name: '🐾 SOS Mascota',
+      repo: '',
+      loadSidebar: true,
+      subMaxLevel: 2,
+      auto2top: true,
+      homepage: 'README.md',
+      relativePath: false,
+      search: { placeholder: 'Buscar en la documentación…', noData: 'Sin resultados', depth: 3 },
+      // Evita que el navegador guarde versiones viejas de los .md
+      requestHeaders: { 'cache-control': 'no-cache' },
+      plugins: [panelDeEstado]
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4.13.1/lib/docsify.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4.13.1/lib/plugins/search.min.js"></script>
+</body>
+</html>
