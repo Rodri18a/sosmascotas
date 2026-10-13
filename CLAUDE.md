@@ -48,4 +48,5 @@ Si un dato de `reference/` contradice `docs/`, **manda `docs/`** (ver `docs/12-d
 9. **Métricas desde el día 1:** toda acción relevante registra un evento anónimo (`docs/08-arquitectura.md`, sección Métricas).
 10. Regla de oro del negocio: **lo que hace a la seguridad y la salud del animal no se cobra** (SOS, QR, foto, recordatorios de medicación).
 11. Si una decisión nueva cambia algo de `docs/`, actualizar el documento y anotarla en `docs/12-decisiones.md`.
+13. **Repositorio:** `github.com/Rodri18a/sosmascotas` (privado). Se trabaja en varias máquinas: al empezar, `git pull`; al terminar cada sesión o cambio importante, commit y `git push`.
 12. **Web de documentación** (`./ver-docs.sh` → `http://localhost:3000/docs/`): lee los `.md` en vivo. Si se crea un documento nuevo, agregarlo a `docs/_sidebar.md`. Si cambia algo central (fases, planes, regla de oro), actualizar el resumen de `docs/README.md`. El panel "Estás acá" sale del marcador de `PROGRESO.md`.
