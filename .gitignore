@@ -23,3 +23,7 @@ build/
 # Supabase local
 supabase/.temp/
 supabase/.branches/
+
+# Configuración por entorno de la app (solo se suben los *.example.json)
+app/config/*.json
+!app/config/*.example.json

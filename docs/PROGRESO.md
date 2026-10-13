@@ -15,7 +15,7 @@
 | 3 · Servicios | ⏳ | a detallar | 0 |
 | 4 · Escala | ⏳ | a detallar | 0 |
 
-**Paso actual:** 0.0.2
+**Paso actual:** 0.1.2 (desarrollo) · validación pendiente desde 0.0.2
 
 ---
 
@@ -26,7 +26,7 @@
 ### Etapa 0.0 · Documentación y validación (en paralelo al desarrollo)
 - [x] 0.0.0 Documentación del proyecto (`CLAUDE.md` + `docs/`) — 12/10/2026
 - [x] 0.0.1 🧪 Repasar la documentación y anotar correcciones (⏱️ 2 h) — 12/10/2026
-- [ ] 0.0.2 🧪 Descargar y probar Taponto y uno o dos competidores; anotar qué hacen bien y mal en `investigacion/competencia.md` (⏱️ 2 h) **← ESTÁS ACÁ**
+- [ ] 0.0.2 🧪 Descargar y probar Taponto y uno o dos competidores; anotar qué hacen bien y mal en `investigacion/competencia.md` (⏱️ 2 h) 🔁 *validación pendiente, en paralelo al desarrollo*
 - [ ] 0.0.3 🧪 Listar 30 comercios de Pando (nombre, rubro, dirección, horario, contacto). Empezar por los 8 operadores RENAC de la zona (`investigacion/renac.md`) (⏱️ 3 h)
 - [ ] 0.0.4 🧪 Marcar cuáles atienden urgencias u horario extendido (para la capa de la Fase 0) (⏱️ 1 h)
 - [ ] 0.0.5 🧪 Juntar refugios, protectoras y grupos de Facebook/WhatsApp de Pando (directorio de Ayuda y difusión) (⏱️ 1 h)
@@ -43,8 +43,8 @@
 
 ### Etapa 0.1 · Base técnica
 - [x] 0.1.1 Inicializar git, `.gitignore` (incluye `.env`) y primer commit con la documentación (⏱️ 0,5 h) — 13/10/2026, repo privado en GitHub
-- [ ] 0.1.2 Crear el proyecto Supabase de **desarrollo** (gratis) y activar PostGIS (⏱️ 0,5 h)
-- [ ] 0.1.3 Crear el proyecto Flutter con la estructura de `08-arquitectura.md`, lints, flavors dev/prod y elegir la gestión de estado (⏱️ 3 h)
+- [ ] 0.1.2 Crear el proyecto Supabase de **desarrollo** (gratis) y activar PostGIS (⏱️ 0,5 h) **← ESTÁS ACÁ**
+- [x] 0.1.3 Crear el proyecto Flutter con la estructura de `08-arquitectura.md`, lints, flavors dev/prod y elegir la gestión de estado (⏱️ 3 h) — 13/10/2026, Riverpod + go_router (D45)
 - [ ] 0.1.4 Conectar Flutter con Supabase usando variables por entorno (⏱️ 1 h)
 - [ ] 0.1.5 Tema (verde `#1f8a5b`, claro/oscuro), navegación base con barra inferior y pantalla del logo (⏱️ 3 h)
 - [ ] 0.1.6 Configurar i18n (español rioplatense) sin textos fijos en el código (⏱️ 1 h)
@@ -232,6 +232,8 @@
 | 12/10/2026 | 0.0.1 | Web de documentación (`ver-docs.sh`) |
 | 12/10/2026 | 0.0.1 | ✅ Paso cerrado |
 | 13/10/2026 | 0.1.1 | Repositorio privado en GitHub (`Rodri18a/sosmascotas`), adelantado para trabajar desde otra máquina |
+| 13/10/2026 | — | Repo privado; documentación desde GitHub; Cloudflare preparado y pendiente (D44) |
+| 13/10/2026 | 0.1.3 | ✅ Proyecto Flutter (`app/` + `packages/core`), Riverpod + go_router, reglas estrictas, entornos por archivo; pruebas y build web OK (D45). El desarrollo arranca antes de cerrar la validación |
 | 13/10/2026 | 0.0.2 | Análisis de puntos débiles: contacto inverso en lugar de redirección a WhatsApp; pasos nuevos de identidad, legal temprano, formalización, soporte y criterios de corte (D41–D43) |
 | 12/10/2026 | 0.0.2 | Sin combo de microchip (D39). Línea institucional: Zoonosis de Canelones → nacional → mundial (D40) |
 | 12/10/2026 | 0.0.2 | Chapitas pre-codificadas, retiro en veterinaria, sponsors y prototipo con impresión 3D (D35–D38) |

@@ -1,0 +1,19 @@
+name: sosmascota_core
+description: "Lógica compartida de SOS Mascota (modelos, servicios de Supabase, capa de mapa, i18n)."
+publish_to: none
+version: 0.1.0
+
+environment:
+  sdk: ^3.11.4
+  flutter: ">=3.41.0"
+
+resolution: workspace
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_lints: ^6.0.0
+  flutter_test:
+    sdk: flutter

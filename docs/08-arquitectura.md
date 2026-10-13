@@ -34,13 +34,15 @@
 | Pagos (Fase 4) | Mercado Pago |
 | Suscripciones de usuarios (Fase 2) | Compras dentro de la app (Google Play / App Store) |
 
-## Estructura del repositorio (propuesta)
+## Estructura del repositorio
 
 ```
 sosmascotas/
 ├── CLAUDE.md
 ├── docs/
 ├── reference/
+├── pubspec.yaml          # Espacio de trabajo de Dart (un solo `flutter pub get` en la raíz)
+├── analysis_options.yaml # Reglas de estilo compartidas
 ├── app/                  # Flutter: app de usuarios + modo comercio (móvil y PWA)
 ├── admin/                # Flutter Web: portal de administración (Fase 1)
 ├── packages/
@@ -124,4 +126,5 @@ Tabla `events` (append-only), escrita por el cliente con un helper `track()` y, 
 
 - **Desarrollo:** proyecto Supabase gratis + Firebase de desarrollo.
 - **Producción:** proyecto Supabase aparte (Pro al tener usuarios reales).
-- Variables por entorno (flavors de Flutter), nunca en el repositorio.
+- Variables por entorno con `--dart-define-from-file=config/<entorno>.json` (`APP_FLAVOR`, `SUPABASE_URL`, `SUPABASE_ANON_KEY`). Los `.json` reales **nunca** van al repositorio; solo los `*.example.json`. La clase `AppEnv` (`packages/core`) los valida: producción sin Supabase no arranca.
+- Los *flavors* nativos (otro `applicationId` para dev en el celular) se suman en el paso 1.1.1, al preparar las apps de las tiendas. En la Fase 0 (PWA) alcanza con la configuración por archivo.

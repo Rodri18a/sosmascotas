@@ -2,7 +2,7 @@
 
 Plataforma para dueños de mascotas y empresas del rubro: mapa, mascotas perdidas y encontradas, chapita QR, recordatorios de salud, adopción responsable y herramientas para empresas. Arranca en Pando (Uruguay).
 
-> Etapa actual: **documentación y validación** (todavía no hay código).
+> Etapa actual: **base técnica** (Fase 0) con la validación en paralelo. Ver [`docs/PROGRESO.md`](docs/PROGRESO.md).
 
 ## Por dónde empezar
 
@@ -12,6 +12,8 @@ Plataforma para dueños de mascotas y empresas del rubro: mapa, mascotas perdida
 | [`docs/README.md`](docs/README.md) | Resumen del proyecto en 2 minutos |
 | [`CLAUDE.md`](CLAUDE.md) | Contexto y reglas para trabajar con Claude Code |
 | [`docs/`](docs/) | Documentación completa (visión, funcionalidades, reglas, arquitectura, costos, hoja de ruta, decisiones) |
+| [`app/`](app/) | App Flutter (Android, iPhone y web). Cómo correrla: [`app/README.md`](app/README.md) |
+| [`packages/core/`](packages/core/) | Código compartido |
 | [`reference/`](reference/) | Brief anterior y prototipo HTML |
 
 ## Ver la documentación como web

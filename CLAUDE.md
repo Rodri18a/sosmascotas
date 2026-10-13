@@ -35,6 +35,13 @@ Si un dato de `reference/` contradice `docs/`, **manda `docs/`** (ver `docs/12-d
 - **Mapa:** Google Maps nativo en Android/iPhone y MapLibre/OpenStreetMap en web, detrás de una capa propia.
 - **Web pública del QR y de los perdidos:** página liviana y rápida, apta para SEO y para compartir.
 
+## Comandos
+
+- `flutter pub get` en la raíz (espacio de trabajo: `app/` + `packages/core`).
+- Desde `app/`: `flutter analyze`, `flutter test`, `flutter run -d chrome --dart-define-from-file=config/dev.json`.
+- Desde `packages/core/`: `flutter test`.
+- La configuración real va en `app/config/dev.json` / `prod.json` (ignorados por git; copiar de `*.example.json`).
+
 ## Reglas para trabajar en este proyecto
 
 1. **Hablar en español rioplatense (voseo).** Los textos de la app también van en voseo.

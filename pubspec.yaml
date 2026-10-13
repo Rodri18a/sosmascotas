@@ -1,0 +1,11 @@
+# Espacio de trabajo de Dart: un solo `flutter pub get` en la raíz resuelve
+# la app, el paquete compartido y (más adelante) el portal de administración.
+name: sosmascotas_workspace
+publish_to: none
+
+environment:
+  sdk: ^3.11.4
+
+workspace:
+  - app
+  - packages/core
