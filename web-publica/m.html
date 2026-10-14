@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es-UY">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#1F8A5B">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; connect-src 'self' https://*.supabase.co; img-src 'self' data: https://*.supabase.co; style-src 'self'">
+  <title>SOS Mascota</title>
+  <link rel="stylesheet" href="/assets/estilo.css">
+</head>
+<body>
+  <main>
+    <header class="marca"><span aria-hidden="true">🐾</span> SOS Mascota</header>
+
+    <p id="cargando">Cargando…</p>
+
+    <section id="estado" class="tarjeta" hidden>
+      <h1 id="estado-titulo"></h1>
+      <p id="estado-texto"></p>
+    </section>
+
+    <article id="mascota" hidden>
+      <div id="perdido" class="perdido" hidden>Estoy perdido 🆘</div>
+      <div class="tarjeta">
+        <div id="foto-contenedor"></div>
+        <h1 id="nombre"></h1>
+        <p id="detalle" class="detalle"></p>
+        <p id="senas"></p>
+        <p id="nota" class="nota" hidden></p>
+        <p id="chip" class="ayuda" hidden>Tengo microchip: si podés, llevame a una veterinaria para que lo lean.</p>
+      </div>
+
+      <div class="tarjeta" id="contacto">
+        <p><strong>¿Me encontraste?</strong> Avisale a mi familia: les llega tu mensaje y deciden cómo contactarte.</p>
+        <button id="abrir-aviso" class="boton principal" type="button">Avisar a mi familia</button>
+      </div>
+    </article>
+
+    <p class="aviso-911">Si hay una persona en riesgo, llamá al 911.</p>
+  </main>
+
+  <script src="/config.js"></script>
+  <script src="/assets/comun.js"></script>
+  <script src="/assets/qr.js"></script>
+</body>
+</html>

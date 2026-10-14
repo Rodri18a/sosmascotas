@@ -75,6 +75,20 @@ sosmascotas/
 
 **Control:** alerta de presupuesto y tope diario de cuota en Google Cloud. Si se llega al tope, mostrar la **lista** en lugar del mapa.
 
+## Web pública (`web-publica/`)
+
+Páginas livianas en **HTML + JavaScript sin frameworks** (cargan rápido en cualquier celular, sin instalar nada):
+
+| Ruta | Archivo | Qué muestra |
+|---|---|---|
+| `/m/<código>` | `m.html` + `assets/qr.js` | Página del QR: foto, nombre, especie/raza, señas, nota del dueño, si tiene chip, "Estoy perdido 🆘" y **"Avisar a mi familia"** (contacto inverso) |
+| `/s/<id>` | `s.html` | Página pública de un SOS para compartir (0.5.5) |
+
+- Datos: funciones RPC públicas (`public_pet_page`) que devuelven solo lo pensado para quien encuentra a la mascota.
+- Seguridad: todo el texto se inserta con `textContent` (nunca HTML), CSP estricta, `_headers` con `X-Frame-Options: DENY`.
+- Hosting: Cloudflare Pages (`_redirects` reescribe `/m/*` y `/s/*`). Local: `python3 web-publica/servir.py` → `http://localhost:3002`.
+- Configuración en `web-publica/config.js` (ignorado por git; copiar de `config.example.js`).
+
 ## Edge Functions
 
 | Función | Para qué | Paso |

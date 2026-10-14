@@ -27,3 +27,6 @@ supabase/.branches/
 # Configuración por entorno de la app (solo se suben los *.example.json)
 app/config/*.json
 !app/config/*.example.json
+
+# Web pública: la configuración real no se sube
+web-publica/config.js

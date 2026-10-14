@@ -1,0 +1,3 @@
+# Cloudflare Pages: cada código o reporte se sirve con su página.
+/m/*  /m.html  200
+/s/*  /s.html  200
