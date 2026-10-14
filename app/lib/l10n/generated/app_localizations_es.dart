@@ -28,7 +28,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'Veterinarias de urgencia y mascotas perdidas cerca tuyo';
 
   @override
-  String get sosDescripcion => 'Reportá una mascota perdida o encontrada';
+  String get sosDescripcion => 'Descripción';
 
   @override
   String get mascotasDescripcion => 'Tus mascotas, su ficha y su chapita QR';
@@ -568,4 +568,95 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get qrEscaneoSinUbicacion => 'Abrieron la página';
+
+  @override
+  String get sosPerdi => 'Perdí una mascota';
+
+  @override
+  String get sosEncontre => 'Encontré una mascota';
+
+  @override
+  String get sosCualMascota => '¿Cuál?';
+
+  @override
+  String get sosOtraMascota => 'Otra';
+
+  @override
+  String get sosFotos => 'Fotos (al menos una)';
+
+  @override
+  String get sosFotoDeLaFicha => 'Foto de su ficha';
+
+  @override
+  String sosFotoN(int n) {
+    return 'Foto $n';
+  }
+
+  @override
+  String get sosDondePerdida => '¿Dónde la viste por última vez?';
+
+  @override
+  String get sosDondeEncontrada => '¿Dónde la encontraste o la viste?';
+
+  @override
+  String get sosUbicacionAyuda =>
+      'Tocá el mapa en el lugar. Al publicar se muestra una zona aproximada, nunca el punto exacto.';
+
+  @override
+  String get sosUbicacionMarcada => 'Lugar marcado ✔';
+
+  @override
+  String get sosNombreSiLoSabes =>
+      'Nombre (si lo sabés, por la chapita o el collar)';
+
+  @override
+  String get sosDescripcionAyudaPerdida =>
+      '¿Cómo se perdió? ¿Tiene collar? ¿Es miedosa?';
+
+  @override
+  String get sosDescripcionAyudaEncontrada =>
+      '¿Cómo está? ¿La tenés con vos o sigue suelta?';
+
+  @override
+  String get sosCuandoPerdida => '¿Cuándo se perdió?';
+
+  @override
+  String get sosCuandoEncontrada => '¿Cuándo la encontraste?';
+
+  @override
+  String get sosTieneMicrochip => 'Tiene microchip';
+
+  @override
+  String get sosRecompensa => 'Recompensa (opcional)';
+
+  @override
+  String get sosRecompensaAyuda =>
+      'Si ofrecés una, ponela acá. Nunca pagues antes de tener a tu mascota.';
+
+  @override
+  String get sosPrivacidad =>
+      'Tu teléfono no se publica: quien la vea te va a dejar un aviso con su contacto y vos decidís si respondés.';
+
+  @override
+  String get sosPublicar => 'Publicar';
+
+  @override
+  String get sosFaltaFoto => 'Agregá al menos una foto.';
+
+  @override
+  String get sosFaltaUbicacion => 'Marcá en el mapa dónde fue.';
+
+  @override
+  String get sosLimiteDiario =>
+      'Ya publicaste 3 reportes hoy. Si es urgente, escribinos a soporte.';
+
+  @override
+  String get sosDetalleTitulo => 'Reporte';
+
+  @override
+  String get sosPublicado =>
+      '¡Publicado! Los vecinos de la zona ya pueden verlo.';
+
+  @override
+  String get fichaReportarPerdida => 'Se perdió: reportarla';
 }

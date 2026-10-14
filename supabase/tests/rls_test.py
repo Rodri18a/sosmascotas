@@ -259,13 +259,16 @@ def main():
         caso('A sube una foto de SOS en su carpeta', subir(f'sos-photos/{a_id}/sos1.jpg', JPEG_MINIMO, 'image/jpeg', a) == 200)
         caso('A no puede subir fotos de SOS en la carpeta de B', subir(f'sos-photos/{b_id}/x.jpg', JPEG_MINIMO, 'image/jpeg', a) != 200)
         reporte = {'kind': 'lost', 'species_id': 1, 'name': 'Firulais', 'color': 'Negro',
-                   'lat': -34.7171, 'lng': -55.9581, 'photos': [f'{a_id}/sos1.jpg'], 'pet_id': pet.get('id')}
+                   'lat': -34.7171, 'lng': -55.9581, 'photos': [f'sos-photos/{a_id}/sos1.jpg'], 'pet_id': pet.get('id')}
         caso('sin foto no se puede publicar', rest('POST', 'rpc/crear_sos', {'p': {**reporte, 'photos': []}}, a)[0] >= 400)
         caso('con una foto de otra persona no se puede publicar',
-             rest('POST', 'rpc/crear_sos', {'p': {**reporte, 'photos': [f'{b_id}/x.jpg']}}, a)[0] >= 400)
+             rest('POST', 'rpc/crear_sos', {'p': {**reporte, 'photos': [f'sos-photos/{b_id}/x.jpg']}}, a)[0] >= 400)
         caso('B no puede reportar la mascota de A como propia',
-             rest('POST', 'rpc/crear_sos', {'p': {**reporte, 'photos': [f'{b_id}/x.jpg']}}, b)[0] >= 400)
+             rest('POST', 'rpc/crear_sos', {'p': {**reporte, 'photos': [f'sos-photos/{b_id}/x.jpg']}}, b)[0] >= 400)
         caso('un visitante no puede publicar', rest('POST', 'rpc/crear_sos', {'p': reporte})[0] in (401, 403))
+        caso('no se aceptan rutas con ".." ni de otros buckets',
+             rest('POST', 'rpc/crear_sos', {'p': {**reporte, 'photos': [f'sos-photos/{a_id}/../{b_id}/x.jpg']}}, a)[0] >= 400
+             and rest('POST', 'rpc/crear_sos', {'p': {**reporte, 'photos': [f'otro/{a_id}/x.jpg']}}, a)[0] >= 400)
         s_sos, sos_id = rest('POST', 'rpc/crear_sos', {'p': reporte}, a)
         caso('A publica un SOS de su mascota', s_sos == 200 and isinstance(sos_id, str))
         OBJETIVOS_DE_PRUEBA.append(sos_id if isinstance(sos_id, str) else '')
@@ -273,7 +276,7 @@ def main():
              bloqueado(rest('GET', 'sos_reports?select=*', quien=a)) and bloqueado(rest('GET', 'sos_reports?select=*')))
         mios = filas(rest('POST', 'rpc/mis_sos', {}, a))
         mio = mios[0] if mios else {}
-        caso('A ve su reporte con la ubicación exacta', abs(mio.get('lat', 0) + 34.7171) < 1e-9 and mio.get('photos') == [f'{a_id}/sos1.jpg'])
+        caso('A ve su reporte con la ubicación exacta', abs(mio.get('lat', 0) + 34.7171) < 1e-9 and mio.get('photos') == [f'sos-photos/{a_id}/sos1.jpg'])
         dlat = math.radians(mio.get('public_lat', 0) - mio.get('lat', 0))
         dlng = math.radians(mio.get('public_lng', 0) - mio.get('lng', 0))
         h = math.sin(dlat / 2) ** 2 + math.cos(math.radians(mio.get('lat', 0))) * math.cos(math.radians(mio.get('public_lat', 0))) * math.sin(dlng / 2) ** 2

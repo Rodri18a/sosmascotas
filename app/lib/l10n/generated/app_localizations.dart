@@ -133,7 +133,7 @@ abstract class AppLocalizations {
   /// No description provided for @sosDescripcion.
   ///
   /// In es, this message translates to:
-  /// **'Reportá una mascota perdida o encontrada'**
+  /// **'Descripción'**
   String get sosDescripcion;
 
   /// No description provided for @mascotasDescripcion.
@@ -1035,6 +1035,168 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Abrieron la página'**
   String get qrEscaneoSinUbicacion;
+
+  /// No description provided for @sosPerdi.
+  ///
+  /// In es, this message translates to:
+  /// **'Perdí una mascota'**
+  String get sosPerdi;
+
+  /// No description provided for @sosEncontre.
+  ///
+  /// In es, this message translates to:
+  /// **'Encontré una mascota'**
+  String get sosEncontre;
+
+  /// No description provided for @sosCualMascota.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Cuál?'**
+  String get sosCualMascota;
+
+  /// No description provided for @sosOtraMascota.
+  ///
+  /// In es, this message translates to:
+  /// **'Otra'**
+  String get sosOtraMascota;
+
+  /// No description provided for @sosFotos.
+  ///
+  /// In es, this message translates to:
+  /// **'Fotos (al menos una)'**
+  String get sosFotos;
+
+  /// No description provided for @sosFotoDeLaFicha.
+  ///
+  /// In es, this message translates to:
+  /// **'Foto de su ficha'**
+  String get sosFotoDeLaFicha;
+
+  /// No description provided for @sosFotoN.
+  ///
+  /// In es, this message translates to:
+  /// **'Foto {n}'**
+  String sosFotoN(int n);
+
+  /// No description provided for @sosDondePerdida.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Dónde la viste por última vez?'**
+  String get sosDondePerdida;
+
+  /// No description provided for @sosDondeEncontrada.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Dónde la encontraste o la viste?'**
+  String get sosDondeEncontrada;
+
+  /// No description provided for @sosUbicacionAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Tocá el mapa en el lugar. Al publicar se muestra una zona aproximada, nunca el punto exacto.'**
+  String get sosUbicacionAyuda;
+
+  /// No description provided for @sosUbicacionMarcada.
+  ///
+  /// In es, this message translates to:
+  /// **'Lugar marcado ✔'**
+  String get sosUbicacionMarcada;
+
+  /// No description provided for @sosNombreSiLoSabes.
+  ///
+  /// In es, this message translates to:
+  /// **'Nombre (si lo sabés, por la chapita o el collar)'**
+  String get sosNombreSiLoSabes;
+
+  /// No description provided for @sosDescripcionAyudaPerdida.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Cómo se perdió? ¿Tiene collar? ¿Es miedosa?'**
+  String get sosDescripcionAyudaPerdida;
+
+  /// No description provided for @sosDescripcionAyudaEncontrada.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Cómo está? ¿La tenés con vos o sigue suelta?'**
+  String get sosDescripcionAyudaEncontrada;
+
+  /// No description provided for @sosCuandoPerdida.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Cuándo se perdió?'**
+  String get sosCuandoPerdida;
+
+  /// No description provided for @sosCuandoEncontrada.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Cuándo la encontraste?'**
+  String get sosCuandoEncontrada;
+
+  /// No description provided for @sosTieneMicrochip.
+  ///
+  /// In es, this message translates to:
+  /// **'Tiene microchip'**
+  String get sosTieneMicrochip;
+
+  /// No description provided for @sosRecompensa.
+  ///
+  /// In es, this message translates to:
+  /// **'Recompensa (opcional)'**
+  String get sosRecompensa;
+
+  /// No description provided for @sosRecompensaAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Si ofrecés una, ponela acá. Nunca pagues antes de tener a tu mascota.'**
+  String get sosRecompensaAyuda;
+
+  /// No description provided for @sosPrivacidad.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu teléfono no se publica: quien la vea te va a dejar un aviso con su contacto y vos decidís si respondés.'**
+  String get sosPrivacidad;
+
+  /// No description provided for @sosPublicar.
+  ///
+  /// In es, this message translates to:
+  /// **'Publicar'**
+  String get sosPublicar;
+
+  /// No description provided for @sosFaltaFoto.
+  ///
+  /// In es, this message translates to:
+  /// **'Agregá al menos una foto.'**
+  String get sosFaltaFoto;
+
+  /// No description provided for @sosFaltaUbicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Marcá en el mapa dónde fue.'**
+  String get sosFaltaUbicacion;
+
+  /// No description provided for @sosLimiteDiario.
+  ///
+  /// In es, this message translates to:
+  /// **'Ya publicaste 3 reportes hoy. Si es urgente, escribinos a soporte.'**
+  String get sosLimiteDiario;
+
+  /// No description provided for @sosDetalleTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Reporte'**
+  String get sosDetalleTitulo;
+
+  /// No description provided for @sosPublicado.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Publicado! Los vecinos de la zona ya pueden verlo.'**
+  String get sosPublicado;
+
+  /// No description provided for @fichaReportarPerdida.
+  ///
+  /// In es, this message translates to:
+  /// **'Se perdió: reportarla'**
+  String get fichaReportarPerdida;
 }
 
 class _AppLocalizationsDelegate

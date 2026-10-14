@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
-import '../../fotos/selector_foto.dart';
+import '../../fotos/elegir_foto.dart';
 import '../../mascotas/catalogo.dart';
 import '../../mascotas/mascotas_repositorio.dart';
 import '../../metricas/metricas.dart';
@@ -99,38 +99,15 @@ class _FormularioState extends ConsumerState<_Formulario> {
 
   Future<void> _elegirFoto() async {
     final t = context.t;
-    final origen = await showModalBottomSheet<OrigenFoto>(
-      context: context,
-      showDragHandle: true,
-      builder: (context) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              leading: const Icon(Icons.photo_camera_outlined),
-              title: Text(t.mascotaSacarFoto),
-              onTap: () => Navigator.pop(context, OrigenFoto.camara),
-            ),
-            ListTile(
-              leading: const Icon(Icons.photo_library_outlined),
-              title: Text(t.mascotaElegirFoto),
-              onTap: () => Navigator.pop(context, OrigenFoto.galeria),
-            ),
-          ],
-        ),
-      ),
-    );
-    if (origen == null) return;
-    final bytes = await ref.read(selectorFotoProvider)(origen);
-    if (bytes == null || !mounted) return;
-
+    final original = await elegirFoto(context, ref);
+    if (original == null || !mounted) return;
     setState(() => _procesandoFoto = true);
     // Achica y quita la ubicación (EXIF) antes de mostrarla o subirla.
-    final preparada = prepararFoto(bytes);
+    final preparada = prepararFoto(original);
     if (!mounted) return;
     setState(() {
       _procesandoFoto = false;
-      _fotoNueva = preparada;
+      _fotoNueva = preparada ?? _fotoNueva;
       _error = preparada == null ? t.mascotaFotoInvalida : null;
     });
   }

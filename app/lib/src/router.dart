@@ -16,6 +16,7 @@ import 'features/mascotas/mascota_form_screen.dart';
 import 'features/mascotas/mascotas_screen.dart';
 import 'features/mascotas/qr_mascota_screen.dart';
 import 'features/shell/app_shell.dart';
+import 'features/sos/sos_detalle_screen.dart';
 import 'features/sos/sos_nuevo_screen.dart';
 import 'features/sos/sos_screen.dart';
 import 'legal/legal.dart';
@@ -41,6 +42,11 @@ abstract final class Rutas {
   static const requierenCuenta = <String>[sosNuevo, '$mascotas/', avisos];
 
   static String fichaMascota(String id) => '$mascotas/$id';
+  static String detalleSos(String id) => '$sos/$id';
+
+  /// Reportar perdida una mascota propia (con sus datos cargados).
+  static String reportarMascota(String mascotaId) =>
+      Uri(path: sosNuevo, queryParameters: {'mascota': mascotaId}).toString();
   static String editarMascota(String id) => '$mascotas/$id/editar';
   static String qrMascota(String id) => '$mascotas/$id/qr';
 
@@ -95,7 +101,19 @@ final routerProvider = Provider<GoRouter>((ref) {
               _pestana(
                 Rutas.sos,
                 (_, _) => const SosScreen(),
-                hijas: [_hija(Rutas.sosNuevo, const SosNuevoScreen())],
+                hijas: [
+                  GoRoute(
+                    path: 'nuevo',
+                    builder: (_, state) => SosNuevoScreen(
+                      mascotaId: state.uri.queryParameters['mascota'],
+                    ),
+                  ),
+                  GoRoute(
+                    path: ':id',
+                    builder: (_, state) =>
+                        SosDetalleScreen(sosId: state.pathParameters['id']!),
+                  ),
+                ],
               ),
             ],
           ),

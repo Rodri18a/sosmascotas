@@ -121,6 +121,16 @@ class _Ficha extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 12),
+          FilledButton.icon(
+            style: FilledButton.styleFrom(
+              backgroundColor: tema.colorScheme.error,
+              foregroundColor: tema.colorScheme.onError,
+            ),
+            onPressed: () => context.push(Rutas.reportarMascota(mascota.id)),
+            icon: const Icon(Icons.sos),
+            label: Text(t.fichaReportarPerdida),
+          ),
+          const SizedBox(height: 12),
           Card(
             child: ListTile(
               leading: const Icon(Icons.qr_code_2),
