@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../l10n/l10n.dart';
+import '../../config/supabase_providers.dart';
 import '../../cuenta/servicio_cuenta.dart';
 import '../../redireccion.dart';
 import '../../router.dart';
@@ -102,6 +103,26 @@ class _IngresarScreenState extends ConsumerState<IngresarScreen> {
               padding: const EdgeInsets.all(24),
               children: [
                 if (emailEnviado == null) ...[
+                  if (ref.watch(googleHabilitadoProvider).value ?? false) ...[
+                    OutlinedButton.icon(
+                      onPressed: _ocupado
+                          ? null
+                          : () => _ejecutar(
+                              () => ref
+                                  .read(servicioCuentaProvider)
+                                  .ingresarConGoogle(redirigirA: _redirigirA),
+                            ),
+                      icon: const Icon(Icons.account_circle_outlined),
+                      label: Text(t.ingresarConGoogle),
+                    ),
+                    const SizedBox(height: 24),
+                    Text(
+                      t.ingresarOConCorreo,
+                      textAlign: TextAlign.center,
+                      style: tema.textTheme.labelLarge,
+                    ),
+                    const SizedBox(height: 16),
+                  ],
                   Text(t.ingresarExplicacion, style: tema.textTheme.bodyLarge),
                   const SizedBox(height: 24),
                   TextField(

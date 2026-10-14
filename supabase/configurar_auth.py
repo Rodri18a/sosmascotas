@@ -67,6 +67,15 @@ def pedir(metodo, cuerpo=None):
 def main():
     actual = pedir('GET')
     deseado = dict(DESEADO)
+    # Google (paso 0.2.3): se activa cuando el archivo privado tiene las credenciales.
+    if os.environ.get('GOOGLE_CLIENT_ID') and os.environ.get('GOOGLE_CLIENT_SECRET'):
+        deseado.update({
+            'external_google_enabled': True,
+            'external_google_client_id': os.environ['GOOGLE_CLIENT_ID'],
+            'external_google_secret': os.environ['GOOGLE_CLIENT_SECRET'],
+        })
+    else:
+        print('ℹ️  Sin GOOGLE_CLIENT_ID/GOOGLE_CLIENT_SECRET: el ingreso con Google queda apagado (ver docs/guias/login-google.md).')
     if actual.get('smtp_host'):
         deseado.update(CORREOS)
     else:
@@ -77,7 +86,8 @@ def main():
         return
     for clave, valor in cambios.items():
         antes = repr(actual.get(clave))[:60]
-        print(f'- {clave}: {antes} → {repr(valor)[:60]}')
+        despues = '«oculto»' if 'secret' in clave else repr(valor)[:60]
+        print(f'- {clave}: {antes} → {despues}')
     if '--aplicar' in sys.argv:
         pedir('PATCH', cambios)
         print('✅ Aplicado.')

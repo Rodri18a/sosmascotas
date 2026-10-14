@@ -15,7 +15,7 @@
 | 3 · Servicios | ⏳ | a detallar | 0 |
 | 4 · Escala | ⏳ | a detallar | 0 |
 
-**Paso actual:** 0.2.3 (desarrollo) · validación pendiente desde 0.0.2
+**Paso actual:** 0.2.4 (desarrollo) · pendiente: credenciales de Google (0.2.3) · validación pendiente desde 0.0.2
 
 ---
 
@@ -53,8 +53,8 @@
 ### Etapa 0.2 · Cuentas
 - [x] 0.2.1 Tabla `profiles` y `private_contacts` + RLS + trigger de creación de perfil (⏱️ 2 h) — 14/10/2026, 22 pruebas de seguridad en `supabase/tests/rls_test.py`
 - [x] 0.2.2 Login con correo y enlace mágico (⏱️ 2 h) — 14/10/2026, enlace + código de 6 números (D50)
-- [ ] 0.2.3 Login con Google (⏱️ 3 h) **← ESTÁS ACÁ**
-- [ ] 0.2.4 Modo visitante: ver sin cuenta; al actuar, pedir login y volver a la acción (⏱️ 2 h)
+- [ ] 0.2.3 Login con Google (⏱️ 3 h) — ⏳ código listo (14/10/2026); **falta crear las credenciales de Google** siguiendo `guias/login-google.md` (15 min, lo hace el dueño)
+- [ ] 0.2.4 Modo visitante: ver sin cuenta; al actuar, pedir login y volver a la acción (⏱️ 2 h) **← ESTÁS ACÁ**
 - [ ] 0.2.5 Textos de términos y privacidad + consentimiento al registrarse (⏱️ 2 h)
 - [ ] 0.2.6 Ajustes: perfil, radio de avisos, cerrar sesión, **borrar mi cuenta** (⏱️ 2 h)
 
@@ -241,6 +241,7 @@
 | 13/10/2026 | 0.1.7 | ✅ Supabase CLI 2.118.0 vinculado a dev (credenciales en `~/.config/sosmascotas/supabase-dev.env`). Migraciones `zones` (Pando) + `events` aplicadas; RLS verificado; `track()` con id anónimo por instalación (D49). **Etapa 0.1 terminada** |
 | 14/10/2026 | 0.2.1 | ✅ `profiles` (se crea solo al registrarse; plan y rol no editables desde la app) y `private_contacts` (nadie la lee desde la app). Script de pruebas de seguridad con cuentas temporales |
 | 14/10/2026 | 0.2.2 | ✅ Pantalla Ingresar (correo → enlace o código de 6 números, sin contraseña), vuelve a la acción; cerrar sesión. Config de login versionada en `supabase/configurar_auth.py`. Los correos en español requieren SMTP propio (pasado a 0.4.4b) (D50) |
+| 14/10/2026 | 0.2.3 | ⏳ Botón "Continuar con Google" listo: aparece solo si Google está activo en Supabase. Activación con `configurar_auth.py` cuando estén las credenciales (guía en `docs/guias/login-google.md`) |
 | 13/10/2026 | 0.0.2 | Análisis de puntos débiles: contacto inverso en lugar de redirección a WhatsApp; pasos nuevos de identidad, legal temprano, formalización, soporte y criterios de corte (D41–D43) |
 | 12/10/2026 | 0.0.2 | Sin combo de microchip (D39). Línea institucional: Zoonosis de Canelones → nacional → mundial (D40) |
 | 12/10/2026 | 0.0.2 | Chapitas pre-codificadas, retiro en veterinaria, sponsors y prototipo con impresión 3D (D35–D38) |

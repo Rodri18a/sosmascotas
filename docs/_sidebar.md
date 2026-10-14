@@ -30,6 +30,7 @@
 
 - **Proyecto**
   - [Publicación de esta web](PUBLICACION.md)
+  - [Guía: login con Google](guias/login-google.md)
 
 - **Referencia**
   - [Prototipo (HTML)](../reference/sos-mascota.html ':ignore')

@@ -130,4 +130,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get errorDesconocido => 'Algo salió mal. Probá de nuevo en un rato.';
+
+  @override
+  String get ingresarConGoogle => 'Continuar con Google';
+
+  @override
+  String get ingresarOConCorreo => 'o con tu correo';
 }

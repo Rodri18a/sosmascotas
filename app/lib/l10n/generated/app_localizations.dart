@@ -309,6 +309,18 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Algo salió mal. Probá de nuevo en un rato.'**
   String get errorDesconocido;
+
+  /// No description provided for @ingresarConGoogle.
+  ///
+  /// In es, this message translates to:
+  /// **'Continuar con Google'**
+  String get ingresarConGoogle;
+
+  /// No description provided for @ingresarOConCorreo.
+  ///
+  /// In es, this message translates to:
+  /// **'o con tu correo'**
+  String get ingresarOConCorreo;
 }
 
 class _AppLocalizationsDelegate

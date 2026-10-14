@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -53,5 +55,28 @@ final estadoConexionProvider = FutureProvider<EstadoConexion>((ref) async {
         : EstadoConexion.sinConexion;
   } on Exception {
     return EstadoConexion.sinConexion;
+  }
+});
+
+/// ¿Está activado el ingreso con Google en Supabase? Se consulta al servidor para
+/// mostrar el botón solo cuando funciona (se activa con supabase/configurar_auth.py).
+final googleHabilitadoProvider = FutureProvider<bool>((ref) async {
+  final env = ref.watch(appEnvProvider);
+  if (!env.hasSupabase) return false;
+  try {
+    final respuesta = await ref
+        .watch(httpClientProvider)
+        .get(
+          Uri.parse('${env.supabaseUrl}/auth/v1/settings'),
+          headers: {'apikey': env.supabasePublishableKey},
+        )
+        .timeout(const Duration(seconds: 10));
+    if (respuesta.statusCode != 200) return false;
+    final datos = jsonDecode(respuesta.body);
+    return datos is Map && datos['external'] is Map
+        ? (datos['external'] as Map)['google'] == true
+        : false;
+  } on Exception {
+    return false;
   }
 });

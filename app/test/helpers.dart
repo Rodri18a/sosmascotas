@@ -19,6 +19,7 @@ Widget appDePrueba({
   AppFlavor flavor = AppFlavor.dev,
   bool conSupabase = false,
   int respuestaSalud = 200,
+  bool googleHabilitado = false,
   ServicioCuenta? cuenta,
 }) => ProviderScope(
   overrides: [
@@ -36,9 +37,15 @@ Widget appDePrueba({
     ),
     httpClientProvider.overrideWithValue(
       MockClient((pedido) async {
-        assert(pedido.url.toString() == '$urlPrueba/auth/v1/health');
         assert(pedido.headers['apikey'] == clavePrueba);
-        return http.Response('{}', respuestaSalud);
+        return switch (pedido.url.toString()) {
+          '$urlPrueba/auth/v1/health' => http.Response('{}', respuestaSalud),
+          '$urlPrueba/auth/v1/settings' => http.Response(
+            '{"external":{"email":true,"google":$googleHabilitado}}',
+            200,
+          ),
+          _ => http.Response('no encontrado', 404),
+        };
       }),
     ),
   ],

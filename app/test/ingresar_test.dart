@@ -96,4 +96,28 @@ void main() {
 
     expect(find.text('Ingresar o crear cuenta'), findsOneWidget);
   });
+
+  testWidgets('sin Google configurado no muestra el botón', (tester) async {
+    await tester.pumpWidget(appDePrueba(conSupabase: true));
+    await tester.pumpAndSettle();
+    await _irAIngresarDesdeAjustes(tester);
+
+    expect(find.text('Continuar con Google'), findsNothing);
+  });
+
+  testWidgets('con Google configurado, el botón inicia el ingreso', (
+    tester,
+  ) async {
+    final cuenta = ServicioCuentaFalso();
+    await tester.pumpWidget(
+      appDePrueba(conSupabase: true, googleHabilitado: true, cuenta: cuenta),
+    );
+    await tester.pumpAndSettle();
+    await _irAIngresarDesdeAjustes(tester);
+
+    await tester.tap(find.text('Continuar con Google'));
+    await tester.pumpAndSettle();
+
+    expect(cuenta.ingresosConGoogle, 1);
+  });
 }
