@@ -1,5 +1,7 @@
 # Guía · Activar "Continuar con Google" (paso 0.2.3)
 
+> ✅ Activado en dev el 14/10/2026.
+
 La app ya tiene el botón: aparece solo cuando Google está activado en Supabase. Para activarlo hacen falta unas credenciales que **solo puede crear el dueño de la cuenta de Google** (≈ 15 minutos, gratis).
 
 ## 1. Crear el proyecto en Google Cloud
