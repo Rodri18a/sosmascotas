@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../l10n/l10n.dart';
 import '../../widgets/boton_ajustes.dart';
 import '../../widgets/en_construccion.dart';
 
@@ -8,10 +9,13 @@ class SosScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('SOS'), actions: const [BotonAjustes()]),
-    body: const EnConstruccion(
+    appBar: AppBar(
+      title: Text(context.t.pestanaSos),
+      actions: const [BotonAjustes()],
+    ),
+    body: EnConstruccion(
       icono: Icons.sos,
-      descripcion: 'Reportá una mascota perdida o encontrada',
+      descripcion: context.t.sosDescripcion,
       paso: '0.5.3',
     ),
   );

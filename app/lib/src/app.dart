@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../l10n/l10n.dart';
 
 import 'config/env_provider.dart';
 import 'router.dart';
@@ -14,7 +17,16 @@ class SosMascotaApp extends ConsumerWidget {
     final router = ref.watch(routerProvider);
 
     return MaterialApp.router(
-      title: 'SOS Mascota',
+      onGenerateTitle: (context) => context.t.appNombre,
+      // Español de Uruguay: fechas y números con formato local.
+      locale: const Locale('es', 'UY'),
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       debugShowCheckedModeBanner: false,
       theme: AppTheme.claro,
       darkTheme: AppTheme.oscuro,
@@ -48,7 +60,7 @@ class MarcaDev extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
               child: Text(
-                'DEV',
+                'DEV', // i18n-ok: etiqueta técnica, solo en desarrollo
                 style: TextStyle(
                   color: Color(0xFFFFFFFF),
                   fontSize: 11,

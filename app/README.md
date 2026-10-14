@@ -36,4 +36,8 @@ lib/
     └── features/<nombre>/ # Una carpeta por funcionalidad (pantallas, providers)
 ```
 
-Estado con **Riverpod**, navegación con **go_router** (ver `docs/12-decisiones.md`, D45).
+## Textos
+
+Todos los textos que ve el usuario están en **`lib/l10n/app_es.arb`** (voseo). En el código se usan con `context.t.<clave>`. Al agregar un texto: sumarlo al `.arb` y correr `flutter pub get` (regenera `lib/l10n/generated/`). La prueba `test/sin_textos_fijos_test.dart` falla si aparece un texto escrito a mano en una pantalla.
+
+Estado con **Riverpod**, navegación con **go_router** (ver `docs/12-decisiones.md`, D45 a D48).

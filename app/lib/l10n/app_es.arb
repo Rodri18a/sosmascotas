@@ -1,0 +1,33 @@
+{
+  "@@locale": "es",
+
+  "appNombre": "SOS Mascota",
+  "@appNombre": { "description": "Nombre de la app (pestaña del navegador, lista de apps)." },
+
+  "pestanaMapa": "Mapa",
+  "pestanaSos": "SOS",
+  "pestanaMascotas": "Mis mascotas",
+  "pestanaAyuda": "Ayuda",
+  "@pestanaMapa": { "description": "Barra inferior y título de la pantalla." },
+
+  "mapaDescripcion": "Veterinarias de urgencia y mascotas perdidas cerca tuyo",
+  "sosDescripcion": "Reportá una mascota perdida o encontrada",
+  "mascotasDescripcion": "Tus mascotas, su ficha y su chapita QR",
+  "ayudaDescripcion": "Urgencias, refugios y grupos de difusión de tu zona",
+
+  "enConstruccionPaso": "Llega en el paso {paso}",
+  "@enConstruccionPaso": {
+    "description": "Debajo de una pantalla provisoria. {paso} es el número de paso de PROGRESO.md.",
+    "placeholders": { "paso": { "type": "String", "example": "0.5.2" } }
+  },
+
+  "ajustes": "Ajustes",
+  "ajustesPerfil": "Perfil, avisos y cuenta",
+  "ajustesDesarrollo": "Desarrollo",
+
+  "conexionConectado": "Conectado a Supabase dev ✅",
+  "conexionSinConfigurar": "Falta configurar Supabase (config/dev.json) ⚠️",
+  "conexionSinConexion": "Sin conexión a Supabase ❌",
+  "conexionConectando": "Conectando con Supabase…",
+  "@conexionConectado": { "description": "Indicador solo visible en desarrollo." }
+}

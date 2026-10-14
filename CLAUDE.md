@@ -41,6 +41,8 @@ Si un dato de `reference/` contradice `docs/`, **manda `docs/`** (ver `docs/12-d
 - Desde `app/`: `flutter analyze`, `flutter test`, `flutter run -d chrome --dart-define-from-file=config/dev.json`.
 - Desde `packages/core/`: `flutter test`.
 - La configuración real va en `app/config/dev.json` / `prod.json` (ignorados por git; copiar de `*.example.json`).
+- Textos de la app: solo en `app/lib/l10n/app_es.arb` (voseo), usados con `context.t.<clave>`.
+- La compilación web tarda (en esta máquina, varios minutos): correrla en segundo plano.
 
 ## Reglas para trabajar en este proyecto
 

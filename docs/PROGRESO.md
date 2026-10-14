@@ -15,7 +15,7 @@
 | 3 · Servicios | ⏳ | a detallar | 0 |
 | 4 · Escala | ⏳ | a detallar | 0 |
 
-**Paso actual:** 0.1.6 (desarrollo) · validación pendiente desde 0.0.2
+**Paso actual:** 0.1.7 (desarrollo) · validación pendiente desde 0.0.2
 
 ---
 
@@ -47,8 +47,8 @@
 - [x] 0.1.3 Crear el proyecto Flutter con la estructura de `08-arquitectura.md`, lints, flavors dev/prod y elegir la gestión de estado (⏱️ 3 h) — 13/10/2026, Riverpod + go_router (D45)
 - [x] 0.1.4 Conectar Flutter con Supabase usando variables por entorno (⏱️ 1 h) — 13/10/2026, indicador de conexión en dev
 - [x] 0.1.5 Tema (verde `#1f8a5b`, claro/oscuro), navegación base con barra inferior y pantalla del logo (⏱️ 3 h) — 13/10/2026, pestañas Mapa · SOS · Mis mascotas · Ayuda (D47)
-- [ ] 0.1.6 Configurar i18n (español rioplatense) sin textos fijos en el código (⏱️ 1 h) **← ESTÁS ACÁ**
-- [ ] 0.1.7 Migraciones iniciales: `zones` (Pando) y `events` + helper `track()` (⏱️ 2 h)
+- [x] 0.1.6 Configurar i18n (español rioplatense) sin textos fijos en el código (⏱️ 1 h) — 13/10/2026, `app_es.arb` + prueba que bloquea textos fijos (D48)
+- [ ] 0.1.7 Migraciones iniciales: `zones` (Pando) y `events` + helper `track()` (⏱️ 2 h) **← ESTÁS ACÁ**
 
 ### Etapa 0.2 · Cuentas
 - [ ] 0.2.1 Tabla `profiles` y `private_contacts` + RLS + trigger de creación de perfil (⏱️ 2 h)
@@ -237,6 +237,7 @@
 | 13/10/2026 | 0.1.2 | ✅ Supabase dev (`sosmascotas-dev`, São Paulo, Free) + PostGIS; migración en `supabase/migrations/`. Claves solo en `app/config/dev.json` (ignorado) |
 | 13/10/2026 | 0.1.4 | ✅ `supabase_flutter` conectado a `sosmascotas-dev` (probado en el navegador). Variable renombrada a `SUPABASE_PUBLISHABLE_KEY` (D46) |
 | 13/10/2026 | 0.1.5 | ✅ Tema claro/oscuro, barra inferior con 4 pestañas que conservan su estado, Ajustes desde arriba, pantalla de carga verde (web y Android), direcciones limpias `/mapa`, `/sos`… (D47) |
+| 13/10/2026 | 0.1.6 | ✅ Textos en `app/lib/l10n/app_es.arb` (voseo), idioma `es_UY`, acceso `context.t`; prueba que falla si aparece un texto escrito en una pantalla (D48) |
 | 13/10/2026 | 0.0.2 | Análisis de puntos débiles: contacto inverso en lugar de redirección a WhatsApp; pasos nuevos de identidad, legal temprano, formalización, soporte y criterios de corte (D41–D43) |
 | 12/10/2026 | 0.0.2 | Sin combo de microchip (D39). Línea institucional: Zoonosis de Canelones → nacional → mundial (D40) |
 | 12/10/2026 | 0.0.2 | Chapitas pre-codificadas, retiro en veterinaria, sponsors y prototipo con impresión 3D (D35–D38) |

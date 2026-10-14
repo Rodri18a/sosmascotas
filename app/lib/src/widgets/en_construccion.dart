@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../l10n/l10n.dart';
+
 /// Contenido provisorio de una pantalla que todavía no está hecha.
 class EnConstruccion extends StatelessWidget {
   const EnConstruccion({
@@ -33,7 +35,7 @@ class EnConstruccion extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Llega en el paso $paso',
+              context.t.enConstruccionPaso(paso),
               style: tema.textTheme.bodySmall?.copyWith(
                 color: tema.colorScheme.onSurfaceVariant,
               ),

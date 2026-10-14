@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../l10n/l10n.dart';
 import '../../widgets/boton_ajustes.dart';
 import '../../widgets/en_construccion.dart';
 
@@ -8,10 +9,13 @@ class MapaScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Mapa'), actions: const [BotonAjustes()]),
-    body: const EnConstruccion(
+    appBar: AppBar(
+      title: Text(context.t.pestanaMapa),
+      actions: const [BotonAjustes()],
+    ),
+    body: EnConstruccion(
       icono: Icons.map_outlined,
-      descripcion: 'Veterinarias de urgencia y mascotas perdidas cerca tuyo',
+      descripcion: context.t.mapaDescripcion,
       paso: '0.5.2',
     ),
   );

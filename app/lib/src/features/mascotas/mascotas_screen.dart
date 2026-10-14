@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../l10n/l10n.dart';
 import '../../widgets/boton_ajustes.dart';
 import '../../widgets/en_construccion.dart';
 
@@ -9,12 +10,12 @@ class MascotasScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
-      title: const Text('Mis mascotas'),
+      title: Text(context.t.pestanaMascotas),
       actions: const [BotonAjustes()],
     ),
-    body: const EnConstruccion(
+    body: EnConstruccion(
       icono: Icons.pets,
-      descripcion: 'Tus mascotas, su ficha y su chapita QR',
+      descripcion: context.t.mascotasDescripcion,
       paso: '0.3.4',
     ),
   );
