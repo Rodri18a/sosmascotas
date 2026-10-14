@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -7,8 +7,10 @@ import 'features/ajustes/ajustes_screen.dart';
 import 'features/ayuda/ayuda_screen.dart';
 import 'features/ingresar/ingresar_screen.dart';
 import 'features/mapa/mapa_screen.dart';
+import 'features/mascotas/mascota_nueva_screen.dart';
 import 'features/mascotas/mascotas_screen.dart';
 import 'features/shell/app_shell.dart';
+import 'features/sos/sos_nuevo_screen.dart';
 import 'features/sos/sos_screen.dart';
 import 'redireccion.dart';
 
@@ -20,17 +22,26 @@ abstract final class Rutas {
   static const ayuda = '/ayuda';
   static const ajustes = '/ajustes';
   static const ingresar = '/ingresar';
+  static const sosNuevo = '/sos/nuevo';
+  static const mascotaNueva = '/mascotas/nueva';
 
   /// Rutas que un visitante no puede ver: se le pide ingresar y después vuelve.
-  static const requierenCuenta = <String>[];
+  static const requierenCuenta = <String>[sosNuevo, mascotaNueva];
 
   /// Pantalla de ingreso que, al terminar, vuelve a [destino].
   static String ingresarYVolverA(String destino) =>
       Uri(path: ingresar, queryParameters: {'volver': destino}).toString();
 }
 
-GoRoute _pestana(String ruta, GoRouterWidgetBuilder builder) =>
-    GoRoute(path: ruta, builder: builder);
+GoRoute _pestana(
+  String ruta,
+  GoRouterWidgetBuilder builder, {
+  List<RouteBase> hijas = const [],
+}) => GoRoute(path: ruta, builder: builder, routes: hijas);
+
+/// Ruta hija: [ruta] completa (p. ej. `/sos/nuevo`) dentro de su pestaña.
+GoRoute _hija(String ruta, Widget pantalla) =>
+    GoRoute(path: ruta.split('/').last, builder: (_, _) => pantalla);
 
 final routerProvider = Provider<GoRouter>((ref) {
   // Al iniciar o cerrar sesión se vuelven a evaluar las redirecciones.
@@ -55,11 +66,21 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [_pestana(Rutas.mapa, (_, _) => const MapaScreen())],
           ),
           StatefulShellBranch(
-            routes: [_pestana(Rutas.sos, (_, _) => const SosScreen())],
+            routes: [
+              _pestana(
+                Rutas.sos,
+                (_, _) => const SosScreen(),
+                hijas: [_hija(Rutas.sosNuevo, const SosNuevoScreen())],
+              ),
+            ],
           ),
           StatefulShellBranch(
             routes: [
-              _pestana(Rutas.mascotas, (_, _) => const MascotasScreen()),
+              _pestana(
+                Rutas.mascotas,
+                (_, _) => const MascotasScreen(),
+                hijas: [_hija(Rutas.mascotaNueva, const MascotaNuevaScreen())],
+              ),
             ],
           ),
           StatefulShellBranch(

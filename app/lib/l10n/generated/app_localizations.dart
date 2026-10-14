@@ -321,6 +321,66 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'o con tu correo'**
   String get ingresarOConCorreo;
+
+  /// No description provided for @cuentaNecesariaTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Necesitás una cuenta'**
+  String get cuentaNecesariaTitulo;
+
+  /// No description provided for @ahoraNo.
+  ///
+  /// In es, this message translates to:
+  /// **'Ahora no'**
+  String get ahoraNo;
+
+  /// No description provided for @sosReportar.
+  ///
+  /// In es, this message translates to:
+  /// **'Reportar mascota perdida o encontrada'**
+  String get sosReportar;
+
+  /// No description provided for @sosMotivoCuenta.
+  ///
+  /// In es, this message translates to:
+  /// **'Para reportar necesitamos poder avisarte cuando alguien vea a la mascota. Tu teléfono nunca se muestra.'**
+  String get sosMotivoCuenta;
+
+  /// No description provided for @sosNuevoTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Nuevo reporte'**
+  String get sosNuevoTitulo;
+
+  /// No description provided for @sosNuevoDescripcion.
+  ///
+  /// In es, this message translates to:
+  /// **'Foto, ubicación en el mapa y datos de la mascota'**
+  String get sosNuevoDescripcion;
+
+  /// No description provided for @mascotasAgregar.
+  ///
+  /// In es, this message translates to:
+  /// **'Agregar mascota'**
+  String get mascotasAgregar;
+
+  /// No description provided for @mascotasMotivoCuenta.
+  ///
+  /// In es, this message translates to:
+  /// **'Para guardar tus mascotas, su ficha y su chapita QR, y recibir avisos si alguien la encuentra.'**
+  String get mascotasMotivoCuenta;
+
+  /// No description provided for @mascotaNuevaTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Nueva mascota'**
+  String get mascotaNuevaTitulo;
+
+  /// No description provided for @mascotaNuevaDescripcion.
+  ///
+  /// In es, this message translates to:
+  /// **'Nombre, especie, raza y foto de tu mascota'**
+  String get mascotaNuevaDescripcion;
 }
 
 class _AppLocalizationsDelegate

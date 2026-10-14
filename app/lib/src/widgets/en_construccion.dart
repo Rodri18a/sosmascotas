@@ -8,6 +8,7 @@ class EnConstruccion extends StatelessWidget {
     required this.icono,
     required this.descripcion,
     required this.paso,
+    this.accion,
     super.key,
   });
 
@@ -17,11 +18,15 @@ class EnConstruccion extends StatelessWidget {
   /// Paso de `PROGRESO.md` en el que se construye esta pantalla.
   final String paso;
 
+  /// Botón opcional debajo del texto (por ejemplo, "Agregar mascota").
+  final Widget? accion;
+
   @override
   Widget build(BuildContext context) {
     final tema = Theme.of(context);
+    // Desplazable: en pantallas chicas o con letra grande no se corta.
     return Center(
-      child: Padding(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.all(32),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -40,6 +45,10 @@ class EnConstruccion extends StatelessWidget {
                 color: tema.colorScheme.onSurfaceVariant,
               ),
             ),
+            if (accion case final accion?) ...[
+              const SizedBox(height: 24),
+              accion,
+            ],
           ],
         ),
       ),

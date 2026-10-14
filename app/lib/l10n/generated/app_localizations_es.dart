@@ -136,4 +136,38 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get ingresarOConCorreo => 'o con tu correo';
+
+  @override
+  String get cuentaNecesariaTitulo => 'Necesitás una cuenta';
+
+  @override
+  String get ahoraNo => 'Ahora no';
+
+  @override
+  String get sosReportar => 'Reportar mascota perdida o encontrada';
+
+  @override
+  String get sosMotivoCuenta =>
+      'Para reportar necesitamos poder avisarte cuando alguien vea a la mascota. Tu teléfono nunca se muestra.';
+
+  @override
+  String get sosNuevoTitulo => 'Nuevo reporte';
+
+  @override
+  String get sosNuevoDescripcion =>
+      'Foto, ubicación en el mapa y datos de la mascota';
+
+  @override
+  String get mascotasAgregar => 'Agregar mascota';
+
+  @override
+  String get mascotasMotivoCuenta =>
+      'Para guardar tus mascotas, su ficha y su chapita QR, y recibir avisos si alguien la encuentra.';
+
+  @override
+  String get mascotaNuevaTitulo => 'Nueva mascota';
+
+  @override
+  String get mascotaNuevaDescripcion =>
+      'Nombre, especie, raza y foto de tu mascota';
 }
