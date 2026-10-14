@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'src/app.dart';
 import 'src/config/env_provider.dart';
 import 'src/config/supabase_providers.dart';
+import 'src/metricas/metricas.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,11 +19,15 @@ Future<void> main() async {
     env.supabaseUrl,
     env.supabasePublishableKey,
   );
+  final anonId = await obtenerAnonId(await SharedPreferences.getInstance());
+  final metricas = Metricas.conSupabase(supabase, anonId: anonId)
+    ..track(Eventos.appOpen);
   runApp(
     ProviderScope(
       overrides: [
         appEnvProvider.overrideWithValue(env),
         supabaseClientProvider.overrideWithValue(supabase),
+        metricasProvider.overrideWithValue(metricas),
       ],
       child: const SosMascotaApp(),
     ),

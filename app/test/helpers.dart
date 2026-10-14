@@ -5,6 +5,7 @@ import 'package:http/testing.dart';
 import 'package:sosmascota/src/app.dart';
 import 'package:sosmascota/src/config/env_provider.dart';
 import 'package:sosmascota/src/config/supabase_providers.dart';
+import 'package:sosmascota/src/metricas/metricas.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 const urlPrueba = 'https://abc.supabase.co';
@@ -25,6 +26,9 @@ Widget appDePrueba({
       ),
     ),
     supabaseClientProvider.overrideWithValue(null),
+    metricasProvider.overrideWithValue(
+      Metricas(anonId: 'anon-prueba', plataforma: 'web', enviar: null),
+    ),
     httpClientProvider.overrideWithValue(
       MockClient((pedido) async {
         assert(pedido.url.toString() == '$urlPrueba/auth/v1/health');

@@ -6,7 +6,7 @@ Propuesta inicial. Se ajusta al implementar cada fase. **RLS activado en todas l
 
 | Tabla | Campos clave | Fase |
 |---|---|---|
-| `zones` | id, name, country, timezone, currency, area (polígono), active | 0 |
+| `zones` | id, slug, name, country, timezone, currency, area (multipolígono), active — ✅ creada en 0.1.7 (Pando) | 0 |
 | `profiles` | id (auth), display_name, avatar_path, role (`user`, `admin`), zone_id, plan (`free`, `pro`, `family`), prefs (idioma, color, letra), approx_location, alert_radius_km, created_at | 0 |
 | `private_contacts` | user_id, phone, whatsapp, show_whatsapp_direct (bool, por defecto `false`) — **solo accesible desde Edge Functions** | 0 |
 | `push_tokens` | user_id, token, platform | 0 |
@@ -116,7 +116,7 @@ Trigger: con 3 `flags` de usuarios distintos, el contenido pasa a `hidden`.
 
 | Tabla | Campos clave | Fase |
 |---|---|---|
-| `events` | id, name, user_id (nullable), anon_id, zone_id, business_id, target_id, props (json), created_at | **0** |
+| `events` | id, name, user_id (nullable), anon_id, zone_id, business_id, target_id, platform, props (json, ≤ 2 KB), created_at — ✅ creada en 0.1.7. La app solo inserta; nadie lee desde la app | **0** |
 | `daily_stats` | date, zone_id, business_id, metric, value | 2 |
 | `prospects` | id, name, business_type, zone_id, location, contact, stage (`prospect`, `contacted`, `demo`, `founder`, `paying`, `renewed`, `lost`), business_id, next_contact_at, owner_admin_id | 1 |
 | `prospect_notes` | id, prospect_id, admin_id, note, created_at | 1 |

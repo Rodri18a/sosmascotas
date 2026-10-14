@@ -101,7 +101,7 @@ sosmascotas/
 
 ## Métricas desde el día 1
 
-Tabla `events` (append-only), escrita por el cliente con un helper `track()` y, en las acciones sensibles, por las Edge Functions.
+Tabla `events` (append-only), escrita por el cliente con `ref.read(metricasProvider).track(Eventos.x)` y, en las acciones sensibles, por las Edge Functions. Los nombres están en `packages/core` (`Eventos`). `track()` no espera ni falla: sin internet, el evento se pierde sin afectar a la persona.
 
 | Evento | Datos |
 |---|---|
@@ -120,6 +120,7 @@ Tabla `events` (append-only), escrita por el cliente con un helper `track()` y, 
 | `reminder_done` | tipo |
 
 - Se guarda `user_id` solo para métricas internas (retención). A las empresas se les muestran **agregados**.
+- Riesgo aceptado en la Fase 0: con la clave pública se pueden cargar eventos falsos (solo ensucia métricas). Si pasa: tope por instalación o registro vía Edge Function.
 - Para no inflar costos: agrupar eventos de impresión en lotes y, más adelante, resumir por día en una tabla `daily_stats`.
 
 ## Entornos
