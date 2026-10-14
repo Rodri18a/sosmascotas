@@ -15,8 +15,8 @@ Propuesta inicial. Se ajusta al implementar cada fase. **RLS activado en todas l
 
 | Tabla | Campos clave | Fase |
 |---|---|---|
-| `species` | id, name, icon | 0 |
-| `breeds` | id, species_id, name | 0 |
+| `species` | id, slug, name, icon, sort — ✅ 0.3.1 (10 especies) | 0 |
+| `breeds` | id, species_id, name, sort — ✅ 0.3.1 (~60 razas; si no está, `pets.breed_other`) | 0 |
 | `pets` | id, household_id, owner_id, name, species_id, breed_id, breed_other, sex, color, marks, birth, photo_path, microchip (15 dígitos), renac_status (`registered`, `not_registered`, `unknown`, Fase 1), neutered, notes, vet_business_id | 0 |
 | `qr_tags` | id, code (único), pet_id (**nullable** hasta activarse), kind (`digital`, `physical`), batch_id, active, activated_at, show_health (json de qué mostrar) | 0 (digital) / 1 (física) |
 | `qr_batches` | id, quantity, producer, material, sponsor_id (opcional), unit_cost, created_at | 1 |

@@ -15,7 +15,7 @@
 | 3 · Servicios | ⏳ | a detallar | 0 |
 | 4 · Escala | ⏳ | a detallar | 0 |
 
-**Paso actual:** 0.3.1 (desarrollo) · validación pendiente desde 0.0.2
+**Paso actual:** 0.3.2 (desarrollo) · validación pendiente desde 0.0.2
 
 ### Horas reales vs. estimadas (calibración)
 
@@ -71,8 +71,8 @@ Regla de trabajo: **por cada etapa de desarrollo, avanzar al menos un paso de va
 - [x] 0.2.6 Ajustes: perfil, radio de avisos, cerrar sesión, **borrar mi cuenta** (⏱️ 2 h) — 14/10/2026, Edge Function `delete-account` (D52)
 
 ### Etapa 0.3 · Mascotas
-- [ ] 0.3.1 Seed de `species` y `breeds` (⏱️ 2 h) **← ESTÁS ACÁ**
-- [ ] 0.3.2 Tabla `pets` + RLS + bucket de fotos con límite de tamaño (⏱️ 1 h)
+- [x] 0.3.1 Seed de `species` y `breeds` (⏱️ 2 h) — 14/10/2026, 10 especies y ~60 razas (Mestizo y Cimarrón uruguayo primero)
+- [ ] 0.3.2 Tabla `pets` + RLS + bucket de fotos con límite de tamaño (⏱️ 1 h) **← ESTÁS ACÁ**
 - [ ] 0.3.3 Alta y edición de mascota con foto comprimida y sin metadatos de ubicación (EXIF) (⏱️ 4 h)
 - [ ] 0.3.4 Pantalla "Mis mascotas": lista, ficha y fila superior de mascotas (⏱️ 3 h)
 

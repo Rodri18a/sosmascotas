@@ -3,5 +3,6 @@ library;
 
 export 'src/config/app_env.dart';
 export 'src/cuenta/perfil.dart';
+export 'src/mascotas/especie.dart';
 export 'src/metricas/anon_id.dart';
 export 'src/metricas/eventos.dart';

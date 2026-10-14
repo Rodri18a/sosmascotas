@@ -100,6 +100,12 @@ def main():
         caso('un visitante ve Pando', any(z['slug'] == 'pando' for z in filas(rest('GET', 'zones?select=slug'))))
         caso('un visitante no puede crear zonas', bloqueado(rest('POST', 'zones', {'slug': 'x', 'name': 'x'})))
 
+        print('species / breeds')
+        caso('un visitante ve las especies', len(filas(rest('GET', 'species?select=id'))) >= 10)
+        caso('un visitante ve las razas de perro', len(filas(rest('GET', 'breeds?select=id&species_id=eq.1'))) > 20)
+        caso('A no puede crear especies', bloqueado(rest('POST', 'species', {'slug': 'x', 'name': 'x', 'icon': 'x'}, a)))
+        caso('A no puede cambiar razas', bloqueado(rest('PATCH', 'breeds?id=eq.1', {'name': 'x'}, a)))
+
         print('events')
         anon = str(uuid.uuid4())
         caso('un visitante puede agregar un evento sin usuario',
