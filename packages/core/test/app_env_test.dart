@@ -49,4 +49,36 @@ void main() {
       );
     });
   });
+
+  group('ConfigFirebase.parse', () {
+    ConfigFirebase? parse({String apiKey = 'k', String vapidKey = 'v'}) =>
+        ConfigFirebase.parse(
+          apiKey: apiKey,
+          appId: '1:2:web:3',
+          messagingSenderId: '2',
+          projectId: 'sosmascotas-dev',
+          vapidKey: vapidKey,
+        );
+
+    test('completa es válida', () {
+      expect(parse()?.projectId, 'sosmascotas-dev');
+    });
+
+    test('sin ningún dato no hay Firebase', () {
+      expect(
+        ConfigFirebase.parse(
+          apiKey: '',
+          appId: '',
+          messagingSenderId: '',
+          projectId: '',
+          vapidKey: ' ',
+        ),
+        isNull,
+      );
+    });
+
+    test('incompleta falla (por ejemplo, sin clave VAPID)', () {
+      expect(() => parse(vapidKey: ''), throwsStateError);
+    });
+  });
 }

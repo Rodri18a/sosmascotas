@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../l10n/l10n.dart';
 
 import 'config/env_provider.dart';
+import 'push/servicio_push.dart';
 import 'router.dart';
 import 'theme/app_theme.dart';
 
@@ -15,6 +16,7 @@ class SosMascotaApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final env = ref.watch(appEnvProvider);
     final router = ref.watch(routerProvider);
+    ref.watch(renovarPushProvider);
 
     return MaterialApp.router(
       onGenerateTitle: (context) => context.t.appNombre,

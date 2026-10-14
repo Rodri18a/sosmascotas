@@ -13,6 +13,7 @@ import 'package:sosmascota/src/mapa/mapa_vista.dart';
 import 'package:sosmascota/src/mascotas/catalogo.dart';
 import 'package:sosmascota/src/mascotas/mascotas_repositorio.dart';
 import 'package:sosmascota/src/metricas/metricas.dart';
+import 'package:sosmascota/src/push/servicio_push.dart';
 import 'package:sosmascota/src/qr/qr_repositorio.dart';
 import 'package:sosmascota/src/sos/sos_repositorio.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
@@ -42,9 +43,11 @@ Widget appDePrueba({
   QrRepositorio? qr,
   AvisosRepositorio? avisos,
   SosRepositorio? sos,
+  ServicioPush? push,
 }) => ProviderScope(
   overrides: [
     sosRepositorioProvider.overrideWithValue(sos ?? SosFalso()),
+    servicioPushProvider.overrideWithValue(push ?? const PushNoDisponible()),
     // Mapa falso: las pruebas no dibujan el mapa real (WebGL).
     constructorMapaProvider.overrideWithValue(MapaFalso.new),
     avisosRepositorioProvider.overrideWithValue(avisos ?? AvisosFalsos()),

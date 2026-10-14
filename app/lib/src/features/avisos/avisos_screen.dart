@@ -8,6 +8,7 @@ import '../../../l10n/l10n.dart';
 import '../../avisos/avisos_repositorio.dart';
 import '../../mascotas/mascotas_repositorio.dart';
 import '../../metricas/metricas.dart';
+import '../../push/control_push.dart';
 
 /// Bandeja "Avisos": lo que dejaron quienes encontraron o vieron a tu mascota.
 /// Vos decidís si los contactás; tu teléfono nunca se les mostró.
@@ -53,6 +54,7 @@ class _AvisosScreenState extends ConsumerState<AvisosScreen> {
           AsyncData(value: final lista) => ListView(
             padding: const EdgeInsets.all(16),
             children: [
+              const TarjetaActivarPush(),
               const _ConsejoAntiEstafa(),
               const SizedBox(height: 12),
               if (lista.isEmpty)

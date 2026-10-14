@@ -374,6 +374,33 @@ def main():
         finally:
             pedir('DELETE', f'{URL}/auth/v1/admin/users/{c_id}', headers=ADMIN)
 
+        print('push_tokens')
+        token = 'prueba-rls-' + uuid.uuid4().hex
+        guardar = lambda quien, tok=token: rest('POST', 'rpc/guardar_push_token', {'p_token': tok, 'p_platform': 'web'}, quien)[0]
+        caso('un visitante no puede guardar tokens', guardar({'apikey': PUBLICA}) >= 400)
+        caso('A guarda el token de su dispositivo', guardar(a) in (200, 204))
+        caso('A ve su token', [t['token'] for t in filas(rest('GET', 'push_tokens?select=token', quien=a))] == [token])
+        caso('B no ve los tokens de A', filas(rest('GET', 'push_tokens?select=token', quien=b)) == [])
+        caso('A no puede insertar tokens directamente',
+             bloqueado(rest('POST', 'push_tokens', {'token': 'x' * 30, 'user_id': a_id, 'platform': 'web'}, a)))
+        caso('B no puede pasarse el token de A con un update',
+             bloqueado(rest('PATCH', f'push_tokens?token=eq.{token}', {'user_id': b_id}, b)))
+        caso('B no puede borrar el token de A',
+             rest('DELETE', f'push_tokens?token=eq.{token}', quien=b)[1] == [])
+        caso('no se aceptan plataformas inventadas',
+             rest('POST', 'rpc/guardar_push_token', {'p_token': token, 'p_platform': 'tv'}, a)[0] >= 400)
+        caso('celular compartido: si B ingresa en el mismo dispositivo, el token pasa a B',
+             guardar(b) in (200, 204)
+             and filas(rest('GET', 'push_tokens?select=token', quien=a)) == []
+             and len(filas(rest('GET', 'push_tokens?select=token', quien=b))) == 1)
+        for i in range(11):
+            guardar(a, f'{token}-{i:02d}')
+        caso('se guardan como máximo 10 dispositivos por persona',
+             len(filas(rest('GET', 'push_tokens?select=token', quien=a))) == 10)
+        caso('B borra su token al cerrar sesión',
+             len(filas(rest('DELETE', f'push_tokens?token=eq.{token}', quien=b))) == 1
+             and filas(rest('GET', 'push_tokens?select=token', quien=b)) == [])
+
         print('storage pet-photos')
         caso('A puede subir una foto en su carpeta', subir(f'pet-photos/{a_id}/prueba.jpg', JPEG_MINIMO, 'image/jpeg', a) == 200)
         caso('A no puede subir en la carpeta de B', subir(f'pet-photos/{b_id}/intruso.jpg', JPEG_MINIMO, 'image/jpeg', a) != 200)

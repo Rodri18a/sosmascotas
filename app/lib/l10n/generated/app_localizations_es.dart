@@ -919,4 +919,38 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get sosMotivoOtro => 'Otro';
+
+  @override
+  String get pushInterruptor => 'Avisos en este dispositivo';
+
+  @override
+  String get pushDetalle =>
+      'Te avisamos si alguien encuentra a tu mascota o escanea su QR.';
+
+  @override
+  String get pushNoDisponible =>
+      'Este navegador no admite avisos. En iPhone, primero agregá SOS Mascota a la pantalla de inicio (Compartir → Agregar a inicio) y abrila desde ahí.';
+
+  @override
+  String get pushBloqueado =>
+      'Los avisos están bloqueados en este navegador. Habilitalos desde el candado de la barra de direcciones → Notificaciones.';
+
+  @override
+  String get pushSinElegir =>
+      'No se activaron los avisos. Podés hacerlo cuando quieras desde Ajustes.';
+
+  @override
+  String get pushTarjeta =>
+      'Activá los avisos para enterarte al instante si alguien encuentra a tu mascota.';
+
+  @override
+  String get pushActivar => 'Activar avisos';
+
+  @override
+  String get pushActivados =>
+      '¡Listo! Vas a recibir los avisos en este dispositivo.';
+
+  @override
+  String get pushError =>
+      'No pudimos activar los avisos. Revisá tu conexión y probá de nuevo.';
 }

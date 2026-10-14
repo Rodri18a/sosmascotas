@@ -433,5 +433,14 @@
   "sosMotivoEstafa": "Parece una estafa",
   "sosMotivoSpam": "Spam o publicidad",
   "sosMotivoOfensivo": "Ofensivo",
-  "sosMotivoOtro": "Otro"
+  "sosMotivoOtro": "Otro",
+  "pushInterruptor": "Avisos en este dispositivo",
+  "pushDetalle": "Te avisamos si alguien encuentra a tu mascota o escanea su QR.",
+  "pushNoDisponible": "Este navegador no admite avisos. En iPhone, primero agregá SOS Mascota a la pantalla de inicio (Compartir → Agregar a inicio) y abrila desde ahí.",
+  "pushBloqueado": "Los avisos están bloqueados en este navegador. Habilitalos desde el candado de la barra de direcciones → Notificaciones.",
+  "pushSinElegir": "No se activaron los avisos. Podés hacerlo cuando quieras desde Ajustes.",
+  "pushTarjeta": "Activá los avisos para enterarte al instante si alguien encuentra a tu mascota.",
+  "pushActivar": "Activar avisos",
+  "pushActivados": "¡Listo! Vas a recibir los avisos en este dispositivo.",
+  "pushError": "No pudimos activar los avisos. Revisá tu conexión y probá de nuevo."
 }

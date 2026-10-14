@@ -1611,6 +1611,60 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Otro'**
   String get sosMotivoOtro;
+
+  /// No description provided for @pushInterruptor.
+  ///
+  /// In es, this message translates to:
+  /// **'Avisos en este dispositivo'**
+  String get pushInterruptor;
+
+  /// No description provided for @pushDetalle.
+  ///
+  /// In es, this message translates to:
+  /// **'Te avisamos si alguien encuentra a tu mascota o escanea su QR.'**
+  String get pushDetalle;
+
+  /// No description provided for @pushNoDisponible.
+  ///
+  /// In es, this message translates to:
+  /// **'Este navegador no admite avisos. En iPhone, primero agregá SOS Mascota a la pantalla de inicio (Compartir → Agregar a inicio) y abrila desde ahí.'**
+  String get pushNoDisponible;
+
+  /// No description provided for @pushBloqueado.
+  ///
+  /// In es, this message translates to:
+  /// **'Los avisos están bloqueados en este navegador. Habilitalos desde el candado de la barra de direcciones → Notificaciones.'**
+  String get pushBloqueado;
+
+  /// No description provided for @pushSinElegir.
+  ///
+  /// In es, this message translates to:
+  /// **'No se activaron los avisos. Podés hacerlo cuando quieras desde Ajustes.'**
+  String get pushSinElegir;
+
+  /// No description provided for @pushTarjeta.
+  ///
+  /// In es, this message translates to:
+  /// **'Activá los avisos para enterarte al instante si alguien encuentra a tu mascota.'**
+  String get pushTarjeta;
+
+  /// No description provided for @pushActivar.
+  ///
+  /// In es, this message translates to:
+  /// **'Activar avisos'**
+  String get pushActivar;
+
+  /// No description provided for @pushActivados.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Listo! Vas a recibir los avisos en este dispositivo.'**
+  String get pushActivados;
+
+  /// No description provided for @pushError.
+  ///
+  /// In es, this message translates to:
+  /// **'No pudimos activar los avisos. Revisá tu conexión y probá de nuevo.'**
+  String get pushError;
 }
 
 class _AppLocalizationsDelegate

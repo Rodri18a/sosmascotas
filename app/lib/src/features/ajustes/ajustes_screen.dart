@@ -8,6 +8,8 @@ import '../../config/env_provider.dart';
 import '../../cuenta/perfil_repositorio.dart';
 import '../../cuenta/servicio_cuenta.dart';
 import '../../metricas/metricas.dart';
+import '../../push/control_push.dart';
+import '../../push/servicio_push.dart';
 import '../../router.dart';
 import '../ingresar/ingresar_screen.dart';
 import 'estado_conexion.dart';
@@ -56,7 +58,7 @@ class AjustesScreen extends ConsumerWidget {
             ListTile(
               leading: const Icon(Icons.logout),
               title: Text(t.cerrarSesion),
-              onTap: () => ref.read(servicioCuentaProvider).salir(),
+              onTap: () => _salir(ref),
             ),
             ListTile(
               leading: Icon(
@@ -84,6 +86,16 @@ class AjustesScreen extends ConsumerWidget {
         ],
       ),
     );
+  }
+
+  /// Cierra la sesión; antes, este dispositivo deja de recibir sus avisos.
+  Future<void> _salir(WidgetRef ref) async {
+    try {
+      await ref.read(servicioPushProvider).olvidarDispositivo();
+    } on Exception catch (e) {
+      debugPrint('No se pudo borrar el token de push: $e');
+    }
+    await ref.read(servicioCuentaProvider).salir();
   }
 
   Future<void> _borrarCuenta(BuildContext context, WidgetRef ref) async {
@@ -151,6 +163,7 @@ class _SeccionCuenta extends ConsumerWidget {
               ? null
               : () => _editarNombre(context, ref, perfil),
         ),
+        const InterruptorPush(),
         if (perfil != null) _RadioAvisos(perfil: perfil),
       ],
     );

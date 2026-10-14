@@ -94,7 +94,7 @@ Regla de trabajo: **por cada etapa de desarrollo, avanzar al menos un paso de va
 - [x] 0.5.7 Botón "Reportar" + ocultamiento automático con 3 reportes + límite de 3 SOS por día (⏱️ 3 h) — 14/10/2026, "Reportar publicación" en el detalle (motivo + detalle opcional, una vez por persona, evento `content_flag`); ocultamiento y límite ya estaban en la base desde 0.5.1. **Etapa 0.5 terminada**
 
 ### Etapa 0.6 · Avisos
-- [ ] 0.6.1 Proyecto Firebase (gratis) + push web en la PWA + guardar `push_tokens` (⏱️ 3 h) **← ESTÁS ACÁ**
+- [ ] 0.6.1 Proyecto Firebase (gratis) + push web en la PWA + guardar `push_tokens` (⏱️ 3 h) **← ESTÁS ACÁ** — 14/10/2026, código, migración aplicada y pruebas OK; en Chrome (`localhost:3001`) el permiso, el service worker y el token en `push_tokens` funcionan. **Falta:** confirmar que llega la notificación (Firebase → Messaging → Redactar notificación → "Enviar mensaje de prueba" con el token del navegador: `localStorage['flutter.push.token']`, copiar el valor, no el comando) y que al tocarla abre la app
 - [ ] 0.6.2 Pedir permiso de ubicación y guardar la zona aproximada del usuario (⏱️ 2 h)
 - [ ] 0.6.3 Edge Function: nuevo SOS → push a los usuarios a 5 km o menos, con tope diario (⏱️ 3 h)
 - [ ] 0.6.4 Push al dueño cuando escanean el QR de su mascota (⏱️ 1 h)

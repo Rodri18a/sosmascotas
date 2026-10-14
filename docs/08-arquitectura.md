@@ -110,6 +110,7 @@ Se despliegan con `supabase functions deploy <nombre> --use-api` y se prueban en
 | Recordatorios del hogar compartido | Locales + sincronización por Realtime / FCM | "Ana ya le dio la pastilla" |
 
 - Las push usan el **token del dispositivo** (`push_tokens`), nunca el teléfono.
+- Web (PWA): `app/web/firebase-messaging-sw.js` muestra cada push como notificación del sistema y al tocarla abre `data.ruta` (por ejemplo `/sos/<id>`). Los mensajes se mandan con `notification: {title, body}` y `data: {ruta}` (D55).
 - Para los avisos por zona se guarda una **ubicación aproximada** del usuario (no exacta), actualizada al abrir la app.
 
 ## Contacto inverso

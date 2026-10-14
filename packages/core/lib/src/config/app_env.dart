@@ -1,3 +1,5 @@
+import 'config_firebase.dart';
+
 /// Entorno en el que corre la app.
 enum AppFlavor { dev, prod }
 
@@ -11,6 +13,7 @@ class AppEnv {
     required this.supabaseUrl,
     required this.supabasePublishableKey,
     this.urlPublica = 'https://sosmascotas.uy',
+    this.firebase,
   });
 
   /// Lee la configuración pasada al compilar.
@@ -24,6 +27,7 @@ class AppEnv {
       'PUBLIC_BASE_URL',
       defaultValue: 'https://sosmascotas.uy',
     ),
+    firebase: ConfigFirebase.fromEnvironment(),
   );
 
   /// Valida los valores crudos. En producción Supabase es obligatorio;
@@ -33,6 +37,7 @@ class AppEnv {
     required String supabaseUrl,
     required String supabasePublishableKey,
     String urlPublica = 'https://sosmascotas.uy',
+    ConfigFirebase? firebase,
   }) {
     final parsedFlavor = AppFlavor.values.asNameMap()[flavor.trim()];
     if (parsedFlavor == null) {
@@ -47,6 +52,7 @@ class AppEnv {
       supabaseUrl: supabaseUrl.trim(),
       supabasePublishableKey: supabasePublishableKey.trim(),
       urlPublica: urlPublica.trim(),
+      firebase: firebase,
     );
     if (env.isProd && !env.hasSupabase) {
       throw StateError(
@@ -62,6 +68,9 @@ class AppEnv {
 
   /// Dirección de la web pública (páginas del QR y de los SOS).
   final String urlPublica;
+
+  /// Push web (Firebase). `null`: la app funciona sin avisos push.
+  final ConfigFirebase? firebase;
 
   bool get isProd => flavor == AppFlavor.prod;
 
