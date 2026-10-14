@@ -9,6 +9,7 @@ import 'package:sosmascota/src/config/supabase_providers.dart';
 import 'package:sosmascota/src/cuenta/perfil_repositorio.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
 import 'package:sosmascota/src/fotos/selector_foto.dart';
+import 'package:sosmascota/src/mapa/mapa_vista.dart';
 import 'package:sosmascota/src/mascotas/catalogo.dart';
 import 'package:sosmascota/src/mascotas/mascotas_repositorio.dart';
 import 'package:sosmascota/src/metricas/metricas.dart';
@@ -17,6 +18,7 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'avisos_falsos.dart';
 import 'cuenta_falsa.dart';
+import 'mapa_falso.dart';
 import 'mascotas_falsas.dart';
 import 'perfil_falso.dart';
 import 'qr_falso.dart';
@@ -39,6 +41,8 @@ Widget appDePrueba({
   AvisosRepositorio? avisos,
 }) => ProviderScope(
   overrides: [
+    // Mapa falso: las pruebas no dibujan el mapa real (WebGL).
+    constructorMapaProvider.overrideWithValue(MapaFalso.new),
     avisosRepositorioProvider.overrideWithValue(avisos ?? AvisosFalsos()),
     qrRepositorioProvider.overrideWithValue(qr ?? QrFalso()),
     catalogoRepositorioProvider.overrideWithValue(CatalogoFalso()),

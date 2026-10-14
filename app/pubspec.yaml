@@ -27,6 +27,7 @@ dependencies:
   qr_flutter: ^4.1.0
   web: ^1.1.1
   url_launcher: ^6.3.3
+  maplibre_gl: ^0.27.1
 
 dev_dependencies:
   flutter_lints: ^6.0.0

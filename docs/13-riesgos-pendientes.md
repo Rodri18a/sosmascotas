@@ -9,7 +9,7 @@
 | P3 | Tecnologías que se usan en el trabajo actual | Para reutilizar conocimiento |
 | P4 | **Precios** de Pro, Familia, Destacado y Plus | Validar en las entrevistas de la Fase 0 |
 | P5 | Vencimiento de los reportes SOS (60 días) y radio de aviso (5 km) | Propuesta; ajustar con el uso real |
-| P6 | Proveedor de teselas para el mapa web | Elegir en el paso del mapa web (comparar planes gratis) |
+| P6 | ~~Proveedor de teselas para el mapa web~~ | ✅ OpenFreeMap (D54) |
 | P7 | ~~Gestión de estado y librerías de Flutter~~ | ✅ Resuelto en 0.1.3: Riverpod + go_router (D45) |
 | P8 | Comprar el dominio antes, para asegurarlo | Decisión del dueño del proyecto |
 | P9 | Logo e identidad | Algo simple al inicio; no invertir en branding hasta validar |
