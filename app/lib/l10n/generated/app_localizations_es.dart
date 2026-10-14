@@ -63,4 +63,71 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get conexionConectando => 'Conectando con Supabase…';
+
+  @override
+  String get ingresarTitulo => 'Ingresar';
+
+  @override
+  String get ingresarExplicacion =>
+      'Ingresá o creá tu cuenta con tu correo. Te mandamos un código: no hace falta contraseña.';
+
+  @override
+  String get ingresarCorreo => 'Tu correo';
+
+  @override
+  String get ingresarEnviarCodigo => 'Enviarme el código';
+
+  @override
+  String ingresarRevisaCorreo(String email) {
+    return 'Te mandamos un correo a $email. Tocá el enlace del correo o escribí acá el código de 6 números.';
+  }
+
+  @override
+  String get ingresarCodigo => 'Código';
+
+  @override
+  String get ingresarConfirmar => 'Ingresar';
+
+  @override
+  String get ingresarOtroCorreo => 'Usar otro correo';
+
+  @override
+  String get ingresarEmailInvalido =>
+      'Revisá el correo: parece que le falta algo.';
+
+  @override
+  String get ingresarCodigoInvalido => 'El código tiene 6 números.';
+
+  @override
+  String get ingresarAvisoTerminos =>
+      'Al ingresar vas a poder leer y aceptar los términos y la política de privacidad de SOS Mascota.';
+
+  @override
+  String get ingresarOCrearCuenta => 'Ingresar o crear cuenta';
+
+  @override
+  String get ingresarSubtitulo =>
+      'Para reportar, guardar tus mascotas y recibir avisos';
+
+  @override
+  String get cerrarSesion => 'Cerrar sesión';
+
+  @override
+  String get errorDemasiadosIntentos =>
+      'Hiciste muchos intentos seguidos. Esperá unos minutos y probá de nuevo.';
+
+  @override
+  String get errorCodigoInvalido =>
+      'El código no es correcto o ya venció. Pedí uno nuevo.';
+
+  @override
+  String get errorSinConexion =>
+      'No pudimos conectarnos. Revisá tu internet y probá de nuevo.';
+
+  @override
+  String get errorNoConfigurado =>
+      'El ingreso no está disponible en este momento.';
+
+  @override
+  String get errorDesconocido => 'Algo salió mal. Probá de nuevo en un rato.';
 }

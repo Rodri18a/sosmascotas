@@ -195,6 +195,120 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Conectando con Supabase…'**
   String get conexionConectando;
+
+  /// No description provided for @ingresarTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Ingresar'**
+  String get ingresarTitulo;
+
+  /// No description provided for @ingresarExplicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Ingresá o creá tu cuenta con tu correo. Te mandamos un código: no hace falta contraseña.'**
+  String get ingresarExplicacion;
+
+  /// No description provided for @ingresarCorreo.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu correo'**
+  String get ingresarCorreo;
+
+  /// No description provided for @ingresarEnviarCodigo.
+  ///
+  /// In es, this message translates to:
+  /// **'Enviarme el código'**
+  String get ingresarEnviarCodigo;
+
+  /// No description provided for @ingresarRevisaCorreo.
+  ///
+  /// In es, this message translates to:
+  /// **'Te mandamos un correo a {email}. Tocá el enlace del correo o escribí acá el código de 6 números.'**
+  String ingresarRevisaCorreo(String email);
+
+  /// No description provided for @ingresarCodigo.
+  ///
+  /// In es, this message translates to:
+  /// **'Código'**
+  String get ingresarCodigo;
+
+  /// No description provided for @ingresarConfirmar.
+  ///
+  /// In es, this message translates to:
+  /// **'Ingresar'**
+  String get ingresarConfirmar;
+
+  /// No description provided for @ingresarOtroCorreo.
+  ///
+  /// In es, this message translates to:
+  /// **'Usar otro correo'**
+  String get ingresarOtroCorreo;
+
+  /// No description provided for @ingresarEmailInvalido.
+  ///
+  /// In es, this message translates to:
+  /// **'Revisá el correo: parece que le falta algo.'**
+  String get ingresarEmailInvalido;
+
+  /// No description provided for @ingresarCodigoInvalido.
+  ///
+  /// In es, this message translates to:
+  /// **'El código tiene 6 números.'**
+  String get ingresarCodigoInvalido;
+
+  /// No description provided for @ingresarAvisoTerminos.
+  ///
+  /// In es, this message translates to:
+  /// **'Al ingresar vas a poder leer y aceptar los términos y la política de privacidad de SOS Mascota.'**
+  String get ingresarAvisoTerminos;
+
+  /// No description provided for @ingresarOCrearCuenta.
+  ///
+  /// In es, this message translates to:
+  /// **'Ingresar o crear cuenta'**
+  String get ingresarOCrearCuenta;
+
+  /// No description provided for @ingresarSubtitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Para reportar, guardar tus mascotas y recibir avisos'**
+  String get ingresarSubtitulo;
+
+  /// No description provided for @cerrarSesion.
+  ///
+  /// In es, this message translates to:
+  /// **'Cerrar sesión'**
+  String get cerrarSesion;
+
+  /// No description provided for @errorDemasiadosIntentos.
+  ///
+  /// In es, this message translates to:
+  /// **'Hiciste muchos intentos seguidos. Esperá unos minutos y probá de nuevo.'**
+  String get errorDemasiadosIntentos;
+
+  /// No description provided for @errorCodigoInvalido.
+  ///
+  /// In es, this message translates to:
+  /// **'El código no es correcto o ya venció. Pedí uno nuevo.'**
+  String get errorCodigoInvalido;
+
+  /// No description provided for @errorSinConexion.
+  ///
+  /// In es, this message translates to:
+  /// **'No pudimos conectarnos. Revisá tu internet y probá de nuevo.'**
+  String get errorSinConexion;
+
+  /// No description provided for @errorNoConfigurado.
+  ///
+  /// In es, this message translates to:
+  /// **'El ingreso no está disponible en este momento.'**
+  String get errorNoConfigurado;
+
+  /// No description provided for @errorDesconocido.
+  ///
+  /// In es, this message translates to:
+  /// **'Algo salió mal. Probá de nuevo en un rato.'**
+  String get errorDesconocido;
 }
 
 class _AppLocalizationsDelegate

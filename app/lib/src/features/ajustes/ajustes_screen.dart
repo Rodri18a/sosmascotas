@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../l10n/l10n.dart';
 import '../../config/env_provider.dart';
+import '../../cuenta/servicio_cuenta.dart';
 import '../../router.dart';
 import 'estado_conexion.dart';
 
@@ -13,9 +14,11 @@ class AjustesScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final env = ref.watch(appEnvProvider);
+    final usuario = ref.watch(usuarioActualProvider).value;
+    final t = context.t;
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.t.ajustes),
+        title: Text(t.ajustes),
         // Si se entró por un enlace directo no hay a dónde volver: ir al mapa.
         leading: context.canPop()
             ? null
@@ -24,14 +27,28 @@ class AjustesScreen extends ConsumerWidget {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          ListTile(
-            leading: const Icon(Icons.person_outline),
-            title: Text(context.t.ajustesPerfil),
-            subtitle: Text(context.t.enConstruccionPaso('0.2.6')),
-          ),
+          if (usuario == null)
+            ListTile(
+              leading: const Icon(Icons.login),
+              title: Text(t.ingresarOCrearCuenta),
+              subtitle: Text(t.ingresarSubtitulo),
+              onTap: () => context.push(Rutas.ingresarYVolverA(Rutas.ajustes)),
+            )
+          else ...[
+            ListTile(
+              leading: const Icon(Icons.person_outline),
+              title: Text(usuario.email ?? t.ajustesPerfil),
+              subtitle: Text(t.enConstruccionPaso('0.2.6')),
+            ),
+            ListTile(
+              leading: const Icon(Icons.logout),
+              title: Text(t.cerrarSesion),
+              onTap: () => ref.read(servicioCuentaProvider).salir(),
+            ),
+          ],
           if (!env.isProd) ...[
             const Divider(),
-            ListTile(title: Text(context.t.ajustesDesarrollo)),
+            ListTile(title: Text(t.ajustesDesarrollo)),
             const Align(
               alignment: Alignment.centerLeft,
               child: EstadoConexionChip(),

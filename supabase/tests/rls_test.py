@@ -136,6 +136,21 @@ def main():
         caso('B no puede leer ni su propio teléfono desde la app', bloqueado(rest('GET', 'private_contacts?select=*', quien=b)))
         caso('A no puede cargar teléfonos', bloqueado(rest('POST', 'private_contacts', {'user_id': a_id, 'phone': '099000000'}, a)))
         caso('un visitante no puede leer teléfonos', bloqueado(rest('GET', 'private_contacts?select=*')))
+
+        print('auth')
+        email_c = f'prueba-rls-c-{uuid.uuid4().hex[:8]}@example.com'
+        s_link, link = pedir('POST', f'{URL}/auth/v1/admin/generate_link', {'type': 'magiclink', 'email': email_c}, ADMIN)
+        if s_link != 200:
+            s_link, link = pedir('POST', f'{URL}/auth/v1/admin/generate_link', {'type': 'signup', 'email': email_c, 'password': uuid.uuid4().hex}, ADMIN)
+        codigo = (link or {}).get('email_otp', '')
+        caso('el código del correo tiene 6 números', len(codigo) == 6 and codigo.isdigit())
+        s_v, ses = pedir('POST', f'{URL}/auth/v1/verify', {'type': 'email', 'email': email_c, 'token': codigo}, {'apikey': PUBLICA})
+        caso('con el código se inicia sesión (como en la app)', s_v == 200 and 'access_token' in (ses or {}))
+        s_v2, _ = pedir('POST', f'{URL}/auth/v1/verify', {'type': 'email', 'email': email_c, 'token': codigo}, {'apikey': PUBLICA})
+        caso('el mismo código no sirve dos veces', s_v2 != 200)
+        c_id = (link or {}).get('id') or ((ses or {}).get('user') or {}).get('id')
+        if c_id:
+            pedir('DELETE', f'{URL}/auth/v1/admin/users/{c_id}', headers=ADMIN)
     finally:
         for uid in (a_id, b_id):
             pedir('DELETE', f'{URL}/auth/v1/admin/users/{uid}', headers=ADMIN)

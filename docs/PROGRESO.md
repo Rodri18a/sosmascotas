@@ -15,7 +15,7 @@
 | 3 · Servicios | ⏳ | a detallar | 0 |
 | 4 · Escala | ⏳ | a detallar | 0 |
 
-**Paso actual:** 0.2.2 (desarrollo) · validación pendiente desde 0.0.2
+**Paso actual:** 0.2.3 (desarrollo) · validación pendiente desde 0.0.2
 
 ---
 
@@ -52,8 +52,8 @@
 
 ### Etapa 0.2 · Cuentas
 - [x] 0.2.1 Tabla `profiles` y `private_contacts` + RLS + trigger de creación de perfil (⏱️ 2 h) — 14/10/2026, 22 pruebas de seguridad en `supabase/tests/rls_test.py`
-- [ ] 0.2.2 Login con correo y enlace mágico (⏱️ 2 h) **← ESTÁS ACÁ**
-- [ ] 0.2.3 Login con Google (⏱️ 3 h)
+- [x] 0.2.2 Login con correo y enlace mágico (⏱️ 2 h) — 14/10/2026, enlace + código de 6 números (D50)
+- [ ] 0.2.3 Login con Google (⏱️ 3 h) **← ESTÁS ACÁ**
 - [ ] 0.2.4 Modo visitante: ver sin cuenta; al actuar, pedir login y volver a la acción (⏱️ 2 h)
 - [ ] 0.2.5 Textos de términos y privacidad + consentimiento al registrarse (⏱️ 2 h)
 - [ ] 0.2.6 Ajustes: perfil, radio de avisos, cerrar sesión, **borrar mi cuenta** (⏱️ 2 h)
@@ -69,7 +69,7 @@
 - [ ] 0.4.2 Mostrar, descargar e imprimir el QR desde la ficha (⏱️ 2 h)
 - [ ] 0.4.3 Página pública liviana `/m/<código>` (foto, nombre, datos elegidos) (⏱️ 3 h)
 - [ ] 0.4.4 **Contacto inverso:** tabla `owner_alerts` + formulario "Avisar a mi familia" (sin cuenta, con anti-bots) + Edge Function `owner-alert` con límites + bandeja "Avisos" del dueño con consejo anti-estafa (⏱️ 5 h)
-- [ ] 0.4.4b Email de respaldo de los avisos (SMTP en Supabase con proveedor gratis) (⏱️ 1 h)
+- [ ] 0.4.4b Email de respaldo de los avisos (SMTP en Supabase con proveedor gratis) **+ correos de login en español con código** (`python3 -I supabase/configurar_auth.py --aplicar`). **Obligatorio antes del lanzamiento**: sin SMTP propio Supabase manda 2 correos por hora y en inglés (⏱️ 1 h)
 - [ ] 0.4.5 Registrar los escaneos (`qr_scans`) con ubicación opcional compartida (⏱️ 1 h)
 
 ### Etapa 0.5 · SOS
@@ -240,6 +240,7 @@
 | 13/10/2026 | 0.1.6 | ✅ Textos en `app/lib/l10n/app_es.arb` (voseo), idioma `es_UY`, acceso `context.t`; prueba que falla si aparece un texto escrito en una pantalla (D48) |
 | 13/10/2026 | 0.1.7 | ✅ Supabase CLI 2.118.0 vinculado a dev (credenciales en `~/.config/sosmascotas/supabase-dev.env`). Migraciones `zones` (Pando) + `events` aplicadas; RLS verificado; `track()` con id anónimo por instalación (D49). **Etapa 0.1 terminada** |
 | 14/10/2026 | 0.2.1 | ✅ `profiles` (se crea solo al registrarse; plan y rol no editables desde la app) y `private_contacts` (nadie la lee desde la app). Script de pruebas de seguridad con cuentas temporales |
+| 14/10/2026 | 0.2.2 | ✅ Pantalla Ingresar (correo → enlace o código de 6 números, sin contraseña), vuelve a la acción; cerrar sesión. Config de login versionada en `supabase/configurar_auth.py`. Los correos en español requieren SMTP propio (pasado a 0.4.4b) (D50) |
 | 13/10/2026 | 0.0.2 | Análisis de puntos débiles: contacto inverso en lugar de redirección a WhatsApp; pasos nuevos de identidad, legal temprano, formalización, soporte y criterios de corte (D41–D43) |
 | 12/10/2026 | 0.0.2 | Sin combo de microchip (D39). Línea institucional: Zoonosis de Canelones → nacional → mundial (D40) |
 | 12/10/2026 | 0.0.2 | Chapitas pre-codificadas, retiro en veterinaria, sponsors y prototipo con impresión 3D (D35–D38) |

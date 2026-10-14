@@ -5,8 +5,11 @@ import 'package:http/testing.dart';
 import 'package:sosmascota/src/app.dart';
 import 'package:sosmascota/src/config/env_provider.dart';
 import 'package:sosmascota/src/config/supabase_providers.dart';
+import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
 import 'package:sosmascota/src/metricas/metricas.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
+
+import 'cuenta_falsa.dart';
 
 const urlPrueba = 'https://abc.supabase.co';
 const clavePrueba = 'sb_publishable_prueba';
@@ -16,8 +19,10 @@ Widget appDePrueba({
   AppFlavor flavor = AppFlavor.dev,
   bool conSupabase = false,
   int respuestaSalud = 200,
+  ServicioCuenta? cuenta,
 }) => ProviderScope(
   overrides: [
+    servicioCuentaProvider.overrideWithValue(cuenta ?? ServicioCuentaFalso()),
     appEnvProvider.overrideWithValue(
       AppEnv(
         flavor: flavor,
