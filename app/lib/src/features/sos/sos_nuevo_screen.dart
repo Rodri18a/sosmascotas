@@ -36,6 +36,8 @@ class _SosNuevoScreenState extends ConsumerState<SosNuevoScreen> {
   final _senas = TextEditingController();
   final _descripcion = TextEditingController();
   final _recompensa = TextEditingController();
+  final _whatsapp = TextEditingController();
+  bool _mostrarWhatsapp = false;
 
   TipoSos _tipo = TipoSos.perdida;
   Mascota? _mascota;
@@ -72,6 +74,7 @@ class _SosNuevoScreenState extends ConsumerState<SosNuevoScreen> {
       _senas,
       _descripcion,
       _recompensa,
+      _whatsapp,
     ]) {
       c.dispose();
     }
@@ -169,6 +172,13 @@ class _SosNuevoScreenState extends ConsumerState<SosNuevoScreen> {
           cuando: _cuando,
         ),
       );
+      if (_mostrarWhatsapp) {
+        try {
+          await repo.mostrarWhatsapp(id, numero: _whatsapp.text, activo: true);
+        } on Exception {
+          // El SOS ya se publicó; el WhatsApp se puede activar desde el detalle.
+        }
+      }
       ref.invalidate(misSosProvider);
       if (mounted) context.go(Rutas.detalleSos(id));
     } on SosException catch (e) {
@@ -177,6 +187,7 @@ class _SosNuevoScreenState extends ConsumerState<SosNuevoScreen> {
         () => _error = switch (e.tipo) {
           ErrorSos.limiteDiario => t.sosLimiteDiario,
           ErrorSos.datosInvalidos => t.errorDesconocido,
+          ErrorSos.demasiadosAvisos => t.errorDemasiadosIntentos,
           ErrorSos.sinConexion => t.errorSinConexion,
         },
       );
@@ -438,6 +449,25 @@ class _SosNuevoScreenState extends ConsumerState<SosNuevoScreen> {
                     ),
                   ),
                 ],
+                SwitchListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(t.sosMostrarWhatsapp),
+                  subtitle: Text(t.sosMostrarWhatsappRiesgo),
+                  value: _mostrarWhatsapp,
+                  onChanged: (v) => setState(() => _mostrarWhatsapp = v),
+                ),
+                if (_mostrarWhatsapp)
+                  TextFormField(
+                    controller: _whatsapp,
+                    keyboardType: TextInputType.phone,
+                    maxLength: 20,
+                    decoration: InputDecoration(labelText: t.sosTuWhatsapp),
+                    validator: (v) =>
+                        _mostrarWhatsapp &&
+                            telefonoInternacionalUy(v ?? '') == null
+                        ? t.sosWhatsappInvalido
+                        : null,
+                  ),
                 const SizedBox(height: 8),
                 Text(t.sosPrivacidad, style: tema.textTheme.bodySmall),
                 if (_error case final error?) ...[

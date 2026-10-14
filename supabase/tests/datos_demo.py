@@ -89,8 +89,14 @@ def crear(h):
     _, tags = pedir('GET', f"{URL}/rest/v1/qr_tags?select=id,code&pet_id=eq.{mascota['id']}", headers=yo)
     pedir('PATCH', f"{URL}/rest/v1/qr_tags?id=eq.{tags[0]['id']}",
           {'public_note': 'Es miedosa con los ruidos fuertes. Toma medicación para la tiroides.'}, yo)
-    print(f"✅ Demo creada: Canela (código {tags[0]['code']})")
+    _, sos_id = pedir('POST', f'{URL}/rest/v1/rpc/crear_sos', {'p': {
+        'kind': 'lost', 'species_id': 1, 'pet_id': mascota['id'], 'name': 'Canela', 'color': 'Marrón claro',
+        'marks': 'Collar rojo y una mancha blanca en el pecho', 'has_microchip': True,
+        'description': 'Se escapó con los fuegos artificiales. Es miedosa: no la persigas.',
+        'reward': 'Sí, a convenir', 'lat': -34.7195, 'lng': -55.9555, 'photos': [f'pet-photos/{ruta}']}}, yo)
+    print(f"✅ Demo creada: Canela (código {tags[0]['code']}), reportada perdida")
     print(f"   Página del QR: http://localhost:3002/m/{tags[0]['code']}")
+    print(f"   Página del SOS: http://localhost:3002/s/{sos_id}")
     return tags[0]['code']
 
 

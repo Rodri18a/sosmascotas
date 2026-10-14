@@ -8,13 +8,14 @@ const ERRORES_AVISO = {
   falta_antibots: 'Esperá a que termine el control anti-robots y volvé a enviar.',
   antibots: 'No pudimos verificar que no seas un robot. Recargá la página y probá de nuevo.',
   demasiados_avisos: 'Se enviaron muchos avisos en poco tiempo. Probá de nuevo en un rato.',
-  no_encontrado: 'Este código ya no está activo.',
+  no_encontrado: 'Este código o reporte ya no está activo.',
 };
 
 let tokenAntibots = null;
 let widgetAntibots = null;
 let ubicacion = null;
-let codigoActual = null;
+// Destino del aviso: { target_type: 'qr', code } o { target_type: 'sos', report_id }.
+let destinoActual = null;
 
 function mostrarErrorAviso(mensaje) {
   const p = document.getElementById('error-aviso');
@@ -67,8 +68,7 @@ async function enviarAviso(evento) {
       method: 'POST',
       headers: { apikey: CONF.supabaseKey, 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        target_type: 'qr',
-        code: codigoActual,
+        ...destinoActual,
         message: valor('mensaje'),
         sender_name: valor('nombre-remitente'),
         sender_contact: valor('contacto'),
@@ -92,15 +92,18 @@ async function enviarAviso(evento) {
   }
 }
 
-window.addEventListener('sos:mascota', (e) => {
-  codigoActual = e.detail.codigo;
+function habilitarAviso(destino) {
+  destinoActual = destino;
   document.getElementById('abrir-aviso').addEventListener('click', () => {
     document.getElementById('tarjeta-contacto').hidden = true;
     document.getElementById('aviso').hidden = false;
     prepararAntibots();
     document.getElementById('mensaje').focus();
   });
-});
+}
+
+window.addEventListener('sos:mascota', (e) => habilitarAviso({ target_type: 'qr', code: e.detail.codigo }));
+window.addEventListener('sos:reporte', (e) => habilitarAviso({ target_type: 'sos', report_id: e.detail.id }));
 
 document.getElementById('compartir-ubicacion').addEventListener('change', (e) => pedirUbicacion(e.target));
 document.getElementById('aviso').addEventListener('submit', enviarAviso);

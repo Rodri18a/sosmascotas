@@ -308,6 +308,35 @@ def main():
         caso('la lista está ordenada por distancia',
              [x['distance_m'] for x in cercanos] == sorted(x['distance_m'] for x in cercanos))
 
+        print('sos detalle, WhatsApp opcional y avisos al SOS')
+        s_det, det = rest('POST', 'rpc/sos_publico', {'p_id': sos_id})
+        texto_det = json.dumps(det)
+        caso('un visitante ve el detalle con fotos y zona aproximada',
+             s_det == 200 and det.get('status') == 'active' and det.get('photos') == [f'sos-photos/{a_id}/sos1.jpg']
+             and abs(det.get('lat', 0) - mio['public_lat']) < 1e-9)
+        caso('el detalle no expone al autor ni el punto exacto',
+             texto_det.replace(f'sos-photos/{a_id}', '').find(a_id) == -1 and str(mio['lat']) not in texto_det
+             and det.get('mine') is False)
+        caso('por defecto no muestra WhatsApp', det.get('whatsapp') is None)
+        caso('el autor se reconoce como dueño del reporte', rest('POST', 'rpc/sos_publico', {'p_id': sos_id}, a)[1].get('mine') is True)
+        rest('POST', 'rpc/guardar_mi_whatsapp', {'p_whatsapp': '099 111 222'}, a)
+        caso('B no puede activar el WhatsApp en el SOS de A',
+             rest('POST', 'rpc/activar_whatsapp_en_sos', {'p_sos_id': sos_id, 'p_activo': True}, b)[0] >= 400)
+        caso('A activa su WhatsApp en el reporte y se muestra',
+             rest('POST', 'rpc/activar_whatsapp_en_sos', {'p_sos_id': sos_id, 'p_activo': True}, a)[0] in (200, 204)
+             and rest('POST', 'rpc/sos_publico', {'p_id': sos_id})[1].get('whatsapp') == '099 111 222')
+        rest('POST', 'rpc/activar_whatsapp_en_sos', {'p_sos_id': sos_id, 'p_activo': False}, a)
+        caso('al desactivarlo deja de mostrarse', rest('POST', 'rpc/sos_publico', {'p_id': sos_id})[1].get('whatsapp') is None)
+        caso('un visitante no puede guardar WhatsApp', rest('POST', 'rpc/guardar_mi_whatsapp', {'p_whatsapp': '099'})[0] in (401, 403))
+        aviso_sos = {'target_type': 'sos', 'report_id': sos_id, 'message': 'La vi cerca de la plaza', 'sender_name': 'Beto',
+                     'sender_contact': '098 765 432', 'consent': True}
+        caso('sin sesión y sin anti-bots no se puede avisar al SOS',
+             pedir('POST', aviso_url, aviso_sos, {'apikey': PUBLICA, 'User-Agent': f'prueba-{uuid.uuid4()}'})[0] == 400)
+        caso('B (con sesión, desde la app) avisa al SOS sin anti-bots',
+             pedir('POST', aviso_url, aviso_sos, {**b, 'User-Agent': f'prueba-{uuid.uuid4()}'})[0] == 200)
+        caso('A recibe el aviso del SOS',
+             any(x['target_type'] == 'sos' and x['sender_name'] == 'Beto' for x in filas(rest('GET', 'owner_alerts_app?select=*', quien=a))))
+
         print('flags (reportar contenido)')
         c_id, c = crear_usuario('c')
         try:
@@ -319,8 +348,12 @@ def main():
             caso('con 2 reportes sigue activo', filas(rest('POST', 'rpc/mis_sos', {}, a))[-1]['status'] == 'active'
                  or any(r['id'] == sos_id and r['status'] == 'active' for r in filas(rest('POST', 'rpc/mis_sos', {}, a))))
             rest('POST', 'flags', {'target_type': 'sos', 'target_id': sos_id}, a, 'return=minimal')
+            caso('un SOS oculto no se ve para otros', rest('POST', 'rpc/sos_publico', {'p_id': sos_id}, b)[1].get('status') in ('active', 'not_found'))
             caso('con 3 personas distintas se oculta solo',
                  any(r['id'] == sos_id and r['status'] == 'hidden' for r in filas(rest('POST', 'rpc/mis_sos', {}, a))))
+            caso('oculto: otros ven not_found y el autor lo sigue viendo',
+                 rest('POST', 'rpc/sos_publico', {'p_id': sos_id}, b)[1].get('status') == 'not_found'
+                 and rest('POST', 'rpc/sos_publico', {'p_id': sos_id}, a)[1].get('status') == 'hidden')
             caso('B no ve los reportes de contenido de otros', all(f['reporter_id'] == b_id for f in filas(rest('GET', 'flags?select=*', quien=b))))
         finally:
             pedir('DELETE', f'{URL}/auth/v1/admin/users/{c_id}', headers=ADMIN)

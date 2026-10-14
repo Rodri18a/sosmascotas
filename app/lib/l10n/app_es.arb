@@ -369,5 +369,44 @@
         "type": "int"
       }
     }
-  }
+  },
+  "sosMostrarWhatsapp": "Mostrar mi WhatsApp en este reporte",
+  "sosMostrarWhatsappRiesgo": "No recomendado: cualquiera vería tu número y es la vía más usada para estafas. Sin esto, igual te llegan los avisos.",
+  "sosTuWhatsapp": "Tu WhatsApp",
+  "sosWhatsappInvalido": "Revisá el número (ej.: 099 123 456).",
+  "sosNoEncontrado": "Este reporte no existe o ya no está disponible.",
+  "sosEnlaceCopiado": "Enlace copiado: pegalo en WhatsApp o Facebook para compartirlo.",
+  "sosAvisarMotivoCuenta": "Para avisar desde la app necesitamos una cuenta (así evitamos avisos falsos). También podés avisar desde la página web del reporte, sin cuenta.",
+  "sosAvisoEnviado": "¡Gracias! Tu aviso le llegó.",
+  "sosWhatsappAdvertenciaTitulo": "Antes de escribir por WhatsApp",
+  "sosWhatsappAdvertencia": "Nunca pidas ni mandes plata. Si alguien te pide un pago para devolver una mascota, es una estafa.",
+  "sosWhatsappAbrir": "Abrir WhatsApp",
+  "sosEstadoResuelto": "¡Apareció! Este reporte ya está resuelto.",
+  "sosEstadoArchivado": "Este reporte está archivado.",
+  "sosEstadoOculto": "Este reporte está oculto mientras lo revisamos.",
+  "sosRecompensaValor": "Recompensa: {valor}",
+  "@sosRecompensaValor": {
+    "placeholders": {
+      "valor": {
+        "type": "String"
+      }
+    }
+  },
+  "sosConsejoVeterinaria": "Si la tenés con vos, llevala a una veterinaria: pueden leer si tiene microchip y avisar a su familia.",
+  "sosConsejoVista": "Si la ves, no la persigas: avisá al dueño con el lugar y la hora. Una foto ayuda mucho.",
+  "sosConsejoDuenoRenac": "Si tiene microchip, marcala como extraviada en el RENAC (consultá en tu veterinaria). Compartí este reporte en los grupos de la zona.",
+  "sosConsejoEncontradaPropia": "Si la llevás a una veterinaria, pueden leer si tiene microchip y encontrar a su familia más rápido.",
+  "sosZonaAproximada": "Zona aproximada",
+  "sosAvisarDueno": "Avisar al dueño",
+  "sosAvisarQuienEncontro": "Es mía / sé de quién es",
+  "sosCompartir": "Compartir",
+  "sosPrivacidadDetalle": "El teléfono del autor no se muestra: tu aviso le llega y decide cómo contactarte. La ubicación del mapa es aproximada.",
+  "sosAvisarTitulo": "Dejale un aviso",
+  "sosAvisoMensaje": "Mensaje (dónde y cuándo la viste)",
+  "sosAvisoNombre": "Tu nombre",
+  "sosAvisoContacto": "Tu teléfono o WhatsApp",
+  "sosAvisoConsentimiento": "Acepto que reciba mi nombre y mi teléfono para contactarme.",
+  "sosAvisoFaltaConsentimiento": "Para enviar el aviso tenés que aceptar compartir tu contacto.",
+  "sosAvisoEnviar": "Enviar aviso",
+  "sosCampoObligatorio": "Completá este dato."
 }

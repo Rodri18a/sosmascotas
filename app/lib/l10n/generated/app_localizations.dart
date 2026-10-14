@@ -1269,6 +1269,198 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'el {dia}/{mes}'**
   String elDia(int dia, int mes);
+
+  /// No description provided for @sosMostrarWhatsapp.
+  ///
+  /// In es, this message translates to:
+  /// **'Mostrar mi WhatsApp en este reporte'**
+  String get sosMostrarWhatsapp;
+
+  /// No description provided for @sosMostrarWhatsappRiesgo.
+  ///
+  /// In es, this message translates to:
+  /// **'No recomendado: cualquiera vería tu número y es la vía más usada para estafas. Sin esto, igual te llegan los avisos.'**
+  String get sosMostrarWhatsappRiesgo;
+
+  /// No description provided for @sosTuWhatsapp.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu WhatsApp'**
+  String get sosTuWhatsapp;
+
+  /// No description provided for @sosWhatsappInvalido.
+  ///
+  /// In es, this message translates to:
+  /// **'Revisá el número (ej.: 099 123 456).'**
+  String get sosWhatsappInvalido;
+
+  /// No description provided for @sosNoEncontrado.
+  ///
+  /// In es, this message translates to:
+  /// **'Este reporte no existe o ya no está disponible.'**
+  String get sosNoEncontrado;
+
+  /// No description provided for @sosEnlaceCopiado.
+  ///
+  /// In es, this message translates to:
+  /// **'Enlace copiado: pegalo en WhatsApp o Facebook para compartirlo.'**
+  String get sosEnlaceCopiado;
+
+  /// No description provided for @sosAvisarMotivoCuenta.
+  ///
+  /// In es, this message translates to:
+  /// **'Para avisar desde la app necesitamos una cuenta (así evitamos avisos falsos). También podés avisar desde la página web del reporte, sin cuenta.'**
+  String get sosAvisarMotivoCuenta;
+
+  /// No description provided for @sosAvisoEnviado.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Gracias! Tu aviso le llegó.'**
+  String get sosAvisoEnviado;
+
+  /// No description provided for @sosWhatsappAdvertenciaTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Antes de escribir por WhatsApp'**
+  String get sosWhatsappAdvertenciaTitulo;
+
+  /// No description provided for @sosWhatsappAdvertencia.
+  ///
+  /// In es, this message translates to:
+  /// **'Nunca pidas ni mandes plata. Si alguien te pide un pago para devolver una mascota, es una estafa.'**
+  String get sosWhatsappAdvertencia;
+
+  /// No description provided for @sosWhatsappAbrir.
+  ///
+  /// In es, this message translates to:
+  /// **'Abrir WhatsApp'**
+  String get sosWhatsappAbrir;
+
+  /// No description provided for @sosEstadoResuelto.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Apareció! Este reporte ya está resuelto.'**
+  String get sosEstadoResuelto;
+
+  /// No description provided for @sosEstadoArchivado.
+  ///
+  /// In es, this message translates to:
+  /// **'Este reporte está archivado.'**
+  String get sosEstadoArchivado;
+
+  /// No description provided for @sosEstadoOculto.
+  ///
+  /// In es, this message translates to:
+  /// **'Este reporte está oculto mientras lo revisamos.'**
+  String get sosEstadoOculto;
+
+  /// No description provided for @sosRecompensaValor.
+  ///
+  /// In es, this message translates to:
+  /// **'Recompensa: {valor}'**
+  String sosRecompensaValor(String valor);
+
+  /// No description provided for @sosConsejoVeterinaria.
+  ///
+  /// In es, this message translates to:
+  /// **'Si la tenés con vos, llevala a una veterinaria: pueden leer si tiene microchip y avisar a su familia.'**
+  String get sosConsejoVeterinaria;
+
+  /// No description provided for @sosConsejoVista.
+  ///
+  /// In es, this message translates to:
+  /// **'Si la ves, no la persigas: avisá al dueño con el lugar y la hora. Una foto ayuda mucho.'**
+  String get sosConsejoVista;
+
+  /// No description provided for @sosConsejoDuenoRenac.
+  ///
+  /// In es, this message translates to:
+  /// **'Si tiene microchip, marcala como extraviada en el RENAC (consultá en tu veterinaria). Compartí este reporte en los grupos de la zona.'**
+  String get sosConsejoDuenoRenac;
+
+  /// No description provided for @sosConsejoEncontradaPropia.
+  ///
+  /// In es, this message translates to:
+  /// **'Si la llevás a una veterinaria, pueden leer si tiene microchip y encontrar a su familia más rápido.'**
+  String get sosConsejoEncontradaPropia;
+
+  /// No description provided for @sosZonaAproximada.
+  ///
+  /// In es, this message translates to:
+  /// **'Zona aproximada'**
+  String get sosZonaAproximada;
+
+  /// No description provided for @sosAvisarDueno.
+  ///
+  /// In es, this message translates to:
+  /// **'Avisar al dueño'**
+  String get sosAvisarDueno;
+
+  /// No description provided for @sosAvisarQuienEncontro.
+  ///
+  /// In es, this message translates to:
+  /// **'Es mía / sé de quién es'**
+  String get sosAvisarQuienEncontro;
+
+  /// No description provided for @sosCompartir.
+  ///
+  /// In es, this message translates to:
+  /// **'Compartir'**
+  String get sosCompartir;
+
+  /// No description provided for @sosPrivacidadDetalle.
+  ///
+  /// In es, this message translates to:
+  /// **'El teléfono del autor no se muestra: tu aviso le llega y decide cómo contactarte. La ubicación del mapa es aproximada.'**
+  String get sosPrivacidadDetalle;
+
+  /// No description provided for @sosAvisarTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Dejale un aviso'**
+  String get sosAvisarTitulo;
+
+  /// No description provided for @sosAvisoMensaje.
+  ///
+  /// In es, this message translates to:
+  /// **'Mensaje (dónde y cuándo la viste)'**
+  String get sosAvisoMensaje;
+
+  /// No description provided for @sosAvisoNombre.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu nombre'**
+  String get sosAvisoNombre;
+
+  /// No description provided for @sosAvisoContacto.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu teléfono o WhatsApp'**
+  String get sosAvisoContacto;
+
+  /// No description provided for @sosAvisoConsentimiento.
+  ///
+  /// In es, this message translates to:
+  /// **'Acepto que reciba mi nombre y mi teléfono para contactarme.'**
+  String get sosAvisoConsentimiento;
+
+  /// No description provided for @sosAvisoFaltaConsentimiento.
+  ///
+  /// In es, this message translates to:
+  /// **'Para enviar el aviso tenés que aceptar compartir tu contacto.'**
+  String get sosAvisoFaltaConsentimiento;
+
+  /// No description provided for @sosAvisoEnviar.
+  ///
+  /// In es, this message translates to:
+  /// **'Enviar aviso'**
+  String get sosAvisoEnviar;
+
+  /// No description provided for @sosCampoObligatorio.
+  ///
+  /// In es, this message translates to:
+  /// **'Completá este dato.'**
+  String get sosCampoObligatorio;
 }
 
 class _AppLocalizationsDelegate

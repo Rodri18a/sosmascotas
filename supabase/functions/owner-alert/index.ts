@@ -72,7 +72,6 @@ Deno.serve(async (req) => {
     return responder(400, { error: 'datos_incompletos' });
   }
   if (cuerpo.consent !== true) return responder(400, { error: 'falta_consentimiento' });
-  if (!token) return responder(400, { error: 'falta_antibots' });
 
   let ubicacion: string | null = null;
   const loc = cuerpo.location as { lat?: unknown; lng?: unknown } | undefined;
@@ -83,15 +82,25 @@ Deno.serve(async (req) => {
     ubicacion = `SRID=4326;POINT(${loc.lng} ${loc.lat})`;
   }
 
-  // 2. Anti-bots.
-  const ip = (req.headers.get('x-forwarded-for') ?? '').split(',')[0].trim();
-  if (!(await pasaTurnstile(token, ip))) return responder(403, { error: 'antibots' });
-
   const admin = createClient(
     Deno.env.get('SUPABASE_URL')!,
     Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
     { auth: { persistSession: false, autoRefreshToken: false } },
   );
+
+  // 2. ¿Quién avisa? Con sesión (desde la app) ya está identificado y no hace
+  // falta el anti-bots; sin sesión (página pública), Turnstile es obligatorio.
+  let remitente: string | null = null;
+  const sesion = req.headers.get('Authorization')?.replace(/^Bearer\s+/i, '');
+  if (sesion && sesion.split('.').length === 3) {
+    const { data } = await admin.auth.getUser(sesion);
+    remitente = data.user?.id ?? null;
+  }
+  const ip = (req.headers.get('x-forwarded-for') ?? '').split(',')[0].trim();
+  if (!remitente) {
+    if (!token) return responder(400, { error: 'falta_antibots' });
+    if (!(await pasaTurnstile(token, ip))) return responder(403, { error: 'antibots' });
+  }
 
   // 3. ¿A quién va el aviso? (el dueño nunca se expone en la respuesta)
   let destino: { target_id: string; owner_id: string; pet_id: string | null } | null = null;
@@ -143,14 +152,7 @@ Deno.serve(async (req) => {
     .maybeSingle();
   if (bloqueado) return responder(200, { ok: true });
 
-  // 6. Si quien avisa tiene sesión, se guarda quién es (para la Fase 1: chat).
-  let remitente: string | null = null;
-  const sesion = req.headers.get('Authorization')?.replace(/^Bearer\s+/i, '');
-  if (sesion && sesion.split('.').length === 3) {
-    const { data } = await admin.auth.getUser(sesion);
-    remitente = data.user?.id ?? null;
-  }
-
+  // 6. Guardar (si quien avisa tiene sesión, se guarda quién es: chat en la Fase 1).
   const { error } = await admin.from('owner_alerts').insert({
     target_type: tipo,
     target_id: destino.target_id,

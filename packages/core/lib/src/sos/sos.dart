@@ -1,5 +1,6 @@
 import '../mapa/mapa.dart';
 import '../mascotas/mascota.dart';
+import '../qr/qr_tag.dart';
 
 /// Perdida (`lost`) o encontrada (`found`).
 enum TipoSos {
@@ -181,3 +182,79 @@ String textoDistancia(double metros) {
       ? '$redondeado m'
       : '${(metros / 1000).toStringAsFixed(1).replaceAll('.', ',')} km';
 }
+
+/// Detalle público de un SOS (`sos_publico`).
+class SosDetalle {
+  const SosDetalle({
+    required this.id,
+    required this.tipo,
+    required this.estado,
+    required this.especie,
+    required this.especieIcono,
+    required this.cuando,
+    required this.zona,
+    required this.fotos,
+    required this.esMio,
+    this.nombre,
+    this.raza,
+    this.sexo = Sexo.unknown,
+    this.color,
+    this.senas,
+    this.descripcion,
+    this.recompensa,
+    this.tieneMicrochip = false,
+    this.whatsapp,
+    this.muestraWhatsapp = false,
+  });
+
+  factory SosDetalle.fromJson(Map<String, Object?> json) => SosDetalle(
+    id: json['id']! as String,
+    tipo: TipoSos.desdeBase(json['kind']),
+    estado: EstadoSos.desdeBase(json['status']),
+    especie: json['species']! as String,
+    especieIcono: json['species_icon']! as String,
+    cuando: DateTime.parse(json['happened_at']! as String).toLocal(),
+    zona: Punto(
+      (json['lat']! as num).toDouble(),
+      (json['lng']! as num).toDouble(),
+    ),
+    fotos: [...?(json['photos'] as List<Object?>?)?.cast<String>()],
+    esMio: json['mine'] == true,
+    nombre: json['name'] as String?,
+    raza: json['breed'] as String?,
+    sexo: Sexo.values.asNameMap()[json['sex']] ?? Sexo.unknown,
+    color: json['color'] as String?,
+    senas: json['marks'] as String?,
+    descripcion: json['description'] as String?,
+    recompensa: json['reward'] as String?,
+    tieneMicrochip: json['has_microchip'] == true,
+    whatsapp: json['whatsapp'] as String?,
+    muestraWhatsapp: json['show_whatsapp'] == true,
+  );
+
+  final String id;
+  final TipoSos tipo;
+  final EstadoSos estado;
+  final String especie;
+  final String especieIcono;
+  final DateTime cuando;
+
+  /// Punto aproximado (nunca el exacto).
+  final Punto zona;
+  final List<String> fotos;
+  final bool esMio;
+  final String? nombre;
+  final String? raza;
+  final Sexo sexo;
+  final String? color;
+  final String? senas;
+  final String? descripcion;
+  final String? recompensa;
+  final bool tieneMicrochip;
+  final String? whatsapp;
+  final bool muestraWhatsapp;
+}
+
+/// Enlace público para compartir un SOS: `<base>/s/<id>`.
+String urlPaginaSos(String id, {String base = urlPublicaPorDefecto}) =>
+    '${base.replaceAll(RegExp(r'/+$'), '')}/s/$id';

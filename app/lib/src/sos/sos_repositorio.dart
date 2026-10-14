@@ -8,7 +8,7 @@ import '../config/supabase_providers.dart';
 import '../cuenta/servicio_cuenta.dart';
 
 /// Motivo por el que no se pudo publicar un SOS.
-enum ErrorSos { limiteDiario, datosInvalidos, sinConexion }
+enum ErrorSos { limiteDiario, datosInvalidos, demasiadosAvisos, sinConexion }
 
 class SosException implements Exception {
   const SosException(this.tipo);
@@ -31,6 +31,24 @@ abstract interface class SosRepositorio {
 
   /// SOS activos más cercanos a [punto] (hasta 50 km).
   Future<List<SosResumen>> cercanos(Punto punto);
+
+  /// Detalle público (`null` si no existe o está oculto).
+  Future<SosDetalle?> detalle(String id);
+
+  /// "Avisar al dueño" desde la app (con sesión: no hace falta anti-bots).
+  Future<void> avisarAlDueno({
+    required String sosId,
+    required String mensaje,
+    required String nombre,
+    required String contacto,
+  });
+
+  /// WhatsApp directo opcional en un reporte propio (desactivado por defecto).
+  Future<void> mostrarWhatsapp(
+    String sosId, {
+    required String? numero,
+    required bool activo,
+  });
 
   /// Enlace público de una foto guardada como `bucket/usuario/archivo`.
   String? urlFoto(String? ruta);
@@ -104,6 +122,61 @@ class SupabaseSosRepositorio implements SosRepositorio {
   }
 
   @override
+  Future<SosDetalle?> detalle(String id) async {
+    final datos = await _cliente.rpc<Map<String, dynamic>>(
+      'sos_publico',
+      params: {'p_id': id},
+    );
+    return datos['status'] == 'not_found' ? null : SosDetalle.fromJson(datos);
+  }
+
+  @override
+  Future<void> avisarAlDueno({
+    required String sosId,
+    required String mensaje,
+    required String nombre,
+    required String contacto,
+  }) async {
+    try {
+      await _cliente.functions.invoke(
+        'owner-alert',
+        body: {
+          'target_type': 'sos',
+          'report_id': sosId,
+          'message': mensaje,
+          'sender_name': nombre,
+          'sender_contact': contacto,
+          'consent': true,
+        },
+      );
+    } on FunctionException catch (e) {
+      throw SosException(
+        e.status == 429 ? ErrorSos.demasiadosAvisos : ErrorSos.datosInvalidos,
+      );
+    } on Exception {
+      throw const SosException(ErrorSos.sinConexion);
+    }
+  }
+
+  @override
+  Future<void> mostrarWhatsapp(
+    String sosId, {
+    required String? numero,
+    required bool activo,
+  }) async {
+    if (activo) {
+      await _cliente.rpc<void>(
+        'guardar_mi_whatsapp',
+        params: {'p_whatsapp': numero},
+      );
+    }
+    await _cliente.rpc<void>(
+      'activar_whatsapp_en_sos',
+      params: {'p_sos_id': sosId, 'p_activo': activo},
+    );
+  }
+
+  @override
   String? urlFoto(String? ruta) {
     if (ruta == null) return null;
     final corte = ruta.indexOf('/');
@@ -135,6 +208,24 @@ class SosSinConfigurar implements SosRepositorio {
   Future<List<SosResumen>> cercanos(Punto punto) async => const [];
 
   @override
+  Future<SosDetalle?> detalle(String id) async => null;
+
+  @override
+  Future<void> avisarAlDueno({
+    required String sosId,
+    required String mensaje,
+    required String nombre,
+    required String contacto,
+  }) => throw const SosException(ErrorSos.sinConexion);
+
+  @override
+  Future<void> mostrarWhatsapp(
+    String sosId, {
+    required String? numero,
+    required bool activo,
+  }) async {}
+
+  @override
   String? urlFoto(String? ruta) => null;
 }
 
@@ -157,4 +248,8 @@ final miZonaProvider = Provider<Punto>((ref) => centroPando);
 final sosCercanosProvider = FutureProvider<List<SosResumen>>(
   (ref) =>
       ref.watch(sosRepositorioProvider).cercanos(ref.watch(miZonaProvider)),
+);
+
+final sosDetalleProvider = FutureProvider.family<SosDetalle?, String>(
+  (ref, id) => ref.watch(sosRepositorioProvider).detalle(id),
 );

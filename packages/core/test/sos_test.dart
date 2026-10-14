@@ -55,4 +55,24 @@ void main() {
     expect(pin.tipo, TipoPin.encontrado);
     expect(pin.punto, const Punto(-34.7, -55.9));
   });
+
+  test('SosDetalle lee sos_publico', () {
+    final d = SosDetalle.fromJson({
+      'id': 's1',
+      'kind': 'lost',
+      'status': 'active',
+      'species': 'Perro',
+      'species_icon': '🐶',
+      'happened_at': '2026-10-14T10:00:00Z',
+      'lat': -34.7,
+      'lng': -55.9,
+      'photos': ['sos-photos/u1/a.jpg'],
+      'mine': false,
+      'has_microchip': true,
+      'whatsapp': null,
+    });
+    expect(d.tieneMicrochip, isTrue);
+    expect(d.esMio, isFalse);
+    expect(urlPaginaSos('s1'), 'https://sosmascotas.uy/s/s1');
+  });
 }

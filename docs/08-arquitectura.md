@@ -82,7 +82,7 @@ Páginas livianas en **HTML + JavaScript sin frameworks** (cargan rápido en cua
 | Ruta | Archivo | Qué muestra |
 |---|---|---|
 | `/m/<código>` | `m.html` + `assets/qr.js` | Página del QR: foto, nombre, especie/raza, señas, nota del dueño, si tiene chip, "Estoy perdido 🆘" y **"Avisar a mi familia"** (contacto inverso) |
-| `/s/<id>` | `s.html` | Página pública de un SOS para compartir (0.5.5) |
+| `/s/<id>` | `s.html` + `assets/sos.js` | Página pública de un SOS para compartir: fotos, datos, zona aproximada (enlace a Google Maps) y "Avisar a su familia" (mismo formulario que el QR, `assets/aviso.js`) |
 
 - Datos: funciones RPC públicas (`public_pet_page`) que devuelven solo lo pensado para quien encuentra a la mascota.
 - Seguridad: todo el texto se inserta con `textContent` (nunca HTML), CSP estricta, `_headers` con `X-Frame-Options: DENY`.
@@ -94,7 +94,7 @@ Páginas livianas en **HTML + JavaScript sin frameworks** (cargan rápido en cua
 | Función | Para qué | Paso |
 |---|---|---|
 | `delete-account` | Borrar mi cuenta (valida la sesión y borra solo esa cuenta) | 0.2.6 ✅ |
-| `owner-alert` | Contacto inverso: aviso al dueño desde el QR o un SOS. Turnstile (secreto `TURNSTILE_SECRET`; en dev, la clave de prueba de Cloudflare), límites 5/h por dispositivo y 10/h por destino, remitentes bloqueados | 0.4.4 ✅ |
+| `owner-alert` | Contacto inverso: aviso al dueño desde el QR o un SOS. Con sesión (desde la app) no pide anti-bots; sin sesión, Turnstile (secreto `TURNSTILE_SECRET`; en dev, la clave de prueba de Cloudflare), límites 5/h por dispositivo y 10/h por destino, remitentes bloqueados | 0.4.4 ✅ |
 
 Se despliegan con `supabase functions deploy <nombre> --use-api` y se prueban en `supabase/tests/rls_test.py`.
 

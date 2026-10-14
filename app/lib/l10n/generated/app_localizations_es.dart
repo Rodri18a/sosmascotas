@@ -728,4 +728,115 @@ class AppLocalizationsEs extends AppLocalizations {
   String elDia(int dia, int mes) {
     return 'el $dia/$mes';
   }
+
+  @override
+  String get sosMostrarWhatsapp => 'Mostrar mi WhatsApp en este reporte';
+
+  @override
+  String get sosMostrarWhatsappRiesgo =>
+      'No recomendado: cualquiera vería tu número y es la vía más usada para estafas. Sin esto, igual te llegan los avisos.';
+
+  @override
+  String get sosTuWhatsapp => 'Tu WhatsApp';
+
+  @override
+  String get sosWhatsappInvalido => 'Revisá el número (ej.: 099 123 456).';
+
+  @override
+  String get sosNoEncontrado =>
+      'Este reporte no existe o ya no está disponible.';
+
+  @override
+  String get sosEnlaceCopiado =>
+      'Enlace copiado: pegalo en WhatsApp o Facebook para compartirlo.';
+
+  @override
+  String get sosAvisarMotivoCuenta =>
+      'Para avisar desde la app necesitamos una cuenta (así evitamos avisos falsos). También podés avisar desde la página web del reporte, sin cuenta.';
+
+  @override
+  String get sosAvisoEnviado => '¡Gracias! Tu aviso le llegó.';
+
+  @override
+  String get sosWhatsappAdvertenciaTitulo => 'Antes de escribir por WhatsApp';
+
+  @override
+  String get sosWhatsappAdvertencia =>
+      'Nunca pidas ni mandes plata. Si alguien te pide un pago para devolver una mascota, es una estafa.';
+
+  @override
+  String get sosWhatsappAbrir => 'Abrir WhatsApp';
+
+  @override
+  String get sosEstadoResuelto => '¡Apareció! Este reporte ya está resuelto.';
+
+  @override
+  String get sosEstadoArchivado => 'Este reporte está archivado.';
+
+  @override
+  String get sosEstadoOculto =>
+      'Este reporte está oculto mientras lo revisamos.';
+
+  @override
+  String sosRecompensaValor(String valor) {
+    return 'Recompensa: $valor';
+  }
+
+  @override
+  String get sosConsejoVeterinaria =>
+      'Si la tenés con vos, llevala a una veterinaria: pueden leer si tiene microchip y avisar a su familia.';
+
+  @override
+  String get sosConsejoVista =>
+      'Si la ves, no la persigas: avisá al dueño con el lugar y la hora. Una foto ayuda mucho.';
+
+  @override
+  String get sosConsejoDuenoRenac =>
+      'Si tiene microchip, marcala como extraviada en el RENAC (consultá en tu veterinaria). Compartí este reporte en los grupos de la zona.';
+
+  @override
+  String get sosConsejoEncontradaPropia =>
+      'Si la llevás a una veterinaria, pueden leer si tiene microchip y encontrar a su familia más rápido.';
+
+  @override
+  String get sosZonaAproximada => 'Zona aproximada';
+
+  @override
+  String get sosAvisarDueno => 'Avisar al dueño';
+
+  @override
+  String get sosAvisarQuienEncontro => 'Es mía / sé de quién es';
+
+  @override
+  String get sosCompartir => 'Compartir';
+
+  @override
+  String get sosPrivacidadDetalle =>
+      'El teléfono del autor no se muestra: tu aviso le llega y decide cómo contactarte. La ubicación del mapa es aproximada.';
+
+  @override
+  String get sosAvisarTitulo => 'Dejale un aviso';
+
+  @override
+  String get sosAvisoMensaje => 'Mensaje (dónde y cuándo la viste)';
+
+  @override
+  String get sosAvisoNombre => 'Tu nombre';
+
+  @override
+  String get sosAvisoContacto => 'Tu teléfono o WhatsApp';
+
+  @override
+  String get sosAvisoConsentimiento =>
+      'Acepto que reciba mi nombre y mi teléfono para contactarme.';
+
+  @override
+  String get sosAvisoFaltaConsentimiento =>
+      'Para enviar el aviso tenés que aceptar compartir tu contacto.';
+
+  @override
+  String get sosAvisoEnviar => 'Enviar aviso';
+
+  @override
+  String get sosCampoObligatorio => 'Completá este dato.';
 }
