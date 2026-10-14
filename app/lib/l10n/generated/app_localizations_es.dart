@@ -247,4 +247,196 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get borrarCuentaHecho => 'Tu cuenta y tus datos se borraron.';
+
+  @override
+  String get mascotaEditarTitulo => 'Editar mascota';
+
+  @override
+  String get mascotaFoto => 'Foto';
+
+  @override
+  String get mascotaAgregarFoto => 'Agregar foto';
+
+  @override
+  String get mascotaCambiarFoto => 'Cambiar foto';
+
+  @override
+  String get mascotaSacarFoto => 'Sacar una foto';
+
+  @override
+  String get mascotaElegirFoto => 'Elegir de la galería';
+
+  @override
+  String get mascotaFotoAyuda =>
+      'Una foto clara de cuerpo entero ayuda mucho si se pierde. Le quitamos la ubicación antes de subirla.';
+
+  @override
+  String get mascotaFotoInvalida =>
+      'No pudimos leer esa imagen. Probá con otra.';
+
+  @override
+  String get mascotaNombre => 'Nombre';
+
+  @override
+  String get mascotaNombreFalta => 'Escribí el nombre de tu mascota.';
+
+  @override
+  String get mascotaEspecie => 'Especie';
+
+  @override
+  String get mascotaEspecieFalta => 'Elegí la especie.';
+
+  @override
+  String get mascotaRaza => 'Raza';
+
+  @override
+  String get mascotaRazaOtra => 'Otra / no está en la lista';
+
+  @override
+  String get mascotaRazaOtraCampo => '¿Qué raza es?';
+
+  @override
+  String get mascotaSexo => 'Sexo';
+
+  @override
+  String get sexoMacho => 'Macho';
+
+  @override
+  String get sexoHembra => 'Hembra';
+
+  @override
+  String get noSe => 'No sé';
+
+  @override
+  String get si => 'Sí';
+
+  @override
+  String get no => 'No';
+
+  @override
+  String get mascotaColor => 'Color';
+
+  @override
+  String get mascotaSenas => 'Señas particulares';
+
+  @override
+  String get mascotaSenasAyuda =>
+      'Manchas, cicatrices, collar… lo que la distinga.';
+
+  @override
+  String get mascotaNacimiento => 'Fecha de nacimiento';
+
+  @override
+  String get mascotaNacimientoAyuda =>
+      'Si no la sabés exacta, una aproximada sirve.';
+
+  @override
+  String get mascotaNacimientoElegir => 'Elegir fecha';
+
+  @override
+  String get mascotaMicrochip => 'Microchip';
+
+  @override
+  String get mascotaMicrochipAyuda =>
+      '15 números. Está en el carné de la veterinaria.';
+
+  @override
+  String get mascotaMicrochipInvalido => 'El microchip tiene 15 números.';
+
+  @override
+  String get mascotaCastrada => '¿Está castrada/o?';
+
+  @override
+  String get mascotaNotas => 'Notas';
+
+  @override
+  String get mascotaNotasAyuda =>
+      'Carácter, miedos, medicación… (solo lo ves vos).';
+
+  @override
+  String get mascotaBorrar => 'Borrar mascota';
+
+  @override
+  String mascotaBorrarTitulo(String nombre) {
+    return '¿Borrar a $nombre?';
+  }
+
+  @override
+  String get mascotaBorrarExplicacion =>
+      'Se borran su ficha y su foto. No se puede deshacer.';
+
+  @override
+  String get borrar => 'Borrar';
+
+  @override
+  String get guardando => 'Guardando…';
+
+  @override
+  String get mascotasVacio =>
+      'Todavía no cargaste ninguna mascota. Con su ficha y su foto vas a poder generar su chapita QR y reportarla rápido si se pierde.';
+
+  @override
+  String get edadMenosDeUnMes => 'Menos de un mes';
+
+  @override
+  String edadMeses(int meses) {
+    String _temp0 = intl.Intl.pluralLogic(
+      meses,
+      locale: localeName,
+      other: '$meses meses',
+      one: '1 mes',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String edadAnios(int anios) {
+    String _temp0 = intl.Intl.pluralLogic(
+      anios,
+      locale: localeName,
+      other: '$anios años',
+      one: '1 año',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String edadAniosYMeses(int anios, int meses) {
+    String _temp0 = intl.Intl.pluralLogic(
+      anios,
+      locale: localeName,
+      other: '$anios años',
+      one: '1 año',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      meses,
+      locale: localeName,
+      other: '$meses meses',
+      one: '1 mes',
+    );
+    return '$_temp0 y $_temp1';
+  }
+
+  @override
+  String get fichaEditar => 'Editar';
+
+  @override
+  String get fichaEdad => 'Edad';
+
+  @override
+  String get fichaCastrada => 'Castrada/o';
+
+  @override
+  String get fichaMicrochipConsejo =>
+      'Si se pierde, a quien la encuentre le vamos a sugerir llevarla a una veterinaria para leer el chip.';
+
+  @override
+  String get fichaSinMicrochip => 'Sin microchip cargado';
+
+  @override
+  String get fichaQrTitulo => 'Chapita QR';
+
+  @override
+  String get fichaQrDescripcion =>
+      'Su código para que quien la encuentre pueda avisarte sin ver tu teléfono.';
 }

@@ -513,6 +513,306 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Tu cuenta y tus datos se borraron.'**
   String get borrarCuentaHecho;
+
+  /// No description provided for @mascotaEditarTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Editar mascota'**
+  String get mascotaEditarTitulo;
+
+  /// No description provided for @mascotaFoto.
+  ///
+  /// In es, this message translates to:
+  /// **'Foto'**
+  String get mascotaFoto;
+
+  /// No description provided for @mascotaAgregarFoto.
+  ///
+  /// In es, this message translates to:
+  /// **'Agregar foto'**
+  String get mascotaAgregarFoto;
+
+  /// No description provided for @mascotaCambiarFoto.
+  ///
+  /// In es, this message translates to:
+  /// **'Cambiar foto'**
+  String get mascotaCambiarFoto;
+
+  /// No description provided for @mascotaSacarFoto.
+  ///
+  /// In es, this message translates to:
+  /// **'Sacar una foto'**
+  String get mascotaSacarFoto;
+
+  /// No description provided for @mascotaElegirFoto.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegir de la galería'**
+  String get mascotaElegirFoto;
+
+  /// No description provided for @mascotaFotoAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Una foto clara de cuerpo entero ayuda mucho si se pierde. Le quitamos la ubicación antes de subirla.'**
+  String get mascotaFotoAyuda;
+
+  /// No description provided for @mascotaFotoInvalida.
+  ///
+  /// In es, this message translates to:
+  /// **'No pudimos leer esa imagen. Probá con otra.'**
+  String get mascotaFotoInvalida;
+
+  /// No description provided for @mascotaNombre.
+  ///
+  /// In es, this message translates to:
+  /// **'Nombre'**
+  String get mascotaNombre;
+
+  /// No description provided for @mascotaNombreFalta.
+  ///
+  /// In es, this message translates to:
+  /// **'Escribí el nombre de tu mascota.'**
+  String get mascotaNombreFalta;
+
+  /// No description provided for @mascotaEspecie.
+  ///
+  /// In es, this message translates to:
+  /// **'Especie'**
+  String get mascotaEspecie;
+
+  /// No description provided for @mascotaEspecieFalta.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegí la especie.'**
+  String get mascotaEspecieFalta;
+
+  /// No description provided for @mascotaRaza.
+  ///
+  /// In es, this message translates to:
+  /// **'Raza'**
+  String get mascotaRaza;
+
+  /// No description provided for @mascotaRazaOtra.
+  ///
+  /// In es, this message translates to:
+  /// **'Otra / no está en la lista'**
+  String get mascotaRazaOtra;
+
+  /// No description provided for @mascotaRazaOtraCampo.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Qué raza es?'**
+  String get mascotaRazaOtraCampo;
+
+  /// No description provided for @mascotaSexo.
+  ///
+  /// In es, this message translates to:
+  /// **'Sexo'**
+  String get mascotaSexo;
+
+  /// No description provided for @sexoMacho.
+  ///
+  /// In es, this message translates to:
+  /// **'Macho'**
+  String get sexoMacho;
+
+  /// No description provided for @sexoHembra.
+  ///
+  /// In es, this message translates to:
+  /// **'Hembra'**
+  String get sexoHembra;
+
+  /// No description provided for @noSe.
+  ///
+  /// In es, this message translates to:
+  /// **'No sé'**
+  String get noSe;
+
+  /// No description provided for @si.
+  ///
+  /// In es, this message translates to:
+  /// **'Sí'**
+  String get si;
+
+  /// No description provided for @no.
+  ///
+  /// In es, this message translates to:
+  /// **'No'**
+  String get no;
+
+  /// No description provided for @mascotaColor.
+  ///
+  /// In es, this message translates to:
+  /// **'Color'**
+  String get mascotaColor;
+
+  /// No description provided for @mascotaSenas.
+  ///
+  /// In es, this message translates to:
+  /// **'Señas particulares'**
+  String get mascotaSenas;
+
+  /// No description provided for @mascotaSenasAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Manchas, cicatrices, collar… lo que la distinga.'**
+  String get mascotaSenasAyuda;
+
+  /// No description provided for @mascotaNacimiento.
+  ///
+  /// In es, this message translates to:
+  /// **'Fecha de nacimiento'**
+  String get mascotaNacimiento;
+
+  /// No description provided for @mascotaNacimientoAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Si no la sabés exacta, una aproximada sirve.'**
+  String get mascotaNacimientoAyuda;
+
+  /// No description provided for @mascotaNacimientoElegir.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegir fecha'**
+  String get mascotaNacimientoElegir;
+
+  /// No description provided for @mascotaMicrochip.
+  ///
+  /// In es, this message translates to:
+  /// **'Microchip'**
+  String get mascotaMicrochip;
+
+  /// No description provided for @mascotaMicrochipAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'15 números. Está en el carné de la veterinaria.'**
+  String get mascotaMicrochipAyuda;
+
+  /// No description provided for @mascotaMicrochipInvalido.
+  ///
+  /// In es, this message translates to:
+  /// **'El microchip tiene 15 números.'**
+  String get mascotaMicrochipInvalido;
+
+  /// No description provided for @mascotaCastrada.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Está castrada/o?'**
+  String get mascotaCastrada;
+
+  /// No description provided for @mascotaNotas.
+  ///
+  /// In es, this message translates to:
+  /// **'Notas'**
+  String get mascotaNotas;
+
+  /// No description provided for @mascotaNotasAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Carácter, miedos, medicación… (solo lo ves vos).'**
+  String get mascotaNotasAyuda;
+
+  /// No description provided for @mascotaBorrar.
+  ///
+  /// In es, this message translates to:
+  /// **'Borrar mascota'**
+  String get mascotaBorrar;
+
+  /// No description provided for @mascotaBorrarTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Borrar a {nombre}?'**
+  String mascotaBorrarTitulo(String nombre);
+
+  /// No description provided for @mascotaBorrarExplicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Se borran su ficha y su foto. No se puede deshacer.'**
+  String get mascotaBorrarExplicacion;
+
+  /// No description provided for @borrar.
+  ///
+  /// In es, this message translates to:
+  /// **'Borrar'**
+  String get borrar;
+
+  /// No description provided for @guardando.
+  ///
+  /// In es, this message translates to:
+  /// **'Guardando…'**
+  String get guardando;
+
+  /// No description provided for @mascotasVacio.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no cargaste ninguna mascota. Con su ficha y su foto vas a poder generar su chapita QR y reportarla rápido si se pierde.'**
+  String get mascotasVacio;
+
+  /// No description provided for @edadMenosDeUnMes.
+  ///
+  /// In es, this message translates to:
+  /// **'Menos de un mes'**
+  String get edadMenosDeUnMes;
+
+  /// No description provided for @edadMeses.
+  ///
+  /// In es, this message translates to:
+  /// **'{meses, plural, =1{1 mes} other{{meses} meses}}'**
+  String edadMeses(int meses);
+
+  /// No description provided for @edadAnios.
+  ///
+  /// In es, this message translates to:
+  /// **'{anios, plural, =1{1 año} other{{anios} años}}'**
+  String edadAnios(int anios);
+
+  /// No description provided for @edadAniosYMeses.
+  ///
+  /// In es, this message translates to:
+  /// **'{anios, plural, =1{1 año} other{{anios} años}} y {meses, plural, =1{1 mes} other{{meses} meses}}'**
+  String edadAniosYMeses(int anios, int meses);
+
+  /// No description provided for @fichaEditar.
+  ///
+  /// In es, this message translates to:
+  /// **'Editar'**
+  String get fichaEditar;
+
+  /// No description provided for @fichaEdad.
+  ///
+  /// In es, this message translates to:
+  /// **'Edad'**
+  String get fichaEdad;
+
+  /// No description provided for @fichaCastrada.
+  ///
+  /// In es, this message translates to:
+  /// **'Castrada/o'**
+  String get fichaCastrada;
+
+  /// No description provided for @fichaMicrochipConsejo.
+  ///
+  /// In es, this message translates to:
+  /// **'Si se pierde, a quien la encuentre le vamos a sugerir llevarla a una veterinaria para leer el chip.'**
+  String get fichaMicrochipConsejo;
+
+  /// No description provided for @fichaSinMicrochip.
+  ///
+  /// In es, this message translates to:
+  /// **'Sin microchip cargado'**
+  String get fichaSinMicrochip;
+
+  /// No description provided for @fichaQrTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Chapita QR'**
+  String get fichaQrTitulo;
+
+  /// No description provided for @fichaQrDescripcion.
+  ///
+  /// In es, this message translates to:
+  /// **'Su código para que quien la encuentre pueda avisarte sin ver tu teléfono.'**
+  String get fichaQrDescripcion;
 }
 
 class _AppLocalizationsDelegate

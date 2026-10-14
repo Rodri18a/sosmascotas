@@ -10,8 +10,10 @@ import 'features/consentimiento/consentimiento_screen.dart';
 import 'features/ingresar/ingresar_screen.dart';
 import 'features/legal/legal_screen.dart';
 import 'features/mapa/mapa_screen.dart';
-import 'features/mascotas/mascota_nueva_screen.dart';
+import 'features/mascotas/ficha_mascota_screen.dart';
+import 'features/mascotas/mascota_form_screen.dart';
 import 'features/mascotas/mascotas_screen.dart';
+import 'features/mascotas/qr_mascota_screen.dart';
 import 'features/shell/app_shell.dart';
 import 'features/sos/sos_nuevo_screen.dart';
 import 'features/sos/sos_screen.dart';
@@ -34,7 +36,11 @@ abstract final class Rutas {
   static const mascotaNueva = '/mascotas/nueva';
 
   /// Rutas que un visitante no puede ver: se le pide ingresar y después vuelve.
-  static const requierenCuenta = <String>[sosNuevo, mascotaNueva];
+  static const requierenCuenta = <String>[sosNuevo, '$mascotas/'];
+
+  static String fichaMascota(String id) => '$mascotas/$id';
+  static String editarMascota(String id) => '$mascotas/$id/editar';
+  static String qrMascota(String id) => '$mascotas/$id/qr';
 
   /// Pantalla de ingreso que, al terminar, vuelve a [destino].
   static String ingresarYVolverA(String destino) =>
@@ -96,7 +102,29 @@ final routerProvider = Provider<GoRouter>((ref) {
               _pestana(
                 Rutas.mascotas,
                 (_, _) => const MascotasScreen(),
-                hijas: [_hija(Rutas.mascotaNueva, const MascotaNuevaScreen())],
+                hijas: [
+                  _hija(Rutas.mascotaNueva, const MascotaFormScreen()),
+                  GoRoute(
+                    path: ':id',
+                    builder: (_, state) => FichaMascotaScreen(
+                      mascotaId: state.pathParameters['id']!,
+                    ),
+                    routes: [
+                      GoRoute(
+                        path: 'editar',
+                        builder: (_, state) => MascotaFormScreen(
+                          mascotaId: state.pathParameters['id'],
+                        ),
+                      ),
+                      GoRoute(
+                        path: 'qr',
+                        builder: (_, state) => QrMascotaScreen(
+                          mascotaId: state.pathParameters['id']!,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ],
           ),

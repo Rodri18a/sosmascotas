@@ -15,7 +15,7 @@
 | 3 · Servicios | ⏳ | a detallar | 0 |
 | 4 · Escala | ⏳ | a detallar | 0 |
 
-**Paso actual:** 0.3.3 (desarrollo) · validación pendiente desde 0.0.2
+**Paso actual:** 0.4.1 (desarrollo) · validación pendiente desde 0.0.2
 
 ### Horas reales vs. estimadas (calibración)
 
@@ -73,11 +73,11 @@ Regla de trabajo: **por cada etapa de desarrollo, avanzar al menos un paso de va
 ### Etapa 0.3 · Mascotas
 - [x] 0.3.1 Seed de `species` y `breeds` (⏱️ 2 h) — 14/10/2026, 10 especies y ~60 razas (Mestizo y Cimarrón uruguayo primero)
 - [x] 0.3.2 Tabla `pets` + RLS + bucket de fotos con límite de tamaño (⏱️ 1 h) — 14/10/2026, bucket `pet-photos` (JPEG/WebP ≤ 2 MB, carpeta por usuario); borrar cuenta también borra las fotos
-- [ ] 0.3.3 Alta y edición de mascota con foto comprimida y sin metadatos de ubicación (EXIF) (⏱️ 4 h) **← ESTÁS ACÁ**
-- [ ] 0.3.4 Pantalla "Mis mascotas": lista, ficha y fila superior de mascotas (⏱️ 3 h)
+- [x] 0.3.3 Alta y edición de mascota con foto comprimida y sin metadatos de ubicación (EXIF) (⏱️ 4 h) — 14/10/2026, `prepararFoto()` probado con una foto con GPS
+- [x] 0.3.4 Pantalla "Mis mascotas": lista, ficha y fila superior de mascotas (⏱️ 3 h) — 14/10/2026. **Etapa 0.3 terminada**
 
 ### Etapa 0.4 · Chapita QR
-- [ ] 0.4.1 Tabla `qr_tags` + código único automático por mascota (⏱️ 1 h)
+- [ ] 0.4.1 Tabla `qr_tags` + código único automático por mascota (⏱️ 1 h) **← ESTÁS ACÁ**
 - [ ] 0.4.2 Mostrar, descargar e imprimir el QR desde la ficha (⏱️ 2 h)
 - [ ] 0.4.3 Página pública liviana `/m/<código>` (foto, nombre, datos elegidos) (⏱️ 3 h)
 - [ ] 0.4.4 **Contacto inverso:** tabla `owner_alerts` + formulario "Avisar a mi familia" (sin cuenta, con anti-bots) + Edge Function `owner-alert` con límites + bandeja "Avisos" del dueño con consejo anti-estafa (⏱️ 5 h)
@@ -259,6 +259,7 @@ Regla de trabajo: **por cada etapa de desarrollo, avanzar al menos un paso de va
 | 14/10/2026 | 0.2.6 | ✅ Ajustes: nombre, radio de avisos (1–20 km), textos legales, cerrar sesión y borrar mi cuenta con confirmación. Edge Function `delete-account` probada en el servidor (borra login, perfil y teléfono; eventos quedan anónimos) (D52). **Etapa 0.2 terminada** salvo activar Google (0.2.3) |
 | 14/10/2026 | 0.2.3 | ✅ Google activado en Supabase dev; el servidor redirige bien a Google. Antes del lanzamiento: publicar la app de Google (salir de modo Prueba) y sumar el dominio |
 | 14/10/2026 | — | Calibración: 0.1 y 0.2 llevaron ≈ 5 h reales contra 23,5 h estimadas. Se recalibra después de la 0.5. Regla: intercalar un paso de validación por etapa (D53) |
+| 14/10/2026 | 0.3.1–0.3.4 | ✅ Especies y razas, tabla `pets` + fotos, formulario de alta/edición (foto achicada y **sin EXIF**), lista con fila superior (mascota activa) y ficha. Arreglado: el formulario no validaba campos fuera de pantalla |
 | 13/10/2026 | 0.0.2 | Análisis de puntos débiles: contacto inverso en lugar de redirección a WhatsApp; pasos nuevos de identidad, legal temprano, formalización, soporte y criterios de corte (D41–D43) |
 | 12/10/2026 | 0.0.2 | Sin combo de microchip (D39). Línea institucional: Zoonosis de Canelones → nacional → mundial (D40) |
 | 12/10/2026 | 0.0.2 | Chapitas pre-codificadas, retiro en veterinaria, sponsors y prototipo con impresión 3D (D35–D38) |

@@ -111,5 +111,87 @@
   "borrarCuentaTitulo": "¿Borrar tu cuenta?",
   "borrarCuentaExplicacion": "Se borran para siempre tu perfil, tus datos de contacto y tus mascotas. No se puede deshacer.",
   "borrarCuentaConfirmar": "Sí, borrar todo",
-  "borrarCuentaHecho": "Tu cuenta y tus datos se borraron."
+  "borrarCuentaHecho": "Tu cuenta y tus datos se borraron.",
+  "mascotaEditarTitulo": "Editar mascota",
+  "mascotaFoto": "Foto",
+  "mascotaAgregarFoto": "Agregar foto",
+  "mascotaCambiarFoto": "Cambiar foto",
+  "mascotaSacarFoto": "Sacar una foto",
+  "mascotaElegirFoto": "Elegir de la galería",
+  "mascotaFotoAyuda": "Una foto clara de cuerpo entero ayuda mucho si se pierde. Le quitamos la ubicación antes de subirla.",
+  "mascotaFotoInvalida": "No pudimos leer esa imagen. Probá con otra.",
+  "mascotaNombre": "Nombre",
+  "mascotaNombreFalta": "Escribí el nombre de tu mascota.",
+  "mascotaEspecie": "Especie",
+  "mascotaEspecieFalta": "Elegí la especie.",
+  "mascotaRaza": "Raza",
+  "mascotaRazaOtra": "Otra / no está en la lista",
+  "mascotaRazaOtraCampo": "¿Qué raza es?",
+  "mascotaSexo": "Sexo",
+  "sexoMacho": "Macho",
+  "sexoHembra": "Hembra",
+  "noSe": "No sé",
+  "si": "Sí",
+  "no": "No",
+  "mascotaColor": "Color",
+  "mascotaSenas": "Señas particulares",
+  "mascotaSenasAyuda": "Manchas, cicatrices, collar… lo que la distinga.",
+  "mascotaNacimiento": "Fecha de nacimiento",
+  "mascotaNacimientoAyuda": "Si no la sabés exacta, una aproximada sirve.",
+  "mascotaNacimientoElegir": "Elegir fecha",
+  "mascotaMicrochip": "Microchip",
+  "mascotaMicrochipAyuda": "15 números. Está en el carné de la veterinaria.",
+  "mascotaMicrochipInvalido": "El microchip tiene 15 números.",
+  "mascotaCastrada": "¿Está castrada/o?",
+  "mascotaNotas": "Notas",
+  "mascotaNotasAyuda": "Carácter, miedos, medicación… (solo lo ves vos).",
+  "mascotaBorrar": "Borrar mascota",
+  "mascotaBorrarTitulo": "¿Borrar a {nombre}?",
+  "@mascotaBorrarTitulo": {
+    "placeholders": {
+      "nombre": {
+        "type": "String",
+        "example": "Firulais"
+      }
+    }
+  },
+  "mascotaBorrarExplicacion": "Se borran su ficha y su foto. No se puede deshacer.",
+  "borrar": "Borrar",
+  "guardando": "Guardando…",
+  "mascotasVacio": "Todavía no cargaste ninguna mascota. Con su ficha y su foto vas a poder generar su chapita QR y reportarla rápido si se pierde.",
+  "edadMenosDeUnMes": "Menos de un mes",
+  "edadMeses": "{meses, plural, =1{1 mes} other{{meses} meses}}",
+  "@edadMeses": {
+    "placeholders": {
+      "meses": {
+        "type": "int"
+      }
+    }
+  },
+  "edadAnios": "{anios, plural, =1{1 año} other{{anios} años}}",
+  "@edadAnios": {
+    "placeholders": {
+      "anios": {
+        "type": "int"
+      }
+    }
+  },
+  "edadAniosYMeses": "{anios, plural, =1{1 año} other{{anios} años}} y {meses, plural, =1{1 mes} other{{meses} meses}}",
+  "@edadAniosYMeses": {
+    "placeholders": {
+      "anios": {
+        "type": "int"
+      },
+      "meses": {
+        "type": "int"
+      }
+    }
+  },
+  "fichaEditar": "Editar",
+  "fichaEdad": "Edad",
+  "fichaCastrada": "Castrada/o",
+  "fichaMicrochipConsejo": "Si se pierde, a quien la encuentre le vamos a sugerir llevarla a una veterinaria para leer el chip.",
+  "fichaSinMicrochip": "Sin microchip cargado",
+  "fichaQrTitulo": "Chapita QR",
+  "fichaQrDescripcion": "Su código para que quien la encuentre pueda avisarte sin ver tu teléfono."
 }

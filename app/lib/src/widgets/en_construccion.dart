@@ -7,16 +7,24 @@ class EnConstruccion extends StatelessWidget {
   const EnConstruccion({
     required this.icono,
     required this.descripcion,
-    required this.paso,
+    required String this.paso,
     this.accion,
     super.key,
   });
+
+  /// Estado vacío (pantalla hecha, pero sin contenido todavía).
+  const EnConstruccion.vacio({
+    required this.icono,
+    required this.descripcion,
+    this.accion,
+    super.key,
+  }) : paso = null;
 
   final IconData icono;
   final String descripcion;
 
   /// Paso de `PROGRESO.md` en el que se construye esta pantalla.
-  final String paso;
+  final String? paso;
 
   /// Botón opcional debajo del texto (por ejemplo, "Agregar mascota").
   final Widget? accion;
@@ -38,13 +46,15 @@ class EnConstruccion extends StatelessWidget {
               textAlign: TextAlign.center,
               style: tema.textTheme.bodyLarge,
             ),
-            const SizedBox(height: 8),
-            Text(
-              context.t.enConstruccionPaso(paso),
-              style: tema.textTheme.bodySmall?.copyWith(
-                color: tema.colorScheme.onSurfaceVariant,
+            if (paso case final paso?) ...[
+              const SizedBox(height: 8),
+              Text(
+                context.t.enConstruccionPaso(paso),
+                style: tema.textTheme.bodySmall?.copyWith(
+                  color: tema.colorScheme.onSurfaceVariant,
+                ),
               ),
-            ),
+            ],
             if (accion case final accion?) ...[
               const SizedBox(height: 24),
               accion,

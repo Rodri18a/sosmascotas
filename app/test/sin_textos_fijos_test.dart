@@ -16,6 +16,21 @@ void main() {
       unicode: true,
     );
 
+    // Un texto armado solo con datos ('${a} ${b}') no es un texto escrito a mano.
+    final literal = RegExp(
+      r"'([^']*)'"
+      '|'
+      r'"([^"]*)"',
+    );
+    final interpolacion = RegExp(r'\$\{[^}]*\}|\$\w+');
+    final letra = RegExp(r'\p{L}', unicode: true);
+    bool tieneTextoFijo(String linea) => literal
+        .allMatches(linea)
+        .map(
+          (m) => (m.group(1) ?? m.group(2) ?? '').replaceAll(interpolacion, ''),
+        )
+        .any(letra.hasMatch);
+
     final problemas = <String>[];
     final archivos = Directory('lib/src')
         .listSync(recursive: true)
@@ -30,8 +45,10 @@ void main() {
         }
         // Un texto suelto en su propia línea, justo después de `Text(`.
         final anterior = i > 0 ? lineas[i - 1].trimRight() : '';
-        if (textoFijo.hasMatch(linea) ||
-            (anterior.endsWith('Text(') && soloTexto.hasMatch(linea))) {
+        final sospechosa =
+            textoFijo.hasMatch(linea) ||
+            (anterior.endsWith('Text(') && soloTexto.hasMatch(linea));
+        if (sospechosa && tieneTextoFijo(linea)) {
           problemas.add('${archivo.path}:${i + 1}: ${linea.trim()}');
         }
       }
