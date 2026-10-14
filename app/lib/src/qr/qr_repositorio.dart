@@ -4,6 +4,25 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../config/supabase_providers.dart';
 
+/// Un escaneo del QR (alguien abrió la página).
+class Escaneo {
+  const Escaneo({required this.id, required this.creado, this.lat, this.lng});
+
+  factory Escaneo.fromJson(Map<String, Object?> json) => Escaneo(
+    id: json['id']! as String,
+    creado: DateTime.parse(json['created_at']! as String).toLocal(),
+    lat: (json['lat'] as num?)?.toDouble(),
+    lng: (json['lng'] as num?)?.toDouble(),
+  );
+
+  final String id;
+  final DateTime creado;
+  final double? lat;
+  final double? lng;
+
+  bool get conUbicacion => lat != null && lng != null;
+}
+
 /// QR de las mascotas propias. Se reemplaza en las pruebas.
 abstract interface class QrRepositorio {
   /// QR digital activo de la mascota (`null` si no tiene).
@@ -13,6 +32,9 @@ abstract interface class QrRepositorio {
   Future<String> regenerar(String mascotaId);
 
   Future<void> guardarNota(String qrId, String? nota);
+
+  /// Últimos escaneos de los QR de la mascota (el más nuevo primero).
+  Future<List<Escaneo>> escaneos(String mascotaId);
 }
 
 class SupabaseQrRepositorio implements QrRepositorio {
@@ -46,6 +68,17 @@ class SupabaseQrRepositorio implements QrRepositorio {
         })
         .eq('id', qrId);
   }
+
+  @override
+  Future<List<Escaneo>> escaneos(String mascotaId) async {
+    final filas = await _cliente
+        .from('qr_scans_app')
+        .select()
+        .eq('pet_id', mascotaId)
+        .order('created_at', ascending: false)
+        .limit(20);
+    return filas.map(Escaneo.fromJson).toList();
+  }
 }
 
 class QrSinConfigurar implements QrRepositorio {
@@ -60,6 +93,9 @@ class QrSinConfigurar implements QrRepositorio {
 
   @override
   Future<void> guardarNota(String qrId, String? nota) async {}
+
+  @override
+  Future<List<Escaneo>> escaneos(String mascotaId) async => const [];
 }
 
 final qrRepositorioProvider = Provider<QrRepositorio>((ref) {
@@ -71,4 +107,8 @@ final qrRepositorioProvider = Provider<QrRepositorio>((ref) {
 
 final qrActivoProvider = FutureProvider.family<QrTag?, String>(
   (ref, mascotaId) => ref.watch(qrRepositorioProvider).qrActivo(mascotaId),
+);
+
+final escaneosProvider = FutureProvider.family<List<Escaneo>, String>(
+  (ref, mascotaId) => ref.watch(qrRepositorioProvider).escaneos(mascotaId),
 );

@@ -15,7 +15,7 @@
 | 3 · Servicios | ⏳ | a detallar | 0 |
 | 4 · Escala | ⏳ | a detallar | 0 |
 
-**Paso actual:** 0.4.5 (desarrollo) · validación pendiente desde 0.0.2
+**Paso actual:** 0.5.1 (desarrollo) · pendiente del dueño: 0.4.4b (proveedor de correo) · validación pendiente desde 0.0.2
 
 ### Horas reales vs. estimadas (calibración)
 
@@ -82,10 +82,10 @@ Regla de trabajo: **por cada etapa de desarrollo, avanzar al menos un paso de va
 - [x] 0.4.3 Página pública liviana `/m/<código>` (foto, nombre, datos elegidos) (⏱️ 3 h) — 14/10/2026, `web-publica/` en HTML+JS sin frameworks; demo con `supabase/tests/datos_demo.py`
 - [x] 0.4.4 **Contacto inverso:** tabla `owner_alerts` + formulario "Avisar a mi familia" (sin cuenta, con anti-bots) + Edge Function `owner-alert` con límites + bandeja "Avisos" del dueño con consejo anti-estafa (⏱️ 5 h) — 14/10/2026, Edge Function `owner-alert` (Turnstile, 5/h por dispositivo, 10/h por destino, bloqueo por estafa), formulario en la página del QR (probado en navegador real) y bandeja Avisos
 - [ ] 0.4.4b Email de respaldo de los avisos (SMTP en Supabase con proveedor gratis) **+ correos de login en español con código** (`python3 -I supabase/configurar_auth.py --aplicar`). **Obligatorio antes del lanzamiento**: sin SMTP propio Supabase manda 2 correos por hora y en inglés (⏱️ 1 h)
-- [ ] 0.4.5 Registrar los escaneos (`qr_scans`) con ubicación opcional compartida (⏱️ 1 h) **← ESTÁS ACÁ**
+- [x] 0.4.5 Registrar los escaneos (`qr_scans`) con ubicación opcional compartida (⏱️ 1 h) — 14/10/2026, botón en la página del QR (probado en Chrome) y "Últimos escaneos" en la app
 
 ### Etapa 0.5 · SOS
-- [ ] 0.5.1 Tablas `sos_reports`, `sos_photos`, `flags` + RLS + ubicación pública aproximada (⏱️ 2 h)
+- [ ] 0.5.1 Tablas `sos_reports`, `sos_photos`, `flags` + RLS + ubicación pública aproximada (⏱️ 2 h) **← ESTÁS ACÁ**
 - [ ] 0.5.2 Capa propia `MapView` + implementación web con MapLibre/OSM (elegir proveedor de teselas, P6) (⏱️ 4 h)
 - [ ] 0.5.3 Formulario de reporte perdida/encontrada (precarga de mascota propia, foto, ubicación tocando el mapa) (⏱️ 4 h)
 - [ ] 0.5.4 Mapa y lista de reportes por cercanía, cargando solo la zona visible (⏱️ 4 h)

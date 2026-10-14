@@ -1011,6 +1011,30 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Ver ubicación'**
   String get avisosVerUbicacion;
+
+  /// No description provided for @qrEscaneosTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Últimos escaneos'**
+  String get qrEscaneosTitulo;
+
+  /// No description provided for @qrSinEscaneos.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía nadie escaneó este QR.'**
+  String get qrSinEscaneos;
+
+  /// No description provided for @qrEscaneoConUbicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Compartió su ubicación: tocá para verla'**
+  String get qrEscaneoConUbicacion;
+
+  /// No description provided for @qrEscaneoSinUbicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Abrieron la página'**
+  String get qrEscaneoSinUbicacion;
 }
 
 class _AppLocalizationsDelegate

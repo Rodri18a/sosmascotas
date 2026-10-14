@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -212,6 +213,9 @@ class _ContenidoState extends ConsumerState<_Contenido> {
           ),
         ),
         const Divider(height: 32),
+        Text(t.qrEscaneosTitulo, style: tema.textTheme.titleMedium),
+        _Escaneos(mascotaId: widget.mascota.id),
+        const Divider(height: 32),
         Text(t.qrConsejoChapita, style: tema.textTheme.bodySmall),
         const SizedBox(height: 8),
         TextButton.icon(
@@ -219,6 +223,50 @@ class _ContenidoState extends ConsumerState<_Contenido> {
           icon: const Icon(Icons.autorenew),
           label: Text(t.qrRegenerar),
         ),
+      ],
+    );
+  }
+}
+
+/// Últimos escaneos: cuándo abrieron la página y, si la compartieron, dónde.
+class _Escaneos extends ConsumerWidget {
+  const _Escaneos({required this.mascotaId});
+
+  final String mascotaId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = context.t;
+    final escaneos = ref.watch(escaneosProvider(mascotaId)).value ?? const [];
+    if (escaneos.isEmpty) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: Text(t.qrSinEscaneos),
+      );
+    }
+    final formato = DateFormat("d 'de' MMMM, HH:mm", 'es');
+    return Column(
+      children: [
+        for (final e in escaneos)
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            leading: Icon(e.conUbicacion ? Icons.place : Icons.qr_code_scanner),
+            title: Text(formato.format(e.creado)),
+            subtitle: Text(
+              e.conUbicacion
+                  ? t.qrEscaneoConUbicacion
+                  : t.qrEscaneoSinUbicacion,
+            ),
+            onTap: e.conUbicacion
+                ? () => launchUrl(
+                    Uri.https('www.google.com', '/maps/search/', {
+                      'api': '1',
+                      'query': '${e.lat},${e.lng}',
+                    }),
+                    mode: LaunchMode.externalApplication,
+                  )
+                : null,
+          ),
       ],
     );
   }

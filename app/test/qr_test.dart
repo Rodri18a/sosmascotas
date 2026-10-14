@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
 import 'package:sosmascota/src/qr/cartel_qr.dart';
+import 'package:sosmascota/src/qr/qr_repositorio.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'cuenta_falsa.dart';
@@ -131,5 +132,35 @@ void main() {
     );
 
     expect(png!.sublist(0, 8), [137, 80, 78, 71, 13, 10, 26, 10]);
+  });
+
+  testWidgets('muestra los últimos escaneos', (tester) async {
+    _pantallaDeCelular(tester);
+    await tester.pumpWidget(
+      appDePrueba(
+        cuenta: ServicioCuentaFalso(conectado: _ana),
+        mascotas: MascotasFalsas([_luna]),
+        qr: QrFalso(
+          listaEscaneos: [
+            Escaneo(
+              id: 'e1',
+              creado: DateTime(2026, 10, 14, 9, 5),
+              lat: -34.7,
+              lng: -55.9,
+            ),
+            Escaneo(id: 'e2', creado: DateTime(2026, 10, 13, 18, 40)),
+          ],
+        ),
+      ),
+    );
+    await _abrirQrDeLuna(tester);
+    await _ver(tester, find.text('Últimos escaneos'));
+
+    await _ver(tester, find.text('Abrieron la página'));
+    expect(
+      find.text('Compartió su ubicación: tocá para verla'),
+      findsOneWidget,
+    );
+    expect(find.text('14 de octubre, 09:05'), findsOneWidget);
   });
 }

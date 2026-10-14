@@ -264,5 +264,9 @@
   "avisosRespondido": "Ya lo contactaste",
   "avisosLlamar": "Llamar",
   "avisosWhatsapp": "WhatsApp",
-  "avisosVerUbicacion": "Ver ubicación"
+  "avisosVerUbicacion": "Ver ubicación",
+  "qrEscaneosTitulo": "Últimos escaneos",
+  "qrSinEscaneos": "Todavía nadie escaneó este QR.",
+  "qrEscaneoConUbicacion": "Compartió su ubicación: tocá para verla",
+  "qrEscaneoSinUbicacion": "Abrieron la página"
 }

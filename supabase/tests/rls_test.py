@@ -236,6 +236,24 @@ def main():
         resultados = [pedir('POST', aviso_url, base, otro)[0] for _ in range(6)]
         caso('más de 5 avisos por hora desde el mismo dispositivo se frenan', resultados[:5] == [200] * 5 and resultados[5] == 429)
 
+        print('qr_scans (escaneos)')
+        s_esc, escaneo = rest('POST', 'rpc/registrar_escaneo', {'p_code': nuevo})
+        caso('un visitante registra un escaneo y recibe su id', s_esc == 200 and isinstance(escaneo, str))
+        caso('con un código inexistente no se registra nada',
+             rest('POST', 'rpc/registrar_escaneo', {'p_code': 'ZZZZZZZZ'})[1] is None)
+        caso('con el código viejo (cambiado) no se registra nada',
+             rest('POST', 'rpc/registrar_escaneo', {'p_code': tag.get('code')})[1] is None)
+        caso('quien escaneó comparte su ubicación',
+             rest('POST', 'rpc/compartir_ubicacion_escaneo', {'p_scan_id': escaneo, 'p_lat': -34.72, 'p_lng': -55.95})[1] is True)
+        caso('no se puede cambiar la ubicación ya compartida',
+             rest('POST', 'rpc/compartir_ubicacion_escaneo', {'p_scan_id': escaneo, 'p_lat': 0, 'p_lng': 0})[1] is False)
+        escaneos_a = filas(rest('GET', 'qr_scans_app?select=*', quien=a))
+        caso('A ve el escaneo con la ubicación compartida',
+             len(escaneos_a) == 1 and abs(escaneos_a[0]['lat'] + 34.72) < 1e-6)
+        caso('B no ve los escaneos de A', filas(rest('GET', 'qr_scans_app?select=id', quien=b)) == [])
+        caso('un visitante no ve escaneos', bloqueado(rest('GET', 'qr_scans?select=id')))
+        caso('nadie inserta escaneos directo', bloqueado(rest('POST', 'qr_scans', {'qr_id': tag.get('id'), 'owner_id': a_id}, b)))
+
         print('storage pet-photos')
         caso('A puede subir una foto en su carpeta', subir(f'pet-photos/{a_id}/prueba.jpg', JPEG_MINIMO, 'image/jpeg', a) == 200)
         caso('A no puede subir en la carpeta de B', subir(f'pet-photos/{b_id}/intruso.jpg', JPEG_MINIMO, 'image/jpeg', a) != 200)

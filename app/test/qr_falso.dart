@@ -2,6 +2,9 @@ import 'package:sosmascota/src/qr/qr_repositorio.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 class QrFalso implements QrRepositorio {
+  QrFalso({this.listaEscaneos = const []});
+
+  final List<Escaneo> listaEscaneos;
   final Map<String, QrTag> porMascota = {};
   int regeneraciones = 0;
 
@@ -38,4 +41,7 @@ class QrFalso implements QrRepositorio {
       notaPublica: nota,
     );
   }
+
+  @override
+  Future<List<Escaneo>> escaneos(String mascotaId) async => listaEscaneos;
 }

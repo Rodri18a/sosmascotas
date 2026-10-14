@@ -556,4 +556,16 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get avisosVerUbicacion => 'Ver ubicación';
+
+  @override
+  String get qrEscaneosTitulo => 'Últimos escaneos';
+
+  @override
+  String get qrSinEscaneos => 'Todavía nadie escaneó este QR.';
+
+  @override
+  String get qrEscaneoConUbicacion => 'Compartió su ubicación: tocá para verla';
+
+  @override
+  String get qrEscaneoSinUbicacion => 'Abrieron la página';
 }

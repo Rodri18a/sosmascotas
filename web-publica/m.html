@@ -34,6 +34,8 @@
       <div class="tarjeta" id="tarjeta-contacto">
         <p><strong>¿Me encontraste?</strong> Avisale a mi familia: les llega tu mensaje y deciden cómo contactarte.</p>
         <button id="abrir-aviso" class="boton principal" type="button">Avisar a mi familia</button>
+        <button id="compartir-ubicacion-escaneo" class="boton secundario" type="button" hidden>Compartir mi ubicación con la familia</button>
+        <p id="ubicacion-compartida" class="ayuda" role="status" hidden>¡Gracias! La familia ya puede ver dónde está.</p>
       </div>
 
       <form id="aviso" class="tarjeta" hidden novalidate>
@@ -69,6 +71,7 @@
   <script src="/assets/comun.js"></script>
   <script src="/assets/qr.js"></script>
   <script src="/assets/aviso.js"></script>
+  <script src="/assets/escaneo.js"></script>
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 </body>
 </html>
