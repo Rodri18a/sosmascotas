@@ -169,6 +169,34 @@ def main():
         caso('A puede editar su mascota',
              filas(rest('PATCH', f"pets?id=eq.{pet.get('id')}", {'color': 'Negro'}, a))[0]['color'] == 'Negro')
 
+        print('qr_tags y página pública')
+        tags_a = filas(rest('GET', f"qr_tags?select=*&pet_id=eq.{pet.get('id')}", quien=a))
+        tag = tags_a[0] if tags_a else {}
+        caso('al crear la mascota se creó su QR digital activo',
+             len(tags_a) == 1 and tag.get('active') and len(tag.get('code', '')) == 8)
+        caso('B no ve los QR de A', filas(rest('GET', 'qr_tags?select=id', quien=b)) == [])
+        caso('un visitante no lista QR', bloqueado(rest('GET', 'qr_tags?select=id')))
+        s_pag, pagina = rest('POST', 'rpc/public_pet_page', {'p_code': tag.get('code', '').lower()})
+        texto_pagina = json.dumps(pagina, ensure_ascii=False)
+        caso('un visitante ve la página pública con el nombre (sin importar mayúsculas)',
+             s_pag == 200 and pagina.get('status') == 'active' and pagina['pet']['name'] == 'Firulais')
+        caso('la página no muestra el microchip ni datos del dueño',
+             '858000000123456' not in texto_pagina and a_id not in texto_pagina
+             and pagina['pet'].get('has_microchip') is True)
+        caso('un código inexistente dice not_found',
+             rest('POST', 'rpc/public_pet_page', {'p_code': 'ZZZZZZZZ'})[1].get('status') == 'not_found')
+        caso('A puede escribir la nota pública',
+             filas(rest('PATCH', f"qr_tags?id=eq.{tag.get('id')}", {'public_note': 'Toma medicación'}, a))[0]['public_note'] == 'Toma medicación')
+        caso('A no puede cambiarse el código a mano', bloqueado(rest('PATCH', f"qr_tags?id=eq.{tag.get('id')}", {'code': 'AAAAAAAA'}, a)))
+        caso('B no puede regenerar el QR de A',
+             rest('POST', 'rpc/regenerar_qr', {'p_pet_id': pet.get('id')}, b)[0] in (401, 403))
+        s_reg, nuevo = rest('POST', 'rpc/regenerar_qr', {'p_pet_id': pet.get('id')}, a)
+        caso('A regenera su QR: el viejo deja de funcionar y el nuevo sí',
+             s_reg == 200 and nuevo != tag.get('code')
+             and rest('POST', 'rpc/public_pet_page', {'p_code': tag.get('code')})[1].get('status') == 'inactive'
+             and rest('POST', 'rpc/public_pet_page', {'p_code': nuevo})[1].get('status') == 'active')
+        caso('un visitante no puede regenerar QR', rest('POST', 'rpc/regenerar_qr', {'p_pet_id': pet.get('id')})[0] in (401, 403))
+
         print('storage pet-photos')
         caso('A puede subir una foto en su carpeta', subir(f'pet-photos/{a_id}/prueba.jpg', JPEG_MINIMO, 'image/jpeg', a) == 200)
         caso('A no puede subir en la carpeta de B', subir(f'pet-photos/{b_id}/intruso.jpg', JPEG_MINIMO, 'image/jpeg', a) != 200)

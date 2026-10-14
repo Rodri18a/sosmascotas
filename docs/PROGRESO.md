@@ -15,7 +15,7 @@
 | 3 · Servicios | ⏳ | a detallar | 0 |
 | 4 · Escala | ⏳ | a detallar | 0 |
 
-**Paso actual:** 0.4.1 (desarrollo) · validación pendiente desde 0.0.2
+**Paso actual:** 0.4.2 (desarrollo) · validación pendiente desde 0.0.2
 
 ### Horas reales vs. estimadas (calibración)
 
@@ -77,8 +77,8 @@ Regla de trabajo: **por cada etapa de desarrollo, avanzar al menos un paso de va
 - [x] 0.3.4 Pantalla "Mis mascotas": lista, ficha y fila superior de mascotas (⏱️ 3 h) — 14/10/2026. **Etapa 0.3 terminada**
 
 ### Etapa 0.4 · Chapita QR
-- [ ] 0.4.1 Tabla `qr_tags` + código único automático por mascota (⏱️ 1 h) **← ESTÁS ACÁ**
-- [ ] 0.4.2 Mostrar, descargar e imprimir el QR desde la ficha (⏱️ 2 h)
+- [x] 0.4.1 Tabla `qr_tags` + código único automático por mascota (⏱️ 1 h) — 14/10/2026, código de 8 caracteres sin ambiguos, `regenerar_qr()` y `public_pet_page()`
+- [ ] 0.4.2 Mostrar, descargar e imprimir el QR desde la ficha (⏱️ 2 h) **← ESTÁS ACÁ**
 - [ ] 0.4.3 Página pública liviana `/m/<código>` (foto, nombre, datos elegidos) (⏱️ 3 h)
 - [ ] 0.4.4 **Contacto inverso:** tabla `owner_alerts` + formulario "Avisar a mi familia" (sin cuenta, con anti-bots) + Edge Function `owner-alert` con límites + bandeja "Avisos" del dueño con consejo anti-estafa (⏱️ 5 h)
 - [ ] 0.4.4b Email de respaldo de los avisos (SMTP en Supabase con proveedor gratis) **+ correos de login en español con código** (`python3 -I supabase/configurar_auth.py --aplicar`). **Obligatorio antes del lanzamiento**: sin SMTP propio Supabase manda 2 correos por hora y en inglés (⏱️ 1 h)

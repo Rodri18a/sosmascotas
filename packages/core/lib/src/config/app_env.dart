@@ -10,6 +10,7 @@ class AppEnv {
     required this.flavor,
     required this.supabaseUrl,
     required this.supabasePublishableKey,
+    this.urlPublica = 'https://sosmascotas.uy',
   });
 
   /// Lee la configuración pasada al compilar.
@@ -19,6 +20,10 @@ class AppEnv {
     supabasePublishableKey: const String.fromEnvironment(
       'SUPABASE_PUBLISHABLE_KEY',
     ),
+    urlPublica: const String.fromEnvironment(
+      'PUBLIC_BASE_URL',
+      defaultValue: 'https://sosmascotas.uy',
+    ),
   );
 
   /// Valida los valores crudos. En producción Supabase es obligatorio;
@@ -27,6 +32,7 @@ class AppEnv {
     required String flavor,
     required String supabaseUrl,
     required String supabasePublishableKey,
+    String urlPublica = 'https://sosmascotas.uy',
   }) {
     final parsedFlavor = AppFlavor.values.asNameMap()[flavor.trim()];
     if (parsedFlavor == null) {
@@ -40,6 +46,7 @@ class AppEnv {
       flavor: parsedFlavor,
       supabaseUrl: supabaseUrl.trim(),
       supabasePublishableKey: supabasePublishableKey.trim(),
+      urlPublica: urlPublica.trim(),
     );
     if (env.isProd && !env.hasSupabase) {
       throw StateError(
@@ -52,6 +59,9 @@ class AppEnv {
   final AppFlavor flavor;
   final String supabaseUrl;
   final String supabasePublishableKey;
+
+  /// Dirección de la web pública (páginas del QR y de los SOS).
+  final String urlPublica;
 
   bool get isProd => flavor == AppFlavor.prod;
 

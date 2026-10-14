@@ -8,3 +8,4 @@ export 'src/mascotas/especie.dart';
 export 'src/mascotas/mascota.dart';
 export 'src/metricas/anon_id.dart';
 export 'src/metricas/eventos.dart';
+export 'src/qr/qr_tag.dart';
