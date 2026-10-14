@@ -15,7 +15,7 @@
 | 3 · Servicios | ⏳ | a detallar | 0 |
 | 4 · Escala | ⏳ | a detallar | 0 |
 
-**Paso actual:** 0.2.6 (desarrollo) · pendiente: credenciales de Google (0.2.3) · validación pendiente desde 0.0.2
+**Paso actual:** 0.3.1 (desarrollo) · pendiente: credenciales de Google (0.2.3) · validación pendiente desde 0.0.2
 
 ---
 
@@ -56,10 +56,10 @@
 - [ ] 0.2.3 Login con Google (⏱️ 3 h) — ⏳ código listo (14/10/2026); **falta crear las credenciales de Google** siguiendo `guias/login-google.md` (15 min, lo hace el dueño)
 - [x] 0.2.4 Modo visitante: ver sin cuenta; al actuar, pedir login y volver a la acción (⏱️ 2 h) — 14/10/2026, `abrirConCuenta()` + rutas que requieren cuenta
 - [x] 0.2.5 Textos de términos y privacidad + consentimiento al registrarse (⏱️ 2 h) — 14/10/2026, borradores en `app/assets/legal/` para la asesoría (D51)
-- [ ] 0.2.6 Ajustes: perfil, radio de avisos, cerrar sesión, **borrar mi cuenta** (⏱️ 2 h) **← ESTÁS ACÁ**
+- [x] 0.2.6 Ajustes: perfil, radio de avisos, cerrar sesión, **borrar mi cuenta** (⏱️ 2 h) — 14/10/2026, Edge Function `delete-account` (D52)
 
 ### Etapa 0.3 · Mascotas
-- [ ] 0.3.1 Seed de `species` y `breeds` (⏱️ 2 h)
+- [ ] 0.3.1 Seed de `species` y `breeds` (⏱️ 2 h) **← ESTÁS ACÁ**
 - [ ] 0.3.2 Tabla `pets` + RLS + bucket de fotos con límite de tamaño (⏱️ 1 h)
 - [ ] 0.3.3 Alta y edición de mascota con foto comprimida y sin metadatos de ubicación (EXIF) (⏱️ 4 h)
 - [ ] 0.3.4 Pantalla "Mis mascotas": lista, ficha y fila superior de mascotas (⏱️ 3 h)
@@ -244,6 +244,7 @@
 | 14/10/2026 | 0.2.3 | ⏳ Botón "Continuar con Google" listo: aparece solo si Google está activo en Supabase. Activación con `configurar_auth.py` cuando estén las credenciales (guía en `docs/guias/login-google.md`) |
 | 14/10/2026 | 0.2.4 | ✅ Visitante ve todo; al tocar "Reportar" o "Agregar mascota" se explica por qué hace falta cuenta y, después de ingresar, llega directo a la acción. Enlaces directos a acciones también piden ingresar |
 | 14/10/2026 | 0.2.5 | ✅ Borradores de términos y privacidad (voseo, Ley 18.331) visibles en la app; pantalla de consentimiento obligatoria con casilla al crear la cuenta y al cambiar la versión; evento `signup` (D51) |
+| 14/10/2026 | 0.2.6 | ✅ Ajustes: nombre, radio de avisos (1–20 km), textos legales, cerrar sesión y borrar mi cuenta con confirmación. Edge Function `delete-account` probada en el servidor (borra login, perfil y teléfono; eventos quedan anónimos) (D52). **Etapa 0.2 terminada** salvo activar Google (0.2.3) |
 | 13/10/2026 | 0.0.2 | Análisis de puntos débiles: contacto inverso en lugar de redirección a WhatsApp; pasos nuevos de identidad, legal temprano, formalización, soporte y criterios de corte (D41–D43) |
 | 12/10/2026 | 0.0.2 | Sin combo de microchip (D39). Línea institucional: Zoonosis de Canelones → nacional → mundial (D40) |
 | 12/10/2026 | 0.0.2 | Chapitas pre-codificadas, retiro en veterinaria, sponsors y prototipo con impresión 3D (D35–D38) |

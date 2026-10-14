@@ -84,5 +84,32 @@
   "consentimientoBorrar": "Podés borrar tu cuenta cuando quieras.",
   "consentimientoCasilla": "Leí y acepto los términos y la política de privacidad",
   "consentimientoAceptar": "Aceptar y continuar",
-  "consentimientoNoAcepto": "No acepto (cerrar sesión)"
+  "consentimientoNoAcepto": "No acepto (cerrar sesión)",
+  "ajustesNombreTitulo": "Tu nombre",
+  "ajustesNombreAyuda": "Así te ven los demás cuando hablás con ellos",
+  "ajustesRadioAvisos": "Avisarme de mascotas perdidas hasta a {km} km",
+  "@ajustesRadioAvisos": {
+    "placeholders": {
+      "km": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  "ajustesKm": "{km} km",
+  "@ajustesKm": {
+    "placeholders": {
+      "km": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  "guardar": "Guardar",
+  "cancelar": "Cancelar",
+  "borrarCuenta": "Borrar mi cuenta",
+  "borrarCuentaTitulo": "¿Borrar tu cuenta?",
+  "borrarCuentaExplicacion": "Se borran para siempre tu perfil, tus datos de contacto y tus mascotas. No se puede deshacer.",
+  "borrarCuentaConfirmar": "Sí, borrar todo",
+  "borrarCuentaHecho": "Tu cuenta y tus datos se borraron."
 }

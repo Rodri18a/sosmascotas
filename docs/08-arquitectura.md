@@ -75,6 +75,15 @@ sosmascotas/
 
 **Control:** alerta de presupuesto y tope diario de cuota en Google Cloud. Si se llega al tope, mostrar la **lista** en lugar del mapa.
 
+## Edge Functions
+
+| Función | Para qué | Paso |
+|---|---|---|
+| `delete-account` | Borrar mi cuenta (valida la sesión y borra solo esa cuenta) | 0.2.6 ✅ |
+| `owner-alert` | Contacto inverso: aviso al dueño desde el QR o un SOS | 0.4.4 |
+
+Se despliegan con `supabase functions deploy <nombre> --use-api` y se prueban en `supabase/tests/rls_test.py`.
+
 ## Notificaciones
 
 | Tipo | Mecanismo | Ejemplo |

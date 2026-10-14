@@ -208,4 +208,43 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get consentimientoNoAcepto => 'No acepto (cerrar sesión)';
+
+  @override
+  String get ajustesNombreTitulo => 'Tu nombre';
+
+  @override
+  String get ajustesNombreAyuda =>
+      'Así te ven los demás cuando hablás con ellos';
+
+  @override
+  String ajustesRadioAvisos(int km) {
+    return 'Avisarme de mascotas perdidas hasta a $km km';
+  }
+
+  @override
+  String ajustesKm(int km) {
+    return '$km km';
+  }
+
+  @override
+  String get guardar => 'Guardar';
+
+  @override
+  String get cancelar => 'Cancelar';
+
+  @override
+  String get borrarCuenta => 'Borrar mi cuenta';
+
+  @override
+  String get borrarCuentaTitulo => '¿Borrar tu cuenta?';
+
+  @override
+  String get borrarCuentaExplicacion =>
+      'Se borran para siempre tu perfil, tus datos de contacto y tus mascotas. No se puede deshacer.';
+
+  @override
+  String get borrarCuentaConfirmar => 'Sí, borrar todo';
+
+  @override
+  String get borrarCuentaHecho => 'Tu cuenta y tus datos se borraron.';
 }

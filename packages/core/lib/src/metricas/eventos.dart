@@ -4,6 +4,7 @@
 abstract final class Eventos {
   static const appOpen = 'app_open';
   static const signup = 'signup';
+  static const accountDelete = 'account_delete';
 }
 
 /// Valida el nombre de un evento con la misma regla que la base de datos.

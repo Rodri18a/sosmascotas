@@ -56,6 +56,9 @@ abstract interface class ServicioCuenta {
   Future<void> ingresarConGoogle({String? redirigirA});
 
   Future<void> salir();
+
+  /// Borra la cuenta y todos sus datos (Edge Function `delete-account`).
+  Future<void> borrarCuenta();
 }
 
 class SupabaseServicioCuenta implements ServicioCuenta {
@@ -92,6 +95,19 @@ class SupabaseServicioCuenta implements ServicioCuenta {
 
   @override
   Future<void> salir() => _traducir(_auth.signOut);
+
+  @override
+  Future<void> borrarCuenta() async {
+    try {
+      await _cliente.functions.invoke('delete-account');
+    } on FunctionException catch (e) {
+      throw CuentaException(ErrorCuenta.desconocido, '${e.status}');
+    } on Exception catch (e) {
+      throw CuentaException(ErrorCuenta.sinConexion, e.toString());
+    }
+    // La cuenta ya no existe: cerrar la sesión local.
+    await _traducir(() => _auth.signOut(scope: SignOutScope.local));
+  }
 
   static Future<void> _traducir(Future<Object?> Function() accion) async {
     try {
@@ -141,6 +157,9 @@ class ServicioCuentaSinConfigurar implements ServicioCuenta {
 
   @override
   Future<void> salir() async {}
+
+  @override
+  Future<void> borrarCuenta() async => _falla();
 }
 
 final servicioCuentaProvider = Provider<ServicioCuenta>((ref) {

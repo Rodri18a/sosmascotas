@@ -447,6 +447,72 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'No acepto (cerrar sesión)'**
   String get consentimientoNoAcepto;
+
+  /// No description provided for @ajustesNombreTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu nombre'**
+  String get ajustesNombreTitulo;
+
+  /// No description provided for @ajustesNombreAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Así te ven los demás cuando hablás con ellos'**
+  String get ajustesNombreAyuda;
+
+  /// No description provided for @ajustesRadioAvisos.
+  ///
+  /// In es, this message translates to:
+  /// **'Avisarme de mascotas perdidas hasta a {km} km'**
+  String ajustesRadioAvisos(int km);
+
+  /// No description provided for @ajustesKm.
+  ///
+  /// In es, this message translates to:
+  /// **'{km} km'**
+  String ajustesKm(int km);
+
+  /// No description provided for @guardar.
+  ///
+  /// In es, this message translates to:
+  /// **'Guardar'**
+  String get guardar;
+
+  /// No description provided for @cancelar.
+  ///
+  /// In es, this message translates to:
+  /// **'Cancelar'**
+  String get cancelar;
+
+  /// No description provided for @borrarCuenta.
+  ///
+  /// In es, this message translates to:
+  /// **'Borrar mi cuenta'**
+  String get borrarCuenta;
+
+  /// No description provided for @borrarCuentaTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Borrar tu cuenta?'**
+  String get borrarCuentaTitulo;
+
+  /// No description provided for @borrarCuentaExplicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Se borran para siempre tu perfil, tus datos de contacto y tus mascotas. No se puede deshacer.'**
+  String get borrarCuentaExplicacion;
+
+  /// No description provided for @borrarCuentaConfirmar.
+  ///
+  /// In es, this message translates to:
+  /// **'Sí, borrar todo'**
+  String get borrarCuentaConfirmar;
+
+  /// No description provided for @borrarCuentaHecho.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu cuenta y tus datos se borraron.'**
+  String get borrarCuentaHecho;
 }
 
 class _AppLocalizationsDelegate

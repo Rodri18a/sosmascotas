@@ -52,6 +52,15 @@ class ServicioCuentaFalso implements ServicioCuenta {
     ingresosConGoogle++;
   }
 
+  int cuentasBorradas = 0;
+
   @override
   Future<void> salir() async => conectar(null);
+
+  @override
+  Future<void> borrarCuenta() async {
+    _quizasFallar();
+    cuentasBorradas++;
+    conectar(null);
+  }
 }
