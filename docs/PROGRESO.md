@@ -9,13 +9,25 @@
 
 | Fase | Estado | Horas estimadas | Horas hechas |
 |---|---|---|---|
-| 0 · SOS | 🔄 En curso | ~145 h (≈ 45 sin código + ≈ 100 de desarrollo) | 0 |
+| 0 · SOS | 🔄 En curso | ~145 h (≈ 45 sin código + ≈ 100 de desarrollo) | ≈ 5 h (pasos que se estimaron en 23,5 h) |
 | 1 · MVP | ⏳ | ~160 h | 0 |
 | 2 · Monetización | ⏳ | a detallar | 0 |
 | 3 · Servicios | ⏳ | a detallar | 0 |
 | 4 · Escala | ⏳ | a detallar | 0 |
 
 **Paso actual:** 0.3.1 (desarrollo) · validación pendiente desde 0.0.2
+
+### Horas reales vs. estimadas (calibración)
+
+Las estimaciones son para una persona programando sola. Con Claude, el desarrollo va más rápido; la validación, la gestión y los plazos externos (tiendas, asesoría legal, pruebas de la chapita) no cambian. **No se reescalan las estimaciones hasta terminar la Etapa 0.5** (mapa, la más incierta).
+
+| Etapa | Estimado | Real | Proporción | Notas |
+|---|---|---|---|---|
+| 0.1 · Base técnica (0.1.2–0.1.7) | 10,5 h | ≈ 2 h 45 min | ≈ 4× | Compilación web lenta en esta máquina (7–15 min con 3,4 GB de RAM) |
+| 0.2 · Cuentas (0.2.1–0.2.6) | 13 h | ≈ 1 h 30 min + ≈ 30 min del dueño (Supabase y Google) | ≈ 6× | Terreno conocido (login, tablas) |
+| **Total** | **23,5 h** | **≈ 5 h** | **≈ 4–5×** | |
+
+Regla de trabajo: **por cada etapa de desarrollo, avanzar al menos un paso de validación (Etapa 0.0)**, para que el código no se adelante a lo que confirman las entrevistas.
 
 ---
 
@@ -246,6 +258,7 @@
 | 14/10/2026 | 0.2.5 | ✅ Borradores de términos y privacidad (voseo, Ley 18.331) visibles en la app; pantalla de consentimiento obligatoria con casilla al crear la cuenta y al cambiar la versión; evento `signup` (D51) |
 | 14/10/2026 | 0.2.6 | ✅ Ajustes: nombre, radio de avisos (1–20 km), textos legales, cerrar sesión y borrar mi cuenta con confirmación. Edge Function `delete-account` probada en el servidor (borra login, perfil y teléfono; eventos quedan anónimos) (D52). **Etapa 0.2 terminada** salvo activar Google (0.2.3) |
 | 14/10/2026 | 0.2.3 | ✅ Google activado en Supabase dev; el servidor redirige bien a Google. Antes del lanzamiento: publicar la app de Google (salir de modo Prueba) y sumar el dominio |
+| 14/10/2026 | — | Calibración: 0.1 y 0.2 llevaron ≈ 5 h reales contra 23,5 h estimadas. Se recalibra después de la 0.5. Regla: intercalar un paso de validación por etapa (D53) |
 | 13/10/2026 | 0.0.2 | Análisis de puntos débiles: contacto inverso en lugar de redirección a WhatsApp; pasos nuevos de identidad, legal temprano, formalización, soporte y criterios de corte (D41–D43) |
 | 12/10/2026 | 0.0.2 | Sin combo de microchip (D39). Línea institucional: Zoonosis de Canelones → nacional → mundial (D40) |
 | 12/10/2026 | 0.0.2 | Chapitas pre-codificadas, retiro en veterinaria, sponsors y prototipo con impresión 3D (D35–D38) |
