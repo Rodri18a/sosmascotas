@@ -64,6 +64,7 @@ class _SosScreenState extends ConsumerState<SosScreen> {
                 ],
               ),
             ),
+            const _MisReportes(),
             ...switch (reportes) {
               AsyncData(value: final lista) => _tarjetas(context, lista),
               AsyncError() => [
@@ -169,6 +170,41 @@ class TarjetaSos extends ConsumerWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+/// Los reportes propios (para cerrarlos cuando aparece la mascota).
+class _MisReportes extends ConsumerWidget {
+  const _MisReportes();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = context.t;
+    final mios = ref.watch(misSosProvider).value ?? const <MiSos>[];
+    if (mios.isEmpty) return const SizedBox.shrink();
+    return ExpansionTile(
+      leading: const Icon(Icons.person_pin_circle_outlined),
+      title: Text(t.sosMisReportes),
+      initiallyExpanded: mios.any((s) => s.estado == EstadoSos.activo),
+      children: [
+        for (final s in mios)
+          ListTile(
+            title: Text(
+              s.tipo == TipoSos.perdida
+                  ? t.sosTituloPerdida(s.nombre ?? '')
+                  : t.sosTituloEncontrada(s.nombre ?? ''),
+            ),
+            subtitle: Text(switch (s.estado) {
+              EstadoSos.activo => t.sosEstadoActivoCorto,
+              EstadoSos.resuelto => t.sosEstadoResueltoCorto,
+              EstadoSos.archivado => t.sosEstadoArchivadoCorto,
+              EstadoSos.oculto => t.sosEstadoOcultoCorto,
+            }),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.push(Rutas.detalleSos(s.id)),
+          ),
+      ],
     );
   }
 }

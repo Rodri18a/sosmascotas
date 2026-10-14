@@ -76,6 +76,54 @@ class _Detalle extends ConsumerWidget {
     }
   }
 
+  Future<void> _cerrar(
+    BuildContext context,
+    WidgetRef ref, {
+    required bool resuelto,
+  }) async {
+    final t = context.t;
+    final confirmado = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(resuelto ? t.sosAparecioTitulo : t.sosArchivarTitulo),
+        content: Text(
+          resuelto ? t.sosAparecioExplicacion : t.sosArchivarExplicacion,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text(t.cancelar),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: Text(resuelto ? t.sosAparecio : t.sosArchivar),
+          ),
+        ],
+      ),
+    );
+    if (!(confirmado ?? false) || !context.mounted) return;
+    try {
+      await ref
+          .read(sosRepositorioProvider)
+          .cerrar(detalle.id, resuelto: resuelto);
+      ref
+        ..invalidate(sosDetalleProvider(detalle.id))
+        ..invalidate(sosCercanosProvider)
+        ..invalidate(misSosProvider);
+      if (context.mounted && resuelto) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(t.sosAparecioGracias)));
+      }
+    } on Exception {
+      if (context.mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(t.errorSinConexion)));
+      }
+    }
+  }
+
   Future<void> _abrirWhatsapp(BuildContext context, String numero) async {
     final t = context.t;
     final seguir = await showDialog<bool>(
@@ -230,6 +278,21 @@ class _Detalle extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 16),
+              if (detalle.esMio &&
+                  (activo || detalle.estado == EstadoSos.oculto)) ...[
+                FilledButton.icon(
+                  onPressed: () => _cerrar(context, ref, resuelto: true),
+                  icon: const Icon(Icons.celebration_outlined),
+                  label: Text(t.sosAparecio),
+                ),
+                const SizedBox(height: 8),
+                OutlinedButton.icon(
+                  onPressed: () => _cerrar(context, ref, resuelto: false),
+                  icon: const Icon(Icons.archive_outlined),
+                  label: Text(t.sosArchivar),
+                ),
+                const SizedBox(height: 8),
+              ],
               if (activo && !detalle.esMio) ...[
                 FilledButton.icon(
                   onPressed: () => _avisar(context, ref),

@@ -337,6 +337,13 @@ def main():
         caso('A recibe el aviso del SOS',
              any(x['target_type'] == 'sos' and x['sender_name'] == 'Beto' for x in filas(rest('GET', 'owner_alerts_app?select=*', quien=a))))
 
+        print('cerrar SOS y "Estoy perdido" en el QR')
+        pag_qr = rest('POST', 'rpc/public_pet_page', {'p_code': nuevo})[1]
+        caso('con el SOS activo, la página del QR dice "Estoy perdido" y enlaza el reporte',
+             pag_qr.get('lost') is True and pag_qr.get('sos_id') == sos_id)
+        caso('B no puede cerrar el SOS de A', rest('POST', 'rpc/cerrar_sos', {'p_id': sos_id, 'p_estado': 'resolved'}, b)[0] >= 400)
+        caso('no se aceptan estados inventados', rest('POST', 'rpc/cerrar_sos', {'p_id': sos_id, 'p_estado': 'hidden'}, a)[0] >= 400)
+
         print('flags (reportar contenido)')
         c_id, c = crear_usuario('c')
         try:
@@ -354,6 +361,15 @@ def main():
             caso('oculto: otros ven not_found y el autor lo sigue viendo',
                  rest('POST', 'rpc/sos_publico', {'p_id': sos_id}, b)[1].get('status') == 'not_found'
                  and rest('POST', 'rpc/sos_publico', {'p_id': sos_id}, a)[1].get('status') == 'hidden')
+            caso('A marca su SOS (oculto) como "¡Apareció!"',
+                 rest('POST', 'rpc/cerrar_sos', {'p_id': sos_id, 'p_estado': 'resolved'}, a)[0] in (200, 204)
+                 and rest('POST', 'rpc/sos_publico', {'p_id': sos_id}, a)[1].get('status') == 'resolved')
+            caso('resuelto: ya no aparece en el mapa ni en la lista',
+                 all(x['id'] != sos_id for x in filas(rest('POST', 'rpc/sos_en_zona', {'p_min_lat': -34.8, 'p_min_lng': -56.05, 'p_max_lat': -34.65, 'p_max_lng': -55.85})))
+                 and all(x['id'] != sos_id for x in filas(rest('POST', 'rpc/sos_cercanos', {'p_lat': -34.7171, 'p_lng': -55.9581}))))
+            caso('resuelto: la página del QR deja de decir "Estoy perdido"',
+                 rest('POST', 'rpc/public_pet_page', {'p_code': nuevo})[1].get('lost') is False)
+            caso('no se puede cerrar dos veces', rest('POST', 'rpc/cerrar_sos', {'p_id': sos_id, 'p_estado': 'archived'}, a)[0] >= 400)
             caso('B no ve los reportes de contenido de otros', all(f['reporter_id'] == b_id for f in filas(rest('GET', 'flags?select=*', quien=b))))
         finally:
             pedir('DELETE', f'{URL}/auth/v1/admin/users/{c_id}', headers=ADMIN)

@@ -1461,6 +1461,78 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Completá este dato.'**
   String get sosCampoObligatorio;
+
+  /// No description provided for @sosAparecio.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Apareció!'**
+  String get sosAparecio;
+
+  /// No description provided for @sosAparecioTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Apareció?'**
+  String get sosAparecioTitulo;
+
+  /// No description provided for @sosAparecioExplicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'El reporte deja de mostrarse en el mapa y la página de su QR deja de decir \"Estoy perdido\".'**
+  String get sosAparecioExplicacion;
+
+  /// No description provided for @sosAparecioGracias.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Qué alegría! 💚 Gracias por avisar.'**
+  String get sosAparecioGracias;
+
+  /// No description provided for @sosArchivar.
+  ///
+  /// In es, this message translates to:
+  /// **'Archivar'**
+  String get sosArchivar;
+
+  /// No description provided for @sosArchivarTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Archivar el reporte?'**
+  String get sosArchivarTitulo;
+
+  /// No description provided for @sosArchivarExplicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Deja de mostrarse en el mapa y en la lista. Usalo si ya no hace falta, aunque no haya aparecido.'**
+  String get sosArchivarExplicacion;
+
+  /// No description provided for @sosMisReportes.
+  ///
+  /// In es, this message translates to:
+  /// **'Mis reportes'**
+  String get sosMisReportes;
+
+  /// No description provided for @sosEstadoActivoCorto.
+  ///
+  /// In es, this message translates to:
+  /// **'Activo'**
+  String get sosEstadoActivoCorto;
+
+  /// No description provided for @sosEstadoResueltoCorto.
+  ///
+  /// In es, this message translates to:
+  /// **'Apareció'**
+  String get sosEstadoResueltoCorto;
+
+  /// No description provided for @sosEstadoArchivadoCorto.
+  ///
+  /// In es, this message translates to:
+  /// **'Archivado'**
+  String get sosEstadoArchivadoCorto;
+
+  /// No description provided for @sosEstadoOcultoCorto.
+  ///
+  /// In es, this message translates to:
+  /// **'En revisión'**
+  String get sosEstadoOcultoCorto;
 }
 
 class _AppLocalizationsDelegate

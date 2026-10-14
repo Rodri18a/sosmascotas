@@ -43,7 +43,9 @@ function mostrarMascota(datos) {
     nota.hidden = false;
   }
   document.getElementById('chip').hidden = !m.has_microchip;
-  document.getElementById('perdido').hidden = !datos.lost;
+  const perdido = document.getElementById('perdido');
+  perdido.hidden = !datos.lost;
+  if (datos.sos_id) perdido.href = `/s/${encodeURIComponent(datos.sos_id)}`;
   document.getElementById('mascota').hidden = false;
 }
 

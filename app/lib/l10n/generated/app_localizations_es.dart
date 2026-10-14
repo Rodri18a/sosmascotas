@@ -839,4 +839,42 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get sosCampoObligatorio => 'Completá este dato.';
+
+  @override
+  String get sosAparecio => '¡Apareció!';
+
+  @override
+  String get sosAparecioTitulo => '¿Apareció?';
+
+  @override
+  String get sosAparecioExplicacion =>
+      'El reporte deja de mostrarse en el mapa y la página de su QR deja de decir \"Estoy perdido\".';
+
+  @override
+  String get sosAparecioGracias => '¡Qué alegría! 💚 Gracias por avisar.';
+
+  @override
+  String get sosArchivar => 'Archivar';
+
+  @override
+  String get sosArchivarTitulo => '¿Archivar el reporte?';
+
+  @override
+  String get sosArchivarExplicacion =>
+      'Deja de mostrarse en el mapa y en la lista. Usalo si ya no hace falta, aunque no haya aparecido.';
+
+  @override
+  String get sosMisReportes => 'Mis reportes';
+
+  @override
+  String get sosEstadoActivoCorto => 'Activo';
+
+  @override
+  String get sosEstadoResueltoCorto => 'Apareció';
+
+  @override
+  String get sosEstadoArchivadoCorto => 'Archivado';
+
+  @override
+  String get sosEstadoOcultoCorto => 'En revisión';
 }

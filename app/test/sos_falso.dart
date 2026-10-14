@@ -7,13 +7,15 @@ class SosFalso implements SosRepositorio {
   SosFalso({
     this.pins = const [],
     this.listaCercanos = const [],
-    this.detalles = const {},
-  });
+    Map<String, SosDetalle> detalles = const {},
+  }) : detalles = {...detalles};
 
   final List<Pin> pins;
   final Map<String, SosDetalle> detalles;
   final avisosEnviados = <({String sosId, String mensaje, String contacto})>[];
   final whatsappActivado = <String, String?>{};
+  final cerrados = <String, bool>{};
+  List<MiSos> mios = const [];
   final List<SosResumen> listaCercanos;
   final zonasConsultadas = <Limites>[];
   final creados = <NuevoSos>[];
@@ -34,7 +36,7 @@ class SosFalso implements SosRepositorio {
   }
 
   @override
-  Future<List<MiSos>> misSos() async => const [];
+  Future<List<MiSos>> misSos() async => mios;
 
   @override
   Future<List<Pin>> enZona(Limites zona) async {
@@ -69,5 +71,25 @@ class SosFalso implements SosRepositorio {
     required bool activo,
   }) async {
     whatsappActivado[sosId] = activo ? numero : null;
+  }
+
+  @override
+  Future<void> cerrar(String id, {required bool resuelto}) async {
+    cerrados[id] = resuelto;
+    final d = detalles[id];
+    if (d != null) {
+      detalles[id] = SosDetalle(
+        id: d.id,
+        tipo: d.tipo,
+        estado: resuelto ? EstadoSos.resuelto : EstadoSos.archivado,
+        especie: d.especie,
+        especieIcono: d.especieIcono,
+        cuando: d.cuando,
+        zona: d.zona,
+        fotos: d.fotos,
+        esMio: d.esMio,
+        nombre: d.nombre,
+      );
+    }
   }
 }

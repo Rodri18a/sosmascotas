@@ -204,4 +204,72 @@ void main() {
       expect(copiado, 'https://sosmascotas.uy/s/s1');
     },
   );
+
+  testWidgets('el autor marca "¡Apareció!" y el reporte queda resuelto', (
+    tester,
+  ) async {
+    _pantallaDeCelular(tester);
+    final sos = SosFalso(
+      listaCercanos: [_enLista],
+      detalles: {'s1': _detalle(mio: true)},
+    );
+    await tester.pumpWidget(
+      appDePrueba(
+        cuenta: ServicioCuentaFalso(conectado: _beto),
+        sos: sos,
+      ),
+    );
+    await _abrirDetalle(tester);
+
+    await _ver(tester, find.widgetWithText(FilledButton, '¡Apareció!'));
+    await tester.tap(find.widgetWithText(FilledButton, '¡Apareció!'));
+    await tester.pumpAndSettle();
+    await tester.tap(
+      find.descendant(
+        of: find.byType(AlertDialog),
+        matching: find.text('¡Apareció!'),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(sos.cerrados, {'s1': true});
+    await tester.scrollUntilVisible(
+      find.textContaining('ya está resuelto'),
+      -150,
+      scrollable: find.byType(Scrollable).first,
+    );
+    expect(find.textContaining('ya está resuelto'), findsOneWidget);
+    expect(find.widgetWithText(FilledButton, '¡Apareció!'), findsNothing);
+  });
+
+  testWidgets('la pestaña SOS muestra "Mis reportes"', (tester) async {
+    final sos = SosFalso()
+      ..mios = [
+        MiSos(
+          id: 's1',
+          tipo: TipoSos.perdida,
+          estado: EstadoSos.activo,
+          creado: DateTime(2026, 10, 14),
+          ubicacion: centroPando,
+          nombre: 'Firulais',
+        ),
+      ];
+    await tester.pumpWidget(
+      appDePrueba(
+        cuenta: ServicioCuentaFalso(conectado: _beto),
+        sos: sos,
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(
+      find.descendant(
+        of: find.byType(NavigationBar),
+        matching: find.text('SOS'),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Mis reportes'), findsOneWidget);
+    expect(find.text('Activo'), findsOneWidget);
+  });
 }

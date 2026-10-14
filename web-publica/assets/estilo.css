@@ -34,7 +34,7 @@ header.marca { display: flex; align-items: center; gap: 8px; color: var(--verde)
 .sin-foto { display: grid; place-items: center; font-size: 96px; }
 h1 { font-size: 30px; margin: 12px 0 4px; }
 .detalle { color: var(--suave); margin: 0 0 8px; }
-.perdido { background: var(--rojo); color: #fff; border-radius: 12px; padding: 12px 16px; font-weight: 700; font-size: 20px; text-align: center; margin-bottom: 12px; }
+.perdido { display: block; text-decoration: none; background: var(--rojo); color: #fff; border-radius: 12px; padding: 12px 16px; font-weight: 700; font-size: 20px; text-align: center; margin-bottom: 12px; }
 .nota { background: var(--verde-claro); border-left: 4px solid var(--verde); padding: 8px 12px; border-radius: 8px; margin: 12px 0; }
 .boton { display: block; width: 100%; padding: 14px; border: 0; border-radius: 12px; font: inherit; font-weight: 700; cursor: pointer; text-align: center; text-decoration: none; }
 .boton.principal { background: var(--verde); color: #fff; }

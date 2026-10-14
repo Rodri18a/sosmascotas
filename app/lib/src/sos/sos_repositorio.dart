@@ -43,6 +43,9 @@ abstract interface class SosRepositorio {
     required String contacto,
   });
 
+  /// El autor cierra su reporte: ¡apareció! ([resuelto] = true) o archivado.
+  Future<void> cerrar(String id, {required bool resuelto});
+
   /// WhatsApp directo opcional en un reporte propio (desactivado por defecto).
   Future<void> mostrarWhatsapp(
     String sosId, {
@@ -159,6 +162,13 @@ class SupabaseSosRepositorio implements SosRepositorio {
   }
 
   @override
+  Future<void> cerrar(String id, {required bool resuelto}) =>
+      _cliente.rpc<void>(
+        'cerrar_sos',
+        params: {'p_id': id, 'p_estado': resuelto ? 'resolved' : 'archived'},
+      );
+
+  @override
   Future<void> mostrarWhatsapp(
     String sosId, {
     required String? numero,
@@ -217,6 +227,9 @@ class SosSinConfigurar implements SosRepositorio {
     required String nombre,
     required String contacto,
   }) => throw const SosException(ErrorSos.sinConexion);
+
+  @override
+  Future<void> cerrar(String id, {required bool resuelto}) async {}
 
   @override
   Future<void> mostrarWhatsapp(

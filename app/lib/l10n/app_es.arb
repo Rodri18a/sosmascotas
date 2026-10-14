@@ -408,5 +408,17 @@
   "sosAvisoConsentimiento": "Acepto que reciba mi nombre y mi teléfono para contactarme.",
   "sosAvisoFaltaConsentimiento": "Para enviar el aviso tenés que aceptar compartir tu contacto.",
   "sosAvisoEnviar": "Enviar aviso",
-  "sosCampoObligatorio": "Completá este dato."
+  "sosCampoObligatorio": "Completá este dato.",
+  "sosAparecio": "¡Apareció!",
+  "sosAparecioTitulo": "¿Apareció?",
+  "sosAparecioExplicacion": "El reporte deja de mostrarse en el mapa y la página de su QR deja de decir \"Estoy perdido\".",
+  "sosAparecioGracias": "¡Qué alegría! 💚 Gracias por avisar.",
+  "sosArchivar": "Archivar",
+  "sosArchivarTitulo": "¿Archivar el reporte?",
+  "sosArchivarExplicacion": "Deja de mostrarse en el mapa y en la lista. Usalo si ya no hace falta, aunque no haya aparecido.",
+  "sosMisReportes": "Mis reportes",
+  "sosEstadoActivoCorto": "Activo",
+  "sosEstadoResueltoCorto": "Apareció",
+  "sosEstadoArchivadoCorto": "Archivado",
+  "sosEstadoOcultoCorto": "En revisión"
 }
