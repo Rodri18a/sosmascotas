@@ -70,6 +70,19 @@ def crear_usuario(nombre):
     return u['id'], {'apikey': PUBLICA, 'Authorization': f"Bearer {sesion['access_token']}"}
 
 
+def subir(ruta, datos, tipo, quien):
+    req = urllib.request.Request(f'{URL}/storage/v1/object/{ruta}', data=datos, method='POST',
+                                 headers={**quien, 'Content-Type': tipo, 'User-Agent': 'sosmascotas-rls-test'})
+    try:
+        with urllib.request.urlopen(req, timeout=60) as r:
+            return r.status
+    except urllib.error.HTTPError as e:
+        return e.code
+
+
+JPEG_MINIMO = bytes.fromhex('ffd8ffe000104a46494600010100000100010000ffdb004300') + bytes(64) + bytes.fromhex('ffd9')
+
+
 def rest(metodo, ruta, cuerpo=None, quien=None, prefer='return=representation'):
     h = dict(quien or {'apikey': PUBLICA})
     h['Prefer'] = prefer
@@ -138,6 +151,33 @@ def main():
         caso('A no puede crear otro perfil', bloqueado(rest('POST', 'profiles', {'id': str(uuid.uuid4())}, a)))
         caso('A no puede borrar su perfil directamente', bloqueado(rest('DELETE', f'profiles?id=eq.{a_id}', quien=a)))
 
+        print('pets')
+        r_pet = rest('POST', 'pets', {'name': 'Firulais', 'species_id': 1, 'breed_id': 1, 'microchip': '858000000123456'}, a)
+        pet = filas(r_pet)[0] if filas(r_pet) else {}
+        caso('A puede crear su mascota (queda a su nombre)', pet.get('owner_id') == a_id)
+        caso('B no ve la mascota de A', filas(rest('GET', 'pets?select=id', quien=b)) == [])
+        caso('un visitante no ve mascotas', bloqueado(rest('GET', 'pets?select=id')))
+        caso('B no puede cambiar la mascota de A', bloqueado(rest('PATCH', f"pets?id=eq.{pet.get('id')}", {'name': 'X'}, b)))
+        caso('B no puede borrar la mascota de A', bloqueado(rest('DELETE', f"pets?id=eq.{pet.get('id')}", quien=b)))
+        caso('A no puede crear una mascota a nombre de B',
+             bloqueado(rest('POST', 'pets', {'name': 'X', 'species_id': 1, 'owner_id': b_id}, a)))
+        razas_gato = filas(rest('GET', 'breeds?select=id&species_id=eq.2&limit=1'))
+        caso('una raza de gato no sirve para un perro',
+             rest('POST', 'pets', {'name': 'X', 'species_id': 1, 'breed_id': razas_gato[0]['id']}, a)[0] in (400, 409))
+        caso('un microchip que no tiene 15 números se rechaza',
+             rest('POST', 'pets', {'name': 'X', 'species_id': 1, 'microchip': '12345'}, a)[0] == 400)
+        caso('A puede editar su mascota',
+             filas(rest('PATCH', f"pets?id=eq.{pet.get('id')}", {'color': 'Negro'}, a))[0]['color'] == 'Negro')
+
+        print('storage pet-photos')
+        caso('A puede subir una foto en su carpeta', subir(f'pet-photos/{a_id}/prueba.jpg', JPEG_MINIMO, 'image/jpeg', a) == 200)
+        caso('A no puede subir en la carpeta de B', subir(f'pet-photos/{b_id}/intruso.jpg', JPEG_MINIMO, 'image/jpeg', a) != 200)
+        caso('un visitante no puede subir fotos', subir(f'pet-photos/{a_id}/v.jpg', JPEG_MINIMO, 'image/jpeg', {'apikey': PUBLICA}) != 200)
+        caso('no se aceptan archivos que no son imágenes', subir(f'pet-photos/{a_id}/x.html', b'<script>', 'text/html', a) != 200)
+        caso('no se aceptan fotos de más de 2 MB', subir(f'pet-photos/{a_id}/grande.jpg', JPEG_MINIMO + bytes(2_200_000), 'image/jpeg', a) != 200)
+        publica = urllib.request.urlopen(f'{URL}/storage/v1/object/public/pet-photos/{a_id}/prueba.jpg', timeout=30).status
+        caso('la foto se puede ver con su enlace', publica == 200)
+
         print('private_contacts')
         pedir('POST', f'{URL}/rest/v1/private_contacts', {'user_id': b_id, 'phone': '099123456'}, {**ADMIN, 'Prefer': 'return=minimal'})
         caso('A no puede leer teléfonos (ni el de B)', bloqueado(rest('GET', 'private_contacts?select=*', quien=a)))
@@ -168,21 +208,30 @@ def main():
         d_id, d = crear_usuario('d')
         pedir('POST', f'{URL}/rest/v1/private_contacts', {'user_id': d_id, 'phone': '099111222'}, {**ADMIN, 'Prefer': 'return=minimal'})
         pedir('POST', f'{URL}/rest/v1/events', {'name': 'prueba_rls', 'anon_id': str(uuid.uuid4()), 'user_id': d_id}, {**d, 'Prefer': 'return=minimal'})
+        subir(f'pet-photos/{d_id}/foto.jpg', JPEG_MINIMO, 'image/jpeg', d)
         s_b, r_b = pedir('POST', funcion, {}, d)
         caso('con su sesión, D borra su cuenta', s_b == 200 and (r_b or {}).get('borrada') is True)
         caso('el login de D ya no existe', pedir('GET', f'{URL}/auth/v1/admin/users/{d_id}', headers=ADMIN)[0] == 404)
         caso('el perfil de D se borró', filas(pedir('GET', f'{URL}/rest/v1/profiles?select=id&id=eq.{d_id}', headers=ADMIN)) == [])
         caso('el teléfono de D se borró', filas(pedir('GET', f'{URL}/rest/v1/private_contacts?select=user_id&user_id=eq.{d_id}', headers=ADMIN)) == [])
+        try:
+            foto_d = urllib.request.urlopen(f'{URL}/storage/v1/object/public/pet-photos/{d_id}/foto.jpg', timeout=30).status
+        except urllib.error.HTTPError as e:
+            foto_d = e.code
+        caso('las fotos de D se borraron', foto_d in (400, 404))
         caso('los eventos de D quedaron anónimos',
              filas(pedir('GET', f'{URL}/rest/v1/events?select=id&user_id=eq.{d_id}', headers=ADMIN)) == [])
         caso('A y B siguen existiendo',
              len(filas(pedir('GET', f'{URL}/rest/v1/profiles?select=id&id=in.({a_id},{b_id})', headers=ADMIN))) == 2)
     finally:
+        pedir('DELETE', f'{URL}/storage/v1/object/pet-photos', {'prefixes': [f'{a_id}/prueba.jpg']}, ADMIN)
         for uid in (a_id, b_id):
             pedir('DELETE', f'{URL}/auth/v1/admin/users/{uid}', headers=ADMIN)
         pedir('DELETE', f'{URL}/rest/v1/events?name=eq.prueba_rls', headers=ADMIN)
         quedan = filas(pedir('GET', f'{URL}/rest/v1/profiles?select=id&id=in.({a_id},{b_id})', headers=ADMIN))
         caso('al borrar las cuentas se borran sus perfiles', quedan == [])
+        caso('al borrar las cuentas se borran sus mascotas',
+             filas(pedir('GET', f'{URL}/rest/v1/pets?select=id&owner_id=in.({a_id},{b_id})', headers=ADMIN)) == [])
 
     print(f'\n{"Todo bien" if fallas == 0 else f"{fallas} caso(s) fallaron"}')
     sys.exit(1 if fallas else 0)

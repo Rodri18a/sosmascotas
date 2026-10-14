@@ -17,7 +17,7 @@ Propuesta inicial. Se ajusta al implementar cada fase. **RLS activado en todas l
 |---|---|---|
 | `species` | id, slug, name, icon, sort — ✅ 0.3.1 (10 especies) | 0 |
 | `breeds` | id, species_id, name, sort — ✅ 0.3.1 (~60 razas; si no está, `pets.breed_other`) | 0 |
-| `pets` | id, household_id, owner_id, name, species_id, breed_id, breed_other, sex, color, marks, birth, photo_path, microchip (15 dígitos), renac_status (`registered`, `not_registered`, `unknown`, Fase 1), neutered, notes, vet_business_id | 0 |
+| `pets` | id, household_id (Fase 1), owner_id, name, species_id, breed_id (de la misma especie: FK compuesta), breed_other, sex, color, marks, birth, photo_path, microchip (15 dígitos), renac_status (`registered`, `not_registered`, `unknown`, Fase 1), neutered, notes, vet_business_id (Fase 1) — ✅ 0.3.2. Privada: cada dueño ve solo las suyas. Fotos en el bucket público `pet-photos/<user_id>/` (nombres al azar) | 0 |
 | `qr_tags` | id, code (único), pet_id (**nullable** hasta activarse), kind (`digital`, `physical`), batch_id, active, activated_at, show_health (json de qué mostrar) | 0 (digital) / 1 (física) |
 | `qr_batches` | id, quantity, producer, material, sponsor_id (opcional), unit_cost, created_at | 1 |
 | `qr_pickups` | id, order_id o tag_id, business_id (veterinaria punto de retiro), status (`sent`, `ready`, `delivered`), delivered_at | 1 |
