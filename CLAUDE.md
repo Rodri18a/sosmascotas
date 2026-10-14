@@ -43,6 +43,7 @@ Si un dato de `reference/` contradice `docs/`, **manda `docs/`** (ver `docs/12-d
 - La configuración real va en `app/config/dev.json` / `prod.json` (ignorados por git; copiar de `*.example.json`).
 - Textos de la app: solo en `app/lib/l10n/app_es.arb` (voseo), usados con `context.t.<clave>`.
 - Base de datos: migraciones en `supabase/migrations/`. Aplicar con `set -a; . ~/.config/sosmascotas/supabase-dev.env; set +a; supabase db push --linked` (probar antes con `--dry-run` y mostrar el SQL y las políticas para aprobar). En otra máquina: instalar la CLI, crear ese archivo y `supabase link --project-ref <ref>`.
+- Pruebas de seguridad de la base: `python3 -I supabase/tests/rls_test.py` (con el mismo `set -a; . …`). Sumar casos en cada tabla nueva.
 - La compilación web tarda (en esta máquina, varios minutos): correrla en segundo plano.
 
 ## Reglas para trabajar en este proyecto

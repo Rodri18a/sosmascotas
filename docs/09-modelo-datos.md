@@ -7,8 +7,8 @@ Propuesta inicial. Se ajusta al implementar cada fase. **RLS activado en todas l
 | Tabla | Campos clave | Fase |
 |---|---|---|
 | `zones` | id, slug, name, country, timezone, currency, area (multipolígono), active — ✅ creada en 0.1.7 (Pando) | 0 |
-| `profiles` | id (auth), display_name, avatar_path, role (`user`, `admin`), zone_id, plan (`free`, `pro`, `family`), prefs (idioma, color, letra), approx_location, alert_radius_km, created_at | 0 |
-| `private_contacts` | user_id, phone, whatsapp, show_whatsapp_direct (bool, por defecto `false`) — **solo accesible desde Edge Functions** | 0 |
+| `profiles` | id (auth), display_name, avatar_path, role (`user`, `admin`), zone_id, plan (`free`, `pro`, `family`), prefs (idioma, color, letra), approx_location (se agrega en 0.6.2), alert_radius_km (1–20, por defecto 5), terms_version, terms_accepted_at, created_at, updated_at — ✅ 0.2.1. Cada uno ve y edita solo el suyo; `role` y `plan` no se editan desde la app | 0 |
+| `private_contacts` | user_id, phone, whatsapp, show_whatsapp_direct (bool, por defecto `false`) — **solo accesible desde Edge Functions** (✅ 0.2.1: RLS sin políticas). Cuando el dueño cargue su teléfono, será con una función del servidor | 0 |
 | `push_tokens` | user_id, token, platform | 0 |
 
 ## Mascotas y hogar

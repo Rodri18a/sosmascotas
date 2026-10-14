@@ -15,7 +15,7 @@
 | 3 · Servicios | ⏳ | a detallar | 0 |
 | 4 · Escala | ⏳ | a detallar | 0 |
 
-**Paso actual:** 0.2.1 (desarrollo) · validación pendiente desde 0.0.2
+**Paso actual:** 0.2.2 (desarrollo) · validación pendiente desde 0.0.2
 
 ---
 
@@ -51,8 +51,8 @@
 - [x] 0.1.7 Migraciones iniciales: `zones` (Pando) y `events` + helper `track()` (⏱️ 2 h) — 13/10/2026, RLS probado con 9 casos; `app_open` llega a la base (D49)
 
 ### Etapa 0.2 · Cuentas
-- [ ] 0.2.1 Tabla `profiles` y `private_contacts` + RLS + trigger de creación de perfil (⏱️ 2 h) **← ESTÁS ACÁ**
-- [ ] 0.2.2 Login con correo y enlace mágico (⏱️ 2 h)
+- [x] 0.2.1 Tabla `profiles` y `private_contacts` + RLS + trigger de creación de perfil (⏱️ 2 h) — 14/10/2026, 22 pruebas de seguridad en `supabase/tests/rls_test.py`
+- [ ] 0.2.2 Login con correo y enlace mágico (⏱️ 2 h) **← ESTÁS ACÁ**
 - [ ] 0.2.3 Login con Google (⏱️ 3 h)
 - [ ] 0.2.4 Modo visitante: ver sin cuenta; al actuar, pedir login y volver a la acción (⏱️ 2 h)
 - [ ] 0.2.5 Textos de términos y privacidad + consentimiento al registrarse (⏱️ 2 h)
@@ -239,6 +239,7 @@
 | 13/10/2026 | 0.1.5 | ✅ Tema claro/oscuro, barra inferior con 4 pestañas que conservan su estado, Ajustes desde arriba, pantalla de carga verde (web y Android), direcciones limpias `/mapa`, `/sos`… (D47) |
 | 13/10/2026 | 0.1.6 | ✅ Textos en `app/lib/l10n/app_es.arb` (voseo), idioma `es_UY`, acceso `context.t`; prueba que falla si aparece un texto escrito en una pantalla (D48) |
 | 13/10/2026 | 0.1.7 | ✅ Supabase CLI 2.118.0 vinculado a dev (credenciales en `~/.config/sosmascotas/supabase-dev.env`). Migraciones `zones` (Pando) + `events` aplicadas; RLS verificado; `track()` con id anónimo por instalación (D49). **Etapa 0.1 terminada** |
+| 14/10/2026 | 0.2.1 | ✅ `profiles` (se crea solo al registrarse; plan y rol no editables desde la app) y `private_contacts` (nadie la lee desde la app). Script de pruebas de seguridad con cuentas temporales |
 | 13/10/2026 | 0.0.2 | Análisis de puntos débiles: contacto inverso en lugar de redirección a WhatsApp; pasos nuevos de identidad, legal temprano, formalización, soporte y criterios de corte (D41–D43) |
 | 12/10/2026 | 0.0.2 | Sin combo de microchip (D39). Línea institucional: Zoonosis de Canelones → nacional → mundial (D40) |
 | 12/10/2026 | 0.0.2 | Chapitas pre-codificadas, retiro en veterinaria, sponsors y prototipo con impresión 3D (D35–D38) |
