@@ -123,3 +123,61 @@ class MiSos {
   final String? mascotaId;
   final List<String> fotos;
 }
+
+/// Tarjeta pública de un SOS para la lista por cercanía (`sos_cercanos`).
+class SosResumen {
+  const SosResumen({
+    required this.id,
+    required this.tipo,
+    required this.especie,
+    required this.especieIcono,
+    required this.cuando,
+    required this.distanciaMetros,
+    this.nombre,
+    this.raza,
+    this.color,
+    this.foto,
+  });
+
+  factory SosResumen.fromJson(Map<String, Object?> json) => SosResumen(
+    id: json['id']! as String,
+    tipo: TipoSos.desdeBase(json['kind']),
+    especie: json['species']! as String,
+    especieIcono: json['species_icon']! as String,
+    cuando: DateTime.parse(json['happened_at']! as String).toLocal(),
+    distanciaMetros: (json['distance_m']! as num).toDouble(),
+    nombre: json['name'] as String?,
+    raza: json['breed'] as String?,
+    color: json['color'] as String?,
+    foto: json['photo'] as String?,
+  );
+
+  final String id;
+  final TipoSos tipo;
+  final String especie;
+  final String especieIcono;
+  final DateTime cuando;
+  final double distanciaMetros;
+  final String? nombre;
+  final String? raza;
+  final String? color;
+  final String? foto;
+}
+
+/// Pin del mapa a partir de una fila de `sos_en_zona`.
+Pin pinDeSos(Map<String, Object?> json) => Pin(
+  id: json['id']! as String,
+  tipo: json['kind'] == 'found' ? TipoPin.encontrado : TipoPin.perdido,
+  punto: Punto(
+    (json['lat']! as num).toDouble(),
+    (json['lng']! as num).toDouble(),
+  ),
+);
+
+/// "a 350 m", "a 2,4 km".
+String textoDistancia(double metros) {
+  final redondeado = (metros / 50).round() * 50;
+  return redondeado < 1000
+      ? '$redondeado m'
+      : '${(metros / 1000).toStringAsFixed(1).replaceAll('.', ',')} km';
+}

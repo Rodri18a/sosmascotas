@@ -290,6 +290,24 @@ def main():
         caso('el cuarto reporte del día se rechaza (máximo 3)',
              'limite_diario' in json.dumps(rest('POST', 'rpc/crear_sos', {'p': reporte}, a)[1]))
 
+        print('sos públicos (mapa y lista)')
+        en_zona = filas(rest('POST', 'rpc/sos_en_zona', {'p_min_lat': -34.8, 'p_min_lng': -56.05, 'p_max_lat': -34.65, 'p_max_lng': -55.85}))
+        pin = next((x for x in en_zona if x['id'] == sos_id), None)
+        caso('un visitante ve el pin del SOS en la zona de Pando', pin is not None and set(pin) == {'id', 'kind', 'lat', 'lng'})
+        caso('el pin usa el punto aproximado, no el exacto',
+             pin is not None and abs(pin['lat'] - mio['public_lat']) < 1e-9 and abs(pin['lat'] - mio['lat']) > 1e-6)
+        caso('fuera de la zona no aparece',
+             all(x['id'] != sos_id for x in filas(rest('POST', 'rpc/sos_en_zona', {'p_min_lat': 10, 'p_min_lng': 10, 'p_max_lat': 11, 'p_max_lng': 11}))))
+        cercanos = filas(rest('POST', 'rpc/sos_cercanos', {'p_lat': -34.7171, 'p_lng': -55.9581}))
+        tarjeta = next((x for x in cercanos if x['id'] == sos_id), None)
+        texto_cercanos = json.dumps(cercanos)
+        caso('la lista por cercanía trae la tarjeta con foto y distancia',
+             tarjeta is not None and tarjeta['photo'] == f'sos-photos/{a_id}/sos1.jpg' and 140 < tarjeta['distance_m'] < 210)
+        caso('la lista no expone al autor ni la ubicación exacta',
+             a_id + '"' not in texto_cercanos.replace(f'sos-photos/{a_id}', '') and 'lat' not in (tarjeta or {}))
+        caso('la lista está ordenada por distancia',
+             [x['distance_m'] for x in cercanos] == sorted(x['distance_m'] for x in cercanos))
+
         print('flags (reportar contenido)')
         c_id, c = crear_usuario('c')
         try:

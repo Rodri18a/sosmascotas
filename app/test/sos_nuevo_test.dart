@@ -44,7 +44,7 @@ Future<void> _abrirFormulario(WidgetTester tester) async {
     find.descendant(of: find.byType(NavigationBar), matching: find.text('SOS')),
   );
   await tester.pumpAndSettle();
-  await tester.tap(find.text('Reportar mascota perdida o encontrada'));
+  await tester.tap(find.widgetWithText(FloatingActionButton, 'Reportar'));
   await tester.pumpAndSettle();
 }
 

@@ -15,7 +15,7 @@
 | 3 · Servicios | ⏳ | a detallar | 0 |
 | 4 · Escala | ⏳ | a detallar | 0 |
 
-**Paso actual:** 0.5.4 (desarrollo) · pendiente del dueño: 0.4.4b (proveedor de correo) · validación pendiente desde 0.0.2
+**Paso actual:** 0.5.5 (desarrollo) · pendiente del dueño: 0.4.4b (proveedor de correo) · validación pendiente desde 0.0.2
 
 ### Horas reales vs. estimadas (calibración)
 
@@ -88,8 +88,8 @@ Regla de trabajo: **por cada etapa de desarrollo, avanzar al menos un paso de va
 - [x] 0.5.1 Tablas `sos_reports`, `sos_photos`, `flags` + RLS + ubicación pública aproximada (⏱️ 2 h) — 14/10/2026, sin acceso directo (funciones `crear_sos`, `mis_sos`); punto público a 150–200 m; 3 por día; se oculta con 3 reportes
 - [x] 0.5.2 Capa propia `MapView` + implementación web con MapLibre/OSM (elegir proveedor de teselas, P6) (⏱️ 4 h) — 14/10/2026, `MapaVista` + MapLibre con **OpenFreeMap** (D54). Falta verlo en una compilación web
 - [x] 0.5.3 Formulario de reporte perdida/encontrada (precarga de mascota propia, foto, ubicación tocando el mapa) (⏱️ 4 h) — 14/10/2026, reusa la foto de la ficha; botón "Se perdió" en la ficha
-- [ ] 0.5.4 Mapa y lista de reportes por cercanía, cargando solo la zona visible (⏱️ 4 h) **← ESTÁS ACÁ**
-- [ ] 0.5.5 Detalle del reporte + "Avisar al dueño" (contacto inverso) + página pública para compartir + consejos de microchip y RENAC + WhatsApp directo opcional (desactivado por defecto) (⏱️ 3 h)
+- [x] 0.5.4 Mapa y lista de reportes por cercanía, cargando solo la zona visible (⏱️ 4 h) — 14/10/2026, `sos_en_zona()` (pines mínimos) + caché de zona 1,5×; `sos_cercanos()` con filtro
+- [ ] 0.5.5 Detalle del reporte + "Avisar al dueño" (contacto inverso) + página pública para compartir + consejos de microchip y RENAC + WhatsApp directo opcional (desactivado por defecto) (⏱️ 3 h) **← ESTÁS ACÁ**
 - [ ] 0.5.6 Marcar "¡Apareció!" y archivar; la página del QR muestra "Estoy perdido 🆘" si hay un SOS activo (⏱️ 2 h)
 - [ ] 0.5.7 Botón "Reportar" + ocultamiento automático con 3 reportes + límite de 3 SOS por día (⏱️ 3 h)
 

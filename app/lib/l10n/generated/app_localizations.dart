@@ -337,7 +337,7 @@ abstract class AppLocalizations {
   /// No description provided for @sosReportar.
   ///
   /// In es, this message translates to:
-  /// **'Reportar mascota perdida o encontrada'**
+  /// **'Reportar'**
   String get sosReportar;
 
   /// No description provided for @sosMotivoCuenta.
@@ -1197,6 +1197,78 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Se perdió: reportarla'**
   String get fichaReportarPerdida;
+
+  /// No description provided for @sosFiltroTodos.
+  ///
+  /// In es, this message translates to:
+  /// **'Todos'**
+  String get sosFiltroTodos;
+
+  /// No description provided for @sosFiltroPerdidas.
+  ///
+  /// In es, this message translates to:
+  /// **'Perdidas'**
+  String get sosFiltroPerdidas;
+
+  /// No description provided for @sosFiltroEncontradas.
+  ///
+  /// In es, this message translates to:
+  /// **'Encontradas'**
+  String get sosFiltroEncontradas;
+
+  /// No description provided for @sosNingunoCerca.
+  ///
+  /// In es, this message translates to:
+  /// **'No hay reportes activos cerca. ¡Ojalá siga así! 🐾'**
+  String get sosNingunoCerca;
+
+  /// No description provided for @sosTituloPerdida.
+  ///
+  /// In es, this message translates to:
+  /// **'Se perdió: {nombre}'**
+  String sosTituloPerdida(String nombre);
+
+  /// No description provided for @sosTituloEncontrada.
+  ///
+  /// In es, this message translates to:
+  /// **'Encontrada: {especie}'**
+  String sosTituloEncontrada(String especie);
+
+  /// No description provided for @sosDistanciaYTiempo.
+  ///
+  /// In es, this message translates to:
+  /// **'A {distancia} · {cuando}'**
+  String sosDistanciaYTiempo(String distancia, String cuando);
+
+  /// No description provided for @haceUnMomento.
+  ///
+  /// In es, this message translates to:
+  /// **'hace un momento'**
+  String get haceUnMomento;
+
+  /// No description provided for @haceMinutos.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =1{hace 1 minuto} other{hace {n} minutos}}'**
+  String haceMinutos(int n);
+
+  /// No description provided for @haceHoras.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =1{hace 1 hora} other{hace {n} horas}}'**
+  String haceHoras(int n);
+
+  /// No description provided for @haceDias.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =1{hace 1 día} other{hace {n} días}}'**
+  String haceDias(int n);
+
+  /// No description provided for @elDia.
+  ///
+  /// In es, this message translates to:
+  /// **'el {dia}/{mes}'**
+  String elDia(int dia, int mes);
 }
 
 class _AppLocalizationsDelegate

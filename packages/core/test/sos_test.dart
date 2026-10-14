@@ -38,4 +38,21 @@ void main() {
     expect(mio.estado, EstadoSos.oculto);
     expect(mio.fotos, hasLength(1));
   });
+
+  test('distancia redondeada para mostrar', () {
+    expect(textoDistancia(162), '150 m');
+    expect(textoDistancia(980), '1,0 km');
+    expect(textoDistancia(2430), '2,4 km');
+  });
+
+  test('pin de un SOS encontrado', () {
+    final pin = pinDeSos({
+      'id': 's1',
+      'kind': 'found',
+      'lat': -34.7,
+      'lng': -55.9,
+    });
+    expect(pin.tipo, TipoPin.encontrado);
+    expect(pin.punto, const Punto(-34.7, -55.9));
+  });
 }

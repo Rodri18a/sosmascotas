@@ -144,7 +144,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get ahoraNo => 'Ahora no';
 
   @override
-  String get sosReportar => 'Reportar mascota perdida o encontrada';
+  String get sosReportar => 'Reportar';
 
   @override
   String get sosMotivoCuenta =>
@@ -659,4 +659,73 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get fichaReportarPerdida => 'Se perdió: reportarla';
+
+  @override
+  String get sosFiltroTodos => 'Todos';
+
+  @override
+  String get sosFiltroPerdidas => 'Perdidas';
+
+  @override
+  String get sosFiltroEncontradas => 'Encontradas';
+
+  @override
+  String get sosNingunoCerca =>
+      'No hay reportes activos cerca. ¡Ojalá siga así! 🐾';
+
+  @override
+  String sosTituloPerdida(String nombre) {
+    return 'Se perdió: $nombre';
+  }
+
+  @override
+  String sosTituloEncontrada(String especie) {
+    return 'Encontrada: $especie';
+  }
+
+  @override
+  String sosDistanciaYTiempo(String distancia, String cuando) {
+    return 'A $distancia · $cuando';
+  }
+
+  @override
+  String get haceUnMomento => 'hace un momento';
+
+  @override
+  String haceMinutos(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'hace $n minutos',
+      one: 'hace 1 minuto',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String haceHoras(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'hace $n horas',
+      one: 'hace 1 hora',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String haceDias(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'hace $n días',
+      one: 'hace 1 día',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String elDia(int dia, int mes) {
+    return 'el $dia/$mes';
+  }
 }

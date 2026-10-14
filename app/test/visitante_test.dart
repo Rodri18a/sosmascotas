@@ -24,7 +24,7 @@ void main() {
     await tester.pumpAndSettle();
     await _tocarPestana(tester, 'SOS');
 
-    await tester.tap(find.text('Reportar mascota perdida o encontrada'));
+    await tester.tap(find.widgetWithText(FloatingActionButton, 'Reportar'));
     await tester.pumpAndSettle();
     expect(find.text('Necesitás una cuenta'), findsOneWidget);
     expect(find.textContaining('Tu teléfono nunca se muestra'), findsOneWidget);

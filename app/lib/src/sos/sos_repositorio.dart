@@ -26,6 +26,12 @@ abstract interface class SosRepositorio {
 
   Future<List<MiSos>> misSos();
 
+  /// Pines de los SOS activos en la zona (datos mínimos).
+  Future<List<Pin>> enZona(Limites zona);
+
+  /// SOS activos más cercanos a [punto] (hasta 50 km).
+  Future<List<SosResumen>> cercanos(Punto punto);
+
   /// Enlace público de una foto guardada como `bucket/usuario/archivo`.
   String? urlFoto(String? ruta);
 }
@@ -75,6 +81,29 @@ class SupabaseSosRepositorio implements SosRepositorio {
   }
 
   @override
+  Future<List<Pin>> enZona(Limites zona) async {
+    final filas = await _cliente.rpc<List<dynamic>>(
+      'sos_en_zona',
+      params: {
+        'p_min_lat': zona.minLat,
+        'p_min_lng': zona.minLng,
+        'p_max_lat': zona.maxLat,
+        'p_max_lng': zona.maxLng,
+      },
+    );
+    return filas.cast<Map<String, dynamic>>().map(pinDeSos).toList();
+  }
+
+  @override
+  Future<List<SosResumen>> cercanos(Punto punto) async {
+    final filas = await _cliente.rpc<List<dynamic>>(
+      'sos_cercanos',
+      params: {'p_lat': punto.lat, 'p_lng': punto.lng},
+    );
+    return filas.cast<Map<String, dynamic>>().map(SosResumen.fromJson).toList();
+  }
+
+  @override
   String? urlFoto(String? ruta) {
     if (ruta == null) return null;
     final corte = ruta.indexOf('/');
@@ -100,6 +129,12 @@ class SosSinConfigurar implements SosRepositorio {
   Future<List<MiSos>> misSos() async => const [];
 
   @override
+  Future<List<Pin>> enZona(Limites zona) async => const [];
+
+  @override
+  Future<List<SosResumen>> cercanos(Punto punto) async => const [];
+
+  @override
   String? urlFoto(String? ruta) => null;
 }
 
@@ -114,3 +149,12 @@ final misSosProvider = FutureProvider<List<MiSos>>((ref) async {
   if (ref.watch(usuarioActualProvider).value == null) return const [];
   return ref.watch(sosRepositorioProvider).misSos();
 });
+
+/// Punto de referencia para "cerca tuyo". Hasta que la persona comparta su zona
+/// (paso 0.6.2), es el centro de Pando.
+final miZonaProvider = Provider<Punto>((ref) => centroPando);
+
+final sosCercanosProvider = FutureProvider<List<SosResumen>>(
+  (ref) =>
+      ref.watch(sosRepositorioProvider).cercanos(ref.watch(miZonaProvider)),
+);

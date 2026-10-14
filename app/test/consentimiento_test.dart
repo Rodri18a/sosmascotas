@@ -53,7 +53,7 @@ void main() {
     await tester.pumpWidget(appDePrueba(perfiles: perfiles, eventos: eventos));
     await tester.pumpAndSettle();
     await _tocarPestana(tester, 'SOS');
-    await tester.tap(find.text('Reportar mascota perdida o encontrada'));
+    await tester.tap(find.widgetWithText(FloatingActionButton, 'Reportar'));
     await tester.pumpAndSettle();
     await tester.tap(
       find.widgetWithText(FilledButton, 'Ingresar o crear cuenta'),

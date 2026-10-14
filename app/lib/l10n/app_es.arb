@@ -66,7 +66,7 @@
   "ingresarOConCorreo": "o con tu correo",
   "cuentaNecesariaTitulo": "Necesitás una cuenta",
   "ahoraNo": "Ahora no",
-  "sosReportar": "Reportar mascota perdida o encontrada",
+  "sosReportar": "Reportar",
   "sosMotivoCuenta": "Para reportar necesitamos poder avisarte cuando alguien vea a la mascota. Tu teléfono nunca se muestra.",
   "sosNuevoTitulo": "Nuevo reporte",
   "sosNuevoDescripcion": "Foto, ubicación en el mapa y datos de la mascota",
@@ -302,5 +302,72 @@
   "sosLimiteDiario": "Ya publicaste 3 reportes hoy. Si es urgente, escribinos a soporte.",
   "sosDetalleTitulo": "Reporte",
   "sosPublicado": "¡Publicado! Los vecinos de la zona ya pueden verlo.",
-  "fichaReportarPerdida": "Se perdió: reportarla"
+  "fichaReportarPerdida": "Se perdió: reportarla",
+  "sosFiltroTodos": "Todos",
+  "sosFiltroPerdidas": "Perdidas",
+  "sosFiltroEncontradas": "Encontradas",
+  "sosNingunoCerca": "No hay reportes activos cerca. ¡Ojalá siga así! 🐾",
+  "sosTituloPerdida": "Se perdió: {nombre}",
+  "@sosTituloPerdida": {
+    "placeholders": {
+      "nombre": {
+        "type": "String"
+      }
+    }
+  },
+  "sosTituloEncontrada": "Encontrada: {especie}",
+  "@sosTituloEncontrada": {
+    "placeholders": {
+      "especie": {
+        "type": "String"
+      }
+    }
+  },
+  "sosDistanciaYTiempo": "A {distancia} · {cuando}",
+  "@sosDistanciaYTiempo": {
+    "placeholders": {
+      "distancia": {
+        "type": "String"
+      },
+      "cuando": {
+        "type": "String"
+      }
+    }
+  },
+  "haceUnMomento": "hace un momento",
+  "haceMinutos": "{n, plural, =1{hace 1 minuto} other{hace {n} minutos}}",
+  "@haceMinutos": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "haceHoras": "{n, plural, =1{hace 1 hora} other{hace {n} horas}}",
+  "@haceHoras": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "haceDias": "{n, plural, =1{hace 1 día} other{hace {n} días}}",
+  "@haceDias": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "elDia": "el {dia}/{mes}",
+  "@elDia": {
+    "placeholders": {
+      "dia": {
+        "type": "int"
+      },
+      "mes": {
+        "type": "int"
+      }
+    }
+  }
 }
