@@ -15,7 +15,7 @@
 | 3 · Servicios | ⏳ | a detallar | 0 |
 | 4 · Escala | ⏳ | a detallar | 0 |
 
-**Paso actual:** 0.1.4 (desarrollo) · validación pendiente desde 0.0.2
+**Paso actual:** 0.1.5 (desarrollo) · validación pendiente desde 0.0.2
 
 ---
 
@@ -45,8 +45,8 @@
 - [x] 0.1.1 Inicializar git, `.gitignore` (incluye `.env`) y primer commit con la documentación (⏱️ 0,5 h) — 13/10/2026, repo privado en GitHub
 - [x] 0.1.2 Crear el proyecto Supabase de **desarrollo** (gratis) y activar PostGIS (⏱️ 0,5 h) — 13/10/2026, `sosmascotas-dev` en São Paulo
 - [x] 0.1.3 Crear el proyecto Flutter con la estructura de `08-arquitectura.md`, lints, flavors dev/prod y elegir la gestión de estado (⏱️ 3 h) — 13/10/2026, Riverpod + go_router (D45)
-- [ ] 0.1.4 Conectar Flutter con Supabase usando variables por entorno (⏱️ 1 h) **← ESTÁS ACÁ**
-- [ ] 0.1.5 Tema (verde `#1f8a5b`, claro/oscuro), navegación base con barra inferior y pantalla del logo (⏱️ 3 h)
+- [x] 0.1.4 Conectar Flutter con Supabase usando variables por entorno (⏱️ 1 h) — 13/10/2026, indicador de conexión en dev
+- [ ] 0.1.5 Tema (verde `#1f8a5b`, claro/oscuro), navegación base con barra inferior y pantalla del logo (⏱️ 3 h) **← ESTÁS ACÁ**
 - [ ] 0.1.6 Configurar i18n (español rioplatense) sin textos fijos en el código (⏱️ 1 h)
 - [ ] 0.1.7 Migraciones iniciales: `zones` (Pando) y `events` + helper `track()` (⏱️ 2 h)
 
@@ -235,6 +235,7 @@
 | 13/10/2026 | — | Repo privado; documentación desde GitHub; Cloudflare preparado y pendiente (D44) |
 | 13/10/2026 | 0.1.3 | ✅ Proyecto Flutter (`app/` + `packages/core`), Riverpod + go_router, reglas estrictas, entornos por archivo; pruebas y build web OK (D45). El desarrollo arranca antes de cerrar la validación |
 | 13/10/2026 | 0.1.2 | ✅ Supabase dev (`sosmascotas-dev`, São Paulo, Free) + PostGIS; migración en `supabase/migrations/`. Claves solo en `app/config/dev.json` (ignorado) |
+| 13/10/2026 | 0.1.4 | ✅ `supabase_flutter` conectado a `sosmascotas-dev` (probado en el navegador). Variable renombrada a `SUPABASE_PUBLISHABLE_KEY` (D46) |
 | 13/10/2026 | 0.0.2 | Análisis de puntos débiles: contacto inverso en lugar de redirección a WhatsApp; pasos nuevos de identidad, legal temprano, formalización, soporte y criterios de corte (D41–D43) |
 | 12/10/2026 | 0.0.2 | Sin combo de microchip (D39). Línea institucional: Zoonosis de Canelones → nacional → mundial (D40) |
 | 12/10/2026 | 0.0.2 | Chapitas pre-codificadas, retiro en veterinaria, sponsors y prototipo con impresión 3D (D35–D38) |

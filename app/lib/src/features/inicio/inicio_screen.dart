@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'estado_conexion.dart';
+
 /// Pantalla provisoria hasta que exista la navegación base (paso 0.1.5).
 /// Los textos pasan a i18n en el paso 0.1.6.
 class InicioScreen extends StatelessWidget {
@@ -18,6 +20,8 @@ class InicioScreen extends StatelessWidget {
             Text('SOS Mascota', style: textTheme.headlineMedium),
             const SizedBox(height: 8),
             Text('Base técnica lista', style: textTheme.bodyLarge),
+            const SizedBox(height: 24),
+            const EstadoConexionChip(),
           ],
         ),
       ),

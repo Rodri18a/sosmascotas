@@ -7,7 +7,7 @@ void main() {
       final env = AppEnv.parse(
         flavor: 'dev',
         supabaseUrl: '',
-        supabaseAnonKey: '',
+        supabasePublishableKey: '',
       );
 
       expect(env.flavor, AppFlavor.dev);
@@ -19,7 +19,7 @@ void main() {
       final env = AppEnv.parse(
         flavor: ' prod ',
         supabaseUrl: ' https://abc.supabase.co ',
-        supabaseAnonKey: 'clave',
+        supabasePublishableKey: 'clave',
       );
 
       expect(env.isProd, isTrue);
@@ -29,8 +29,11 @@ void main() {
 
     test('producción sin Supabase falla', () {
       expect(
-        () =>
-            AppEnv.parse(flavor: 'prod', supabaseUrl: '', supabaseAnonKey: ''),
+        () => AppEnv.parse(
+          flavor: 'prod',
+          supabaseUrl: '',
+          supabasePublishableKey: '',
+        ),
         throwsStateError,
       );
     });
@@ -40,7 +43,7 @@ void main() {
         () => AppEnv.parse(
           flavor: 'staging',
           supabaseUrl: '',
-          supabaseAnonKey: '',
+          supabasePublishableKey: '',
         ),
         throwsArgumentError,
       );

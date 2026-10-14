@@ -126,5 +126,5 @@ Tabla `events` (append-only), escrita por el cliente con un helper `track()` y, 
 
 - **Desarrollo:** proyecto Supabase gratis + Firebase de desarrollo.
 - **Producción:** proyecto Supabase aparte (Pro al tener usuarios reales).
-- Variables por entorno con `--dart-define-from-file=config/<entorno>.json` (`APP_FLAVOR`, `SUPABASE_URL`, `SUPABASE_ANON_KEY`). Los `.json` reales **nunca** van al repositorio; solo los `*.example.json`. La clase `AppEnv` (`packages/core`) los valida: producción sin Supabase no arranca.
+- Variables por entorno con `--dart-define-from-file=config/<entorno>.json` (`APP_FLAVOR`, `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`). Los `.json` reales **nunca** van al repositorio; solo los `*.example.json`. La clase `AppEnv` (`packages/core`) los valida: producción sin Supabase no arranca.
 - Los *flavors* nativos (otro `applicationId` para dev en el celular) se suman en el paso 1.1.1, al preparar las apps de las tiendas. En la Fase 0 (PWA) alcanza con la configuración por archivo.

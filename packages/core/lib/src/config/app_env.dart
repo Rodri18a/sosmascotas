@@ -9,14 +9,16 @@ class AppEnv {
   const AppEnv({
     required this.flavor,
     required this.supabaseUrl,
-    required this.supabaseAnonKey,
+    required this.supabasePublishableKey,
   });
 
   /// Lee la configuración pasada al compilar.
   factory AppEnv.fromEnvironment() => AppEnv.parse(
     flavor: const String.fromEnvironment('APP_FLAVOR', defaultValue: 'dev'),
     supabaseUrl: const String.fromEnvironment('SUPABASE_URL'),
-    supabaseAnonKey: const String.fromEnvironment('SUPABASE_ANON_KEY'),
+    supabasePublishableKey: const String.fromEnvironment(
+      'SUPABASE_PUBLISHABLE_KEY',
+    ),
   );
 
   /// Valida los valores crudos. En producción Supabase es obligatorio;
@@ -24,7 +26,7 @@ class AppEnv {
   factory AppEnv.parse({
     required String flavor,
     required String supabaseUrl,
-    required String supabaseAnonKey,
+    required String supabasePublishableKey,
   }) {
     final parsedFlavor = AppFlavor.values.asNameMap()[flavor.trim()];
     if (parsedFlavor == null) {
@@ -37,19 +39,22 @@ class AppEnv {
     final env = AppEnv(
       flavor: parsedFlavor,
       supabaseUrl: supabaseUrl.trim(),
-      supabaseAnonKey: supabaseAnonKey.trim(),
+      supabasePublishableKey: supabasePublishableKey.trim(),
     );
     if (env.isProd && !env.hasSupabase) {
-      throw StateError('Producción necesita SUPABASE_URL y SUPABASE_ANON_KEY');
+      throw StateError(
+        'Producción necesita SUPABASE_URL y SUPABASE_PUBLISHABLE_KEY',
+      );
     }
     return env;
   }
 
   final AppFlavor flavor;
   final String supabaseUrl;
-  final String supabaseAnonKey;
+  final String supabasePublishableKey;
 
   bool get isProd => flavor == AppFlavor.prod;
 
-  bool get hasSupabase => supabaseUrl.isNotEmpty && supabaseAnonKey.isNotEmpty;
+  bool get hasSupabase =>
+      supabaseUrl.isNotEmpty && supabasePublishableKey.isNotEmpty;
 }
