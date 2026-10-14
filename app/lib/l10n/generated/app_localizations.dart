@@ -909,6 +909,108 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Listo: el código nuevo ya está activo.'**
   String get qrRegenerado;
+
+  /// No description provided for @avisosTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Avisos'**
+  String get avisosTitulo;
+
+  /// No description provided for @avisosVacio.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no tenés avisos. Si alguien escanea el QR de tu mascota y te deja un mensaje, lo vas a ver acá.'**
+  String get avisosVacio;
+
+  /// No description provided for @avisosAntiEstafa.
+  ///
+  /// In es, this message translates to:
+  /// **'Nunca pagues por adelantado ni mandes plata para recuperar a tu mascota. Si te la piden, marcá el aviso como estafa.'**
+  String get avisosAntiEstafa;
+
+  /// No description provided for @avisosDe.
+  ///
+  /// In es, this message translates to:
+  /// **'Aviso de {nombre}'**
+  String avisosDe(String nombre);
+
+  /// No description provided for @avisosSobre.
+  ///
+  /// In es, this message translates to:
+  /// **'{mascota}: aviso de {nombre}'**
+  String avisosSobre(String mascota, String nombre);
+
+  /// No description provided for @avisosNuevo.
+  ///
+  /// In es, this message translates to:
+  /// **'Nuevo'**
+  String get avisosNuevo;
+
+  /// No description provided for @avisosMasOpciones.
+  ///
+  /// In es, this message translates to:
+  /// **'Más opciones'**
+  String get avisosMasOpciones;
+
+  /// No description provided for @avisosYaContacte.
+  ///
+  /// In es, this message translates to:
+  /// **'Ya lo contacté'**
+  String get avisosYaContacte;
+
+  /// No description provided for @avisosEstafa.
+  ///
+  /// In es, this message translates to:
+  /// **'Es una estafa'**
+  String get avisosEstafa;
+
+  /// No description provided for @avisosEstafaTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Marcar como estafa?'**
+  String get avisosEstafaTitulo;
+
+  /// No description provided for @avisosEstafaExplicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Esa persona no va a poder mandarte más avisos. No le avisamos que la bloqueaste.'**
+  String get avisosEstafaExplicacion;
+
+  /// No description provided for @avisosMarcadoEstafa.
+  ///
+  /// In es, this message translates to:
+  /// **'Marcado como estafa: esa persona ya no puede mandarte avisos.'**
+  String get avisosMarcadoEstafa;
+
+  /// No description provided for @avisosContacto.
+  ///
+  /// In es, this message translates to:
+  /// **'Contacto: {contacto}'**
+  String avisosContacto(String contacto);
+
+  /// No description provided for @avisosRespondido.
+  ///
+  /// In es, this message translates to:
+  /// **'Ya lo contactaste'**
+  String get avisosRespondido;
+
+  /// No description provided for @avisosLlamar.
+  ///
+  /// In es, this message translates to:
+  /// **'Llamar'**
+  String get avisosLlamar;
+
+  /// No description provided for @avisosWhatsapp.
+  ///
+  /// In es, this message translates to:
+  /// **'WhatsApp'**
+  String get avisosWhatsapp;
+
+  /// No description provided for @avisosVerUbicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Ver ubicación'**
+  String get avisosVerUbicacion;
 }
 
 class _AppLocalizationsDelegate

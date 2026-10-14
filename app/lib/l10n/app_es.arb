@@ -223,5 +223,46 @@
   "qrRegenerar": "Cambiar el código",
   "qrRegenerarTitulo": "¿Cambiar el código?",
   "qrRegenerarExplicacion": "El código actual deja de funcionar: vas a tener que imprimir el nuevo y reemplazar la chapita.",
-  "qrRegenerado": "Listo: el código nuevo ya está activo."
+  "qrRegenerado": "Listo: el código nuevo ya está activo.",
+  "avisosTitulo": "Avisos",
+  "avisosVacio": "Todavía no tenés avisos. Si alguien escanea el QR de tu mascota y te deja un mensaje, lo vas a ver acá.",
+  "avisosAntiEstafa": "Nunca pagues por adelantado ni mandes plata para recuperar a tu mascota. Si te la piden, marcá el aviso como estafa.",
+  "avisosDe": "Aviso de {nombre}",
+  "@avisosDe": {
+    "placeholders": {
+      "nombre": {
+        "type": "String"
+      }
+    }
+  },
+  "avisosSobre": "{mascota}: aviso de {nombre}",
+  "@avisosSobre": {
+    "placeholders": {
+      "mascota": {
+        "type": "String"
+      },
+      "nombre": {
+        "type": "String"
+      }
+    }
+  },
+  "avisosNuevo": "Nuevo",
+  "avisosMasOpciones": "Más opciones",
+  "avisosYaContacte": "Ya lo contacté",
+  "avisosEstafa": "Es una estafa",
+  "avisosEstafaTitulo": "¿Marcar como estafa?",
+  "avisosEstafaExplicacion": "Esa persona no va a poder mandarte más avisos. No le avisamos que la bloqueaste.",
+  "avisosMarcadoEstafa": "Marcado como estafa: esa persona ya no puede mandarte avisos.",
+  "avisosContacto": "Contacto: {contacto}",
+  "@avisosContacto": {
+    "placeholders": {
+      "contacto": {
+        "type": "String"
+      }
+    }
+  },
+  "avisosRespondido": "Ya lo contactaste",
+  "avisosLlamar": "Llamar",
+  "avisosWhatsapp": "WhatsApp",
+  "avisosVerUbicacion": "Ver ubicación"
 }

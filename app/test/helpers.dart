@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:sosmascota/src/app.dart';
+import 'package:sosmascota/src/avisos/avisos_repositorio.dart';
 import 'package:sosmascota/src/config/env_provider.dart';
 import 'package:sosmascota/src/config/supabase_providers.dart';
 import 'package:sosmascota/src/cuenta/perfil_repositorio.dart';
@@ -14,6 +15,7 @@ import 'package:sosmascota/src/metricas/metricas.dart';
 import 'package:sosmascota/src/qr/qr_repositorio.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
+import 'avisos_falsos.dart';
 import 'cuenta_falsa.dart';
 import 'mascotas_falsas.dart';
 import 'perfil_falso.dart';
@@ -34,8 +36,10 @@ Widget appDePrueba({
   MascotasRepositorio? mascotas,
   SelectorFoto? selectorFoto,
   QrRepositorio? qr,
+  AvisosRepositorio? avisos,
 }) => ProviderScope(
   overrides: [
+    avisosRepositorioProvider.overrideWithValue(avisos ?? AvisosFalsos()),
     qrRepositorioProvider.overrideWithValue(qr ?? QrFalso()),
     catalogoRepositorioProvider.overrideWithValue(CatalogoFalso()),
     mascotasRepositorioProvider.overrideWithValue(mascotas ?? MascotasFalsas()),

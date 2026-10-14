@@ -105,6 +105,10 @@ def bloqueado(resp):
     return s in (401, 403) or (s in (200, 201) and d == [])
 
 
+# Ids de objetivos usados en las pruebas: sus eventos de métricas se borran al final.
+OBJETIVOS_DE_PRUEBA = []
+
+
 def main():
     a_id, a = crear_usuario('a')
     b_id, b = crear_usuario('b')
@@ -197,6 +201,41 @@ def main():
              and rest('POST', 'rpc/public_pet_page', {'p_code': nuevo})[1].get('status') == 'active')
         caso('un visitante no puede regenerar QR', rest('POST', 'rpc/regenerar_qr', {'p_pet_id': pet.get('id')})[0] in (401, 403))
 
+        print('owner-alert (contacto inverso)')
+        aviso_url = f'{URL}/functions/v1/owner-alert'
+        OBJETIVOS_DE_PRUEBA.extend([tag.get('id')] + [t['id'] for t in filas(rest('GET', 'qr_tags?select=id', quien=a))])
+        ua = {'apikey': PUBLICA, 'User-Agent': f'prueba-{uuid.uuid4()}'}  # dispositivo nuevo en cada corrida
+        base = {'target_type': 'qr', 'code': nuevo, 'message': 'La vi en la plaza', 'sender_name': 'Carla',
+                'sender_contact': '099 555 666', 'consent': True, 'turnstile_token': 'XXXX.DUMMY.TOKEN.XXXX'}
+        caso('sin aceptar compartir el contacto se rechaza',
+             pedir('POST', aviso_url, {**base, 'consent': False}, ua)[0] == 400)
+        caso('sin el control anti-bots se rechaza',
+             pedir('POST', aviso_url, {k: v for k, v in base.items() if k != 'turnstile_token'}, ua)[0] == 400)
+        caso('un código inexistente no revela nada', pedir('POST', aviso_url, {**base, 'code': 'ZZZZZZZZ'}, ua)[0] == 404)
+        caso('el código viejo (cambiado) ya no recibe avisos', pedir('POST', aviso_url, {**base, 'code': tag.get('code')}, ua)[0] == 404)
+        s_av, r_av = pedir('POST', aviso_url, {**base, 'location': {'lat': -34.7171, 'lng': -55.9581}}, ua)
+        caso('un visitante deja un aviso (sin cuenta)', s_av == 200 and r_av.get('ok') is True)
+        caso('la respuesta no expone al dueño', a_id not in json.dumps(r_av))
+        avisos_a = filas(rest('GET', 'owner_alerts_app?select=*', quien=a))
+        caso('A ve el aviso con el contacto de quien avisó y la ubicación',
+             len(avisos_a) == 1 and avisos_a[0]['sender_contact'] == '099 555 666' and avisos_a[0]['lat'] is not None)
+        caso('B no ve los avisos de A', filas(rest('GET', 'owner_alerts_app?select=id', quien=b)) == [])
+        caso('un visitante no ve avisos', bloqueado(rest('GET', 'owner_alerts?select=id')))
+        caso('nadie puede crear avisos directo en la tabla (solo la función)',
+             bloqueado(rest('POST', 'owner_alerts', {'target_type': 'qr', 'target_id': tag.get('id'), 'owner_id': a_id,
+                                                     'sender_name': 'x', 'sender_contact': '0991234', 'message': 'x',
+                                                     'device_hash': 'a' * 64}, b)))
+        aviso_id = avisos_a[0]['id'] if avisos_a else ''
+        caso('A no puede cambiar el mensaje del aviso', bloqueado(rest('PATCH', f'owner_alerts?id=eq.{aviso_id}', {'message': 'x'}, a)))
+        caso('A marca el aviso como estafa',
+             filas(rest('PATCH', f'owner_alerts?id=eq.{aviso_id}', {'status': 'scam_reported'}, a))[0]['status'] == 'scam_reported')
+        s_bl, _ = pedir('POST', aviso_url, base, ua)
+        caso('el remitente bloqueado recibe "ok" pero el aviso no llega',
+             s_bl == 200 and len(filas(rest('GET', 'owner_alerts_app?select=id', quien=a))) == 1)
+        otro = {'apikey': PUBLICA, 'User-Agent': f'prueba-{uuid.uuid4()}'}
+        resultados = [pedir('POST', aviso_url, base, otro)[0] for _ in range(6)]
+        caso('más de 5 avisos por hora desde el mismo dispositivo se frenan', resultados[:5] == [200] * 5 and resultados[5] == 429)
+
         print('storage pet-photos')
         caso('A puede subir una foto en su carpeta', subir(f'pet-photos/{a_id}/prueba.jpg', JPEG_MINIMO, 'image/jpeg', a) == 200)
         caso('A no puede subir en la carpeta de B', subir(f'pet-photos/{b_id}/intruso.jpg', JPEG_MINIMO, 'image/jpeg', a) != 200)
@@ -256,6 +295,8 @@ def main():
         for uid in (a_id, b_id):
             pedir('DELETE', f'{URL}/auth/v1/admin/users/{uid}', headers=ADMIN)
         pedir('DELETE', f'{URL}/rest/v1/events?name=eq.prueba_rls', headers=ADMIN)
+        if OBJETIVOS_DE_PRUEBA:
+            pedir('DELETE', f"{URL}/rest/v1/events?target_id=in.({','.join(OBJETIVOS_DE_PRUEBA)})", headers=ADMIN)
         quedan = filas(pedir('GET', f'{URL}/rest/v1/profiles?select=id&id=in.({a_id},{b_id})', headers=ADMIN))
         caso('al borrar las cuentas se borran sus perfiles', quedan == [])
         caso('al borrar las cuentas se borran sus mascotas',

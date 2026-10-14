@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../l10n/l10n.dart';
 import '../../widgets/boton_ajustes.dart';
+import '../../widgets/boton_avisos.dart';
 import '../../widgets/en_construccion.dart';
 
 class MapaScreen extends StatelessWidget {
@@ -11,7 +12,7 @@ class MapaScreen extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
       title: Text(context.t.pestanaMapa),
-      actions: const [BotonAjustes()],
+      actions: const [BotonAvisos(), BotonAjustes()],
     ),
     body: EnConstruccion(
       icono: Icons.map_outlined,

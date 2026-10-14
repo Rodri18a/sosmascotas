@@ -418,3 +418,7 @@ enabled = true
 # chequeo del gateway no hace falta (y es compatible con las claves nuevas).
 [functions.delete-account]
 verify_jwt = false
+
+# Paso 0.4.4: la usan personas sin cuenta (página del QR). Valida anti-bots y límites.
+[functions.owner-alert]
+verify_jwt = false

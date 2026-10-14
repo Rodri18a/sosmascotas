@@ -5,6 +5,7 @@ import '../../../l10n/l10n.dart';
 import '../../cuenta/con_cuenta.dart';
 import '../../router.dart';
 import '../../widgets/boton_ajustes.dart';
+import '../../widgets/boton_avisos.dart';
 import '../../widgets/en_construccion.dart';
 
 class SosScreen extends ConsumerWidget {
@@ -16,7 +17,7 @@ class SosScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(t.pestanaSos),
-        actions: const [BotonAjustes()],
+        actions: const [BotonAvisos(), BotonAjustes()],
       ),
       body: EnConstruccion(
         icono: Icons.sos,

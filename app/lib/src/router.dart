@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'cuenta/perfil_repositorio.dart';
 import 'cuenta/servicio_cuenta.dart';
 import 'features/ajustes/ajustes_screen.dart';
+import 'features/avisos/avisos_screen.dart';
 import 'features/ayuda/ayuda_screen.dart';
 import 'features/consentimiento/consentimiento_screen.dart';
 import 'features/ingresar/ingresar_screen.dart';
@@ -28,6 +29,7 @@ abstract final class Rutas {
   static const ayuda = '/ayuda';
   static const ajustes = '/ajustes';
   static const ingresar = '/ingresar';
+  static const avisos = '/avisos';
   static const consentimiento = '/consentimiento';
   static const legal = '/legal';
   static const terminos = '/legal/terminos';
@@ -36,7 +38,7 @@ abstract final class Rutas {
   static const mascotaNueva = '/mascotas/nueva';
 
   /// Rutas que un visitante no puede ver: se le pide ingresar y después vuelve.
-  static const requierenCuenta = <String>[sosNuevo, '$mascotas/'];
+  static const requierenCuenta = <String>[sosNuevo, '$mascotas/', avisos];
 
   static String fichaMascota(String id) => '$mascotas/$id';
   static String editarMascota(String id) => '$mascotas/$id/editar';
@@ -136,6 +138,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: Rutas.ajustes,
         builder: (context, state) => const AjustesScreen(),
+      ),
+      GoRoute(
+        path: Rutas.avisos,
+        builder: (context, state) => const AvisosScreen(),
       ),
       GoRoute(
         path: Rutas.consentimiento,

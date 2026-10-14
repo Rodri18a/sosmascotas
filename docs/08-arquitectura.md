@@ -94,7 +94,7 @@ Páginas livianas en **HTML + JavaScript sin frameworks** (cargan rápido en cua
 | Función | Para qué | Paso |
 |---|---|---|
 | `delete-account` | Borrar mi cuenta (valida la sesión y borra solo esa cuenta) | 0.2.6 ✅ |
-| `owner-alert` | Contacto inverso: aviso al dueño desde el QR o un SOS | 0.4.4 |
+| `owner-alert` | Contacto inverso: aviso al dueño desde el QR o un SOS. Turnstile (secreto `TURNSTILE_SECRET`; en dev, la clave de prueba de Cloudflare), límites 5/h por dispositivo y 10/h por destino, remitentes bloqueados | 0.4.4 ✅ |
 
 Se despliegan con `supabase functions deploy <nombre> --use-api` y se prueban en `supabase/tests/rls_test.py`.
 

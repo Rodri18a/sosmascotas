@@ -495,4 +495,65 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get qrRegenerado => 'Listo: el código nuevo ya está activo.';
+
+  @override
+  String get avisosTitulo => 'Avisos';
+
+  @override
+  String get avisosVacio =>
+      'Todavía no tenés avisos. Si alguien escanea el QR de tu mascota y te deja un mensaje, lo vas a ver acá.';
+
+  @override
+  String get avisosAntiEstafa =>
+      'Nunca pagues por adelantado ni mandes plata para recuperar a tu mascota. Si te la piden, marcá el aviso como estafa.';
+
+  @override
+  String avisosDe(String nombre) {
+    return 'Aviso de $nombre';
+  }
+
+  @override
+  String avisosSobre(String mascota, String nombre) {
+    return '$mascota: aviso de $nombre';
+  }
+
+  @override
+  String get avisosNuevo => 'Nuevo';
+
+  @override
+  String get avisosMasOpciones => 'Más opciones';
+
+  @override
+  String get avisosYaContacte => 'Ya lo contacté';
+
+  @override
+  String get avisosEstafa => 'Es una estafa';
+
+  @override
+  String get avisosEstafaTitulo => '¿Marcar como estafa?';
+
+  @override
+  String get avisosEstafaExplicacion =>
+      'Esa persona no va a poder mandarte más avisos. No le avisamos que la bloqueaste.';
+
+  @override
+  String get avisosMarcadoEstafa =>
+      'Marcado como estafa: esa persona ya no puede mandarte avisos.';
+
+  @override
+  String avisosContacto(String contacto) {
+    return 'Contacto: $contacto';
+  }
+
+  @override
+  String get avisosRespondido => 'Ya lo contactaste';
+
+  @override
+  String get avisosLlamar => 'Llamar';
+
+  @override
+  String get avisosWhatsapp => 'WhatsApp';
+
+  @override
+  String get avisosVerUbicacion => 'Ver ubicación';
 }

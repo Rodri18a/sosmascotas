@@ -1,6 +1,7 @@
 /// Lógica compartida de SOS Mascota: la usan la app y el portal de administración.
 library;
 
+export 'src/avisos/aviso.dart';
 export 'src/config/app_env.dart';
 export 'src/cuenta/perfil.dart';
 export 'src/fotos/preparar_foto.dart';
