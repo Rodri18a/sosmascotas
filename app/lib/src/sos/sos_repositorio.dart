@@ -53,6 +53,10 @@ abstract interface class SosRepositorio {
     required bool activo,
   });
 
+  /// Reporta el SOS a moderación (con 3 personas distintas se oculta solo).
+  /// Devuelve `false` si esta persona ya lo había reportado.
+  Future<bool> reportarContenido(String sosId, {required String motivo});
+
   /// Enlace público de una foto guardada como `bucket/usuario/archivo`.
   String? urlFoto(String? ruta);
 }
@@ -187,6 +191,27 @@ class SupabaseSosRepositorio implements SosRepositorio {
   }
 
   @override
+  Future<bool> reportarContenido(
+    String sosId, {
+    required String motivo,
+  }) async {
+    try {
+      await _cliente.from('flags').insert({
+        'target_type': 'sos',
+        'target_id': sosId,
+        'reason': motivo,
+      });
+      return true;
+    } on PostgrestException catch (e) {
+      // 23505: ya existe el reporte de esta persona (unique).
+      if (e.code == '23505') return false;
+      throw const SosException(ErrorSos.datosInvalidos);
+    } on Exception {
+      throw const SosException(ErrorSos.sinConexion);
+    }
+  }
+
+  @override
   String? urlFoto(String? ruta) {
     if (ruta == null) return null;
     final corte = ruta.indexOf('/');
@@ -237,6 +262,10 @@ class SosSinConfigurar implements SosRepositorio {
     required String? numero,
     required bool activo,
   }) async {}
+
+  @override
+  Future<bool> reportarContenido(String sosId, {required String motivo}) =>
+      throw const SosException(ErrorSos.sinConexion);
 
   @override
   String? urlFoto(String? ruta) => null;

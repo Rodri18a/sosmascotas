@@ -15,7 +15,7 @@
 | 3 · Servicios | ⏳ | a detallar | 0 |
 | 4 · Escala | ⏳ | a detallar | 0 |
 
-**Paso actual:** 0.5.7 (desarrollo) · pendiente del dueño: 0.4.4b (proveedor de correo) · validación pendiente desde 0.0.2
+**Paso actual:** 0.6.1 (desarrollo) · pendiente del dueño: 0.4.4b (proveedor de correo) · validación pendiente desde 0.0.2
 
 ### Horas reales vs. estimadas (calibración)
 
@@ -91,10 +91,10 @@ Regla de trabajo: **por cada etapa de desarrollo, avanzar al menos un paso de va
 - [x] 0.5.4 Mapa y lista de reportes por cercanía, cargando solo la zona visible (⏱️ 4 h) — 14/10/2026, `sos_en_zona()` (pines mínimos) + caché de zona 1,5×; `sos_cercanos()` con filtro
 - [x] 0.5.5 Detalle del reporte + "Avisar al dueño" (contacto inverso) + página pública para compartir + consejos de microchip y RENAC + WhatsApp directo opcional (desactivado por defecto) (⏱️ 3 h) — 14/10/2026, `sos_publico()`, aviso desde la app (con sesión, sin anti-bots) y desde `/s/<id>` (probado en Chrome), WhatsApp opcional con advertencia
 - [x] 0.5.6 Marcar "¡Apareció!" y archivar; la página del QR muestra "Estoy perdido 🆘" si hay un SOS activo (⏱️ 2 h) — 14/10/2026, `cerrar_sos()`, "Mis reportes" en la pestaña SOS; el QR enlaza al reporte
-- [ ] 0.5.7 Botón "Reportar" + ocultamiento automático con 3 reportes + límite de 3 SOS por día (⏱️ 3 h) **← ESTÁS ACÁ**
+- [x] 0.5.7 Botón "Reportar" + ocultamiento automático con 3 reportes + límite de 3 SOS por día (⏱️ 3 h) — 14/10/2026, "Reportar publicación" en el detalle (motivo + detalle opcional, una vez por persona, evento `content_flag`); ocultamiento y límite ya estaban en la base desde 0.5.1. **Etapa 0.5 terminada**
 
 ### Etapa 0.6 · Avisos
-- [ ] 0.6.1 Proyecto Firebase (gratis) + push web en la PWA + guardar `push_tokens` (⏱️ 3 h)
+- [ ] 0.6.1 Proyecto Firebase (gratis) + push web en la PWA + guardar `push_tokens` (⏱️ 3 h) **← ESTÁS ACÁ**
 - [ ] 0.6.2 Pedir permiso de ubicación y guardar la zona aproximada del usuario (⏱️ 2 h)
 - [ ] 0.6.3 Edge Function: nuevo SOS → push a los usuarios a 5 km o menos, con tope diario (⏱️ 3 h)
 - [ ] 0.6.4 Push al dueño cuando escanean el QR de su mascota (⏱️ 1 h)
@@ -261,6 +261,7 @@ Regla de trabajo: **por cada etapa de desarrollo, avanzar al menos un paso de va
 | 14/10/2026 | — | Calibración: 0.1 y 0.2 llevaron ≈ 5 h reales contra 23,5 h estimadas. Se recalibra después de la 0.5. Regla: intercalar un paso de validación por etapa (D53) |
 | 14/10/2026 | 0.3.1–0.3.4 | ✅ Especies y razas, tabla `pets` + fotos, formulario de alta/edición (foto achicada y **sin EXIF**), lista con fila superior (mascota activa) y ficha. Arreglado: el formulario no validaba campos fuera de pantalla |
 | 14/10/2026 | 0.4.1–0.5.6 | ✅ QR (código, cartel, página pública, contacto inverso con anti-bots y bandeja Avisos, escaneos) y SOS (tablas, mapa MapLibre+OpenFreeMap, formulario, lista por cercanía, detalle, página /s/, ¡Apareció!). Pendientes del dueño: 0.4.4b (correo). **No se compiló la web desde 0.3.3** (falta de memoria con Chrome abierto): compilar y probar el mapa real en otra máquina |
+| 14/10/2026 | 0.5.7 | ✅ Reportar publicación (app) con motivo; la web `/s/` indica reportar desde la app (sin reporte anónimo). Arreglado: bloque "aviso enviado" duplicado en `s.html`. **Etapa 0.5 terminada** |
 | 13/10/2026 | 0.0.2 | Análisis de puntos débiles: contacto inverso en lugar de redirección a WhatsApp; pasos nuevos de identidad, legal temprano, formalización, soporte y criterios de corte (D41–D43) |
 | 12/10/2026 | 0.0.2 | Sin combo de microchip (D39). Línea institucional: Zoonosis de Canelones → nacional → mundial (D40) |
 | 12/10/2026 | 0.0.2 | Chapitas pre-codificadas, retiro en veterinaria, sponsors y prototipo con impresión 3D (D35–D38) |

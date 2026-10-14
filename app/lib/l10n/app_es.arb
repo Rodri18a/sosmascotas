@@ -420,5 +420,18 @@
   "sosEstadoActivoCorto": "Activo",
   "sosEstadoResueltoCorto": "Apareció",
   "sosEstadoArchivadoCorto": "Archivado",
-  "sosEstadoOcultoCorto": "En revisión"
+  "sosEstadoOcultoCorto": "En revisión",
+  "sosReportarContenido": "Reportar publicación",
+  "sosReportarContenidoMotivoCuenta": "Para reportar una publicación necesitás una cuenta: así evitamos reportes falsos.",
+  "sosReportarContenidoExplicacion": "Si varias personas la reportan, se oculta hasta que la revisemos. Quien la publicó no sabe quién la reportó.",
+  "sosReportarContenidoDetalle": "Contanos más (opcional)",
+  "sosReportarContenidoEnviar": "Enviar reporte",
+  "sosReportarContenidoFaltaMotivo": "Elegí un motivo.",
+  "sosReportarContenidoGracias": "Gracias, lo vamos a revisar.",
+  "sosReportarContenidoYaReportado": "Ya habías reportado esta publicación. La estamos revisando.",
+  "sosMotivoFalso": "Es falso",
+  "sosMotivoEstafa": "Parece una estafa",
+  "sosMotivoSpam": "Spam o publicidad",
+  "sosMotivoOfensivo": "Ofensivo",
+  "sosMotivoOtro": "Otro"
 }

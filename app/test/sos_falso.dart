@@ -15,6 +15,7 @@ class SosFalso implements SosRepositorio {
   final avisosEnviados = <({String sosId, String mensaje, String contacto})>[];
   final whatsappActivado = <String, String?>{};
   final cerrados = <String, bool>{};
+  final reportados = <String, String>{};
   List<MiSos> mios = const [];
   final List<SosResumen> listaCercanos;
   final zonasConsultadas = <Limites>[];
@@ -71,6 +72,17 @@ class SosFalso implements SosRepositorio {
     required bool activo,
   }) async {
     whatsappActivado[sosId] = activo ? numero : null;
+  }
+
+  @override
+  Future<bool> reportarContenido(
+    String sosId, {
+    required String motivo,
+  }) async {
+    if (fallarCon case final tipo?) throw SosException(tipo);
+    if (reportados.containsKey(sosId)) return false;
+    reportados[sosId] = motivo;
+    return true;
   }
 
   @override

@@ -139,6 +139,7 @@ Tabla `events` (append-only), escrita por el cliente con `ref.read(metricasProvi
 | `sos_create` / `sos_resolve` / `sos_alert` | report_id |
 | `qr_scan` / `qr_alert` | pet_id |
 | `alert_reply` | el dueño respondió un aviso (marcado por él) |
+| `content_flag` | target_type, motivo, target_id (reporte a moderación, solo la primera vez) |
 | `signup` / `pet_create` | — |
 | `reminder_done` | tipo |
 

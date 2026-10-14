@@ -7,6 +7,7 @@ abstract final class Eventos {
   static const accountDelete = 'account_delete';
   static const petCreate = 'pet_create';
   static const alertReply = 'alert_reply';
+  static const contentFlag = 'content_flag';
 }
 
 /// Valida el nombre de un evento con la misma regla que la base de datos.

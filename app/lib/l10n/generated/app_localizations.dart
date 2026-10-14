@@ -1533,6 +1533,84 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'En revisión'**
   String get sosEstadoOcultoCorto;
+
+  /// No description provided for @sosReportarContenido.
+  ///
+  /// In es, this message translates to:
+  /// **'Reportar publicación'**
+  String get sosReportarContenido;
+
+  /// No description provided for @sosReportarContenidoMotivoCuenta.
+  ///
+  /// In es, this message translates to:
+  /// **'Para reportar una publicación necesitás una cuenta: así evitamos reportes falsos.'**
+  String get sosReportarContenidoMotivoCuenta;
+
+  /// No description provided for @sosReportarContenidoExplicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Si varias personas la reportan, se oculta hasta que la revisemos. Quien la publicó no sabe quién la reportó.'**
+  String get sosReportarContenidoExplicacion;
+
+  /// No description provided for @sosReportarContenidoDetalle.
+  ///
+  /// In es, this message translates to:
+  /// **'Contanos más (opcional)'**
+  String get sosReportarContenidoDetalle;
+
+  /// No description provided for @sosReportarContenidoEnviar.
+  ///
+  /// In es, this message translates to:
+  /// **'Enviar reporte'**
+  String get sosReportarContenidoEnviar;
+
+  /// No description provided for @sosReportarContenidoFaltaMotivo.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegí un motivo.'**
+  String get sosReportarContenidoFaltaMotivo;
+
+  /// No description provided for @sosReportarContenidoGracias.
+  ///
+  /// In es, this message translates to:
+  /// **'Gracias, lo vamos a revisar.'**
+  String get sosReportarContenidoGracias;
+
+  /// No description provided for @sosReportarContenidoYaReportado.
+  ///
+  /// In es, this message translates to:
+  /// **'Ya habías reportado esta publicación. La estamos revisando.'**
+  String get sosReportarContenidoYaReportado;
+
+  /// No description provided for @sosMotivoFalso.
+  ///
+  /// In es, this message translates to:
+  /// **'Es falso'**
+  String get sosMotivoFalso;
+
+  /// No description provided for @sosMotivoEstafa.
+  ///
+  /// In es, this message translates to:
+  /// **'Parece una estafa'**
+  String get sosMotivoEstafa;
+
+  /// No description provided for @sosMotivoSpam.
+  ///
+  /// In es, this message translates to:
+  /// **'Spam o publicidad'**
+  String get sosMotivoSpam;
+
+  /// No description provided for @sosMotivoOfensivo.
+  ///
+  /// In es, this message translates to:
+  /// **'Ofensivo'**
+  String get sosMotivoOfensivo;
+
+  /// No description provided for @sosMotivoOtro.
+  ///
+  /// In es, this message translates to:
+  /// **'Otro'**
+  String get sosMotivoOtro;
 }
 
 class _AppLocalizationsDelegate

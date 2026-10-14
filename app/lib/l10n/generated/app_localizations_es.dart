@@ -877,4 +877,46 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get sosEstadoOcultoCorto => 'En revisión';
+
+  @override
+  String get sosReportarContenido => 'Reportar publicación';
+
+  @override
+  String get sosReportarContenidoMotivoCuenta =>
+      'Para reportar una publicación necesitás una cuenta: así evitamos reportes falsos.';
+
+  @override
+  String get sosReportarContenidoExplicacion =>
+      'Si varias personas la reportan, se oculta hasta que la revisemos. Quien la publicó no sabe quién la reportó.';
+
+  @override
+  String get sosReportarContenidoDetalle => 'Contanos más (opcional)';
+
+  @override
+  String get sosReportarContenidoEnviar => 'Enviar reporte';
+
+  @override
+  String get sosReportarContenidoFaltaMotivo => 'Elegí un motivo.';
+
+  @override
+  String get sosReportarContenidoGracias => 'Gracias, lo vamos a revisar.';
+
+  @override
+  String get sosReportarContenidoYaReportado =>
+      'Ya habías reportado esta publicación. La estamos revisando.';
+
+  @override
+  String get sosMotivoFalso => 'Es falso';
+
+  @override
+  String get sosMotivoEstafa => 'Parece una estafa';
+
+  @override
+  String get sosMotivoSpam => 'Spam o publicidad';
+
+  @override
+  String get sosMotivoOfensivo => 'Ofensivo';
+
+  @override
+  String get sosMotivoOtro => 'Otro';
 }

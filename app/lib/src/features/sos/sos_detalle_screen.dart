@@ -12,6 +12,7 @@ import '../../cuenta/perfil_repositorio.dart';
 import '../../cuenta/servicio_cuenta.dart';
 import '../../mapa/mapa_vista.dart';
 import '../../mascotas/textos_mascota.dart';
+import '../../metricas/metricas.dart';
 import '../../router.dart';
 import '../../sos/sos_repositorio.dart';
 
@@ -73,6 +74,35 @@ class _Detalle extends ConsumerWidget {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text(context.t.sosAvisoEnviado)));
+    }
+  }
+
+  Future<void> _reportar(BuildContext context, WidgetRef ref) async {
+    if (!ref.read(conectadoProvider)) {
+      await abrirConCuenta(
+        context,
+        ref,
+        destino: Rutas.detalleSos(detalle.id),
+        motivo: context.t.sosReportarContenidoMotivoCuenta,
+      );
+      return;
+    }
+    final nuevo = await showModalBottomSheet<bool>(
+      context: context,
+      isScrollControlled: true,
+      showDragHandle: true,
+      builder: (_) => _FormularioReporte(sosId: detalle.id),
+    );
+    if (nuevo != null && context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            nuevo
+                ? context.t.sosReportarContenidoGracias
+                : context.t.sosReportarContenidoYaReportado,
+          ),
+        ),
+      );
     }
   }
 
@@ -318,10 +348,143 @@ class _Detalle extends ConsumerWidget {
               ),
               const SizedBox(height: 8),
               Text(t.sosPrivacidadDetalle, style: tema.textTheme.bodySmall),
+              if (activo && !detalle.esMio) ...[
+                const SizedBox(height: 16),
+                TextButton.icon(
+                  onPressed: () => _reportar(context, ref),
+                  icon: const Icon(Icons.flag_outlined),
+                  label: Text(t.sosReportarContenido),
+                ),
+              ],
             ],
           ),
         ),
       ],
+    );
+  }
+}
+
+/// Motivos para reportar un SOS (se guardan en `flags.reason`).
+enum _MotivoReporte { falso, estafa, spam, ofensivo, otro }
+
+/// Reportar un SOS a moderación: motivo + detalle opcional.
+/// Devuelve `true` si se registró, `false` si ya lo había reportado.
+class _FormularioReporte extends ConsumerStatefulWidget {
+  const _FormularioReporte({required this.sosId});
+
+  final String sosId;
+
+  @override
+  ConsumerState<_FormularioReporte> createState() =>
+      _FormularioReporteState();
+}
+
+class _FormularioReporteState extends ConsumerState<_FormularioReporte> {
+  final _detalle = TextEditingController();
+  _MotivoReporte? _motivo;
+  bool _enviando = false;
+  String? _error;
+
+  @override
+  void dispose() {
+    _detalle.dispose();
+    super.dispose();
+  }
+
+  Future<void> _enviar() async {
+    final t = context.t;
+    final motivo = _motivo;
+    if (motivo == null) {
+      setState(() => _error = t.sosReportarContenidoFaltaMotivo);
+      return;
+    }
+    setState(() {
+      _enviando = true;
+      _error = null;
+    });
+    final detalle = _detalle.text.trim();
+    try {
+      final nuevo = await ref
+          .read(sosRepositorioProvider)
+          .reportarContenido(
+            widget.sosId,
+            motivo: detalle.isEmpty ? motivo.name : '${motivo.name}: $detalle',
+          );
+      if (nuevo) {
+        ref
+            .read(metricasProvider)
+            .track(
+              Eventos.contentFlag,
+              props: {'target_type': 'sos', 'reason': motivo.name},
+              targetId: widget.sosId,
+            );
+      }
+      if (mounted) Navigator.pop(context, nuevo);
+    } on SosException {
+      if (mounted) setState(() => _error = t.errorSinConexion);
+    } finally {
+      if (mounted) setState(() => _enviando = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final t = context.t;
+    final tema = Theme.of(context);
+    String texto(_MotivoReporte m) => switch (m) {
+      _MotivoReporte.falso => t.sosMotivoFalso,
+      _MotivoReporte.estafa => t.sosMotivoEstafa,
+      _MotivoReporte.spam => t.sosMotivoSpam,
+      _MotivoReporte.ofensivo => t.sosMotivoOfensivo,
+      _MotivoReporte.otro => t.sosMotivoOtro,
+    };
+    return Padding(
+      padding: EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(context).bottom),
+      child: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(t.sosReportarContenido, style: tema.textTheme.titleLarge),
+              const SizedBox(height: 8),
+              Text(t.sosReportarContenidoExplicacion),
+              const SizedBox(height: 12),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: [
+                  for (final m in _MotivoReporte.values)
+                    ChoiceChip(
+                      label: Text(texto(m)),
+                      selected: _motivo == m,
+                      onSelected: (_) => setState(() => _motivo = m),
+                    ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              TextField(
+                controller: _detalle,
+                maxLength: 200,
+                maxLines: 3,
+                minLines: 1,
+                decoration: InputDecoration(
+                  labelText: t.sosReportarContenidoDetalle,
+                ),
+              ),
+              if (_error case final error?)
+                Text(error, style: TextStyle(color: tema.colorScheme.error)),
+              const SizedBox(height: 8),
+              FilledButton(
+                onPressed: _enviando ? null : _enviar,
+                child: Text(
+                  _enviando ? t.guardando : t.sosReportarContenidoEnviar,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

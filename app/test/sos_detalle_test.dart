@@ -242,6 +242,95 @@ void main() {
     expect(find.widgetWithText(FilledButton, '¡Apareció!'), findsNothing);
   });
 
+  testWidgets('un visitante que quiere reportar ve por qué hace falta cuenta', (
+    tester,
+  ) async {
+    _pantallaDeCelular(tester);
+    await tester.pumpWidget(
+      appDePrueba(
+        sos: SosFalso(listaCercanos: [_enLista], detalles: {'s1': _detalle()}),
+      ),
+    );
+    await _abrirDetalle(tester);
+
+    await _ver(tester, find.text('Reportar publicación'));
+    await tester.tap(find.text('Reportar publicación'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Necesitás una cuenta'), findsOneWidget);
+    expect(find.textContaining('evitamos reportes falsos'), findsOneWidget);
+  });
+
+  testWidgets('con cuenta, reporta la publicación una sola vez', (
+    tester,
+  ) async {
+    _pantallaDeCelular(tester);
+    final eventos = <Map<String, Object?>>[];
+    final sos = SosFalso(
+      listaCercanos: [_enLista],
+      detalles: {'s1': _detalle()},
+    );
+    await tester.pumpWidget(
+      appDePrueba(
+        cuenta: ServicioCuentaFalso(conectado: _beto),
+        sos: sos,
+        eventos: eventos,
+      ),
+    );
+    await _abrirDetalle(tester);
+
+    Future<void> reportar() async {
+      await _ver(tester, find.text('Reportar publicación'));
+      await tester.tap(find.text('Reportar publicación'));
+      await tester.pumpAndSettle();
+    }
+
+    await reportar();
+    await tester.tap(find.text('Enviar reporte'));
+    await tester.pumpAndSettle();
+    expect(find.text('Elegí un motivo.'), findsOneWidget);
+    expect(sos.reportados, isEmpty);
+
+    await tester.tap(find.text('Parece una estafa'));
+    await tester.enterText(find.byType(TextField).last, 'Pide plata');
+    await tester.tap(find.text('Enviar reporte'));
+    await tester.pumpAndSettle();
+
+    expect(sos.reportados, {'s1': 'estafa: Pide plata'});
+    expect(find.text('Gracias, lo vamos a revisar.'), findsOneWidget);
+    expect(
+      eventos.where((e) => e['name'] == 'content_flag').single['target_id'],
+      's1',
+    );
+
+    // Segundo intento: no se duplica.
+    ScaffoldMessenger.of(
+      tester.element(find.byType(ListView)),
+    ).removeCurrentSnackBar();
+    await reportar();
+    await tester.tap(find.text('Spam o publicidad'));
+    await tester.tap(find.text('Enviar reporte'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Ya habías reportado'), findsOneWidget);
+    expect(eventos.where((e) => e['name'] == 'content_flag'), hasLength(1));
+  });
+
+  testWidgets('el autor no ve "Reportar publicación"', (tester) async {
+    _pantallaDeCelular(tester);
+    await tester.pumpWidget(
+      appDePrueba(
+        cuenta: ServicioCuentaFalso(conectado: _beto),
+        sos: SosFalso(
+          listaCercanos: [_enLista],
+          detalles: {'s1': _detalle(mio: true)},
+        ),
+      ),
+    );
+    await _abrirDetalle(tester);
+    await _ver(tester, find.text('Compartir'));
+    expect(find.text('Reportar publicación'), findsNothing);
+  });
+
   testWidgets('la pestaña SOS muestra "Mis reportes"', (tester) async {
     final sos = SosFalso()
       ..mios = [
