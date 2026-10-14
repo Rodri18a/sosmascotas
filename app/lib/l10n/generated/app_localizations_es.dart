@@ -439,4 +439,60 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get fichaQrDescripcion =>
       'Su código para que quien la encuentre pueda avisarte sin ver tu teléfono.';
+
+  @override
+  String qrExplicacion(String nombre) {
+    return 'Este es el QR de $nombre. Quien lo escanee ve su foto y su nombre, y puede avisarte sin ver tu teléfono.';
+  }
+
+  @override
+  String qrDe(String nombre) {
+    return 'QR de $nombre';
+  }
+
+  @override
+  String get qrCartelIndicacion => '¿Me encontraste? Escaneame 🐾';
+
+  @override
+  String get qrDescargar => 'Descargar para imprimir';
+
+  @override
+  String get qrDescargaNoDisponible =>
+      'La descarga llega con la app para celulares. Mientras tanto, usá la versión web.';
+
+  @override
+  String get qrCopiarEnlace => 'Copiar enlace';
+
+  @override
+  String get qrEnlaceCopiado => 'Enlace copiado';
+
+  @override
+  String get qrVerPagina => 'Ver la página que ve quien lo escanea';
+
+  @override
+  String get qrNotaTitulo => 'Nota para quien la encuentre';
+
+  @override
+  String get qrNotaAyuda =>
+      'Por ejemplo: \"Toma medicación\" o \"Es alérgica al pollo\". No pongas tu dirección ni tu teléfono.';
+
+  @override
+  String get qrNotaGuardada => 'Nota guardada';
+
+  @override
+  String get qrConsejoChapita =>
+      'Imprimilo en papel adhesivo y protegelo con cinta transparente, o pedí una chapita resistente cuando esté disponible. Si el código circuló donde no querías, podés cambiarlo.';
+
+  @override
+  String get qrRegenerar => 'Cambiar el código';
+
+  @override
+  String get qrRegenerarTitulo => '¿Cambiar el código?';
+
+  @override
+  String get qrRegenerarExplicacion =>
+      'El código actual deja de funcionar: vas a tener que imprimir el nuevo y reemplazar la chapita.';
+
+  @override
+  String get qrRegenerado => 'Listo: el código nuevo ya está activo.';
 }

@@ -193,5 +193,35 @@
   "fichaMicrochipConsejo": "Si se pierde, a quien la encuentre le vamos a sugerir llevarla a una veterinaria para leer el chip.",
   "fichaSinMicrochip": "Sin microchip cargado",
   "fichaQrTitulo": "Chapita QR",
-  "fichaQrDescripcion": "Su código para que quien la encuentre pueda avisarte sin ver tu teléfono."
+  "fichaQrDescripcion": "Su código para que quien la encuentre pueda avisarte sin ver tu teléfono.",
+  "qrExplicacion": "Este es el QR de {nombre}. Quien lo escanee ve su foto y su nombre, y puede avisarte sin ver tu teléfono.",
+  "@qrExplicacion": {
+    "placeholders": {
+      "nombre": {
+        "type": "String"
+      }
+    }
+  },
+  "qrDe": "QR de {nombre}",
+  "@qrDe": {
+    "placeholders": {
+      "nombre": {
+        "type": "String"
+      }
+    }
+  },
+  "qrCartelIndicacion": "¿Me encontraste? Escaneame 🐾",
+  "qrDescargar": "Descargar para imprimir",
+  "qrDescargaNoDisponible": "La descarga llega con la app para celulares. Mientras tanto, usá la versión web.",
+  "qrCopiarEnlace": "Copiar enlace",
+  "qrEnlaceCopiado": "Enlace copiado",
+  "qrVerPagina": "Ver la página que ve quien lo escanea",
+  "qrNotaTitulo": "Nota para quien la encuentre",
+  "qrNotaAyuda": "Por ejemplo: \"Toma medicación\" o \"Es alérgica al pollo\". No pongas tu dirección ni tu teléfono.",
+  "qrNotaGuardada": "Nota guardada",
+  "qrConsejoChapita": "Imprimilo en papel adhesivo y protegelo con cinta transparente, o pedí una chapita resistente cuando esté disponible. Si el código circuló donde no querías, podés cambiarlo.",
+  "qrRegenerar": "Cambiar el código",
+  "qrRegenerarTitulo": "¿Cambiar el código?",
+  "qrRegenerarExplicacion": "El código actual deja de funcionar: vas a tener que imprimir el nuevo y reemplazar la chapita.",
+  "qrRegenerado": "Listo: el código nuevo ya está activo."
 }

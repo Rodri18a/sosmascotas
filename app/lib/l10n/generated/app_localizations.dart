@@ -813,6 +813,102 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Su código para que quien la encuentre pueda avisarte sin ver tu teléfono.'**
   String get fichaQrDescripcion;
+
+  /// No description provided for @qrExplicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Este es el QR de {nombre}. Quien lo escanee ve su foto y su nombre, y puede avisarte sin ver tu teléfono.'**
+  String qrExplicacion(String nombre);
+
+  /// No description provided for @qrDe.
+  ///
+  /// In es, this message translates to:
+  /// **'QR de {nombre}'**
+  String qrDe(String nombre);
+
+  /// No description provided for @qrCartelIndicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Me encontraste? Escaneame 🐾'**
+  String get qrCartelIndicacion;
+
+  /// No description provided for @qrDescargar.
+  ///
+  /// In es, this message translates to:
+  /// **'Descargar para imprimir'**
+  String get qrDescargar;
+
+  /// No description provided for @qrDescargaNoDisponible.
+  ///
+  /// In es, this message translates to:
+  /// **'La descarga llega con la app para celulares. Mientras tanto, usá la versión web.'**
+  String get qrDescargaNoDisponible;
+
+  /// No description provided for @qrCopiarEnlace.
+  ///
+  /// In es, this message translates to:
+  /// **'Copiar enlace'**
+  String get qrCopiarEnlace;
+
+  /// No description provided for @qrEnlaceCopiado.
+  ///
+  /// In es, this message translates to:
+  /// **'Enlace copiado'**
+  String get qrEnlaceCopiado;
+
+  /// No description provided for @qrVerPagina.
+  ///
+  /// In es, this message translates to:
+  /// **'Ver la página que ve quien lo escanea'**
+  String get qrVerPagina;
+
+  /// No description provided for @qrNotaTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Nota para quien la encuentre'**
+  String get qrNotaTitulo;
+
+  /// No description provided for @qrNotaAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Por ejemplo: \"Toma medicación\" o \"Es alérgica al pollo\". No pongas tu dirección ni tu teléfono.'**
+  String get qrNotaAyuda;
+
+  /// No description provided for @qrNotaGuardada.
+  ///
+  /// In es, this message translates to:
+  /// **'Nota guardada'**
+  String get qrNotaGuardada;
+
+  /// No description provided for @qrConsejoChapita.
+  ///
+  /// In es, this message translates to:
+  /// **'Imprimilo en papel adhesivo y protegelo con cinta transparente, o pedí una chapita resistente cuando esté disponible. Si el código circuló donde no querías, podés cambiarlo.'**
+  String get qrConsejoChapita;
+
+  /// No description provided for @qrRegenerar.
+  ///
+  /// In es, this message translates to:
+  /// **'Cambiar el código'**
+  String get qrRegenerar;
+
+  /// No description provided for @qrRegenerarTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Cambiar el código?'**
+  String get qrRegenerarTitulo;
+
+  /// No description provided for @qrRegenerarExplicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'El código actual deja de funcionar: vas a tener que imprimir el nuevo y reemplazar la chapita.'**
+  String get qrRegenerarExplicacion;
+
+  /// No description provided for @qrRegenerado.
+  ///
+  /// In es, this message translates to:
+  /// **'Listo: el código nuevo ya está activo.'**
+  String get qrRegenerado;
 }
 
 class _AppLocalizationsDelegate

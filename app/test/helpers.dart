@@ -11,11 +11,13 @@ import 'package:sosmascota/src/fotos/selector_foto.dart';
 import 'package:sosmascota/src/mascotas/catalogo.dart';
 import 'package:sosmascota/src/mascotas/mascotas_repositorio.dart';
 import 'package:sosmascota/src/metricas/metricas.dart';
+import 'package:sosmascota/src/qr/qr_repositorio.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'cuenta_falsa.dart';
 import 'mascotas_falsas.dart';
 import 'perfil_falso.dart';
+import 'qr_falso.dart';
 
 const urlPrueba = 'https://abc.supabase.co';
 const clavePrueba = 'sb_publishable_prueba';
@@ -31,8 +33,10 @@ Widget appDePrueba({
   List<Map<String, Object?>>? eventos,
   MascotasRepositorio? mascotas,
   SelectorFoto? selectorFoto,
+  QrRepositorio? qr,
 }) => ProviderScope(
   overrides: [
+    qrRepositorioProvider.overrideWithValue(qr ?? QrFalso()),
     catalogoRepositorioProvider.overrideWithValue(CatalogoFalso()),
     mascotasRepositorioProvider.overrideWithValue(mascotas ?? MascotasFalsas()),
     selectorFotoProvider.overrideWithValue(selectorFoto ?? (_) async => null),
