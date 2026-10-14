@@ -11,6 +11,7 @@ Uso (desde la raíz del repo):
     python3 -I supabase/tests/rls_test.py
 """
 import json
+import math
 import os
 import pathlib
 import sys
@@ -254,6 +255,55 @@ def main():
         caso('un visitante no ve escaneos', bloqueado(rest('GET', 'qr_scans?select=id')))
         caso('nadie inserta escaneos directo', bloqueado(rest('POST', 'qr_scans', {'qr_id': tag.get('id'), 'owner_id': a_id}, b)))
 
+        print('sos_reports (perdidos y encontrados)')
+        caso('A sube una foto de SOS en su carpeta', subir(f'sos-photos/{a_id}/sos1.jpg', JPEG_MINIMO, 'image/jpeg', a) == 200)
+        caso('A no puede subir fotos de SOS en la carpeta de B', subir(f'sos-photos/{b_id}/x.jpg', JPEG_MINIMO, 'image/jpeg', a) != 200)
+        reporte = {'kind': 'lost', 'species_id': 1, 'name': 'Firulais', 'color': 'Negro',
+                   'lat': -34.7171, 'lng': -55.9581, 'photos': [f'{a_id}/sos1.jpg'], 'pet_id': pet.get('id')}
+        caso('sin foto no se puede publicar', rest('POST', 'rpc/crear_sos', {'p': {**reporte, 'photos': []}}, a)[0] >= 400)
+        caso('con una foto de otra persona no se puede publicar',
+             rest('POST', 'rpc/crear_sos', {'p': {**reporte, 'photos': [f'{b_id}/x.jpg']}}, a)[0] >= 400)
+        caso('B no puede reportar la mascota de A como propia',
+             rest('POST', 'rpc/crear_sos', {'p': {**reporte, 'photos': [f'{b_id}/x.jpg']}}, b)[0] >= 400)
+        caso('un visitante no puede publicar', rest('POST', 'rpc/crear_sos', {'p': reporte})[0] in (401, 403))
+        s_sos, sos_id = rest('POST', 'rpc/crear_sos', {'p': reporte}, a)
+        caso('A publica un SOS de su mascota', s_sos == 200 and isinstance(sos_id, str))
+        OBJETIVOS_DE_PRUEBA.append(sos_id if isinstance(sos_id, str) else '')
+        caso('nadie lee la tabla de SOS directo (ni el autor)',
+             bloqueado(rest('GET', 'sos_reports?select=*', quien=a)) and bloqueado(rest('GET', 'sos_reports?select=*')))
+        mios = filas(rest('POST', 'rpc/mis_sos', {}, a))
+        mio = mios[0] if mios else {}
+        caso('A ve su reporte con la ubicación exacta', abs(mio.get('lat', 0) + 34.7171) < 1e-9 and mio.get('photos') == [f'{a_id}/sos1.jpg'])
+        dlat = math.radians(mio.get('public_lat', 0) - mio.get('lat', 0))
+        dlng = math.radians(mio.get('public_lng', 0) - mio.get('lng', 0))
+        h = math.sin(dlat / 2) ** 2 + math.cos(math.radians(mio.get('lat', 0))) * math.cos(math.radians(mio.get('public_lat', 0))) * math.sin(dlng / 2) ** 2
+        distancia = 2 * 6371000 * math.asin(math.sqrt(h))
+        caso(f'el punto público está desplazado 150–200 m ({distancia:.0f} m)', 149 <= distancia <= 201)
+        caso('B no ve los reportes de A en "mis SOS"', filas(rest('POST', 'rpc/mis_sos', {}, b)) == [])
+        for _ in range(2):
+            ids_extra = rest('POST', 'rpc/crear_sos', {'p': {**reporte, 'pet_id': None}}, a)[1]
+            if isinstance(ids_extra, str):
+                OBJETIVOS_DE_PRUEBA.append(ids_extra)
+        caso('el cuarto reporte del día se rechaza (máximo 3)',
+             'limite_diario' in json.dumps(rest('POST', 'rpc/crear_sos', {'p': reporte}, a)[1]))
+
+        print('flags (reportar contenido)')
+        c_id, c = crear_usuario('c')
+        try:
+            caso('B reporta el SOS', rest('POST', 'flags', {'target_type': 'sos', 'target_id': sos_id, 'reason': 'spam'}, b, 'return=minimal')[0] == 201)
+            caso('B no puede reportar dos veces', rest('POST', 'flags', {'target_type': 'sos', 'target_id': sos_id}, b, 'return=minimal')[0] == 409)
+            caso('B no puede reportar a nombre de C',
+                 bloqueado(rest('POST', 'flags', {'target_type': 'sos', 'target_id': sos_id, 'reporter_id': c_id}, b, 'return=minimal')))
+            rest('POST', 'flags', {'target_type': 'sos', 'target_id': sos_id}, c, 'return=minimal')
+            caso('con 2 reportes sigue activo', filas(rest('POST', 'rpc/mis_sos', {}, a))[-1]['status'] == 'active'
+                 or any(r['id'] == sos_id and r['status'] == 'active' for r in filas(rest('POST', 'rpc/mis_sos', {}, a))))
+            rest('POST', 'flags', {'target_type': 'sos', 'target_id': sos_id}, a, 'return=minimal')
+            caso('con 3 personas distintas se oculta solo',
+                 any(r['id'] == sos_id and r['status'] == 'hidden' for r in filas(rest('POST', 'rpc/mis_sos', {}, a))))
+            caso('B no ve los reportes de contenido de otros', all(f['reporter_id'] == b_id for f in filas(rest('GET', 'flags?select=*', quien=b))))
+        finally:
+            pedir('DELETE', f'{URL}/auth/v1/admin/users/{c_id}', headers=ADMIN)
+
         print('storage pet-photos')
         caso('A puede subir una foto en su carpeta', subir(f'pet-photos/{a_id}/prueba.jpg', JPEG_MINIMO, 'image/jpeg', a) == 200)
         caso('A no puede subir en la carpeta de B', subir(f'pet-photos/{b_id}/intruso.jpg', JPEG_MINIMO, 'image/jpeg', a) != 200)
@@ -310,6 +360,7 @@ def main():
              len(filas(pedir('GET', f'{URL}/rest/v1/profiles?select=id&id=in.({a_id},{b_id})', headers=ADMIN))) == 2)
     finally:
         pedir('DELETE', f'{URL}/storage/v1/object/pet-photos', {'prefixes': [f'{a_id}/prueba.jpg']}, ADMIN)
+        pedir('DELETE', f'{URL}/storage/v1/object/sos-photos', {'prefixes': [f'{a_id}/sos1.jpg']}, ADMIN)
         for uid in (a_id, b_id):
             pedir('DELETE', f'{URL}/auth/v1/admin/users/{uid}', headers=ADMIN)
         pedir('DELETE', f'{URL}/rest/v1/events?name=eq.prueba_rls', headers=ADMIN)

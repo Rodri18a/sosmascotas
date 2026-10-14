@@ -15,7 +15,7 @@
 | 3 · Servicios | ⏳ | a detallar | 0 |
 | 4 · Escala | ⏳ | a detallar | 0 |
 
-**Paso actual:** 0.5.1 (desarrollo) · pendiente del dueño: 0.4.4b (proveedor de correo) · validación pendiente desde 0.0.2
+**Paso actual:** 0.5.2 (desarrollo) · pendiente del dueño: 0.4.4b (proveedor de correo) · validación pendiente desde 0.0.2
 
 ### Horas reales vs. estimadas (calibración)
 
@@ -85,8 +85,8 @@ Regla de trabajo: **por cada etapa de desarrollo, avanzar al menos un paso de va
 - [x] 0.4.5 Registrar los escaneos (`qr_scans`) con ubicación opcional compartida (⏱️ 1 h) — 14/10/2026, botón en la página del QR (probado en Chrome) y "Últimos escaneos" en la app
 
 ### Etapa 0.5 · SOS
-- [ ] 0.5.1 Tablas `sos_reports`, `sos_photos`, `flags` + RLS + ubicación pública aproximada (⏱️ 2 h) **← ESTÁS ACÁ**
-- [ ] 0.5.2 Capa propia `MapView` + implementación web con MapLibre/OSM (elegir proveedor de teselas, P6) (⏱️ 4 h)
+- [x] 0.5.1 Tablas `sos_reports`, `sos_photos`, `flags` + RLS + ubicación pública aproximada (⏱️ 2 h) — 14/10/2026, sin acceso directo (funciones `crear_sos`, `mis_sos`); punto público a 150–200 m; 3 por día; se oculta con 3 reportes
+- [ ] 0.5.2 Capa propia `MapView` + implementación web con MapLibre/OSM (elegir proveedor de teselas, P6) (⏱️ 4 h) **← ESTÁS ACÁ**
 - [ ] 0.5.3 Formulario de reporte perdida/encontrada (precarga de mascota propia, foto, ubicación tocando el mapa) (⏱️ 4 h)
 - [ ] 0.5.4 Mapa y lista de reportes por cercanía, cargando solo la zona visible (⏱️ 4 h)
 - [ ] 0.5.5 Detalle del reporte + "Avisar al dueño" (contacto inverso) + página pública para compartir + consejos de microchip y RENAC + WhatsApp directo opcional (desactivado por defecto) (⏱️ 3 h)

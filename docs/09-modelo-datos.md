@@ -33,8 +33,8 @@ Propuesta inicial. Se ajusta al implementar cada fase. **RLS activado en todas l
 
 | Tabla | Campos clave | Fase |
 |---|---|---|
-| `sos_reports` | id, kind (`lost`, `found`), user_id, pet_id (opcional), species_id, breed_id, name, color, marks, description, reward, exact_location (privada), public_location (aproximada), zone_id, lost_at, status (`active`, `resolved`, `archived`, `hidden`), last_activity_at | 0 |
-| `sos_photos` | id, report_id, path, order | 0 |
+| `sos_reports` | id, kind (`lost`, `found`), user_id, pet_id (opcional, propia), species_id, breed_id, breed_other, name, sex, color, marks, description, reward, has_microchip, exact_location (**privada**), public_location (desplazada 150–200 m al azar), zone_id, happened_at, status (`active`, `resolved`, `archived`, `hidden`), created_at, last_activity_at, resolved_at — ✅ 0.5.1. **Sin acceso directo**: se publica con `crear_sos()` (≥ 1 foto propia, máx. 3/día) y se lee con funciones (`mis_sos()`, y las públicas de 0.5.4–0.5.5) | 0 |
+| `sos_photos` | id, report_id, path, sort — ✅ 0.5.1 (bucket `sos-photos`, carpeta por usuario) | 0 |
 | `owner_alerts` | id, target_type (`sos`, `qr`), target_id, owner_id, pet_id, from_user_id (nullable), sender_name, sender_contact (**privada**, solo la ve el dueño), message, photo_path, location (si quien avisa la compartió), device_hash (SHA-256 de IP + navegador), status (`new`, `seen`, `replied`, `scam_reported`), created_at — ✅ 0.4.4. Solo la crea la Edge Function `owner-alert`; el dueño lee (vista `owner_alerts_app`) y cambia el estado | 0 |
 | `blocked_senders` | owner_id, device_hash — se llena al marcar un aviso como estafa; solo la usa `owner-alert` (descarta en silencio) — ✅ 0.4.4 | 0 |
 | `sos_followers` | report_id, user_id | 1 |
@@ -99,7 +99,7 @@ Propuesta inicial. Se ajusta al implementar cada fase. **RLS activado en todas l
 
 | Tabla | Campos clave | Fase |
 |---|---|---|
-| `flags` | id, target_type, target_id, reporter_id, reason, created_at (un usuario reporta una vez por contenido) | 0 |
+| `flags` | id, target_type (`sos` por ahora), target_id, reporter_id, reason, created_at (un usuario reporta una vez por contenido) — ✅ 0.5.1 | 0 |
 | `moderation_actions` | id, target_type, target_id, admin_id, action, note | 1 |
 | `user_sanctions` | user_id, kind (`warning`, `blocked`), until, reason | 1 |
 
