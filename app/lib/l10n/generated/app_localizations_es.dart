@@ -100,7 +100,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get ingresarAvisoTerminos =>
-      'Al ingresar vas a poder leer y aceptar los términos y la política de privacidad de SOS Mascota.';
+      'Al crear tu cuenta te vamos a pedir que aceptes los términos y la política de privacidad.';
 
   @override
   String get ingresarOCrearCuenta => 'Ingresar o crear cuenta';
@@ -170,4 +170,42 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get mascotaNuevaDescripcion =>
       'Nombre, especie, raza y foto de tu mascota';
+
+  @override
+  String get legalTerminos => 'Términos y condiciones';
+
+  @override
+  String get legalPrivacidad => 'Política de privacidad';
+
+  @override
+  String get consentimientoTitulo => 'Antes de empezar';
+
+  @override
+  String get consentimientoExplicacion =>
+      'Para usar tu cuenta necesitamos que leas y aceptes cómo funciona SOS Mascota y cómo cuidamos tus datos. En resumen:';
+
+  @override
+  String get consentimientoTelefono =>
+      'Tu teléfono nunca se muestra a otras personas.';
+
+  @override
+  String get consentimientoUbicacion =>
+      'Solo guardamos una zona aproximada, nunca tu ubicación exacta.';
+
+  @override
+  String get consentimientoMetricas =>
+      'Medimos el uso de la app de forma anónima. No vendemos tus datos.';
+
+  @override
+  String get consentimientoBorrar => 'Podés borrar tu cuenta cuando quieras.';
+
+  @override
+  String get consentimientoCasilla =>
+      'Leí y acepto los términos y la política de privacidad';
+
+  @override
+  String get consentimientoAceptar => 'Aceptar y continuar';
+
+  @override
+  String get consentimientoNoAcepto => 'No acepto (cerrar sesión)';
 }

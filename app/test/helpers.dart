@@ -5,11 +5,13 @@ import 'package:http/testing.dart';
 import 'package:sosmascota/src/app.dart';
 import 'package:sosmascota/src/config/env_provider.dart';
 import 'package:sosmascota/src/config/supabase_providers.dart';
+import 'package:sosmascota/src/cuenta/perfil_repositorio.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
 import 'package:sosmascota/src/metricas/metricas.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'cuenta_falsa.dart';
+import 'perfil_falso.dart';
 
 const urlPrueba = 'https://abc.supabase.co';
 const clavePrueba = 'sb_publishable_prueba';
@@ -21,9 +23,14 @@ Widget appDePrueba({
   int respuestaSalud = 200,
   bool googleHabilitado = false,
   ServicioCuenta? cuenta,
+  PerfilRepositorio? perfiles,
+  List<Map<String, Object?>>? eventos,
 }) => ProviderScope(
   overrides: [
     servicioCuentaProvider.overrideWithValue(cuenta ?? ServicioCuentaFalso()),
+    perfilRepositorioProvider.overrideWithValue(
+      perfiles ?? PerfilRepositorioFalso(),
+    ),
     appEnvProvider.overrideWithValue(
       AppEnv(
         flavor: flavor,
@@ -33,7 +40,11 @@ Widget appDePrueba({
     ),
     supabaseClientProvider.overrideWithValue(null),
     metricasProvider.overrideWithValue(
-      Metricas(anonId: 'anon-prueba', plataforma: 'web', enviar: null),
+      Metricas(
+        anonId: 'anon-prueba',
+        plataforma: 'web',
+        enviar: eventos == null ? null : (fila) async => eventos.add(fila),
+      ),
     ),
     httpClientProvider.overrideWithValue(
       MockClient((pedido) async {

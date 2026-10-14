@@ -2,16 +2,20 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'cuenta/perfil_repositorio.dart';
 import 'cuenta/servicio_cuenta.dart';
 import 'features/ajustes/ajustes_screen.dart';
 import 'features/ayuda/ayuda_screen.dart';
+import 'features/consentimiento/consentimiento_screen.dart';
 import 'features/ingresar/ingresar_screen.dart';
+import 'features/legal/legal_screen.dart';
 import 'features/mapa/mapa_screen.dart';
 import 'features/mascotas/mascota_nueva_screen.dart';
 import 'features/mascotas/mascotas_screen.dart';
 import 'features/shell/app_shell.dart';
 import 'features/sos/sos_nuevo_screen.dart';
 import 'features/sos/sos_screen.dart';
+import 'legal/legal.dart';
 import 'redireccion.dart';
 
 /// Direcciones de la app. También son las direcciones web (enlaces compartibles).
@@ -22,6 +26,10 @@ abstract final class Rutas {
   static const ayuda = '/ayuda';
   static const ajustes = '/ajustes';
   static const ingresar = '/ingresar';
+  static const consentimiento = '/consentimiento';
+  static const legal = '/legal';
+  static const terminos = '/legal/terminos';
+  static const privacidad = '/legal/privacidad';
   static const sosNuevo = '/sos/nuevo';
   static const mascotaNueva = '/mascotas/nueva';
 
@@ -44,20 +52,29 @@ GoRoute _hija(String ruta, Widget pantalla) =>
     GoRoute(path: ruta.split('/').last, builder: (_, _) => pantalla);
 
 final routerProvider = Provider<GoRouter>((ref) {
-  // Al iniciar o cerrar sesión se vuelven a evaluar las redirecciones.
-  final cambioDeSesion = ValueNotifier<bool>(ref.read(conectadoProvider));
+  // Al iniciar o cerrar sesión, o al cambiar el consentimiento, se vuelven a
+  // evaluar las redirecciones.
+  final cambio = ValueNotifier<(bool, bool)>((
+    ref.read(conectadoProvider),
+    ref.read(necesitaConsentimientoProvider),
+  ));
+  void actualizar() => cambio.value = (
+    ref.read(conectadoProvider),
+    ref.read(necesitaConsentimientoProvider),
+  );
   ref
-    ..listen(
-      conectadoProvider,
-      (_, conectado) => cambioDeSesion.value = conectado,
-    )
-    ..onDispose(cambioDeSesion.dispose);
+    ..listen(conectadoProvider, (_, _) => actualizar())
+    ..listen(necesitaConsentimientoProvider, (_, _) => actualizar())
+    ..onDispose(cambio.dispose);
 
   final router = GoRouter(
     initialLocation: Rutas.mapa,
-    refreshListenable: cambioDeSesion,
-    redirect: (context, state) =>
-        redirigir(conectado: ref.read(conectadoProvider), uri: state.uri),
+    refreshListenable: cambio,
+    redirect: (context, state) => redirigir(
+      conectado: ref.read(conectadoProvider),
+      necesitaConsentimiento: ref.read(necesitaConsentimientoProvider),
+      uri: state.uri,
+    ),
     routes: [
       StatefulShellRoute.indexedStack(
         builder: (context, state, shell) => AppShell(navigationShell: shell),
@@ -91,6 +108,21 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: Rutas.ajustes,
         builder: (context, state) => const AjustesScreen(),
+      ),
+      GoRoute(
+        path: Rutas.consentimiento,
+        builder: (context, state) =>
+            ConsentimientoScreen(volver: state.uri.queryParameters['volver']),
+      ),
+      GoRoute(
+        path: Rutas.terminos,
+        builder: (_, _) =>
+            const LegalScreen(documento: DocumentoLegal.terminos),
+      ),
+      GoRoute(
+        path: Rutas.privacidad,
+        builder: (_, _) =>
+            const LegalScreen(documento: DocumentoLegal.privacidad),
       ),
       GoRoute(
         path: Rutas.ingresar,

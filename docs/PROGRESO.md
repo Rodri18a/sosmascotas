@@ -15,7 +15,7 @@
 | 3 · Servicios | ⏳ | a detallar | 0 |
 | 4 · Escala | ⏳ | a detallar | 0 |
 
-**Paso actual:** 0.2.5 (desarrollo) · pendiente: credenciales de Google (0.2.3) · validación pendiente desde 0.0.2
+**Paso actual:** 0.2.6 (desarrollo) · pendiente: credenciales de Google (0.2.3) · validación pendiente desde 0.0.2
 
 ---
 
@@ -36,7 +36,7 @@
 - [ ] 0.0.8b 🧪 Analizar las entrevistas en `investigacion/entrevistas.md` y aplicar los **criterios de corte** de `11-roadmap.md` (⏱️ 2 h)
 - [ ] 0.0.9 🧪 Decidir los pendientes P1 (nombre) y P2 (horas por semana). Verificar que el nombre esté libre en DNPI, tiendas de apps y dominios (⏱️ 2 h)
 - [ ] 0.0.9b 🧪 Identidad mínima: logo simple, colores y tipografía. **Requisito antes de imprimir chapitas o volantes** (⏱️ 3 h)
-- [ ] 0.0.9c 🧪 💳 Pedir presupuesto a una **asesoría legal** (términos, privacidad, registro URCDP, compromiso de adopción) y enviarle el borrador. **Arrancar temprano: puede llevar semanas** (⏱️ 2 h)
+- [ ] 0.0.9c 🧪 💳 Pedir presupuesto a una **asesoría legal** (términos, privacidad, registro URCDP, compromiso de adopción) y enviarle el borrador (ya escrito: `app/assets/legal/terminos.md` y `privacidad.md`). **Arrancar temprano: puede llevar semanas** (⏱️ 2 h)
 - [ ] 0.0.9d 🧪 Consultar con un **contador** cómo formalizar (unipersonal, SAS u otra), DGI, BPS, facturación electrónica: costo y plazos. **Requisito antes del primer cobro**, sea de chapitas, sponsors o planes (⏱️ 1 h)
 - [ ] 0.0.10 🧪 Prototipo de chapita con el amigo de impresión 3D: 3–5 muestras con distintos materiales y métodos de QR, costo por unidad y tiempo por lote (P15) (⏱️ 2 h)
 - [ ] 0.0.11 🧪 Prueba de durabilidad: usar las muestras 2–3 semanas y escanearlas con varios celulares (⏱️ 1 h)
@@ -55,8 +55,8 @@
 - [x] 0.2.2 Login con correo y enlace mágico (⏱️ 2 h) — 14/10/2026, enlace + código de 6 números (D50)
 - [ ] 0.2.3 Login con Google (⏱️ 3 h) — ⏳ código listo (14/10/2026); **falta crear las credenciales de Google** siguiendo `guias/login-google.md` (15 min, lo hace el dueño)
 - [x] 0.2.4 Modo visitante: ver sin cuenta; al actuar, pedir login y volver a la acción (⏱️ 2 h) — 14/10/2026, `abrirConCuenta()` + rutas que requieren cuenta
-- [ ] 0.2.5 Textos de términos y privacidad + consentimiento al registrarse (⏱️ 2 h) **← ESTÁS ACÁ**
-- [ ] 0.2.6 Ajustes: perfil, radio de avisos, cerrar sesión, **borrar mi cuenta** (⏱️ 2 h)
+- [x] 0.2.5 Textos de términos y privacidad + consentimiento al registrarse (⏱️ 2 h) — 14/10/2026, borradores en `app/assets/legal/` para la asesoría (D51)
+- [ ] 0.2.6 Ajustes: perfil, radio de avisos, cerrar sesión, **borrar mi cuenta** (⏱️ 2 h) **← ESTÁS ACÁ**
 
 ### Etapa 0.3 · Mascotas
 - [ ] 0.3.1 Seed de `species` y `breeds` (⏱️ 2 h)
@@ -243,6 +243,7 @@
 | 14/10/2026 | 0.2.2 | ✅ Pantalla Ingresar (correo → enlace o código de 6 números, sin contraseña), vuelve a la acción; cerrar sesión. Config de login versionada en `supabase/configurar_auth.py`. Los correos en español requieren SMTP propio (pasado a 0.4.4b) (D50) |
 | 14/10/2026 | 0.2.3 | ⏳ Botón "Continuar con Google" listo: aparece solo si Google está activo en Supabase. Activación con `configurar_auth.py` cuando estén las credenciales (guía en `docs/guias/login-google.md`) |
 | 14/10/2026 | 0.2.4 | ✅ Visitante ve todo; al tocar "Reportar" o "Agregar mascota" se explica por qué hace falta cuenta y, después de ingresar, llega directo a la acción. Enlaces directos a acciones también piden ingresar |
+| 14/10/2026 | 0.2.5 | ✅ Borradores de términos y privacidad (voseo, Ley 18.331) visibles en la app; pantalla de consentimiento obligatoria con casilla al crear la cuenta y al cambiar la versión; evento `signup` (D51) |
 | 13/10/2026 | 0.0.2 | Análisis de puntos débiles: contacto inverso en lugar de redirección a WhatsApp; pasos nuevos de identidad, legal temprano, formalización, soporte y criterios de corte (D41–D43) |
 | 12/10/2026 | 0.0.2 | Sin combo de microchip (D39). Línea institucional: Zoonosis de Canelones → nacional → mundial (D40) |
 | 12/10/2026 | 0.0.2 | Chapitas pre-codificadas, retiro en veterinaria, sponsors y prototipo con impresión 3D (D35–D38) |

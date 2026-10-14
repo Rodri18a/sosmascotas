@@ -191,6 +191,19 @@ class _IngresarScreenState extends ConsumerState<IngresarScreen> {
                     color: tema.colorScheme.onSurfaceVariant,
                   ),
                 ),
+                Wrap(
+                  spacing: 8,
+                  children: [
+                    TextButton(
+                      onPressed: () => context.push(Rutas.terminos),
+                      child: Text(t.legalTerminos),
+                    ),
+                    TextButton(
+                      onPressed: () => context.push(Rutas.privacidad),
+                      child: Text(t.legalPrivacidad),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),

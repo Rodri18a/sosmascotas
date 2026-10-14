@@ -121,6 +121,8 @@ def main():
         caso('un visitante no ve perfiles', bloqueado(rest('GET', 'profiles?select=id')))
         caso('A puede cambiar su nombre y radio',
              filas(rest('PATCH', f'profiles?id=eq.{a_id}', {'display_name': 'Ana', 'alert_radius_km': 10}, a))[0]['display_name'] == 'Ana')
+        caso('A puede registrar que aceptó los términos',
+             filas(rest('PATCH', f'profiles?id=eq.{a_id}', {'terms_version': 'prueba', 'terms_accepted_at': '2026-10-14T10:00:00Z'}, a))[0]['terms_version'] == 'prueba')
         caso('A no puede cambiar el perfil de B',
              bloqueado(rest('PATCH', f'profiles?id=eq.{b_id}', {'display_name': 'Hackeado'}, a)))
         caso('A no puede darse el plan Pro', bloqueado(rest('PATCH', f'profiles?id=eq.{a_id}', {'plan': 'pro'}, a)))

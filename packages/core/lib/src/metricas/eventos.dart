@@ -3,6 +3,7 @@
 /// Formato obligatorio (lo valida también la base): minúsculas, números y `_`.
 abstract final class Eventos {
   static const appOpen = 'app_open';
+  static const signup = 'signup';
 }
 
 /// Valida el nombre de un evento con la misma regla que la base de datos.

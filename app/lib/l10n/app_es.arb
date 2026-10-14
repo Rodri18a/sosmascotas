@@ -53,7 +53,7 @@
   "ingresarOtroCorreo": "Usar otro correo",
   "ingresarEmailInvalido": "Revisá el correo: parece que le falta algo.",
   "ingresarCodigoInvalido": "El código tiene 6 números.",
-  "ingresarAvisoTerminos": "Al ingresar vas a poder leer y aceptar los términos y la política de privacidad de SOS Mascota.",
+  "ingresarAvisoTerminos": "Al crear tu cuenta te vamos a pedir que aceptes los términos y la política de privacidad.",
   "ingresarOCrearCuenta": "Ingresar o crear cuenta",
   "ingresarSubtitulo": "Para reportar, guardar tus mascotas y recibir avisos",
   "cerrarSesion": "Cerrar sesión",
@@ -73,5 +73,16 @@
   "mascotasAgregar": "Agregar mascota",
   "mascotasMotivoCuenta": "Para guardar tus mascotas, su ficha y su chapita QR, y recibir avisos si alguien la encuentra.",
   "mascotaNuevaTitulo": "Nueva mascota",
-  "mascotaNuevaDescripcion": "Nombre, especie, raza y foto de tu mascota"
+  "mascotaNuevaDescripcion": "Nombre, especie, raza y foto de tu mascota",
+  "legalTerminos": "Términos y condiciones",
+  "legalPrivacidad": "Política de privacidad",
+  "consentimientoTitulo": "Antes de empezar",
+  "consentimientoExplicacion": "Para usar tu cuenta necesitamos que leas y aceptes cómo funciona SOS Mascota y cómo cuidamos tus datos. En resumen:",
+  "consentimientoTelefono": "Tu teléfono nunca se muestra a otras personas.",
+  "consentimientoUbicacion": "Solo guardamos una zona aproximada, nunca tu ubicación exacta.",
+  "consentimientoMetricas": "Medimos el uso de la app de forma anónima. No vendemos tus datos.",
+  "consentimientoBorrar": "Podés borrar tu cuenta cuando quieras.",
+  "consentimientoCasilla": "Leí y acepto los términos y la política de privacidad",
+  "consentimientoAceptar": "Aceptar y continuar",
+  "consentimientoNoAcepto": "No acepto (cerrar sesión)"
 }

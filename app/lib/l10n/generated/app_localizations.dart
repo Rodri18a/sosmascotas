@@ -259,7 +259,7 @@ abstract class AppLocalizations {
   /// No description provided for @ingresarAvisoTerminos.
   ///
   /// In es, this message translates to:
-  /// **'Al ingresar vas a poder leer y aceptar los términos y la política de privacidad de SOS Mascota.'**
+  /// **'Al crear tu cuenta te vamos a pedir que aceptes los términos y la política de privacidad.'**
   String get ingresarAvisoTerminos;
 
   /// No description provided for @ingresarOCrearCuenta.
@@ -381,6 +381,72 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Nombre, especie, raza y foto de tu mascota'**
   String get mascotaNuevaDescripcion;
+
+  /// No description provided for @legalTerminos.
+  ///
+  /// In es, this message translates to:
+  /// **'Términos y condiciones'**
+  String get legalTerminos;
+
+  /// No description provided for @legalPrivacidad.
+  ///
+  /// In es, this message translates to:
+  /// **'Política de privacidad'**
+  String get legalPrivacidad;
+
+  /// No description provided for @consentimientoTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Antes de empezar'**
+  String get consentimientoTitulo;
+
+  /// No description provided for @consentimientoExplicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Para usar tu cuenta necesitamos que leas y aceptes cómo funciona SOS Mascota y cómo cuidamos tus datos. En resumen:'**
+  String get consentimientoExplicacion;
+
+  /// No description provided for @consentimientoTelefono.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu teléfono nunca se muestra a otras personas.'**
+  String get consentimientoTelefono;
+
+  /// No description provided for @consentimientoUbicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Solo guardamos una zona aproximada, nunca tu ubicación exacta.'**
+  String get consentimientoUbicacion;
+
+  /// No description provided for @consentimientoMetricas.
+  ///
+  /// In es, this message translates to:
+  /// **'Medimos el uso de la app de forma anónima. No vendemos tus datos.'**
+  String get consentimientoMetricas;
+
+  /// No description provided for @consentimientoBorrar.
+  ///
+  /// In es, this message translates to:
+  /// **'Podés borrar tu cuenta cuando quieras.'**
+  String get consentimientoBorrar;
+
+  /// No description provided for @consentimientoCasilla.
+  ///
+  /// In es, this message translates to:
+  /// **'Leí y acepto los términos y la política de privacidad'**
+  String get consentimientoCasilla;
+
+  /// No description provided for @consentimientoAceptar.
+  ///
+  /// In es, this message translates to:
+  /// **'Aceptar y continuar'**
+  String get consentimientoAceptar;
+
+  /// No description provided for @consentimientoNoAcepto.
+  ///
+  /// In es, this message translates to:
+  /// **'No acepto (cerrar sesión)'**
+  String get consentimientoNoAcepto;
 }
 
 class _AppLocalizationsDelegate
