@@ -31,6 +31,20 @@
 
   <title>SOS Mascota</title>
   <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1F8A5B">
+  <style>
+    /* Pantalla del logo mientras carga la app (provisoria hasta la identidad, paso 0.0.9b). */
+    #carga {
+      position: fixed; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 12px;
+      background: #1F8A5B; color: #fff;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+    #carga .logo { font-size: 72px; animation: latido 1.2s ease-in-out infinite; }
+    #carga .nombre { font-size: 28px; font-weight: 600; }
+    @keyframes latido { 50% { transform: scale(1.12); } }
+    @media (prefers-reduced-motion: reduce) { #carga .logo { animation: none; } }
+  </style>
 </head>
 <body>
   <!--
@@ -41,6 +55,14 @@
     For more details:
     * https://docs.flutter.dev/platform-integration/web/initialization
   -->
+  <div id="carga" role="status" aria-label="Cargando SOS Mascota">
+    <div class="logo" aria-hidden="true">🐾</div>
+    <div class="nombre">SOS Mascota</div>
+  </div>
+  <script>
+    // Se quita cuando Flutter dibuja la primera pantalla.
+    window.addEventListener('flutter-first-frame', () => document.getElementById('carga')?.remove());
+  </script>
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

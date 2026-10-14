@@ -1,0 +1,55 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+import 'helpers.dart';
+
+Future<void> _tocarPestana(WidgetTester tester, String nombre) async {
+  await tester.tap(
+    find.descendant(
+      of: find.byType(NavigationBar),
+      matching: find.text(nombre),
+    ),
+  );
+  await tester.pumpAndSettle();
+}
+
+void main() {
+  testWidgets('la barra inferior lleva a las 4 pestañas', (tester) async {
+    await tester.pumpWidget(appDePrueba());
+    await tester.pumpAndSettle();
+
+    for (final pestana in ['SOS', 'Mis mascotas', 'Ayuda', 'Mapa']) {
+      await _tocarPestana(tester, pestana);
+      expect(find.widgetWithText(AppBar, pestana), findsOneWidget);
+    }
+  });
+
+  testWidgets('cada pestaña conserva su estado al cambiar', (tester) async {
+    await tester.pumpWidget(appDePrueba());
+    await tester.pumpAndSettle();
+
+    await _tocarPestana(tester, 'SOS');
+    final estadoSos = tester.state(find.byType(Scaffold).last);
+    await _tocarPestana(tester, 'Mapa');
+    await _tocarPestana(tester, 'SOS');
+
+    expect(tester.state(find.byType(Scaffold).last), same(estadoSos));
+  });
+
+  testWidgets('Ajustes se abre desde arriba y vuelve a la pestaña', (
+    tester,
+  ) async {
+    await tester.pumpWidget(appDePrueba());
+    await tester.pumpAndSettle();
+    await _tocarPestana(tester, 'Ayuda');
+
+    await tester.tap(find.byTooltip('Ajustes'));
+    await tester.pumpAndSettle();
+    expect(find.widgetWithText(AppBar, 'Ajustes'), findsOneWidget);
+    expect(find.byType(NavigationBar), findsNothing);
+
+    await tester.tap(find.byType(BackButton));
+    await tester.pumpAndSettle();
+    expect(find.widgetWithText(AppBar, 'Ayuda'), findsOneWidget);
+  });
+}

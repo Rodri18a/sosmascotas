@@ -1,82 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart' as http;
-import 'package:http/testing.dart';
 import 'package:sosmascota/src/app.dart';
-import 'package:sosmascota/src/config/env_provider.dart';
-import 'package:sosmascota/src/config/supabase_providers.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
-const _url = 'https://abc.supabase.co';
-
-Widget _app({
-  AppFlavor flavor = AppFlavor.dev,
-  bool conSupabase = false,
-  int respuestaSalud = 200,
-}) => ProviderScope(
-  overrides: [
-    appEnvProvider.overrideWithValue(
-      AppEnv(
-        flavor: flavor,
-        supabaseUrl: conSupabase ? _url : '',
-        supabasePublishableKey: conSupabase ? 'sb_publishable_prueba' : '',
-      ),
-    ),
-    supabaseClientProvider.overrideWithValue(null),
-    httpClientProvider.overrideWithValue(
-      MockClient((pedido) async {
-        expect(pedido.url.toString(), '$_url/auth/v1/health');
-        expect(pedido.headers['apikey'], 'sb_publishable_prueba');
-        return http.Response('{}', respuestaSalud);
-      }),
-    ),
-  ],
-  child: const SosMascotaApp(),
-);
+import 'helpers.dart';
 
 void main() {
-  testWidgets('arranca en la pantalla de inicio', (tester) async {
-    await tester.pumpWidget(_app());
+  testWidgets('arranca en la pestaña Mapa', (tester) async {
+    await tester.pumpWidget(appDePrueba());
+    await tester.pumpAndSettle();
 
-    expect(find.text('SOS Mascota'), findsOneWidget);
+    expect(find.widgetWithText(AppBar, 'Mapa'), findsOneWidget);
+    expect(find.byType(NavigationBar), findsOneWidget);
   });
 
   testWidgets('muestra la marca DEV solo en desarrollo', (tester) async {
-    await tester.pumpWidget(_app());
-    expect(find.byType(Banner), findsOneWidget);
+    await tester.pumpWidget(appDePrueba());
+    expect(find.byType(MarcaDev), findsOneWidget);
 
-    await tester.pumpWidget(_app(flavor: AppFlavor.prod, conSupabase: true));
-    expect(find.byType(Banner), findsNothing);
+    await tester.pumpWidget(
+      appDePrueba(flavor: AppFlavor.prod, conSupabase: true),
+    );
+    expect(find.byType(MarcaDev), findsNothing);
   });
 
-  group('indicador de conexión', () {
-    testWidgets('avisa si falta la configuración', (tester) async {
-      await tester.pumpWidget(_app());
-      await tester.pump();
+  testWidgets('sigue el modo claro u oscuro del sistema', (tester) async {
+    await tester.pumpWidget(appDePrueba());
+    final app = tester.widget<MaterialApp>(find.byType(MaterialApp));
 
-      expect(find.textContaining('Falta configurar Supabase'), findsOneWidget);
-    });
-
-    testWidgets('muestra conectado si Supabase responde', (tester) async {
-      await tester.pumpWidget(_app(conSupabase: true));
-      await tester.pump();
-
-      expect(find.text('Conectado a Supabase dev ✅'), findsOneWidget);
-    });
-
-    testWidgets('muestra sin conexión si Supabase falla', (tester) async {
-      await tester.pumpWidget(_app(conSupabase: true, respuestaSalud: 503));
-      await tester.pump();
-
-      expect(find.text('Sin conexión a Supabase ❌'), findsOneWidget);
-    });
-
-    testWidgets('no se muestra en producción', (tester) async {
-      await tester.pumpWidget(_app(flavor: AppFlavor.prod, conSupabase: true));
-      await tester.pump();
-
-      expect(find.byType(Chip), findsNothing);
-    });
+    expect(app.themeMode, ThemeMode.system);
+    expect(app.theme!.colorScheme.brightness, Brightness.light);
+    expect(app.darkTheme!.colorScheme.brightness, Brightness.dark);
   });
 }

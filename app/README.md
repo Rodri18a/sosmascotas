@@ -17,6 +17,8 @@ cp app/config/dev.example.json app/config/dev.json  # y completar las claves de 
 flutter run -d chrome --dart-define-from-file=config/dev.json   # correr en el navegador
 flutter analyze                                                 # reglas de estilo
 flutter test                                                    # pruebas
+flutter build web --dart-define-from-file=config/dev.json       # build web…
+python3 tool/servir_web.py                                      # …y verla en http://localhost:3001
 flutter build web --dart-define-from-file=config/prod.json      # build de producción
 ```
 
@@ -26,9 +28,11 @@ flutter build web --dart-define-from-file=config/prod.json      # build de produ
 lib/
 ├── main.dart              # Lee el entorno y arranca la app
 └── src/
-    ├── app.dart           # MaterialApp + tema + marca DEV
-    ├── router.dart        # Rutas (go_router)
-    ├── config/            # Providers de configuración
+    ├── app.dart           # MaterialApp + tema + etiqueta DEV
+    ├── router.dart        # Rutas (go_router): /mapa, /sos, /mascotas, /ayuda, /ajustes
+    ├── theme/             # Tema claro y oscuro
+    ├── widgets/           # Piezas compartidas entre pantallas
+    ├── config/            # Providers de configuración y Supabase
     └── features/<nombre>/ # Una carpeta por funcionalidad (pantallas, providers)
 ```
 
