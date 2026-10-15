@@ -30,3 +30,6 @@ app/config/*.json
 
 # Web pública: la configuración real no se sube
 web-publica/config.js
+
+# Python
+__pycache__/
