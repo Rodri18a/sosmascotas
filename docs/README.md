@@ -2,6 +2,8 @@
 
 <div id="estado">Cargando el progreso…</div>
 
+> ⏸️ **En pausa desde el 15/10/2026.** Lo que quedó pendiente está al principio de [Progreso](PROGRESO.md) ("Pendientes al retomar"): elegir la identidad visual ([brief](14-brief-identidad-visual.md)), aplicarla, la [habilitación gradual de funcionalidades](15-funcionalidades-graduales.md) y la PWA instalable.
+
 ## Qué es
 
 Una app que conecta a **dueños de mascotas** con **empresas del rubro**, con un **mapa** como centro: veterinarias, petshops, servicios, lugares que aceptan mascotas, y mascotas **perdidas y encontradas**. Arranca en **Pando** y crece por zonas.
