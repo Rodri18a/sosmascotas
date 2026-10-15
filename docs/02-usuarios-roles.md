@@ -33,6 +33,8 @@ Las empresas indican **qué especies atienden**. Eso se usa para filtrar (ver la
 
 ## Permisos resumidos
 
+> Además del rol y el plan, cada funcionalidad nueva puede estar prendida solo para una parte de los usuarios mientras se prueba: ver `15-funcionalidades-graduales.md`.
+
 | Acción | Visitante | Usuario | Empresa | Admin |
 |---|---|---|---|---|
 | Ver mapa, fichas, perdidos | ✅ | ✅ | ✅ | ✅ |

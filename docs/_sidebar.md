@@ -7,6 +7,8 @@
   - [Usuarios y roles](02-usuarios-roles.md)
   - [Funcionalidades de la app](03-funcionalidades-app.md)
   - [Reglas de negocio](06-reglas-negocio.md)
+  - [Habilitación gradual de funcionalidades](15-funcionalidades-graduales.md)
+  - [Brief de identidad visual](14-brief-identidad-visual.md)
 
 - **Portales**
   - [Portal de empresas](04-portal-empresas.md)
