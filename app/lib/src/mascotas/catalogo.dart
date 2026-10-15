@@ -21,7 +21,8 @@ class SupabaseCatalogoRepositorio implements CatalogoRepositorio {
     final filas = await _cliente
         .from('species')
         .select('id, slug, name, icon')
-        .order('sort');
+        // En supabase_flutter `order` es descendente si no se aclara.
+        .order('sort', ascending: true);
     return filas.map(Especie.fromJson).toList();
   }
 
@@ -31,8 +32,8 @@ class SupabaseCatalogoRepositorio implements CatalogoRepositorio {
         .from('breeds')
         .select('id, species_id, name')
         .eq('species_id', especieId)
-        .order('sort')
-        .order('name');
+        .order('sort', ascending: true) // "Mestizo" primero
+        .order('name', ascending: true);
     return filas.map(Raza.fromJson).toList();
   }
 }

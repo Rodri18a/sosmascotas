@@ -36,7 +36,8 @@ class SupabaseMascotasRepositorio implements MascotasRepositorio {
 
   @override
   Future<List<Mascota>> misMascotas() async {
-    final filas = await _pets.select().order('created_at');
+    // En el orden en que se cargaron (`order` es descendente si no se aclara).
+    final filas = await _pets.select().order('created_at', ascending: true);
     return filas.map(Mascota.fromJson).toList();
   }
 
