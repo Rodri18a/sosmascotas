@@ -102,6 +102,8 @@ Páginas livianas en **HTML + JavaScript sin frameworks** (cargan rápido en cua
 
 Hasta el panel de administración, las veterinarias se cargan desde una planilla: `investigacion/veterinarias.csv` → `python -I -X utf8 supabase/cargar_comercios.py investigacion/veterinarias.csv [--aplicar]` (sin `--aplicar` solo valida). Las coordenadas van en la planilla (copiadas de Google Maps), sin geocodificación. Las de ejemplo para desarrollo están en `supabase/seeds/veterinarias_ejemplo.csv` (`--ejemplo`) y se borran al cargar las reales. El mapa las trae con `comercios_en_zona()` (zona visible).
 
+El directorio de la pestaña Ayuda se carga igual: `investigacion/ayuda.csv` → `supabase/cargar_ayuda.py` (ejemplos en `supabase/seeds/ayuda_ejemplo.csv`, `--ejemplo`).
+
 Se despliegan con `supabase functions deploy <nombre> --use-api` y se prueban en `supabase/tests/rls_test.py`. Las partes sin red (textos, firma de FCM) tienen pruebas de Deno: `npx deno test --allow-env supabase/functions/`.
 
 ## Notificaciones
@@ -139,6 +141,7 @@ Tabla `events` (append-only), escrita por el cliente con `ref.read(metricasProvi
 | `map_view` | zona, capas activas |
 | `search` | rubro, especie, zona, **cantidad de resultados** |
 | `place_impression` | business_id (aparición en el mapa o la lista) |
+| `help_click` | tipo (911, llamar, whatsapp, enlace) y kind de la entrada (pestaña Ayuda, sin datos de nadie) |
 | `place_open` | business_id |
 | `place_click` | business_id, tipo (whatsapp, llamar, cómo llegar, web, instagram) |
 | `favorite_add` | business_id |

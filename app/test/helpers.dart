@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:sosmascota/src/app.dart';
 import 'package:sosmascota/src/avisos/avisos_repositorio.dart';
+import 'package:sosmascota/src/ayuda/ayuda_repositorio.dart';
 import 'package:sosmascota/src/comercios/comercios_repositorio.dart';
 import 'package:sosmascota/src/config/env_provider.dart';
 import 'package:sosmascota/src/config/supabase_providers.dart';
@@ -22,6 +23,7 @@ import 'package:sosmascota/src/utiles/enlaces.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'avisos_falsos.dart';
+import 'ayuda_falsa.dart';
 import 'comercios_falsos.dart';
 import 'cuenta_falsa.dart';
 import 'mapa_falso.dart';
@@ -52,6 +54,7 @@ Widget appDePrueba({
   ComerciosRepositorio? comercios,
   List<Uri>? enlacesAbiertos,
   DateTime? ahora,
+  AyudaRepositorio? ayuda,
 }) => ProviderScope(
   overrides: [
     sosRepositorioProvider.overrideWithValue(sos ?? SosFalso()),
@@ -60,6 +63,7 @@ Widget appDePrueba({
       return true;
     }),
     if (ahora != null) relojProvider.overrideWithValue(() => ahora),
+    ayudaRepositorioProvider.overrideWithValue(ayuda ?? AyudaFalsa()),
     comerciosRepositorioProvider.overrideWithValue(
       comercios ?? ComerciosFalsos(),
     ),

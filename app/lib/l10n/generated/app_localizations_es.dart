@@ -1099,4 +1099,37 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get diaDomingo => 'domingo';
+
+  @override
+  String get ayuda911Titulo => '¿Hay una persona en riesgo?';
+
+  @override
+  String get ayuda911Texto =>
+      'Llamá al 911. SOS Mascota es solo para animales.';
+
+  @override
+  String get ayuda911Boton => 'Llamar al 911';
+
+  @override
+  String get ayudaUrgencias => 'Veterinarias de urgencia';
+
+  @override
+  String get ayudaSinUrgencias =>
+      'Todavía no hay veterinarias de urgencia cargadas en tu zona.';
+
+  @override
+  String get ayudaRefugios => 'Refugios y protectoras';
+
+  @override
+  String get ayudaGrupos => 'Grupos para difundir';
+
+  @override
+  String get ayudaOrganismos => 'Organismos';
+
+  @override
+  String get ayudaAbrir => 'Abrir';
+
+  @override
+  String get ayudaDirectorioVacio =>
+      'Todavía no hay refugios ni grupos cargados en tu zona.';
 }

@@ -12,6 +12,7 @@ abstract final class Eventos {
   static const alertZoneClear = 'alert_zone_clear';
   static const placeOpen = 'place_open';
   static const placeClick = 'place_click';
+  static const helpClick = 'help_click';
 }
 
 /// Valida el nombre de un evento con la misma regla que la base de datos.

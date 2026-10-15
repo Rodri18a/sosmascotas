@@ -1,0 +1,6 @@
+tipo,nombre,descripcion,telefono,whatsapp,enlace,orden
+refugio,Refugio Ejemplo Pando,"Datos de ejemplo para desarrollo, no es un refugio real.",099000011,099000011,,10
+refugio,Refugio Ejemplo Norte,"Datos de ejemplo para desarrollo, no es un refugio real.",099000012,,,20
+protectora,Protectora Ejemplo,"Datos de ejemplo para desarrollo, no es una protectora real.",,099000013,https://example.com/protectora,30
+grupo,Grupo Ejemplo de perdidos (Facebook),"Datos de ejemplo para desarrollo, no es un grupo real.",,,https://example.com/grupo-facebook,40
+grupo,Grupo Ejemplo de difusión (WhatsApp),"Datos de ejemplo para desarrollo, no es un grupo real.",,,https://example.com/grupo-whatsapp,50

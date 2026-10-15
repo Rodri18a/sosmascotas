@@ -489,5 +489,15 @@
   "diaJueves": "jueves",
   "diaViernes": "viernes",
   "diaSabado": "sábado",
-  "diaDomingo": "domingo"
+  "diaDomingo": "domingo",
+  "ayuda911Titulo": "¿Hay una persona en riesgo?",
+  "ayuda911Texto": "Llamá al 911. SOS Mascota es solo para animales.",
+  "ayuda911Boton": "Llamar al 911",
+  "ayudaUrgencias": "Veterinarias de urgencia",
+  "ayudaSinUrgencias": "Todavía no hay veterinarias de urgencia cargadas en tu zona.",
+  "ayudaRefugios": "Refugios y protectoras",
+  "ayudaGrupos": "Grupos para difundir",
+  "ayudaOrganismos": "Organismos",
+  "ayudaAbrir": "Abrir",
+  "ayudaDirectorioVacio": "Todavía no hay refugios ni grupos cargados en tu zona."
 }

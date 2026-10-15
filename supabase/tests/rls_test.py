@@ -510,6 +510,27 @@ def main():
              pedir('POST', f'{URL}/rest/v1/businesses', {'name': 'Prueba RLS horario', 'location': 'SRID=4326;POINT(-55.958 -34.717)',
                                                        'hours': {'lunes': [['9', '13']]}}, ADMIN)[0] >= 400)
 
+        print('help_directory (pestaña Ayuda)')
+        caso('un visitante lee el directorio de Ayuda', isinstance(filas(rest('GET', 'help_directory?select=id,kind,name')), list)
+             and rest('GET', 'help_directory?select=id')[0] == 200)
+        caso('A no puede cargar entradas', bloqueado(rest('POST', 'help_directory', {'kind': 'grupo', 'name': 'Falso', 'link': 'https://x.com'}, a)))
+        caso('un visitante tampoco', bloqueado(rest('POST', 'help_directory', {'kind': 'grupo', 'name': 'Falso', 'link': 'https://x.com'})))
+        s_h, oculta_h = pedir('POST', f'{URL}/rest/v1/help_directory', {
+            'kind': 'refugio', 'name': 'Prueba RLS ayuda oculta', 'phone': '099000099', 'status': 'hidden', 'is_sample': True},
+            {**ADMIN, 'Prefer': 'return=representation'})
+        try:
+            id_h = oculta_h[0]['id'] if s_h == 201 else ''
+            caso('una entrada oculta no se ve', s_h == 201
+                 and filas(rest('GET', f'help_directory?select=id&id=eq.{id_h}')) == []
+                 and filas(rest('GET', f'help_directory?select=id&id=eq.{id_h}', quien=a)) == [])
+            caso('A no puede mostrarla ni borrarla',
+                 bloqueado(rest('PATCH', f'help_directory?id=eq.{id_h}', {'status': 'active'}, a))
+                 and bloqueado(rest('DELETE', f'help_directory?id=eq.{id_h}', quien=a)))
+        finally:
+            pedir('DELETE', f'{URL}/rest/v1/help_directory?name=eq.Prueba%20RLS%20ayuda%20oculta', headers=ADMIN)
+        caso('la base rechaza enlaces que no son https',
+             pedir('POST', f'{URL}/rest/v1/help_directory', {'kind': 'grupo', 'name': 'Prueba RLS http', 'link': 'http://x.com'}, ADMIN)[0] >= 400)
+
         print('zona para avisos (profiles.approx_location)')
         zona = lambda quien, lat=-34.7171, lng=-55.9581, origen='gps': rest(
             'POST', 'rpc/guardar_zona_aproximada', {'p_lat': lat, 'p_lng': lng, 'p_origen': origen}, quien)[0]

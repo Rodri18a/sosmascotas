@@ -39,7 +39,7 @@ Propuesta inicial. Se ajusta al implementar cada fase. **RLS activado en todas l
 | `owner_alerts` | id, target_type (`sos`, `qr`), target_id, owner_id, pet_id, from_user_id (nullable), sender_name, sender_contact (**privada**, solo la ve el dueño), message, photo_path, location (si quien avisa la compartió), device_hash (SHA-256 de IP + navegador), status (`new`, `seen`, `replied`, `scam_reported`), created_at — ✅ 0.4.4. Solo la crea la Edge Function `owner-alert`; el dueño lee (vista `owner_alerts_app`) y cambia el estado | 0 |
 | `blocked_senders` | owner_id, device_hash — se llena al marcar un aviso como estafa; solo la usa `owner-alert` (descarta en silencio) — ✅ 0.4.4 | 0 |
 | `sos_followers` | report_id, user_id | 1 |
-| `help_directory` | id, zone_id, name, kind (refugio, protectora, grupo, emergencia), contact, link | 0 |
+| `help_directory` | id, zone_id, kind (`refugio`, `protectora`, `grupo`, `organismo`), name, description, phone, whatsapp, link (https), sort, status, is_sample — ✅ 0.7.3 (D61). Público: política de lectura de los activos; nadie escribe desde la app (se carga con `supabase/cargar_ayuda.py`). El 911 va fijo en la app | 0 |
 
 ## Empresas y lugares
 

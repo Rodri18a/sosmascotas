@@ -2,6 +2,7 @@
 library;
 
 export 'src/avisos/aviso.dart';
+export 'src/ayuda/ayuda.dart';
 export 'src/comercios/comercio.dart';
 export 'src/config/app_env.dart';
 export 'src/config/config_firebase.dart';

@@ -1917,6 +1917,66 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'domingo'**
   String get diaDomingo;
+
+  /// No description provided for @ayuda911Titulo.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Hay una persona en riesgo?'**
+  String get ayuda911Titulo;
+
+  /// No description provided for @ayuda911Texto.
+  ///
+  /// In es, this message translates to:
+  /// **'Llamá al 911. SOS Mascota es solo para animales.'**
+  String get ayuda911Texto;
+
+  /// No description provided for @ayuda911Boton.
+  ///
+  /// In es, this message translates to:
+  /// **'Llamar al 911'**
+  String get ayuda911Boton;
+
+  /// No description provided for @ayudaUrgencias.
+  ///
+  /// In es, this message translates to:
+  /// **'Veterinarias de urgencia'**
+  String get ayudaUrgencias;
+
+  /// No description provided for @ayudaSinUrgencias.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no hay veterinarias de urgencia cargadas en tu zona.'**
+  String get ayudaSinUrgencias;
+
+  /// No description provided for @ayudaRefugios.
+  ///
+  /// In es, this message translates to:
+  /// **'Refugios y protectoras'**
+  String get ayudaRefugios;
+
+  /// No description provided for @ayudaGrupos.
+  ///
+  /// In es, this message translates to:
+  /// **'Grupos para difundir'**
+  String get ayudaGrupos;
+
+  /// No description provided for @ayudaOrganismos.
+  ///
+  /// In es, this message translates to:
+  /// **'Organismos'**
+  String get ayudaOrganismos;
+
+  /// No description provided for @ayudaAbrir.
+  ///
+  /// In es, this message translates to:
+  /// **'Abrir'**
+  String get ayudaAbrir;
+
+  /// No description provided for @ayudaDirectorioVacio.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no hay refugios ni grupos cargados en tu zona.'**
+  String get ayudaDirectorioVacio;
 }
 
 class _AppLocalizationsDelegate

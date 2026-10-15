@@ -9,13 +9,13 @@
 
 | Fase | Estado | Horas estimadas | Horas hechas |
 |---|---|---|---|
-| 0 · SOS | 🔄 En curso | ~145 h (≈ 45 sin código + ≈ 100 de desarrollo) | ≈ 9,5 h (pasos que se estimaron en 34,5 h) |
+| 0 · SOS | 🔄 En curso | ~145 h (≈ 45 sin código + ≈ 100 de desarrollo) | ≈ 10,5 h (pasos que se estimaron en 35,5 h) |
 | 1 · MVP | ⏳ | ~160 h | 0 |
 | 2 · Monetización | ⏳ | a detallar | 0 |
 | 3 · Servicios | ⏳ | a detallar | 0 |
 | 4 · Escala | ⏳ | a detallar | 0 |
 
-**Paso actual:** 0.7.3 (desarrollo) · pendiente del dueño: 0.4.4b (proveedor de correo) · validación pendiente desde 0.0.2
+**Paso actual:** 0.8.1 (desarrollo) · pendiente del dueño: 0.4.4b (proveedor de correo) · validación pendiente desde 0.0.2
 
 ### Horas reales vs. estimadas (calibración)
 
@@ -41,7 +41,7 @@ Regla de trabajo: **por cada etapa de desarrollo, avanzar al menos un paso de va
 - [ ] 0.0.2 🧪 Descargar y probar Taponto y uno o dos competidores; anotar qué hacen bien y mal en `investigacion/competencia.md` (⏱️ 2 h) 🔁 *validación pendiente, en paralelo al desarrollo*
 - [ ] 0.0.3 🧪 Listar 30 comercios de Pando (nombre, rubro, dirección, horario, contacto). Empezar por los 8 operadores RENAC de la zona (`investigacion/renac.md`) (⏱️ 3 h)
 - [ ] 0.0.4 🧪 Marcar cuáles atienden urgencias u horario extendido (para la capa de la Fase 0) (⏱️ 1 h) → volcarlas en `investigacion/veterinarias.csv` (formato en `supabase/cargar_comercios.py`) y cargarlas
-- [ ] 0.0.5 🧪 Juntar refugios, protectoras y grupos de Facebook/WhatsApp de Pando (directorio de Ayuda y difusión) (⏱️ 1 h)
+- [ ] 0.0.5 🧪 Juntar refugios, protectoras y grupos de Facebook/WhatsApp de Pando (directorio de Ayuda y difusión) (⏱️ 1 h) → volcarlos en `investigacion/ayuda.csv` (formato en `supabase/cargar_ayuda.py`) y cargarlos
 - [ ] 0.0.6 🧪 Revisar y ajustar el guion de entrevistas (borrador en `investigacion/entrevistas.md`) (⏱️ 1 h)
 - [ ] 0.0.7 🧪 Entrevistar a 10 dueños de mascotas (⏱️ 5 h)
 - [ ] 0.0.8 🧪 Mostrar el prototipo a 5–8 comercios y anotar candidatos a Socios Fundadores (⏱️ 6 h)
@@ -102,10 +102,10 @@ Regla de trabajo: **por cada etapa de desarrollo, avanzar al menos un paso de va
 ### Etapa 0.7 · Veterinarias de urgencia y Ayuda
 - [x] 0.7.1 Tabla `businesses` mínima + cargar las veterinarias de 0.0.4 desde Supabase (⏱️ 2 h) — 15/10/2026, migración `businesses` + `comercios_en_zona()` (D59), modelo `Comercio`/`Horario` en el núcleo, `ComerciosRepositorio` en la app, cargador `supabase/cargar_comercios.py`; pruebas OK (97 app, 42 núcleo, 186 de seguridad). **Cargadas 5 veterinarias de ejemplo** (solo dev); las reales quedan pendientes del 0.0.4: completar `investigacion/veterinarias.csv` y correr el cargador con `--aplicar`
 - [x] 0.7.2 Capa en el mapa + ficha (horario, "abierto ahora", llamar, cómo llegar) (⏱️ 3 h) — 15/10/2026, "abierto ahora" con la hora de Uruguay en el núcleo, capa de veterinarias + leyenda, ficha con horario, Llamar / WhatsApp / Cómo llegar / web / Instagram, métricas `place_open`/`place_click` (FK `events.business_id`), cargador que conserva ids (D60); pruebas OK (101 app, 48 núcleo, 188 de seguridad); prueba real en Chrome con las 5 de ejemplo (abierta/cerrada según la hora, 24 h, horario de la semana, métricas registradas)
-- [ ] 0.7.3 Pestaña Ayuda: `help_directory` + aviso del 911 (⏱️ 1 h) **← ESTÁS ACÁ**
+- [x] 0.7.3 Pestaña Ayuda: `help_directory` + aviso del 911 (⏱️ 1 h) — 15/10/2026, migración `help_directory` (lectura pública de los activos), cargador `supabase/cargar_ayuda.py` + 5 entradas de ejemplo (solo dev), pantalla con tarjeta del 911, veterinarias de urgencia con "abierto ahora" y directorio agrupado; métrica `help_click` (D61); pruebas OK (104 app, 50 núcleo, 194 de seguridad); prueba real en Chrome. Las reales quedan pendientes del 0.0.5 (`investigacion/ayuda.csv`). **Cierra la Etapa 0.7**
 
 ### Etapa 0.8 · Lanzamiento
-- [ ] 0.8.1 PWA instalable (manifest, íconos, pantalla de instalación) (⏱️ 2 h)
+- [ ] 0.8.1 PWA instalable (manifest, íconos, pantalla de instalación) (⏱️ 2 h) **← ESTÁS ACÁ**
 - [ ] 0.8.2 Pruebas de recorrido: registro, mascota, QR, SOS, contacto (⏱️ 4 h)
 - [ ] 0.8.3 Prueba con 5–10 conocidos y corrección de errores (⏱️ 4 h)
 - [ ] 0.8.4 🧪 Cierre de la revisión legal iniciada en 0.0.9c: aplicar las correcciones a términos y privacidad (P10) (⏱️ 2 h)
