@@ -9,13 +9,13 @@
 
 | Fase | Estado | Horas estimadas | Horas hechas |
 |---|---|---|---|
-| 0 · SOS | 🔄 En curso | ~145 h (≈ 45 sin código + ≈ 100 de desarrollo) | ≈ 5,5 h (pasos que se estimaron en 25,5 h) |
+| 0 · SOS | 🔄 En curso | ~145 h (≈ 45 sin código + ≈ 100 de desarrollo) | ≈ 6,5 h (pasos que se estimaron en 28,5 h) |
 | 1 · MVP | ⏳ | ~160 h | 0 |
 | 2 · Monetización | ⏳ | a detallar | 0 |
 | 3 · Servicios | ⏳ | a detallar | 0 |
 | 4 · Escala | ⏳ | a detallar | 0 |
 
-**Paso actual:** 0.6.3 (desarrollo) · pendiente del dueño: 0.4.4b (proveedor de correo) · validación pendiente desde 0.0.2
+**Paso actual:** 0.6.4 (desarrollo) · pendiente del dueño: 0.4.4b (proveedor de correo) · validación pendiente desde 0.0.2
 
 ### Horas reales vs. estimadas (calibración)
 
@@ -96,8 +96,8 @@ Regla de trabajo: **por cada etapa de desarrollo, avanzar al menos un paso de va
 ### Etapa 0.6 · Avisos
 - [x] 0.6.1 Proyecto Firebase (gratis) + push web en la PWA + guardar `push_tokens` (⏱️ 3 h) — 14/10/2026, código, migración y pruebas OK; prueba real: el mensaje de prueba de Firebase llega a Chrome (`localhost:3001`) y al tocarlo abre la app en Avisos. Ojo: en la consola de Firebase pegar el token **sin comillas** (si no, no se envía a nadie)
 - [x] 0.6.2 Pedir permiso de ubicación y guardar la zona aproximada del usuario (⏱️ 2 h) — 15/10/2026, código, migración (`zona_avisos`, D56) y pruebas OK (app, núcleo y 160 de seguridad); prueba real en Chrome (`localhost:3001`): borrar y volver a guardar desde Ajustes, cartel al activar los avisos, la zona borrada no se vuelve a guardar sola al recargar, y en la base queda el centro de la celda con origen `gps`
-- [ ] 0.6.3 Edge Function: nuevo SOS → push a los usuarios a 5 km o menos, con tope diario (⏱️ 3 h) **← ESTÁS ACÁ** — 15/10/2026: migración `sos_avisos_zona`, función `sos-zone-alert` desplegada, app y pruebas OK (95 app, 4 Deno, 172 de seguridad). Falta: cargar el secreto `FIREBASE_SERVICE_ACCOUNT` y la prueba real (publicar un SOS y que llegue la push a otra cuenta cercana)
-- [ ] 0.6.4 Push al dueño cuando escanean el QR de su mascota (⏱️ 1 h)
+- [x] 0.6.3 Edge Function: nuevo SOS → push a los usuarios a 5 km o menos, con tope diario (⏱️ 3 h) — 15/10/2026, migración `sos_avisos_zona`, función `sos-zone-alert` (D57), app y pruebas OK (95 app, 4 Deno, 171 de seguridad con Firebase configurado); prueba real: un SOS de prueba a ~2 km mandó la push "🐾 Se perdió un perro cerca tuyo" y llegó a Chrome. Secreto `FIREBASE_SERVICE_ACCOUNT` cargado en dev. Ojo: con Firebase configurado, cada corrida de `rls_test.py` le manda esa push a las cuentas reales de dev con zona en Pando
+- [ ] 0.6.4 Push al dueño cuando escanean el QR de su mascota (⏱️ 1 h) **← ESTÁS ACÁ**
 
 ### Etapa 0.7 · Veterinarias de urgencia y Ayuda
 - [ ] 0.7.1 Tabla `businesses` mínima + cargar las veterinarias de 0.0.4 desde Supabase (⏱️ 2 h)

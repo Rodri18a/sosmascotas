@@ -16,12 +16,14 @@ export type Push = {
 
 export type ResultadoEnvio = { enviados: number; tokensInvalidos: string[] };
 
-let cuenta: CuentaDeServicio | null | undefined;
+// Solo se recuerda la cuenta válida: si falta el secreto, se vuelve a leer
+// (al cargarlo, la instancia que ya estaba corriendo lo toma sin redesplegar).
+let cuenta: CuentaDeServicio | null = null;
 let acceso: { token: string; vence: number } | null = null;
 
 /** La cuenta de servicio, o `null` si falta el secreto (no se puede enviar). */
 export function cuentaFcm(): CuentaDeServicio | null {
-  if (cuenta !== undefined) return cuenta;
+  if (cuenta) return cuenta;
   let leida: CuentaDeServicio | null = null;
   try {
     const json = JSON.parse(Deno.env.get('FIREBASE_SERVICE_ACCOUNT') ?? '');
