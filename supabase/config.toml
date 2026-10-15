@@ -426,3 +426,8 @@ verify_jwt = false
 # Paso 0.6.3: la llama la app al publicar un SOS. Valida la sesión por su cuenta.
 [functions.sos-zone-alert]
 verify_jwt = false
+
+# Paso 0.6.4: la llama la página pública del QR (sin cuenta). Solo acepta el id
+# de un escaneo recién registrado y limita a una push por QR cada 10 minutos.
+[functions.qr-scan-alert]
+verify_jwt = false

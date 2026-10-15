@@ -119,3 +119,27 @@ export async function enviarPush(tokens: string[], push: Push): Promise<Resultad
   }
   return resultado;
 }
+
+/**
+ * Manda la push a los dispositivos de una persona y borra de push_tokens los
+ * que ya no existen. Nunca lanza: una push que no sale no debe romper el aviso
+ * guardado. Devuelve cuántas salieron.
+ */
+export async function avisarDispositivos(
+  // deno-lint-ignore no-explicit-any
+  admin: { from: (tabla: string) => any },
+  tokens: string[],
+  push: Push,
+): Promise<number> {
+  if (tokens.length === 0 || !cuentaFcm()) return 0;
+  try {
+    const r = await enviarPush(tokens, push);
+    if (r.tokensInvalidos.length > 0) {
+      await admin.from('push_tokens').delete().in('token', r.tokensInvalidos);
+    }
+    return r.enviados;
+  } catch (e) {
+    console.error('No se pudo mandar la push', (e as Error).message);
+    return 0;
+  }
+}

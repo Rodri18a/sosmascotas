@@ -5,6 +5,8 @@
 // mascota/reporte, remitentes bloqueados por estafa (se descartan en silencio)
 // y validación de todos los campos.
 import { createClient } from 'npm:@supabase/supabase-js@2.117.2';
+import { avisarDispositivos } from '../_shared/fcm.ts';
+import { textoAvisoAlDueno } from '../qr-scan-alert/texto.ts';
 
 const CORS = {
   'Access-Control-Allow-Origin': '*',
@@ -103,28 +105,35 @@ Deno.serve(async (req) => {
   }
 
   // 3. ¿A quién va el aviso? (el dueño nunca se expone en la respuesta)
-  let destino: { target_id: string; owner_id: string; pet_id: string | null } | null = null;
+  let destino:
+    | { target_id: string; owner_id: string; pet_id: string | null; nombre: string | null }
+    | null = null;
   if (tipo === 'qr') {
     const codigo = texto(cuerpo.code, 8, 8)?.toUpperCase();
     if (!codigo) return responder(400, { error: 'datos_incompletos' });
     const { data } = await admin
       .from('qr_tags')
-      .select('id, owner_id, pet_id, active')
+      .select('id, owner_id, pet_id, active, pets(name)')
       .eq('code', codigo)
       .maybeSingle();
     if (data?.active && data.pet_id && data.owner_id) {
-      destino = { target_id: data.id, owner_id: data.owner_id, pet_id: data.pet_id };
+      destino = {
+        target_id: data.id,
+        owner_id: data.owner_id,
+        pet_id: data.pet_id,
+        nombre: (data.pets as { name?: string } | null)?.name ?? null,
+      };
     }
   } else {
     const reporte = texto(cuerpo.report_id, 36, 36);
     if (!reporte) return responder(400, { error: 'datos_incompletos' });
     const { data } = await admin
       .from('sos_reports')
-      .select('id, user_id, pet_id, status')
+      .select('id, user_id, pet_id, status, name')
       .eq('id', reporte)
       .maybeSingle();
     if (data?.status === 'active') {
-      destino = { target_id: data.id, owner_id: data.user_id, pet_id: data.pet_id };
+      destino = { target_id: data.id, owner_id: data.user_id, pet_id: data.pet_id, nombre: data.name };
     }
   }
   if (!destino) return responder(404, { error: 'no_encontrado' });
@@ -178,8 +187,17 @@ Deno.serve(async (req) => {
     props: { con_ubicacion: ubicacion !== null },
   });
 
-  // Push (0.6.4) y correo de respaldo (0.4.4b) se agregan acá cuando estén
-  // configurados Firebase y el proveedor de correo. Mientras tanto, el aviso
-  // queda en la bandeja "Avisos" de la app.
+  // Push al dueño (0.6.4): abre la bandeja Avisos. Si no sale, el aviso ya
+  // quedó guardado ahí. El correo de respaldo llega con 0.4.4b.
+  const { data: dispositivos } = await admin
+    .from('push_tokens')
+    .select('token')
+    .eq('user_id', destino.owner_id);
+  const push = textoAvisoAlDueno(tipo, destino.nombre);
+  await avisarDispositivos(admin, (dispositivos ?? []).map((d) => d.token), {
+    titulo: push.titulo,
+    cuerpo: push.cuerpo,
+    ruta: '/avisos',
+  });
   return responder(200, { ok: true });
 });

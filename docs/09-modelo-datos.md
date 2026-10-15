@@ -21,7 +21,7 @@ Propuesta inicial. Se ajusta al implementar cada fase. **RLS activado en todas l
 | `qr_tags` | id, code (8 caracteres sin ambiguos, único), pet_id (**nullable** hasta activarse), owner_id, kind (`digital`, `physical`), batch_id, active, activated_at, public_note (lo que el dueño elige mostrar, ≤ 200) — ✅ 0.4.1. Se crea solo al crear la mascota; `regenerar_qr()`; lo público sale de `public_pet_page()` (sin teléfono, sin número de chip) | 0 (digital) / 1 (física) |
 | `qr_batches` | id, quantity, producer, material, sponsor_id (opcional), unit_cost, created_at | 1 |
 | `qr_pickups` | id, order_id o tag_id, business_id (veterinaria punto de retiro), status (`sent`, `ready`, `delivered`), delivered_at | 1 |
-| `qr_scans` | id, qr_id, owner_id, pet_id, shared_location, shared_at, created_at — ✅ 0.4.5. `registrar_escaneo()` (tope 60/h por QR) y `compartir_ubicacion_escaneo()` (una vez, dentro de 30 min); solo el dueño los ve (`qr_scans_app`) | 0 |
+| `qr_scans` | id, qr_id, owner_id, pet_id, shared_location, shared_at, created_at — ✅ 0.4.5. `registrar_escaneo()` (tope 60/h por QR) y `compartir_ubicacion_escaneo()` (una vez, dentro de 30 min); solo el dueño los ve (`qr_scans_app`). `notified_at` (0.6.4): la push al dueño la decide `aviso_escaneo()`, solo para la Edge Function `qr-scan-alert` | 0 |
 | `households` | id, owner_id, plan_status, trial_until | 1 |
 | `household_members` | household_id, user_id, role (`owner`, `member`, `temp_caregiver`), access_until | 1 |
 | `health_records` | id, pet_id, kind (`vaccine`, `deworming`, `checkup`, `allergy`, `other`), name, date, next_date, notes | 1 |

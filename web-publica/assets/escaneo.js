@@ -9,6 +9,14 @@ window.addEventListener('sos:mascota', async (e) => {
   } catch (error) {
     console.error(error);
   }
+  // Aviso push al dueño (no se espera: si falla, la página sigue igual).
+  if (escaneo) {
+    fetch(`${CONF.supabaseUrl}/functions/v1/qr-scan-alert`, {
+      method: 'POST',
+      headers: { apikey: CONF.supabaseKey, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ scan_id: escaneo }),
+    }).catch((error) => console.error(error));
+  }
   const boton = document.getElementById('compartir-ubicacion-escaneo');
   if (!escaneo || !navigator.geolocation) return;
   boton.hidden = false;

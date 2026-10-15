@@ -256,6 +256,22 @@ def main():
         caso('un visitante no ve escaneos', bloqueado(rest('GET', 'qr_scans?select=id')))
         caso('nadie inserta escaneos directo', bloqueado(rest('POST', 'qr_scans', {'qr_id': tag.get('id'), 'owner_id': a_id}, b)))
 
+        print('push por escaneo (aviso_escaneo y qr-scan-alert)')
+        caso('un visitante no puede llamar a aviso_escaneo', rest('POST', 'rpc/aviso_escaneo', {'p_scan': escaneo})[0] >= 400)
+        caso('A tampoco (solo la Edge Function)', rest('POST', 'rpc/aviso_escaneo', {'p_scan': escaneo}, a)[0] >= 400)
+        s_q, r_q = pedir('POST', f'{URL}/functions/v1/qr-scan-alert', {'scan_id': str(uuid.uuid4())}, {'apikey': PUBLICA})
+        caso('con un escaneo inventado responde igual y no avisa', s_q == 200 and r_q == {'ok': True})
+        caso('sin id de escaneo no hace nada',
+             pedir('POST', f'{URL}/functions/v1/qr-scan-alert', {'scan_id': 'x'}, {'apikey': PUBLICA})[0] == 400)
+        aviso = filas(pedir('POST', f'{URL}/rest/v1/rpc/aviso_escaneo', {'p_scan': escaneo}, ADMIN))
+        caso('el escaneo avisa al dueño, con el nombre de la mascota',
+             len(aviso) == 1 and aviso[0]['owner_id'] == a_id and aviso[0]['pet_name'] == pet.get('name'))
+        caso('un escaneo avisa una sola vez',
+             filas(pedir('POST', f'{URL}/rest/v1/rpc/aviso_escaneo', {'p_scan': escaneo}, ADMIN)) == [])
+        otro = rest('POST', 'rpc/registrar_escaneo', {'p_code': nuevo})[1]
+        caso('otro escaneo del mismo QR antes de 10 minutos no vuelve a avisar',
+             isinstance(otro, str) and filas(pedir('POST', f'{URL}/rest/v1/rpc/aviso_escaneo', {'p_scan': otro}, ADMIN)) == [])
+
         print('sos_reports (perdidos y encontrados)')
         caso('A sube una foto de SOS en su carpeta', subir(f'sos-photos/{a_id}/sos1.jpg', JPEG_MINIMO, 'image/jpeg', a) == 200)
         caso('A no puede subir fotos de SOS en la carpeta de B', subir(f'sos-photos/{b_id}/x.jpg', JPEG_MINIMO, 'image/jpeg', a) != 200)
