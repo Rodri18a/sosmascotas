@@ -422,3 +422,7 @@ verify_jwt = false
 # Paso 0.4.4: la usan personas sin cuenta (página del QR). Valida anti-bots y límites.
 [functions.owner-alert]
 verify_jwt = false
+
+# Paso 0.6.3: la llama la app al publicar un SOS. Valida la sesión por su cuenta.
+[functions.sos-zone-alert]
+verify_jwt = false

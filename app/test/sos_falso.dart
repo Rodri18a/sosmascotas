@@ -22,6 +22,10 @@ class SosFalso implements SosRepositorio {
   final creados = <NuevoSos>[];
   final fotosSubidas = <Uint8List>[];
   ErrorSos? fallarCon;
+  final difundidos = <String>[];
+
+  /// `false` simula que la función no respondió (hay que reintentar).
+  bool difusionResponde = true;
 
   @override
   Future<String> subirFoto(Uint8List jpeg) async {
@@ -34,6 +38,12 @@ class SosFalso implements SosRepositorio {
     if (fallarCon case final tipo?) throw SosException(tipo);
     creados.add(sos);
     return 'sos-${creados.length}';
+  }
+
+  @override
+  Future<bool> difundirEnZona(String id) async {
+    difundidos.add(id);
+    return difusionResponde;
   }
 
   @override

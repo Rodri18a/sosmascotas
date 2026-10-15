@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image/image.dart' as img;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
 import 'package:sosmascota/src/sos/sos_repositorio.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
@@ -56,6 +57,8 @@ Future<void> _publicar(WidgetTester tester) async {
 }
 
 void main() {
+  setUp(() => SharedPreferences.setMockInitialValues({}));
+
   testWidgets('perdí a Luna: se precarga su ficha y se publica con su foto', (
     tester,
   ) async {
@@ -91,6 +94,8 @@ void main() {
     expect(publicado.fotos, ['pet-photos/u1/luna.jpg']);
     expect(publicado.ubicacion, const Punto(-34.72, -55.95));
     expect(find.widgetWithText(AppBar, 'Reporte'), findsOneWidget);
+    // Se avisa a quienes están cerca (Edge Function sos-zone-alert).
+    expect(sos.difundidos, ['sos-1']);
   });
 
   testWidgets('encontré una mascota: pide foto, lugar y especie', (

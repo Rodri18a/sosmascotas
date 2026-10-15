@@ -402,6 +402,65 @@ def main():
              len(filas(rest('DELETE', f'push_tokens?token=eq.{token}', quien=b))) == 1
              and filas(rest('GET', 'push_tokens?select=token', quien=b)) == [])
 
+        print('avisos por zona (difundir_sos y sos-zone-alert)')
+        e_id, e = crear_usuario('e')   # publica
+        f_id, f = crear_usuario('f')   # a ~3 km, con avisos activados
+        g_id, g = crear_usuario('g')   # a ~30 km
+        h_id, h = crear_usuario('h')   # a ~1 km, sin dispositivos con avisos
+        try:
+            for quien, lat in ((f, -34.690), (g, -34.450), (h, -34.708)):
+                rest('POST', 'rpc/guardar_zona_aproximada', {'p_lat': lat, 'p_lng': -55.9581, 'p_origen': 'gps'}, quien)
+            for quien, nombre in ((e, 'e'), (f, 'f'), (g, 'g')):
+                rest('POST', 'rpc/guardar_push_token', {'p_token': f'prueba-rls-{nombre}-' + uuid.uuid4().hex, 'p_platform': 'web'}, quien)
+            subir(f'sos-photos/{e_id}/z1.jpg', JPEG_MINIMO, 'image/jpeg', e)
+            sos_e = {'kind': 'lost', 'species_id': 1, 'name': 'Toby', 'lat': -34.7171, 'lng': -55.9581,
+                     'photos': [f'sos-photos/{e_id}/z1.jpg']}
+            sos1 = rest('POST', 'rpc/crear_sos', {'p': sos_e}, e)[1]
+            sos2 = rest('POST', 'rpc/crear_sos', {'p': {**sos_e, 'kind': 'found', 'name': None}}, e)[1]
+            OBJETIVOS_DE_PRUEBA.extend([sos1, sos2])
+            difundir = lambda sos, autor, tope=3: pedir('POST', f'{URL}/rest/v1/rpc/difundir_sos',
+                                                        {'p_sos': sos, 'p_autor': autor, 'p_tope_diario': tope}, ADMIN)
+
+            caso('la app no puede llamar a difundir_sos (ni el autor)',
+                 rest('POST', 'rpc/difundir_sos', {'p_sos': sos1, 'p_autor': e_id}, e)[0] >= 400)
+            caso('nadie lee a quién se avisó', bloqueado(rest('GET', 'sos_zone_alerts?select=*', quien=e))
+                 and bloqueado(rest('GET', 'sos_zone_alerts?select=*', quien=f)))
+            caso('otra persona no puede difundir el SOS de E', filas(difundir(sos1, f_id)) == [])
+            alerta = pedir('GET', f'{URL}/rest/v1/sos_reports?select=zone_alerted_at&id=eq.{sos1}', headers=ADMIN)[1]
+            caso('…y el SOS sigue sin difundir', alerta and alerta[0]['zone_alerted_at'] is None)
+
+            s_fn, r_fn = pedir('POST', f'{URL}/functions/v1/sos-zone-alert', {'sos_id': sos1}, {'apikey': PUBLICA})
+            caso('la función pide sesión', s_fn == 401)
+            s_fn, r_fn = pedir('POST', f'{URL}/functions/v1/sos-zone-alert', {'sos_id': sos1}, f)
+            caso('F no puede difundir el SOS de E desde la función', s_fn in (404, 503))
+            s_fn, r_fn = pedir('POST', f'{URL}/functions/v1/sos-zone-alert', {'sos_id': sos1}, e)
+            if s_fn == 503:
+                alerta = pedir('GET', f'{URL}/rest/v1/sos_reports?select=zone_alerted_at&id=eq.{sos1}', headers=ADMIN)[1]
+                caso('sin Firebase configurado no marca el SOS (la app reintenta)', alerta[0]['zone_alerted_at'] is None)
+                destinatarios = filas(difundir(sos1, e_id))
+            else:
+                caso('la función difunde el SOS de E', s_fn == 200 and (r_fn or {}).get('avisados', 0) >= 1)
+                destinatarios = [{'user_id': f_id}] if s_fn == 200 else []
+                caso('los tokens que FCM rechaza se borran',
+                     filas(rest('GET', 'push_tokens?select=token', quien=f)) == [])
+            caso('se avisa a F (a 3 km, con avisos); no a G (30 km), ni a H (sin avisos), ni a E (autor)',
+                 # Solo se miran las cuentas de prueba: en dev puede haber gente real en Pando.
+                 [d['user_id'] for d in destinatarios if d['user_id'] in (e_id, f_id, g_id, h_id)] == [f_id])
+            if s_fn == 503:
+                de_f = next((d for d in destinatarios if d['user_id'] == f_id), {})
+                caso('la distancia sale de la ubicación pública (~3 km, no exacta)',
+                     2500 < de_f.get('distancia_m', 0) < 3500 and len(de_f.get('tokens', [])) == 1)
+            caso('llamar de nuevo no avisa dos veces', filas(difundir(sos1, e_id)) == [])
+            if s_fn == 503:
+                caso('con el tope diario cumplido no se avisa más', filas(difundir(sos2, e_id, 1)) == [])
+            caso('un SOS cerrado no se difunde',
+                 rest('POST', 'rpc/cerrar_sos', {'p_id': sos2, 'p_estado': 'archived'}, e)[0] in (200, 204)
+                 and filas(difundir(sos2, e_id)) == [])
+        finally:
+            pedir('DELETE', f'{URL}/storage/v1/object/sos-photos', {'prefixes': [f'{e_id}/z1.jpg']}, ADMIN)
+            for uid in (e_id, f_id, g_id, h_id):
+                pedir('DELETE', f'{URL}/auth/v1/admin/users/{uid}', headers=ADMIN)
+
         print('zona para avisos (profiles.approx_location)')
         zona = lambda quien, lat=-34.7171, lng=-55.9581, origen='gps': rest(
             'POST', 'rpc/guardar_zona_aproximada', {'p_lat': lat, 'p_lng': lng, 'p_origen': origen}, quien)[0]

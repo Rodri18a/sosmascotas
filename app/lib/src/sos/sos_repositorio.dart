@@ -24,6 +24,11 @@ abstract interface class SosRepositorio {
   /// Publica el SOS y devuelve su id.
   Future<String> crear(NuevoSos sos);
 
+  /// Pide avisar por push a quienes están cerca (Edge Function
+  /// `sos-zone-alert`). Devuelve `false` si conviene reintentar más tarde
+  /// (sin conexión o push sin configurar); la función no avisa dos veces.
+  Future<bool> difundirEnZona(String id);
+
   Future<List<MiSos>> misSos();
 
   /// Pines de los SOS activos en la zona (datos mínimos).
@@ -138,6 +143,19 @@ class SupabaseSosRepositorio implements SosRepositorio {
   }
 
   @override
+  Future<bool> difundirEnZona(String id) async {
+    try {
+      await _cliente.functions.invoke('sos-zone-alert', body: {'sos_id': id});
+      return true;
+    } on FunctionException catch (e) {
+      // 4xx: no hay nada que reintentar (no es suyo, no existe, etc.).
+      return e.status < 500;
+    } on Exception {
+      return false;
+    }
+  }
+
+  @override
   Future<void> avisarAlDueno({
     required String sosId,
     required String mensaje,
@@ -229,6 +247,9 @@ class SosSinConfigurar implements SosRepositorio {
   @override
   Future<String> crear(NuevoSos sos) =>
       throw const SosException(ErrorSos.sinConexion);
+
+  @override
+  Future<bool> difundirEnZona(String id) async => true;
 
   @override
   Future<List<MiSos>> misSos() async => const [];

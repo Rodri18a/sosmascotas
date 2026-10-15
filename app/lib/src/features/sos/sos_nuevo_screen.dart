@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import '../../mapa/mapa_vista.dart';
 import '../../mascotas/catalogo.dart';
 import '../../mascotas/mascotas_repositorio.dart';
 import '../../router.dart';
+import '../../sos/difusion_sos.dart';
 import '../../sos/sos_repositorio.dart';
 import '../../widgets/foto_mascota.dart';
 
@@ -172,6 +174,8 @@ class _SosNuevoScreenState extends ConsumerState<SosNuevoScreen> {
           cuando: _cuando,
         ),
       );
+      // Avisa a quienes están cerca sin hacer esperar (si falla, se reintenta).
+      unawaited(ref.read(difusionSosProvider).difundir(id));
       if (_mostrarWhatsapp) {
         try {
           await repo.mostrarWhatsapp(id, numero: _whatsapp.text, activo: true);

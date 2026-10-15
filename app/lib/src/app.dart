@@ -7,6 +7,7 @@ import '../l10n/l10n.dart';
 import 'config/env_provider.dart';
 import 'push/servicio_push.dart';
 import 'router.dart';
+import 'sos/difusion_sos.dart';
 import 'theme/app_theme.dart';
 import 'ubicacion/servicio_ubicacion.dart';
 
@@ -19,7 +20,8 @@ class SosMascotaApp extends ConsumerWidget {
     final router = ref.watch(routerProvider);
     ref
       ..watch(renovarPushProvider)
-      ..watch(renovarUbicacionProvider);
+      ..watch(renovarUbicacionProvider)
+      ..watch(reintentarDifusionProvider);
 
     return MaterialApp.router(
       onGenerateTitle: (context) => context.t.appNombre,
