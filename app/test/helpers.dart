@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:sosmascota/src/app.dart';
 import 'package:sosmascota/src/avisos/avisos_repositorio.dart';
+import 'package:sosmascota/src/comercios/comercios_repositorio.dart';
 import 'package:sosmascota/src/config/env_provider.dart';
 import 'package:sosmascota/src/config/supabase_providers.dart';
 import 'package:sosmascota/src/cuenta/perfil_repositorio.dart';
@@ -20,6 +21,7 @@ import 'package:sosmascota/src/ubicacion/servicio_ubicacion.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'avisos_falsos.dart';
+import 'comercios_falsos.dart';
 import 'cuenta_falsa.dart';
 import 'mapa_falso.dart';
 import 'mascotas_falsas.dart';
@@ -46,9 +48,13 @@ Widget appDePrueba({
   SosRepositorio? sos,
   ServicioPush? push,
   ServicioUbicacion? ubicacion,
+  ComerciosRepositorio? comercios,
 }) => ProviderScope(
   overrides: [
     sosRepositorioProvider.overrideWithValue(sos ?? SosFalso()),
+    comerciosRepositorioProvider.overrideWithValue(
+      comercios ?? ComerciosFalsos(),
+    ),
     servicioPushProvider.overrideWithValue(push ?? const PushNoDisponible()),
     servicioUbicacionProvider.overrideWithValue(
       ubicacion ?? const UbicacionSinConfigurar(),

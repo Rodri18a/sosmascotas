@@ -9,13 +9,13 @@
 
 | Fase | Estado | Horas estimadas | Horas hechas |
 |---|---|---|---|
-| 0 · SOS | 🔄 En curso | ~145 h (≈ 45 sin código + ≈ 100 de desarrollo) | ≈ 7,5 h (pasos que se estimaron en 29,5 h) |
+| 0 · SOS | 🔄 En curso | ~145 h (≈ 45 sin código + ≈ 100 de desarrollo) | ≈ 8,5 h (pasos que se estimaron en 31,5 h) |
 | 1 · MVP | ⏳ | ~160 h | 0 |
 | 2 · Monetización | ⏳ | a detallar | 0 |
 | 3 · Servicios | ⏳ | a detallar | 0 |
 | 4 · Escala | ⏳ | a detallar | 0 |
 
-**Paso actual:** 0.7.1 (desarrollo) · pendiente del dueño: 0.4.4b (proveedor de correo) · validación pendiente desde 0.0.2
+**Paso actual:** 0.7.2 (desarrollo) · pendiente del dueño: 0.4.4b (proveedor de correo) · validación pendiente desde 0.0.2
 
 ### Horas reales vs. estimadas (calibración)
 
@@ -40,7 +40,7 @@ Regla de trabajo: **por cada etapa de desarrollo, avanzar al menos un paso de va
 - [x] 0.0.1 🧪 Repasar la documentación y anotar correcciones (⏱️ 2 h) — 12/10/2026
 - [ ] 0.0.2 🧪 Descargar y probar Taponto y uno o dos competidores; anotar qué hacen bien y mal en `investigacion/competencia.md` (⏱️ 2 h) 🔁 *validación pendiente, en paralelo al desarrollo*
 - [ ] 0.0.3 🧪 Listar 30 comercios de Pando (nombre, rubro, dirección, horario, contacto). Empezar por los 8 operadores RENAC de la zona (`investigacion/renac.md`) (⏱️ 3 h)
-- [ ] 0.0.4 🧪 Marcar cuáles atienden urgencias u horario extendido (para la capa de la Fase 0) (⏱️ 1 h)
+- [ ] 0.0.4 🧪 Marcar cuáles atienden urgencias u horario extendido (para la capa de la Fase 0) (⏱️ 1 h) → volcarlas en `investigacion/veterinarias.csv` (formato en `supabase/cargar_comercios.py`) y cargarlas
 - [ ] 0.0.5 🧪 Juntar refugios, protectoras y grupos de Facebook/WhatsApp de Pando (directorio de Ayuda y difusión) (⏱️ 1 h)
 - [ ] 0.0.6 🧪 Revisar y ajustar el guion de entrevistas (borrador en `investigacion/entrevistas.md`) (⏱️ 1 h)
 - [ ] 0.0.7 🧪 Entrevistar a 10 dueños de mascotas (⏱️ 5 h)
@@ -100,8 +100,8 @@ Regla de trabajo: **por cada etapa de desarrollo, avanzar al menos un paso de va
 - [x] 0.6.4 Push al dueño cuando escanean el QR de su mascota (⏱️ 1 h) — 15/10/2026, migración `qr_scans_aviso`, función `qr-scan-alert` y push también en `owner-alert` (aviso con mensaje) (D58); pruebas OK (6 Deno, 178 de seguridad); prueba real: escanear el QR de una mascota de prueba en la web pública (`localhost:3002`) y enviar el formulario → llegaron a Chrome "📍 Escanearon el QR de…" y "💬 Alguien vio a… y te dejó un mensaje" (mascota de prueba borrada). **Cierra la Etapa 0.6**
 
 ### Etapa 0.7 · Veterinarias de urgencia y Ayuda
-- [ ] 0.7.1 Tabla `businesses` mínima + cargar las veterinarias de 0.0.4 desde Supabase (⏱️ 2 h) **← ESTÁS ACÁ**
-- [ ] 0.7.2 Capa en el mapa + ficha (horario, "abierto ahora", llamar, cómo llegar) (⏱️ 3 h)
+- [x] 0.7.1 Tabla `businesses` mínima + cargar las veterinarias de 0.0.4 desde Supabase (⏱️ 2 h) — 15/10/2026, migración `businesses` + `comercios_en_zona()` (D59), modelo `Comercio`/`Horario` en el núcleo, `ComerciosRepositorio` en la app, cargador `supabase/cargar_comercios.py`; pruebas OK (97 app, 42 núcleo, 186 de seguridad). **Cargadas 5 veterinarias de ejemplo** (solo dev); las reales quedan pendientes del 0.0.4: completar `investigacion/veterinarias.csv` y correr el cargador con `--aplicar`
+- [ ] 0.7.2 Capa en el mapa + ficha (horario, "abierto ahora", llamar, cómo llegar) (⏱️ 3 h) **← ESTÁS ACÁ**
 - [ ] 0.7.3 Pestaña Ayuda: `help_directory` + aviso del 911 (⏱️ 1 h)
 
 ### Etapa 0.8 · Lanzamiento

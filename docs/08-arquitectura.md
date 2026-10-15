@@ -98,6 +98,10 @@ Páginas livianas en **HTML + JavaScript sin frameworks** (cargan rápido en cua
 | `qr-scan-alert` | La llama la página pública del QR después de `registrar_escaneo()`: push al dueño "📍 Escanearon el QR de…" (abre `/mascotas/<id>/qr`). Sin sesión; solo acepta el id de un escaneo de menos de 5 min, una push por escaneo y como mucho una por QR cada 10 min (`aviso_escaneo()`). Responde siempre igual | 0.6.4 ✅ |
 | `owner-alert` | Contacto inverso: aviso al dueño desde el QR o un SOS, con push "💬 …te dejó un mensaje" (abre `/avisos`; si la push no sale, el aviso queda igual en la bandeja). Con sesión (desde la app) no pide anti-bots; sin sesión, Turnstile (secreto `TURNSTILE_SECRET`; en dev, la clave de prueba de Cloudflare), límites 5/h por dispositivo y 10/h por destino, remitentes bloqueados | 0.4.4 ✅ |
 
+### Comercios cargados a mano (Fase 0)
+
+Hasta el panel de administración, las veterinarias se cargan desde una planilla: `investigacion/veterinarias.csv` → `python -I -X utf8 supabase/cargar_comercios.py investigacion/veterinarias.csv [--aplicar]` (sin `--aplicar` solo valida). Las coordenadas van en la planilla (copiadas de Google Maps), sin geocodificación. Las de ejemplo para desarrollo están en `supabase/seeds/veterinarias_ejemplo.csv` (`--ejemplo`) y se borran al cargar las reales. El mapa las trae con `comercios_en_zona()` (zona visible).
+
 Se despliegan con `supabase functions deploy <nombre> --use-api` y se prueban en `supabase/tests/rls_test.py`. Las partes sin red (textos, firma de FCM) tienen pruebas de Deno: `npx deno test --allow-env supabase/functions/`.
 
 ## Notificaciones

@@ -477,6 +477,32 @@ def main():
             for uid in (e_id, f_id, g_id, h_id):
                 pedir('DELETE', f'{URL}/auth/v1/admin/users/{uid}', headers=ADMIN)
 
+        print('businesses (veterinarias)')
+        pando_rect = {'p_min_lat': -34.80, 'p_min_lng': -56.05, 'p_max_lat': -34.65, 'p_max_lng': -55.85}
+        vets = filas(rest('POST', 'rpc/comercios_en_zona', pando_rect))
+        caso('un visitante ve las veterinarias activas de Pando', len(vets) >= 1 and all(v['business_type'] == 'vet' for v in vets))
+        caso('las de urgencia y 24 h vienen primero',
+             [v['emergencies'] for v in vets] == sorted([v['emergencies'] for v in vets], reverse=True))
+        caso('fuera del rectángulo visible no aparecen',
+             filas(rest('POST', 'rpc/comercios_en_zona', {'p_min_lat': -35.0, 'p_min_lng': -56.3, 'p_max_lat': -34.95, 'p_max_lng': -56.2})) == [])
+        caso('nadie lee la tabla directo', bloqueado(rest('GET', 'businesses?select=id')) and bloqueado(rest('GET', 'businesses?select=id', quien=a)))
+        caso('A no puede cargar comercios', bloqueado(rest('POST', 'businesses', {'name': 'Falsa', 'location': 'SRID=4326;POINT(-55.95 -34.71)'}, a)))
+        if vets:
+            caso('A no puede cambiar ni borrar comercios',
+                 bloqueado(rest('PATCH', f"businesses?id=eq.{vets[0]['id']}", {'name': 'Hackeada'}, a))
+                 and bloqueado(rest('DELETE', f"businesses?id=eq.{vets[0]['id']}", quien=a)))
+        s_o, oculta = pedir('POST', f'{URL}/rest/v1/businesses', {
+            'name': 'Prueba RLS oculta', 'location': 'SRID=4326;POINT(-55.958 -34.717)', 'status': 'hidden', 'is_sample': True},
+            {**ADMIN, 'Prefer': 'return=representation'})
+        try:
+            caso('una veterinaria oculta no aparece en el mapa',
+                 s_o == 201 and all(v['name'] != 'Prueba RLS oculta' for v in filas(rest('POST', 'rpc/comercios_en_zona', pando_rect))))
+        finally:
+            pedir('DELETE', f'{URL}/rest/v1/businesses?name=eq.Prueba%20RLS%20oculta', headers=ADMIN)
+        caso('la base rechaza horarios mal escritos',
+             pedir('POST', f'{URL}/rest/v1/businesses', {'name': 'Prueba RLS horario', 'location': 'SRID=4326;POINT(-55.958 -34.717)',
+                                                       'hours': {'lunes': [['9', '13']]}}, ADMIN)[0] >= 400)
+
         print('zona para avisos (profiles.approx_location)')
         zona = lambda quien, lat=-34.7171, lng=-55.9581, origen='gps': rest(
             'POST', 'rpc/guardar_zona_aproximada', {'p_lat': lat, 'p_lng': lng, 'p_origen': origen}, quien)[0]

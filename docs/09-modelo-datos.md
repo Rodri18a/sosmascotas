@@ -45,7 +45,7 @@ Propuesta inicial. Se ajusta al implementar cada fase. **RLS activado en todas l
 
 | Tabla | Campos clave | Fase |
 |---|---|---|
-| `businesses` | id, owner_id, kind (`local`, `online`, `domicilio`), business_type, name, description, address, location, coverage_area, zone_id, hours (json por día), is_24h, species_ids[], plan (`basic`, `featured`, `plus`), verification (`unverified`, `pending`, `verified`), rut, renac_operator (bool, verificado por admin), founder_until, promo, web, instagram, facebook, status (`active`, `hidden`) | 0 (mínima) / 1 |
+| `businesses` | **Fase 0 (✅ 0.7.1, D59):** id, business_type (`vet`), name, description, address, location, zone_id, phone, whatsapp, web, instagram, hours (json por día, validado por `horario_valido()`), is_24h, emergencies, species_ids[], verification, status, is_sample (ejemplos de dev). Sin acceso directo: se lee con `comercios_en_zona()` (zona visible, solo activos y campos públicos) y se carga con `supabase/cargar_comercios.py`. **Fase 1 agrega:** owner_id, kind (`local`, `online`, `domicilio`), business_type, name, description, address, location, coverage_area, zone_id, hours (json por día), is_24h, species_ids[], plan (`basic`, `featured`, `plus`), verification (`unverified`, `pending`, `verified`), rut, renac_operator (bool, verificado por admin), founder_until, promo, web, instagram, facebook, status (`active`, `hidden`) | 0 (mínima) / 1 |
 | `business_contacts_private` | business_id, whatsapp, phone | 1 |
 | `business_photos` | id, business_id, path, order | 1 |
 | `place_marks` | id, user_id, category, location, google_link, business_id (cuando se reclama) | 1 |

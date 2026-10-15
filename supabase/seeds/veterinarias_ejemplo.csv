@@ -1,0 +1,6 @@
+nombre,direccion,lat,lng,telefono,whatsapp,web,instagram,horario,urgencias,24h,especies,descripcion
+Veterinaria Ejemplo Centro,Calle de ejemplo 100,-34.7168,-55.9575,099000001,,,,"lun-vie 09:00-13:00,15:00-20:00; sab 09:00-13:00",,,,"Datos de ejemplo para desarrollo, no es un comercio real."
+Clínica Ejemplo 24 h,Ruta de ejemplo km 1,-34.7215,-55.9512,099000002,099000002,,,,si,si,"Perro, Gato","Datos de ejemplo para desarrollo, no es un comercio real."
+Veterinaria Ejemplo Norte,Avenida de ejemplo 200,-34.7090,-55.9620,099000003,,,,lun-sab 08:00-21:00,si,,,"Datos de ejemplo para desarrollo, no es un comercio real."
+Veterinaria Ejemplo Sur,Calle de ejemplo 300,-34.7262,-55.9603,099000004,,,ejemplo.vet,lun-vie 10:00-18:00,,,"Perro, Gato, Conejo","Datos de ejemplo para desarrollo, no es un comercio real."
+Veterinaria Ejemplo Este,Calle de ejemplo 400,-34.7150,-55.9455,099000005,,,,"lun-vie 09:00-12:00,14:00-19:00; sab-dom 10:00-13:00",,,,"Datos de ejemplo para desarrollo, no es un comercio real."
