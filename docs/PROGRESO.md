@@ -9,13 +9,13 @@
 
 | Fase | Estado | Horas estimadas | Horas hechas |
 |---|---|---|---|
-| 0 · SOS | 🔄 En curso | ~145 h (≈ 45 sin código + ≈ 100 de desarrollo) | ≈ 8,5 h (pasos que se estimaron en 31,5 h) |
+| 0 · SOS | 🔄 En curso | ~145 h (≈ 45 sin código + ≈ 100 de desarrollo) | ≈ 9,5 h (pasos que se estimaron en 34,5 h) |
 | 1 · MVP | ⏳ | ~160 h | 0 |
 | 2 · Monetización | ⏳ | a detallar | 0 |
 | 3 · Servicios | ⏳ | a detallar | 0 |
 | 4 · Escala | ⏳ | a detallar | 0 |
 
-**Paso actual:** 0.7.2 (desarrollo) · pendiente del dueño: 0.4.4b (proveedor de correo) · validación pendiente desde 0.0.2
+**Paso actual:** 0.7.3 (desarrollo) · pendiente del dueño: 0.4.4b (proveedor de correo) · validación pendiente desde 0.0.2
 
 ### Horas reales vs. estimadas (calibración)
 
@@ -101,8 +101,8 @@ Regla de trabajo: **por cada etapa de desarrollo, avanzar al menos un paso de va
 
 ### Etapa 0.7 · Veterinarias de urgencia y Ayuda
 - [x] 0.7.1 Tabla `businesses` mínima + cargar las veterinarias de 0.0.4 desde Supabase (⏱️ 2 h) — 15/10/2026, migración `businesses` + `comercios_en_zona()` (D59), modelo `Comercio`/`Horario` en el núcleo, `ComerciosRepositorio` en la app, cargador `supabase/cargar_comercios.py`; pruebas OK (97 app, 42 núcleo, 186 de seguridad). **Cargadas 5 veterinarias de ejemplo** (solo dev); las reales quedan pendientes del 0.0.4: completar `investigacion/veterinarias.csv` y correr el cargador con `--aplicar`
-- [ ] 0.7.2 Capa en el mapa + ficha (horario, "abierto ahora", llamar, cómo llegar) (⏱️ 3 h) **← ESTÁS ACÁ**
-- [ ] 0.7.3 Pestaña Ayuda: `help_directory` + aviso del 911 (⏱️ 1 h)
+- [x] 0.7.2 Capa en el mapa + ficha (horario, "abierto ahora", llamar, cómo llegar) (⏱️ 3 h) — 15/10/2026, "abierto ahora" con la hora de Uruguay en el núcleo, capa de veterinarias + leyenda, ficha con horario, Llamar / WhatsApp / Cómo llegar / web / Instagram, métricas `place_open`/`place_click` (FK `events.business_id`), cargador que conserva ids (D60); pruebas OK (101 app, 48 núcleo, 188 de seguridad); prueba real en Chrome con las 5 de ejemplo (abierta/cerrada según la hora, 24 h, horario de la semana, métricas registradas)
+- [ ] 0.7.3 Pestaña Ayuda: `help_directory` + aviso del 911 (⏱️ 1 h) **← ESTÁS ACÁ**
 
 ### Etapa 0.8 · Lanzamiento
 - [ ] 0.8.1 PWA instalable (manifest, íconos, pantalla de instalación) (⏱️ 2 h)

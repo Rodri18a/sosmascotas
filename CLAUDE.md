@@ -48,7 +48,7 @@ Si un dato de `reference/` contradice `docs/`, **manda `docs/`** (ver `docs/12-d
 - Veterinarias (Fase 0): planilla `investigacion/veterinarias.csv` → `supabase/cargar_comercios.py <csv> [--aplicar]` (con las mismas credenciales; `--ejemplo` para `supabase/seeds/veterinarias_ejemplo.csv`).
 - Pruebas de seguridad de la base: `python3 -I supabase/tests/rls_test.py` (con el mismo `set -a; . …`). Sumar casos en cada tabla nueva.
 - **En Windows** (PC del trabajo): la CLI se usa con `npx --yes supabase@2.120.0 …` (sin instalar), los comandos con `set -a; . …` van en Git Bash, y los scripts de Python con `python -I -X utf8 …` (si no, la consola no imprime los ✅). Los secretos de Edge Functions con JSON (por ejemplo `FIREBASE_SERVICE_ACCOUNT`) se cargan con `secrets set --env-file <archivo temporal>` con el JSON en una sola línea: pasarlos como argumento por `npx` en Windows los corta. Si falta alguna credencial: token nuevo en supabase.com/dashboard/account/tokens y, si hace falta, resetear la contraseña de la base; `dev.json` y `web-publica/config.js` se arman con la API (clave publishable) sin copiar nada de otra máquina.
-- La compilación web tarda (en esta máquina, varios minutos): correrla en segundo plano.
+- La compilación web tarda (en esta máquina, varios minutos): correrla en segundo plano. En Windows, al cortar `flutter run` puede quedar un `dartvm` escuchando en el puerto (3001): revisar con `Get-NetTCPConnection -LocalPort 3001` y cerrarlo.
 
 ## Reglas para trabajar en este proyecto
 

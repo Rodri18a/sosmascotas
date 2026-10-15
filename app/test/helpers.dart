@@ -18,6 +18,7 @@ import 'package:sosmascota/src/push/servicio_push.dart';
 import 'package:sosmascota/src/qr/qr_repositorio.dart';
 import 'package:sosmascota/src/sos/sos_repositorio.dart';
 import 'package:sosmascota/src/ubicacion/servicio_ubicacion.dart';
+import 'package:sosmascota/src/utiles/enlaces.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'avisos_falsos.dart';
@@ -49,9 +50,16 @@ Widget appDePrueba({
   ServicioPush? push,
   ServicioUbicacion? ubicacion,
   ComerciosRepositorio? comercios,
+  List<Uri>? enlacesAbiertos,
+  DateTime? ahora,
 }) => ProviderScope(
   overrides: [
     sosRepositorioProvider.overrideWithValue(sos ?? SosFalso()),
+    abrirEnlaceProvider.overrideWithValue((enlace) async {
+      enlacesAbiertos?.add(enlace);
+      return true;
+    }),
+    if (ahora != null) relojProvider.overrideWithValue(() => ahora),
     comerciosRepositorioProvider.overrideWithValue(
       comercios ?? ComerciosFalsos(),
     ),

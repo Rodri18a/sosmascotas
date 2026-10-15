@@ -10,12 +10,8 @@ import 'mapa_vista.dart';
 /// Decisión P6 / D54. Si hiciera falta cambiarlo, es solo esta línea.
 const estiloMapa = 'https://tiles.openfreemap.org/styles/liberty';
 
-const _coloresPin = {
-  TipoPin.perdido: '#B3261E',
-  TipoPin.encontrado: '#1565C0',
-  TipoPin.veterinaria: '#6A1B9A',
-  TipoPin.urgencia: '#E65100',
-};
+String _hex(Color c) =>
+    '#${(c.toARGB32() & 0xFFFFFF).toRadixString(16).padLeft(6, '0')}';
 
 class MapaMapLibre extends StatefulWidget {
   const MapaMapLibre({required this.config, super.key});
@@ -75,7 +71,7 @@ class _MapaMapLibreState extends State<MapaMapLibre> {
         CircleOptions(
           geometry: LatLng(pin.punto.lat, pin.punto.lng),
           circleRadius: 9,
-          circleColor: _coloresPin[pin.tipo],
+          circleColor: _hex(coloresPin[pin.tipo]!),
           circleStrokeWidth: 2,
           circleStrokeColor: '#FFFFFF',
         ),

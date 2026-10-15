@@ -68,4 +68,74 @@ void main() {
     expect(h.porDia.keys, [0]);
     expect(Horario.fromJson(null).vacio, isTrue);
   });
+
+  group('abierto ahora (hora de Uruguay, UTC−3)', () {
+    // Lunes a viernes 09–13 y 15–20; sábado 09–13; domingo cerrado.
+    final horario = Horario.fromJson({
+      for (final d in ['mon', 'tue', 'wed', 'thu', 'fri'])
+        d: [
+          ['09:00', '13:00'],
+          ['15:00', '20:00'],
+        ],
+      'sat': [
+        ['09:00', '13:00'],
+      ],
+    });
+    // 15/10/2026 es jueves. Las horas se escriben en UTC (+3 de Uruguay).
+    DateTime uy(int dia, int hora, [int minuto = 0]) =>
+        DateTime.utc(2026, 10, dia, hora + 3, minuto);
+
+    test('abierto en la primera franja: dice a qué hora cierra', () {
+      expect(
+        horario.estadoEn(uy(15, 10)),
+        const EstadoApertura.abierto(cierra: 780),
+      );
+    });
+
+    test('al mediodía está cerrado y abre hoy a las 15', () {
+      expect(
+        horario.estadoEn(uy(15, 13)),
+        const EstadoApertura.cerrado(dia: 3, abre: 900, diasHasta: 0),
+      );
+    });
+
+    test('a la noche abre mañana a las 9', () {
+      expect(
+        horario.estadoEn(uy(15, 21)),
+        const EstadoApertura.cerrado(dia: 4, abre: 540, diasHasta: 1),
+      );
+    });
+
+    test('sábado de tarde: el domingo está cerrado, abre el lunes', () {
+      expect(
+        horario.estadoEn(uy(17, 14)),
+        const EstadoApertura.cerrado(dia: 0, abre: 540, diasHasta: 2),
+      );
+    });
+
+    test('usa la hora de Uruguay, no la del dispositivo', () {
+      // 23:30 UTC del jueves = 20:30 en Uruguay: ya cerró.
+      expect(
+        horario.estadoEn(DateTime.utc(2026, 10, 15, 23, 30)).abierto,
+        isFalse,
+      );
+      // 12:00 UTC = 09:00 en Uruguay: abre justo.
+      expect(horario.estadoEn(DateTime.utc(2026, 10, 15, 12)).abierto, isTrue);
+    });
+
+    test('24 h siempre abierta; sin horario, cerrada', () {
+      const c = Comercio(
+        id: 'b',
+        nombre: 'X',
+        punto: centroPando,
+        horario: Horario({}),
+        es24h: true,
+      );
+      expect(c.estadoEn(uy(18, 3)), const EstadoApertura.abierto24h());
+      expect(
+        const Horario({}).estadoEn(uy(15, 10)),
+        const EstadoApertura.sinHorario(),
+      );
+    });
+  });
 }

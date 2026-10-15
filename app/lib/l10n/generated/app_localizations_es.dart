@@ -1001,4 +1001,102 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get ubicacionError =>
       'No pudimos obtener tu ubicación. Revisá tu conexión y probá de nuevo.';
+
+  @override
+  String get leyendaPerdido => 'Perdido';
+
+  @override
+  String get leyendaEncontrado => 'Encontrado';
+
+  @override
+  String get leyendaVeterinaria => 'Veterinaria';
+
+  @override
+  String get leyendaUrgencia => 'Urgencias / 24 h';
+
+  @override
+  String get comercioAbierto24h => 'Abierto las 24 h';
+
+  @override
+  String comercioAbiertoHasta(String hora) {
+    return 'Abierto · cierra a las $hora';
+  }
+
+  @override
+  String comercioCerradoHoy(String hora) {
+    return 'Cerrado · abre hoy a las $hora';
+  }
+
+  @override
+  String comercioCerradoManana(String hora) {
+    return 'Cerrado · abre mañana a las $hora';
+  }
+
+  @override
+  String comercioCerradoDia(String dia, String hora) {
+    return 'Cerrado · abre el $dia a las $hora';
+  }
+
+  @override
+  String get comercioSinHorario => 'Horario sin cargar';
+
+  @override
+  String get comercio24h => '24 h';
+
+  @override
+  String get comercioUrgencias => 'Urgencias';
+
+  @override
+  String get comercioEjemplo => 'Ejemplo';
+
+  @override
+  String get comercioEjemploAviso =>
+      'Es un dato de ejemplo para probar la app: no es una veterinaria real.';
+
+  @override
+  String comercioAtiende(String especies) {
+    return 'Atiende: $especies';
+  }
+
+  @override
+  String get comercioHorarioSemana => 'Horario de la semana';
+
+  @override
+  String get comercioDiaCerrado => 'Cerrado';
+
+  @override
+  String get comercioLlamar => 'Llamar';
+
+  @override
+  String get comercioWhatsapp => 'WhatsApp';
+
+  @override
+  String get comercioComoLlegar => 'Cómo llegar';
+
+  @override
+  String get comercioWeb => 'Web';
+
+  @override
+  String get comercioInstagram => 'Instagram';
+
+  @override
+  String get diaLunes => 'lunes';
+
+  @override
+  String get diaMartes => 'martes';
+
+  @override
+  String get diaMiercoles => 'miércoles';
+
+  @override
+  String get diaJueves => 'jueves';
+
+  @override
+  String get diaViernes => 'viernes';
+
+  @override
+  String get diaSabado => 'sábado';
+
+  @override
+  String get diaDomingo => 'domingo';
 }

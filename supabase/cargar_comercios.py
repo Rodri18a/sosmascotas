@@ -21,7 +21,9 @@ Uso (desde la raíz del repo, con las credenciales de dev):
     python -I -X utf8 supabase/cargar_comercios.py investigacion/veterinarias.csv [--aplicar]
 
 Con --ejemplo reemplaza las veterinarias de ejemplo (is_sample). Sin --ejemplo
-reemplaza las reales cargadas a mano **y borra las de ejemplo**.
+borra las de ejemplo y sincroniza las reales **por nombre**: actualiza las que
+ya están (conservan su id y sus métricas), agrega las nuevas y oculta (no
+borra) las que ya no figuran en la planilla.
 """
 import csv
 import json
@@ -168,15 +170,39 @@ def main():
         print('\nNo se cambió nada. Para cargarlas, repetir con --aplicar.')
         return
 
-    # Reemplaza las del mismo tipo; al cargar las reales, también se van las de ejemplo.
-    filtro = 'is_sample=eq.true' if ejemplo else 'is_sample=in.(true,false)'
-    s, r = pedir('DELETE', f'{url}/rest/v1/businesses?business_type=eq.vet&{filtro}', headers=admin)
-    if s not in (200, 204):
-        sys.exit(f'No se pudieron borrar las anteriores: {s} {r}')
-    s, r = pedir('POST', f'{url}/rest/v1/businesses', filas, {**admin, 'Prefer': 'return=minimal'})
-    if s not in (200, 201):
-        sys.exit(f'No se pudieron cargar: {s} {r}')
-    print(f'\n✅ Cargadas {len(filas)} veterinarias {tipo}.')
+    def ok(respuesta, que):
+        s, r = respuesta
+        if s not in (200, 201, 204):
+            sys.exit(f'No se pudo {que}: {s} {r}')
+
+    # Las de ejemplo no tienen historia: se borran siempre.
+    ok(pedir('DELETE', f'{url}/rest/v1/businesses?business_type=eq.vet&is_sample=eq.true', headers=admin),
+       'borrar las de ejemplo')
+    if ejemplo:
+        ok(pedir('POST', f'{url}/rest/v1/businesses', filas, {**admin, 'Prefer': 'return=minimal'}), 'cargar')
+        print(f'\n✅ Cargadas {len(filas)} veterinarias de ejemplo.')
+        return
+
+    # Reales: por nombre, para conservar el id (y las métricas de cada una).
+    _, existentes = pedir('GET', f'{url}/rest/v1/businesses?select=id,name&business_type=eq.vet&is_sample=eq.false',
+                          headers=admin)
+    por_nombre = {e['name'].strip().lower(): e['id'] for e in existentes}
+    nuevas, actualizadas = [], 0
+    for f in filas:
+        existente = por_nombre.pop(f['name'].strip().lower(), None)
+        if existente:
+            ok(pedir('PATCH', f'{url}/rest/v1/businesses?id=eq.{existente}', {**f, 'status': 'active'},
+                     {**admin, 'Prefer': 'return=minimal'}), f"actualizar {f['name']}")
+            actualizadas += 1
+        else:
+            nuevas.append(f)
+    if nuevas:
+        ok(pedir('POST', f'{url}/rest/v1/businesses', nuevas, {**admin, 'Prefer': 'return=minimal'}), 'cargar las nuevas')
+    for nombre, id_ in por_nombre.items():
+        ok(pedir('PATCH', f'{url}/rest/v1/businesses?id=eq.{id_}', {'status': 'hidden'},
+                 {**admin, 'Prefer': 'return=minimal'}), f'ocultar {nombre}')
+    print(f'\n✅ {len(nuevas)} nuevas, {actualizadas} actualizadas, {len(por_nombre)} ocultadas '
+          '(ya no figuran en la planilla). Las de ejemplo se borraron.')
 
 
 if __name__ == '__main__':

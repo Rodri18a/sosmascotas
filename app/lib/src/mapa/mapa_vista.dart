@@ -38,6 +38,14 @@ class MapaVista extends ConsumerWidget {
       ref.watch(constructorMapaProvider)(this);
 }
 
+/// Color de cada tipo de pin (el mapa y la leyenda usan los mismos).
+const coloresPin = <TipoPin, Color>{
+  TipoPin.perdido: Color(0xFFB3261E),
+  TipoPin.encontrado: Color(0xFF1565C0),
+  TipoPin.veterinaria: Color(0xFF6A1B9A),
+  TipoPin.urgencia: Color(0xFFE65100),
+};
+
 typedef ConstructorMapa = Widget Function(MapaVista config);
 
 /// Motor del mapa. En la Fase 0 (web) es MapLibre con OpenFreeMap; en la Fase 1

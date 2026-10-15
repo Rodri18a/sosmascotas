@@ -1743,6 +1743,180 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'No pudimos obtener tu ubicación. Revisá tu conexión y probá de nuevo.'**
   String get ubicacionError;
+
+  /// No description provided for @leyendaPerdido.
+  ///
+  /// In es, this message translates to:
+  /// **'Perdido'**
+  String get leyendaPerdido;
+
+  /// No description provided for @leyendaEncontrado.
+  ///
+  /// In es, this message translates to:
+  /// **'Encontrado'**
+  String get leyendaEncontrado;
+
+  /// No description provided for @leyendaVeterinaria.
+  ///
+  /// In es, this message translates to:
+  /// **'Veterinaria'**
+  String get leyendaVeterinaria;
+
+  /// No description provided for @leyendaUrgencia.
+  ///
+  /// In es, this message translates to:
+  /// **'Urgencias / 24 h'**
+  String get leyendaUrgencia;
+
+  /// No description provided for @comercioAbierto24h.
+  ///
+  /// In es, this message translates to:
+  /// **'Abierto las 24 h'**
+  String get comercioAbierto24h;
+
+  /// No description provided for @comercioAbiertoHasta.
+  ///
+  /// In es, this message translates to:
+  /// **'Abierto · cierra a las {hora}'**
+  String comercioAbiertoHasta(String hora);
+
+  /// No description provided for @comercioCerradoHoy.
+  ///
+  /// In es, this message translates to:
+  /// **'Cerrado · abre hoy a las {hora}'**
+  String comercioCerradoHoy(String hora);
+
+  /// No description provided for @comercioCerradoManana.
+  ///
+  /// In es, this message translates to:
+  /// **'Cerrado · abre mañana a las {hora}'**
+  String comercioCerradoManana(String hora);
+
+  /// No description provided for @comercioCerradoDia.
+  ///
+  /// In es, this message translates to:
+  /// **'Cerrado · abre el {dia} a las {hora}'**
+  String comercioCerradoDia(String dia, String hora);
+
+  /// No description provided for @comercioSinHorario.
+  ///
+  /// In es, this message translates to:
+  /// **'Horario sin cargar'**
+  String get comercioSinHorario;
+
+  /// No description provided for @comercio24h.
+  ///
+  /// In es, this message translates to:
+  /// **'24 h'**
+  String get comercio24h;
+
+  /// No description provided for @comercioUrgencias.
+  ///
+  /// In es, this message translates to:
+  /// **'Urgencias'**
+  String get comercioUrgencias;
+
+  /// No description provided for @comercioEjemplo.
+  ///
+  /// In es, this message translates to:
+  /// **'Ejemplo'**
+  String get comercioEjemplo;
+
+  /// No description provided for @comercioEjemploAviso.
+  ///
+  /// In es, this message translates to:
+  /// **'Es un dato de ejemplo para probar la app: no es una veterinaria real.'**
+  String get comercioEjemploAviso;
+
+  /// No description provided for @comercioAtiende.
+  ///
+  /// In es, this message translates to:
+  /// **'Atiende: {especies}'**
+  String comercioAtiende(String especies);
+
+  /// No description provided for @comercioHorarioSemana.
+  ///
+  /// In es, this message translates to:
+  /// **'Horario de la semana'**
+  String get comercioHorarioSemana;
+
+  /// No description provided for @comercioDiaCerrado.
+  ///
+  /// In es, this message translates to:
+  /// **'Cerrado'**
+  String get comercioDiaCerrado;
+
+  /// No description provided for @comercioLlamar.
+  ///
+  /// In es, this message translates to:
+  /// **'Llamar'**
+  String get comercioLlamar;
+
+  /// No description provided for @comercioWhatsapp.
+  ///
+  /// In es, this message translates to:
+  /// **'WhatsApp'**
+  String get comercioWhatsapp;
+
+  /// No description provided for @comercioComoLlegar.
+  ///
+  /// In es, this message translates to:
+  /// **'Cómo llegar'**
+  String get comercioComoLlegar;
+
+  /// No description provided for @comercioWeb.
+  ///
+  /// In es, this message translates to:
+  /// **'Web'**
+  String get comercioWeb;
+
+  /// No description provided for @comercioInstagram.
+  ///
+  /// In es, this message translates to:
+  /// **'Instagram'**
+  String get comercioInstagram;
+
+  /// No description provided for @diaLunes.
+  ///
+  /// In es, this message translates to:
+  /// **'lunes'**
+  String get diaLunes;
+
+  /// No description provided for @diaMartes.
+  ///
+  /// In es, this message translates to:
+  /// **'martes'**
+  String get diaMartes;
+
+  /// No description provided for @diaMiercoles.
+  ///
+  /// In es, this message translates to:
+  /// **'miércoles'**
+  String get diaMiercoles;
+
+  /// No description provided for @diaJueves.
+  ///
+  /// In es, this message translates to:
+  /// **'jueves'**
+  String get diaJueves;
+
+  /// No description provided for @diaViernes.
+  ///
+  /// In es, this message translates to:
+  /// **'viernes'**
+  String get diaViernes;
+
+  /// No description provided for @diaSabado.
+  ///
+  /// In es, this message translates to:
+  /// **'sábado'**
+  String get diaSabado;
+
+  /// No description provided for @diaDomingo.
+  ///
+  /// In es, this message translates to:
+  /// **'domingo'**
+  String get diaDomingo;
 }
 
 class _AppLocalizationsDelegate

@@ -499,6 +499,13 @@ def main():
                  s_o == 201 and all(v['name'] != 'Prueba RLS oculta' for v in filas(rest('POST', 'rpc/comercios_en_zona', pando_rect))))
         finally:
             pedir('DELETE', f'{URL}/rest/v1/businesses?name=eq.Prueba%20RLS%20oculta', headers=ADMIN)
+        if vets:
+            caso('un visitante registra place_open de una veterinaria (métrica con business_id)',
+                 rest('POST', 'events', {'name': 'prueba_rls', 'anon_id': str(uuid.uuid4()), 'business_id': vets[0]['id']},
+                      prefer='return=minimal')[0] == 201)
+        caso('no se aceptan métricas de un comercio que no existe',
+             rest('POST', 'events', {'name': 'prueba_rls', 'anon_id': str(uuid.uuid4()), 'business_id': str(uuid.uuid4())},
+                  prefer='return=minimal')[0] >= 400)
         caso('la base rechaza horarios mal escritos',
              pedir('POST', f'{URL}/rest/v1/businesses', {'name': 'Prueba RLS horario', 'location': 'SRID=4326;POINT(-55.958 -34.717)',
                                                        'hours': {'lunes': [['9', '13']]}}, ADMIN)[0] >= 400)

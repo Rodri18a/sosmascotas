@@ -21,6 +21,73 @@ class Franja {
   String toString() => 'Franja($desde, $hasta)';
 }
 
+/// Hora de Uruguay (UTC−3, sin horario de verano desde 2015). "Abierto ahora"
+/// se calcula con la hora del lugar (docs/06-reglas-negocio.md); al sumar
+/// zonas de otros países se usa `zones.timezone`.
+const diferenciaUruguay = Duration(hours: -3);
+
+/// Si un comercio está abierto en un momento dado, y hasta cuándo o desde
+/// cuándo.
+class EstadoApertura {
+  const EstadoApertura.abierto24h()
+    : abierto = true,
+      es24h = true,
+      dia = null,
+      minutos = null,
+      diasHasta = null;
+
+  const EstadoApertura.abierto({required int cierra})
+    : abierto = true,
+      es24h = false,
+      dia = null,
+      minutos = cierra,
+      diasHasta = 0;
+
+  const EstadoApertura.cerrado({
+    required int this.dia,
+    required int abre,
+    required int this.diasHasta,
+  }) : abierto = false,
+       es24h = false,
+       minutos = abre;
+
+  /// Cerrado y sin ningún horario cargado.
+  const EstadoApertura.sinHorario()
+    : abierto = false,
+      es24h = false,
+      dia = null,
+      minutos = null,
+      diasHasta = null;
+
+  final bool abierto;
+  final bool es24h;
+
+  /// Abierto: a qué hora cierra. Cerrado: a qué hora abre (minutos del día).
+  final int? minutos;
+
+  /// Cerrado: qué día abre (0 = lunes … 6 = domingo) y en cuántos días
+  /// (0 = hoy, 1 = mañana).
+  final int? dia;
+  final int? diasHasta;
+
+  @override
+  bool operator ==(Object other) =>
+      other is EstadoApertura &&
+      other.abierto == abierto &&
+      other.es24h == es24h &&
+      other.minutos == minutos &&
+      other.dia == dia &&
+      other.diasHasta == diasHasta;
+
+  @override
+  int get hashCode => Object.hash(abierto, es24h, minutos, dia, diasHasta);
+
+  @override
+  String toString() =>
+      'EstadoApertura(abierto: $abierto, 24h: $es24h, minutos: $minutos, '
+      'dia: $dia, diasHasta: $diasHasta)';
+}
+
 /// Horario semanal de un comercio. Un día sin franjas está cerrado.
 class Horario {
   const Horario(this.porDia);
@@ -53,6 +120,33 @@ class Horario {
   bool get vacio => porDia.isEmpty;
 
   List<Franja> delDia(int dia) => porDia[dia] ?? const [];
+
+  /// ¿Está abierto en [momento]? (se pasa a la hora de Uruguay).
+  EstadoApertura estadoEn(DateTime momento) {
+    final local = momento.toUtc().add(diferenciaUruguay);
+    final hoy = local.weekday - 1;
+    final ahora = local.hour * 60 + local.minute;
+    for (final f in delDia(hoy)) {
+      if (f.desde <= ahora && ahora < f.hasta) {
+        return EstadoApertura.abierto(cierra: f.hasta);
+      }
+    }
+    for (var n = 0; n <= 7; n++) {
+      final dia = (hoy + n) % 7;
+      final siguientes = [
+        for (final f in delDia(dia))
+          if (n > 0 || f.desde > ahora) f.desde,
+      ]..sort();
+      if (siguientes.isNotEmpty) {
+        return EstadoApertura.cerrado(
+          dia: dia,
+          abre: siguientes.first,
+          diasHasta: n,
+        );
+      }
+    }
+    return const EstadoApertura.sinHorario();
+  }
 
   static int? _minutos(Object? hora) {
     if (hora is! String) return null;
@@ -130,6 +224,10 @@ class Comercio {
 
   /// Dato de ejemplo (solo en desarrollo).
   final bool esEjemplo;
+
+  /// ¿Está abierto en [momento]?
+  EstadoApertura estadoEn(DateTime momento) =>
+      es24h ? const EstadoApertura.abierto24h() : horario.estadoEn(momento);
 
   /// Pin del mapa: las de urgencia o 24 h se destacan.
   Pin get pin => Pin(

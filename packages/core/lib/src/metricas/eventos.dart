@@ -10,6 +10,8 @@ abstract final class Eventos {
   static const contentFlag = 'content_flag';
   static const alertZoneSet = 'alert_zone_set';
   static const alertZoneClear = 'alert_zone_clear';
+  static const placeOpen = 'place_open';
+  static const placeClick = 'place_click';
 }
 
 /// Valida el nombre de un evento con la misma regla que la base de datos.
