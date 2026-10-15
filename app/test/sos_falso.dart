@@ -75,10 +75,7 @@ class SosFalso implements SosRepositorio {
   }
 
   @override
-  Future<bool> reportarContenido(
-    String sosId, {
-    required String motivo,
-  }) async {
+  Future<bool> reportarContenido(String sosId, {required String motivo}) async {
     if (fallarCon case final tipo?) throw SosException(tipo);
     if (reportados.containsKey(sosId)) return false;
     reportados[sosId] = motivo;

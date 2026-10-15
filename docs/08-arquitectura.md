@@ -111,7 +111,7 @@ Se despliegan con `supabase functions deploy <nombre> --use-api` y se prueban en
 
 - Las push usan el **token del dispositivo** (`push_tokens`), nunca el teléfono.
 - Web (PWA): `app/web/firebase-messaging-sw.js` muestra cada push como notificación del sistema y al tocarla abre `data.ruta` (por ejemplo `/sos/<id>`). Los mensajes se mandan con `notification: {title, body}` y `data: {ruta}` (D55).
-- Para los avisos por zona se guarda una **ubicación aproximada** del usuario (no exacta), actualizada al abrir la app.
+- Para los avisos por zona se guarda una **ubicación aproximada** del usuario (no exacta), actualizada al abrir la app: el centro de una celda de ~500 m, calculado en el teléfono y otra vez en la base (D56). El permiso de ubicación se pide recién al activar los avisos, después de explicar para qué es; se puede borrar desde Ajustes.
 
 ## Contacto inverso
 
@@ -141,6 +141,7 @@ Tabla `events` (append-only), escrita por el cliente con `ref.read(metricasProvi
 | `qr_scan` / `qr_alert` | pet_id |
 | `alert_reply` | el dueño respondió un aviso (marcado por él) |
 | `content_flag` | target_type, motivo, target_id (reporte a moderación, solo la primera vez) |
+| `alert_zone_set` / `alert_zone_clear` | — (guardó o borró su zona para avisos; **sin coordenadas**) |
 | `signup` / `pet_create` | — |
 | `reminder_done` | tipo |
 

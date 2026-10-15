@@ -8,6 +8,8 @@ abstract final class Eventos {
   static const petCreate = 'pet_create';
   static const alertReply = 'alert_reply';
   static const contentFlag = 'content_flag';
+  static const alertZoneSet = 'alert_zone_set';
+  static const alertZoneClear = 'alert_zone_clear';
 }
 
 /// Valida el nombre de un evento con la misma regla que la base de datos.

@@ -953,4 +953,52 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get pushError =>
       'No pudimos activar los avisos. Revisá tu conexión y probá de nuevo.';
+
+  @override
+  String get ubicacionDialogoTitulo =>
+      '¿Te avisamos de mascotas perdidas cerca tuyo?';
+
+  @override
+  String get ubicacionDialogoTexto =>
+      'Para eso guardamos una zona aproximada (unos 500 m), nunca tu ubicación exacta. Nadie más la ve y la podés borrar cuando quieras desde Ajustes.';
+
+  @override
+  String get ubicacionAhoraNo => 'Ahora no';
+
+  @override
+  String get ubicacionUsar => 'Usar mi zona';
+
+  @override
+  String get ubicacionTitulo => 'Zona para avisos de perdidos';
+
+  @override
+  String get ubicacionGuardada =>
+      'Guardada: una zona aproximada (unos 500 m), nunca tu ubicación exacta.';
+
+  @override
+  String get ubicacionSinGuardar =>
+      'Sin guardar: no te llegan avisos de mascotas perdidas cerca.';
+
+  @override
+  String get ubicacionBloqueada =>
+      'La ubicación está bloqueada en este navegador. Habilitala desde el candado de la barra de direcciones → Ubicación.';
+
+  @override
+  String get ubicacionNoDisponible =>
+      'Este dispositivo no nos da la ubicación.';
+
+  @override
+  String get ubicacionBorrar => 'Borrar';
+
+  @override
+  String get ubicacionGuardadaOk =>
+      '¡Listo! Te vamos a avisar de las mascotas perdidas cerca de tu zona.';
+
+  @override
+  String get ubicacionBorradaOk =>
+      'Borramos tu zona. Ya no te llegan avisos por cercanía.';
+
+  @override
+  String get ubicacionError =>
+      'No pudimos obtener tu ubicación. Revisá tu conexión y probá de nuevo.';
 }

@@ -1665,6 +1665,84 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'No pudimos activar los avisos. Revisá tu conexión y probá de nuevo.'**
   String get pushError;
+
+  /// No description provided for @ubicacionDialogoTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Te avisamos de mascotas perdidas cerca tuyo?'**
+  String get ubicacionDialogoTitulo;
+
+  /// No description provided for @ubicacionDialogoTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Para eso guardamos una zona aproximada (unos 500 m), nunca tu ubicación exacta. Nadie más la ve y la podés borrar cuando quieras desde Ajustes.'**
+  String get ubicacionDialogoTexto;
+
+  /// No description provided for @ubicacionAhoraNo.
+  ///
+  /// In es, this message translates to:
+  /// **'Ahora no'**
+  String get ubicacionAhoraNo;
+
+  /// No description provided for @ubicacionUsar.
+  ///
+  /// In es, this message translates to:
+  /// **'Usar mi zona'**
+  String get ubicacionUsar;
+
+  /// No description provided for @ubicacionTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Zona para avisos de perdidos'**
+  String get ubicacionTitulo;
+
+  /// No description provided for @ubicacionGuardada.
+  ///
+  /// In es, this message translates to:
+  /// **'Guardada: una zona aproximada (unos 500 m), nunca tu ubicación exacta.'**
+  String get ubicacionGuardada;
+
+  /// No description provided for @ubicacionSinGuardar.
+  ///
+  /// In es, this message translates to:
+  /// **'Sin guardar: no te llegan avisos de mascotas perdidas cerca.'**
+  String get ubicacionSinGuardar;
+
+  /// No description provided for @ubicacionBloqueada.
+  ///
+  /// In es, this message translates to:
+  /// **'La ubicación está bloqueada en este navegador. Habilitala desde el candado de la barra de direcciones → Ubicación.'**
+  String get ubicacionBloqueada;
+
+  /// No description provided for @ubicacionNoDisponible.
+  ///
+  /// In es, this message translates to:
+  /// **'Este dispositivo no nos da la ubicación.'**
+  String get ubicacionNoDisponible;
+
+  /// No description provided for @ubicacionBorrar.
+  ///
+  /// In es, this message translates to:
+  /// **'Borrar'**
+  String get ubicacionBorrar;
+
+  /// No description provided for @ubicacionGuardadaOk.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Listo! Te vamos a avisar de las mascotas perdidas cerca de tu zona.'**
+  String get ubicacionGuardadaOk;
+
+  /// No description provided for @ubicacionBorradaOk.
+  ///
+  /// In es, this message translates to:
+  /// **'Borramos tu zona. Ya no te llegan avisos por cercanía.'**
+  String get ubicacionBorradaOk;
+
+  /// No description provided for @ubicacionError.
+  ///
+  /// In es, this message translates to:
+  /// **'No pudimos obtener tu ubicación. Revisá tu conexión y probá de nuevo.'**
+  String get ubicacionError;
 }
 
 class _AppLocalizationsDelegate

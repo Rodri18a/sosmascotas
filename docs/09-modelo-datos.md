@@ -7,7 +7,7 @@ Propuesta inicial. Se ajusta al implementar cada fase. **RLS activado en todas l
 | Tabla | Campos clave | Fase |
 |---|---|---|
 | `zones` | id, slug, name, country, timezone, currency, area (multipolígono), active — ✅ creada en 0.1.7 (Pando) | 0 |
-| `profiles` | id (auth), display_name, avatar_path, role (`user`, `admin`), zone_id, plan (`free`, `pro`, `family`), prefs (idioma, color, letra), approx_location (se agrega en 0.6.2), alert_radius_km (1–20, por defecto 5), terms_version, terms_accepted_at, created_at, updated_at — ✅ 0.2.1. Cada uno ve y edita solo el suyo; `role` y `plan` no se editan desde la app | 0 |
+| `profiles` | id (auth), display_name, avatar_path, role (`user`, `admin`), zone_id, plan (`free`, `pro`, `family`), prefs (idioma, color, letra), approx_location (centro de una celda de ~500 m, **privada**), approx_location_source (`gps`, `mapa`), approx_location_at, alert_radius_km (1–20, por defecto 5), terms_version, terms_accepted_at, created_at, updated_at — ✅ 0.2.1 / zona ✅ 0.6.2. Cada uno ve y edita solo el suyo; `role` y `plan` no se editan desde la app. La zona solo se cambia con `guardar_zona_aproximada()` (redondea con `celda_zona()`, igual que `zonaAproximada()` en `packages/core`) y `borrar_zona_aproximada()` (D56) | 0 |
 | `private_contacts` | user_id, phone, whatsapp, show_whatsapp_direct (bool, por defecto `false`) — **solo accesible desde Edge Functions** (✅ 0.2.1: RLS sin políticas). Cuando el dueño cargue su teléfono, será con una función del servidor | 0 |
 | `push_tokens` | token (clave), user_id, platform, created_at, last_seen_at. Se guarda solo con `guardar_push_token()` (pasa el token a la cuenta actual, máximo 10 por persona); cada uno ve y borra los suyos — ✅ 0.6.1 | 0 |
 

@@ -95,7 +95,7 @@ Regla de trabajo: **por cada etapa de desarrollo, avanzar al menos un paso de va
 
 ### Etapa 0.6 · Avisos
 - [x] 0.6.1 Proyecto Firebase (gratis) + push web en la PWA + guardar `push_tokens` (⏱️ 3 h) — 14/10/2026, código, migración y pruebas OK; prueba real: el mensaje de prueba de Firebase llega a Chrome (`localhost:3001`) y al tocarlo abre la app en Avisos. Ojo: en la consola de Firebase pegar el token **sin comillas** (si no, no se envía a nadie)
-- [ ] 0.6.2 Pedir permiso de ubicación y guardar la zona aproximada del usuario (⏱️ 2 h) **← ESTÁS ACÁ**
+- [ ] 0.6.2 Pedir permiso de ubicación y guardar la zona aproximada del usuario (⏱️ 2 h) **← ESTÁS ACÁ** — 15/10/2026: código, migración (`zona_avisos`, D56) y pruebas OK (app, núcleo y 160 de seguridad). Falta la prueba real en Chrome: activar avisos → "Usar mi zona" → aparece "Guardada" en Ajustes
 - [ ] 0.6.3 Edge Function: nuevo SOS → push a los usuarios a 5 km o menos, con tope diario (⏱️ 3 h)
 - [ ] 0.6.4 Push al dueño cuando escanean el QR de su mascota (⏱️ 1 h)
 

@@ -191,10 +191,7 @@ class SupabaseSosRepositorio implements SosRepositorio {
   }
 
   @override
-  Future<bool> reportarContenido(
-    String sosId, {
-    required String motivo,
-  }) async {
+  Future<bool> reportarContenido(String sosId, {required String motivo}) async {
     try {
       await _cliente.from('flags').insert({
         'target_type': 'sos',

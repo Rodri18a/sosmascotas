@@ -375,8 +375,7 @@ class _FormularioReporte extends ConsumerStatefulWidget {
   final String sosId;
 
   @override
-  ConsumerState<_FormularioReporte> createState() =>
-      _FormularioReporteState();
+  ConsumerState<_FormularioReporte> createState() => _FormularioReporteState();
 }
 
 class _FormularioReporteState extends ConsumerState<_FormularioReporte> {

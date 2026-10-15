@@ -16,6 +16,7 @@ import 'package:sosmascota/src/metricas/metricas.dart';
 import 'package:sosmascota/src/push/servicio_push.dart';
 import 'package:sosmascota/src/qr/qr_repositorio.dart';
 import 'package:sosmascota/src/sos/sos_repositorio.dart';
+import 'package:sosmascota/src/ubicacion/servicio_ubicacion.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'avisos_falsos.dart';
@@ -44,10 +45,14 @@ Widget appDePrueba({
   AvisosRepositorio? avisos,
   SosRepositorio? sos,
   ServicioPush? push,
+  ServicioUbicacion? ubicacion,
 }) => ProviderScope(
   overrides: [
     sosRepositorioProvider.overrideWithValue(sos ?? SosFalso()),
     servicioPushProvider.overrideWithValue(push ?? const PushNoDisponible()),
+    servicioUbicacionProvider.overrideWithValue(
+      ubicacion ?? const UbicacionSinConfigurar(),
+    ),
     // Mapa falso: las pruebas no dibujan el mapa real (WebGL).
     constructorMapaProvider.overrideWithValue(MapaFalso.new),
     avisosRepositorioProvider.overrideWithValue(avisos ?? AvisosFalsos()),

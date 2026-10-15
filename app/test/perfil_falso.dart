@@ -10,6 +10,7 @@ class PerfilRepositorioFalso implements PerfilRepositorio {
   bool _acepto;
   String nombre = 'Ana';
   int radioAvisosKm = 5;
+  DateTime? zonaAvisosEn;
   int aceptaciones = 0;
   bool fallar = false;
 
@@ -19,6 +20,7 @@ class PerfilRepositorioFalso implements PerfilRepositorio {
     nombre: nombre,
     plan: Plan.free,
     radioAvisosKm: radioAvisosKm,
+    zonaAvisosEn: zonaAvisosEn,
     versionTerminos: _acepto ? versionTerminos : null,
     terminosAceptadosEn: _acepto ? DateTime(2026, 10, 14) : null,
   );

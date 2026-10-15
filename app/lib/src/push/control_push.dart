@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../l10n/l10n.dart';
+import '../ubicacion/control_ubicacion.dart';
 import 'servicio_push.dart';
 
 /// Pide el permiso y avisa cómo quedó. Se usa desde Ajustes y desde Avisos.
@@ -21,6 +22,9 @@ Future<void> activarPush(BuildContext context, WidgetRef ref) async {
         }),
       ),
     );
+    if (estado == EstadoPush.activado && context.mounted) {
+      await ofrecerZonaAvisos(context, ref);
+    }
   } catch (e) {
     // Firebase web también lanza errores que no son Exception.
     debugPrint('[push] No se pudo activar: $e');

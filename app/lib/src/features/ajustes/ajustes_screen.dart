@@ -11,6 +11,7 @@ import '../../metricas/metricas.dart';
 import '../../push/control_push.dart';
 import '../../push/servicio_push.dart';
 import '../../router.dart';
+import '../../ubicacion/control_ubicacion.dart';
 import '../ingresar/ingresar_screen.dart';
 import 'estado_conexion.dart';
 
@@ -164,6 +165,7 @@ class _SeccionCuenta extends ConsumerWidget {
               : () => _editarNombre(context, ref, perfil),
         ),
         const InterruptorPush(),
+        if (perfil != null) TileZonaAvisos(perfil: perfil),
         if (perfil != null) _RadioAvisos(perfil: perfil),
       ],
     );

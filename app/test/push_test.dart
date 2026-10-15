@@ -33,7 +33,10 @@ void main() {
     _pantallaDeCelular(tester);
     final push = PushFalso();
     await tester.pumpWidget(
-      appDePrueba(cuenta: ServicioCuentaFalso(conectado: _ana), push: push),
+      appDePrueba(
+        cuenta: ServicioCuentaFalso(conectado: _ana),
+        push: push,
+      ),
     );
     await _abrir(tester, 'Avisos');
 
@@ -52,7 +55,10 @@ void main() {
     _pantallaDeCelular(tester);
     final push = PushFalso()..fallar = true;
     await tester.pumpWidget(
-      appDePrueba(cuenta: ServicioCuentaFalso(conectado: _ana), push: push),
+      appDePrueba(
+        cuenta: ServicioCuentaFalso(conectado: _ana),
+        push: push,
+      ),
     );
     await _abrir(tester, 'Avisos');
 
@@ -70,7 +76,10 @@ void main() {
     _pantallaDeCelular(tester);
     final push = PushFalso(alPedirPermiso: EstadoPush.bloqueado);
     await tester.pumpWidget(
-      appDePrueba(cuenta: ServicioCuentaFalso(conectado: _ana), push: push),
+      appDePrueba(
+        cuenta: ServicioCuentaFalso(conectado: _ana),
+        push: push,
+      ),
     );
     await _abrir(tester, 'Ajustes');
 
@@ -86,7 +95,10 @@ void main() {
     _pantallaDeCelular(tester);
     final push = PushFalso(actual: EstadoPush.activado);
     await tester.pumpWidget(
-      appDePrueba(cuenta: ServicioCuentaFalso(conectado: _ana), push: push),
+      appDePrueba(
+        cuenta: ServicioCuentaFalso(conectado: _ana),
+        push: push,
+      ),
     );
     await _abrir(tester, 'Ajustes');
 
@@ -119,7 +131,10 @@ void main() {
     _pantallaDeCelular(tester);
     final push = PushFalso(actual: EstadoPush.activado);
     await tester.pumpWidget(
-      appDePrueba(cuenta: ServicioCuentaFalso(conectado: _ana), push: push),
+      appDePrueba(
+        cuenta: ServicioCuentaFalso(conectado: _ana),
+        push: push,
+      ),
     );
     await _abrir(tester, 'Ajustes');
     expect(push.renovaciones, greaterThanOrEqualTo(1));

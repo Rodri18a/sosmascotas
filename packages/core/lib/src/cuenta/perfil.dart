@@ -15,6 +15,7 @@ class Perfil {
     this.zonaId,
     this.versionTerminos,
     this.terminosAceptadosEn,
+    this.zonaAvisosEn,
   });
 
   factory Perfil.fromJson(Map<String, Object?> json) => Perfil(
@@ -28,6 +29,10 @@ class Perfil {
       final String fecha => DateTime.parse(fecha),
       _ => null,
     },
+    zonaAvisosEn: switch (json['approx_location_at']) {
+      final String fecha => DateTime.parse(fecha),
+      _ => null,
+    },
   );
 
   final String id;
@@ -37,6 +42,10 @@ class Perfil {
   final int? zonaId;
   final String? versionTerminos;
   final DateTime? terminosAceptadosEn;
+
+  /// Cuándo se guardó su zona aproximada para los avisos de SOS cercanos
+  /// (`null`: no tiene zona y no le llegan esos avisos).
+  final DateTime? zonaAvisosEn;
 
   /// ¿Aceptó esta versión de los términos y la política de privacidad?
   bool aceptoTerminos(String versionVigente) =>

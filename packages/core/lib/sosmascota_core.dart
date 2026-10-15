@@ -7,6 +7,7 @@ export 'src/config/config_firebase.dart';
 export 'src/cuenta/perfil.dart';
 export 'src/fotos/preparar_foto.dart';
 export 'src/mapa/mapa.dart';
+export 'src/mapa/zona.dart';
 export 'src/mascotas/especie.dart';
 export 'src/mascotas/mascota.dart';
 export 'src/metricas/anon_id.dart';

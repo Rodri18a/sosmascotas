@@ -442,5 +442,18 @@
   "pushTarjeta": "Activá los avisos para enterarte al instante si alguien encuentra a tu mascota.",
   "pushActivar": "Activar avisos",
   "pushActivados": "¡Listo! Vas a recibir los avisos en este dispositivo.",
-  "pushError": "No pudimos activar los avisos. Revisá tu conexión y probá de nuevo."
+  "pushError": "No pudimos activar los avisos. Revisá tu conexión y probá de nuevo.",
+  "ubicacionDialogoTitulo": "¿Te avisamos de mascotas perdidas cerca tuyo?",
+  "ubicacionDialogoTexto": "Para eso guardamos una zona aproximada (unos 500 m), nunca tu ubicación exacta. Nadie más la ve y la podés borrar cuando quieras desde Ajustes.",
+  "ubicacionAhoraNo": "Ahora no",
+  "ubicacionUsar": "Usar mi zona",
+  "ubicacionTitulo": "Zona para avisos de perdidos",
+  "ubicacionGuardada": "Guardada: una zona aproximada (unos 500 m), nunca tu ubicación exacta.",
+  "ubicacionSinGuardar": "Sin guardar: no te llegan avisos de mascotas perdidas cerca.",
+  "ubicacionBloqueada": "La ubicación está bloqueada en este navegador. Habilitala desde el candado de la barra de direcciones → Ubicación.",
+  "ubicacionNoDisponible": "Este dispositivo no nos da la ubicación.",
+  "ubicacionBorrar": "Borrar",
+  "ubicacionGuardadaOk": "¡Listo! Te vamos a avisar de las mascotas perdidas cerca de tu zona.",
+  "ubicacionBorradaOk": "Borramos tu zona. Ya no te llegan avisos por cercanía.",
+  "ubicacionError": "No pudimos obtener tu ubicación. Revisá tu conexión y probá de nuevo."
 }

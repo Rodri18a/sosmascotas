@@ -14,6 +14,7 @@ import json
 import math
 import os
 import pathlib
+import struct
 import sys
 import urllib.error
 import urllib.request
@@ -400,6 +401,38 @@ def main():
         caso('B borra su token al cerrar sesión',
              len(filas(rest('DELETE', f'push_tokens?token=eq.{token}', quien=b))) == 1
              and filas(rest('GET', 'push_tokens?select=token', quien=b)) == [])
+
+        print('zona para avisos (profiles.approx_location)')
+        zona = lambda quien, lat=-34.7171, lng=-55.9581, origen='gps': rest(
+            'POST', 'rpc/guardar_zona_aproximada', {'p_lat': lat, 'p_lng': lng, 'p_origen': origen}, quien)[0]
+        mi_zona = lambda quien: (filas(rest('GET', 'profiles?select=approx_location,approx_location_source,approx_location_at', quien=quien)) or [{}])[0]
+        caso('un visitante no puede guardar zonas', zona({'apikey': PUBLICA}) >= 400)
+        caso('A guarda su zona', zona(a) in (200, 204))
+        guardada = mi_zona(a)
+        # PostgREST devuelve EWKB en hexadecimal: 1 + 4 (tipo) + 4 (SRID) bytes y luego x, y.
+        x, y = struct.unpack('<dd', bytes.fromhex(guardada.get('approx_location') or '00' * 25)[9:25])
+        caso('se guarda el centro de la celda, no el punto exacto (igual que zonaAproximada en la app)',
+             (round(y, 6), round(x, 6)) == (-34.71525, -55.957628))
+        caso('queda guardada con origen y fecha', guardada.get('approx_location_source') == 'gps' and guardada.get('approx_location_at') is not None)
+        caso('B no ve la zona de A', all(p['id'] == b_id for p in filas(rest('GET', 'profiles?select=id,approx_location', quien=b))))
+        caso('un visitante no ve zonas', bloqueado(rest('GET', 'profiles?select=approx_location')))
+        caso('A no puede escribir su zona directo (sin redondear)',
+             bloqueado(rest('PATCH', f'profiles?id=eq.{a_id}', {'approx_location': 'SRID=4326;POINT(-55.9581 -34.7171)'}, a))
+             and mi_zona(a).get('approx_location') == guardada.get('approx_location'))
+        caso('A no puede inventar el origen ni la fecha',
+             bloqueado(rest('PATCH', f'profiles?id=eq.{a_id}', {'approx_location_source': 'mapa', 'approx_location_at': '2020-01-01'}, a)))
+        caso('B no puede cambiar la zona de A', zona(b, -34.9, -56.16) in (200, 204)
+             and mi_zona(a).get('approx_location') == guardada.get('approx_location'))
+        caso('dos puntos de la misma celda guardan lo mismo (nunca el punto exacto)',
+             zona(a, -34.7160, -55.9590) in (200, 204) and mi_zona(a).get('approx_location') == guardada.get('approx_location'))
+        caso('un punto de otra celda cambia la zona', zona(a, -34.7300, -55.9581) in (200, 204)
+             and mi_zona(a).get('approx_location') != guardada.get('approx_location'))
+        caso('no se aceptan coordenadas imposibles', zona(a, 95, 10) >= 400 and zona(a, -34.7, 200) >= 400)
+        caso('no se aceptan orígenes inventados', zona(a, origen='ip') >= 400)
+        caso('A puede borrar su zona',
+             rest('POST', 'rpc/borrar_zona_aproximada', {}, a)[0] in (200, 204)
+             and mi_zona(a).get('approx_location') is None and mi_zona(a).get('approx_location_at') is None)
+        caso('un visitante no puede usar celda_zona()', rest('POST', 'rpc/celda_zona', {'p_lat': 0, 'p_lng': 0})[0] >= 400)
 
         print('storage pet-photos')
         caso('A puede subir una foto en su carpeta', subir(f'pet-photos/{a_id}/prueba.jpg', JPEG_MINIMO, 'image/jpeg', a) == 200)
