@@ -24,7 +24,7 @@ npx --yes vercel@latest alias rm sosmascota-docs.vercel.app --yes   # ¡siempre!
 curl -s -o /dev/null -w "%{http_code}\n" https://sosmascota-docs.vercel.app/docs/   # tiene que dar 404
 ```
 
-La app de prueba (base de dev) está en **`sosmascota-dev`** → <https://sosmascota-dev.vercel.app> (pública: es la app, no tiene nada privado). Se sube con `npx --yes vercel@latest deploy --prod --yes` desde `app/build/web` después de `flutter build web --release --dart-define-from-file=config/dev.json`. **Nunca** correr `vercel` desde la raíz del repo: publicaría la documentación en esa dirección pública.
+La app de prueba (base de dev) está en **`sosmascota-dev`** → <https://sosmascota-dev.vercel.app> (pública: es la app, no tiene nada privado). Se sube con `npx --yes vercel@latest deploy --prod --yes` desde `app/build/web` después de `flutter build web --release --dart-define-from-file=config/dev.json`. **Nunca** correr `vercel` desde la raíz del repo: publicaría la documentación en esa dirección pública. Ninguno de los dos proyectos tiene que estar **conectado a GitHub** (`vercel git disconnect`): si lo está, cada push publica la raíz del repo (la documentación) encima de la app. Pasó el 16/10 y se desconectó.
 
 ## Pendiente (opcional): web online con login en Cloudflare
 
