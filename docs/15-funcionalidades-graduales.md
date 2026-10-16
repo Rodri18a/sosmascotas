@@ -1,6 +1,6 @@
 # 15 · Habilitación gradual de funcionalidades
 
-> **Propuesta** (15/10/2026), pendiente de aprobar e implementar. Complementa los roles de `02-usuarios-roles.md` y los planes de `06-reglas-negocio.md`: los roles dicen **quién puede** hacer algo; esto dice **a quién ya le llegó** una funcionalidad nueva.
+> **Aprobada** el 16/10/2026 (D64), sin cambios; se implementa en los pasos 0.8.0b–e. Complementa los roles de `02-usuarios-roles.md` y los planes de `06-reglas-negocio.md`: los roles dicen **quién puede** hacer algo; esto dice **a quién ya le llegó** una funcionalidad nueva.
 
 ## 1. Para qué
 

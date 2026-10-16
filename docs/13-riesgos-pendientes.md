@@ -23,7 +23,7 @@
 | P15 | **Prototipo de chapita** con el amigo: material, método de impresión del QR, costo por unidad, tiempo por lote | Paso 0.0.10 |
 | P16 | Precio de venta de la chapita y precio del patrocinio por lote | Con el costo real del prototipo |
 | P20 | ~~**Identidad visual**~~ | ✅ C · Cielo, con Faro, Vecinos y Pop como temas Pro (D62). Falta generar el logo y las piezas con el prompt de `14-brief-identidad-visual.md` §8 |
-| P21 | **Habilitación gradual de funcionalidades** (`15-funcionalidades-graduales.md`): aprobar la propuesta y sumar los pasos a–d a la Etapa 0.8 | Antes del lanzamiento |
+| P21 | ~~**Habilitación gradual de funcionalidades**~~ | ✅ Aprobada tal cual el 16/10 (D64); pasos 0.8.0b–e en `PROGRESO.md` |
 | P13 | Texto del **compromiso de adopción** | Redactarlo con protectoras de Pando y revisarlo en la asesoría legal |
 
 ## Riesgos
