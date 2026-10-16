@@ -8,6 +8,7 @@ import '../../mascotas/catalogo.dart';
 import '../../mascotas/mascotas_repositorio.dart';
 import '../../mascotas/textos_mascota.dart';
 import '../../router.dart';
+import '../../theme/paleta.dart';
 import '../../widgets/foto_mascota.dart';
 
 /// Ficha de una mascota propia.
@@ -123,8 +124,8 @@ class _Ficha extends ConsumerWidget {
           const SizedBox(height: 12),
           FilledButton.icon(
             style: FilledButton.styleFrom(
-              backgroundColor: tema.colorScheme.error,
-              foregroundColor: tema.colorScheme.onError,
+              backgroundColor: context.marca.acento,
+              foregroundColor: context.marca.sobreAcento,
             ),
             onPressed: () => context.push(Rutas.reportarMascota(mascota.id)),
             icon: const Icon(Icons.sos),

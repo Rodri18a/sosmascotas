@@ -1,44 +1,62 @@
 /* Web pública de SOS Mascota: liviana, legible al sol y en celulares de gama baja. */
+/* Identidad C · Cielo (D62, docs/14-brief-identidad-visual.md §10). Fuentes propias: sin pedidos a terceros. */
+@font-face {
+  font-family: 'Sora'; font-style: normal; font-weight: 600 700; font-display: swap;
+  src: url(/assets/fuentes/sora-latin.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Source Sans 3'; font-style: normal; font-weight: 400 700; font-display: swap;
+  src: url(/assets/fuentes/source-sans-3-latin.woff2) format('woff2');
+}
 :root {
-  --verde: #1f8a5b;
-  --verde-claro: #e3f3ea;
-  --rojo: #b3261e;
-  --texto: #1b1b1b;
-  --suave: #5c5c5c;
-  --fondo: #f7faf8;
+  --primario: #0f5e7a;
+  --sobre-primario: #ffffff;
+  --primario-claro: #e1eef2;
+  --acento: #ff7a59;
+  --sobre-acento: #102a35;
+  --error: #b3261e;
+  --texto: #102a35;
+  --suave: #4a5f68;
+  --fondo: #f6f4ef;
   --tarjeta: #ffffff;
-  --borde: #d9e2dc;
+  --borde: #ddd8cd;
   color-scheme: light dark;
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --verde-claro: #12301f;
-    --texto: #ececec;
-    --suave: #b5b5b5;
-    --fondo: #101412;
-    --tarjeta: #1b211e;
-    --borde: #2c3530;
+    --primario: #7cc4de;
+    --sobre-primario: #0e1e26;
+    --primario-claro: #16323d;
+    --acento: #ff8a6b;
+    --sobre-acento: #0e1e26;
+    --error: #ff8a80;
+    --texto: #ece9e2;
+    --suave: #a9b8be;
+    --fondo: #0e1e26;
+    --tarjeta: #13262f;
+    --borde: #2a414c;
   }
 }
 * { box-sizing: border-box; }
 body {
   margin: 0;
-  font: 17px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font: 17px/1.5 "Source Sans 3", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   color: var(--texto);
   background: var(--fondo);
 }
 main { max-width: 520px; margin: 0 auto; padding: 16px 16px 48px; }
-header.marca { display: flex; align-items: center; gap: 8px; color: var(--verde); font-weight: 700; margin-bottom: 12px; }
+header.marca { display: flex; align-items: center; gap: 8px; color: var(--primario); font-family: "Sora", sans-serif; font-weight: 700; margin-bottom: 12px; }
 .tarjeta { background: var(--tarjeta); border: 1px solid var(--borde); border-radius: 16px; padding: 16px; margin-bottom: 16px; }
-.foto { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 12px; background: var(--verde-claro); display: block; }
+.foto { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 12px; background: var(--primario-claro); display: block; }
 .sin-foto { display: grid; place-items: center; font-size: 96px; }
-h1 { font-size: 30px; margin: 12px 0 4px; }
+h1 { font-family: "Sora", sans-serif; font-weight: 700; font-size: 30px; margin: 12px 0 4px; }
 .detalle { color: var(--suave); margin: 0 0 8px; }
-.perdido { display: block; text-decoration: none; background: var(--rojo); color: #fff; border-radius: 12px; padding: 12px 16px; font-weight: 700; font-size: 20px; text-align: center; margin-bottom: 12px; }
-.nota { background: var(--verde-claro); border-left: 4px solid var(--verde); padding: 8px 12px; border-radius: 8px; margin: 12px 0; }
+.perdido { display: block; text-decoration: none; background: var(--acento); color: var(--sobre-acento); border-radius: 12px; padding: 12px 16px; font-weight: 700; font-size: 20px; text-align: center; margin-bottom: 12px; }
+.perdido.calmo { background: var(--primario); color: var(--sobre-primario); }
+.nota { background: var(--primario-claro); border-left: 4px solid var(--primario); padding: 8px 12px; border-radius: 8px; margin: 12px 0; }
 .boton { display: block; width: 100%; padding: 14px; border: 0; border-radius: 12px; font: inherit; font-weight: 700; cursor: pointer; text-align: center; text-decoration: none; }
-.boton.principal { background: var(--verde); color: #fff; }
-.boton.secundario { background: transparent; color: var(--verde); border: 2px solid var(--verde); margin-top: 8px; }
+.boton.principal { background: var(--primario); color: var(--sobre-primario); }
+.boton.secundario { background: transparent; color: var(--primario); border: 2px solid var(--primario); margin-top: 8px; }
 .boton:disabled { opacity: .6; cursor: wait; }
 label { display: block; font-weight: 600; margin: 12px 0 4px; }
 input[type=text], input[type=tel], textarea {
@@ -49,7 +67,7 @@ textarea { min-height: 96px; }
 .casilla { display: flex; gap: 8px; align-items: flex-start; font-weight: 400; }
 .casilla input { margin-top: 5px; width: 20px; height: 20px; }
 .ayuda { color: var(--suave); font-size: 14px; }
-.error { color: var(--rojo); font-weight: 600; }
-.ok { background: var(--verde-claro); border-radius: 12px; padding: 16px; }
+.error { color: var(--error); font-weight: 600; }
+.ok { background: var(--primario-claro); border-radius: 12px; padding: 16px; }
 .aviso-911 { font-size: 14px; color: var(--suave); text-align: center; margin-top: 24px; }
 [hidden] { display: none !important; }

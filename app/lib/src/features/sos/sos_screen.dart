@@ -7,6 +7,7 @@ import '../../../l10n/l10n.dart';
 import '../../cuenta/con_cuenta.dart';
 import '../../router.dart';
 import '../../sos/sos_repositorio.dart';
+import '../../theme/paleta.dart';
 import '../../utiles/tiempo.dart';
 import '../../widgets/boton_ajustes.dart';
 import '../../widgets/boton_avisos.dart';
@@ -32,6 +33,8 @@ class _SosScreenState extends ConsumerState<SosScreen> {
         actions: const [BotonAvisos(), BotonAjustes()],
       ),
       floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: context.marca.acento,
+        foregroundColor: context.marca.sobreAcento,
         onPressed: () => abrirConCuenta(
           context,
           ref,

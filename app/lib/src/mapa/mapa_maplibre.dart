@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
+import '../theme/paleta.dart';
 import 'mapa_vista.dart';
 
 /// Estilo de OpenFreeMap (gratis, sin cuenta ni clave, basado en OpenStreetMap).
@@ -73,7 +74,7 @@ class _MapaMapLibreState extends State<MapaMapLibre> {
           circleRadius: 9,
           circleColor: _hex(coloresPin[pin.tipo]!),
           circleStrokeWidth: 2,
-          circleStrokeColor: '#FFFFFF',
+          circleStrokeColor: _hex(bordePin),
         ),
       );
       _pinsPorCirculo[circulo.id] = pin;
@@ -93,7 +94,7 @@ class _MapaMapLibreState extends State<MapaMapLibre> {
       CircleOptions(
         geometry: LatLng(punto.lat, punto.lng),
         circleRadius: 12,
-        circleColor: '#1F8A5B',
+        circleColor: _hex(Paleta.cielo.claro.primario),
         circleOpacity: 0.85,
         circleStrokeWidth: 3,
         circleStrokeColor: '#FFFFFF',

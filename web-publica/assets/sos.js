@@ -23,10 +23,10 @@ function mostrarReporte(r) {
   const cartel = document.getElementById('cartel');
   if (r.status === 'active') {
     cartel.textContent = perdida ? 'Se busca 🆘' : 'Encontrada: busca a su familia';
-    cartel.style.background = perdida ? '' : 'var(--verde)';
+    cartel.classList.toggle('calmo', !perdida);
   } else {
     cartel.textContent = r.status === 'resolved' ? '¡Apareció! Gracias por ayudar 💚' : 'Este reporte ya no está activo';
-    cartel.style.background = 'var(--verde)';
+    cartel.classList.add('calmo');
     document.getElementById('tarjeta-contacto').hidden = true;
   }
 

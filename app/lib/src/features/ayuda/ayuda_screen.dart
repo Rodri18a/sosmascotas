@@ -4,8 +4,8 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
 import '../../ayuda/ayuda_repositorio.dart';
-import '../../mapa/mapa_vista.dart';
 import '../../metricas/metricas.dart';
+import '../../theme/paleta.dart';
 import '../../utiles/enlaces.dart';
 import '../../widgets/boton_ajustes.dart';
 import '../../widgets/boton_avisos.dart';
@@ -153,7 +153,7 @@ class _FilaUrgencia extends ConsumerWidget {
       child: ListTile(
         leading: Icon(
           Icons.local_hospital_outlined,
-          color: coloresPin[TipoPin.urgencia],
+          color: context.marca.urgencia,
         ),
         title: Text(comercio.nombre),
         subtitle: Text(textoApertura(context.t, estado)),

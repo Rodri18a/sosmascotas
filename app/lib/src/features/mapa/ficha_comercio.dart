@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
-import '../../mapa/mapa_vista.dart';
 import '../../mascotas/catalogo.dart';
 import '../../metricas/metricas.dart';
+import '../../theme/paleta.dart';
 import '../../utiles/enlaces.dart';
 
 /// Abre la ficha de una veterinaria desde abajo (al tocar su pin).
@@ -94,10 +94,9 @@ class FichaComercio extends ConsumerWidget {
               spacing: 8,
               runSpacing: 4,
               children: [
-                if (c.es24h)
-                  _Etiqueta(t.comercio24h, coloresPin[TipoPin.urgencia]!),
+                if (c.es24h) _Etiqueta(t.comercio24h, context.marca.urgencia),
                 if (c.urgencias && !c.es24h)
-                  _Etiqueta(t.comercioUrgencias, coloresPin[TipoPin.urgencia]!),
+                  _Etiqueta(t.comercioUrgencias, context.marca.urgencia),
                 if (c.esEjemplo)
                   _Etiqueta(t.comercioEjemplo, tema.colorScheme.outline),
               ],
@@ -109,7 +108,7 @@ class FichaComercio extends ConsumerWidget {
                   Icons.schedule,
                   size: 20,
                   color: estado.abierto
-                      ? Colors.green.shade700
+                      ? context.marca.exito
                       : tema.colorScheme.error,
                 ),
                 const SizedBox(width: 8),
@@ -118,7 +117,7 @@ class FichaComercio extends ConsumerWidget {
                     textoApertura(t, estado),
                     style: tema.textTheme.titleSmall?.copyWith(
                       color: estado.abierto
-                          ? Colors.green.shade700
+                          ? context.marca.exito
                           : tema.colorScheme.error,
                     ),
                   ),

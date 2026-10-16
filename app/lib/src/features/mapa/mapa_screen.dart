@@ -104,7 +104,15 @@ class _Leyenda extends StatelessWidget {
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.circle, size: 12, color: coloresPin[tipo]),
+                  Container(
+                    width: 12,
+                    height: 12,
+                    decoration: BoxDecoration(
+                      color: coloresPin[tipo],
+                      shape: BoxShape.circle,
+                      border: Border.all(color: bordePin, width: 1.5),
+                    ),
+                  ),
                   const SizedBox(width: 6),
                   Text(texto, style: tema.textTheme.labelSmall),
                 ],

@@ -6,7 +6,7 @@ Cada función indica la **fase** en la que se construye (ver `11-roadmap.md`) y 
 
 Barra inferior: **Explorar** (mapa) · **Noticias** · **SOS** (en rojo) · **Mascotas** · **Ajustes**. Arriba, una fila con las mascotas del usuario, la opción "Todas" y "＋".
 
-Pantalla inicial: logo (🐾 sobre un cuadrado verde redondeado) durante 1,5 segundos.
+Pantalla inicial: logo sobre el azul petróleo de la marca (`#0F5E7A`, D62) durante 1,5 segundos. Hasta tener el logo (0.0.9b) se usa 🐾 y el nombre en Sora.
 
 ---
 

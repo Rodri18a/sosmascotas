@@ -38,13 +38,18 @@ class MapaVista extends ConsumerWidget {
       ref.watch(constructorMapaProvider)(this);
 }
 
-/// Color de cada tipo de pin (el mapa y la leyenda usan los mismos).
+/// Color de cada tipo de pin (el mapa y la leyenda usan los mismos). Son
+/// iguales en todos los temas y se distinguen también por luminosidad, para
+/// quien no distingue colores (D62). Como texto, usar `context.marca.urgencia`.
 const coloresPin = <TipoPin, Color>{
-  TipoPin.perdido: Color(0xFFB3261E),
-  TipoPin.encontrado: Color(0xFF1565C0),
-  TipoPin.veterinaria: Color(0xFF6A1B9A),
-  TipoPin.urgencia: Color(0xFFE65100),
+  TipoPin.perdido: Color(0xFFD62839),
+  TipoPin.encontrado: Color(0xFF1F9E8E),
+  TipoPin.veterinaria: Color(0xFF0B3D52),
+  TipoPin.urgencia: Color(0xFFFFB238),
 };
+
+/// Borde de los pines: contrasta con el mapa claro y con el pin ámbar.
+const bordePin = Color(0xFF102A35);
 
 typedef ConstructorMapa = Widget Function(MapaVista config);
 
