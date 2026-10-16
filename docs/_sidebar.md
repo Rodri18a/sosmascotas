@@ -34,6 +34,7 @@
 - **Proyecto**
   - [Publicación de esta web](PUBLICACION.md)
   - [Guía: login con Google](guias/login-google.md)
+  - [Plantilla: validar una idea](guias/validar-una-idea.md)
 
 - **Referencia**
   - [Prototipo (HTML)](../reference/sos-mascota.html ':ignore')
