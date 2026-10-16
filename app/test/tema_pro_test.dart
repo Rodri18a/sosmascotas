@@ -7,11 +7,15 @@ import 'package:sosmascota/src/theme/paleta.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'cuenta_falsa.dart';
+import 'funcionalidades_falsas.dart';
 import 'helpers.dart';
 import 'perfil_falso.dart';
 import 'tema_falso.dart';
 
 const _ana = Usuario(id: 'u1', email: 'ana@correo.com');
+
+FuncionalidadesFalsas _temasPro() =>
+    FuncionalidadesFalsas({Funcionalidades.temasPro});
 
 void _pantallaDeCelular(WidgetTester tester) {
   tester.view
@@ -37,6 +41,7 @@ void main() {
     await tester.pumpWidget(
       appDePrueba(
         cuenta: ServicioCuentaFalso(conectado: _ana),
+        funcionalidades: _temasPro(),
         // Aunque haya un tema guardado de cuando tenía Pro.
         almacenTema: AlmacenTemaFalso('pop'),
       ),
@@ -57,6 +62,7 @@ void main() {
       appDePrueba(
         cuenta: ServicioCuentaFalso(conectado: _ana),
         perfiles: PerfilRepositorioFalso(plan: Plan.pro),
+        funcionalidades: _temasPro(),
         almacenTema: almacen,
         eventos: eventos,
       ),
@@ -86,6 +92,7 @@ void main() {
       appDePrueba(
         cuenta: ServicioCuentaFalso(conectado: _ana),
         perfiles: PerfilRepositorioFalso(plan: Plan.family),
+        funcionalidades: _temasPro(),
         almacenTema: AlmacenTemaFalso('vecinos'),
       ),
     );
@@ -94,9 +101,37 @@ void main() {
     expect(_primario(tester), Paleta.vecinos.claro.primario);
   });
 
+  testWidgets('con plan Pro pero temas_pro apagada no aparece y se ve Cielo', (
+    tester,
+  ) async {
+    _pantallaDeCelular(tester);
+    final eventos = <Map<String, Object?>>[];
+    await tester.pumpWidget(
+      appDePrueba(
+        cuenta: ServicioCuentaFalso(conectado: _ana),
+        perfiles: PerfilRepositorioFalso(plan: Plan.pro),
+        almacenTema: AlmacenTemaFalso('pop'),
+        eventos: eventos,
+      ),
+    );
+    await _abrirAjustes(tester);
+
+    expect(find.text('Tema de colores'), findsNothing);
+    expect(_primario(tester), Paleta.cielo.claro.primario);
+    final exposicion = eventos.singleWhere(
+      (e) => e['name'] == 'feature_exposure',
+    );
+    expect(exposicion['props'], {'key': 'temas_pro', 'variante': 'apagada'});
+  });
+
   testWidgets('un visitante ve Cielo', (tester) async {
     _pantallaDeCelular(tester);
-    await tester.pumpWidget(appDePrueba(almacenTema: AlmacenTemaFalso('pop')));
+    await tester.pumpWidget(
+      appDePrueba(
+        funcionalidades: _temasPro(),
+        almacenTema: AlmacenTemaFalso('pop'),
+      ),
+    );
     await tester.pumpAndSettle();
 
     expect(_primario(tester), Paleta.cielo.claro.primario);

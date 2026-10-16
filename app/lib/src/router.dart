@@ -15,10 +15,12 @@ import 'features/mascotas/ficha_mascota_screen.dart';
 import 'features/mascotas/mascota_form_screen.dart';
 import 'features/mascotas/mascotas_screen.dart';
 import 'features/mascotas/qr_mascota_screen.dart';
+import 'features/no_disponible/no_disponible_screen.dart';
 import 'features/shell/app_shell.dart';
 import 'features/sos/sos_detalle_screen.dart';
 import 'features/sos/sos_nuevo_screen.dart';
 import 'features/sos/sos_screen.dart';
+import 'funcionalidades/funcionalidades_activas.dart';
 import 'legal/legal.dart';
 import 'redireccion.dart';
 
@@ -37,6 +39,12 @@ abstract final class Rutas {
   static const privacidad = '/legal/privacidad';
   static const sosNuevo = '/sos/nuevo';
   static const mascotaNueva = '/mascotas/nueva';
+  static const noDisponible = '/no-disponible';
+
+  /// Rutas detrás de una funcionalidad gradual (comienzo de la ruta → clave de
+  /// `Funcionalidades`). Quien entra sin tenerla prendida ve "Todavía no está
+  /// disponible" (D64). Por ahora ninguna pantalla entera está en prueba.
+  static const conFuncionalidad = <String, String>{};
 
   /// Rutas que un visitante no puede ver: se le pide ingresar y después vuelve.
   static const requierenCuenta = <String>[sosNuevo, '$mascotas/', avisos];
@@ -66,19 +74,22 @@ GoRoute _hija(String ruta, Widget pantalla) =>
     GoRoute(path: ruta.split('/').last, builder: (_, _) => pantalla);
 
 final routerProvider = Provider<GoRouter>((ref) {
-  // Al iniciar o cerrar sesión, o al cambiar el consentimiento, se vuelven a
-  // evaluar las redirecciones.
-  final cambio = ValueNotifier<(bool, bool)>((
+  // Al iniciar o cerrar sesión, al cambiar el consentimiento o al cambiar las
+  // funcionalidades prendidas, se vuelven a evaluar las redirecciones.
+  final cambio = ValueNotifier<(bool, bool, EstadoFuncionalidades)>((
     ref.read(conectadoProvider),
     ref.read(necesitaConsentimientoProvider),
+    ref.read(funcionalidadesProvider),
   ));
   void actualizar() => cambio.value = (
     ref.read(conectadoProvider),
     ref.read(necesitaConsentimientoProvider),
+    ref.read(funcionalidadesProvider),
   );
   ref
     ..listen(conectadoProvider, (_, _) => actualizar())
     ..listen(necesitaConsentimientoProvider, (_, _) => actualizar())
+    ..listen(funcionalidadesProvider, (_, _) => actualizar())
     ..onDispose(cambio.dispose);
 
   final router = GoRouter(
@@ -88,6 +99,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       conectado: ref.read(conectadoProvider),
       necesitaConsentimiento: ref.read(necesitaConsentimientoProvider),
       uri: state.uri,
+      funcionalidadActiva: ref.read(funcionalidadesProvider).activa,
     ),
     routes: [
       StatefulShellRoute.indexedStack(
@@ -175,6 +187,10 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: Rutas.privacidad,
         builder: (_, _) =>
             const LegalScreen(documento: DocumentoLegal.privacidad),
+      ),
+      GoRoute(
+        path: Rutas.noDisponible,
+        builder: (_, _) => const NoDisponibleScreen(),
       ),
       GoRoute(
         path: Rutas.ingresar,

@@ -2049,6 +2049,24 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Violeta y amarillo, tipo sticker'**
   String get temaPopDescripcion;
+
+  /// No description provided for @noDisponibleTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no está disponible'**
+  String get noDisponibleTitulo;
+
+  /// No description provided for @noDisponibleTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Esta función se está probando de a poco y todavía no te llegó. Cuando esté lista para vos, la vas a ver en la app.'**
+  String get noDisponibleTexto;
+
+  /// No description provided for @noDisponibleIrAlMapa.
+  ///
+  /// In es, this message translates to:
+  /// **'Ir al mapa'**
+  String get noDisponibleIrAlMapa;
 }
 
 class _AppLocalizationsDelegate

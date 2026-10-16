@@ -130,6 +130,13 @@ SiFuncionalidad(Funcionalidades.chat, child: BotonChat(), sinoMostrar: SizedBox.
 - **Rutas**: go_router redirige a "Todavía no está disponible" si alguien entra por un enlace a algo que no le llegó.
 - **Pruebas**: un `FuncionalidadesFalsas` en `test/helpers.dart` para probar cada pantalla con la marca prendida y apagada.
 
+> **Implementado en 0.8.0d** (`app/lib/src/funcionalidades/funcionalidades_activas.dart`):
+> - `funcionalidadesProvider` pregunta con `mis_funcionalidades(anon_id, plataforma, versión)` al abrir, al iniciar o cerrar sesión, cada 3 h con la app abierta y al volver a la app si pasaron 15 min. La versión sale de `app/lib/src/config/version.dart` (una prueba la compara con `pubspec.yaml`).
+> - Lo guardado en el dispositivo va **junto con la cuenta** a la que corresponde: otra cuenta, o un visitante en el mismo dispositivo, no lo usa.
+> - `SiFuncionalidad(clave, child: …, sinoMostrar: …)` y `funcionalidadActivaProvider(clave)`. La primera marca en uso es `temas_pro` (Ajustes → Tema de colores, además del plan Pro o Familia).
+> - Rutas: `Rutas.conFuncionalidad` (comienzo de la ruta → clave) lleva a `/no-disponible?volver=…`, que vuelve sola a la ruta si la funcionalidad llega después (por ejemplo, al terminar de cargar). Un visitante primero ingresa y después se evalúa.
+> - `feature_exposure` se anota solo cuando ya se sabe qué le tocó (de la base o de lo guardado), así no cuenta como "apagada" a quien todavía no recibió la respuesta.
+
 ## 7. Métricas
 
 - `feature_exposure` (una vez por sesión y marca, cuando la persona **ve** la funcionalidad): props `key`, `variante` (prendida/apagada) → permite comparar grupos.

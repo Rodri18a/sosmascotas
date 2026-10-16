@@ -143,6 +143,7 @@ Tabla `events` (append-only), escrita por el cliente con `ref.read(metricasProvi
 | `place_impression` | business_id (aparición en el mapa o la lista) |
 | `help_click` | tipo (911, llamar, whatsapp, enlace) y kind de la entrada (pestaña Ayuda, sin datos de nadie) |
 | `theme_change` | tema elegido (`cielo`, `faro`, `vecinos`, `pop`; plan Pro, D63) |
+| `feature_exposure` | `key` de la funcionalidad y `variante` (`prendida`/`apagada`); una vez por sesión, marca y variante, solo cuando ya se sabe qué le tocó (D64) |
 | `place_open` | business_id |
 | `place_click` | business_id, tipo (whatsapp, llamar, cómo llegar, web, instagram) |
 | `favorite_add` | business_id |

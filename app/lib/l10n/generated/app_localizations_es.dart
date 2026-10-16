@@ -1171,4 +1171,14 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get temaPopDescripcion => 'Violeta y amarillo, tipo sticker';
+
+  @override
+  String get noDisponibleTitulo => 'Todavía no está disponible';
+
+  @override
+  String get noDisponibleTexto =>
+      'Esta función se está probando de a poco y todavía no te llegó. Cuando esté lista para vos, la vas a ver en la app.';
+
+  @override
+  String get noDisponibleIrAlMapa => 'Ir al mapa';
 }

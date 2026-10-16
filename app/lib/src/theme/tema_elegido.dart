@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../cuenta/perfil_repositorio.dart';
+import '../funcionalidades/funcionalidades_activas.dart';
 import '../metricas/metricas.dart';
 import 'paleta.dart';
 
@@ -36,10 +37,18 @@ final almacenTemaProvider = Provider<AlmacenTema>(
 );
 
 /// Elegir otro tema es del plan Pro (también lo incluye Familia).
-final puedeElegirTemaProvider = Provider<bool>((ref) {
+final tienePlanConTemasProvider = Provider<bool>((ref) {
   final plan = ref.watch(perfilProvider).value?.plan;
   return plan == Plan.pro || plan == Plan.family;
 });
+
+/// Además del plan, la funcionalidad `temas_pro` tiene que estar prendida
+/// (D64): mientras no haya cobro está en beta, solo para invitados.
+final puedeElegirTemaProvider = Provider<bool>(
+  (ref) =>
+      ref.watch(tienePlanConTemasProvider) &&
+      ref.watch(funcionalidadActivaProvider(Funcionalidades.temasPro)),
+);
 
 /// Id del tema que la persona eligió en este dispositivo (Cielo si nunca eligió).
 final temaElegidoProvider = NotifierProvider<TemaElegido, String>(
@@ -72,8 +81,8 @@ class TemaElegido extends Notifier<String> {
   }
 }
 
-/// La paleta con la que se dibuja la app. Si el plan Pro vence, vuelve a Cielo
-/// sin borrar la elección guardada (vuelve sola si se renueva).
+/// La paleta con la que se dibuja la app. Si el plan Pro vence (o se apaga la
+/// funcionalidad), vuelve a Cielo sin borrar la elección guardada.
 final paletaActivaProvider = Provider<Paleta>((ref) {
   if (!ref.watch(puedeElegirTemaProvider)) return Paleta.cielo;
   return Paleta.porId(ref.watch(temaElegidoProvider));

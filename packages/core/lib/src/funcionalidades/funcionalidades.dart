@@ -8,6 +8,11 @@ import 'package:crypto/crypto.dart';
 /// Cuando una lleva un tiempo en `todos` sin problemas, se borra de acá.
 abstract final class Funcionalidades {
   static const temasPro = 'temas_pro';
+
+  /// Las que ya están en `todos`: la app las da por prendidas aunque no pueda
+  /// preguntarle a la base (sin conexión y sin nada guardado). Las demás, en
+  /// ese caso, quedan apagadas (lo seguro).
+  static const prendidasPorDefecto = <String>{};
 }
 
 /// Valida el nombre de una funcionalidad con la misma regla que la base.

@@ -11,6 +11,7 @@ import 'package:sosmascota/src/config/supabase_providers.dart';
 import 'package:sosmascota/src/cuenta/perfil_repositorio.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
 import 'package:sosmascota/src/fotos/selector_foto.dart';
+import 'package:sosmascota/src/funcionalidades/funcionalidades_activas.dart';
 import 'package:sosmascota/src/mapa/mapa_vista.dart';
 import 'package:sosmascota/src/mascotas/catalogo.dart';
 import 'package:sosmascota/src/mascotas/mascotas_repositorio.dart';
@@ -27,6 +28,7 @@ import 'avisos_falsos.dart';
 import 'ayuda_falsa.dart';
 import 'comercios_falsos.dart';
 import 'cuenta_falsa.dart';
+import 'funcionalidades_falsas.dart';
 import 'mapa_falso.dart';
 import 'mascotas_falsas.dart';
 import 'perfil_falso.dart';
@@ -58,8 +60,16 @@ Widget appDePrueba({
   DateTime? ahora,
   AyudaRepositorio? ayuda,
   AlmacenTema? almacenTema,
+  FuncionalidadesRepositorio? funcionalidades,
+  CacheFuncionalidades? cacheFuncionalidades,
 }) => ProviderScope(
   overrides: [
+    funcionalidadesRepositorioProvider.overrideWithValue(
+      funcionalidades ?? FuncionalidadesFalsas(),
+    ),
+    cacheFuncionalidadesProvider.overrideWithValue(
+      cacheFuncionalidades ?? CacheFuncionalidadesFalsa(),
+    ),
     almacenTemaProvider.overrideWithValue(almacenTema ?? AlmacenTemaFalso()),
     cargadorFuentesProvider.overrideWithValue(const FuentesFalsas()),
     sosRepositorioProvider.overrideWithValue(sos ?? SosFalso()),

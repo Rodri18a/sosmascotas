@@ -7,6 +7,7 @@ import '../../../l10n/l10n.dart';
 import '../../config/env_provider.dart';
 import '../../cuenta/perfil_repositorio.dart';
 import '../../cuenta/servicio_cuenta.dart';
+import '../../funcionalidades/funcionalidades_activas.dart';
 import '../../metricas/metricas.dart';
 import '../../push/control_push.dart';
 import '../../push/servicio_push.dart';
@@ -169,7 +170,8 @@ class _SeccionCuenta extends ConsumerWidget {
         const InterruptorPush(),
         if (perfil != null) TileZonaAvisos(perfil: perfil),
         if (perfil != null) _RadioAvisos(perfil: perfil),
-        if (ref.watch(puedeElegirTemaProvider)) const TileTema(),
+        if (ref.watch(tienePlanConTemasProvider))
+          const SiFuncionalidad(Funcionalidades.temasPro, child: TileTema()),
       ],
     );
   }

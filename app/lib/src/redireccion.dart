@@ -6,6 +6,8 @@ String? redirigir({
   required bool conectado,
   required Uri uri,
   bool necesitaConsentimiento = false,
+  bool Function(String clave)? funcionalidadActiva,
+  Map<String, String> rutasConFuncionalidad = Rutas.conFuncionalidad,
 }) {
   if (uri.path == '/') return Rutas.mapa;
 
@@ -35,6 +37,26 @@ String? redirigir({
   // Visitante en una pantalla que necesita cuenta: ingresar y después volver.
   if (!conectado && Rutas.requierenCuenta.any(uri.path.startsWith)) {
     return Rutas.ingresarYVolverA(uri.toString());
+  }
+
+  // Funcionalidad gradual que no le llegó (D64). Si después le llega (por
+  // ejemplo, al terminar de cargar), vuelve sola a donde quería ir.
+  String? claveDe(String ruta) => rutasConFuncionalidad.entries
+      .where((e) => ruta.startsWith(e.key))
+      .firstOrNull
+      ?.value;
+  final activa = funcionalidadActiva ?? ((_) => false);
+  if (uri.path == Rutas.noDisponible) {
+    final volver = uri.queryParameters['volver'];
+    final clave = volver == null ? null : claveDe(Uri.parse(volver).path);
+    return clave != null && activa(clave) ? volverSeguro(volver) : null;
+  }
+  final clave = claveDe(uri.path);
+  if (clave != null && !activa(clave)) {
+    return Uri(
+      path: Rutas.noDisponible,
+      queryParameters: {'volver': uri.toString()},
+    ).toString();
   }
   return null;
 }
