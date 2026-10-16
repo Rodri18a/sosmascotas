@@ -169,4 +169,6 @@ En `05-portal-admin.md` se suma una pantalla **Funcionalidades**: lista de marca
 | d | Script `supabase/funcionalidades.py` para prender/apagar desde la terminal hasta que exista el panel | 1 h |
 | e | Pantalla en el portal de administración (Fase 1) | 4 h |
 
+> **Paso d implementado en 0.8.0e** (`supabase/funcionalidades.py`): `listar`, `ver <clave>` (con los últimos 10 cambios del historial), `crear`, `etapa`, `porcentaje`, `regla` (zonas, planes, roles, plataformas, version-minima, visitantes, desde, hasta; `-` la borra), `apagar`/`prender` (apagado de emergencia), `invitar`/`excluir`/`quitar` por email. Valida todo antes de conectarse, muestra antes/después y solo escribe con `--aplicar`. Usa la clave secreta del proyecto vinculado (pedida en el momento, no se guarda). Como no hay sesión de administrador, en el historial `changed_by` queda vacío.
+
 Recomendación: hacer **a–d antes del lanzamiento** (Etapa 0.8), para que la primera funcionalidad posterior ya salga con marca y apagado de emergencia.
