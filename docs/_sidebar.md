@@ -9,6 +9,7 @@
   - [Reglas de negocio](06-reglas-negocio.md)
   - [Habilitación gradual de funcionalidades](15-funcionalidades-graduales.md)
   - [Brief de identidad visual](14-brief-identidad-visual.md)
+  - [Ideas para el futuro](16-ideas-futuras.md)
 
 - **Portales**
   - [Portal de empresas](04-portal-empresas.md)

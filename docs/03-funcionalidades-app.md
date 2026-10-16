@@ -148,6 +148,7 @@ El objetivo no es solo publicar animales: es que **la adopción salga bien y el 
 - **Reservar turno:** día, horario libre, servicio y mascota. El comercio confirma o rechaza.
 - **Catálogo y pedidos:** cantidades y total. Estados: nuevo → preparando → listo → entregado. El pago se hace directo al comercio (pago en la app en la Fase 4).
 - **Contratar paseadores, hoteles y cuidadores:** solicitud por chat y reserva. El pago es entre las partes hasta la Fase 4.
+  - Idea a evaluar: **seguir el paseo en vivo** con la ubicación del paseador (`16-ideas-futuras.md`, I1).
 - "**Mis turnos y pedidos**" con el estado en vivo.
 
 ## 13. Comunidad por raza y especie — Fase 3

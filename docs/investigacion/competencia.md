@@ -21,6 +21,7 @@
 
 ### 🇺🇾 MiMascota App — cuidadores
 - Su sitio (`mimascotaapp.com`) se presenta como *"el mejor cuidador para tu mascota en Uruguay"*. No se encontró más información. **Verificar** qué hace y si está activa.
+- 16/10/2026: el dueño vio en la app un **collar con señal tipo GPS** para seguir a la mascota. Anotado como idea en `16-ideas-futuras.md` (I1 paseo en vivo, I2 collar GPS, I3 collar de salud).
 - **Lectura:** compite con **paseadores y cuidadores** (Fase 3).
 
 ### 🇦🇷🇨🇱 Referencias de la región
