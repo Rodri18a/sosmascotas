@@ -66,6 +66,7 @@ Widget appDePrueba({
   CacheFuncionalidades? cacheFuncionalidades,
   ServicioInstalacion? instalacion,
   AlmacenInstalacion? almacenInstalacion,
+  String urlPublica = 'https://sosmascotas.uy',
 }) => ProviderScope(
   overrides: [
     // Por defecto, como si ya estuviera instalada: no se ofrece nada.
@@ -113,6 +114,7 @@ Widget appDePrueba({
         flavor: flavor,
         supabaseUrl: conSupabase ? urlPrueba : '',
         supabasePublishableKey: conSupabase ? clavePrueba : '',
+        urlPublica: urlPublica,
       ),
     ),
     supabaseClientProvider.overrideWithValue(null),

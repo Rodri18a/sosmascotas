@@ -37,7 +37,21 @@ class SosFalso implements SosRepositorio {
   Future<String> crear(NuevoSos sos) async {
     if (fallarCon case final tipo?) throw SosException(tipo);
     creados.add(sos);
-    return 'sos-${creados.length}';
+    final id = 'sos-${creados.length}';
+    // Como la base: lo publicado se puede abrir enseguida.
+    detalles[id] ??= SosDetalle(
+      id: id,
+      tipo: sos.tipo,
+      estado: EstadoSos.activo,
+      especie: 'Mascota',
+      especieIcono: '🐾',
+      cuando: DateTime(2026, 10, 16),
+      zona: sos.ubicacion,
+      fotos: sos.fotos,
+      esMio: true,
+      nombre: sos.nombre,
+    );
+    return id;
   }
 
   @override
