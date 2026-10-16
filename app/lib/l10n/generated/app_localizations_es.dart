@@ -1132,4 +1132,43 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get ayudaDirectorioVacio =>
       'Todavía no hay refugios ni grupos cargados en tu zona.';
+
+  @override
+  String get ajustesTema => 'Tema de colores';
+
+  @override
+  String ajustesTemaPro(String nombre) {
+    return '$nombre · beneficio de tu plan Pro';
+  }
+
+  @override
+  String get temaElegirTitulo => 'Elegí cómo se ve la app';
+
+  @override
+  String get temaExplicacion =>
+      'Cambia los colores y las letras de la app solo en este dispositivo. El mapa, la chapita y lo que ven los demás siguen igual.';
+
+  @override
+  String get temaCielo => 'Cielo';
+
+  @override
+  String get temaCieloDescripcion => 'Calma y confianza: el de SOS Mascota';
+
+  @override
+  String get temaFaro => 'Faro';
+
+  @override
+  String get temaFaroDescripcion => 'Naranja de rescate y azul noche';
+
+  @override
+  String get temaVecinos => 'Vecinos';
+
+  @override
+  String get temaVecinosDescripcion => 'Terracota y mostaza, de barrio';
+
+  @override
+  String get temaPop => 'Pop';
+
+  @override
+  String get temaPopDescripcion => 'Violeta y amarillo, tipo sticker';
 }

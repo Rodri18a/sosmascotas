@@ -11,9 +11,11 @@ import '../../metricas/metricas.dart';
 import '../../push/control_push.dart';
 import '../../push/servicio_push.dart';
 import '../../router.dart';
+import '../../theme/tema_elegido.dart';
 import '../../ubicacion/control_ubicacion.dart';
 import '../ingresar/ingresar_screen.dart';
 import 'estado_conexion.dart';
+import 'tile_tema.dart';
 
 class AjustesScreen extends ConsumerWidget {
   const AjustesScreen({super.key});
@@ -167,6 +169,7 @@ class _SeccionCuenta extends ConsumerWidget {
         const InterruptorPush(),
         if (perfil != null) TileZonaAvisos(perfil: perfil),
         if (perfil != null) _RadioAvisos(perfil: perfil),
+        if (ref.watch(puedeElegirTemaProvider)) const TileTema(),
       ],
     );
   }

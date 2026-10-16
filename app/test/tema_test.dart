@@ -15,9 +15,8 @@ double contraste(Color a, Color b) {
 }
 
 void main() {
-  const paletas = {'Cielo': Paleta.cielo};
-
-  for (final MapEntry(key: nombre, value: paleta) in paletas.entries) {
+  for (final paleta in Paleta.todas) {
+    final nombre = paleta.id;
     for (final brillo in Brightness.values) {
       group('$nombre ${brillo.name}', () {
         final c = paleta.modo(brillo);

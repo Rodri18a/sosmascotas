@@ -13,6 +13,7 @@ abstract final class Eventos {
   static const placeOpen = 'place_open';
   static const placeClick = 'place_click';
   static const helpClick = 'help_click';
+  static const themeChange = 'theme_change';
 }
 
 /// Valida el nombre de un evento con la misma regla que la base de datos.

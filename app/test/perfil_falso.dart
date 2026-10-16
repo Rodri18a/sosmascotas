@@ -4,8 +4,10 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 
 /// Perfiles en memoria para las pruebas.
 class PerfilRepositorioFalso implements PerfilRepositorio {
-  PerfilRepositorioFalso({bool aceptoTerminos = true})
+  PerfilRepositorioFalso({bool aceptoTerminos = true, this.plan = Plan.free})
     : _acepto = aceptoTerminos;
+
+  final Plan plan;
 
   bool _acepto;
   String nombre = 'Ana';
@@ -18,7 +20,7 @@ class PerfilRepositorioFalso implements PerfilRepositorio {
   Future<Perfil?> obtener(String id) async => Perfil(
     id: id,
     nombre: nombre,
-    plan: Plan.free,
+    plan: plan,
     radioAvisosKm: radioAvisosKm,
     zonaAvisosEn: zonaAvisosEn,
     versionTerminos: _acepto ? versionTerminos : null,

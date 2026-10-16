@@ -9,6 +9,7 @@ import 'push/servicio_push.dart';
 import 'router.dart';
 import 'sos/difusion_sos.dart';
 import 'theme/app_theme.dart';
+import 'theme/tema_elegido.dart';
 import 'ubicacion/servicio_ubicacion.dart';
 
 class SosMascotaApp extends ConsumerWidget {
@@ -18,7 +19,9 @@ class SosMascotaApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final env = ref.watch(appEnvProvider);
     final router = ref.watch(routerProvider);
+    final paleta = ref.watch(paletaActivaProvider);
     ref
+      ..watch(fuentesDelTemaProvider)
       ..watch(renovarPushProvider)
       ..watch(renovarUbicacionProvider)
       ..watch(reintentarDifusionProvider);
@@ -35,8 +38,8 @@ class SosMascotaApp extends ConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.claro,
-      darkTheme: AppTheme.oscuro,
+      theme: AppTheme.tema(paleta, Brightness.light),
+      darkTheme: AppTheme.tema(paleta, Brightness.dark),
       // Sigue el modo claro u oscuro del celular.
       themeMode: ThemeMode.system,
       routerConfig: router,

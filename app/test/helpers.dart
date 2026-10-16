@@ -18,6 +18,7 @@ import 'package:sosmascota/src/metricas/metricas.dart';
 import 'package:sosmascota/src/push/servicio_push.dart';
 import 'package:sosmascota/src/qr/qr_repositorio.dart';
 import 'package:sosmascota/src/sos/sos_repositorio.dart';
+import 'package:sosmascota/src/theme/tema_elegido.dart';
 import 'package:sosmascota/src/ubicacion/servicio_ubicacion.dart';
 import 'package:sosmascota/src/utiles/enlaces.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
@@ -31,6 +32,7 @@ import 'mascotas_falsas.dart';
 import 'perfil_falso.dart';
 import 'qr_falso.dart';
 import 'sos_falso.dart';
+import 'tema_falso.dart';
 
 const urlPrueba = 'https://abc.supabase.co';
 const clavePrueba = 'sb_publishable_prueba';
@@ -55,8 +57,11 @@ Widget appDePrueba({
   List<Uri>? enlacesAbiertos,
   DateTime? ahora,
   AyudaRepositorio? ayuda,
+  AlmacenTema? almacenTema,
 }) => ProviderScope(
   overrides: [
+    almacenTemaProvider.overrideWithValue(almacenTema ?? AlmacenTemaFalso()),
+    cargadorFuentesProvider.overrideWithValue(const FuentesFalsas()),
     sosRepositorioProvider.overrideWithValue(sos ?? SosFalso()),
     abrirEnlaceProvider.overrideWithValue((enlace) async {
       enlacesAbiertos?.add(enlace);

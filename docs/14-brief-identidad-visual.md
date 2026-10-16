@@ -147,7 +147,7 @@ Cambian **solo la apariencia de la app para esa persona**: paleta y tipografías
 | Tema | Claro: fondo / texto / primario / acento | Oscuro: fondo / texto / primario / acento | Tipografías |
 |---|---|---|---|
 | **Cielo** (por defecto, gratis) | ver arriba | ver arriba | Sora + Source Sans 3 |
-| **Faro** (Pro) | `#FFF8F0` / `#14213D` / `#14213D` / `#F25C05` | `#0F1626` / `#F3EEE8` / `#FF8A3D` / `#4FC3B5` | Bricolage Grotesque + Atkinson Hyperlegible |
+| **Faro** (Pro) | `#FFF8F0` / `#14213D` / `#14213D` / `#F25C05` | `#0F1626` / `#F3EEE8` / `#9DB4E8` / `#FF8A3D` | Bricolage Grotesque + Atkinson Hyperlegible |
 | **Vecinos** (Pro) | `#FAF3E3` / `#2B2118` / `#B5462F` / `#F2C14E` | `#1E1914` / `#F4ECDD` / `#E8836B` / `#F2C14E` | Fraunces + Nunito Sans |
 | **Pop** (Pro) | `#F3EEFF` / `#17151F` / `#5B2EBB` / `#FFD23F` | `#17151F` / `#F1EDFA` / `#B49BFF` / `#FFD23F` | Baloo 2 + Figtree |
 
@@ -156,3 +156,5 @@ Texto sobre el primario: blanco en claro y el color de fondo en oscuro. Texto so
 - **Gratis siempre:** modo claro/oscuro, el tamaño de letra del sistema y el alto contraste. Lo pago es elegir otro tema (regla de oro: es comodidad, no seguridad).
 - Las tipografías de Cielo vienen con la app. Las de los otros temas se descargan solo si alguien elige ese tema, para no agrandar la carga de la web.
 - Si el plan Pro vence, la app vuelve a Cielo sin perder la elección guardada.
+- En Faro oscuro el primario es un azul claro (`#9DB4E8`) y el acento sigue naranja, para que el SOS sea naranja en los dos modos (D63).
+- Error, "abierto ahora" y "urgencias" de cada tema: valores en `app/lib/src/theme/paleta.dart`; la prueba `app/test/tema_test.dart` controla el contraste de todos.

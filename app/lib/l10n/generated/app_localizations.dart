@@ -1977,6 +1977,78 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Todavía no hay refugios ni grupos cargados en tu zona.'**
   String get ayudaDirectorioVacio;
+
+  /// No description provided for @ajustesTema.
+  ///
+  /// In es, this message translates to:
+  /// **'Tema de colores'**
+  String get ajustesTema;
+
+  /// No description provided for @ajustesTemaPro.
+  ///
+  /// In es, this message translates to:
+  /// **'{nombre} · beneficio de tu plan Pro'**
+  String ajustesTemaPro(String nombre);
+
+  /// No description provided for @temaElegirTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegí cómo se ve la app'**
+  String get temaElegirTitulo;
+
+  /// No description provided for @temaExplicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Cambia los colores y las letras de la app solo en este dispositivo. El mapa, la chapita y lo que ven los demás siguen igual.'**
+  String get temaExplicacion;
+
+  /// No description provided for @temaCielo.
+  ///
+  /// In es, this message translates to:
+  /// **'Cielo'**
+  String get temaCielo;
+
+  /// No description provided for @temaCieloDescripcion.
+  ///
+  /// In es, this message translates to:
+  /// **'Calma y confianza: el de SOS Mascota'**
+  String get temaCieloDescripcion;
+
+  /// No description provided for @temaFaro.
+  ///
+  /// In es, this message translates to:
+  /// **'Faro'**
+  String get temaFaro;
+
+  /// No description provided for @temaFaroDescripcion.
+  ///
+  /// In es, this message translates to:
+  /// **'Naranja de rescate y azul noche'**
+  String get temaFaroDescripcion;
+
+  /// No description provided for @temaVecinos.
+  ///
+  /// In es, this message translates to:
+  /// **'Vecinos'**
+  String get temaVecinos;
+
+  /// No description provided for @temaVecinosDescripcion.
+  ///
+  /// In es, this message translates to:
+  /// **'Terracota y mostaza, de barrio'**
+  String get temaVecinosDescripcion;
+
+  /// No description provided for @temaPop.
+  ///
+  /// In es, this message translates to:
+  /// **'Pop'**
+  String get temaPop;
+
+  /// No description provided for @temaPopDescripcion.
+  ///
+  /// In es, this message translates to:
+  /// **'Violeta y amarillo, tipo sticker'**
+  String get temaPopDescripcion;
 }
 
 class _AppLocalizationsDelegate

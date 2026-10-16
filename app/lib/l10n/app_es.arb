@@ -499,5 +499,18 @@
   "ayudaGrupos": "Grupos para difundir",
   "ayudaOrganismos": "Organismos",
   "ayudaAbrir": "Abrir",
-  "ayudaDirectorioVacio": "Todavía no hay refugios ni grupos cargados en tu zona."
+  "ayudaDirectorioVacio": "Todavía no hay refugios ni grupos cargados en tu zona.",
+  "ajustesTema": "Tema de colores",
+  "ajustesTemaPro": "{nombre} · beneficio de tu plan Pro",
+  "@ajustesTemaPro": {"placeholders": {"nombre": {"type": "String"}}},
+  "temaElegirTitulo": "Elegí cómo se ve la app",
+  "temaExplicacion": "Cambia los colores y las letras de la app solo en este dispositivo. El mapa, la chapita y lo que ven los demás siguen igual.",
+  "temaCielo": "Cielo",
+  "temaCieloDescripcion": "Calma y confianza: el de SOS Mascota",
+  "temaFaro": "Faro",
+  "temaFaroDescripcion": "Naranja de rescate y azul noche",
+  "temaVecinos": "Vecinos",
+  "temaVecinosDescripcion": "Terracota y mostaza, de barrio",
+  "temaPop": "Pop",
+  "temaPopDescripcion": "Violeta y amarillo, tipo sticker"
 }
