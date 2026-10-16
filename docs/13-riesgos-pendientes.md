@@ -24,6 +24,7 @@
 | P16 | Precio de venta de la chapita y precio del patrocinio por lote | Con el costo real del prototipo |
 | P20 | ~~**Identidad visual**~~ | ✅ C · Cielo, con Faro, Vecinos y Pop como temas Pro (D62). Falta generar el logo y las piezas con el prompt de `14-brief-identidad-visual.md` §8 |
 | P21 | ~~**Habilitación gradual de funcionalidades**~~ | ✅ Aprobada tal cual el 16/10 (D64); pasos 0.8.0b–e en `PROGRESO.md` |
+| P22 | **Diferencial frente a Taponto** (16/10/2026): ya tiene mapa de servicios, tag propio y descuentos con comercios; no se vio libreta ni datos en Pando. Decidir entre competir con foco local + salud + veterinarias, proponer una alianza o replantear. Ver `investigacion/competencia.md` | Antes de seguir con la Etapa 0.8 |
 | P13 | Texto del **compromiso de adopción** | Redactarlo con protectoras de Pando y revisarlo en la asesoría legal |
 
 ## Riesgos

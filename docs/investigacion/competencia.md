@@ -10,9 +10,13 @@
 - **Adopción:** filtros por tamaño, edad, ubicación, género. Los refugios publican sin límite y sin costo.
 - **Reputación:** 4,9 de 5 en App Store con ~199 calificaciones. En 2024 informaba más de 600 mascotas encontradas (dato de prensa, puede estar desactualizado).
 - **Disponible en:** App Store, Android (confirmar), web `taponto.com`, Facebook.
-- **No tiene (según lo publicado):** mapa de veterinarias o comercios, recordatorios de salud ni chapita QR.
+- ~~**No tiene (según lo publicado):** mapa de veterinarias o comercios, recordatorios de salud ni chapita QR.~~ **Corregido el 16/10/2026** (lo vio el dueño en la app y en videos):
+  - **Mapa con veterinarias y otros servicios**, pero **sin datos en Pando**: el foco parece estar en Montevideo.
+  - **Tag propio** (chapita). Según los videos, quien la encuentra **contacta al dueño a través de la app** (no se probó si el teléfono queda oculto).
+  - **Alianzas con comercios y marcas:** descuentos en locales.
+  - **No se vio:** libreta de salud ni recordatorios.
 
-**Lectura:** Taponto ya hace muy bien la parte de **perdidos con aviso por zona**, que es la Fase 0. Por eso, **el SOS solo no alcanza para diferenciarse**. Lo distinto de SOS Mascota tiene que verse desde el primer día: **chapita QR**, **veterinarias de urgencia en el mapa** y, después, recordatorios y empresas.
+**Lectura (actualizada el 16/10/2026):** Taponto ya tiene perdidos con aviso por zona, mapa de servicios, tag propio y alianzas con comercios. **El QR y las veterinarias en el mapa dejan de ser diferenciales por sí mismos**; lo que queda distinto es la **cobertura fuera de Montevideo** (Pando y Canelones), la **libreta de salud y los recordatorios**, y las **herramientas para las veterinarias**. Está abierto como P22 en `13-riesgos-pendientes.md`.
 
 ### 🇺🇾 Ruffo — cuidado integral con IA (2025)
 - App uruguaya con **inteligencia artificial**: asistencia veterinaria 24/7, **historial clínico digital**, **recordatorios inteligentes**, análisis de imágenes con IA, "Ruffo Adiestrador" y un panel para creadores de contenido con cupones.
