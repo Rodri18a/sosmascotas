@@ -10,6 +10,7 @@ Uso (desde la raíz del repo):
     set -a; . ~/.config/sosmascotas/supabase-dev.env; set +a
     python3 -I supabase/tests/rls_test.py
 """
+import hashlib
 import json
 import math
 import os
@@ -531,6 +532,128 @@ def main():
         caso('la base rechaza enlaces que no son https',
              pedir('POST', f'{URL}/rest/v1/help_directory', {'kind': 'grupo', 'name': 'Prueba RLS http', 'link': 'http://x.com'}, ADMIN)[0] >= 400)
 
+        print('feature_flags (habilitación gradual, D64)')
+        caso('un visitante no puede leer las marcas', bloqueado(rest('GET', 'feature_flags?select=key')))
+        caso('A no puede leer las marcas', bloqueado(rest('GET', 'feature_flags?select=key', quien=a)))
+        caso('A no puede crear marcas', bloqueado(rest('POST', 'feature_flags', {'key': 'prueba_rls_x', 'description': 'x', 'stage': 'todos'}, a)))
+        caso('A no puede cambiar marcas', bloqueado(rest('PATCH', 'feature_flags?key=eq.temas_pro', {'stage': 'todos'}, a)))
+        caso('A no puede invitarse a una beta',
+             bloqueado(rest('POST', 'feature_flag_users', {'flag_key': 'temas_pro', 'user_id': a_id}, a)))
+        caso('A no puede leer las invitaciones', bloqueado(rest('GET', 'feature_flag_users?select=user_id', quien=a)))
+        caso('A no puede leer el historial', bloqueado(rest('GET', 'feature_flag_audit?select=id', quien=a)))
+
+        def activa(clave, quien=None, **params):
+            s, d = rest('POST', 'rpc/funcionalidad_activa', {'p_key': clave, **params}, quien)
+            assert s == 200, (s, d)
+            return d is True
+
+        def mis(quien=None, **params):
+            s, d = rest('POST', 'rpc/mis_funcionalidades', params, quien)
+            assert s == 200, (s, d)
+            return d or []
+
+        def marca(clave, **campos):
+            s, d = pedir('PATCH', f'{URL}/rest/v1/feature_flags?key=eq.{clave}', campos, {**ADMIN, 'Prefer': 'return=minimal'})
+            assert s in (200, 204), (s, d)
+
+        def perfil(uid, **campos):
+            pedir('PATCH', f'{URL}/rest/v1/profiles?id=eq.{uid}', campos, {**ADMIN, 'Prefer': 'return=minimal'})
+
+        caso('temas_pro existe y A (no invitada) no la tiene', not activa('temas_pro', a))
+        caso('una clave que no existe está apagada', not activa('no_existe_xyz', a))
+
+        clave = f'prueba_rls_{uuid.uuid4().hex[:8]}'
+        s, _ = pedir('POST', f'{URL}/rest/v1/feature_flags', {'key': clave, 'description': 'Prueba RLS'},
+                     {**ADMIN, 'Prefer': 'return=minimal'})
+        caso('con la clave secreta se crea una marca (en borrador)', s == 201)
+        pedir('POST', f'{URL}/rest/v1/feature_flag_users', {'flag_key': clave, 'user_id': a_id},
+              {**ADMIN, 'Prefer': 'return=minimal'})
+        caso('borrador: ni invitada le llega', not activa(clave, a) and clave not in mis(a))
+
+        marca(clave, stage='interna')
+        caso('interna: le llega a la invitada', activa(clave, a))
+        caso('interna: no le llega a un usuario común', not activa(clave, b))
+        perfil(b_id, role='admin')
+        caso('interna: le llega a un administrador', activa(clave, b))
+        perfil(b_id, role='user')
+
+        marca(clave, stage='beta')
+        caso('beta: le llega a la invitada (y aparece en mis_funcionalidades)', activa(clave, a) and clave in mis(a))
+        caso('beta: no le llega a quien no está invitado', not activa(clave, b) and clave not in mis(b))
+        caso('beta: no le llega a un visitante', not activa(clave, p_anon_id=str(uuid.uuid4())))
+
+        marca(clave, stage='todos')
+        caso('todos: le llega a cualquier cuenta', activa(clave, b))
+        caso('todos: no le llega a un visitante si no se permite', not activa(clave, p_anon_id=str(uuid.uuid4())))
+        marca(clave, allow_anonymous=True)
+        caso('todos: le llega a un visitante si se permite', activa(clave, p_anon_id=str(uuid.uuid4())))
+
+        marca(clave, killed=True)
+        caso('apagado de emergencia: no le llega a nadie',
+             not activa(clave, a) and not activa(clave, b) and clave not in mis(a))
+        perfil(b_id, role='admin')
+        caso('apagado de emergencia: ni a un administrador', not activa(clave, b))
+        perfil(b_id, role='user')
+        marca(clave, killed=False, starts_at='2099-01-01T00:00:00Z')
+        caso('antes de la fecha de inicio está apagada', not activa(clave, b))
+        marca(clave, starts_at=None, ends_at='2020-01-01T00:00:00Z')
+        caso('después de la fecha de fin está apagada', not activa(clave, b))
+        marca(clave, ends_at=None)
+        caso('la base rechaza un fin anterior al inicio',
+             pedir('PATCH', f'{URL}/rest/v1/feature_flags?key=eq.{clave}',
+                   {'starts_at': '2030-01-01T00:00:00Z', 'ends_at': '2029-01-01T00:00:00Z'}, ADMIN)[0] >= 400)
+        caso('la base rechaza planes inventados',
+             pedir('PATCH', f'{URL}/rest/v1/feature_flags?key=eq.{clave}', {'plans': ['oro']}, ADMIN)[0] >= 400)
+
+        pedir('PATCH', f'{URL}/rest/v1/feature_flag_users?flag_key=eq.{clave}&user_id=eq.{a_id}', {'enabled': False},
+              {**ADMIN, 'Prefer': 'return=minimal'})
+        caso('una persona excluida no la ve aunque esté en todos', not activa(clave, a) and activa(clave, b))
+
+        pando = filas(rest('GET', 'zones?select=id&slug=eq.pando'))[0]['id']
+        marca(clave, stage='gradual', rollout_percent=100, allow_anonymous=False)
+        caso('gradual al 100 %: le llega a B', activa(clave, b))
+        marca(clave, zone_ids=[pando])
+        caso('gradual por zona: le llega a B (Pando)', activa(clave, b))
+        marca(clave, zone_ids=[32000])
+        caso('gradual por zona: no le llega fuera de la zona', not activa(clave, b))
+        marca(clave, zone_ids=None, plans=['pro'])
+        caso('gradual por plan: no le llega a B (gratis)', not activa(clave, b))
+        perfil(b_id, plan='pro')
+        caso('gradual por plan: le llega a B con Pro', activa(clave, b))
+        perfil(b_id, plan='free')
+        marca(clave, plans=None, roles=['admin'])
+        caso('gradual por rol: no le llega a un usuario común', not activa(clave, b))
+        marca(clave, roles=None, platforms=['android'])
+        caso('gradual por plataforma: sí en Android, no en la web ni sin decir',
+             activa(clave, b, p_plataforma='android') and not activa(clave, b, p_plataforma='web') and not activa(clave, b))
+        marca(clave, platforms=None, min_app_version='1.10.0')
+        caso('versión mínima 1.10.0: 1.10.0 y 1.10.1 sí; 1.9.5, basura y sin versión no',
+             activa(clave, b, p_version='1.10.0') and activa(clave, b, p_version='1.10.1')
+             and not activa(clave, b, p_version='1.9.5') and not activa(clave, b, p_version='x; drop')
+             and not activa(clave, b))
+        marca(clave, min_app_version=None)
+
+        def cubeta(id_):
+            return int(hashlib.md5(f'{clave}:{id_}'.encode()).hexdigest()[:8], 16) % 100
+
+        anons = [str(uuid.uuid4()) for _ in range(25)]
+        marca(clave, allow_anonymous=True, rollout_percent=30)
+        con30 = {x for x in anons if activa(clave, p_anon_id=x)}
+        caso('porcentaje: la base calcula igual que la fórmula (MD5)', con30 == {x for x in anons if cubeta(x) < 30})
+        caso('porcentaje: la misma persona cae siempre del mismo lado',
+             con30 == {x for x in anons if activa(clave, p_anon_id=x)})
+        marca(clave, rollout_percent=10)
+        con10 = {x for x in anons if activa(clave, p_anon_id=x)}
+        caso('porcentaje: al subir de 10 % a 30 % nadie pierde la funcionalidad', con10 <= con30)
+        caso('porcentaje: con cuenta se usa el id de la cuenta',
+             activa(clave, b, p_anon_id=anons[0]) == (cubeta(b_id) < 10))
+        marca(clave, rollout_percent=0)
+        caso('porcentaje 0: no le llega a nadie (salvo invitadas)', not any(activa(clave, p_anon_id=x) for x in anons[:5]))
+
+        historial = filas(pedir('GET', f'{URL}/rest/v1/feature_flag_audit?select=tabla&flag_key=eq.{clave}', headers=ADMIN))
+        caso('el historial registra cada cambio (marca e invitaciones)',
+             len(historial) >= 20 and {h['tabla'] for h in historial} == {'feature_flags', 'feature_flag_users'})
+
         print('zona para avisos (profiles.approx_location)')
         zona = lambda quien, lat=-34.7171, lng=-55.9581, origen='gps': rest(
             'POST', 'rpc/guardar_zona_aproximada', {'p_lat': lat, 'p_lng': lng, 'p_origen': origen}, quien)[0]
@@ -623,6 +746,8 @@ def main():
         for uid in (a_id, b_id):
             pedir('DELETE', f'{URL}/auth/v1/admin/users/{uid}', headers=ADMIN)
         pedir('DELETE', f'{URL}/rest/v1/events?name=eq.prueba_rls', headers=ADMIN)
+        pedir('DELETE', f'{URL}/rest/v1/feature_flags?key=like.prueba_rls_*', headers=ADMIN)
+        pedir('DELETE', f'{URL}/rest/v1/feature_flag_audit?flag_key=like.prueba_rls_*', headers=ADMIN)
         if OBJETIVOS_DE_PRUEBA:
             pedir('DELETE', f"{URL}/rest/v1/events?target_id=in.({','.join(OBJETIVOS_DE_PRUEBA)})", headers=ADMIN)
         quedan = filas(pedir('GET', f'{URL}/rest/v1/profiles?select=id&id=in.({a_id},{b_id})', headers=ADMIN))
