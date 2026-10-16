@@ -15,16 +15,16 @@
 | 3 · Servicios | ⏳ | a detallar | 0 |
 | 4 · Escala | ⏳ | a detallar | 0 |
 
-**Paso actual:** 0.8.0a (desarrollo) · pendiente del dueño: 0.4.4b (proveedor de correo) · validación pendiente desde 0.0.2
+**Paso actual:** 0.8.0b (desarrollo, necesita aprobar P21) · pendiente del dueño: 0.4.4b (proveedor de correo) · validación pendiente desde 0.0.2
 
-> ⏸️ **Proyecto en pausa desde el 15/10/2026.** Al retomar, empezar por **"Pendientes al retomar"** (abajo): ahí está lo que quedó a medio decidir y el orden sugerido.
+> ▶️ Retomado el 16/10/2026 (se había pausado el 15/10). La lista de abajo sigue siendo el orden sugerido.
 
 ## Pendientes al retomar (15/10/2026)
 
 Lo que quedó pedido o decidido en la última sesión y todavía no está hecho. Cada ítem dice dónde está su detalle.
 
 1. ~~Elegir la identidad visual~~ ✅ 15/10: **C · Cielo** (D62). Falta **generar el logo y las piezas** con el prompt de `docs/14-brief-identidad-visual.md` §8 (IA o diseñador) para cerrar el 0.0.9b.
-2. **Aplicar la identidad a la interfaz** (paso **0.8.0**, abajo): tema de la app, web pública, colores de los pines. Después, **0.8.0a**: Faro, Vecinos y Pop como temas del plan Pro.
+2. ~~Aplicar la identidad a la interfaz~~ ✅ 0.8.0 (15/10) y 0.8.0a, temas Pro (16/10).
 3. **Aprobar la habilitación gradual de funcionalidades** (P21, `docs/15-funcionalidades-graduales.md`) e implementar los pasos **0.8.0b–0.8.0e** (abajo) antes del lanzamiento.
 4. **0.8.1 PWA instalable**: el plan ya está acordado (ver el paso). Conviene hacerlo **después** del 0.8.0, así los íconos ya son los definitivos.
 5. **Validación del dueño** que destraba datos reales:
@@ -123,8 +123,8 @@ Regla de trabajo: **por cada etapa de desarrollo, avanzar al menos un paso de va
 
 ### Etapa 0.8 · Lanzamiento
 - [x] 0.8.0 **Aplicar la identidad elegida en 0.0.9b** (C · Cielo, D62) a la interfaz: paleta (claro y oscuro) y tipografías en `app/lib/src/theme/app_theme.dart`, `coloresPin` (`app/lib/src/mapa/mapa_vista.dart`), pantalla de carga (`app/web/index.html`), web pública (`web-publica/assets/estilo.css`) y textos del brief (`docs/14-brief-identidad-visual.md` §9 y §10). Revisar contraste en modo claro y oscuro (⏱️ 3 h) — 15/10/2026, paleta `Paleta.cielo` + `ColoresMarca` (`app/lib/src/theme/paleta.dart`), tema con superficies derivadas de la paleta, Sora + Source Sans 3 incluidas en la app y en la web pública (sin pedidos a Google), pines nuevos con borde, "Se perdió" y "Reportar" en coral, "abierto ahora" y "urgencias" con colores que contrastan; pantalla de carga, manifest, Android y web pública con Cielo; prueba `tema_test.dart` (contraste ≥ 4,5:1 de cada rol y superficie, luminosidad de los pines). Pruebas OK (113 app, 50 núcleo); revisado en Chrome por el dueño
-- [ ] 0.8.0a **Temas Pro** (D62): los 4 temas (Cielo, Faro, Vecinos, Pop) como datos en el tema de la app, con prueba automática de contraste ≥ 4,5:1; selector "Tema" en Ajustes que solo se puede cambiar con plan Pro (los demás ven Cielo y el aviso de Pro); elección guardada en el dispositivo; tipografías de los temas Pro descargadas solo al elegirlos; si el plan vence, vuelve a Cielo. Mientras no haya cobro (Fase 2) queda detrás de la habilitación gradual, en beta (⏱️ 3 h) **← ESTÁS ACÁ** — 16/10/2026, en curso: Faro, Vecinos y Pop en `Paleta` (todas con contraste ≥ 4,5:1 en `tema_test.dart`), `tema_elegido.dart` (elección en el dispositivo, solo Pro/Familia, vuelve a Cielo si vence), tipografías Pro en `app/web/fuentes/` bajadas al elegir, selector en Ajustes, métrica `theme_change` (D63); pruebas OK (137 app, 50 núcleo). **Falta:** verlo en Chrome con una cuenta de dev en plan Pro
-- [ ] 0.8.0b Habilitación gradual (`docs/15-funcionalidades-graduales.md` §10 a): migración `feature_flags` + `feature_flag_users` + `feature_flag_audit`, `funcionalidad_activa()` y `mis_funcionalidades()`, casos en `rls_test.py` (incluido el porcentaje estable) (⏱️ 3 h)
+- [x] 0.8.0a **Temas Pro** (D62): los 4 temas (Cielo, Faro, Vecinos, Pop) como datos en el tema de la app, con prueba automática de contraste ≥ 4,5:1; selector "Tema" en Ajustes que solo se puede cambiar con plan Pro (los demás ven Cielo y el aviso de Pro); elección guardada en el dispositivo; tipografías de los temas Pro descargadas solo al elegirlos; si el plan vence, vuelve a Cielo. Mientras no haya cobro (Fase 2) queda detrás de la habilitación gradual, en beta (⏱️ 3 h) — 16/10/2026: Faro, Vecinos y Pop en `Paleta` (todas con contraste ≥ 4,5:1 en `tema_test.dart`), `tema_elegido.dart` (elección en el dispositivo, solo Pro/Familia, vuelve a Cielo si vence), tipografías Pro en `app/web/fuentes/` bajadas al elegir, selector en Ajustes, métrica `theme_change` (D63); pruebas OK (137 app, 50 núcleo); revisado en Chrome por el dueño con una cuenta de dev en plan Pro
+- [ ] 0.8.0b Habilitación gradual (`docs/15-funcionalidades-graduales.md` §10 a): migración `feature_flags` + `feature_flag_users` + `feature_flag_audit`, `funcionalidad_activa()` y `mis_funcionalidades()`, casos en `rls_test.py` (incluido el porcentaje estable) (⏱️ 3 h) **← ESTÁS ACÁ** (antes hay que aprobar P21)
 - [ ] 0.8.0c Habilitación gradual (§10 b): nombres de funcionalidades y cálculo del porcentaje en `packages/core`, con pruebas cruzadas contra la base (⏱️ 1 h)
 - [ ] 0.8.0d Habilitación gradual (§10 c): en la app, proveedor, `SiFuncionalidad`, caché en el dispositivo, redirección de rutas, evento `feature_exposure` y pruebas (⏱️ 3 h)
 - [ ] 0.8.0e Habilitación gradual (§10 d): script `supabase/funcionalidades.py` para prender/apagar desde la terminal hasta que exista el panel (⏱️ 1 h)
