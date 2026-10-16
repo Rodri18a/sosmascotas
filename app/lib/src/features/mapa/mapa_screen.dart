@@ -10,6 +10,7 @@ import '../../router.dart';
 import '../../sos/sos_repositorio.dart';
 import '../../widgets/boton_ajustes.dart';
 import '../../widgets/boton_avisos.dart';
+import '../instalar/instalar.dart';
 import 'ficha_comercio.dart';
 
 /// Mapa (Fase 0): perdidos, encontrados y veterinarias de urgencia de la zona.
@@ -75,6 +76,12 @@ class _MapaScreenState extends ConsumerState<MapaScreen> {
           onTocarPin: _alTocarPin,
         ),
         const Positioned(left: 8, bottom: 8, child: _Leyenda()),
+        const Positioned(
+          left: 8,
+          right: 8,
+          top: 8,
+          child: SafeArea(child: TarjetaInstalarApp()),
+        ),
       ],
     ),
   );

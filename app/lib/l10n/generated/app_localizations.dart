@@ -2067,6 +2067,84 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Ir al mapa'**
   String get noDisponibleIrAlMapa;
+
+  /// No description provided for @instalarTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Instalar la app'**
+  String get instalarTitulo;
+
+  /// No description provided for @instalarSubtitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Abrila desde la pantalla de inicio, más rápido y con avisos'**
+  String get instalarSubtitulo;
+
+  /// No description provided for @instalarTarjetaTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Instalá SOS Mascota'**
+  String get instalarTarjetaTitulo;
+
+  /// No description provided for @instalarTarjetaTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Queda en tu pantalla de inicio y te avisa enseguida si se pierde una mascota cerca.'**
+  String get instalarTarjetaTexto;
+
+  /// No description provided for @instalarBoton.
+  ///
+  /// In es, this message translates to:
+  /// **'Instalar'**
+  String get instalarBoton;
+
+  /// No description provided for @instalarAhoraNo.
+  ///
+  /// In es, this message translates to:
+  /// **'Ahora no'**
+  String get instalarAhoraNo;
+
+  /// No description provided for @instalarGracias.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Listo! Ya podés abrir SOS Mascota desde la pantalla de inicio.'**
+  String get instalarGracias;
+
+  /// No description provided for @instalarIphoneTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Instalar en el iPhone'**
+  String get instalarIphoneTitulo;
+
+  /// No description provided for @instalarIphonePaso1.
+  ///
+  /// In es, this message translates to:
+  /// **'Abrí esta página en Safari.'**
+  String get instalarIphonePaso1;
+
+  /// No description provided for @instalarIphonePaso2.
+  ///
+  /// In es, this message translates to:
+  /// **'Tocá Compartir (el cuadrado con la flecha hacia arriba).'**
+  String get instalarIphonePaso2;
+
+  /// No description provided for @instalarIphonePaso3.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegí «Agregar a inicio» y después «Agregar».'**
+  String get instalarIphonePaso3;
+
+  /// No description provided for @instalarIphoneAvisos.
+  ///
+  /// In es, this message translates to:
+  /// **'En el iPhone, los avisos de mascotas perdidas solo llegan con la app instalada.'**
+  String get instalarIphoneAvisos;
+
+  /// No description provided for @instalarEntendido.
+  ///
+  /// In es, this message translates to:
+  /// **'Entendido'**
+  String get instalarEntendido;
 }
 
 class _AppLocalizationsDelegate

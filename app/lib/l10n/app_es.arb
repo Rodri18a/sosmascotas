@@ -515,5 +515,18 @@
   "temaPopDescripcion": "Violeta y amarillo, tipo sticker",
   "noDisponibleTitulo": "Todavía no está disponible",
   "noDisponibleTexto": "Esta función se está probando de a poco y todavía no te llegó. Cuando esté lista para vos, la vas a ver en la app.",
-  "noDisponibleIrAlMapa": "Ir al mapa"
+  "noDisponibleIrAlMapa": "Ir al mapa",
+  "instalarTitulo": "Instalar la app",
+  "instalarSubtitulo": "Abrila desde la pantalla de inicio, más rápido y con avisos",
+  "instalarTarjetaTitulo": "Instalá SOS Mascota",
+  "instalarTarjetaTexto": "Queda en tu pantalla de inicio y te avisa enseguida si se pierde una mascota cerca.",
+  "instalarBoton": "Instalar",
+  "instalarAhoraNo": "Ahora no",
+  "instalarGracias": "¡Listo! Ya podés abrir SOS Mascota desde la pantalla de inicio.",
+  "instalarIphoneTitulo": "Instalar en el iPhone",
+  "instalarIphonePaso1": "Abrí esta página en Safari.",
+  "instalarIphonePaso2": "Tocá Compartir (el cuadrado con la flecha hacia arriba).",
+  "instalarIphonePaso3": "Elegí «Agregar a inicio» y después «Agregar».",
+  "instalarIphoneAvisos": "En el iPhone, los avisos de mascotas perdidas solo llegan con la app instalada.",
+  "instalarEntendido": "Entendido"
 }

@@ -144,6 +144,8 @@ Tabla `events` (append-only), escrita por el cliente con `ref.read(metricasProvi
 | `help_click` | tipo (911, llamar, whatsapp, enlace) y kind de la entrada (pestaña Ayuda, sin datos de nadie) |
 | `theme_change` | tema elegido (`cielo`, `faro`, `vecinos`, `pop`; plan Pro, D63) |
 | `feature_exposure` | `key` de la funcionalidad y `variante` (`prendida`/`apagada`); una vez por sesión, marca y variante, solo cuando ya se sabe qué le tocó (D64) |
+| `pwa_prompt` | `origen` (`ajustes`/`mapa`), `forma` (`aviso`/`iphone`) y `resultado` (`aceptada`/`rechazada`/`pasos`) (D65) |
+| `pwa_installed` | la web se instaló mientras se ofrecía (aviso aceptado o menú del navegador) (D65) |
 | `place_open` | business_id |
 | `place_click` | business_id, tipo (whatsapp, llamar, cómo llegar, web, instagram) |
 | `favorite_add` | business_id |

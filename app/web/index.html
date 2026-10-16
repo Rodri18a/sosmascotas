@@ -18,18 +18,33 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="SOS Mascota: app para dueños de mascotas y comercios del rubro.">
+  <meta name="description" content="Encontrá veterinarias, avisá si se pierde tu mascota y ayudá a las de tu barrio.">
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="SOS Mascota">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
   <title>SOS Mascota</title>
+  <script>
+    // Instalar la app (0.8.1): el navegador avisa una sola vez y puede ser
+    // antes de que arranque Flutter; se guarda acá y la app lo usa después.
+    window.sosInstalacion = { aviso: null, instalada: false };
+    window.addEventListener('beforeinstallprompt', function (e) {
+      e.preventDefault(); // en lugar de la barra del navegador, el botón propio
+      window.sosInstalacion.aviso = e;
+      window.dispatchEvent(new Event('sos-instalacion'));
+    });
+    window.addEventListener('appinstalled', function () {
+      window.sosInstalacion.instalada = true;
+      window.sosInstalacion.aviso = null;
+      window.dispatchEvent(new Event('sos-instalacion'));
+    });
+  </script>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0F5E7A">
   <style>

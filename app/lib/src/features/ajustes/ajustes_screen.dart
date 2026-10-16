@@ -15,6 +15,7 @@ import '../../router.dart';
 import '../../theme/tema_elegido.dart';
 import '../../ubicacion/control_ubicacion.dart';
 import '../ingresar/ingresar_screen.dart';
+import '../instalar/instalar.dart';
 import 'estado_conexion.dart';
 import 'tile_tema.dart';
 
@@ -46,6 +47,7 @@ class AjustesScreen extends ConsumerWidget {
             )
           else
             _SeccionCuenta(usuario: usuario),
+          const TileInstalar(),
           const Divider(),
           ListTile(
             leading: const Icon(Icons.description_outlined),

@@ -1,35 +1,35 @@
 {
+    "id": "/",
     "name": "SOS Mascota",
     "short_name": "SOS Mascota",
-    "start_url": ".",
+    "description": "Encontrá veterinarias, avisá si se pierde tu mascota y ayudá a las de tu barrio.",
+    "lang": "es-UY",
+    "dir": "ltr",
+    "start_url": "/",
+    "scope": "/",
     "display": "standalone",
+    "orientation": "portrait-primary",
     "background_color": "#0F5E7A",
     "theme_color": "#0F5E7A",
-    "description": "SOS Mascota: app para dueños de mascotas y comercios del rubro.",
-    "orientation": "portrait-primary",
+    "categories": ["lifestyle", "utilities"],
     "prefer_related_applications": false,
     "icons": [
+        {"src": "icons/Icon-192.png", "sizes": "192x192", "type": "image/png"},
+        {"src": "icons/Icon-512.png", "sizes": "512x512", "type": "image/png"},
+        {"src": "icons/Icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable"},
+        {"src": "icons/Icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+    ],
+    "shortcuts": [
         {
-            "src": "icons/Icon-192.png",
-            "sizes": "192x192",
-            "type": "image/png"
+            "name": "Reportar mascota perdida",
+            "short_name": "Reportar",
+            "url": "/sos/nuevo",
+            "icons": [{"src": "icons/Icon-192.png", "sizes": "192x192", "type": "image/png"}]
         },
         {
-            "src": "icons/Icon-512.png",
-            "sizes": "512x512",
-            "type": "image/png"
-        },
-        {
-            "src": "icons/Icon-maskable-192.png",
-            "sizes": "192x192",
-            "type": "image/png",
-            "purpose": "maskable"
-        },
-        {
-            "src": "icons/Icon-maskable-512.png",
-            "sizes": "512x512",
-            "type": "image/png",
-            "purpose": "maskable"
+            "name": "Mapa",
+            "url": "/mapa",
+            "icons": [{"src": "icons/Icon-192.png", "sizes": "192x192", "type": "image/png"}]
         }
     ]
 }

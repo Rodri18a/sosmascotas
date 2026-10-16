@@ -12,6 +12,7 @@ import 'package:sosmascota/src/cuenta/perfil_repositorio.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
 import 'package:sosmascota/src/fotos/selector_foto.dart';
 import 'package:sosmascota/src/funcionalidades/funcionalidades_activas.dart';
+import 'package:sosmascota/src/instalar/servicio_instalacion.dart';
 import 'package:sosmascota/src/mapa/mapa_vista.dart';
 import 'package:sosmascota/src/mascotas/catalogo.dart';
 import 'package:sosmascota/src/mascotas/mascotas_repositorio.dart';
@@ -29,6 +30,7 @@ import 'ayuda_falsa.dart';
 import 'comercios_falsos.dart';
 import 'cuenta_falsa.dart';
 import 'funcionalidades_falsas.dart';
+import 'instalacion_falsa.dart';
 import 'mapa_falso.dart';
 import 'mascotas_falsas.dart';
 import 'perfil_falso.dart';
@@ -62,8 +64,17 @@ Widget appDePrueba({
   AlmacenTema? almacenTema,
   FuncionalidadesRepositorio? funcionalidades,
   CacheFuncionalidades? cacheFuncionalidades,
+  ServicioInstalacion? instalacion,
+  AlmacenInstalacion? almacenInstalacion,
 }) => ProviderScope(
   overrides: [
+    // Por defecto, como si ya estuviera instalada: no se ofrece nada.
+    servicioInstalacionProvider.overrideWithValue(
+      instalacion ?? const InstalacionNoDisponible(),
+    ),
+    almacenInstalacionProvider.overrideWithValue(
+      almacenInstalacion ?? AlmacenInstalacionFalso(),
+    ),
     funcionalidadesRepositorioProvider.overrideWithValue(
       funcionalidades ?? FuncionalidadesFalsas(),
     ),

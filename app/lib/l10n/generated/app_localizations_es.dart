@@ -1181,4 +1181,49 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get noDisponibleIrAlMapa => 'Ir al mapa';
+
+  @override
+  String get instalarTitulo => 'Instalar la app';
+
+  @override
+  String get instalarSubtitulo =>
+      'Abrila desde la pantalla de inicio, más rápido y con avisos';
+
+  @override
+  String get instalarTarjetaTitulo => 'Instalá SOS Mascota';
+
+  @override
+  String get instalarTarjetaTexto =>
+      'Queda en tu pantalla de inicio y te avisa enseguida si se pierde una mascota cerca.';
+
+  @override
+  String get instalarBoton => 'Instalar';
+
+  @override
+  String get instalarAhoraNo => 'Ahora no';
+
+  @override
+  String get instalarGracias =>
+      '¡Listo! Ya podés abrir SOS Mascota desde la pantalla de inicio.';
+
+  @override
+  String get instalarIphoneTitulo => 'Instalar en el iPhone';
+
+  @override
+  String get instalarIphonePaso1 => 'Abrí esta página en Safari.';
+
+  @override
+  String get instalarIphonePaso2 =>
+      'Tocá Compartir (el cuadrado con la flecha hacia arriba).';
+
+  @override
+  String get instalarIphonePaso3 =>
+      'Elegí «Agregar a inicio» y después «Agregar».';
+
+  @override
+  String get instalarIphoneAvisos =>
+      'En el iPhone, los avisos de mascotas perdidas solo llegan con la app instalada.';
+
+  @override
+  String get instalarEntendido => 'Entendido';
 }
