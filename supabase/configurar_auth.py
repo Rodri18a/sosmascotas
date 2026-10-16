@@ -37,9 +37,17 @@ CORREO = """<div style="font-family:system-ui,-apple-system,'Segoe UI',Roboto,sa
   <p style="color:#666;font-size:13px">Si no lo pediste, ignorá este correo: nadie puede entrar sin el código.</p>
 </div>"""
 
+# Dirección principal: la app de prueba online (Vercel, docs/PUBLICACION.md).
+# Supabase manda ahí si el pedido no trae una dirección permitida; localhost
+# queda permitido para desarrollar en la máquina.
+APP_ONLINE = 'https://sosmascota-dev.vercel.app'
 DESEADO = {
-    'site_url': 'http://localhost:3001',
-    'uri_allow_list': 'http://localhost:3001/**,http://127.0.0.1:3001/**',
+    'site_url': APP_ONLINE,
+    'uri_allow_list': ','.join([
+        f'{APP_ONLINE}/**',
+        'http://localhost:3001/**',
+        'http://127.0.0.1:3001/**',
+    ]),
     'mailer_otp_length': 6,
     'mailer_otp_exp': 600,
 }

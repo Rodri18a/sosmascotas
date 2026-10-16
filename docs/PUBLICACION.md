@@ -24,6 +24,10 @@ npx --yes vercel@latest alias rm sosmascota-docs.vercel.app --yes   # ¡siempre!
 curl -s -o /dev/null -w "%{http_code}\n" https://sosmascota-docs.vercel.app/docs/   # tiene que dar 404
 ```
 
+La **web pública** de prueba (páginas del QR `/m/<código>` y del SOS `/s/<id>`, base de dev) está en **`sosmascota-web-dev`** → <https://sosmascota-web-dev.vercel.app>. Se sube desde una carpeta temporal con el contenido de `web-publica/` (incluido `config.js`, que no está en el repo; sin `servir.py`, `_redirects` ni `_headers`, que son de Cloudflare: en Vercel las reglas están en `web-publica/vercel.json`) con `vercel link --yes --project sosmascota-web-dev` y `vercel deploy --prod --yes`. La app la usa como `PUBLIC_BASE_URL` (en `app/config/dev.json`), así los enlaces del QR y del SOS no apuntan a `localhost`.
+
+El **login** (Supabase Auth de dev) tiene como dirección principal la app online y permite también `localhost:3001` (`supabase/configurar_auth.py`): los enlaces de los correos y Google vuelven a la app desde donde se pidieron.
+
 La app de prueba (base de dev) está en **`sosmascota-dev`** → <https://sosmascota-dev.vercel.app> (pública: es la app, no tiene nada privado). Se sube con `npx --yes vercel@latest deploy --prod --yes` desde `app/build/web` después de `flutter build web --release --dart-define-from-file=config/dev.json`. **Nunca** correr `vercel` desde la raíz del repo: publicaría la documentación en esa dirección pública. Ninguno de los dos proyectos tiene que estar **conectado a GitHub** (`vercel git disconnect`): si lo está, cada push publica la raíz del repo (la documentación) encima de la app. Pasó el 16/10 y se desconectó.
 
 ## Pendiente (opcional): web online con login en Cloudflare
