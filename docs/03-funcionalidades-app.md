@@ -16,7 +16,7 @@ Pantalla inicial: logo (🐾 sobre un cuadrado verde redondeado) durante 1,5 seg
 - **No se pide teléfono al registrarse.** Solo se pide al publicar un SOS, al configurar el contacto del QR o al registrar un negocio.
 - Consentimiento de términos y privacidad al registrarse.
 - **Descargar mis datos** y **borrar mi cuenta** (Ley 18.331).
-- Ajustes: idioma (español por ahora), notificaciones, radio de avisos SOS, y color y tamaño de letra (Pro).
+- Ajustes: idioma (español por ahora), notificaciones, radio de avisos SOS, y tema de color (Cielo por defecto; Faro, Vecinos y Pop con Pro) y tamaño de letra (Pro). El modo oscuro y el tamaño de letra del sistema son gratis.
 
 ## 2. Mascotas — Fase 0 (básico) / Fase 1 (libreta)
 

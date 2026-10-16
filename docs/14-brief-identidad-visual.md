@@ -1,7 +1,7 @@
 # 14 · Brief de identidad visual (para pasarle a una IA o a un diseñador)
 
 > Documento pensado para **copiar y pegar** en una IA de imágenes o de diseño (o mandárselo a un diseñador) y obtener la identidad completa de SOS Mascota: logo, ícono de la app, paleta, tipografías, íconos, pines del mapa, ilustraciones y piezas impresas.
-> Las 4 direcciones de partida se pueden ver en el lienzo **"SOS Mascota · Opciones de identidad"** (enlace en la sesión del 15/10/2026). **No tiene por qué ser verde**: el verde `#1F8A5B` de la app es provisorio (paso 0.0.9b).
+> Las 4 direcciones de partida se pueden ver en el lienzo **"SOS Mascota · Opciones de identidad"** (enlace en la sesión del 15/10/2026). **Elegida el 15/10/2026: C · Cielo** (D62). Faro, Vecinos y Pop quedan como **temas opcionales del plan Pro** (§10).
 
 ---
 
@@ -85,7 +85,8 @@ familia sin ver su teléfono, y un directorio de refugios. Tono: cercano, de bar
 en una urgencia, confiable con los datos; nunca infantil ni alarmista. Textos en español
 rioplatense (voseo).
 
-Partí de la dirección [A Faro / B Vecinos / C Cielo / D Pop / mezcla de …] y proponé 3
+Partí de la dirección C Cielo (azul petróleo #0F5E7A, coral #FF7A59, hueso #F6F4EF,
+tinta #102A35; Sora + Source Sans 3; logo: chapita redonda con argolla y huella) y proponé 3
 variantes de logo dentro de esa dirección.
 
 Restricciones: contraste mínimo 4,5:1; modo claro y oscuro; el logo funciona a una tinta
@@ -108,3 +109,50 @@ volante A5 y post cuadrado para redes.
 2. Reemplazar los íconos de `app/web/icons/` (hoy son el logo de Flutter) y el favicon: es parte del paso **0.8.1**.
 3. Colores de los pines en `coloresPin` (`app/lib/src/mapa/mapa_vista.dart`).
 4. Anotar la decisión en `12-decisiones.md` y cerrar el paso **0.0.9b**.
+
+## 10. Decisión: C · Cielo + temas Pro (15/10/2026, D62)
+
+**Identidad de la marca: C · Cielo.** Es la única que usan el logo, el ícono de la app, la chapita, la web pública, los volantes y la pantalla de carga. Contraste verificado (WCAG): todos los roles ≥ 4,5:1 en claro y oscuro.
+
+### Paleta de Cielo
+
+| Rol | Claro | Oscuro |
+|---|---|---|
+| Fondo (`surface`) | hueso `#F6F4EF` | `#0E1E26` |
+| Texto | tinta `#102A35` (13,6:1) | `#ECE9E2` (14,1:1) |
+| Texto secundario | `#4A5F68` (6,1:1) | `#A9B8BE` (8,3:1) |
+| Primario (botones, enlaces) | azul petróleo `#0F5E7A` (6,6:1) | `#7CC4DE` (8,8:1) |
+| Sobre el primario | `#FFFFFF` (7,2:1) | `#0E1E26` |
+| Acento (SOS, destacado) | coral `#FF7A59` | `#FF8A6B` |
+| Sobre el acento | tinta `#102A35` (5,8:1) | `#0E1E26` (7,4:1) |
+
+- El coral **no se usa como color de texto** sobre fondo claro (no llega a 4,5:1): va de relleno con texto tinta encima.
+- Tipografías: **Sora** (títulos) y **Source Sans 3** (texto), de Google Fonts.
+
+### Pines del mapa (fijos en todos los temas)
+
+Se distinguen por luminosidad además de por color (daltonismo) y llevan un borde que contraste con el mapa.
+
+| Pin | Color | Luminosidad |
+|---|---|---|
+| Veterinaria | `#0B3D52` | 0,04 (muy oscuro) |
+| Perdido | `#D62839` | 0,16 |
+| Encontrado | `#1F9E8E` | 0,27 |
+| Urgencia / 24 h | `#FFB238` | 0,53 (claro) |
+
+### Temas opcionales del plan Pro
+
+Cambian **solo la apariencia de la app para esa persona**: paleta y tipografías. No cambian el logo, los pines del mapa, ni nada que vean otras personas (web pública, QR, chapita). Cada tema tiene modo claro y oscuro, con los mismos roles y el mismo control de contraste (todos ≥ 4,5:1).
+
+| Tema | Claro: fondo / texto / primario / acento | Oscuro: fondo / texto / primario / acento | Tipografías |
+|---|---|---|---|
+| **Cielo** (por defecto, gratis) | ver arriba | ver arriba | Sora + Source Sans 3 |
+| **Faro** (Pro) | `#FFF8F0` / `#14213D` / `#14213D` / `#F25C05` | `#0F1626` / `#F3EEE8` / `#FF8A3D` / `#4FC3B5` | Bricolage Grotesque + Atkinson Hyperlegible |
+| **Vecinos** (Pro) | `#FAF3E3` / `#2B2118` / `#B5462F` / `#F2C14E` | `#1E1914` / `#F4ECDD` / `#E8836B` / `#F2C14E` | Fraunces + Nunito Sans |
+| **Pop** (Pro) | `#F3EEFF` / `#17151F` / `#5B2EBB` / `#FFD23F` | `#17151F` / `#F1EDFA` / `#B49BFF` / `#FFD23F` | Baloo 2 + Figtree |
+
+Texto sobre el primario: blanco en claro y el color de fondo en oscuro. Texto sobre el acento: el color de texto oscuro de cada tema. Texto secundario: Faro `#4F566B` / `#B3B8C6`, Vecinos `#5E5246` / `#C2B6A3`, Pop `#4D4860` / `#B7B0C9`.
+
+- **Gratis siempre:** modo claro/oscuro, el tamaño de letra del sistema y el alto contraste. Lo pago es elegir otro tema (regla de oro: es comodidad, no seguridad).
+- Las tipografías de Cielo vienen con la app. Las de los otros temas se descargan solo si alguien elige ese tema, para no agrandar la carga de la web.
+- Si el plan Pro vence, la app vuelve a Cielo sin perder la elección guardada.

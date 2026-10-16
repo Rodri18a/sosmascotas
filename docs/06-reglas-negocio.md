@@ -16,7 +16,7 @@
 | Filtros y favoritos guardados | | ✅ | ✅ |
 | Descuentos en comercios adheridos | | ✅ | ✅ |
 | Historial de salud en PDF | | ✅ | ✅ |
-| Personalización (color y tamaño de letra) | | ✅ | ✅ |
+| Personalización: temas Faro, Vecinos y Pop (`14-brief-identidad-visual.md` §10) y tamaño de letra | | ✅ | ✅ |
 | Hogar compartido (hasta 5 integrantes), tareas, cuidador temporal | | | ✅ |
 | **Precio de ejemplo (a validar)** | $0 | ~$60/mes | ~$120/mes |
 

@@ -2,7 +2,7 @@
 
 <div id="estado">Cargando el progreso…</div>
 
-> ⏸️ **En pausa desde el 15/10/2026.** Lo que quedó pendiente está al principio de [Progreso](PROGRESO.md) ("Pendientes al retomar"): elegir la identidad visual ([brief](14-brief-identidad-visual.md)), aplicarla, la [habilitación gradual de funcionalidades](15-funcionalidades-graduales.md) y la PWA instalable.
+> **Identidad elegida (15/10/2026): C · Cielo**, con Faro, Vecinos y Pop como temas del plan Pro ([brief](14-brief-identidad-visual.md) §10). Lo que sigue está al principio de [Progreso](PROGRESO.md) ("Pendientes al retomar"): generar el logo, aplicar la identidad, la [habilitación gradual de funcionalidades](15-funcionalidades-graduales.md) y la PWA instalable.
 
 ## Qué es
 

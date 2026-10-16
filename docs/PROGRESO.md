@@ -15,7 +15,7 @@
 | 3 · Servicios | ⏳ | a detallar | 0 |
 | 4 · Escala | ⏳ | a detallar | 0 |
 
-**Paso actual:** 0.8.1 (desarrollo) · pendiente del dueño: 0.4.4b (proveedor de correo) · validación pendiente desde 0.0.2
+**Paso actual:** 0.8.0 (desarrollo) · pendiente del dueño: 0.4.4b (proveedor de correo) · validación pendiente desde 0.0.2
 
 > ⏸️ **Proyecto en pausa desde el 15/10/2026.** Al retomar, empezar por **"Pendientes al retomar"** (abajo): ahí está lo que quedó a medio decidir y el orden sugerido.
 
@@ -23,15 +23,15 @@
 
 Lo que quedó pedido o decidido en la última sesión y todavía no está hecho. Cada ítem dice dónde está su detalle.
 
-1. **Elegir la identidad visual** (paso **0.0.9b**, P20). Ver las 4 direcciones (A Faro, B Vecinos, C Cielo, D Pop) en el lienzo "SOS Mascota · Opciones de identidad" (claude.ai/artifact/VRSwHWrJGJNRcv2NntttEV) y en `docs/14-brief-identidad-visual.md` §7. Elegir una o una mezcla y generar las piezas con el **prompt de la §8** (IA o diseñador). No tiene por qué ser verde.
-2. **Aplicar la identidad a la interfaz** (nuevo paso **0.8.0**, abajo), apenas esté elegida: tema de la app, web pública, colores de los pines e íconos.
+1. ~~Elegir la identidad visual~~ ✅ 15/10: **C · Cielo** (D62). Falta **generar el logo y las piezas** con el prompt de `docs/14-brief-identidad-visual.md` §8 (IA o diseñador) para cerrar el 0.0.9b.
+2. **Aplicar la identidad a la interfaz** (paso **0.8.0**, abajo): tema de la app, web pública, colores de los pines. Después, **0.8.0a**: Faro, Vecinos y Pop como temas del plan Pro.
 3. **Aprobar la habilitación gradual de funcionalidades** (P21, `docs/15-funcionalidades-graduales.md`) e implementar los pasos **0.8.0b–0.8.0e** (abajo) antes del lanzamiento.
 4. **0.8.1 PWA instalable**: el plan ya está acordado (ver el paso). Conviene hacerlo **después** del 0.8.0, así los íconos ya son los definitivos.
 5. **Validación del dueño** que destraba datos reales:
    - **0.0.4** → completar `investigacion/veterinarias.csv` y cargar con `supabase/cargar_comercios.py` (sin `--aplicar` valida; con `--aplicar` reemplaza las 5 de ejemplo).
    - **0.0.5** → completar `investigacion/ayuda.csv` y cargar con `supabase/cargar_ayuda.py` (igual).
    - **0.4.4b** (proveedor de correo) y el resto de la Etapa 0.0.
-6. **Otra máquina**: tiene una versión vieja del 0.6.2 sin subir. Antes del `git pull`, guardarla con `git stash` y quedarse con la de `main`.
+6. ~~Otra máquina~~ ✅ 15/10: la versión vieja del 0.6.2 quedó en `git stash` y se actualizó a `main`.
 7. **Recordatorios técnicos** (también en `CLAUDE.md`): en Windows, al cortar `flutter run` puede quedar un `dartvm` en el puerto 3001; con Firebase configurado, cada corrida de `rls_test.py` manda una push de prueba a las cuentas reales de dev con zona en Pando.
 
 ### Horas reales vs. estimadas (calibración)
@@ -64,7 +64,7 @@ Regla de trabajo: **por cada etapa de desarrollo, avanzar al menos un paso de va
 - [ ] 0.0.8 🧪 Mostrar el prototipo a 5–8 comercios y anotar candidatos a Socios Fundadores (⏱️ 6 h)
 - [ ] 0.0.8b 🧪 Analizar las entrevistas en `investigacion/entrevistas.md` y aplicar los **criterios de corte** de `11-roadmap.md` (⏱️ 2 h)
 - [ ] 0.0.9 🧪 Decidir los pendientes P1 (nombre) y P2 (horas por semana). Verificar que el nombre esté libre en DNPI, tiendas de apps y dominios (⏱️ 2 h)
-- [ ] 0.0.9b 🧪 Identidad mínima: logo simple, colores y tipografía. **Requisito antes de imprimir chapitas o volantes** (⏱️ 3 h) → partir de las 4 direcciones y el prompt de `docs/14-brief-identidad-visual.md` (P20); después, aplicarla en 0.8.0
+- [ ] 0.0.9b 🧪 Identidad mínima: logo simple, colores y tipografía. **Requisito antes de imprimir chapitas o volantes** (⏱️ 3 h) → 15/10/2026: **elegida C · Cielo**, paleta, tipografías y pines definidos (D62, `docs/14-brief-identidad-visual.md` §10). **Falta:** generar el logo y las piezas con el prompt de la §8 (IA o diseñador) y guardarlas en `reference/identidad/`
 - [ ] 0.0.9c 🧪 💳 Pedir presupuesto a una **asesoría legal** (términos, privacidad, registro URCDP, compromiso de adopción) y enviarle el borrador (ya escrito: `app/assets/legal/terminos.md` y `privacidad.md`). **Arrancar temprano: puede llevar semanas** (⏱️ 2 h)
 - [ ] 0.0.9d 🧪 Consultar con un **contador** cómo formalizar (unipersonal, SAS u otra), DGI, BPS, facturación electrónica: costo y plazos. **Requisito antes del primer cobro**, sea de chapitas, sponsors o planes (⏱️ 1 h)
 - [ ] 0.0.10 🧪 Prototipo de chapita con el amigo de impresión 3D: 3–5 muestras con distintos materiales y métodos de QR, costo por unidad y tiempo por lote (P15) (⏱️ 2 h)
@@ -122,12 +122,13 @@ Regla de trabajo: **por cada etapa de desarrollo, avanzar al menos un paso de va
 - [x] 0.7.3 Pestaña Ayuda: `help_directory` + aviso del 911 (⏱️ 1 h) — 15/10/2026, migración `help_directory` (lectura pública de los activos), cargador `supabase/cargar_ayuda.py` + 5 entradas de ejemplo (solo dev), pantalla con tarjeta del 911, veterinarias de urgencia con "abierto ahora" y directorio agrupado; métrica `help_click` (D61); pruebas OK (104 app, 50 núcleo, 194 de seguridad); prueba real en Chrome. Las reales quedan pendientes del 0.0.5 (`investigacion/ayuda.csv`). **Cierra la Etapa 0.7**
 
 ### Etapa 0.8 · Lanzamiento
-- [ ] 0.8.0 **Aplicar la identidad elegida en 0.0.9b** a la interfaz: paleta (claro y oscuro) y tipografías en `app/lib/src/theme/app_theme.dart`, `coloresPin` (`app/lib/src/mapa/mapa_vista.dart`), pantalla de carga (`app/web/index.html`), web pública (`web-publica/assets/estilo.css`) y textos del brief (`docs/14-brief-identidad-visual.md` §9). Revisar contraste en modo claro y oscuro (⏱️ 3 h)
+- [ ] 0.8.0 **Aplicar la identidad elegida en 0.0.9b** (C · Cielo, D62) a la interfaz: paleta (claro y oscuro) y tipografías en `app/lib/src/theme/app_theme.dart`, `coloresPin` (`app/lib/src/mapa/mapa_vista.dart`), pantalla de carga (`app/web/index.html`), web pública (`web-publica/assets/estilo.css`) y textos del brief (`docs/14-brief-identidad-visual.md` §9 y §10). Revisar contraste en modo claro y oscuro (⏱️ 3 h) **← ESTÁS ACÁ**
+- [ ] 0.8.0a **Temas Pro** (D62): los 4 temas (Cielo, Faro, Vecinos, Pop) como datos en el tema de la app, con prueba automática de contraste ≥ 4,5:1; selector "Tema" en Ajustes que solo se puede cambiar con plan Pro (los demás ven Cielo y el aviso de Pro); elección guardada en el dispositivo; tipografías de los temas Pro descargadas solo al elegirlos; si el plan vence, vuelve a Cielo. Mientras no haya cobro (Fase 2) queda detrás de la habilitación gradual, en beta (⏱️ 3 h)
 - [ ] 0.8.0b Habilitación gradual (`docs/15-funcionalidades-graduales.md` §10 a): migración `feature_flags` + `feature_flag_users` + `feature_flag_audit`, `funcionalidad_activa()` y `mis_funcionalidades()`, casos en `rls_test.py` (incluido el porcentaje estable) (⏱️ 3 h)
 - [ ] 0.8.0c Habilitación gradual (§10 b): nombres de funcionalidades y cálculo del porcentaje en `packages/core`, con pruebas cruzadas contra la base (⏱️ 1 h)
 - [ ] 0.8.0d Habilitación gradual (§10 c): en la app, proveedor, `SiFuncionalidad`, caché en el dispositivo, redirección de rutas, evento `feature_exposure` y pruebas (⏱️ 3 h)
 - [ ] 0.8.0e Habilitación gradual (§10 d): script `supabase/funcionalidades.py` para prender/apagar desde la terminal hasta que exista el panel (⏱️ 1 h)
-- [ ] 0.8.1 PWA instalable (manifest, íconos, pantalla de instalación) (⏱️ 2 h) **← ESTÁS ACÁ** — plan acordado el 15/10: (1) íconos propios (hoy son el logo de Flutter) generados con `app/tool/generar_iconos.dart` (paquete `image`; sin Pillow en esta PC), 192/512/maskable/180/favicon, con el diseño de 0.0.9b; (2) manifest con `id`, `scope`, `lang: es-UY`, descripción en voseo y accesos directos "Reportar mascota perdida" (`/sos/nuevo`) y "Mapa"; (3) invitación a instalar: Android/Chrome con `beforeinstallprompt` y botón propio, iPhone con instrucciones "Compartir → Agregar a inicio" (las push solo funcionan instalada), nada si ya está instalada; fila "Instalar la app" en Ajustes y tarjeta descartable en el mapa desde la 2.ª apertura; (4) métricas `pwa_prompt` y `pwa_installed`; (5) pruebas con un servicio de instalación falso y prueba real en Chrome. Al terminar: D62
+- [ ] 0.8.1 PWA instalable (manifest, íconos, pantalla de instalación) (⏱️ 2 h) — plan acordado el 15/10: (1) íconos propios (hoy son el logo de Flutter) generados con `app/tool/generar_iconos.dart` (paquete `image`; sin Pillow en esta PC), 192/512/maskable/180/favicon, con el diseño de 0.0.9b; (2) manifest con `id`, `scope`, `lang: es-UY`, descripción en voseo y accesos directos "Reportar mascota perdida" (`/sos/nuevo`) y "Mapa"; (3) invitación a instalar: Android/Chrome con `beforeinstallprompt` y botón propio, iPhone con instrucciones "Compartir → Agregar a inicio" (las push solo funcionan instalada), nada si ya está instalada; fila "Instalar la app" en Ajustes y tarjeta descartable en el mapa desde la 2.ª apertura; (4) métricas `pwa_prompt` y `pwa_installed`; (5) pruebas con un servicio de instalación falso y prueba real en Chrome. Al terminar: D63
 - [ ] 0.8.2 Pruebas de recorrido: registro, mascota, QR, SOS, contacto (⏱️ 4 h)
 - [ ] 0.8.3 Prueba con 5–10 conocidos y corrección de errores (⏱️ 4 h)
 - [ ] 0.8.4 🧪 Cierre de la revisión legal iniciada en 0.0.9c: aplicar las correcciones a términos y privacidad (P10) (⏱️ 2 h)

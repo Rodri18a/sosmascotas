@@ -57,7 +57,7 @@ Cumplimiento de la **Ley 18.331** de Protección de Datos Personales de Uruguay 
 
 ## Diseño
 
-- Color principal: **verde `#1f8a5b`**. Naranja para lo destacado y **rojo para SOS**.
+- Identidad **C · Cielo** (D62): azul petróleo `#0F5E7A`, coral `#FF7A59` para lo destacado y el SOS, fondo hueso `#F6F4EF`; Sora + Source Sans 3. Paleta, pines y temas Pro en `14-brief-identidad-visual.md` §10.
 - Pantallas principales sin scroll de página; el mapa ocupa el espacio disponible; la ficha del lugar sube desde abajo.
 - Filtros como grillas horizontales agrupadas, no como burbujas sueltas.
 - Referencia visual: `reference/sos-mascota.html`.
