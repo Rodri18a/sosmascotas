@@ -21,6 +21,14 @@ class QrTag {
   final bool activo;
   final String? mascotaId;
   final String? notaPublica;
+
+  Map<String, Object?> toJson() => {
+    'id': id,
+    'code': codigo,
+    'active': activo,
+    'pet_id': mascotaId,
+    'public_note': notaPublica,
+  };
 }
 
 /// Dirección pública por defecto de las páginas del QR y de los SOS.

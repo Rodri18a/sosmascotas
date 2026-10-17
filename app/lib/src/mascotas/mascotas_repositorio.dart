@@ -6,6 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../config/supabase_providers.dart';
 import '../cuenta/servicio_cuenta.dart';
+import '../utiles/respaldo.dart';
 
 /// Mascotas del dueño con sesión. Se reemplaza en las pruebas.
 abstract interface class MascotasRepositorio {
@@ -116,7 +117,16 @@ final mascotasRepositorioProvider = Provider<MascotasRepositorio>((ref) {
 final misMascotasProvider = FutureProvider<List<Mascota>>((ref) async {
   final usuario = ref.watch(usuarioActualProvider).value;
   if (usuario == null) return const [];
-  return ref.watch(mascotasRepositorioProvider).misMascotas();
+  final repo = ref.watch(mascotasRepositorioProvider);
+  return conRespaldo(
+    ref,
+    clave: 'mascotas',
+    pedir: repo.misMascotas,
+    aJson: (lista) => [
+      for (final m in lista) {...m.toJson(), 'id': m.id},
+    ],
+    deJson: (json) => listaJson(json).map(Mascota.fromJson).toList(),
+  );
 });
 
 /// Una mascota propia por id (`null` si no existe o no es mía).

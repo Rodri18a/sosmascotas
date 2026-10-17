@@ -3,6 +3,7 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../config/supabase_providers.dart';
+import '../utiles/respaldo.dart';
 
 /// Un escaneo del QR (alguien abrió la página).
 class Escaneo {
@@ -105,9 +106,21 @@ final qrRepositorioProvider = Provider<QrRepositorio>((ref) {
       : SupabaseQrRepositorio(cliente);
 });
 
-final qrActivoProvider = FutureProvider.family<QrTag?, String>(
-  (ref, mascotaId) => ref.watch(qrRepositorioProvider).qrActivo(mascotaId),
-);
+final qrActivoProvider = FutureProvider.family<QrTag?, String>((
+  ref,
+  mascotaId,
+) {
+  final repo = ref.watch(qrRepositorioProvider);
+  return conRespaldo(
+    ref,
+    clave: 'qr/$mascotaId',
+    pedir: () => repo.qrActivo(mascotaId),
+    aJson: (qr) => qr?.toJson(),
+    deJson: (json) => json == null
+        ? null
+        : QrTag.fromJson((json as Map).cast<String, Object?>()),
+  );
+});
 
 final escaneosProvider = FutureProvider.family<List<Escaneo>, String>(
   (ref, mascotaId) => ref.watch(qrRepositorioProvider).escaneos(mascotaId),

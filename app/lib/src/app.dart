@@ -12,6 +12,7 @@ import 'sos/difusion_sos.dart';
 import 'theme/app_theme.dart';
 import 'theme/tema_elegido.dart';
 import 'ubicacion/servicio_ubicacion.dart';
+import 'utiles/respaldo.dart';
 
 class SosMascotaApp extends ConsumerWidget {
   const SosMascotaApp({super.key});
@@ -22,6 +23,8 @@ class SosMascotaApp extends ConsumerWidget {
     final router = ref.watch(routerProvider);
     // Avisos de los recordatorios mientras la app está abierta (D67).
     ref.watch(programadorRecordatoriosProvider);
+    // Sin sesión no quedan copias de los datos en el dispositivo (1.5.6).
+    ref.watch(limpiezaRespaldoProvider);
     final paleta = ref.watch(paletaActivaProvider);
     ref
       ..watch(fuentesDelTemaProvider)

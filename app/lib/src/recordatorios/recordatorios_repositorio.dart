@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../config/supabase_providers.dart';
 import '../cuenta/servicio_cuenta.dart';
 import '../utiles/enlaces.dart';
+import '../utiles/respaldo.dart';
 
 /// Recordatorios de mis mascotas (tabla `reminders`, paso 1.5.3). La RLS deja
 /// ver y editar solo los de mis mascotas. Se reemplaza en las pruebas.
@@ -160,7 +161,17 @@ final misRecordatoriosProvider = FutureProvider<List<Recordatorio>>((
 ) async {
   final usuario = ref.watch(usuarioActualProvider).value;
   if (usuario == null) return const [];
-  return ref.watch(recordatoriosRepositorioProvider).misRecordatorios();
+  final repo = ref.watch(recordatoriosRepositorioProvider);
+  return conRespaldo(
+    ref,
+    clave: 'recordatorios',
+    pedir: repo.misRecordatorios,
+    aJson: (lista) => [
+      for (final r in lista) {...r.toJson(), 'id': r.id},
+    ],
+    deJson: (json) =>
+        listaJson(json).map(Recordatorio.fromJson).nonNulls.toList(),
+  );
 });
 
 /// Los de una mascota.

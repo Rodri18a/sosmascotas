@@ -26,6 +26,7 @@ import 'package:sosmascota/src/sos/sos_repositorio.dart';
 import 'package:sosmascota/src/theme/tema_elegido.dart';
 import 'package:sosmascota/src/ubicacion/servicio_ubicacion.dart';
 import 'package:sosmascota/src/utiles/enlaces.dart';
+import 'package:sosmascota/src/utiles/respaldo.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'avisos_falsos.dart';
@@ -40,6 +41,7 @@ import 'mascotas_falsas.dart';
 import 'perfil_falso.dart';
 import 'qr_falso.dart';
 import 'recordatorios_falsos.dart';
+import 'respaldo_falso.dart';
 import 'sos_falso.dart';
 import 'tema_falso.dart';
 
@@ -59,6 +61,7 @@ Widget appDePrueba({
   LibretaRepositorio? libreta,
   RecordatoriosRepositorio? recordatorios,
   AvisadorRecordatorios? avisador,
+  AlmacenRespaldo? respaldo,
   SelectorFoto? selectorFoto,
   QrRepositorio? qr,
   AvisosRepositorio? avisos,
@@ -115,6 +118,9 @@ Widget appDePrueba({
     libretaRepositorioProvider.overrideWithValue(libreta ?? LibretaFalsa()),
     recordatoriosRepositorioProvider.overrideWithValue(
       recordatorios ?? RecordatoriosFalsos(),
+    ),
+    almacenRespaldoProvider.overrideWithValue(
+      respaldo ?? AlmacenRespaldoFalso(),
     ),
     avisadorRecordatoriosProvider.overrideWithValue(
       avisador ?? AvisadorFalso(),

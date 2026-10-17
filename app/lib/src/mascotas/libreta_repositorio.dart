@@ -3,6 +3,7 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../config/supabase_providers.dart';
+import '../utiles/respaldo.dart';
 
 /// Libreta sanitaria de las mascotas propias (tabla `health_records`, paso
 /// 1.5.1). La RLS deja ver y editar solo la de mis mascotas. Se reemplaza en
@@ -80,9 +81,16 @@ final libretaProvider =
       ref,
       mascotaId,
     ) async {
-      final registros = await ref
-          .watch(libretaRepositorioProvider)
-          .deMascota(mascotaId);
+      final repo = ref.watch(libretaRepositorioProvider);
+      final registros = await conRespaldo(
+        ref,
+        clave: 'libreta/$mascotaId',
+        pedir: () => repo.deMascota(mascotaId),
+        aJson: (lista) => [
+          for (final r in lista) {...r.toJson(), 'id': r.id},
+        ],
+        deJson: (json) => listaJson(json).map(RegistroSalud.fromJson).toList(),
+      );
       return agruparLibreta(registros);
     });
 

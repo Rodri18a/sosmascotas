@@ -8,14 +8,19 @@ class QrFalso implements QrRepositorio {
   final Map<String, QrTag> porMascota = {};
   int regeneraciones = 0;
 
+  /// Sin internet al leer (paso 1.5.6).
+  bool sinConexion = false;
+
   @override
-  Future<QrTag?> qrActivo(String mascotaId) async =>
-      porMascota[mascotaId] ??= QrTag(
-        id: 'qr-$mascotaId',
-        codigo: 'K7M2QX9P',
-        activo: true,
-        mascotaId: mascotaId,
-      );
+  Future<QrTag?> qrActivo(String mascotaId) async {
+    if (sinConexion) throw Exception('sin internet');
+    return porMascota[mascotaId] ??= QrTag(
+      id: 'qr-$mascotaId',
+      codigo: 'K7M2QX9P',
+      activo: true,
+      mascotaId: mascotaId,
+    );
+  }
 
   @override
   Future<String> regenerar(String mascotaId) async {

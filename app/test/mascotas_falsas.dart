@@ -32,8 +32,14 @@ class MascotasFalsas implements MascotasRepositorio {
   bool fallar = false;
   int _siguiente = 1;
 
+  /// Sin internet al leer (paso 1.5.6).
+  bool sinConexion = false;
+
   @override
-  Future<List<Mascota>> misMascotas() async => List.of(mascotas);
+  Future<List<Mascota>> misMascotas() async {
+    if (sinConexion) throw Exception('sin internet');
+    return List.of(mascotas);
+  }
 
   @override
   Future<Mascota> crear(Mascota mascota) async {
