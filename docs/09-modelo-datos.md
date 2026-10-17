@@ -27,7 +27,7 @@ Propuesta inicial. Se ajusta al implementar cada fase. **RLS activado en todas l
 | `qr_scans` | id, qr_id, owner_id, pet_id, shared_location, shared_at, created_at — ✅ 0.4.5. `registrar_escaneo()` (tope 60/h por QR) y `compartir_ubicacion_escaneo()` (una vez, dentro de 30 min); solo el dueño los ve (`qr_scans_app`). `notified_at` (0.6.4): la push al dueño la decide `aviso_escaneo()`, solo para la Edge Function `qr-scan-alert` | 0 |
 | `households` | id, owner_id, plan_status, trial_until | 1 |
 | `household_members` | household_id, user_id, role (`owner`, `member`, `temp_caregiver`), access_until | 1 |
-| `health_records` | id, pet_id, kind (`vaccine`, `deworming`, `checkup`, `allergy`, `other`), name, date, next_date, notes | 1 |
+| `health_records` | id, pet_id, kind (`vaccine`, `deworming`, `checkup`, `allergy`, `other`), name, date (sin fecha en las alergias), next_date (≥ date), notes. RLS: solo el dueño de la mascota (D66) | 1 |
 | `reminders` | id, pet_id, kind (`medication`, `food`, `vaccine`, `checkup`), title, dose, schedule (rrule), start, end, assigned_to | 1 |
 | `reminder_logs` | id, reminder_id, done_by, done_at | 1 |
 | `household_tasks` | id, household_id, pet_id, kind (`walk`, `food`, …), assigned_to, date, done_by, done_at | 1 |

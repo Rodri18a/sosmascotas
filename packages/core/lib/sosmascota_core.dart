@@ -13,6 +13,7 @@ export 'src/mapa/mapa.dart';
 export 'src/mapa/zona.dart';
 export 'src/mascotas/especie.dart';
 export 'src/mascotas/mascota.dart';
+export 'src/mascotas/registro_salud.dart';
 export 'src/metricas/anon_id.dart';
 export 'src/metricas/eventos.dart';
 export 'src/qr/qr_tag.dart';

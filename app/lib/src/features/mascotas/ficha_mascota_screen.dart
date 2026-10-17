@@ -4,12 +4,14 @@ import 'package:go_router/go_router.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
+import '../../funcionalidades/funcionalidades_activas.dart';
 import '../../mascotas/catalogo.dart';
 import '../../mascotas/mascotas_repositorio.dart';
 import '../../mascotas/textos_mascota.dart';
 import '../../router.dart';
 import '../../theme/paleta.dart';
 import '../../widgets/foto_mascota.dart';
+import '../libreta/libreta.dart';
 
 /// Ficha de una mascota propia.
 class FichaMascotaScreen extends ConsumerWidget {
@@ -139,6 +141,13 @@ class _Ficha extends ConsumerWidget {
               subtitle: Text(t.fichaQrDescripcion),
               trailing: const Icon(Icons.chevron_right),
               onTap: () => context.push(Rutas.qrMascota(mascota.id)),
+            ),
+          ),
+          SiFuncionalidad(
+            Funcionalidades.libreta,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 12),
+              child: TarjetaLibreta(mascotaId: mascota.id),
             ),
           ),
         ],

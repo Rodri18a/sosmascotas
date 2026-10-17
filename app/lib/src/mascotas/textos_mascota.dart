@@ -16,3 +16,30 @@ String textoSexo(AppLocalizations t, Sexo sexo) => switch (sexo) {
   Sexo.female => t.sexoHembra,
   Sexo.unknown => t.noSe,
 };
+
+String textoTipoRegistro(AppLocalizations t, TipoRegistroSalud tipo) =>
+    switch (tipo) {
+      TipoRegistroSalud.vaccine => t.libretaTipoVacuna,
+      TipoRegistroSalud.deworming => t.libretaTipoDesparasitacion,
+      TipoRegistroSalud.checkup => t.libretaTipoControl,
+      TipoRegistroSalud.allergy => t.libretaTipoAlergia,
+      TipoRegistroSalud.other => t.libretaTipoOtro,
+    };
+
+String textoGrupoLibreta(AppLocalizations t, TipoRegistroSalud tipo) =>
+    switch (tipo) {
+      TipoRegistroSalud.vaccine => t.libretaGrupoVacunas,
+      TipoRegistroSalud.deworming => t.libretaGrupoDesparasitaciones,
+      TipoRegistroSalud.checkup => t.libretaGrupoControles,
+      TipoRegistroSalud.allergy => t.libretaGrupoAlergias,
+      TipoRegistroSalud.other => t.libretaGrupoOtros,
+    };
+
+String ayudaNombreRegistro(AppLocalizations t, TipoRegistroSalud tipo) =>
+    switch (tipo) {
+      TipoRegistroSalud.vaccine => t.libretaNombreAyudaVacuna,
+      TipoRegistroSalud.deworming => t.libretaNombreAyudaDesparasitacion,
+      TipoRegistroSalud.checkup => t.libretaNombreAyudaControl,
+      TipoRegistroSalud.allergy => t.libretaNombreAyudaAlergia,
+      TipoRegistroSalud.other => t.libretaNombreAyudaOtro,
+    };

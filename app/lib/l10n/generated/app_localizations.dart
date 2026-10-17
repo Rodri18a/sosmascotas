@@ -2145,6 +2145,228 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Entendido'**
   String get instalarEntendido;
+
+  /// No description provided for @libretaTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Libreta sanitaria'**
+  String get libretaTitulo;
+
+  /// No description provided for @libretaVacia.
+  ///
+  /// In es, this message translates to:
+  /// **'Anotá vacunas, desparasitaciones, controles y alergias para tenerlas siempre a mano.'**
+  String get libretaVacia;
+
+  /// No description provided for @libretaAgregar.
+  ///
+  /// In es, this message translates to:
+  /// **'Agregar a la libreta'**
+  String get libretaAgregar;
+
+  /// No description provided for @libretaNuevoTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Nuevo registro'**
+  String get libretaNuevoTitulo;
+
+  /// No description provided for @libretaEditarTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Editar registro'**
+  String get libretaEditarTitulo;
+
+  /// No description provided for @libretaTipo.
+  ///
+  /// In es, this message translates to:
+  /// **'Tipo'**
+  String get libretaTipo;
+
+  /// No description provided for @libretaTipoVacuna.
+  ///
+  /// In es, this message translates to:
+  /// **'Vacuna'**
+  String get libretaTipoVacuna;
+
+  /// No description provided for @libretaTipoDesparasitacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Desparasitación'**
+  String get libretaTipoDesparasitacion;
+
+  /// No description provided for @libretaTipoControl.
+  ///
+  /// In es, this message translates to:
+  /// **'Control'**
+  String get libretaTipoControl;
+
+  /// No description provided for @libretaTipoAlergia.
+  ///
+  /// In es, this message translates to:
+  /// **'Alergia'**
+  String get libretaTipoAlergia;
+
+  /// No description provided for @libretaTipoOtro.
+  ///
+  /// In es, this message translates to:
+  /// **'Otro'**
+  String get libretaTipoOtro;
+
+  /// No description provided for @libretaGrupoVacunas.
+  ///
+  /// In es, this message translates to:
+  /// **'Vacunas'**
+  String get libretaGrupoVacunas;
+
+  /// No description provided for @libretaGrupoDesparasitaciones.
+  ///
+  /// In es, this message translates to:
+  /// **'Desparasitaciones'**
+  String get libretaGrupoDesparasitaciones;
+
+  /// No description provided for @libretaGrupoControles.
+  ///
+  /// In es, this message translates to:
+  /// **'Controles'**
+  String get libretaGrupoControles;
+
+  /// No description provided for @libretaGrupoAlergias.
+  ///
+  /// In es, this message translates to:
+  /// **'Alergias'**
+  String get libretaGrupoAlergias;
+
+  /// No description provided for @libretaGrupoOtros.
+  ///
+  /// In es, this message translates to:
+  /// **'Otros'**
+  String get libretaGrupoOtros;
+
+  /// No description provided for @libretaNombre.
+  ///
+  /// In es, this message translates to:
+  /// **'Nombre'**
+  String get libretaNombre;
+
+  /// No description provided for @libretaNombreAyudaVacuna.
+  ///
+  /// In es, this message translates to:
+  /// **'Por ejemplo: Antirrábica, Séxtuple, Triple felina.'**
+  String get libretaNombreAyudaVacuna;
+
+  /// No description provided for @libretaNombreAyudaDesparasitacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Por ejemplo: pipeta, comprimido, interna o externa.'**
+  String get libretaNombreAyudaDesparasitacion;
+
+  /// No description provided for @libretaNombreAyudaControl.
+  ///
+  /// In es, this message translates to:
+  /// **'Por ejemplo: control anual, análisis de sangre.'**
+  String get libretaNombreAyudaControl;
+
+  /// No description provided for @libretaNombreAyudaAlergia.
+  ///
+  /// In es, this message translates to:
+  /// **'Por ejemplo: pollo, un medicamento, picadura de pulga.'**
+  String get libretaNombreAyudaAlergia;
+
+  /// No description provided for @libretaNombreAyudaOtro.
+  ///
+  /// In es, this message translates to:
+  /// **'Cirugía, tratamiento, peso…'**
+  String get libretaNombreAyudaOtro;
+
+  /// No description provided for @libretaNombreFalta.
+  ///
+  /// In es, this message translates to:
+  /// **'Escribí qué fue.'**
+  String get libretaNombreFalta;
+
+  /// No description provided for @libretaNombreLargo.
+  ///
+  /// In es, this message translates to:
+  /// **'Usá hasta 80 letras.'**
+  String get libretaNombreLargo;
+
+  /// No description provided for @libretaFecha.
+  ///
+  /// In es, this message translates to:
+  /// **'Fecha'**
+  String get libretaFecha;
+
+  /// No description provided for @libretaFechaElegir.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegir'**
+  String get libretaFechaElegir;
+
+  /// No description provided for @libretaFechaSin.
+  ///
+  /// In es, this message translates to:
+  /// **'Sin fecha'**
+  String get libretaFechaSin;
+
+  /// No description provided for @libretaProxima.
+  ///
+  /// In es, this message translates to:
+  /// **'Próxima dosis o control'**
+  String get libretaProxima;
+
+  /// No description provided for @libretaProximaAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Opcional. Sirve para recordarte cuándo toca.'**
+  String get libretaProximaAyuda;
+
+  /// No description provided for @libretaProximaAntes.
+  ///
+  /// In es, this message translates to:
+  /// **'La próxima fecha no puede ser anterior a la fecha.'**
+  String get libretaProximaAntes;
+
+  /// No description provided for @libretaQuitarFecha.
+  ///
+  /// In es, this message translates to:
+  /// **'Quitar'**
+  String get libretaQuitarFecha;
+
+  /// No description provided for @libretaNotas.
+  ///
+  /// In es, this message translates to:
+  /// **'Notas'**
+  String get libretaNotas;
+
+  /// No description provided for @libretaNotasAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Lote, veterinaria, dosis… (solo lo ves vos).'**
+  String get libretaNotasAyuda;
+
+  /// No description provided for @libretaBorrar.
+  ///
+  /// In es, this message translates to:
+  /// **'Borrar registro'**
+  String get libretaBorrar;
+
+  /// No description provided for @libretaBorrarTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Borrar «{nombre}»?'**
+  String libretaBorrarTitulo(String nombre);
+
+  /// No description provided for @libretaBorrarExplicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Se borra de la libreta y no se puede recuperar.'**
+  String get libretaBorrarExplicacion;
+
+  /// No description provided for @libretaProximaEl.
+  ///
+  /// In es, this message translates to:
+  /// **'Próxima: {fecha}'**
+  String libretaProximaEl(String fecha);
 }
 
 class _AppLocalizationsDelegate

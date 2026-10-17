@@ -1226,4 +1226,128 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get instalarEntendido => 'Entendido';
+
+  @override
+  String get libretaTitulo => 'Libreta sanitaria';
+
+  @override
+  String get libretaVacia =>
+      'Anotá vacunas, desparasitaciones, controles y alergias para tenerlas siempre a mano.';
+
+  @override
+  String get libretaAgregar => 'Agregar a la libreta';
+
+  @override
+  String get libretaNuevoTitulo => 'Nuevo registro';
+
+  @override
+  String get libretaEditarTitulo => 'Editar registro';
+
+  @override
+  String get libretaTipo => 'Tipo';
+
+  @override
+  String get libretaTipoVacuna => 'Vacuna';
+
+  @override
+  String get libretaTipoDesparasitacion => 'Desparasitación';
+
+  @override
+  String get libretaTipoControl => 'Control';
+
+  @override
+  String get libretaTipoAlergia => 'Alergia';
+
+  @override
+  String get libretaTipoOtro => 'Otro';
+
+  @override
+  String get libretaGrupoVacunas => 'Vacunas';
+
+  @override
+  String get libretaGrupoDesparasitaciones => 'Desparasitaciones';
+
+  @override
+  String get libretaGrupoControles => 'Controles';
+
+  @override
+  String get libretaGrupoAlergias => 'Alergias';
+
+  @override
+  String get libretaGrupoOtros => 'Otros';
+
+  @override
+  String get libretaNombre => 'Nombre';
+
+  @override
+  String get libretaNombreAyudaVacuna =>
+      'Por ejemplo: Antirrábica, Séxtuple, Triple felina.';
+
+  @override
+  String get libretaNombreAyudaDesparasitacion =>
+      'Por ejemplo: pipeta, comprimido, interna o externa.';
+
+  @override
+  String get libretaNombreAyudaControl =>
+      'Por ejemplo: control anual, análisis de sangre.';
+
+  @override
+  String get libretaNombreAyudaAlergia =>
+      'Por ejemplo: pollo, un medicamento, picadura de pulga.';
+
+  @override
+  String get libretaNombreAyudaOtro => 'Cirugía, tratamiento, peso…';
+
+  @override
+  String get libretaNombreFalta => 'Escribí qué fue.';
+
+  @override
+  String get libretaNombreLargo => 'Usá hasta 80 letras.';
+
+  @override
+  String get libretaFecha => 'Fecha';
+
+  @override
+  String get libretaFechaElegir => 'Elegir';
+
+  @override
+  String get libretaFechaSin => 'Sin fecha';
+
+  @override
+  String get libretaProxima => 'Próxima dosis o control';
+
+  @override
+  String get libretaProximaAyuda =>
+      'Opcional. Sirve para recordarte cuándo toca.';
+
+  @override
+  String get libretaProximaAntes =>
+      'La próxima fecha no puede ser anterior a la fecha.';
+
+  @override
+  String get libretaQuitarFecha => 'Quitar';
+
+  @override
+  String get libretaNotas => 'Notas';
+
+  @override
+  String get libretaNotasAyuda =>
+      'Lote, veterinaria, dosis… (solo lo ves vos).';
+
+  @override
+  String get libretaBorrar => 'Borrar registro';
+
+  @override
+  String libretaBorrarTitulo(String nombre) {
+    return '¿Borrar «$nombre»?';
+  }
+
+  @override
+  String get libretaBorrarExplicacion =>
+      'Se borra de la libreta y no se puede recuperar.';
+
+  @override
+  String libretaProximaEl(String fecha) {
+    return 'Próxima: $fecha';
+  }
 }

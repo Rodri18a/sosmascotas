@@ -39,12 +39,17 @@ void main() {
     expect(ids.every((x) => entraEnPorcentaje('chat', x, 100)), isTrue);
   });
 
-  test('cada funcionalidad reparte distinto (no siempre las mismas personas)', () {
-    final ids = [for (var i = 0; i < 300; i++) 'id-$i'];
-    final chat = ids.where((x) => entraEnPorcentaje('chat', x, 20)).toSet();
-    final resenas = ids.where((x) => entraEnPorcentaje('resenas', x, 20)).toSet();
-    expect(chat, isNot(resenas));
-  });
+  test(
+    'cada funcionalidad reparte distinto (no siempre las mismas personas)',
+    () {
+      final ids = [for (var i = 0; i < 300; i++) 'id-$i'];
+      final chat = ids.where((x) => entraEnPorcentaje('chat', x, 20)).toSet();
+      final resenas = ids
+          .where((x) => entraEnPorcentaje('resenas', x, 20))
+          .toSet();
+      expect(chat, isNot(resenas));
+    },
+  );
 
   test('los nombres cumplen la regla de la base', () {
     expect(nombreDeFuncionalidadValido(Funcionalidades.temasPro), isTrue);

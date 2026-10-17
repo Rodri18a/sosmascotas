@@ -176,6 +176,37 @@ def main():
         caso('A puede editar su mascota',
              filas(rest('PATCH', f"pets?id=eq.{pet.get('id')}", {'color': 'Negro'}, a))[0]['color'] == 'Negro')
 
+        print('health_records (libreta sanitaria)')
+        r_vac = rest('POST', 'health_records', {'pet_id': pet.get('id'), 'kind': 'vaccine', 'name': 'Antirrábica',
+                                                'date': '2026-09-01', 'next_date': '2027-09-01'}, a)
+        vacuna = filas(r_vac)[0] if filas(r_vac) else {}
+        caso('A puede cargar una vacuna de su mascota', vacuna.get('name') == 'Antirrábica')
+        caso('A ve la libreta de su mascota',
+             [v['id'] for v in filas(rest('GET', f"health_records?select=id&pet_id=eq.{pet.get('id')}", quien=a))] == [vacuna.get('id')])
+        caso('B no ve la libreta de A', filas(rest('GET', 'health_records?select=id', quien=b)) == [])
+        caso('un visitante no ve libretas', bloqueado(rest('GET', 'health_records?select=id')))
+        caso('B no puede cargar en la libreta de la mascota de A',
+             bloqueado(rest('POST', 'health_records', {'pet_id': pet.get('id'), 'kind': 'other', 'name': 'X'}, b)))
+        caso('B no puede cambiar un registro de A',
+             bloqueado(rest('PATCH', f"health_records?id=eq.{vacuna.get('id')}", {'name': 'X'}, b)))
+        caso('B no puede borrar un registro de A',
+             bloqueado(rest('DELETE', f"health_records?id=eq.{vacuna.get('id')}", quien=b)))
+        r_pet_b = filas(rest('POST', 'pets', {'name': 'Michi', 'species_id': 2}, b))
+        caso('A no puede pasar su registro a la mascota de B',
+             bloqueado(rest('PATCH', f"health_records?id=eq.{vacuna.get('id')}", {'pet_id': r_pet_b[0]['id']}, a))
+             if r_pet_b else False)
+        caso('un tipo inventado se rechaza',
+             rest('POST', 'health_records', {'pet_id': pet.get('id'), 'kind': 'magia', 'name': 'X'}, a)[0] == 400)
+        caso('la próxima fecha no puede ser anterior a la fecha',
+             rest('POST', 'health_records', {'pet_id': pet.get('id'), 'kind': 'checkup', 'name': 'Control',
+                                             'date': '2026-09-01', 'next_date': '2026-08-01'}, a)[0] == 400)
+        caso('A puede cargar una alergia sin fecha',
+             rest('POST', 'health_records', {'pet_id': pet.get('id'), 'kind': 'allergy', 'name': 'Pollo'}, a)[0] == 201)
+        caso('A puede editar su registro',
+             filas(rest('PATCH', f"health_records?id=eq.{vacuna.get('id')}", {'notes': 'Lote 123'}, a))[0]['notes'] == 'Lote 123')
+        caso('A puede borrar su registro',
+             len(filas(rest('DELETE', f"health_records?id=eq.{vacuna.get('id')}", quien=a))) == 1)
+
         print('qr_tags y página pública')
         tags_a = filas(rest('GET', f"qr_tags?select=*&pet_id=eq.{pet.get('id')}", quien=a))
         tag = tags_a[0] if tags_a else {}

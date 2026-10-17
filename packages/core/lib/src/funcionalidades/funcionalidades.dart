@@ -9,6 +9,9 @@ import 'package:crypto/crypto.dart';
 abstract final class Funcionalidades {
   static const temasPro = 'temas_pro';
 
+  /// Libreta sanitaria (paso 1.5.1, Fase 1): oculta hasta el lanzamiento de la Fase 1.
+  static const libreta = 'libreta';
+
   /// Las que ya están en `todos`: la app las da por prendidas aunque no pueda
   /// preguntarle a la base (sin conexión y sin nada guardado). Las demás, en
   /// ese caso, quedan apagadas (lo seguro).

@@ -15,6 +15,7 @@ import 'package:sosmascota/src/funcionalidades/funcionalidades_activas.dart';
 import 'package:sosmascota/src/instalar/servicio_instalacion.dart';
 import 'package:sosmascota/src/mapa/mapa_vista.dart';
 import 'package:sosmascota/src/mascotas/catalogo.dart';
+import 'package:sosmascota/src/mascotas/libreta_repositorio.dart';
 import 'package:sosmascota/src/mascotas/mascotas_repositorio.dart';
 import 'package:sosmascota/src/metricas/metricas.dart';
 import 'package:sosmascota/src/push/servicio_push.dart';
@@ -31,6 +32,7 @@ import 'comercios_falsos.dart';
 import 'cuenta_falsa.dart';
 import 'funcionalidades_falsas.dart';
 import 'instalacion_falsa.dart';
+import 'libreta_falsa.dart';
 import 'mapa_falso.dart';
 import 'mascotas_falsas.dart';
 import 'perfil_falso.dart';
@@ -51,6 +53,7 @@ Widget appDePrueba({
   PerfilRepositorio? perfiles,
   List<Map<String, Object?>>? eventos,
   MascotasRepositorio? mascotas,
+  LibretaRepositorio? libreta,
   SelectorFoto? selectorFoto,
   QrRepositorio? qr,
   AvisosRepositorio? avisos,
@@ -104,6 +107,7 @@ Widget appDePrueba({
     qrRepositorioProvider.overrideWithValue(qr ?? QrFalso()),
     catalogoRepositorioProvider.overrideWithValue(CatalogoFalso()),
     mascotasRepositorioProvider.overrideWithValue(mascotas ?? MascotasFalsas()),
+    libretaRepositorioProvider.overrideWithValue(libreta ?? LibretaFalsa()),
     selectorFotoProvider.overrideWithValue(selectorFoto ?? (_) async => null),
     servicioCuentaProvider.overrideWithValue(cuenta ?? ServicioCuentaFalso()),
     perfilRepositorioProvider.overrideWithValue(

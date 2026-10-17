@@ -158,6 +158,7 @@ Tabla `events` (append-only), escrita por el cliente con `ref.read(metricasProvi
 | `content_flag` | target_type, motivo, target_id (reporte a moderación, solo la primera vez) |
 | `alert_zone_set` / `alert_zone_clear` | — (guardó o borró su zona para avisos; **sin coordenadas**) |
 | `signup` / `pet_create` | — |
+| `health_record_create` | tipo del registro de la libreta (`vaccine`, `deworming`, `checkup`, `allergy`, `other`; D66) |
 | `reminder_done` | tipo |
 
 - Se guarda `user_id` solo para métricas internas (retención). A las empresas se les muestran **agregados**.

@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'cuenta/perfil_repositorio.dart';
 import 'cuenta/servicio_cuenta.dart';
@@ -10,6 +11,7 @@ import 'features/ayuda/ayuda_screen.dart';
 import 'features/consentimiento/consentimiento_screen.dart';
 import 'features/ingresar/ingresar_screen.dart';
 import 'features/legal/legal_screen.dart';
+import 'features/libreta/libreta.dart';
 import 'features/mapa/mapa_screen.dart';
 import 'features/mascotas/ficha_mascota_screen.dart';
 import 'features/mascotas/mascota_form_screen.dart';
@@ -40,14 +42,22 @@ abstract final class Rutas {
   static const sosNuevo = '/sos/nuevo';
   static const mascotaNueva = '/mascotas/nueva';
   static const noDisponible = '/no-disponible';
+  static const libreta = '/libreta';
 
   /// Rutas detrás de una funcionalidad gradual (comienzo de la ruta → clave de
   /// `Funcionalidades`). Quien entra sin tenerla prendida ve "Todavía no está
-  /// disponible" (D64). Por ahora ninguna pantalla entera está en prueba.
-  static const conFuncionalidad = <String, String>{};
+  /// disponible" (D64).
+  static const conFuncionalidad = <String, String>{
+    '$libreta/': Funcionalidades.libreta,
+  };
 
   /// Rutas que un visitante no puede ver: se le pide ingresar y después vuelve.
-  static const requierenCuenta = <String>[sosNuevo, '$mascotas/', avisos];
+  static const requierenCuenta = <String>[
+    sosNuevo,
+    '$mascotas/',
+    avisos,
+    '$libreta/',
+  ];
 
   static String fichaMascota(String id) => '$mascotas/$id';
   static String detalleSos(String id) => '$sos/$id';
@@ -57,6 +67,10 @@ abstract final class Rutas {
       Uri(path: sosNuevo, queryParameters: {'mascota': mascotaId}).toString();
   static String editarMascota(String id) => '$mascotas/$id/editar';
   static String qrMascota(String id) => '$mascotas/$id/qr';
+  static String nuevoRegistroSalud(String mascotaId) =>
+      '$libreta/$mascotaId/nuevo';
+  static String editarRegistroSalud(String mascotaId, String id) =>
+      '$libreta/$mascotaId/$id';
 
   /// Pantalla de ingreso que, al terminar, vuelve a [destino].
   static String ingresarYVolverA(String destino) =>
@@ -187,6 +201,18 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: Rutas.privacidad,
         builder: (_, _) =>
             const LegalScreen(documento: DocumentoLegal.privacidad),
+      ),
+      GoRoute(
+        path: '${Rutas.libreta}/:mascota/nuevo',
+        builder: (_, state) =>
+            RegistroSaludScreen(mascotaId: state.pathParameters['mascota']!),
+      ),
+      GoRoute(
+        path: '${Rutas.libreta}/:mascota/:id',
+        builder: (_, state) => RegistroSaludScreen(
+          mascotaId: state.pathParameters['mascota']!,
+          registroId: state.pathParameters['id'],
+        ),
       ),
       GoRoute(
         path: Rutas.noDisponible,

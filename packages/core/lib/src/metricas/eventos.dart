@@ -17,6 +17,7 @@ abstract final class Eventos {
   static const featureExposure = 'feature_exposure';
   static const pwaPrompt = 'pwa_prompt';
   static const pwaInstalled = 'pwa_installed';
+  static const healthRecordCreate = 'health_record_create';
 }
 
 /// Valida el nombre de un evento con la misma regla que la base de datos.
