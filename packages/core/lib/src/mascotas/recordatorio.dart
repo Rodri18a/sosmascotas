@@ -319,3 +319,58 @@ ValidacionRecordatorio validarRecordatorio({
   }
   return ValidacionRecordatorio.valido;
 }
+
+/// Una toma marcada como hecha ("✅ Ya se la di", tabla `reminder_logs`,
+/// paso 1.5.5).
+class TomaHecha {
+  const TomaHecha({
+    required this.id,
+    required this.recordatorioId,
+    required this.prevista,
+    required this.hecha,
+  });
+
+  factory TomaHecha.fromJson(Map<String, Object?> json) => TomaHecha(
+    id: json['id']! as String,
+    recordatorioId: json['reminder_id']! as String,
+    prevista: DateTime.parse(json['due_at']! as String).toLocal(),
+    hecha: DateTime.parse(json['done_at']! as String).toLocal(),
+  );
+
+  final String id;
+  final String recordatorioId;
+
+  /// La toma que se marcó (hora local).
+  final DateTime prevista;
+
+  /// Cuándo se marcó (hora local).
+  final DateTime hecha;
+}
+
+/// Desde cuánto antes de la hora se puede marcar una toma.
+const anticipoToma = Duration(minutes: 30);
+
+/// Hasta cuánto después se sigue ofreciendo una toma sin marcar.
+const esperaToma = Duration(hours: 12);
+
+/// La toma que toca marcar ahora: la más reciente entre las últimas 12 h y
+/// los próximos 30 minutos que todavía no se marcó. `null` si no hay ninguna.
+DateTime? tomaPendiente(
+  Recordatorio recordatorio,
+  DateTime ahora,
+  Iterable<TomaHecha> hechas,
+) {
+  final marcadas = {
+    for (final h in hechas)
+      if (h.recordatorioId == recordatorio.id)
+        h.prevista.millisecondsSinceEpoch,
+  };
+  return recordatorio
+      // +1 µs: la que es justo dentro de 30 minutos también cuenta.
+      .tomasEntre(
+        ahora.subtract(esperaToma),
+        ahora.add(anticipoToma + const Duration(microseconds: 1)),
+      )
+      .where((t) => !marcadas.contains(t.millisecondsSinceEpoch))
+      .lastOrNull;
+}

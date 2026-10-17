@@ -2739,6 +2739,54 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Recordarme {nombre}'**
   String libretaRecordarmeDe(String nombre);
+
+  /// No description provided for @recordatorioYaSeLaDi.
+  ///
+  /// In es, this message translates to:
+  /// **'✅ Ya se la di ({hora})'**
+  String recordatorioYaSeLaDi(String hora);
+
+  /// No description provided for @recordatorioYaComio.
+  ///
+  /// In es, this message translates to:
+  /// **'✅ Ya comió ({hora})'**
+  String recordatorioYaComio(String hora);
+
+  /// No description provided for @recordatorioHecho.
+  ///
+  /// In es, this message translates to:
+  /// **'✅ Hecho ({hora})'**
+  String recordatorioHecho(String hora);
+
+  /// No description provided for @recordatorioMarcado.
+  ///
+  /// In es, this message translates to:
+  /// **'Listo, quedó anotado.'**
+  String get recordatorioMarcado;
+
+  /// No description provided for @recordatorioDeshacer.
+  ///
+  /// In es, this message translates to:
+  /// **'Deshacer'**
+  String get recordatorioDeshacer;
+
+  /// No description provided for @recordatorioHistorial.
+  ///
+  /// In es, this message translates to:
+  /// **'Historial'**
+  String get recordatorioHistorial;
+
+  /// No description provided for @recordatorioHistorialVacio.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no marcaste ninguna toma.'**
+  String get recordatorioHistorialVacio;
+
+  /// No description provided for @recordatorioHistorialMarcada.
+  ///
+  /// In es, this message translates to:
+  /// **'Marcada {cuando}'**
+  String recordatorioHistorialMarcada(String cuando);
 }
 
 class _AppLocalizationsDelegate

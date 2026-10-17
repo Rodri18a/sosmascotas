@@ -29,7 +29,7 @@ Propuesta inicial. Se ajusta al implementar cada fase. **RLS activado en todas l
 | `household_members` | household_id, user_id, role (`owner`, `member`, `temp_caregiver`), access_until | 1 |
 | `health_records` | id, pet_id, kind (`vaccine`, `deworming`, `checkup`, `allergy`, `other`), name, date (sin fecha en las alergias), next_date (≥ date), notes. RLS: solo el dueño de la mascota (D66) | 1 |
 | `reminders` | id, pet_id, kind (`medication`, `food`, `vaccine`, `checkup`), title, dose, schedule (JSON propio: `cada_horas` / `diaria` / `semanal` / `una_vez`, D67), starts_at, ends_on, active. `assigned_to` se suma con el hogar compartido (1.6). RLS: solo el dueño de la mascota | 1 |
-| `reminder_logs` | id, reminder_id, done_by, done_at | 1 |
+| `reminder_logs` | id, reminder_id, due_at (la toma marcada; única por recordatorio, evita la dosis doble), done_by, done_at. Sin edición: se borra para deshacer. RLS: solo el dueño de la mascota (D67) | 1 |
 | `household_tasks` | id, household_id, pet_id, kind (`walk`, `food`, …), assigned_to, date, done_by, done_at | 1 |
 
 ## SOS

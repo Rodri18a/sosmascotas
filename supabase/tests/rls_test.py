@@ -232,6 +232,28 @@ def main():
         caso('A puede pausar su recordatorio',
              filas(rest('PATCH', f"reminders?id=eq.{rec.get('id')}", {'active': False}, a))[0]['active'] is False)
 
+        print('reminder_logs (ya se la di)')
+        toma = {'reminder_id': rec.get('id'), 'due_at': '2026-10-17T11:00:00Z'}
+        r_toma = rest('POST', 'reminder_logs', toma, a)
+        hecha = filas(r_toma)[0] if filas(r_toma) else {}
+        caso('A puede marcar una toma (queda a su nombre)', hecha.get('done_by') == a_id)
+        caso('la misma toma no se puede marcar dos veces', rest('POST', 'reminder_logs', toma, a)[0] == 409)
+        caso('A ve el historial', len(filas(rest('GET', f"reminder_logs?select=id&reminder_id=eq.{rec.get('id')}", quien=a))) == 1)
+        caso('B no ve el historial de A', filas(rest('GET', 'reminder_logs?select=id', quien=b)) == [])
+        caso('un visitante no ve historiales', bloqueado(rest('GET', 'reminder_logs?select=id')))
+        caso('B no puede marcar tomas de A',
+             bloqueado(rest('POST', 'reminder_logs', {**toma, 'due_at': '2026-10-17T19:00:00Z'}, b)))
+        caso('A no puede marcar a nombre de B',
+             bloqueado(rest('POST', 'reminder_logs', {**toma, 'due_at': '2026-10-18T03:00:00Z', 'done_by': b_id}, a)))
+        caso('no se puede marcar en el futuro',
+             rest('POST', 'reminder_logs', {**toma, 'due_at': '2026-10-18T11:00:00Z', 'done_at': '2099-01-01T00:00:00Z'}, a)[0] in (400, 403))
+        caso('nadie puede cambiar una toma marcada',
+             bloqueado(rest('PATCH', f"reminder_logs?id=eq.{hecha.get('id')}", {'due_at': '2026-10-01T00:00:00Z'}, a)))
+        caso('B no puede desmarcar tomas de A',
+             bloqueado(rest('DELETE', f"reminder_logs?id=eq.{hecha.get('id')}", quien=b)))
+        caso('A puede desmarcar su toma',
+             len(filas(rest('DELETE', f"reminder_logs?id=eq.{hecha.get('id')}", quien=a))) == 1)
+
         print('qr_tags y página pública')
         tags_a = filas(rest('GET', f"qr_tags?select=*&pet_id=eq.{pet.get('id')}", quien=a))
         tag = tags_a[0] if tags_a else {}

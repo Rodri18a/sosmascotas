@@ -250,4 +250,67 @@ void main() {
       );
     });
   });
+
+  group('toma pendiente', () {
+    final r = _r(const CadaHoras(8));
+    TomaHecha hecha(DateTime prevista) => TomaHecha(
+      id: 'h',
+      recordatorioId: 'r1',
+      prevista: prevista,
+      hecha: prevista,
+    );
+
+    test('la de la hora, desde media hora antes', () {
+      final primera = _r(
+        const CadaHoras(8),
+        inicio: DateTime(2026, 10, 17, 16),
+      );
+      expect(
+        tomaPendiente(primera, DateTime(2026, 10, 17, 15, 29), []),
+        isNull,
+      );
+      expect(
+        tomaPendiente(primera, DateTime(2026, 10, 17, 15, 30), []),
+        DateTime(2026, 10, 17, 16),
+      );
+      // Con una toma anterior sin marcar, a las 15:29 se ofrece esa.
+      expect(
+        tomaPendiente(r, DateTime(2026, 10, 17, 15, 29), []),
+        DateTime(2026, 10, 17, 8),
+      );
+    });
+
+    test('si se olvidó, sigue ofreciendo la más reciente', () {
+      expect(
+        tomaPendiente(r, DateTime(2026, 10, 17, 18), []),
+        DateTime(2026, 10, 17, 16),
+      );
+    });
+
+    test('marcada, ya no se ofrece (ni la anterior)', () {
+      final ahora = DateTime(2026, 10, 17, 18);
+      expect(
+        tomaPendiente(r, ahora, [hecha(DateTime(2026, 10, 17, 16))]),
+        DateTime(2026, 10, 17, 8),
+      );
+      expect(
+        tomaPendiente(r, ahora, [
+          hecha(DateTime(2026, 10, 17, 16)),
+          hecha(DateTime(2026, 10, 17, 8)),
+        ]),
+        isNull,
+      );
+    });
+
+    test('lee la fila de reminder_logs', () {
+      final h = TomaHecha.fromJson({
+        'id': 'h1',
+        'reminder_id': 'r1',
+        'due_at': DateTime(2026, 10, 17, 16).toUtc().toIso8601String(),
+        'done_at': DateTime(2026, 10, 17, 16, 5).toUtc().toIso8601String(),
+      });
+      expect(h.prevista, DateTime(2026, 10, 17, 16));
+      expect(h.hecha, DateTime(2026, 10, 17, 16, 5));
+    });
+  });
 }

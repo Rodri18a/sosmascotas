@@ -261,6 +261,52 @@ void main() {
     expect(r.inicio, DateTime(2026, 11, 1, 9));
   });
 
+  testWidgets('"Ya se la di": marca la toma, se puede deshacer y queda en el '
+      'historial', (tester) async {
+    final recordatorios = RecordatoriosFalsos([_antibiotico()]);
+    final eventos = <Map<String, Object?>>[];
+    await _abrirFicha(
+      tester,
+      _app(recordatorios: recordatorios, eventos: eventos),
+    );
+
+    // La de las 8 no se marcó: se ofrece hasta 12 h después.
+    await _tocar(tester, find.text('✅ Ya se la di (8:00)'));
+    expect(recordatorios.tomas.single.prevista, DateTime(2026, 10, 17, 8));
+    expect(find.text('Listo, quedó anotado.'), findsOneWidget);
+    expect(find.textContaining('Ya se la di'), findsNothing);
+    expect(eventos.where((e) => e['name'] == 'reminder_done').single['props'], {
+      'tipo': 'medication',
+    });
+
+    await _tocar(tester, find.text('Deshacer'));
+    expect(recordatorios.tomas, isEmpty);
+    expect(find.text('✅ Ya se la di (8:00)'), findsOneWidget);
+
+    await _tocar(tester, find.text('✅ Ya se la di (8:00)'));
+    await _tocar(tester, find.text('Antibiótico'));
+    await tester.drag(find.byType(Scrollable).last, const Offset(0, -3000));
+    await tester.pumpAndSettle();
+    expect(find.text('Historial'), findsOneWidget);
+    expect(find.text('hoy a las 8:00'), findsOneWidget);
+    expect(find.text('Marcada hoy a las 10:20'), findsOneWidget);
+  });
+
+  testWidgets('comida: "Ya comió"', (tester) async {
+    final recordatorios = RecordatoriosFalsos([
+      Recordatorio(
+        id: 'c1',
+        mascotaId: 'm1',
+        tipo: TipoRecordatorio.food,
+        titulo: 'Balanceado',
+        frecuencia: const Diaria([HoraDelDia(10, 0)]),
+        inicio: DateTime(2026, 10, 1),
+      ),
+    ]);
+    await _abrirFicha(tester, _app(recordatorios: recordatorios));
+    expect(find.text('✅ Ya comió (10:00)'), findsOneWidget);
+  });
+
   testWidgets('pausar y borrar', (tester) async {
     final recordatorios = RecordatoriosFalsos([_antibiotico()]);
     await _abrirFicha(tester, _app(recordatorios: recordatorios));
@@ -339,6 +385,21 @@ void main() {
       expect(primero.titulo, 'Antibiótico para Luna');
       expect(primero.cuerpo, '1/2 comprimido');
       expect(primero.ruta, '/mascotas/m1');
+    });
+
+    testWidgets('una toma marcada antes de la hora ya no avisa', (
+      tester,
+    ) async {
+      final avisador = AvisadorFalso();
+      final recordatorios = RecordatoriosFalsos([_antibiotico()]);
+      await recordatorios.marcar('r1', DateTime(2026, 10, 17, 20));
+      await tester.pumpWidget(
+        _app(recordatorios: recordatorios, avisador: avisador),
+      );
+      await tester.pumpAndSettle();
+      expect(avisador.programados.map((a) => a.cuando), [
+        DateTime(2026, 10, 18, 8),
+      ]);
     });
 
     testWidgets('sin la funcionalidad no se programa nada', (tester) async {

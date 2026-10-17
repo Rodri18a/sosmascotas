@@ -88,21 +88,30 @@ List<AvisoProgramado> avisosDe(
   List<Recordatorio> recordatorios,
   Map<String, String> nombresDeMascotas,
   DateTime ahora,
-  AppLocalizations t,
-) => [
-  for (final r in recordatorios)
-    for (final toma in r.tomasEntre(ahora, ahora.add(ventanaAvisos)))
-      AvisoProgramado(
-        id: '${r.id}@${toma.toIso8601String()}',
-        cuando: toma,
-        titulo: t.recordatorioAvisoTitulo(
-          r.titulo,
-          nombresDeMascotas[r.mascotaId] ?? '',
-        ),
-        cuerpo: r.dosis ?? t.recordatorioAvisoCuerpo,
-        ruta: '/mascotas/${r.mascotaId}',
-      ),
-]..sort((a, b) => a.cuando.compareTo(b.cuando));
+  AppLocalizations t, {
+  Iterable<TomaHecha> hechas = const [],
+}) {
+  // Una toma marcada antes de la hora ya no avisa.
+  final marcadas = {
+    for (final h in hechas)
+      '${h.recordatorioId}@${h.prevista.toIso8601String()}',
+  };
+  return [
+    for (final r in recordatorios)
+      for (final toma in r.tomasEntre(ahora, ahora.add(ventanaAvisos)))
+        if (!marcadas.contains('${r.id}@${toma.toIso8601String()}'))
+          AvisoProgramado(
+            id: '${r.id}@${toma.toIso8601String()}',
+            cuando: toma,
+            titulo: t.recordatorioAvisoTitulo(
+              r.titulo,
+              nombresDeMascotas[r.mascotaId] ?? '',
+            ),
+            cuerpo: r.dosis ?? t.recordatorioAvisoCuerpo,
+            ruta: '/mascotas/${r.mascotaId}',
+          ),
+  ]..sort((a, b) => a.cuando.compareTo(b.cuando));
+}
 
 /// Mantiene programados los avisos de los recordatorios mientras la app está
 /// abierta: al cambiar los recordatorios y cada hora. Lo escucha la raíz de
@@ -119,11 +128,13 @@ final programadorRecordatoriosProvider = Provider<void>((ref) {
   final recordatorios = ref.watch(misRecordatoriosProvider).value ?? const [];
   final mascotas = ref.watch(misMascotasProvider).value ?? const <Mascota>[];
   final nombres = {for (final m in mascotas) m.id: m.nombre};
+  final hechas = ref.watch(tomasHechasProvider).value ?? const <TomaHecha>[];
   final reloj = ref.watch(relojProvider);
   final t = lookupAppLocalizations(const Locale('es'));
 
-  void reprogramar() =>
-      avisador.programar(avisosDe(recordatorios, nombres, reloj(), t));
+  void reprogramar() => avisador.programar(
+    avisosDe(recordatorios, nombres, reloj(), t, hechas: hechas),
+  );
   reprogramar();
   final cadaHora = Timer.periodic(
     const Duration(hours: 1),

@@ -640,5 +640,17 @@
   "recordatorioCuando": "Cuándo",
   "recordatorioYaPaso": "Ya pasó",
   "libretaRecordarmeDe": "Recordarme {nombre}",
-  "@libretaRecordarmeDe": {"placeholders": {"nombre": {"type": "String"}}}
+  "@libretaRecordarmeDe": {"placeholders": {"nombre": {"type": "String"}}},
+  "recordatorioYaSeLaDi": "✅ Ya se la di ({hora})",
+  "@recordatorioYaSeLaDi": {"placeholders": {"hora": {"type": "String"}}},
+  "recordatorioYaComio": "✅ Ya comió ({hora})",
+  "@recordatorioYaComio": {"placeholders": {"hora": {"type": "String"}}},
+  "recordatorioHecho": "✅ Hecho ({hora})",
+  "@recordatorioHecho": {"placeholders": {"hora": {"type": "String"}}},
+  "recordatorioMarcado": "Listo, quedó anotado.",
+  "recordatorioDeshacer": "Deshacer",
+  "recordatorioHistorial": "Historial",
+  "recordatorioHistorialVacio": "Todavía no marcaste ninguna toma.",
+  "recordatorioHistorialMarcada": "Marcada {cuando}",
+  "@recordatorioHistorialMarcada": {"placeholders": {"cuando": {"type": "String"}}}
 }

@@ -1585,4 +1585,36 @@ class AppLocalizationsEs extends AppLocalizations {
   String libretaRecordarmeDe(String nombre) {
     return 'Recordarme $nombre';
   }
+
+  @override
+  String recordatorioYaSeLaDi(String hora) {
+    return '✅ Ya se la di ($hora)';
+  }
+
+  @override
+  String recordatorioYaComio(String hora) {
+    return '✅ Ya comió ($hora)';
+  }
+
+  @override
+  String recordatorioHecho(String hora) {
+    return '✅ Hecho ($hora)';
+  }
+
+  @override
+  String get recordatorioMarcado => 'Listo, quedó anotado.';
+
+  @override
+  String get recordatorioDeshacer => 'Deshacer';
+
+  @override
+  String get recordatorioHistorial => 'Historial';
+
+  @override
+  String get recordatorioHistorialVacio => 'Todavía no marcaste ninguna toma.';
+
+  @override
+  String recordatorioHistorialMarcada(String cuando) {
+    return 'Marcada $cuando';
+  }
 }

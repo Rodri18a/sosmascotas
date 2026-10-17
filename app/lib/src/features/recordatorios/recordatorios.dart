@@ -51,6 +51,7 @@ class TarjetaRecordatorios extends ConsumerWidget {
     final tema = Theme.of(context);
     final ahora = ref.watch(relojProvider)();
     final recordatorios = ref.watch(recordatoriosDeMascotaProvider(mascotaId));
+    final hechas = ref.watch(tomasHechasProvider).value ?? const <TomaHecha>[];
 
     return Card(
       child: Padding(
@@ -73,7 +74,7 @@ class TarjetaRecordatorios extends ConsumerWidget {
               AsyncData(value: final lista) => Column(
                 children: [
                   const _PermisoAvisos(),
-                  for (final r in lista)
+                  for (final r in lista) ...[
                     ListTile(
                       leading: Icon(
                         r.activo
@@ -87,6 +88,12 @@ class TarjetaRecordatorios extends ConsumerWidget {
                         Rutas.editarRecordatorio(mascotaId, r.id),
                       ),
                     ),
+                    if (tomaPendiente(r, ahora, hechas) case final toma?)
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(72, 0, 16, 8),
+                        child: _BotonYaSeLaDi(recordatorio: r, toma: toma),
+                      ),
+                  ],
                 ],
               ),
               AsyncLoading() => const Padding(
@@ -127,6 +134,137 @@ class TarjetaRecordatorios extends ConsumerWidget {
         t.recordatorioTerminado,
     ];
     return partes.join(' · ');
+  }
+}
+
+/// "✅ Ya se la di" (paso 1.5.5): marca la toma y deja deshacerlo.
+class _BotonYaSeLaDi extends ConsumerStatefulWidget {
+  const _BotonYaSeLaDi({required this.recordatorio, required this.toma});
+
+  final Recordatorio recordatorio;
+  final DateTime toma;
+
+  @override
+  ConsumerState<_BotonYaSeLaDi> createState() => _BotonYaSeLaDiState();
+}
+
+class _BotonYaSeLaDiState extends ConsumerState<_BotonYaSeLaDi> {
+  bool _marcando = false;
+
+  Future<void> _marcar() async {
+    final t = context.t;
+    final mensajes = ScaffoldMessenger.of(context);
+    final repo = ref.read(recordatoriosRepositorioProvider);
+    // El botón desaparece al marcar: lo que sigue (deshacer) usa el
+    // contenedor, que no depende de este widget.
+    final contenedor = ProviderScope.containerOf(context, listen: false);
+    final id = widget.recordatorio.id;
+    void releer() => contenedor
+      ..invalidate(tomasHechasProvider)
+      ..invalidate(historialProvider(id));
+    setState(() => _marcando = true);
+    try {
+      final hecha = await repo.marcar(id, widget.toma);
+      contenedor
+          .read(metricasProvider)
+          .track(
+            Eventos.reminderDone,
+            props: {'tipo': widget.recordatorio.tipo.name},
+          );
+      mensajes.showSnackBar(
+        SnackBar(
+          content: Text(t.recordatorioMarcado),
+          action: SnackBarAction(
+            label: t.recordatorioDeshacer,
+            onPressed: () async {
+              try {
+                await repo.desmarcar(hecha.id);
+              } on Exception {
+                mensajes.showSnackBar(
+                  SnackBar(content: Text(t.errorSinConexion)),
+                );
+              }
+              releer();
+            },
+          ),
+        ),
+      );
+    } on Exception {
+      // Puede que ya estuviera marcada: se vuelve a leer igual.
+      mensajes.showSnackBar(SnackBar(content: Text(t.errorSinConexion)));
+    } finally {
+      if (mounted) setState(() => _marcando = false);
+      releer();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final t = context.t;
+    final hora = MaterialLocalizations.of(context).formatTimeOfDay(
+      TimeOfDay.fromDateTime(widget.toma),
+      alwaysUse24HourFormat: true,
+    );
+    return Align(
+      alignment: AlignmentDirectional.centerStart,
+      child: FilledButton.tonal(
+        onPressed: _marcando ? null : _marcar,
+        child: Text(switch (widget.recordatorio.tipo) {
+          TipoRecordatorio.medication => t.recordatorioYaSeLaDi(hora),
+          TipoRecordatorio.food => t.recordatorioYaComio(hora),
+          TipoRecordatorio.vaccine ||
+          TipoRecordatorio.checkup => t.recordatorioHecho(hora),
+        }),
+      ),
+    );
+  }
+}
+
+/// Las últimas tomas marcadas de un recordatorio.
+class _Historial extends ConsumerWidget {
+  const _Historial({required this.recordatorioId});
+
+  final String recordatorioId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = context.t;
+    final tema = Theme.of(context);
+    final ahora = ref.watch(relojProvider)();
+    final historial = ref.watch(historialProvider(recordatorioId));
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const SizedBox(height: 16),
+        Text(t.recordatorioHistorial, style: tema.textTheme.titleSmall),
+        switch (historial) {
+          AsyncData(value: final tomas) when tomas.isEmpty => Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Text(t.recordatorioHistorialVacio),
+          ),
+          AsyncData(value: final tomas) => Column(
+            children: [
+              for (final toma in tomas)
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.check_circle_outline),
+                  title: Text(textoCuando(context, toma.prevista, ahora)),
+                  subtitle: Text(
+                    t.recordatorioHistorialMarcada(
+                      textoCuando(context, toma.hecha, ahora),
+                    ),
+                  ),
+                ),
+            ],
+          ),
+          AsyncLoading() => const Padding(
+            padding: EdgeInsets.all(8),
+            child: Center(child: CircularProgressIndicator()),
+          ),
+          _ => Text(t.errorSinConexion),
+        },
+      ],
+    );
   }
 }
 
@@ -746,6 +884,7 @@ class _FormularioState extends ConsumerState<_Formulario> {
                       style: TextStyle(color: tema.colorScheme.error),
                     ),
                   ),
+                  _Historial(recordatorioId: widget.original!.id),
                 ],
               ],
             ),

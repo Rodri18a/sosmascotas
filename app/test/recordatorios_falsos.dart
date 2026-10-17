@@ -45,6 +45,49 @@ class RecordatoriosFalsos implements RecordatoriosRepositorio {
     if (fallar) throw Exception('sin internet');
     recordatorios.removeWhere((r) => r.id == id);
   }
+
+  final List<TomaHecha> tomas = [];
+
+  /// Cuándo "se marca" (lo pone la base).
+  DateTime ahora = DateTime(2026, 10, 17, 10, 20);
+
+  @override
+  Future<List<TomaHecha>> tomasHechas({required DateTime desde}) async =>
+      tomas.where((t) => !t.prevista.isBefore(desde)).toList();
+
+  @override
+  Future<List<TomaHecha>> historial(
+    String recordatorioId, {
+    int limite = 30,
+  }) async =>
+      (tomas.where((t) => t.recordatorioId == recordatorioId).toList()
+            ..sort((a, b) => b.prevista.compareTo(a.prevista)))
+          .take(limite)
+          .toList();
+
+  @override
+  Future<TomaHecha> marcar(String recordatorioId, DateTime prevista) async {
+    if (fallar) throw Exception('sin internet');
+    if (tomas.any(
+      (t) => t.recordatorioId == recordatorioId && t.prevista == prevista,
+    )) {
+      throw Exception('duplicada');
+    }
+    final toma = TomaHecha(
+      id: 'toma-${tomas.length + 1}',
+      recordatorioId: recordatorioId,
+      prevista: prevista,
+      hecha: ahora,
+    );
+    tomas.add(toma);
+    return toma;
+  }
+
+  @override
+  Future<void> desmarcar(String tomaId) async {
+    if (fallar) throw Exception('sin internet');
+    tomas.removeWhere((t) => t.id == tomaId);
+  }
 }
 
 /// Anota lo que la app programa en vez de mostrar avisos.
