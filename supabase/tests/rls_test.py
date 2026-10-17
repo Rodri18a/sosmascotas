@@ -195,6 +195,9 @@ def main():
         caso('A no puede pasar su registro a la mascota de B',
              bloqueado(rest('PATCH', f"health_records?id=eq.{vacuna.get('id')}", {'pet_id': r_pet_b[0]['id']}, a))
              if r_pet_b else False)
+        if r_pet_b:  # la mascota de B y su QR automático confundirían las pruebas de qr_tags
+            pedir('DELETE', f"{URL}/rest/v1/qr_tags?owner_id=eq.{b_id}", headers=ADMIN)
+            rest('DELETE', f"pets?id=eq.{r_pet_b[0]['id']}", quien=b)
         caso('un tipo inventado se rechaza',
              rest('POST', 'health_records', {'pet_id': pet.get('id'), 'kind': 'magia', 'name': 'X'}, a)[0] == 400)
         caso('la próxima fecha no puede ser anterior a la fecha',

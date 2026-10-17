@@ -182,7 +182,7 @@ Regla de trabajo: **por cada etapa de desarrollo, avanzar al menos un paso de va
 - [ ] 1.4.5 Seguir un SOS y notificar novedades y resolución (⏱️ 3 h)
 
 ### Etapa 1.5 · Libreta y recordatorios
-- [ ] 1.5.1 `health_records` + pantalla de la libreta sanitaria (⏱️ 4 h) — 17/10/2026 **adelantado y oculto** (D66), detrás de la funcionalidad `libreta`: migración `health_records` + casos en `rls_test.py`, modelo `RegistroSalud` en el núcleo, sección en la ficha y formulario (alta, edición, borrado), evento `health_record_create`; pruebas OK (174 app, 62 núcleo). **Falta:** aplicar la migración en dev (con aprobación), correr `rls_test.py`, crear la marca `libreta` e invitarte para probarla
+- [ ] 1.5.1 `health_records` + pantalla de la libreta sanitaria (⏱️ 4 h) — 17/10/2026 **adelantado y oculto** (D66), detrás de la funcionalidad `libreta`: migración `health_records` + casos en `rls_test.py`, modelo `RegistroSalud` en el núcleo, sección en la ficha y formulario (alta, edición, borrado), evento `health_record_create`; pruebas OK (174 app, 62 núcleo). migración aplicada en dev, `rls_test.py` OK (248 casos), marca `libreta` creada en `beta` con rodrigo18a@gmail.com invitado. **Falta:** verla en la app online (compilación nueva) y marcar el paso
 - [ ] 1.5.2 Semáforo de próximos controles (⏱️ 1 h)
 - [ ] 1.5.2b Estado RENAC + guía "Cómo registrar a tu mascota" + botón "Verificar en el RENAC" (⏱️ 2 h)
 - [ ] 1.5.3 `reminders` + notificaciones locales de medicación (⏱️ 4 h)
