@@ -2391,6 +2391,264 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Lo próximo de la libreta'**
   String get libretaProximoUrgente;
+
+  /// No description provided for @recordatoriosTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Recordatorios'**
+  String get recordatoriosTitulo;
+
+  /// No description provided for @recordatoriosVacio.
+  ///
+  /// In es, this message translates to:
+  /// **'Programá remedios, comidas o vacunas y te avisamos a la hora.'**
+  String get recordatoriosVacio;
+
+  /// No description provided for @recordatoriosAgregar.
+  ///
+  /// In es, this message translates to:
+  /// **'Agregar recordatorio'**
+  String get recordatoriosAgregar;
+
+  /// No description provided for @recordatorioNuevoTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Nuevo recordatorio'**
+  String get recordatorioNuevoTitulo;
+
+  /// No description provided for @recordatorioEditarTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Editar recordatorio'**
+  String get recordatorioEditarTitulo;
+
+  /// No description provided for @recordatorioTipoMedicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Medicación'**
+  String get recordatorioTipoMedicacion;
+
+  /// No description provided for @recordatorioTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Remedio'**
+  String get recordatorioTitulo;
+
+  /// No description provided for @recordatorioTituloAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Por ejemplo: antibiótico, antiinflamatorio, gotas para los oídos.'**
+  String get recordatorioTituloAyuda;
+
+  /// No description provided for @recordatorioTituloFalta.
+  ///
+  /// In es, this message translates to:
+  /// **'Escribí qué hay que darle.'**
+  String get recordatorioTituloFalta;
+
+  /// No description provided for @recordatorioTituloLargo.
+  ///
+  /// In es, this message translates to:
+  /// **'Usá hasta 80 letras.'**
+  String get recordatorioTituloLargo;
+
+  /// No description provided for @recordatorioDosis.
+  ///
+  /// In es, this message translates to:
+  /// **'Dosis (opcional)'**
+  String get recordatorioDosis;
+
+  /// No description provided for @recordatorioDosisAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Por ejemplo: 1/2 comprimido, 5 gotas.'**
+  String get recordatorioDosisAyuda;
+
+  /// No description provided for @recordatorioFrecuencia.
+  ///
+  /// In es, this message translates to:
+  /// **'Cada cuánto'**
+  String get recordatorioFrecuencia;
+
+  /// No description provided for @recordatorioCadaHoras.
+  ///
+  /// In es, this message translates to:
+  /// **'Cada X horas'**
+  String get recordatorioCadaHoras;
+
+  /// No description provided for @recordatorioDiaria.
+  ///
+  /// In es, this message translates to:
+  /// **'Todos los días'**
+  String get recordatorioDiaria;
+
+  /// No description provided for @recordatorioSemanal.
+  ///
+  /// In es, this message translates to:
+  /// **'Algunos días'**
+  String get recordatorioSemanal;
+
+  /// No description provided for @recordatorioCadaNHoras.
+  ///
+  /// In es, this message translates to:
+  /// **'{horas, plural, =1{Cada 1 hora} other{Cada {horas} horas}}'**
+  String recordatorioCadaNHoras(int horas);
+
+  /// No description provided for @recordatorioPrimeraToma.
+  ///
+  /// In es, this message translates to:
+  /// **'Primera toma'**
+  String get recordatorioPrimeraToma;
+
+  /// No description provided for @recordatorioInicio.
+  ///
+  /// In es, this message translates to:
+  /// **'Desde'**
+  String get recordatorioInicio;
+
+  /// No description provided for @recordatorioHorarios.
+  ///
+  /// In es, this message translates to:
+  /// **'Horarios'**
+  String get recordatorioHorarios;
+
+  /// No description provided for @recordatorioAgregarHorario.
+  ///
+  /// In es, this message translates to:
+  /// **'Agregar horario'**
+  String get recordatorioAgregarHorario;
+
+  /// No description provided for @recordatorioQuitarHorario.
+  ///
+  /// In es, this message translates to:
+  /// **'Quitar {hora}'**
+  String recordatorioQuitarHorario(String hora);
+
+  /// No description provided for @recordatorioSinHorarios.
+  ///
+  /// In es, this message translates to:
+  /// **'Agregá al menos un horario.'**
+  String get recordatorioSinHorarios;
+
+  /// No description provided for @recordatorioDias.
+  ///
+  /// In es, this message translates to:
+  /// **'Días'**
+  String get recordatorioDias;
+
+  /// No description provided for @recordatorioSinDias.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegí al menos un día.'**
+  String get recordatorioSinDias;
+
+  /// No description provided for @recordatorioFin.
+  ///
+  /// In es, this message translates to:
+  /// **'Hasta'**
+  String get recordatorioFin;
+
+  /// No description provided for @recordatorioFinSin.
+  ///
+  /// In es, this message translates to:
+  /// **'Sin fecha de fin'**
+  String get recordatorioFinSin;
+
+  /// No description provided for @recordatorioFinAntes.
+  ///
+  /// In es, this message translates to:
+  /// **'La fecha de fin no puede ser anterior al inicio.'**
+  String get recordatorioFinAntes;
+
+  /// No description provided for @recordatorioActivo.
+  ///
+  /// In es, this message translates to:
+  /// **'Avisarme'**
+  String get recordatorioActivo;
+
+  /// No description provided for @recordatorioPausado.
+  ///
+  /// In es, this message translates to:
+  /// **'Pausado'**
+  String get recordatorioPausado;
+
+  /// No description provided for @recordatorioTerminado.
+  ///
+  /// In es, this message translates to:
+  /// **'Terminado'**
+  String get recordatorioTerminado;
+
+  /// No description provided for @recordatorioProxima.
+  ///
+  /// In es, this message translates to:
+  /// **'Próxima: {cuando}'**
+  String recordatorioProxima(String cuando);
+
+  /// No description provided for @recordatorioHoyA.
+  ///
+  /// In es, this message translates to:
+  /// **'hoy a las {hora}'**
+  String recordatorioHoyA(String hora);
+
+  /// No description provided for @recordatorioMananaA.
+  ///
+  /// In es, this message translates to:
+  /// **'mañana a las {hora}'**
+  String recordatorioMananaA(String hora);
+
+  /// No description provided for @recordatorioFechaA.
+  ///
+  /// In es, this message translates to:
+  /// **'{fecha} a las {hora}'**
+  String recordatorioFechaA(String fecha, String hora);
+
+  /// No description provided for @recordatorioBorrar.
+  ///
+  /// In es, this message translates to:
+  /// **'Borrar recordatorio'**
+  String get recordatorioBorrar;
+
+  /// No description provided for @recordatorioBorrarTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Borrar «{nombre}»?'**
+  String recordatorioBorrarTitulo(String nombre);
+
+  /// No description provided for @recordatorioBorrarExplicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Deja de avisarte y no se puede recuperar.'**
+  String get recordatorioBorrarExplicacion;
+
+  /// No description provided for @recordatorioAvisoTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'{titulo} para {mascota}'**
+  String recordatorioAvisoTitulo(String titulo, String mascota);
+
+  /// No description provided for @recordatorioAvisoCuerpo.
+  ///
+  /// In es, this message translates to:
+  /// **'Es la hora.'**
+  String get recordatorioAvisoCuerpo;
+
+  /// No description provided for @recordatoriosAvisosWeb.
+  ///
+  /// In es, this message translates to:
+  /// **'En la web te avisamos mientras la app esté abierta (aunque esté minimizada). Instalada en Android o iPhone, te va a avisar siempre.'**
+  String get recordatoriosAvisosWeb;
+
+  /// No description provided for @recordatoriosActivarAvisos.
+  ///
+  /// In es, this message translates to:
+  /// **'Activar avisos'**
+  String get recordatoriosActivarAvisos;
+
+  /// No description provided for @recordatoriosAvisosBloqueados.
+  ///
+  /// In es, this message translates to:
+  /// **'Los avisos están bloqueados en este navegador. Habilitalos en la configuración del sitio.'**
+  String get recordatoriosAvisosBloqueados;
 }
 
 class _AppLocalizationsDelegate

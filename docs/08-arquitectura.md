@@ -114,7 +114,7 @@ Se despliegan con `supabase functions deploy <nombre> --use-api` y se prueban en
 | Escaneo de QR | Edge Function + FCM | "Escanearon el QR de Toby cerca de…" |
 | Novedades de búsquedas que sigo | Edge Function + FCM | "¡Apareció Luna!" |
 | Chat, turnos, pedidos | Realtime + FCM | |
-| Recordatorios de medicación, comida y vacunas | **Locales** (sin servidor) | "Pastilla de Toby (8:00)" |
+| Recordatorios de medicación, comida y vacunas | **Locales** (sin servidor). En la web, solo con la app abierta (D67) | "Antibiótico para Toby" |
 | Recordatorios del hogar compartido | Locales + sincronización por Realtime / FCM | "Ana ya le dio la pastilla" |
 
 - Las push usan el **token del dispositivo** (`push_tokens`), nunca el teléfono.
@@ -159,6 +159,7 @@ Tabla `events` (append-only), escrita por el cliente con `ref.read(metricasProvi
 | `alert_zone_set` / `alert_zone_clear` | — (guardó o borró su zona para avisos; **sin coordenadas**) |
 | `signup` / `pet_create` | — |
 | `health_record_create` | tipo del registro de la libreta (`vaccine`, `deworming`, `checkup`, `allergy`, `other`; D66) |
+| `reminder_create` | tipo del recordatorio (`medication`, `food`, `vaccine`, `checkup`; D67) |
 | `reminder_done` | tipo |
 
 - Se guarda `user_id` solo para métricas internas (retención). A las empresas se les muestran **agregados**.

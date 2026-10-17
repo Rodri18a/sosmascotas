@@ -20,6 +20,8 @@ import 'package:sosmascota/src/mascotas/mascotas_repositorio.dart';
 import 'package:sosmascota/src/metricas/metricas.dart';
 import 'package:sosmascota/src/push/servicio_push.dart';
 import 'package:sosmascota/src/qr/qr_repositorio.dart';
+import 'package:sosmascota/src/recordatorios/avisador.dart';
+import 'package:sosmascota/src/recordatorios/recordatorios_repositorio.dart';
 import 'package:sosmascota/src/sos/sos_repositorio.dart';
 import 'package:sosmascota/src/theme/tema_elegido.dart';
 import 'package:sosmascota/src/ubicacion/servicio_ubicacion.dart';
@@ -37,6 +39,7 @@ import 'mapa_falso.dart';
 import 'mascotas_falsas.dart';
 import 'perfil_falso.dart';
 import 'qr_falso.dart';
+import 'recordatorios_falsos.dart';
 import 'sos_falso.dart';
 import 'tema_falso.dart';
 
@@ -54,6 +57,8 @@ Widget appDePrueba({
   List<Map<String, Object?>>? eventos,
   MascotasRepositorio? mascotas,
   LibretaRepositorio? libreta,
+  RecordatoriosRepositorio? recordatorios,
+  AvisadorRecordatorios? avisador,
   SelectorFoto? selectorFoto,
   QrRepositorio? qr,
   AvisosRepositorio? avisos,
@@ -108,6 +113,12 @@ Widget appDePrueba({
     catalogoRepositorioProvider.overrideWithValue(CatalogoFalso()),
     mascotasRepositorioProvider.overrideWithValue(mascotas ?? MascotasFalsas()),
     libretaRepositorioProvider.overrideWithValue(libreta ?? LibretaFalsa()),
+    recordatoriosRepositorioProvider.overrideWithValue(
+      recordatorios ?? RecordatoriosFalsos(),
+    ),
+    avisadorRecordatoriosProvider.overrideWithValue(
+      avisador ?? AvisadorFalso(),
+    ),
     selectorFotoProvider.overrideWithValue(selectorFoto ?? (_) async => null),
     servicioCuentaProvider.overrideWithValue(cuenta ?? ServicioCuentaFalso()),
     perfilRepositorioProvider.overrideWithValue(

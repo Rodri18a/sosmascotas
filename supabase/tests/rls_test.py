@@ -210,6 +210,28 @@ def main():
         caso('A puede borrar su registro',
              len(filas(rest('DELETE', f"health_records?id=eq.{vacuna.get('id')}", quien=a))) == 1)
 
+        print('reminders (recordatorios)')
+        pastilla = {'pet_id': pet.get('id'), 'kind': 'medication', 'title': 'Antibiótico', 'dose': '1/2',
+                    'schedule': {'tipo': 'cada_horas', 'horas': 8}, 'starts_at': '2026-10-17T11:00:00Z'}
+        r_rec = rest('POST', 'reminders', pastilla, a)
+        rec = filas(r_rec)[0] if filas(r_rec) else {}
+        caso('A puede crear un recordatorio de su mascota', rec.get('title') == 'Antibiótico' and rec.get('active') is True)
+        caso('B no ve los recordatorios de A', filas(rest('GET', 'reminders?select=id', quien=b)) == [])
+        caso('un visitante no ve recordatorios', bloqueado(rest('GET', 'reminders?select=id')))
+        caso('B no puede crear un recordatorio para la mascota de A', bloqueado(rest('POST', 'reminders', pastilla, b)))
+        caso('B no puede cambiar un recordatorio de A',
+             bloqueado(rest('PATCH', f"reminders?id=eq.{rec.get('id')}", {'title': 'X'}, b)))
+        caso('B no puede borrar un recordatorio de A',
+             bloqueado(rest('DELETE', f"reminders?id=eq.{rec.get('id')}", quien=b)))
+        caso('una frecuencia inventada se rechaza',
+             rest('POST', 'reminders', {**pastilla, 'schedule': {'tipo': 'mensual'}}, a)[0] == 400)
+        caso('un tipo inventado se rechaza',
+             rest('POST', 'reminders', {**pastilla, 'kind': 'magia'}, a)[0] == 400)
+        caso('el fin no puede ser antes del inicio',
+             rest('POST', 'reminders', {**pastilla, 'ends_on': '2026-10-01'}, a)[0] == 400)
+        caso('A puede pausar su recordatorio',
+             filas(rest('PATCH', f"reminders?id=eq.{rec.get('id')}", {'active': False}, a))[0]['active'] is False)
+
         print('qr_tags y página pública')
         tags_a = filas(rest('GET', f"qr_tags?select=*&pet_id=eq.{pet.get('id')}", quien=a))
         tag = tags_a[0] if tags_a else {}

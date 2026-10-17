@@ -18,6 +18,8 @@ abstract final class Eventos {
   static const pwaPrompt = 'pwa_prompt';
   static const pwaInstalled = 'pwa_installed';
   static const healthRecordCreate = 'health_record_create';
+  static const reminderCreate = 'reminder_create';
+  static const reminderDone = 'reminder_done';
 }
 
 /// Valida el nombre de un evento con la misma regla que la base de datos.

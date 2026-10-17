@@ -18,6 +18,7 @@ import 'features/mascotas/mascota_form_screen.dart';
 import 'features/mascotas/mascotas_screen.dart';
 import 'features/mascotas/qr_mascota_screen.dart';
 import 'features/no_disponible/no_disponible_screen.dart';
+import 'features/recordatorios/recordatorios.dart';
 import 'features/shell/app_shell.dart';
 import 'features/sos/sos_detalle_screen.dart';
 import 'features/sos/sos_nuevo_screen.dart';
@@ -43,12 +44,14 @@ abstract final class Rutas {
   static const mascotaNueva = '/mascotas/nueva';
   static const noDisponible = '/no-disponible';
   static const libreta = '/libreta';
+  static const recordatorios = '/recordatorios';
 
   /// Rutas detrás de una funcionalidad gradual (comienzo de la ruta → clave de
   /// `Funcionalidades`). Quien entra sin tenerla prendida ve "Todavía no está
   /// disponible" (D64).
   static const conFuncionalidad = <String, String>{
     '$libreta/': Funcionalidades.libreta,
+    '$recordatorios/': Funcionalidades.recordatorios,
   };
 
   /// Rutas que un visitante no puede ver: se le pide ingresar y después vuelve.
@@ -57,6 +60,7 @@ abstract final class Rutas {
     '$mascotas/',
     avisos,
     '$libreta/',
+    '$recordatorios/',
   ];
 
   static String fichaMascota(String id) => '$mascotas/$id';
@@ -71,6 +75,10 @@ abstract final class Rutas {
       '$libreta/$mascotaId/nuevo';
   static String editarRegistroSalud(String mascotaId, String id) =>
       '$libreta/$mascotaId/$id';
+  static String nuevoRecordatorio(String mascotaId) =>
+      '$recordatorios/$mascotaId/nuevo';
+  static String editarRecordatorio(String mascotaId, String id) =>
+      '$recordatorios/$mascotaId/$id';
 
   /// Pantalla de ingreso que, al terminar, vuelve a [destino].
   static String ingresarYVolverA(String destino) =>
@@ -212,6 +220,18 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (_, state) => RegistroSaludScreen(
           mascotaId: state.pathParameters['mascota']!,
           registroId: state.pathParameters['id'],
+        ),
+      ),
+      GoRoute(
+        path: '${Rutas.recordatorios}/:mascota/nuevo',
+        builder: (_, state) =>
+            RecordatorioScreen(mascotaId: state.pathParameters['mascota']!),
+      ),
+      GoRoute(
+        path: '${Rutas.recordatorios}/:mascota/:id',
+        builder: (_, state) => RecordatorioScreen(
+          mascotaId: state.pathParameters['mascota']!,
+          recordatorioId: state.pathParameters['id'],
         ),
       ),
       GoRoute(

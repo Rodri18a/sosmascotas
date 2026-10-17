@@ -1378,4 +1378,161 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get libretaProximoUrgente => 'Lo próximo de la libreta';
+
+  @override
+  String get recordatoriosTitulo => 'Recordatorios';
+
+  @override
+  String get recordatoriosVacio =>
+      'Programá remedios, comidas o vacunas y te avisamos a la hora.';
+
+  @override
+  String get recordatoriosAgregar => 'Agregar recordatorio';
+
+  @override
+  String get recordatorioNuevoTitulo => 'Nuevo recordatorio';
+
+  @override
+  String get recordatorioEditarTitulo => 'Editar recordatorio';
+
+  @override
+  String get recordatorioTipoMedicacion => 'Medicación';
+
+  @override
+  String get recordatorioTitulo => 'Remedio';
+
+  @override
+  String get recordatorioTituloAyuda =>
+      'Por ejemplo: antibiótico, antiinflamatorio, gotas para los oídos.';
+
+  @override
+  String get recordatorioTituloFalta => 'Escribí qué hay que darle.';
+
+  @override
+  String get recordatorioTituloLargo => 'Usá hasta 80 letras.';
+
+  @override
+  String get recordatorioDosis => 'Dosis (opcional)';
+
+  @override
+  String get recordatorioDosisAyuda => 'Por ejemplo: 1/2 comprimido, 5 gotas.';
+
+  @override
+  String get recordatorioFrecuencia => 'Cada cuánto';
+
+  @override
+  String get recordatorioCadaHoras => 'Cada X horas';
+
+  @override
+  String get recordatorioDiaria => 'Todos los días';
+
+  @override
+  String get recordatorioSemanal => 'Algunos días';
+
+  @override
+  String recordatorioCadaNHoras(int horas) {
+    String _temp0 = intl.Intl.pluralLogic(
+      horas,
+      locale: localeName,
+      other: 'Cada $horas horas',
+      one: 'Cada 1 hora',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get recordatorioPrimeraToma => 'Primera toma';
+
+  @override
+  String get recordatorioInicio => 'Desde';
+
+  @override
+  String get recordatorioHorarios => 'Horarios';
+
+  @override
+  String get recordatorioAgregarHorario => 'Agregar horario';
+
+  @override
+  String recordatorioQuitarHorario(String hora) {
+    return 'Quitar $hora';
+  }
+
+  @override
+  String get recordatorioSinHorarios => 'Agregá al menos un horario.';
+
+  @override
+  String get recordatorioDias => 'Días';
+
+  @override
+  String get recordatorioSinDias => 'Elegí al menos un día.';
+
+  @override
+  String get recordatorioFin => 'Hasta';
+
+  @override
+  String get recordatorioFinSin => 'Sin fecha de fin';
+
+  @override
+  String get recordatorioFinAntes =>
+      'La fecha de fin no puede ser anterior al inicio.';
+
+  @override
+  String get recordatorioActivo => 'Avisarme';
+
+  @override
+  String get recordatorioPausado => 'Pausado';
+
+  @override
+  String get recordatorioTerminado => 'Terminado';
+
+  @override
+  String recordatorioProxima(String cuando) {
+    return 'Próxima: $cuando';
+  }
+
+  @override
+  String recordatorioHoyA(String hora) {
+    return 'hoy a las $hora';
+  }
+
+  @override
+  String recordatorioMananaA(String hora) {
+    return 'mañana a las $hora';
+  }
+
+  @override
+  String recordatorioFechaA(String fecha, String hora) {
+    return '$fecha a las $hora';
+  }
+
+  @override
+  String get recordatorioBorrar => 'Borrar recordatorio';
+
+  @override
+  String recordatorioBorrarTitulo(String nombre) {
+    return '¿Borrar «$nombre»?';
+  }
+
+  @override
+  String get recordatorioBorrarExplicacion =>
+      'Deja de avisarte y no se puede recuperar.';
+
+  @override
+  String recordatorioAvisoTitulo(String titulo, String mascota) {
+    return '$titulo para $mascota';
+  }
+
+  @override
+  String get recordatorioAvisoCuerpo => 'Es la hora.';
+
+  @override
+  String get recordatoriosAvisosWeb =>
+      'En la web te avisamos mientras la app esté abierta (aunque esté minimizada). Instalada en Android o iPhone, te va a avisar siempre.';
+
+  @override
+  String get recordatoriosActivarAvisos => 'Activar avisos';
+
+  @override
+  String get recordatoriosAvisosBloqueados =>
+      'Los avisos están bloqueados en este navegador. Habilitalos en la configuración del sitio.';
 }

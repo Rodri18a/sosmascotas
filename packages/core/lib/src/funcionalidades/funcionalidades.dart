@@ -12,6 +12,9 @@ abstract final class Funcionalidades {
   /// Libreta sanitaria (paso 1.5.1, Fase 1): oculta hasta el lanzamiento de la Fase 1.
   static const libreta = 'libreta';
 
+  /// Recordatorios de medicación, comida y vacunas (pasos 1.5.3–1.5.5, Fase 1).
+  static const recordatorios = 'recordatorios';
+
   /// Las que ya están en `todos`: la app las da por prendidas aunque no pueda
   /// preguntarle a la base (sin conexión y sin nada guardado). Las demás, en
   /// ese caso, quedan apagadas (lo seguro).

@@ -6,6 +6,7 @@ import '../l10n/l10n.dart';
 
 import 'config/env_provider.dart';
 import 'push/servicio_push.dart';
+import 'recordatorios/avisador.dart';
 import 'router.dart';
 import 'sos/difusion_sos.dart';
 import 'theme/app_theme.dart';
@@ -19,6 +20,8 @@ class SosMascotaApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final env = ref.watch(appEnvProvider);
     final router = ref.watch(routerProvider);
+    // Avisos de los recordatorios mientras la app está abierta (D67).
+    ref.watch(programadorRecordatoriosProvider);
     final paleta = ref.watch(paletaActivaProvider);
     ref
       ..watch(fuentesDelTemaProvider)
