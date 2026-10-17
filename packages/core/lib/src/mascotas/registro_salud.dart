@@ -106,3 +106,41 @@ Map<TipoRegistroSalud, List<RegistroSalud>> agruparLibreta(
   }
   return grupos;
 }
+
+/// Semáforo de próximos controles (paso 1.5.2, `03-funcionalidades-app.md`):
+/// rojo a 7 días o menos, amarillo hasta 30, verde si falta más, y vencido
+/// si la fecha ya pasó.
+enum Semaforo { vencido, rojo, amarillo, verde }
+
+/// Días de calendario desde [hoy] hasta [fecha] (negativo si ya pasó).
+int diasHasta(DateTime fecha, DateTime hoy) => DateTime.utc(
+  fecha.year,
+  fecha.month,
+  fecha.day,
+).difference(DateTime.utc(hoy.year, hoy.month, hoy.day)).inDays;
+
+Semaforo semaforoDe(DateTime proxima, DateTime hoy) {
+  final dias = diasHasta(proxima, hoy);
+  if (dias < 0) return Semaforo.vencido;
+  if (dias <= 7) return Semaforo.rojo;
+  if (dias <= 30) return Semaforo.amarillo;
+  return Semaforo.verde;
+}
+
+/// Registros cuya próxima fecha sigue vigente, del más urgente al menos.
+/// Si se cargó una dosis más nueva de lo mismo (mismo tipo y nombre), la
+/// próxima fecha de la anterior ya no cuenta: la reemplaza la nueva.
+List<RegistroSalud> proximosVigentes(Iterable<RegistroSalud> registros) {
+  String clave(RegistroSalud r) =>
+      '${r.tipo.name}:${r.nombre.trim().toLowerCase()}';
+  final ultimo = <String, RegistroSalud>{};
+  for (final r in registros) {
+    final actual = ultimo[clave(r)];
+    final masNuevo =
+        actual == null ||
+        (r.fecha ?? DateTime(0)).isAfter(actual.fecha ?? DateTime(0));
+    if (masNuevo) ultimo[clave(r)] = r;
+  }
+  return ultimo.values.where((r) => r.proxima != null).toList()
+    ..sort((a, b) => a.proxima!.compareTo(b.proxima!));
+}

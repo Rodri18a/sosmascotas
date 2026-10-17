@@ -1350,4 +1350,32 @@ class AppLocalizationsEs extends AppLocalizations {
   String libretaProximaEl(String fecha) {
     return 'Próxima: $fecha';
   }
+
+  @override
+  String semaforoVencio(int dias) {
+    String _temp0 = intl.Intl.pluralLogic(
+      dias,
+      locale: localeName,
+      other: '$dias días',
+      one: '1 día',
+    );
+    return 'Venció hace $_temp0';
+  }
+
+  @override
+  String get semaforoHoy => 'Vence hoy';
+
+  @override
+  String semaforoFaltan(int dias) {
+    String _temp0 = intl.Intl.pluralLogic(
+      dias,
+      locale: localeName,
+      other: 'Faltan $dias días',
+      one: 'Falta 1 día',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get libretaProximoUrgente => 'Lo próximo de la libreta';
 }

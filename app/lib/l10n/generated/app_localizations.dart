@@ -2367,6 +2367,30 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Próxima: {fecha}'**
   String libretaProximaEl(String fecha);
+
+  /// No description provided for @semaforoVencio.
+  ///
+  /// In es, this message translates to:
+  /// **'Venció hace {dias, plural, =1{1 día} other{{dias} días}}'**
+  String semaforoVencio(int dias);
+
+  /// No description provided for @semaforoHoy.
+  ///
+  /// In es, this message translates to:
+  /// **'Vence hoy'**
+  String get semaforoHoy;
+
+  /// No description provided for @semaforoFaltan.
+  ///
+  /// In es, this message translates to:
+  /// **'{dias, plural, =1{Falta 1 día} other{Faltan {dias} días}}'**
+  String semaforoFaltan(int dias);
+
+  /// No description provided for @libretaProximoUrgente.
+  ///
+  /// In es, this message translates to:
+  /// **'Lo próximo de la libreta'**
+  String get libretaProximoUrgente;
 }
 
 class _AppLocalizationsDelegate

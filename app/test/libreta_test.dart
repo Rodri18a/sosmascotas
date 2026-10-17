@@ -35,6 +35,7 @@ Future<void> _abrirFicha(
   required LibretaFalsa libreta,
   bool prendida = true,
   List<Map<String, Object?>>? eventos,
+  DateTime? ahora,
 }) async {
   _pantallaDeCelular(tester);
   await tester.pumpWidget(
@@ -46,6 +47,7 @@ Future<void> _abrirFicha(
         if (prendida) Funcionalidades.libreta,
       }),
       eventos: eventos,
+      ahora: ahora ?? DateTime(2026, 9, 20, 10),
     ),
   );
   await tester.pumpAndSettle();
@@ -104,6 +106,8 @@ void main() {
     expect(vacuna.tipo, TipoRegistroSalud.vaccine);
     expect(vacuna.mascotaId, 'm1');
     expect(vacuna.fecha, DateUtils.dateOnly(DateTime.now()));
+    // Sin próxima fecha no hay semáforo.
+    expect(find.textContaining('Falta'), findsNothing);
     expect(find.widgetWithText(AppBar, 'Luna'), findsOneWidget);
     expect(find.text('Vacunas'), findsOneWidget);
     expect(find.text('Antirrábica'), findsOneWidget);
@@ -147,6 +151,7 @@ void main() {
     await _abrirFicha(tester, libreta: libreta);
     expect(find.text('Desparasitaciones'), findsOneWidget);
     expect(find.textContaining('Próxima:'), findsOneWidget);
+    expect(find.text('Faltan 20 días'), findsOneWidget);
 
     await _tocar(tester, find.text('Pipeta'));
     expect(find.widgetWithText(AppBar, 'Editar registro'), findsOneWidget);
@@ -180,6 +185,44 @@ void main() {
 
     expect(find.textContaining('No pudimos conectarnos'), findsOneWidget);
     expect(find.widgetWithText(AppBar, 'Nuevo registro'), findsOneWidget);
+  });
+
+  testWidgets('semáforo: lo vencido sale arriba y la dosis vieja ya no '
+      'cuenta', (tester) async {
+    RegistroSalud vacuna(String id, DateTime fecha, DateTime proxima) =>
+        RegistroSalud(
+          id: id,
+          mascotaId: 'm1',
+          tipo: TipoRegistroSalud.vaccine,
+          nombre: id,
+          fecha: fecha,
+          proxima: proxima,
+        );
+    await _abrirFicha(
+      tester,
+      ahora: DateTime(2026, 10, 17, 9),
+      libreta: LibretaFalsa([
+        vacuna('Séxtuple', DateTime(2025, 10, 14), DateTime(2026, 10, 14)),
+        vacuna('Triple', DateTime(2026, 4), DateTime(2026, 10, 22)),
+        vacuna('Antirrábica', DateTime(2026, 9), DateTime(2027, 9)),
+        RegistroSalud(
+          id: 'vieja',
+          mascotaId: 'm1',
+          tipo: TipoRegistroSalud.vaccine,
+          nombre: 'Antirrábica',
+          fecha: DateTime(2025, 9),
+          proxima: DateTime(2026, 9),
+        ),
+      ]),
+    );
+
+    // Arriba, lo más urgente: la Séxtuple vencida (en el aviso y en la lista).
+    expect(find.text('Venció hace 3 días'), findsNWidgets(2));
+    expect(find.text('Faltan 5 días'), findsOneWidget);
+    expect(find.text('Faltan 319 días'), findsOneWidget);
+    // La Antirrábica de 2025 tenía la próxima en 2026-09, pero ya se dio la
+    // nueva: no aparece como vencida.
+    expect(find.textContaining('Venció hace 4'), findsNothing);
   });
 
   group('rutas', () {

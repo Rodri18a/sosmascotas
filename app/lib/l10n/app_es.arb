@@ -567,5 +567,11 @@
   "@libretaBorrarTitulo": {"placeholders": {"nombre": {"type": "String"}}},
   "libretaBorrarExplicacion": "Se borra de la libreta y no se puede recuperar.",
   "libretaProximaEl": "Próxima: {fecha}",
-  "@libretaProximaEl": {"placeholders": {"fecha": {"type": "String"}}}
+  "@libretaProximaEl": {"placeholders": {"fecha": {"type": "String"}}},
+  "semaforoVencio": "Venció hace {dias, plural, =1{1 día} other{{dias} días}}",
+  "@semaforoVencio": {"placeholders": {"dias": {"type": "int"}}},
+  "semaforoHoy": "Vence hoy",
+  "semaforoFaltan": "{dias, plural, =1{Falta 1 día} other{Faltan {dias} días}}",
+  "@semaforoFaltan": {"placeholders": {"dias": {"type": "int"}}},
+  "libretaProximoUrgente": "Lo próximo de la libreta"
 }

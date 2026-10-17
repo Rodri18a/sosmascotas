@@ -8,6 +8,8 @@ import '../../mascotas/libreta_repositorio.dart';
 import '../../mascotas/textos_mascota.dart';
 import '../../metricas/metricas.dart';
 import '../../router.dart';
+import '../../theme/paleta.dart';
+import '../../utiles/enlaces.dart';
 
 IconData iconoRegistro(TipoRegistroSalud tipo) => switch (tipo) {
   TipoRegistroSalud.vaccine => Icons.vaccines_outlined,
@@ -27,8 +29,8 @@ class TarjetaLibreta extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final t = context.t;
     final tema = Theme.of(context);
-    final fechas = MaterialLocalizations.of(context);
     final libreta = ref.watch(libretaProvider(mascotaId));
+    final hoy = ref.watch(relojProvider)();
 
     return Card(
       child: Padding(
@@ -45,30 +47,10 @@ class TarjetaLibreta extends ConsumerWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(t.libretaVacia),
               ),
-              AsyncData(value: final grupos) => Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  for (final MapEntry(key: tipo, value: registros)
-                      in grupos.entries) ...[
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-                      child: Text(
-                        textoGrupoLibreta(t, tipo),
-                        style: tema.textTheme.labelLarge,
-                      ),
-                    ),
-                    for (final r in registros)
-                      ListTile(
-                        leading: Icon(iconoRegistro(tipo)),
-                        title: Text(r.nombre),
-                        subtitle: _subtitulo(t, fechas, r),
-                        trailing: const Icon(Icons.chevron_right),
-                        onTap: () => context.push(
-                          Rutas.editarRegistroSalud(mascotaId, r.id),
-                        ),
-                      ),
-                  ],
-                ],
+              AsyncData(value: final grupos) => _Registros(
+                mascotaId: mascotaId,
+                grupos: grupos,
+                hoy: hoy,
               ),
               AsyncLoading() => const Padding(
                 padding: EdgeInsets.all(16),
@@ -93,18 +75,140 @@ class TarjetaLibreta extends ConsumerWidget {
       ),
     );
   }
+}
+
+/// Texto del semáforo: "Venció hace 3 días", "Vence hoy", "Faltan 5 días".
+String textoSemaforo(AppLocalizations t, DateTime proxima, DateTime hoy) {
+  final dias = diasHasta(proxima, hoy);
+  if (dias < 0) return t.semaforoVencio(-dias);
+  if (dias == 0) return t.semaforoHoy;
+  return t.semaforoFaltan(dias);
+}
+
+/// Color del semáforo. Siempre va con su texto: el color solo no alcanza.
+Color colorSemaforo(BuildContext context, Semaforo semaforo) =>
+    switch (semaforo) {
+      Semaforo.vencido || Semaforo.rojo => Theme.of(context).colorScheme.error,
+      Semaforo.amarillo => context.marca.urgencia,
+      Semaforo.verde => context.marca.exito,
+    };
+
+class _Registros extends StatelessWidget {
+  const _Registros({
+    required this.mascotaId,
+    required this.grupos,
+    required this.hoy,
+  });
+
+  final String mascotaId;
+  final Map<TipoRegistroSalud, List<RegistroSalud>> grupos;
+  final DateTime hoy;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = context.t;
+    final tema = Theme.of(context);
+    final fechas = MaterialLocalizations.of(context);
+    final vigentes = proximosVigentes(grupos.values.expand((l) => l));
+    final idsVigentes = {for (final v in vigentes) v.id};
+    final urgente = vigentes
+        .where((v) => semaforoDe(v.proxima!, hoy).index <= Semaforo.rojo.index)
+        .firstOrNull;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (urgente != null) _AvisoUrgente(registro: urgente, hoy: hoy),
+        for (final MapEntry(key: tipo, value: registros) in grupos.entries) ...[
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+            child: Text(
+              textoGrupoLibreta(t, tipo),
+              style: tema.textTheme.labelLarge,
+            ),
+          ),
+          for (final r in registros)
+            ListTile(
+              leading: Icon(iconoRegistro(tipo)),
+              title: Text(r.nombre),
+              subtitle: _subtitulo(
+                context,
+                fechas,
+                r,
+                vigente: idsVigentes.contains(r.id),
+              ),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () =>
+                  context.push(Rutas.editarRegistroSalud(mascotaId, r.id)),
+            ),
+        ],
+      ],
+    );
+  }
 
   Widget? _subtitulo(
-    AppLocalizations t,
+    BuildContext context,
     MaterialLocalizations fechas,
-    RegistroSalud r,
-  ) {
+    RegistroSalud r, {
+    required bool vigente,
+  }) {
+    final t = context.t;
     final partes = [
       if (r.fecha case final f?) fechas.formatMediumDate(f),
       if (r.proxima case final p?)
         t.libretaProximaEl(fechas.formatMediumDate(p)),
     ];
-    return partes.isEmpty ? null : Text(partes.join(' · '));
+    final proxima = r.proxima;
+    final estado = vigente && proxima != null
+        ? Text(
+            textoSemaforo(t, proxima, hoy),
+            style: TextStyle(
+              color: colorSemaforo(context, semaforoDe(proxima, hoy)),
+              fontWeight: FontWeight.w600,
+            ),
+          )
+        : null;
+    if (partes.isEmpty && estado == null) return null;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [if (partes.isNotEmpty) Text(partes.join(' · ')), ?estado],
+    );
+  }
+}
+
+/// Lo vencido o lo que toca en 7 días o menos, arriba de todo.
+class _AvisoUrgente extends StatelessWidget {
+  const _AvisoUrgente({required this.registro, required this.hoy});
+
+  final RegistroSalud registro;
+  final DateTime hoy;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = context.t;
+    final proxima = registro.proxima!;
+    final color = colorSemaforo(context, semaforoDe(proxima, hoy));
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+      child: Semantics(
+        container: true,
+        label: t.libretaProximoUrgente,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            border: Border.all(color: color),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: ListTile(
+            leading: Icon(Icons.event_busy_outlined, color: color),
+            title: Text(registro.nombre),
+            subtitle: Text(
+              textoSemaforo(t, proxima, hoy),
+              style: TextStyle(color: color, fontWeight: FontWeight.w600),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 

@@ -124,4 +124,46 @@ void main() {
       'sin fecha',
     ]);
   });
+
+  group('semáforo', () {
+    final hoy = DateTime(2026, 10, 17, 22, 30);
+
+    test('cuenta días de calendario, sin importar la hora', () {
+      expect(diasHasta(DateTime(2026, 10, 18), hoy), 1);
+      expect(diasHasta(DateTime(2026, 10, 17), hoy), 0);
+      expect(diasHasta(DateTime(2026, 10, 16), hoy), -1);
+    });
+
+    test('vencido, rojo hasta 7 días, amarillo hasta 30 y verde', () {
+      expect(semaforoDe(DateTime(2026, 10, 16), hoy), Semaforo.vencido);
+      expect(semaforoDe(DateTime(2026, 10, 17), hoy), Semaforo.rojo);
+      expect(semaforoDe(DateTime(2026, 10, 24), hoy), Semaforo.rojo);
+      expect(semaforoDe(DateTime(2026, 10, 25), hoy), Semaforo.amarillo);
+      expect(semaforoDe(DateTime(2026, 11, 16), hoy), Semaforo.amarillo);
+      expect(semaforoDe(DateTime(2026, 11, 17), hoy), Semaforo.verde);
+    });
+
+    test('una dosis nueva de lo mismo reemplaza la próxima de la anterior', () {
+      RegistroSalud r(
+        String id,
+        String nombre,
+        DateTime fecha, [
+        DateTime? proxima,
+      ]) => RegistroSalud(
+        id: id,
+        mascotaId: 'm1',
+        tipo: TipoRegistroSalud.vaccine,
+        nombre: nombre,
+        fecha: fecha,
+        proxima: proxima,
+      );
+      final vigentes = proximosVigentes([
+        r('vieja', 'Antirrábica', DateTime(2025, 9), DateTime(2026, 9)),
+        r('nueva', ' antirrábica ', DateTime(2026, 9), DateTime(2027, 9)),
+        r('sextuple', 'Séxtuple', DateTime(2026, 3), DateTime(2026, 11)),
+        r('sin proxima', 'Tos de las perreras', DateTime(2026, 1)),
+      ]);
+      expect(vigentes.map((x) => x.id), ['sextuple', 'nueva']);
+    });
+  });
 }
