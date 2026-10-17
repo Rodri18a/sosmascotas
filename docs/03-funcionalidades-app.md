@@ -87,7 +87,8 @@ Pantalla inicial: logo sobre el azul petróleo de la marca (`#0F5E7A`, D62) dura
 
 ## 7. Hogar compartido — Fase 1 (función) / Fase 2 (cobro, plan Familia)
 
-- Invitar hasta 5 integrantes al hogar. Comparten mascotas, libreta y recordatorios.
+- Invitar hasta 5 integrantes al hogar con un **enlace** (`/unirme/<código>`, sirve una vez, vence a los 7 días). Comparten mascotas, libreta y recordatorios, y reciben los avisos del QR. Solo el dueño borra la mascota, cambia el QR y reporta un SOS (D69).
+- **Mi perfil** (D70): rol, plan, mascotas a cargo (propias y compartidas) y con quién se comparte el cuidado.
 - Cuando alguien marca "ya se la di", lo ven todos. **Evita dosis dobles.**
 - Registro de quién paseó o alimentó, y cuándo. Asignar tareas ("hoy pasea Juan").
 - **Cuidador temporal** con acceso por X días.

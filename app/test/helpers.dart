@@ -12,6 +12,7 @@ import 'package:sosmascota/src/cuenta/perfil_repositorio.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
 import 'package:sosmascota/src/fotos/selector_foto.dart';
 import 'package:sosmascota/src/funcionalidades/funcionalidades_activas.dart';
+import 'package:sosmascota/src/hogar/hogar_repositorio.dart';
 import 'package:sosmascota/src/instalar/servicio_instalacion.dart';
 import 'package:sosmascota/src/mapa/mapa_vista.dart';
 import 'package:sosmascota/src/mascotas/catalogo.dart';
@@ -34,6 +35,7 @@ import 'ayuda_falsa.dart';
 import 'comercios_falsos.dart';
 import 'cuenta_falsa.dart';
 import 'funcionalidades_falsas.dart';
+import 'hogar_falso.dart';
 import 'instalacion_falsa.dart';
 import 'libreta_falsa.dart';
 import 'mapa_falso.dart';
@@ -62,6 +64,7 @@ Widget appDePrueba({
   RecordatoriosRepositorio? recordatorios,
   AvisadorRecordatorios? avisador,
   AlmacenRespaldo? respaldo,
+  HogarRepositorio? hogar,
   SelectorFoto? selectorFoto,
   QrRepositorio? qr,
   AvisosRepositorio? avisos,
@@ -119,6 +122,7 @@ Widget appDePrueba({
     recordatoriosRepositorioProvider.overrideWithValue(
       recordatorios ?? RecordatoriosFalsos(),
     ),
+    hogarRepositorioProvider.overrideWithValue(hogar ?? HogarFalso()),
     almacenRespaldoProvider.overrideWithValue(
       respaldo ?? AlmacenRespaldoFalso(),
     ),

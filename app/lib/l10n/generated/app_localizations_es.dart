@@ -1617,4 +1617,205 @@ class AppLocalizationsEs extends AppLocalizations {
   String recordatorioHistorialMarcada(String cuando) {
     return 'Marcada $cuando';
   }
+
+  @override
+  String get hogarTitulo => 'Mi hogar';
+
+  @override
+  String get hogarExplicacion =>
+      'Compartí tus mascotas con tu familia: ven y editan la ficha, la libreta y los recordatorios, marcan «Ya se la di» y reciben los avisos del QR. Hasta 5 personas además de vos.';
+
+  @override
+  String get hogarInvitar => 'Invitar a alguien';
+
+  @override
+  String get hogarInvitacionTitulo => 'Invitación lista';
+
+  @override
+  String get hogarInvitacionTexto =>
+      'Mandale este enlace por WhatsApp o como quieras. Sirve una sola vez y vence en 7 días.';
+
+  @override
+  String get hogarCopiar => 'Copiar enlace';
+
+  @override
+  String get hogarCopiado => 'Enlace copiado.';
+
+  @override
+  String hogarMensajeInvitacion(String enlace) {
+    return 'Te invito a cuidar a mis mascotas en SOS Mascota: $enlace';
+  }
+
+  @override
+  String get hogarCreador => 'Creó el hogar';
+
+  @override
+  String get hogarIntegrante => 'Integrante';
+
+  @override
+  String hogarCuidadorHasta(String fecha) {
+    return 'Cuidador temporal hasta el $fecha';
+  }
+
+  @override
+  String hogarVos(String nombre) {
+    return '$nombre (vos)';
+  }
+
+  @override
+  String get hogarSinNombre => 'Sin nombre';
+
+  @override
+  String get hogarSacar => 'Sacar del hogar';
+
+  @override
+  String hogarSacarTitulo(String nombre) {
+    return '¿Sacar a $nombre?';
+  }
+
+  @override
+  String get hogarSacarTexto => 'Deja de ver tus mascotas en ese momento.';
+
+  @override
+  String get hogarIrme => 'Salir de este hogar';
+
+  @override
+  String get hogarIrmeTitulo => '¿Salir del hogar?';
+
+  @override
+  String get hogarIrmeTexto =>
+      'Dejás de ver sus mascotas. Para volver, te tienen que invitar de nuevo.';
+
+  @override
+  String get hogarSalir => 'Salir';
+
+  @override
+  String get hogarLleno => 'Ya son 5 integrantes: es el máximo.';
+
+  @override
+  String get hogarMio => 'Tu hogar';
+
+  @override
+  String hogarDe(String nombre) {
+    return 'Hogar de $nombre';
+  }
+
+  @override
+  String get hogarSoloVos => 'Todavía no invitaste a nadie.';
+
+  @override
+  String get unirmeTitulo => 'Invitación a un hogar';
+
+  @override
+  String get unirmeTexto =>
+      'Te invitaron a cuidar mascotas en SOS Mascota. Vas a poder ver y editar sus fichas, la libreta y los recordatorios, y vas a recibir los avisos del QR. Las personas del hogar van a ver tu nombre (nunca tu correo).';
+
+  @override
+  String get unirmeBoton => 'Unirme';
+
+  @override
+  String get unirmeListo => '¡Listo! Ya ves sus mascotas en «Mis mascotas».';
+
+  @override
+  String get unirmeNoSirve =>
+      'Esta invitación no existe, ya se usó o venció. Pedí una nueva.';
+
+  @override
+  String get unirmePropia =>
+      'Este enlace es de tu propio hogar: mandáselo a quien quieras invitar.';
+
+  @override
+  String get unirmeYaSos => 'Ya sos parte de este hogar.';
+
+  @override
+  String get unirmeLleno => 'Ese hogar ya tiene 5 integrantes.';
+
+  @override
+  String mascotaCompartidaDe(String nombre) {
+    return 'Compartida por $nombre';
+  }
+
+  @override
+  String get mascotaCompartida => 'Compartida con vos';
+
+  @override
+  String recordatorioMarcadaPor(String nombre, String cuando) {
+    return 'Marcada por $nombre $cuando';
+  }
+
+  @override
+  String get perfilTitulo => 'Mi perfil';
+
+  @override
+  String get perfilAbrir => 'Mi perfil';
+
+  @override
+  String get perfilAbrirAyuda =>
+      'Tu rol, tus mascotas y con quién compartís el cuidado.';
+
+  @override
+  String get perfilRol => 'Rol';
+
+  @override
+  String get perfilRolDueno => 'Dueño o dueña de mascotas';
+
+  @override
+  String get perfilRolAdmin => 'Administración de SOS Mascota';
+
+  @override
+  String get perfilPlan => 'Plan';
+
+  @override
+  String get perfilPlanGratis => 'Gratis';
+
+  @override
+  String get perfilPlanPro => 'Pro';
+
+  @override
+  String get perfilPlanFamilia => 'Familia';
+
+  @override
+  String get perfilMascotas => 'Mascotas a tu cargo';
+
+  @override
+  String get perfilSinMascotas =>
+      'Todavía no tenés mascotas cargadas ni compartidas.';
+
+  @override
+  String perfilPropias(int cantidad) {
+    String _temp0 = intl.Intl.pluralLogic(
+      cantidad,
+      locale: localeName,
+      other: '$cantidad tuyas',
+      one: '1 tuya',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String perfilCompartidas(int cantidad) {
+    String _temp0 = intl.Intl.pluralLogic(
+      cantidad,
+      locale: localeName,
+      other: '$cantidad compartidas con vos',
+      one: '1 compartida con vos',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get perfilCuidado => 'Con quién compartís el cuidado';
+
+  @override
+  String get perfilSinHogar =>
+      'Por ahora cuidás solo/a. Podés invitar a tu familia desde «Mi hogar».';
+
+  @override
+  String get perfilVerHogar => 'Ver «Mi hogar»';
+
+  @override
+  String get ajustesHogar => 'Mi hogar';
+
+  @override
+  String get ajustesHogarAyuda => 'Compartí tus mascotas con tu familia.';
 }

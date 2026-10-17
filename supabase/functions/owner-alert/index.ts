@@ -187,14 +187,14 @@ Deno.serve(async (req) => {
     props: { con_ubicacion: ubicacion !== null },
   });
 
-  // Push al dueño (0.6.4): abre la bandeja Avisos. Si no sale, el aviso ya
-  // quedó guardado ahí. El correo de respaldo llega con 0.4.4b.
-  const { data: dispositivos } = await admin
-    .from('push_tokens')
-    .select('token')
-    .eq('user_id', destino.owner_id);
+  // Push al dueño (0.6.4) y a los integrantes de su hogar (1.6.2, D69): abre
+  // la bandeja Avisos. Si no sale, el aviso ya quedó guardado ahí. El correo
+  // de respaldo llega con 0.4.4b.
+  const { data: tokens } = await admin.rpc('tokens_de_cuidadores', {
+    p_owner: destino.owner_id,
+  });
   const push = textoAvisoAlDueno(tipo, destino.nombre);
-  await avisarDispositivos(admin, (dispositivos ?? []).map((d) => d.token), {
+  await avisarDispositivos(admin, (tokens as string[] | null) ?? [], {
     titulo: push.titulo,
     cuerpo: push.cuerpo,
     ruta: '/avisos',

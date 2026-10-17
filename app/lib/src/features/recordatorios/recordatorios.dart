@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
+import '../../cuenta/servicio_cuenta.dart';
+import '../../hogar/hogar_repositorio.dart';
 import '../../metricas/metricas.dart';
 import '../../recordatorios/avisador.dart';
 import '../../recordatorios/recordatorios_repositorio.dart';
@@ -232,6 +234,8 @@ class _Historial extends ConsumerWidget {
     final tema = Theme.of(context);
     final ahora = ref.watch(relojProvider)();
     final historial = ref.watch(historialProvider(recordatorioId));
+    final nombres = ref.watch(nombresDelHogarProvider);
+    final yo = ref.watch(usuarioActualProvider).value?.id;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -249,11 +253,17 @@ class _Historial extends ConsumerWidget {
                   contentPadding: EdgeInsets.zero,
                   leading: const Icon(Icons.check_circle_outline),
                   title: Text(textoCuando(context, toma.prevista, ahora)),
-                  subtitle: Text(
-                    t.recordatorioHistorialMarcada(
+                  subtitle: Text(switch (nombres[toma.hechaPor]) {
+                    // En un hogar compartido se ve quién la dio (D69).
+                    final n? when toma.hechaPor != yo =>
+                      t.recordatorioMarcadaPor(
+                        n,
+                        textoCuando(context, toma.hecha, ahora),
+                      ),
+                    _ => t.recordatorioHistorialMarcada(
                       textoCuando(context, toma.hecha, ahora),
                     ),
-                  ),
+                  }),
                 ),
             ],
           ),

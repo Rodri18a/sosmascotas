@@ -169,6 +169,26 @@ class _SeccionCuenta extends ConsumerWidget {
               ? null
               : () => _editarNombre(context, ref, perfil),
         ),
+        SiFuncionalidad(
+          Funcionalidades.perfil,
+          child: ListTile(
+            leading: const Icon(Icons.badge_outlined),
+            title: Text(t.perfilAbrir),
+            subtitle: Text(t.perfilAbrirAyuda),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.push(Rutas.perfil),
+          ),
+        ),
+        SiFuncionalidad(
+          Funcionalidades.hogar,
+          child: ListTile(
+            leading: const Icon(Icons.family_restroom),
+            title: Text(t.ajustesHogar),
+            subtitle: Text(t.ajustesHogarAyuda),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.push(Rutas.hogar),
+          ),
+        ),
         const InterruptorPush(),
         if (perfil != null) TileZonaAvisos(perfil: perfil),
         if (perfil != null) _RadioAvisos(perfil: perfil),

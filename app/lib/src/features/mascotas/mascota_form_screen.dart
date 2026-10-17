@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
+import '../../cuenta/servicio_cuenta.dart';
 import '../../fotos/elegir_foto.dart';
 import '../../mascotas/catalogo.dart';
 import '../../mascotas/mascotas_repositorio.dart';
@@ -440,7 +441,11 @@ class _FormularioState extends ConsumerState<_Formulario> {
                   onPressed: _guardando || _procesandoFoto ? null : _guardar,
                   child: Text(_guardando ? t.guardando : t.guardar),
                 ),
-                if (!_esNueva) ...[
+                // Borrar la mascota es solo del dueño (D69).
+                if (!_esNueva &&
+                    widget.original!.esDe(
+                      ref.watch(usuarioActualProvider).value?.id,
+                    )) ...[
                   const SizedBox(height: 8),
                   TextButton.icon(
                     onPressed: _guardando ? null : _borrar,

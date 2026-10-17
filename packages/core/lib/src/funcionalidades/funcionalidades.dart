@@ -15,6 +15,12 @@ abstract final class Funcionalidades {
   /// Recordatorios de medicación, comida y vacunas (pasos 1.5.3–1.5.5, Fase 1).
   static const recordatorios = 'recordatorios';
 
+  /// Hogar compartido: "Mi hogar" e invitaciones (etapa 1.6, D69).
+  static const hogar = 'hogar';
+
+  /// Pantalla "Mi perfil" con rol, mascotas a cargo y hogar (D70).
+  static const perfil = 'perfil';
+
   /// Las que ya están en `todos`: la app las da por prendidas aunque no pueda
   /// preguntarle a la base (sin conexión y sin nada guardado). Las demás, en
   /// ese caso, quedan apagadas (lo seguro).

@@ -6,6 +6,7 @@ export 'src/ayuda/ayuda.dart';
 export 'src/comercios/comercio.dart';
 export 'src/config/app_env.dart';
 export 'src/config/config_firebase.dart';
+export 'src/cuenta/hogar.dart';
 export 'src/cuenta/perfil.dart';
 export 'src/fotos/preparar_foto.dart';
 export 'src/funcionalidades/funcionalidades.dart';

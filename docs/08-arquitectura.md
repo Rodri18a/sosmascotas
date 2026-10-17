@@ -159,6 +159,7 @@ Tabla `events` (append-only), escrita por el cliente con `ref.read(metricasProvi
 | `alert_zone_set` / `alert_zone_clear` | — (guardó o borró su zona para avisos; **sin coordenadas**) |
 | `signup` / `pet_create` | — |
 | `health_record_create` | tipo del registro de la libreta (`vaccine`, `deworming`, `checkup`, `allergy`, `other`; D66) |
+| `household_invite` / `household_join` / `household_leave` | — (sin datos de nadie; D69) |
 | `reminder_create` | tipo del recordatorio (`medication`, `food`, `vaccine`, `checkup`; D67) |
 | `reminder_done` | tipo |
 

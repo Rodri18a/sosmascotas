@@ -328,6 +328,7 @@ class TomaHecha {
     required this.recordatorioId,
     required this.prevista,
     required this.hecha,
+    this.hechaPor,
   });
 
   factory TomaHecha.fromJson(Map<String, Object?> json) => TomaHecha(
@@ -335,6 +336,7 @@ class TomaHecha {
     recordatorioId: json['reminder_id']! as String,
     prevista: DateTime.parse(json['due_at']! as String).toLocal(),
     hecha: DateTime.parse(json['done_at']! as String).toLocal(),
+    hechaPor: json['done_by'] as String?,
   );
 
   final String id;
@@ -345,6 +347,9 @@ class TomaHecha {
 
   /// Cuándo se marcó (hora local).
   final DateTime hecha;
+
+  /// Quién la marcó (con el hogar compartido puede ser otra persona).
+  final String? hechaPor;
 }
 
 /// Desde cuánto antes de la hora se puede marcar una toma.

@@ -818,6 +818,65 @@ def main():
              filas(pedir('GET', f'{URL}/rest/v1/events?select=id&user_id=eq.{d_id}', headers=ADMIN)) == [])
         caso('A y B siguen existiendo',
              len(filas(pedir('GET', f'{URL}/rest/v1/profiles?select=id&id=in.({a_id},{b_id})', headers=ADMIN))) == 2)
+        print('households (hogar compartido)')
+        c_id, c = crear_usuario('c')
+        try:
+            def rpc(nombre, cuerpo, quien):
+                return pedir('POST', f'{URL}/rest/v1/rpc/{nombre}', cuerpo, quien)
+            pet_id = pet.get('id')
+            caso('antes de unirse, B no ve la mascota de A', filas(rest('GET', f'pets?select=id&id=eq.{pet_id}', quien=b)) == [])
+            s_inv, codigo = rpc('invitar_al_hogar', {}, a)
+            caso('A puede invitar (se crea su hogar)', s_inv == 200 and isinstance(codigo, str) and len(codigo) == 10)
+            caso('A ve su invitación', len(filas(rest('GET', 'household_invites?select=code', quien=a))) == 1)
+            caso('B no ve las invitaciones de A', filas(rest('GET', 'household_invites?select=code', quien=b)) == [])
+            caso('nadie crea integrantes a mano',
+                 bloqueado(rest('POST', 'household_members', {'household_id': str(uuid.uuid4()), 'user_id': b_id}, b)))
+            caso('A no se puede unir a su propio hogar', rpc('unirme_al_hogar', {'p_codigo': codigo}, a)[0] >= 400)
+            s_union, hogar = rpc('unirme_al_hogar', {'p_codigo': codigo.lower()}, b)
+            caso('B se une con el código', s_union == 200 and isinstance(hogar, str))
+            caso('el mismo código no sirve dos veces', rpc('unirme_al_hogar', {'p_codigo': codigo}, c)[0] >= 400)
+            caso('un código inventado no sirve', rpc('unirme_al_hogar', {'p_codigo': 'ABCDEFGHJK'}, c)[0] >= 400)
+            integrantes = filas(rpc('integrantes_de_mis_hogares', {}, b))
+            caso('B ve a los integrantes con su nombre, sin correo',
+                 {i['user_id'] for i in integrantes} == {a_id, b_id}
+                 and all('email' not in i for i in integrantes)
+                 and any(i['es_dueno'] and i['user_id'] == a_id for i in integrantes))
+            caso('C (de afuera) no ve el hogar', filas(rest('GET', 'households?select=id', quien=c)) == [])
+            caso('B ve la mascota de A', len(filas(rest('GET', f'pets?select=id&id=eq.{pet_id}', quien=b))) == 1)
+            caso('C sigue sin ver la mascota de A', filas(rest('GET', f'pets?select=id&id=eq.{pet_id}', quien=c)) == [])
+            caso('B puede editar la ficha', len(filas(rest('PATCH', f'pets?id=eq.{pet_id}', {'color': 'Blanco'}, b))) == 1)
+            caso('B no puede quedarse con la mascota',
+                 rest('PATCH', f'pets?id=eq.{pet_id}', {'owner_id': b_id}, b)[0] in (400, 401, 403))
+            caso('B no puede borrar la mascota', bloqueado(rest('DELETE', f'pets?id=eq.{pet_id}', quien=b))
+                 and len(filas(rest('GET', f'pets?select=id&id=eq.{pet_id}', quien=a))) == 1)
+            caso('B ve el QR de la mascota', len(filas(rest('GET', f'qr_tags?select=code&pet_id=eq.{pet_id}&active=eq.true', quien=b))) == 1)
+            caso('B no puede cambiar el QR', bloqueado(rest('PATCH', f'qr_tags?pet_id=eq.{pet_id}', {'public_note': 'X'}, b)))
+            caso('B carga en la libreta',
+                 rest('POST', 'health_records', {'pet_id': pet_id, 'kind': 'checkup', 'name': 'Control'}, b)[0] == 201)
+            caso('A ve lo que cargó B', len(filas(rest('GET', f'health_records?select=id&pet_id=eq.{pet_id}&name=eq.Control', quien=a))) == 1)
+            caso('B ve los recordatorios', len(filas(rest('GET', f'reminders?select=id&id=eq.{rec.get("id")}', quien=b))) == 1)
+            toma_b = rest('POST', 'reminder_logs', {'reminder_id': rec.get('id'), 'due_at': '2026-10-19T11:00:00Z'}, b)
+            caso('B marca "ya se la di" a su nombre', toma_b[0] == 201 and filas(toma_b)[0]['done_by'] == b_id)
+            caso('A ve la toma que marcó B (no hay dosis doble)',
+                 rest('POST', 'reminder_logs', {'reminder_id': rec.get('id'), 'due_at': '2026-10-19T11:00:00Z'}, a)[0] == 409)
+            caso('C no ve las tomas', filas(rest('GET', 'reminder_logs?select=id', quien=c)) == [])
+            tokens = pedir('POST', f'{URL}/rest/v1/rpc/tokens_de_cuidadores', {'p_owner': a_id}, ADMIN)
+            caso('los push del dueño también van al hogar (solo el servidor lo consulta)',
+                 tokens[0] == 200 and rpc('tokens_de_cuidadores', {'p_owner': a_id}, b)[0] in (401, 403, 404))
+            caso('B no puede sacar a A ni renombrar el hogar',
+                 bloqueado(rest('PATCH', f'households?id=eq.{hogar}', {'name': 'X'}, b)))
+            caso('B se puede ir', len(filas(rest('DELETE', f'household_members?user_id=eq.{b_id}', quien=b))) == 1)
+            caso('al irse, B deja de ver la mascota', filas(rest('GET', f'pets?select=id&id=eq.{pet_id}', quien=b)) == [])
+            s2, codigo2 = rpc('invitar_al_hogar', {}, a)
+            rpc('unirme_al_hogar', {'p_codigo': codigo2}, c)
+            caso('A puede sacar a un integrante',
+                 len(filas(rest('DELETE', f'household_members?user_id=eq.{c_id}', quien=a))) == 1
+                 and filas(rest('GET', f'pets?select=id&id=eq.{pet_id}', quien=c)) == [])
+            s3, codigo3 = rpc('invitar_al_hogar', {'p_rol': 'jefe'}, a)
+            caso('un rol inventado se rechaza', s3 >= 400)
+        finally:
+            pedir('DELETE', f'{URL}/auth/v1/admin/users/{c_id}', headers=ADMIN)
+
     finally:
         pedir('DELETE', f'{URL}/storage/v1/object/pet-photos', {'prefixes': [f'{a_id}/prueba.jpg']}, ADMIN)
         pedir('DELETE', f'{URL}/storage/v1/object/sos-photos', {'prefixes': [f'{a_id}/sos1.jpg']}, ADMIN)

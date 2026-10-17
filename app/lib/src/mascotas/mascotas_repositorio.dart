@@ -123,7 +123,7 @@ final misMascotasProvider = FutureProvider<List<Mascota>>((ref) async {
     clave: 'mascotas',
     pedir: repo.misMascotas,
     aJson: (lista) => [
-      for (final m in lista) {...m.toJson(), 'id': m.id},
+      for (final m in lista) {...m.toJson(), 'id': m.id, 'owner_id': m.duenoId},
     ],
     deJson: (json) => listaJson(json).map(Mascota.fromJson).toList(),
   );

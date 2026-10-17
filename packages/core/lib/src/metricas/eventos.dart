@@ -20,6 +20,9 @@ abstract final class Eventos {
   static const healthRecordCreate = 'health_record_create';
   static const reminderCreate = 'reminder_create';
   static const reminderDone = 'reminder_done';
+  static const householdInvite = 'household_invite';
+  static const householdJoin = 'household_join';
+  static const householdLeave = 'household_leave';
 }
 
 /// Valida el nombre de un evento con la misma regla que la base de datos.

@@ -17,6 +17,7 @@ class Mascota {
     this.microchip,
     this.castrada,
     this.notas,
+    this.duenoId,
   });
 
   factory Mascota.fromJson(Map<String, Object?> json) => Mascota(
@@ -36,6 +37,7 @@ class Mascota {
     microchip: json['microchip'] as String?,
     castrada: json['neutered'] as bool?,
     notas: json['notes'] as String?,
+    duenoId: json['owner_id'] as String?,
   );
 
   final String id;
@@ -51,6 +53,13 @@ class Mascota {
   final String? microchip;
   final bool? castrada;
   final String? notas;
+
+  /// Quién la cargó (`owner_id`). Con el hogar compartido (D69) puede no ser
+  /// quien la está viendo.
+  final String? duenoId;
+
+  /// ¿La ve [usuarioId] como dueño? (Sin dato, sí: mascotas viejas en caché.)
+  bool esDe(String? usuarioId) => duenoId == null || duenoId == usuarioId;
 
   /// Columnas editables (sin `id` ni `owner_id`, que pone la base).
   Map<String, Object?> toJson() => {
@@ -82,6 +91,7 @@ class Mascota {
     microchip: microchip,
     castrada: castrada,
     notas: notas,
+    duenoId: duenoId,
   );
 
   static String? _vacioANulo(String? texto) {

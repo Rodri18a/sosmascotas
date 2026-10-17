@@ -1,6 +1,10 @@
 /// Plan de la persona usuaria (valores iguales a la base: `user_plan`).
 enum Plan { free, pro, family }
 
+/// Rol de la cuenta (valores iguales a la base: `user_role`). El rol de
+/// comercio llega con la etapa 1.3.
+enum RolCuenta { user, admin }
+
 /// Radio de avisos permitido, en km (igual que la regla de la base).
 const radioAvisosMinKm = 1;
 const radioAvisosMaxKm = 20;
@@ -16,6 +20,7 @@ class Perfil {
     this.versionTerminos,
     this.terminosAceptadosEn,
     this.zonaAvisosEn,
+    this.rol = RolCuenta.user,
   });
 
   factory Perfil.fromJson(Map<String, Object?> json) => Perfil(
@@ -33,6 +38,7 @@ class Perfil {
       final String fecha => DateTime.parse(fecha),
       _ => null,
     },
+    rol: RolCuenta.values.asNameMap()[json['role']] ?? RolCuenta.user,
   );
 
   final String id;
@@ -46,6 +52,8 @@ class Perfil {
   /// Cuándo se guardó su zona aproximada para los avisos de SOS cercanos
   /// (`null`: no tiene zona y no le llegan esos avisos).
   final DateTime? zonaAvisosEn;
+
+  final RolCuenta rol;
 
   /// ¿Aceptó esta versión de los términos y la política de privacidad?
   bool aceptoTerminos(String versionVigente) =>

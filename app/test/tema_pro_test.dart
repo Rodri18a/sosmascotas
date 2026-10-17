@@ -118,8 +118,11 @@ void main() {
 
     expect(find.text('Tema de colores'), findsNothing);
     expect(_primario(tester), Paleta.cielo.claro.primario);
+    // Ajustes muestra otras funcionalidades graduales: solo la de temas.
     final exposicion = eventos.singleWhere(
-      (e) => e['name'] == 'feature_exposure',
+      (e) =>
+          e['name'] == 'feature_exposure' &&
+          (e['props']! as Map)['key'] == 'temas_pro',
     );
     expect(exposicion['props'], {'key': 'temas_pro', 'variante': 'apagada'});
   });

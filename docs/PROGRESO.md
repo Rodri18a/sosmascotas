@@ -191,8 +191,8 @@ Regla de trabajo: **por cada etapa de desarrollo, avanzar al menos un paso de va
 - [ ] 1.5.6 Funcionamiento sin internet de la ficha, la libreta y el QR (⏱️ 3 h) — 17/10/2026 **hecho en código** (D68): copia local de lo último leído (mascotas, libreta, recordatorios y QR) por cuenta, que se usa si la base no responde y se borra al cerrar sesión (`app/lib/src/utiles/respaldo.dart`); los avisos de recordatorios se siguen programando sin internet; pruebas OK (194 app). Las fotos dependen de la caché del navegador. **Falta:** probarlo en el celular en modo avión
 
 ### Etapa 1.6 · Hogar compartido (gratis por ahora)
-- [ ] 1.6.1 `households` + `household_members` + invitación por enlace (⏱️ 4 h)
-- [ ] 1.6.2 Mascotas y recordatorios compartidos con sincronización del "ya se la di" (⏱️ 4 h)
+- [x] 1.6.1 `households` + `household_members` + invitación por enlace (⏱️ 4 h) — 18/10/2026 (D69), oculto detrás de `hogar`: migración `households` (+ `household_invites`, funciones `invitar_al_hogar`/`unirme_al_hogar`/`integrantes_de_mis_hogares`), pantallas "Mi hogar" (invitar con enlace copiable, sacar, irse) y `/unirme/<código>`, eventos `household_*`; aplicada en dev, `rls_test.py` OK (299), marca `hogar` en beta con rodrigo18a@gmail.com
+- [x] 1.6.2 Mascotas y recordatorios compartidos con sincronización del "ya se la di" (⏱️ 4 h) — 18/10/2026 (D69): migración `hogar_compartido` (`puedo_cuidar()` en las políticas, dueño fijo, push al hogar con `tokens_de_cuidadores()`; `owner-alert` desplegada), "Compartida por …" en la lista y la ficha, solo el dueño reporta SOS / borra / cambia el QR, historial "Marcada por …". Además **Mi perfil** (D70, marca `perfil`). Pruebas OK (206 app, 85 núcleo, 299 seguridad)
 - [ ] 1.6.3 Tareas (paseo, comida) y registro de quién lo hizo (⏱️ 3 h)
 - [ ] 1.6.4 Cuidador temporal con acceso por X días (⏱️ 2 h)
 

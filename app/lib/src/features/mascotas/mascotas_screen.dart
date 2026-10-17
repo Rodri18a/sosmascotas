@@ -6,6 +6,7 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 import '../../../l10n/l10n.dart';
 import '../../cuenta/con_cuenta.dart';
 import '../../cuenta/servicio_cuenta.dart';
+import '../../hogar/hogar_repositorio.dart';
 import '../../mascotas/catalogo.dart';
 import '../../mascotas/mascota_activa.dart';
 import '../../mascotas/mascotas_repositorio.dart';
@@ -165,10 +166,16 @@ class _FilaMascota extends ConsumerWidget {
             .where((r) => r.id == mascota.razaId)
             .firstOrNull
             ?.nombre;
+    final yo = ref.watch(usuarioActualProvider).value?.id;
     final detalle = [
       ?especie?.nombre,
       ?raza,
       if (mascota.nacimiento case final n?) textoEdad(t, n),
+      if (!mascota.esDe(yo))
+        switch (ref.watch(nombresDelHogarProvider)[mascota.duenoId]) {
+          final n? => t.mascotaCompartidaDe(n),
+          null => t.mascotaCompartida,
+        },
     ].join(' · ');
 
     return ListTile(

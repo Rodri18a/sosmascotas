@@ -8,6 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../l10n/l10n.dart';
 import '../../config/env_provider.dart';
+import '../../cuenta/servicio_cuenta.dart';
 import '../../mascotas/mascotas_repositorio.dart';
 import '../../qr/cartel_qr.dart';
 import '../../qr/qr_repositorio.dart';
@@ -142,6 +143,9 @@ class _ContenidoState extends ConsumerState<_Contenido> {
 
   @override
   Widget build(BuildContext context) {
+    final esDueno = widget.mascota.esDe(
+      ref.watch(usuarioActualProvider).value?.id,
+    );
     final t = context.t;
     final tema = Theme.of(context);
     return ListView(
@@ -195,34 +199,39 @@ class _ContenidoState extends ConsumerState<_Contenido> {
           icon: const Icon(Icons.open_in_new),
           label: Text(t.qrVerPagina),
         ),
-        const SizedBox(height: 24),
-        Text(t.qrNotaTitulo, style: tema.textTheme.titleMedium),
-        const SizedBox(height: 8),
-        TextField(
-          controller: _nota,
-          maxLength: 200,
-          maxLines: 3,
-          minLines: 1,
-          decoration: InputDecoration(helperText: t.qrNotaAyuda),
-        ),
-        Align(
-          alignment: Alignment.centerRight,
-          child: TextButton(
-            onPressed: _ocupado ? null : _guardarNota,
-            child: Text(t.guardar),
+        if (esDueno) ...[
+          const SizedBox(height: 24),
+          Text(t.qrNotaTitulo, style: tema.textTheme.titleMedium),
+          const SizedBox(height: 8),
+          TextField(
+            controller: _nota,
+            maxLength: 200,
+            maxLines: 3,
+            minLines: 1,
+            decoration: InputDecoration(helperText: t.qrNotaAyuda),
           ),
-        ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: TextButton(
+              onPressed: _ocupado ? null : _guardarNota,
+              child: Text(t.guardar),
+            ),
+          ),
+        ],
         const Divider(height: 32),
         Text(t.qrEscaneosTitulo, style: tema.textTheme.titleMedium),
         _Escaneos(mascotaId: widget.mascota.id),
         const Divider(height: 32),
         Text(t.qrConsejoChapita, style: tema.textTheme.bodySmall),
-        const SizedBox(height: 8),
-        TextButton.icon(
-          onPressed: _ocupado ? null : _regenerar,
-          icon: const Icon(Icons.autorenew),
-          label: Text(t.qrRegenerar),
-        ),
+        // Cambiar el QR (deja inservible la chapita) es solo del dueño (D69).
+        if (esDueno) ...[
+          const SizedBox(height: 8),
+          TextButton.icon(
+            onPressed: _ocupado ? null : _regenerar,
+            icon: const Icon(Icons.autorenew),
+            label: Text(t.qrRegenerar),
+          ),
+        ],
       ],
     );
   }

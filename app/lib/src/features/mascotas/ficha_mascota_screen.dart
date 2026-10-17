@@ -4,7 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
+import '../../cuenta/servicio_cuenta.dart';
 import '../../funcionalidades/funcionalidades_activas.dart';
+import '../../hogar/hogar_repositorio.dart';
 import '../../mascotas/catalogo.dart';
 import '../../mascotas/mascotas_repositorio.dart';
 import '../../mascotas/textos_mascota.dart';
@@ -45,6 +47,8 @@ class _Ficha extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final t = context.t;
     final tema = Theme.of(context);
+    final esDueno = mascota.esDe(ref.watch(usuarioActualProvider).value?.id);
+    final nombres = ref.watch(nombresDelHogarProvider);
     final especie = (ref.watch(especiesProvider).value ?? const <Especie>[])
         .where((e) => e.id == mascota.especieId)
         .firstOrNull;
@@ -99,6 +103,13 @@ class _Ficha extends ConsumerWidget {
           Center(
             child: Text(mascota.nombre, style: tema.textTheme.headlineSmall),
           ),
+          if (!esDueno)
+            Center(
+              child: Text(switch (nombres[mascota.duenoId]) {
+                final n? => t.mascotaCompartidaDe(n),
+                null => t.mascotaCompartida,
+              }, style: tema.textTheme.bodySmall),
+            ),
           const SizedBox(height: 16),
           Card(
             child: Column(
@@ -125,16 +136,20 @@ class _Ficha extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 12),
-          FilledButton.icon(
-            style: FilledButton.styleFrom(
-              backgroundColor: context.marca.acento,
-              foregroundColor: context.marca.sobreAcento,
+          // Reportar un SOS es del dueño (D69): quien comparte lo ve en
+          // la ficha pero no lo dispara.
+          if (esDueno) ...[
+            FilledButton.icon(
+              style: FilledButton.styleFrom(
+                backgroundColor: context.marca.acento,
+                foregroundColor: context.marca.sobreAcento,
+              ),
+              onPressed: () => context.push(Rutas.reportarMascota(mascota.id)),
+              icon: const Icon(Icons.sos),
+              label: Text(t.fichaReportarPerdida),
             ),
-            onPressed: () => context.push(Rutas.reportarMascota(mascota.id)),
-            icon: const Icon(Icons.sos),
-            label: Text(t.fichaReportarPerdida),
-          ),
-          const SizedBox(height: 12),
+            const SizedBox(height: 12),
+          ],
           Card(
             child: ListTile(
               leading: const Icon(Icons.qr_code_2),

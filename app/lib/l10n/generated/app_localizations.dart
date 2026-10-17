@@ -2787,6 +2787,330 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Marcada {cuando}'**
   String recordatorioHistorialMarcada(String cuando);
+
+  /// No description provided for @hogarTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Mi hogar'**
+  String get hogarTitulo;
+
+  /// No description provided for @hogarExplicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Compartí tus mascotas con tu familia: ven y editan la ficha, la libreta y los recordatorios, marcan «Ya se la di» y reciben los avisos del QR. Hasta 5 personas además de vos.'**
+  String get hogarExplicacion;
+
+  /// No description provided for @hogarInvitar.
+  ///
+  /// In es, this message translates to:
+  /// **'Invitar a alguien'**
+  String get hogarInvitar;
+
+  /// No description provided for @hogarInvitacionTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Invitación lista'**
+  String get hogarInvitacionTitulo;
+
+  /// No description provided for @hogarInvitacionTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Mandale este enlace por WhatsApp o como quieras. Sirve una sola vez y vence en 7 días.'**
+  String get hogarInvitacionTexto;
+
+  /// No description provided for @hogarCopiar.
+  ///
+  /// In es, this message translates to:
+  /// **'Copiar enlace'**
+  String get hogarCopiar;
+
+  /// No description provided for @hogarCopiado.
+  ///
+  /// In es, this message translates to:
+  /// **'Enlace copiado.'**
+  String get hogarCopiado;
+
+  /// No description provided for @hogarMensajeInvitacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Te invito a cuidar a mis mascotas en SOS Mascota: {enlace}'**
+  String hogarMensajeInvitacion(String enlace);
+
+  /// No description provided for @hogarCreador.
+  ///
+  /// In es, this message translates to:
+  /// **'Creó el hogar'**
+  String get hogarCreador;
+
+  /// No description provided for @hogarIntegrante.
+  ///
+  /// In es, this message translates to:
+  /// **'Integrante'**
+  String get hogarIntegrante;
+
+  /// No description provided for @hogarCuidadorHasta.
+  ///
+  /// In es, this message translates to:
+  /// **'Cuidador temporal hasta el {fecha}'**
+  String hogarCuidadorHasta(String fecha);
+
+  /// No description provided for @hogarVos.
+  ///
+  /// In es, this message translates to:
+  /// **'{nombre} (vos)'**
+  String hogarVos(String nombre);
+
+  /// No description provided for @hogarSinNombre.
+  ///
+  /// In es, this message translates to:
+  /// **'Sin nombre'**
+  String get hogarSinNombre;
+
+  /// No description provided for @hogarSacar.
+  ///
+  /// In es, this message translates to:
+  /// **'Sacar del hogar'**
+  String get hogarSacar;
+
+  /// No description provided for @hogarSacarTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Sacar a {nombre}?'**
+  String hogarSacarTitulo(String nombre);
+
+  /// No description provided for @hogarSacarTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Deja de ver tus mascotas en ese momento.'**
+  String get hogarSacarTexto;
+
+  /// No description provided for @hogarIrme.
+  ///
+  /// In es, this message translates to:
+  /// **'Salir de este hogar'**
+  String get hogarIrme;
+
+  /// No description provided for @hogarIrmeTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Salir del hogar?'**
+  String get hogarIrmeTitulo;
+
+  /// No description provided for @hogarIrmeTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Dejás de ver sus mascotas. Para volver, te tienen que invitar de nuevo.'**
+  String get hogarIrmeTexto;
+
+  /// No description provided for @hogarSalir.
+  ///
+  /// In es, this message translates to:
+  /// **'Salir'**
+  String get hogarSalir;
+
+  /// No description provided for @hogarLleno.
+  ///
+  /// In es, this message translates to:
+  /// **'Ya son 5 integrantes: es el máximo.'**
+  String get hogarLleno;
+
+  /// No description provided for @hogarMio.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu hogar'**
+  String get hogarMio;
+
+  /// No description provided for @hogarDe.
+  ///
+  /// In es, this message translates to:
+  /// **'Hogar de {nombre}'**
+  String hogarDe(String nombre);
+
+  /// No description provided for @hogarSoloVos.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no invitaste a nadie.'**
+  String get hogarSoloVos;
+
+  /// No description provided for @unirmeTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Invitación a un hogar'**
+  String get unirmeTitulo;
+
+  /// No description provided for @unirmeTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Te invitaron a cuidar mascotas en SOS Mascota. Vas a poder ver y editar sus fichas, la libreta y los recordatorios, y vas a recibir los avisos del QR. Las personas del hogar van a ver tu nombre (nunca tu correo).'**
+  String get unirmeTexto;
+
+  /// No description provided for @unirmeBoton.
+  ///
+  /// In es, this message translates to:
+  /// **'Unirme'**
+  String get unirmeBoton;
+
+  /// No description provided for @unirmeListo.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Listo! Ya ves sus mascotas en «Mis mascotas».'**
+  String get unirmeListo;
+
+  /// No description provided for @unirmeNoSirve.
+  ///
+  /// In es, this message translates to:
+  /// **'Esta invitación no existe, ya se usó o venció. Pedí una nueva.'**
+  String get unirmeNoSirve;
+
+  /// No description provided for @unirmePropia.
+  ///
+  /// In es, this message translates to:
+  /// **'Este enlace es de tu propio hogar: mandáselo a quien quieras invitar.'**
+  String get unirmePropia;
+
+  /// No description provided for @unirmeYaSos.
+  ///
+  /// In es, this message translates to:
+  /// **'Ya sos parte de este hogar.'**
+  String get unirmeYaSos;
+
+  /// No description provided for @unirmeLleno.
+  ///
+  /// In es, this message translates to:
+  /// **'Ese hogar ya tiene 5 integrantes.'**
+  String get unirmeLleno;
+
+  /// No description provided for @mascotaCompartidaDe.
+  ///
+  /// In es, this message translates to:
+  /// **'Compartida por {nombre}'**
+  String mascotaCompartidaDe(String nombre);
+
+  /// No description provided for @mascotaCompartida.
+  ///
+  /// In es, this message translates to:
+  /// **'Compartida con vos'**
+  String get mascotaCompartida;
+
+  /// No description provided for @recordatorioMarcadaPor.
+  ///
+  /// In es, this message translates to:
+  /// **'Marcada por {nombre} {cuando}'**
+  String recordatorioMarcadaPor(String nombre, String cuando);
+
+  /// No description provided for @perfilTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Mi perfil'**
+  String get perfilTitulo;
+
+  /// No description provided for @perfilAbrir.
+  ///
+  /// In es, this message translates to:
+  /// **'Mi perfil'**
+  String get perfilAbrir;
+
+  /// No description provided for @perfilAbrirAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu rol, tus mascotas y con quién compartís el cuidado.'**
+  String get perfilAbrirAyuda;
+
+  /// No description provided for @perfilRol.
+  ///
+  /// In es, this message translates to:
+  /// **'Rol'**
+  String get perfilRol;
+
+  /// No description provided for @perfilRolDueno.
+  ///
+  /// In es, this message translates to:
+  /// **'Dueño o dueña de mascotas'**
+  String get perfilRolDueno;
+
+  /// No description provided for @perfilRolAdmin.
+  ///
+  /// In es, this message translates to:
+  /// **'Administración de SOS Mascota'**
+  String get perfilRolAdmin;
+
+  /// No description provided for @perfilPlan.
+  ///
+  /// In es, this message translates to:
+  /// **'Plan'**
+  String get perfilPlan;
+
+  /// No description provided for @perfilPlanGratis.
+  ///
+  /// In es, this message translates to:
+  /// **'Gratis'**
+  String get perfilPlanGratis;
+
+  /// No description provided for @perfilPlanPro.
+  ///
+  /// In es, this message translates to:
+  /// **'Pro'**
+  String get perfilPlanPro;
+
+  /// No description provided for @perfilPlanFamilia.
+  ///
+  /// In es, this message translates to:
+  /// **'Familia'**
+  String get perfilPlanFamilia;
+
+  /// No description provided for @perfilMascotas.
+  ///
+  /// In es, this message translates to:
+  /// **'Mascotas a tu cargo'**
+  String get perfilMascotas;
+
+  /// No description provided for @perfilSinMascotas.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no tenés mascotas cargadas ni compartidas.'**
+  String get perfilSinMascotas;
+
+  /// No description provided for @perfilPropias.
+  ///
+  /// In es, this message translates to:
+  /// **'{cantidad, plural, =1{1 tuya} other{{cantidad} tuyas}}'**
+  String perfilPropias(int cantidad);
+
+  /// No description provided for @perfilCompartidas.
+  ///
+  /// In es, this message translates to:
+  /// **'{cantidad, plural, =1{1 compartida con vos} other{{cantidad} compartidas con vos}}'**
+  String perfilCompartidas(int cantidad);
+
+  /// No description provided for @perfilCuidado.
+  ///
+  /// In es, this message translates to:
+  /// **'Con quién compartís el cuidado'**
+  String get perfilCuidado;
+
+  /// No description provided for @perfilSinHogar.
+  ///
+  /// In es, this message translates to:
+  /// **'Por ahora cuidás solo/a. Podés invitar a tu familia desde «Mi hogar».'**
+  String get perfilSinHogar;
+
+  /// No description provided for @perfilVerHogar.
+  ///
+  /// In es, this message translates to:
+  /// **'Ver «Mi hogar»'**
+  String get perfilVerHogar;
+
+  /// No description provided for @ajustesHogar.
+  ///
+  /// In es, this message translates to:
+  /// **'Mi hogar'**
+  String get ajustesHogar;
+
+  /// No description provided for @ajustesHogarAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Compartí tus mascotas con tu familia.'**
+  String get ajustesHogarAyuda;
 }
 
 class _AppLocalizationsDelegate

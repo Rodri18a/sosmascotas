@@ -9,6 +9,7 @@ import 'features/ajustes/ajustes_screen.dart';
 import 'features/avisos/avisos_screen.dart';
 import 'features/ayuda/ayuda_screen.dart';
 import 'features/consentimiento/consentimiento_screen.dart';
+import 'features/hogar/hogar_screen.dart';
 import 'features/ingresar/ingresar_screen.dart';
 import 'features/legal/legal_screen.dart';
 import 'features/libreta/libreta.dart';
@@ -18,6 +19,7 @@ import 'features/mascotas/mascota_form_screen.dart';
 import 'features/mascotas/mascotas_screen.dart';
 import 'features/mascotas/qr_mascota_screen.dart';
 import 'features/no_disponible/no_disponible_screen.dart';
+import 'features/perfil/perfil_screen.dart';
 import 'features/recordatorios/recordatorios.dart';
 import 'features/shell/app_shell.dart';
 import 'features/sos/sos_detalle_screen.dart';
@@ -45,6 +47,9 @@ abstract final class Rutas {
   static const noDisponible = '/no-disponible';
   static const libreta = '/libreta';
   static const recordatorios = '/recordatorios';
+  static const hogar = '/hogar';
+  static const unirme = '/unirme';
+  static const perfil = '/perfil';
 
   /// Rutas detrás de una funcionalidad gradual (comienzo de la ruta → clave de
   /// `Funcionalidades`). Quien entra sin tenerla prendida ve "Todavía no está
@@ -52,6 +57,8 @@ abstract final class Rutas {
   static const conFuncionalidad = <String, String>{
     '$libreta/': Funcionalidades.libreta,
     '$recordatorios/': Funcionalidades.recordatorios,
+    hogar: Funcionalidades.hogar,
+    perfil: Funcionalidades.perfil,
   };
 
   /// Rutas que un visitante no puede ver: se le pide ingresar y después vuelve.
@@ -61,6 +68,9 @@ abstract final class Rutas {
     avisos,
     '$libreta/',
     '$recordatorios/',
+    hogar,
+    '$unirme/',
+    perfil,
   ];
 
   static String fichaMascota(String id) => '$mascotas/$id';
@@ -248,6 +258,15 @@ final routerProvider = Provider<GoRouter>((ref) {
           mascotaId: state.pathParameters['mascota']!,
           recordatorioId: state.pathParameters['id'],
         ),
+      ),
+      GoRoute(path: Rutas.hogar, builder: (_, _) => const HogarScreen()),
+      GoRoute(path: Rutas.perfil, builder: (_, _) => const PerfilScreen()),
+      // Sin funcionalidad: quien recibe la invitación tiene que poder unirse
+      // aunque todavía no tenga "Mi hogar" prendido.
+      GoRoute(
+        path: '${Rutas.unirme}/:codigo',
+        builder: (_, state) =>
+            UnirmeScreen(codigo: state.pathParameters['codigo']!),
       ),
       GoRoute(
         path: Rutas.noDisponible,
