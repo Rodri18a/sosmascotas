@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
+import '../../funcionalidades/funcionalidades_activas.dart';
 import '../../mascotas/libreta_repositorio.dart';
 import '../../mascotas/textos_mascota.dart';
 import '../../metricas/metricas.dart';
@@ -31,6 +32,9 @@ class TarjetaLibreta extends ConsumerWidget {
     final tema = Theme.of(context);
     final libreta = ref.watch(libretaProvider(mascotaId));
     final hoy = ref.watch(relojProvider)();
+    final conRecordatorios = ref.watch(
+      funcionalidadActivaProvider(Funcionalidades.recordatorios),
+    );
 
     return Card(
       child: Padding(
@@ -51,6 +55,7 @@ class TarjetaLibreta extends ConsumerWidget {
                 mascotaId: mascotaId,
                 grupos: grupos,
                 hoy: hoy,
+                conRecordatorios: conRecordatorios,
               ),
               AsyncLoading() => const Padding(
                 padding: EdgeInsets.all(16),
@@ -98,11 +103,15 @@ class _Registros extends StatelessWidget {
     required this.mascotaId,
     required this.grupos,
     required this.hoy,
+    required this.conRecordatorios,
   });
 
   final String mascotaId;
   final Map<TipoRegistroSalud, List<RegistroSalud>> grupos;
   final DateTime hoy;
+
+  /// Ofrece "Recordarme" en lo que tiene próxima fecha por venir (D67).
+  final bool conRecordatorios;
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +146,25 @@ class _Registros extends StatelessWidget {
                 r,
                 vigente: idsVigentes.contains(r.id),
               ),
-              trailing: const Icon(Icons.chevron_right),
+              trailing:
+                  conRecordatorios &&
+                      idsVigentes.contains(r.id) &&
+                      diasHasta(r.proxima!, hoy) >= 0
+                  ? IconButton(
+                      tooltip: t.libretaRecordarmeDe(r.nombre),
+                      icon: const Icon(Icons.add_alarm_outlined),
+                      onPressed: () => context.push(
+                        Rutas.nuevoRecordatorio(
+                          mascotaId,
+                          tipo: r.tipo == TipoRegistroSalud.vaccine
+                              ? TipoRecordatorio.vaccine
+                              : TipoRecordatorio.checkup,
+                          titulo: r.nombre,
+                          fecha: r.proxima,
+                        ),
+                      ),
+                    )
+                  : const Icon(Icons.chevron_right),
               onTap: () =>
                   context.push(Rutas.editarRegistroSalud(mascotaId, r.id)),
             ),

@@ -24,7 +24,22 @@ String textoCuando(BuildContext context, DateTime cuando, DateTime ahora) {
   return t.recordatorioFechaA(l.formatMediumDate(cuando), hora);
 }
 
-/// Recordatorios dentro de la ficha de la mascota (paso 1.5.3).
+IconData iconoRecordatorio(TipoRecordatorio tipo) => switch (tipo) {
+  TipoRecordatorio.medication => Icons.medication_outlined,
+  TipoRecordatorio.food => Icons.restaurant_outlined,
+  TipoRecordatorio.vaccine => Icons.vaccines_outlined,
+  TipoRecordatorio.checkup => Icons.medical_services_outlined,
+};
+
+String textoTipoRecordatorio(AppLocalizations t, TipoRecordatorio tipo) =>
+    switch (tipo) {
+      TipoRecordatorio.medication => t.recordatorioTipoMedicacion,
+      TipoRecordatorio.food => t.recordatorioTipoComida,
+      TipoRecordatorio.vaccine => t.recordatorioTipoVacuna,
+      TipoRecordatorio.checkup => t.recordatorioTipoControl,
+    };
+
+/// Recordatorios dentro de la ficha de la mascota (pasos 1.5.3 y 1.5.4).
 class TarjetaRecordatorios extends ConsumerWidget {
   const TarjetaRecordatorios({required this.mascotaId, super.key});
 
@@ -62,7 +77,7 @@ class TarjetaRecordatorios extends ConsumerWidget {
                     ListTile(
                       leading: Icon(
                         r.activo
-                            ? Icons.medication_outlined
+                            ? iconoRecordatorio(r.tipo)
                             : Icons.pause_circle_outline,
                       ),
                       title: Text(r.titulo),
@@ -106,6 +121,8 @@ class TarjetaRecordatorios extends ConsumerWidget {
         t.recordatorioPausado
       else if (r.proximaToma(ahora) case final p?)
         t.recordatorioProxima(textoCuando(context, p, ahora))
+      else if (r.frecuencia is UnaVez)
+        t.recordatorioYaPaso
       else
         t.recordatorioTerminado,
     ];
@@ -178,17 +195,33 @@ class RecordatorioScreen extends ConsumerWidget {
   const RecordatorioScreen({
     required this.mascotaId,
     this.recordatorioId,
+    this.precarga,
     super.key,
   });
 
+  /// Lee la precarga de la dirección (`?tipo=vaccine&titulo=…&fecha=2027-09-01`),
+  /// por ejemplo desde "Recordarme" en la libreta.
+  static Precarga? precargaDe(Map<String, String> parametros) {
+    final tipo = TipoRecordatorio.values.asNameMap()[parametros['tipo']];
+    if (tipo == null) return null;
+    return (
+      tipo: tipo,
+      titulo: parametros['titulo'],
+      fecha: DateTime.tryParse(parametros['fecha'] ?? ''),
+    );
+  }
+
   final String mascotaId;
   final String? recordatorioId;
+  final Precarga? precarga;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final t = context.t;
     final id = recordatorioId;
-    if (id == null) return _Formulario(mascotaId: mascotaId);
+    if (id == null) {
+      return _Formulario(mascotaId: mascotaId, precarga: precarga);
+    }
     return switch (ref.watch(recordatorioProvider(id))) {
       AsyncData(value: final r?) => _Formulario(
         mascotaId: mascotaId,
@@ -205,15 +238,31 @@ class RecordatorioScreen extends ConsumerWidget {
   }
 }
 
-enum _Modo { cadaHoras, diaria, semanal }
+/// Datos con los que arranca un recordatorio nuevo.
+typedef Precarga = ({TipoRecordatorio tipo, String? titulo, DateTime? fecha});
+
+enum _Modo { cadaHoras, diaria, semanal, unaVez }
+
+/// Las frecuencias que tienen sentido para cada tipo (la primera es la de
+/// arranque).
+List<_Modo> _modosDe(TipoRecordatorio tipo) => switch (tipo) {
+  TipoRecordatorio.medication => const [
+    _Modo.cadaHoras,
+    _Modo.diaria,
+    _Modo.semanal,
+  ],
+  TipoRecordatorio.food => const [_Modo.diaria, _Modo.semanal],
+  TipoRecordatorio.vaccine || TipoRecordatorio.checkup => const [_Modo.unaVez],
+};
 
 const _opcionesHoras = [4, 6, 8, 12, 24, 48, 72];
 
 class _Formulario extends ConsumerStatefulWidget {
-  const _Formulario({required this.mascotaId, this.original});
+  const _Formulario({required this.mascotaId, this.original, this.precarga});
 
   final String mascotaId;
   final Recordatorio? original;
+  final Precarga? precarga;
 
   @override
   ConsumerState<_Formulario> createState() => _FormularioState();
@@ -221,9 +270,15 @@ class _Formulario extends ConsumerStatefulWidget {
 
 class _FormularioState extends ConsumerState<_Formulario> {
   final _form = GlobalKey<FormState>();
-  late final _titulo = TextEditingController(text: widget.original?.titulo);
+  late final _titulo = TextEditingController(
+    text: widget.original?.titulo ?? widget.precarga?.titulo,
+  );
   late final _dosis = TextEditingController(text: widget.original?.dosis);
 
+  late TipoRecordatorio _tipo =
+      widget.original?.tipo ??
+      widget.precarga?.tipo ??
+      TipoRecordatorio.medication;
   late _Modo _modo;
   late int _horas;
   late List<HoraDelDia> _horarios;
@@ -236,6 +291,9 @@ class _FormularioState extends ConsumerState<_Formulario> {
 
   bool get _esNuevo => widget.original == null;
 
+  bool get _llevaDosis =>
+      _tipo == TipoRecordatorio.medication || _tipo == TipoRecordatorio.food;
+
   @override
   void initState() {
     super.initState();
@@ -244,8 +302,12 @@ class _FormularioState extends ConsumerState<_Formulario> {
     _inicio =
         widget.original?.inicio ??
         DateTime(ahora.year, ahora.month, ahora.day, ahora.hour + 1);
-    _modo = _Modo.cadaHoras;
+    _modo = _modosDe(_tipo).first;
     _horas = 8;
+    // Vacunas y controles de la libreta: ese día a las 9.
+    if (widget.precarga?.fecha case final f? when widget.original == null) {
+      _inicio = DateTime(f.year, f.month, f.day, 9);
+    }
     _horarios = const [HoraDelDia(8, 0), HoraDelDia(20, 0)];
     _dias = {ahora.weekday};
     switch (widget.original?.frecuencia) {
@@ -258,9 +320,16 @@ class _FormularioState extends ConsumerState<_Formulario> {
         _modo = _Modo.semanal;
         _dias = dias;
         _horarios = horarios;
-      case UnaVez() || null:
+      case UnaVez():
+        _modo = _Modo.unaVez;
+      case null:
     }
   }
+
+  void _cambiarTipo(TipoRecordatorio tipo) => setState(() {
+    _tipo = tipo;
+    if (!_modosDe(tipo).contains(_modo)) _modo = _modosDe(tipo).first;
+  });
 
   @override
   void dispose() {
@@ -273,6 +342,7 @@ class _FormularioState extends ConsumerState<_Formulario> {
     _Modo.cadaHoras => CadaHoras(_horas),
     _Modo.diaria => Diaria(_horarios),
     _Modo.semanal => Semanal(_dias, _horarios),
+    _Modo.unaVez => const UnaVez(),
   };
 
   Future<void> _elegirInicio() async {
@@ -283,7 +353,7 @@ class _FormularioState extends ConsumerState<_Formulario> {
       lastDate: DateTime(_inicio.year + 2),
     );
     if (dia == null || !mounted) return;
-    final hora = _modo == _Modo.cadaHoras
+    final hora = _modo == _Modo.cadaHoras || _modo == _Modo.unaVez
         ? await showTimePicker(
             context: context,
             initialTime: TimeOfDay.fromDateTime(_inicio),
@@ -344,7 +414,7 @@ class _FormularioState extends ConsumerState<_Formulario> {
         titulo: _titulo.text,
         frecuencia: _frecuencia,
         inicio: _inicio,
-        fin: _fin,
+        fin: _modo == _Modo.unaVez ? null : _fin,
       ),
     );
     if (error != null) {
@@ -358,12 +428,12 @@ class _FormularioState extends ConsumerState<_Formulario> {
     final recordatorio = Recordatorio(
       id: widget.original?.id ?? '',
       mascotaId: widget.mascotaId,
-      tipo: widget.original?.tipo ?? TipoRecordatorio.medication,
+      tipo: _tipo,
       titulo: _titulo.text,
-      dosis: _dosis.text,
+      dosis: _llevaDosis ? _dosis.text : null,
       frecuencia: _frecuencia,
       inicio: _inicio,
-      fin: _fin,
+      fin: _modo == _Modo.unaVez ? null : _fin,
       activo: _activo,
     );
     final repo = ref.read(recordatoriosRepositorioProvider);
@@ -449,13 +519,41 @@ class _FormularioState extends ConsumerState<_Formulario> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                Text(t.recordatorioTipo, style: tema.textTheme.titleSmall),
+                const SizedBox(height: 8),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: [
+                    for (final tipo in TipoRecordatorio.values)
+                      ChoiceChip(
+                        avatar: Icon(iconoRecordatorio(tipo), size: 18),
+                        label: Text(textoTipoRecordatorio(t, tipo)),
+                        selected: tipo == _tipo,
+                        onSelected: (_) => _cambiarTipo(tipo),
+                      ),
+                  ],
+                ),
+                const SizedBox(height: 16),
                 TextFormField(
                   controller: _titulo,
                   maxLength: 80,
                   textCapitalization: TextCapitalization.sentences,
                   decoration: InputDecoration(
-                    labelText: t.recordatorioTitulo,
-                    helperText: t.recordatorioTituloAyuda,
+                    labelText: switch (_tipo) {
+                      TipoRecordatorio.medication => t.recordatorioTitulo,
+                      TipoRecordatorio.food => t.recordatorioTituloComida,
+                      TipoRecordatorio.vaccine => t.recordatorioTituloVacuna,
+                      TipoRecordatorio.checkup => t.recordatorioTituloControl,
+                    },
+                    helperText: switch (_tipo) {
+                      TipoRecordatorio.medication => t.recordatorioTituloAyuda,
+                      TipoRecordatorio.food => t.recordatorioTituloComidaAyuda,
+                      TipoRecordatorio.vaccine =>
+                        t.recordatorioTituloVacunaAyuda,
+                      TipoRecordatorio.checkup =>
+                        t.recordatorioTituloControlAyuda,
+                    },
                   ),
                   validator: (v) => switch (validarRecordatorio(
                     titulo: v ?? '',
@@ -469,39 +567,44 @@ class _FormularioState extends ConsumerState<_Formulario> {
                     _ => null,
                   },
                 ),
-                TextFormField(
-                  controller: _dosis,
-                  maxLength: 80,
-                  decoration: InputDecoration(
-                    labelText: t.recordatorioDosis,
-                    helperText: t.recordatorioDosisAyuda,
+                if (_llevaDosis)
+                  TextFormField(
+                    controller: _dosis,
+                    maxLength: 80,
+                    decoration: InputDecoration(
+                      labelText: _tipo == TipoRecordatorio.food
+                          ? t.recordatorioPorcion
+                          : t.recordatorioDosis,
+                      helperText: _tipo == TipoRecordatorio.food
+                          ? t.recordatorioPorcionAyuda
+                          : t.recordatorioDosisAyuda,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  t.recordatorioFrecuencia,
-                  style: tema.textTheme.titleSmall,
-                ),
-                const SizedBox(height: 8),
-                SegmentedButton<_Modo>(
-                  segments: [
-                    ButtonSegment(
-                      value: _Modo.cadaHoras,
-                      label: Text(t.recordatorioCadaHoras),
-                    ),
-                    ButtonSegment(
-                      value: _Modo.diaria,
-                      label: Text(t.recordatorioDiaria),
-                    ),
-                    ButtonSegment(
-                      value: _Modo.semanal,
-                      label: Text(t.recordatorioSemanal),
-                    ),
-                  ],
-                  selected: {_modo},
-                  onSelectionChanged: (s) => setState(() => _modo = s.first),
-                ),
-                const SizedBox(height: 16),
+                if (_modosDe(_tipo).length > 1) ...[
+                  const SizedBox(height: 8),
+                  Text(
+                    t.recordatorioFrecuencia,
+                    style: tema.textTheme.titleSmall,
+                  ),
+                  const SizedBox(height: 8),
+                  SegmentedButton<_Modo>(
+                    segments: [
+                      for (final modo in _modosDe(_tipo))
+                        ButtonSegment(
+                          value: modo,
+                          label: Text(switch (modo) {
+                            _Modo.cadaHoras => t.recordatorioCadaHoras,
+                            _Modo.diaria => t.recordatorioDiaria,
+                            _Modo.semanal => t.recordatorioSemanal,
+                            _Modo.unaVez => t.recordatorioCuando,
+                          }),
+                        ),
+                    ],
+                    selected: {_modo},
+                    onSelectionChanged: (s) => setState(() => _modo = s.first),
+                  ),
+                  const SizedBox(height: 16),
+                ],
                 if (_modo == _Modo.cadaHoras)
                   DropdownButtonFormField<int>(
                     initialValue: _horas,
@@ -541,7 +644,7 @@ class _FormularioState extends ConsumerState<_Formulario> {
                   ),
                   const SizedBox(height: 16),
                 ],
-                if (_modo != _Modo.cadaHoras) ...[
+                if (_modo == _Modo.diaria || _modo == _Modo.semanal) ...[
                   Text(
                     t.recordatorioHorarios,
                     style: tema.textTheme.titleSmall,
@@ -574,13 +677,13 @@ class _FormularioState extends ConsumerState<_Formulario> {
                 ListTile(
                   contentPadding: EdgeInsets.zero,
                   leading: const Icon(Icons.event_outlined),
-                  title: Text(
-                    _modo == _Modo.cadaHoras
-                        ? t.recordatorioPrimeraToma
-                        : t.recordatorioInicio,
-                  ),
+                  title: Text(switch (_modo) {
+                    _Modo.cadaHoras => t.recordatorioPrimeraToma,
+                    _Modo.unaVez => t.recordatorioCuando,
+                    _ => t.recordatorioInicio,
+                  }),
                   subtitle: Text(
-                    _modo == _Modo.cadaHoras
+                    _modo == _Modo.cadaHoras || _modo == _Modo.unaVez
                         ? textoCuando(context, _inicio, ahora)
                         : l.formatMediumDate(_inicio),
                   ),
@@ -589,30 +692,31 @@ class _FormularioState extends ConsumerState<_Formulario> {
                     child: Text(t.libretaFechaElegir),
                   ),
                 ),
-                ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  leading: const Icon(Icons.event_available_outlined),
-                  title: Text(t.recordatorioFin),
-                  subtitle: Text(
-                    _fin == null
-                        ? t.recordatorioFinSin
-                        : l.formatMediumDate(_fin!),
-                  ),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      if (_fin != null)
+                if (_modo != _Modo.unaVez)
+                  ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(Icons.event_available_outlined),
+                    title: Text(t.recordatorioFin),
+                    subtitle: Text(
+                      _fin == null
+                          ? t.recordatorioFinSin
+                          : l.formatMediumDate(_fin!),
+                    ),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (_fin != null)
+                          TextButton(
+                            onPressed: () => setState(() => _fin = null),
+                            child: Text(t.libretaQuitarFecha),
+                          ),
                         TextButton(
-                          onPressed: () => setState(() => _fin = null),
-                          child: Text(t.libretaQuitarFecha),
+                          onPressed: _elegirFin,
+                          child: Text(t.libretaFechaElegir),
                         ),
-                      TextButton(
-                        onPressed: _elegirFin,
-                        child: Text(t.libretaFechaElegir),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
                 if (!_esNuevo)
                   SwitchListTile(
                     contentPadding: EdgeInsets.zero,

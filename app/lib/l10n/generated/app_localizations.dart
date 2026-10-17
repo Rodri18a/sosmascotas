@@ -2443,7 +2443,7 @@ abstract class AppLocalizations {
   /// No description provided for @recordatorioTituloFalta.
   ///
   /// In es, this message translates to:
-  /// **'Escribí qué hay que darle.'**
+  /// **'Escribí de qué es el recordatorio.'**
   String get recordatorioTituloFalta;
 
   /// No description provided for @recordatorioTituloLargo.
@@ -2649,6 +2649,96 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Los avisos están bloqueados en este navegador. Habilitalos en la configuración del sitio.'**
   String get recordatoriosAvisosBloqueados;
+
+  /// No description provided for @recordatorioTipo.
+  ///
+  /// In es, this message translates to:
+  /// **'Tipo'**
+  String get recordatorioTipo;
+
+  /// No description provided for @recordatorioTipoComida.
+  ///
+  /// In es, this message translates to:
+  /// **'Comida'**
+  String get recordatorioTipoComida;
+
+  /// No description provided for @recordatorioTipoVacuna.
+  ///
+  /// In es, this message translates to:
+  /// **'Vacuna'**
+  String get recordatorioTipoVacuna;
+
+  /// No description provided for @recordatorioTipoControl.
+  ///
+  /// In es, this message translates to:
+  /// **'Control'**
+  String get recordatorioTipoControl;
+
+  /// No description provided for @recordatorioTituloComida.
+  ///
+  /// In es, this message translates to:
+  /// **'Comida'**
+  String get recordatorioTituloComida;
+
+  /// No description provided for @recordatorioTituloComidaAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Por ejemplo: balanceado, comida húmeda.'**
+  String get recordatorioTituloComidaAyuda;
+
+  /// No description provided for @recordatorioTituloVacuna.
+  ///
+  /// In es, this message translates to:
+  /// **'Vacuna'**
+  String get recordatorioTituloVacuna;
+
+  /// No description provided for @recordatorioTituloVacunaAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Por ejemplo: Antirrábica, Séxtuple, Triple felina.'**
+  String get recordatorioTituloVacunaAyuda;
+
+  /// No description provided for @recordatorioTituloControl.
+  ///
+  /// In es, this message translates to:
+  /// **'Control'**
+  String get recordatorioTituloControl;
+
+  /// No description provided for @recordatorioTituloControlAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Por ejemplo: control anual, análisis de sangre.'**
+  String get recordatorioTituloControlAyuda;
+
+  /// No description provided for @recordatorioPorcion.
+  ///
+  /// In es, this message translates to:
+  /// **'Porción (opcional)'**
+  String get recordatorioPorcion;
+
+  /// No description provided for @recordatorioPorcionAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Por ejemplo: 1 taza, 150 g.'**
+  String get recordatorioPorcionAyuda;
+
+  /// No description provided for @recordatorioCuando.
+  ///
+  /// In es, this message translates to:
+  /// **'Cuándo'**
+  String get recordatorioCuando;
+
+  /// No description provided for @recordatorioYaPaso.
+  ///
+  /// In es, this message translates to:
+  /// **'Ya pasó'**
+  String get recordatorioYaPaso;
+
+  /// No description provided for @libretaRecordarmeDe.
+  ///
+  /// In es, this message translates to:
+  /// **'Recordarme {nombre}'**
+  String libretaRecordarmeDe(String nombre);
 }
 
 class _AppLocalizationsDelegate

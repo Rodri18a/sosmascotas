@@ -9,6 +9,7 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 import 'cuenta_falsa.dart';
 import 'funcionalidades_falsas.dart';
 import 'helpers.dart';
+import 'libreta_falsa.dart';
 import 'mascotas_falsas.dart';
 import 'recordatorios_falsos.dart';
 
@@ -39,13 +40,16 @@ Widget _app({
   AvisadorFalso? avisador,
   bool prendida = true,
   List<Map<String, Object?>>? eventos,
+  LibretaFalsa? libreta,
 }) => appDePrueba(
   cuenta: ServicioCuentaFalso(conectado: _ana),
   mascotas: MascotasFalsas([_luna]),
   recordatorios: recordatorios,
   avisador: avisador,
+  libreta: libreta,
   funcionalidades: FuncionalidadesFalsas({
     if (prendida) Funcionalidades.recordatorios,
+    if (libreta != null) Funcionalidades.libreta,
   }),
   eventos: eventos,
   ahora: _ahora,
@@ -103,7 +107,7 @@ void main() {
     expect(find.widgetWithText(AppBar, 'Nuevo recordatorio'), findsOneWidget);
     expect(find.text('hoy a las 11:00'), findsOneWidget);
     await _tocar(tester, find.widgetWithText(FilledButton, 'Guardar'));
-    expect(find.text('Escribí qué hay que darle.'), findsOneWidget);
+    expect(find.text('Escribí de qué es el recordatorio.'), findsOneWidget);
 
     await tester.enterText(
       find.widgetWithText(TextFormField, 'Remedio'),
@@ -164,6 +168,97 @@ void main() {
     expect(f.dias, {DateTime.saturday});
     expect(f.horarios, [const HoraDelDia(20, 0)]);
     expect(find.textContaining('Próxima: hoy a las 20:00'), findsOneWidget);
+  });
+
+  testWidgets('comida: todos los días o algunos días, con porción', (
+    tester,
+  ) async {
+    final recordatorios = RecordatoriosFalsos();
+    await _abrirFicha(tester, _app(recordatorios: recordatorios));
+    await _tocar(tester, find.text('Agregar recordatorio'));
+    await _tocar(tester, find.widgetWithText(ChoiceChip, 'Comida'));
+
+    expect(find.text('Cada X horas'), findsNothing);
+    expect(find.text('8:00'), findsOneWidget);
+    await tester.enterText(
+      find.widgetWithText(TextFormField, 'Comida'),
+      'Balanceado',
+    );
+    await tester.enterText(
+      find.widgetWithText(TextFormField, 'Porción (opcional)'),
+      '1 taza',
+    );
+    await _tocar(tester, find.widgetWithText(FilledButton, 'Guardar'));
+
+    final r = recordatorios.recordatorios.single;
+    expect(r.tipo, TipoRecordatorio.food);
+    expect(r.dosis, '1 taza');
+    expect((r.frecuencia as Diaria).horarios, const [
+      HoraDelDia(8, 0),
+      HoraDelDia(20, 0),
+    ]);
+    expect(find.text('1 taza · Próxima: hoy a las 20:00'), findsOneWidget);
+  });
+
+  testWidgets('vacuna: una sola vez, sin dosis ni frecuencia', (tester) async {
+    final recordatorios = RecordatoriosFalsos();
+    await _abrirFicha(tester, _app(recordatorios: recordatorios));
+    await _tocar(tester, find.text('Agregar recordatorio'));
+    await _tocar(tester, find.widgetWithText(ChoiceChip, 'Vacuna'));
+
+    expect(find.text('Dosis (opcional)'), findsNothing);
+    expect(find.text('Todos los días'), findsNothing);
+    expect(find.text('Hasta'), findsNothing);
+    expect(find.text('Cuándo'), findsOneWidget);
+    await tester.enterText(
+      find.widgetWithText(TextFormField, 'Vacuna'),
+      'Séxtuple',
+    );
+    await _tocar(tester, find.widgetWithText(FilledButton, 'Guardar'));
+
+    final r = recordatorios.recordatorios.single;
+    expect(r.tipo, TipoRecordatorio.vaccine);
+    expect(r.frecuencia, isA<UnaVez>());
+    expect(r.dosis, isNull);
+    expect(r.inicio, DateTime(2026, 10, 17, 11));
+  });
+
+  testWidgets('"Recordarme" desde la libreta: la vacuna ese día a las 9', (
+    tester,
+  ) async {
+    final recordatorios = RecordatoriosFalsos();
+    await _abrirFicha(
+      tester,
+      _app(
+        recordatorios: recordatorios,
+        libreta: LibretaFalsa([
+          RegistroSalud(
+            id: 'v1',
+            mascotaId: 'm1',
+            tipo: TipoRegistroSalud.vaccine,
+            nombre: 'Antirrábica',
+            fecha: DateTime(2025, 11, 1),
+            proxima: DateTime(2026, 11, 1),
+          ),
+        ]),
+      ),
+    );
+    await _tocar(tester, find.byTooltip('Recordarme Antirrábica'));
+
+    expect(find.widgetWithText(AppBar, 'Nuevo recordatorio'), findsOneWidget);
+    expect(
+      tester
+          .widget<ChoiceChip>(find.widgetWithText(ChoiceChip, 'Vacuna'))
+          .selected,
+      isTrue,
+    );
+    expect(find.widgetWithText(TextFormField, 'Antirrábica'), findsOneWidget);
+    await _tocar(tester, find.widgetWithText(FilledButton, 'Guardar'));
+
+    final r = recordatorios.recordatorios.single;
+    expect(r.titulo, 'Antirrábica');
+    expect(r.frecuencia, isA<UnaVez>());
+    expect(r.inicio, DateTime(2026, 11, 1, 9));
   });
 
   testWidgets('pausar y borrar', (tester) async {

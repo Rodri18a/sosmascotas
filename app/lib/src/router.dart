@@ -75,8 +75,21 @@ abstract final class Rutas {
       '$libreta/$mascotaId/nuevo';
   static String editarRegistroSalud(String mascotaId, String id) =>
       '$libreta/$mascotaId/$id';
-  static String nuevoRecordatorio(String mascotaId) =>
-      '$recordatorios/$mascotaId/nuevo';
+  static String nuevoRecordatorio(
+    String mascotaId, {
+    TipoRecordatorio? tipo,
+    String? titulo,
+    DateTime? fecha,
+  }) => Uri(
+    path: '$recordatorios/$mascotaId/nuevo',
+    queryParameters: tipo == null
+        ? null
+        : {
+            'tipo': tipo.name,
+            'titulo': ?titulo,
+            if (fecha != null) 'fecha': fechaIso(fecha),
+          },
+  ).toString();
   static String editarRecordatorio(String mascotaId, String id) =>
       '$recordatorios/$mascotaId/$id';
 
@@ -224,8 +237,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: '${Rutas.recordatorios}/:mascota/nuevo',
-        builder: (_, state) =>
-            RecordatorioScreen(mascotaId: state.pathParameters['mascota']!),
+        builder: (_, state) => RecordatorioScreen(
+          mascotaId: state.pathParameters['mascota']!,
+          precarga: RecordatorioScreen.precargaDe(state.uri.queryParameters),
+        ),
       ),
       GoRoute(
         path: '${Rutas.recordatorios}/:mascota/:id',

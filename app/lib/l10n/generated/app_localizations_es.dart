@@ -1406,7 +1406,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'Por ejemplo: antibiótico, antiinflamatorio, gotas para los oídos.';
 
   @override
-  String get recordatorioTituloFalta => 'Escribí qué hay que darle.';
+  String get recordatorioTituloFalta => 'Escribí de qué es el recordatorio.';
 
   @override
   String get recordatorioTituloLargo => 'Usá hasta 80 letras.';
@@ -1535,4 +1535,54 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get recordatoriosAvisosBloqueados =>
       'Los avisos están bloqueados en este navegador. Habilitalos en la configuración del sitio.';
+
+  @override
+  String get recordatorioTipo => 'Tipo';
+
+  @override
+  String get recordatorioTipoComida => 'Comida';
+
+  @override
+  String get recordatorioTipoVacuna => 'Vacuna';
+
+  @override
+  String get recordatorioTipoControl => 'Control';
+
+  @override
+  String get recordatorioTituloComida => 'Comida';
+
+  @override
+  String get recordatorioTituloComidaAyuda =>
+      'Por ejemplo: balanceado, comida húmeda.';
+
+  @override
+  String get recordatorioTituloVacuna => 'Vacuna';
+
+  @override
+  String get recordatorioTituloVacunaAyuda =>
+      'Por ejemplo: Antirrábica, Séxtuple, Triple felina.';
+
+  @override
+  String get recordatorioTituloControl => 'Control';
+
+  @override
+  String get recordatorioTituloControlAyuda =>
+      'Por ejemplo: control anual, análisis de sangre.';
+
+  @override
+  String get recordatorioPorcion => 'Porción (opcional)';
+
+  @override
+  String get recordatorioPorcionAyuda => 'Por ejemplo: 1 taza, 150 g.';
+
+  @override
+  String get recordatorioCuando => 'Cuándo';
+
+  @override
+  String get recordatorioYaPaso => 'Ya pasó';
+
+  @override
+  String libretaRecordarmeDe(String nombre) {
+    return 'Recordarme $nombre';
+  }
 }
