@@ -7,6 +7,8 @@
 | I1 | Seguir el paseo en vivo (el paseador comparte la ubicación) | Visto en MiMascota App | 16/10/2026 | 💡 Para evaluar |
 | I2 | Collar con GPS propio | Visto en MiMascota App | 16/10/2026 | 💡 Para investigar |
 | I3 | Collar que informa datos de salud (como un reloj biométrico) | Idea del dueño | 16/10/2026 | 💡 Para investigar |
+| I4 | "Con quién me cruzo" por las mascotas | Idea del dueño | 17/10/2026 | 📝 Propuesta en `17-propuestas-perfil-gamificacion.md` §2 |
+| I5 | Gamificación con logros concretos (protección, libreta al día, tratamiento completo, vecino solidario) | Idea del dueño | 17/10/2026 | 📝 Propuesta en `17-propuestas-perfil-gamificacion.md` §3 |
 
 ---
 
