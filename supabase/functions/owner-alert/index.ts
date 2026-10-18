@@ -192,6 +192,7 @@ Deno.serve(async (req) => {
   // de respaldo llega con 0.4.4b.
   const { data: tokens } = await admin.rpc('tokens_de_cuidadores', {
     p_owner: destino.owner_id,
+    p_pet: destino.pet_id,
   });
   const push = textoAvisoAlDueno(tipo, destino.nombre);
   await avisarDispositivos(admin, (tokens as string[] | null) ?? [], {

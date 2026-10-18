@@ -1900,4 +1900,37 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tareaCrear => 'Agregar';
+
+  @override
+  String get hogarInvitarCuidador => 'Invitar a un cuidador temporal';
+
+  @override
+  String get cuidadorTitulo => 'Cuidador temporal';
+
+  @override
+  String get cuidadorExplicacion =>
+      'Para vacaciones o guardería: solo ve las mascotas que elijas y durante los días que digas. Después deja de verlas solo.';
+
+  @override
+  String get cuidadorMascotas => 'Qué mascotas cuida';
+
+  @override
+  String get cuidadorDias => 'Durante';
+
+  @override
+  String cuidadorNDias(int dias) {
+    String _temp0 = intl.Intl.pluralLogic(
+      dias,
+      locale: localeName,
+      other: '$dias días',
+      one: '1 día',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get cuidadorSinMascotas => 'Primero cargá una mascota.';
+
+  @override
+  String get cuidadorInvitar => 'Crear invitación';
 }

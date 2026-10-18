@@ -157,6 +157,49 @@ void main() {
       expect(eventos.map((e) => e['name']), contains('household_leave'));
     });
 
+    testWidgets('cuidador temporal: elige mascotas y días', (tester) async {
+      _pantallaDeCelular(tester);
+      final hogar = HogarFalso([
+        ..._hogarDeAna,
+        Integrante(
+          hogarId: 'h1',
+          usuarioId: 'u3',
+          nombre: 'Caro',
+          rol: RolHogar.tempCaregiver,
+          accesoHasta: DateTime(2026, 10, 25),
+        ),
+      ]);
+      final eventos = <Map<String, Object?>>[];
+      await tester.pumpWidget(
+        _app(
+          yo: _ana,
+          hogar: hogar,
+          eventos: eventos,
+          mascotas: const [
+            _lunaDeAna,
+            Mascota(id: 'm2', nombre: 'Toto', especieId: 1, duenoId: 'u1'),
+          ],
+        ),
+      );
+      await _ir(tester, '/hogar');
+      expect(find.textContaining('Cuidador temporal hasta el'), findsOneWidget);
+
+      await _tocar(tester, find.text('Invitar a un cuidador temporal'));
+      await _tocar(tester, find.widgetWithText(CheckboxListTile, 'Toto'));
+      await _tocar(tester, find.text('7 días'));
+      await _tocar(tester, find.text('3 días').last);
+      await _tocar(tester, find.text('Crear invitación'));
+
+      final invitacion = hogar.invitaciones.single;
+      expect(invitacion.dias, 3);
+      expect(invitacion.mascotas, ['m1']);
+      expect(find.text('Invitación lista'), findsOneWidget);
+      expect(
+        eventos.where((e) => e['name'] == 'household_invite').single['props'],
+        {'rol': 'temp_caregiver'},
+      );
+    });
+
     testWidgets('sin la funcionalidad, "Mi hogar" no está disponible', (
       tester,
     ) async {

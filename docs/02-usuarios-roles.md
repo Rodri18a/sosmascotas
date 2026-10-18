@@ -15,7 +15,7 @@
 | **Dueño de mascota** | Registra una o varias mascotas, usa el mapa, SOS, QR y recordatorios | App |
 | **Persona que encuentra un animal** | Puede no tener mascota. Reporta animales encontrados o escanea un QR | App / web del QR |
 | **Integrante de hogar** | Fue invitado al hogar de un dueño (plan Familia; gratis en la Fase 1) y comparte mascotas, libreta y recordatorios. Ve y edita la ficha, marca "ya se la di" y recibe los avisos del QR; **no** borra la mascota, no cambia el QR ni reporta SOS (D69) | App |
-| **Cuidador temporal** | Acceso limitado por X días a una mascota (vacaciones, guardería) | App |
+| **Cuidador temporal** | Acceso por X días (1 a 90) **solo a las mascotas que elige el dueño** (vacaciones, guardería). Con esas mascotas puede lo mismo que un integrante; al vencer, deja de verlas solo (D72) | App |
 | **Empresa con local** | Veterinaria, petshop, peluquería, farmacia veterinaria, hotel o guardería, adiestrador | App (modo comercio) → luego portal web |
 | **Empresa sin local** | Tienda online o servicio a domicilio (paseador, peluquería móvil) con zona de cobertura | App (modo comercio) → luego portal web |
 | **Refugio / ONG / rescatista** | Publica adopciones y perdidos y aparece en el directorio de Ayuda | App |

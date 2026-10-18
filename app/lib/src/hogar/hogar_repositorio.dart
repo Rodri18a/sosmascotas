@@ -21,8 +21,9 @@ abstract interface class HogarRepositorio {
   Future<List<Integrante>> integrantes();
 
   /// Crea (si hace falta) mi hogar y una invitación. Devuelve el código.
-  /// [diasCuidador]: invitación de cuidador temporal (1.6.4).
-  Future<String> invitar({int? diasCuidador});
+  /// Con [diasCuidador] y [mascotas]: invitación de cuidador temporal
+  /// (1.6.4, D72), con acceso solo a esas mascotas durante esos días.
+  Future<String> invitar({int? diasCuidador, List<String>? mascotas});
 
   /// Usa un código de invitación. Lanza [InvitacionFallida].
   Future<void> unirme(String codigo);
@@ -48,12 +49,17 @@ class SupabaseHogarRepositorio implements HogarRepositorio {
   }
 
   @override
-  Future<String> invitar({int? diasCuidador}) => _cliente.rpc<String>(
-    'invitar_al_hogar',
-    params: diasCuidador == null
-        ? const {}
-        : {'p_rol': 'temp_caregiver', 'p_dias': diasCuidador},
-  );
+  Future<String> invitar({int? diasCuidador, List<String>? mascotas}) =>
+      _cliente.rpc<String>(
+        'invitar_al_hogar',
+        params: diasCuidador == null
+            ? const {}
+            : {
+                'p_rol': 'temp_caregiver',
+                'p_dias': diasCuidador,
+                'p_mascotas': mascotas,
+              },
+      );
 
   @override
   Future<void> unirme(String codigo) async {
@@ -89,7 +95,7 @@ class HogarSinConfigurar implements HogarRepositorio {
   Future<List<Integrante>> integrantes() async => const [];
 
   @override
-  Future<String> invitar({int? diasCuidador}) =>
+  Future<String> invitar({int? diasCuidador, List<String>? mascotas}) =>
       throw StateError('Supabase no está configurado');
 
   @override

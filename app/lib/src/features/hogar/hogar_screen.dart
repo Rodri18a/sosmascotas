@@ -78,6 +78,12 @@ class _Contenido extends ConsumerWidget {
           icon: const Icon(Icons.person_add_alt_1_outlined),
           label: Text(t.hogarInvitar),
         ),
+        const SizedBox(height: 8),
+        OutlinedButton.icon(
+          onPressed: lleno ? null : () => _invitarCuidador(context, ref),
+          icon: const Icon(Icons.schedule),
+          label: Text(t.hogarInvitarCuidador),
+        ),
         if (lleno)
           Padding(
             padding: const EdgeInsets.only(top: 8),
@@ -104,12 +110,43 @@ class _Contenido extends ConsumerWidget {
     );
   }
 
-  Future<void> _invitar(BuildContext context, WidgetRef ref) async {
+  Future<void> _invitarCuidador(BuildContext context, WidgetRef ref) async {
+    final List<Mascota> todas;
+    try {
+      todas = await ref.read(misMascotasProvider.future);
+    } on Exception {
+      return;
+    }
+    final propias = todas.where((m) => m.esDe(yo)).toList();
+    if (!context.mounted) return;
+    final eleccion = await showModalBottomSheet<(int, List<String>)>(
+      context: context,
+      isScrollControlled: true,
+      showDragHandle: true,
+      builder: (_) => _FormularioCuidador(mascotas: propias),
+    );
+    if (eleccion == null || !context.mounted) return;
+    await _invitar(context, ref, dias: eleccion.$1, mascotas: eleccion.$2);
+  }
+
+  Future<void> _invitar(
+    BuildContext context,
+    WidgetRef ref, {
+    int? dias,
+    List<String>? mascotas,
+  }) async {
     final t = context.t;
     final mensajes = ScaffoldMessenger.of(context);
     try {
-      final codigo = await ref.read(hogarRepositorioProvider).invitar();
-      ref.read(metricasProvider).track(Eventos.householdInvite);
+      final codigo = await ref
+          .read(hogarRepositorioProvider)
+          .invitar(diasCuidador: dias, mascotas: mascotas);
+      ref
+          .read(metricasProvider)
+          .track(
+            Eventos.householdInvite,
+            props: {'rol': dias == null ? 'member' : 'temp_caregiver'},
+          );
       ref.invalidate(integrantesProvider);
       if (!context.mounted) return;
       final enlace = enlaceInvitacion(ref.read(urlAppProvider), codigo);
@@ -344,6 +381,77 @@ class _UnirmeScreenState extends ConsumerState<UnirmeScreen> {
             Text(error, style: TextStyle(color: tema.colorScheme.error)),
           ],
         ],
+      ),
+    );
+  }
+}
+
+/// Elegir mascotas y días para un cuidador temporal (1.6.4, D72).
+class _FormularioCuidador extends StatefulWidget {
+  const _FormularioCuidador({required this.mascotas});
+
+  final List<Mascota> mascotas;
+
+  @override
+  State<_FormularioCuidador> createState() => _FormularioCuidadorState();
+}
+
+class _FormularioCuidadorState extends State<_FormularioCuidador> {
+  static const _opcionesDias = [1, 3, 7, 14, 30];
+  late final _elegidas = {for (final m in widget.mascotas) m.id};
+  var _dias = 7;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = context.t;
+    final tema = Theme.of(context);
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(t.cuidadorTitulo, style: tema.textTheme.titleLarge),
+            const SizedBox(height: 8),
+            Text(t.cuidadorExplicacion),
+            const SizedBox(height: 16),
+            Text(t.cuidadorMascotas, style: tema.textTheme.titleSmall),
+            if (widget.mascotas.isEmpty)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Text(t.cuidadorSinMascotas),
+              ),
+            for (final m in widget.mascotas)
+              CheckboxListTile(
+                contentPadding: EdgeInsets.zero,
+                title: Text(m.nombre),
+                value: _elegidas.contains(m.id),
+                onChanged: (si) => setState(
+                  () => (si ?? false)
+                      ? _elegidas.add(m.id)
+                      : _elegidas.remove(m.id),
+                ),
+              ),
+            const SizedBox(height: 8),
+            DropdownButtonFormField<int>(
+              initialValue: _dias,
+              decoration: InputDecoration(labelText: t.cuidadorDias),
+              items: [
+                for (final d in _opcionesDias)
+                  DropdownMenuItem(value: d, child: Text(t.cuidadorNDias(d))),
+              ],
+              onChanged: (d) => setState(() => _dias = d ?? _dias),
+            ),
+            const SizedBox(height: 16),
+            FilledButton(
+              onPressed: _elegidas.isEmpty
+                  ? null
+                  : () => Navigator.pop(context, (_dias, _elegidas.toList())),
+              child: Text(t.cuidadorInvitar),
+            ),
+          ],
+        ),
       ),
     );
   }

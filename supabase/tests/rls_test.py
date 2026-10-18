@@ -899,6 +899,34 @@ def main():
                  and filas(rest('GET', f'pets?select=id&id=eq.{pet_id}', quien=c)) == [])
             s3, codigo3 = rpc('invitar_al_hogar', {'p_rol': 'jefe'}, a)
             caso('un rol inventado se rechaza', s3 >= 400)
+
+            print('household_member_pets (cuidador temporal)')
+            otra = filas(rest('POST', 'pets', {'name': 'Otra', 'species_id': 1}, a))[0]
+            caso('un cuidador temporal necesita mascotas',
+                 rpc('invitar_al_hogar', {'p_rol': 'temp_caregiver', 'p_dias': 3}, a)[0] >= 400)
+            mascota_b = filas(rest('POST', 'pets', {'name': 'DeB', 'species_id': 1}, b))[0]
+            caso('no se comparte una mascota ajena',
+                 rpc('invitar_al_hogar', {'p_rol': 'temp_caregiver', 'p_dias': 3, 'p_mascotas': [mascota_b['id']]}, a)[0] >= 400)
+            pedir('DELETE', f"{URL}/rest/v1/qr_tags?owner_id=eq.{b_id}", headers=ADMIN)
+            rest('DELETE', f"pets?id=eq.{mascota_b['id']}", quien=b)
+            s_c, codigo_c = rpc('invitar_al_hogar', {'p_rol': 'temp_caregiver', 'p_dias': 3, 'p_mascotas': [pet_id]}, a)
+            caso('A invita a C como cuidador de una sola mascota', s_c == 200)
+            rpc('unirme_al_hogar', {'p_codigo': codigo_c}, c)
+            caso('C ve la mascota que cuida', len(filas(rest('GET', f'pets?select=id&id=eq.{pet_id}', quien=c))) == 1)
+            caso('C no ve la otra mascota de A', filas(rest('GET', f"pets?select=id&id=eq.{otra['id']}", quien=c)) == [])
+            caso('C ve la libreta de la que cuida',
+                 len(filas(rest('GET', f'health_records?select=id&pet_id=eq.{pet_id}', quien=c))) >= 1)
+            caso('C no puede borrar la mascota', bloqueado(rest('DELETE', f'pets?id=eq.{pet_id}', quien=c)))
+            integ = filas(rpc('integrantes_de_mis_hogares', {}, a))
+            caso('A ve a C como cuidador con fecha de fin',
+                 any(i['user_id'] == c_id and i['role'] == 'temp_caregiver' and i['access_until'] for i in integ))
+            tokens2 = pedir('POST', f'{URL}/rest/v1/rpc/tokens_de_cuidadores', {'p_owner': a_id, 'p_pet': pet_id}, ADMIN)
+            caso('las push de esa mascota también le llegan al cuidador (consulta del servidor)', tokens2[0] == 200)
+            pedir('PATCH', f'{URL}/rest/v1/household_members?user_id=eq.{c_id}',
+                  {'access_until': '2020-01-01T00:00:00Z'}, ADMIN)
+            caso('al vencer, C deja de ver la mascota', filas(rest('GET', f'pets?select=id&id=eq.{pet_id}', quien=c)) == [])
+            pedir('DELETE', f"{URL}/rest/v1/qr_tags?pet_id=eq.{otra['id']}", headers=ADMIN)
+            rest('DELETE', f"pets?id=eq.{otra['id']}", quien=a)
         finally:
             pedir('DELETE', f'{URL}/auth/v1/admin/users/{c_id}', headers=ADMIN)
 

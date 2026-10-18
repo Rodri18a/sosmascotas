@@ -3261,6 +3261,54 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Agregar'**
   String get tareaCrear;
+
+  /// No description provided for @hogarInvitarCuidador.
+  ///
+  /// In es, this message translates to:
+  /// **'Invitar a un cuidador temporal'**
+  String get hogarInvitarCuidador;
+
+  /// No description provided for @cuidadorTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Cuidador temporal'**
+  String get cuidadorTitulo;
+
+  /// No description provided for @cuidadorExplicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Para vacaciones o guardería: solo ve las mascotas que elijas y durante los días que digas. Después deja de verlas solo.'**
+  String get cuidadorExplicacion;
+
+  /// No description provided for @cuidadorMascotas.
+  ///
+  /// In es, this message translates to:
+  /// **'Qué mascotas cuida'**
+  String get cuidadorMascotas;
+
+  /// No description provided for @cuidadorDias.
+  ///
+  /// In es, this message translates to:
+  /// **'Durante'**
+  String get cuidadorDias;
+
+  /// No description provided for @cuidadorNDias.
+  ///
+  /// In es, this message translates to:
+  /// **'{dias, plural, =1{1 día} other{{dias} días}}'**
+  String cuidadorNDias(int dias);
+
+  /// No description provided for @cuidadorSinMascotas.
+  ///
+  /// In es, this message translates to:
+  /// **'Primero cargá una mascota.'**
+  String get cuidadorSinMascotas;
+
+  /// No description provided for @cuidadorInvitar.
+  ///
+  /// In es, this message translates to:
+  /// **'Crear invitación'**
+  String get cuidadorInvitar;
 }
 
 class _AppLocalizationsDelegate

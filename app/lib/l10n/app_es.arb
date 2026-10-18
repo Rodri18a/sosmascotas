@@ -743,5 +743,14 @@
   "tareaMarcar": "Marcar hecha",
   "tareaDesmarcar": "Marcar pendiente",
   "tareaBorrar": "Borrar tarea",
-  "tareaCrear": "Agregar"
+  "tareaCrear": "Agregar",
+  "hogarInvitarCuidador": "Invitar a un cuidador temporal",
+  "cuidadorTitulo": "Cuidador temporal",
+  "cuidadorExplicacion": "Para vacaciones o guardería: solo ve las mascotas que elijas y durante los días que digas. Después deja de verlas solo.",
+  "cuidadorMascotas": "Qué mascotas cuida",
+  "cuidadorDias": "Durante",
+  "cuidadorNDias": "{dias, plural, =1{1 día} other{{dias} días}}",
+  "@cuidadorNDias": {"placeholders": {"dias": {"type": "int"}}},
+  "cuidadorSinMascotas": "Primero cargá una mascota.",
+  "cuidadorInvitar": "Crear invitación"
 }

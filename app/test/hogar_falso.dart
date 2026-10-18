@@ -7,15 +7,15 @@ class HogarFalso implements HogarRepositorio {
 
   final List<Integrante> lista;
   final unidos = <String>[];
-  final invitaciones = <int?>[];
+  final invitaciones = <({int? dias, List<String>? mascotas})>[];
   ErrorInvitacion? fallarAlUnirse;
 
   @override
   Future<List<Integrante>> integrantes() async => List.of(lista);
 
   @override
-  Future<String> invitar({int? diasCuidador}) async {
-    invitaciones.add(diasCuidador);
+  Future<String> invitar({int? diasCuidador, List<String>? mascotas}) async {
+    invitaciones.add((dias: diasCuidador, mascotas: mascotas));
     return 'K7M2QX9PAB';
   }
 
