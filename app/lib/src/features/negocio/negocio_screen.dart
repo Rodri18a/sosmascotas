@@ -8,8 +8,10 @@ import '../../comercios/comercios_repositorio.dart';
 import '../../comercios/negocios_repositorio.dart';
 import '../../comercios/textos_comercio.dart';
 import '../../fotos/elegir_foto.dart';
+import '../../funcionalidades/funcionalidades_activas.dart';
 import '../../metricas/metricas.dart';
 import '../../router.dart';
+import '../resenas/resenas.dart';
 import 'formulario_negocio.dart';
 
 /// Alta de un negocio (1.3.3, opción C).
@@ -255,6 +257,7 @@ class _Panel extends ConsumerWidget {
             ),
           ),
           for (final (icono, clave, texto) in [
+            (Icons.chat_bubble_outline, 'chats', t.panelChats),
             (Icons.favorite_border, 'favoritos', t.panelFavoritos),
             (Icons.where_to_vote_outlined, 'visitas', t.panelVisitas),
             if (negocio.comercio.categoria == Categoria.vet)
@@ -265,6 +268,23 @@ class _Panel extends ConsumerWidget {
                 leading: Icon(icono),
                 title: Text(p.entero(clave).toString()),
                 subtitle: Text(texto),
+              ),
+            ),
+          // Reputación y respuestas (1.7): el comercio responde una vez.
+          if (ref.watch(funcionalidadActivaProvider(Funcionalidades.resenas)))
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      t.panelSinResponder(p.entero('sin_responder')),
+                      style: tema.textTheme.bodySmall,
+                    ),
+                    SeccionResenas(comercioId: negocio.id, comoComercio: true),
+                  ],
+                ),
               ),
             ),
         ],

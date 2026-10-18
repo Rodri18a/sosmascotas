@@ -54,6 +54,7 @@ abstract final class T {
   static const oculto = 'Oculto por reportes';
   static const sos = 'SOS';
   static const mensaje = 'Mensaje del chat';
+  static const resena = 'Reseña';
   static const hecho = 'Listo.';
   static const motivo = 'Motivo (queda registrado)';
   static const confirmar = 'Confirmar';

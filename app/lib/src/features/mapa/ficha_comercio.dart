@@ -12,6 +12,8 @@ import '../../mascotas/catalogo.dart';
 import '../../metricas/metricas.dart';
 import '../../theme/paleta.dart';
 import '../../utiles/enlaces.dart';
+import '../chat/chat_screen.dart';
+import '../resenas/resenas.dart';
 import 'marcar_lugar.dart';
 
 IconData iconoCategoria(Categoria c) => switch (c) {
@@ -292,6 +294,24 @@ class FichaComercio extends ConsumerWidget {
                   funcionalidadActivaProvider(Funcionalidades.mapaCompleto),
                 ))
               _MisBotones(comercio: c),
+            // Chat con el comercio (1.4.3), si tiene a alguien a cargo.
+            if (c.tieneDuenio &&
+                ref.watch(conectadoProvider) &&
+                ref.watch(funcionalidadActivaProvider(Funcionalidades.chat)))
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: OutlinedButton.icon(
+                  onPressed: () => abrirChatConNegocio(context, ref, c.id),
+                  icon: const Icon(Icons.chat_bubble_outline),
+                  label: Text(t.fichaEscribirChat),
+                ),
+              ),
+            // Reseñas (1.7), con la funcionalidad `resenas`.
+            if (ref.watch(funcionalidadActivaProvider(Funcionalidades.resenas)))
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: SeccionResenas(comercioId: c.id),
+              ),
             // "¿Es tu negocio?" en los lugares sin cuenta a cargo (1.3.4).
             if (!c.tieneDuenio &&
                 !c.esEjemplo &&

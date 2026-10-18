@@ -41,6 +41,12 @@ class ChatFalso implements ChatRepositorio {
   }
 
   @override
+  Future<String> iniciarConNegocio(String comercioId) async {
+    iniciados.add('negocio:$comercioId');
+    return 'c1';
+  }
+
+  @override
   Future<List<Mensaje>> mensajes(String conversacionId) async => [
     for (final m in mensajesGuardados)
       if (m.conversacionId == conversacionId) m,

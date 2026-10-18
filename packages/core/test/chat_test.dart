@@ -58,4 +58,22 @@ void main() {
     expect(pareceEstafa('Pasame el código que te llegó por SMS'), isTrue);
     expect(pareceEstafa('La vi en la plaza a las 8'), isFalse);
   });
+
+  test('reseñas: lee y promedia', () {
+    Resena r(int e) => Resena(id: '$e', estrellas: e, creada: DateTime(2026));
+    expect(promedioEstrellas([r(5), r(4), r(4)]), 4.3);
+    expect(promedioEstrellas(const []), isNull);
+    final leida = Resena.fromJson({
+      'id': 'r1',
+      'estrellas': 5,
+      'comentario': 'Excelente',
+      'respuesta': '¡Gracias!',
+      'respondida': '2026-10-18T12:00:00Z',
+      'creada': '2026-10-17T12:00:00Z',
+      'autor': 'Beto',
+      'mia': false,
+    });
+    expect(leida.respuesta, '¡Gracias!');
+    expect(leida.autor, 'Beto');
+  });
 }

@@ -2551,4 +2551,102 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get negocioDireccion => 'Dirección (opcional)';
+
+  @override
+  String get resenasTitulo => 'Reseñas';
+
+  @override
+  String get resenasVacio => 'Todavía no tiene reseñas.';
+
+  @override
+  String resenasPromedio(String promedio, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n reseñas',
+      one: '1 reseña',
+    );
+    return '$promedio ★ · $_temp0';
+  }
+
+  @override
+  String get resenaEscribir => 'Escribir una reseña';
+
+  @override
+  String get resenaEditar => 'Editar mi reseña';
+
+  @override
+  String get resenaSoloConContacto =>
+      'Podés dejar una reseña después de escribirle, llamar o ir.';
+
+  @override
+  String resenaEstrellas(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n estrellas',
+      one: '1 estrella',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get resenaComentario => 'Contá cómo te fue (opcional)';
+
+  @override
+  String get resenaPublicar => 'Publicar';
+
+  @override
+  String get resenaPublicada => '¡Gracias por tu reseña!';
+
+  @override
+  String get resenaRespuesta => 'Respuesta del comercio';
+
+  @override
+  String get resenaResponder => 'Responder';
+
+  @override
+  String get resenaRespuestaCampo =>
+      'Tu respuesta (es pública y se puede dar una sola vez)';
+
+  @override
+  String get resenaRespondida => 'Respuesta publicada.';
+
+  @override
+  String get resenaReportar => 'Reportar reseña';
+
+  @override
+  String get resenaReportada => 'Gracias. La vamos a revisar.';
+
+  @override
+  String get resenaMia => 'Tu reseña';
+
+  @override
+  String resenaDe(String autor) {
+    return '$autor';
+  }
+
+  @override
+  String get fichaEscribirChat => 'Escribir por chat';
+
+  @override
+  String get panelResenas => 'Reseñas';
+
+  @override
+  String get panelPromedio => 'Promedio';
+
+  @override
+  String panelSinResponder(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n sin responder',
+      one: '1 sin responder',
+      zero: 'Todas respondidas',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get panelChats => 'Chats nuevos';
 }

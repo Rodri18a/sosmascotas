@@ -161,6 +161,7 @@ Tabla `events` (append-only), escrita por el cliente con `ref.read(metricasProvi
 | `health_record_create` | tipo del registro de la libreta (`vaccine`, `deworming`, `checkup`, `allergy`, `other`; D66) |
 | `household_invite` / `household_join` / `household_leave` | — (sin datos de nadie; D69) |
 | `map_view` | vista elegida (`mapa`, `lista`, `sinLocal`; D75) |
+| `review_create` / `review_reply` | business_id; `review_create` con las estrellas (D78) |
 | `place_mark` / `business_create` / `business_claim` / `verification_request` | rubro y modalidad o business_id (1.3, D77) |
 | `place_visit` / `my_vet_set` | business_id ("fui" y "es mi veterinaria"; D75) |
 | `sos_follow` / `sos_follow_push` | target_id del SOS; `sos_follow_push` con los dispositivos avisados (lo registra `sos-follow-alert`; D74) |

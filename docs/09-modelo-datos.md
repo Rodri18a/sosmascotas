@@ -58,7 +58,7 @@ Propuesta inicial. Se ajusta al implementar cada fase. **RLS activado en todas l
 | `claims` | id, business_id o place_mark_id, user_id, rut, evidence_path, status | 1 |
 | `business_modules` | business_id, module (`catalog`, `agenda`, `members`), enabled | 2 |
 | `user_places` | user_id, business_id, favorite, visited_at, is_my_vet (una por persona, solo veterinarias; trigger), updated_at. Privada (D75) | 1 |
-| `reviews` | id, business_id, user_id, rating, comment, reply, reply_at, status | 1 |
+| `reviews` | id, business_id, user_id, rating (1–5), comment, reply (una vez), reply_at, status (`active`, `hidden` con 3 reportes). Única por persona y comercio. Sin acceso directo: `guardar_resena()` (con contacto real), `responder_resena()`, `resenas_de()` (D78) | 1 |
 | `promotions` | id, business_id, title, body, starts_at, ends_at, species_ids[], code | 2 |
 | `pet_friendly_places` | se modelan como `businesses` con business_type `pet_friendly` | 2 |
 

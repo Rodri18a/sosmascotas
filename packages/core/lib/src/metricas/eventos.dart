@@ -37,6 +37,8 @@ abstract final class Eventos {
   static const businessCreate = 'business_create';
   static const businessClaim = 'business_claim';
   static const verificationRequest = 'verification_request';
+  static const reviewCreate = 'review_create';
+  static const reviewReply = 'review_reply';
 }
 
 /// Valida el nombre de un evento con la misma regla que la base de datos.

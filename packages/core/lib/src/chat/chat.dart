@@ -10,6 +10,7 @@ class Conversacion {
     this.soyAutor = false,
     this.sosEncontrada = false,
     this.sosNombre,
+    this.negocioNombre,
     this.ultimoMensaje,
     this.sinLeer = 0,
     this.bloqueada = false,
@@ -28,6 +29,7 @@ class Conversacion {
     soyAutor: json['soy_autor'] as bool? ?? false,
     sosEncontrada: json['sos_kind'] == 'found',
     sosNombre: json['sos_nombre'] as String?,
+    negocioNombre: json['negocio_nombre'] as String?,
     ultimoMensaje: json['ultimo_mensaje'] as String?,
     sinLeer: (json['sin_leer'] as num?)?.toInt() ?? 0,
     bloqueada: json['bloqueada'] as bool? ?? false,
@@ -52,6 +54,9 @@ class Conversacion {
   /// El SOS es de una mascota encontrada (no perdida).
   final bool sosEncontrada;
   final String? sosNombre;
+
+  /// Chat con un comercio: su nombre (para quien le escribe).
+  final String? negocioNombre;
   final String? ultimoMensaje;
   final int sinLeer;
 
@@ -136,4 +141,55 @@ bool pareceEstafa(String texto) {
     'cuenta bancaria',
   ];
   return pistas.any(t.contains);
+}
+
+/// Una reseña pública de un comercio (`resenas_de()`, 1.7, D78).
+class Resena {
+  const Resena({
+    required this.id,
+    required this.estrellas,
+    required this.creada,
+    this.comentario,
+    this.respuesta,
+    this.respondida,
+    this.autor = '',
+    this.mia = false,
+  });
+
+  factory Resena.fromJson(Map<String, Object?> json) => Resena(
+    id: json['id']! as String,
+    estrellas: (json['estrellas']! as num).toInt(),
+    comentario: json['comentario'] as String?,
+    respuesta: json['respuesta'] as String?,
+    respondida: switch (json['respondida']) {
+      final String f => DateTime.parse(f).toLocal(),
+      _ => null,
+    },
+    creada: DateTime.parse(json['creada']! as String).toLocal(),
+    autor: (json['autor'] as String?) ?? '',
+    mia: json['mia'] == true,
+  );
+
+  final String id;
+
+  /// De 1 a 5.
+  final int estrellas;
+  final String? comentario;
+
+  /// La respuesta del comercio (una sola, en público).
+  final String? respuesta;
+  final DateTime? respondida;
+  final DateTime creada;
+
+  /// Solo el primer nombre visible de quien la escribió.
+  final String autor;
+  final bool mia;
+}
+
+/// Promedio de estrellas con un decimal (`null` sin reseñas).
+double? promedioEstrellas(Iterable<Resena> resenas) {
+  final lista = resenas.toList();
+  if (lista.isEmpty) return null;
+  final total = lista.fold<int>(0, (s, r) => s + r.estrellas);
+  return (total / lista.length * 10).round() / 10;
 }

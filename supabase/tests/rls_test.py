@@ -1171,6 +1171,47 @@ def main():
             caso('al dar de alta el negocio, las marcas cercanas del rubro quedan absorbidas',
                  s_n3 == 200 and not any(g['category'] == 'trainer' and abs(g['lat'] + 34.73) < 0.001
                                          for g in filas(rest('POST', 'rpc/lugares_sin_reclamar_en_zona', pando_rect))))
+            print('chat con comercios y reseñas (1.4.3 y 1.7)')
+            caso('A no puede abrir un chat con su propio negocio', rest('POST', 'rpc/iniciar_chat_negocio', {'p_business': negocio}, a)[0] >= 400)
+            caso('B no puede reseñar sin contacto real',
+                 rest('POST', 'rpc/puedo_resenar', {'p_business': negocio}, b)[1] is False
+                 and rest('POST', 'rpc/guardar_resena', {'p_business': negocio, 'p_estrellas': 5}, b)[0] >= 400)
+            s_cn, conv_n = rest('POST', 'rpc/iniciar_chat_negocio', {'p_business': negocio}, b)
+            caso('B abre un chat con el negocio de A', s_cn == 200 and isinstance(conv_n, str))
+            rest('POST', 'messages', {'conversation_id': conv_n, 'body': '¿Tienen turno el sábado?'}, b, 'return=minimal')
+            lista_n = filas(rest('POST', 'rpc/mis_conversaciones', {}, b))
+            caso('B ve el chat con el nombre del negocio (no el de A)',
+                 any(c['id'] == conv_n and c['negocio_nombre'] == 'Peluquería Prueba RLS' and c['otro_nombre'] is None for c in lista_n))
+            caso('A (el comercio) ve el nombre de B',
+                 any(c['id'] == conv_n and c['otro_nombre'] == 'Prueba b' and c['soy_autor'] for c in filas(rest('POST', 'rpc/mis_conversaciones', {}, a))))
+            caso('con el chat hay contacto real: B puede reseñar', rest('POST', 'rpc/puedo_resenar', {'p_business': negocio}, b)[1] is True)
+            caso('las estrellas van de 1 a 5',
+                 rest('POST', 'rpc/guardar_resena', {'p_business': negocio, 'p_estrellas': 6}, b)[0] >= 400)
+            s_rv, resena = rest('POST', 'rpc/guardar_resena', {'p_business': negocio, 'p_estrellas': 4, 'p_comentario': 'Muy buena atención'}, b)
+            caso('B deja su reseña', s_rv == 200)
+            caso('B la edita (una sola por comercio)',
+                 rest('POST', 'rpc/guardar_resena', {'p_business': negocio, 'p_estrellas': 5, 'p_comentario': 'Excelente'}, b)[1] == resena)
+            publicas = filas(rest('POST', 'rpc/resenas_de', {'p_business': negocio}))
+            caso('un visitante ve la reseña con el nombre (sin el id de quien la escribió)',
+                 len(publicas) == 1 and publicas[0]['estrellas'] == 5 and publicas[0]['autor'] == 'Prueba'
+                 and 'user_id' not in publicas[0])
+            caso('A no puede reseñar su propio negocio',
+                 rest('POST', 'rpc/guardar_resena', {'p_business': negocio, 'p_estrellas': 5}, a)[0] >= 400)
+            caso('nadie lee la tabla de reseñas directo', bloqueado(rest('GET', 'reviews?select=id', quien=a)))
+            caso('B no responde reseñas de un negocio ajeno',
+                 rest('POST', 'rpc/responder_resena', {'p_review': resena, 'p_respuesta': 'X'}, b)[0] >= 400)
+            caso('A responde una vez', rest('POST', 'rpc/responder_resena', {'p_review': resena, 'p_respuesta': '¡Gracias!'}, a)[0] in (200, 204))
+            caso('y no dos', rest('POST', 'rpc/responder_resena', {'p_review': resena, 'p_respuesta': 'Otra'}, a)[0] >= 400)
+            caso('A no puede borrar la reseña', bloqueado(rest('DELETE', f'reviews?id=eq.{resena}', quien=a)))
+            caso('A puede reportarla', rest('POST', 'flags', {'target_type': 'review', 'target_id': resena, 'reason': 'falsa'}, a, 'return=minimal')[0] == 201)
+            caso('la reseña reportada aparece en moderación',
+                 any(i['target_type'] == 'review' and i['target_id'] == resena for i in filas(rest('POST', 'rpc/admin_moderacion', {}, x))))
+            panel_r = rest('POST', 'rpc/panel_negocio', {'p_id': negocio}, a)[1]
+            caso('el panel del comercio suma la reputación', panel_r.get('resenas') == 1 and float(panel_r.get('promedio')) == 5.0)
+            rest('POST', 'rpc/admin_moderar', {'p_tipo': 'review', 'p_id': resena, 'p_accion': 'eliminar'}, x)
+            caso('X elimina la reseña', filas(rest('POST', 'rpc/resenas_de', {'p_business': negocio})) == [])
+            pedir('DELETE', f'{URL}/rest/v1/flags?target_type=eq.review', headers=ADMIN)
+
             pedir('DELETE', f'{URL}/rest/v1/businesses?id=in.({negocio},{sin_duenio},{desde_marca})', headers=ADMIN)
             pedir('DELETE', f'{URL}/rest/v1/place_marks?user_id=in.({a_id},{b_id})', headers=ADMIN)
         finally:

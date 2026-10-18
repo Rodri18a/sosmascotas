@@ -15,6 +15,9 @@ abstract interface class ChatRepositorio {
   /// Abre (o reusa) el chat con quien publicó un SOS. Devuelve su id.
   Future<String> iniciarDesdeSos(String sosId);
 
+  /// Abre (o reusa) el chat con un comercio que tiene dueño (1.4.3).
+  Future<String> iniciarConNegocio(String comercioId);
+
   /// Los últimos mensajes, del más viejo al más nuevo.
   Future<List<Mensaje>> mensajes(String conversacionId);
 
@@ -61,6 +64,12 @@ class SupabaseChatRepositorio implements ChatRepositorio {
   @override
   Future<String> iniciarDesdeSos(String sosId) =>
       _cliente.rpc<String>('iniciar_chat_sos', params: {'p_sos': sosId});
+
+  @override
+  Future<String> iniciarConNegocio(String comercioId) => _cliente.rpc<String>(
+    'iniciar_chat_negocio',
+    params: {'p_business': comercioId},
+  );
 
   @override
   Future<List<Mensaje>> mensajes(String conversacionId) async {
@@ -165,6 +174,10 @@ class ChatSinConfigurar implements ChatRepositorio {
 
   @override
   Future<String> iniciarDesdeSos(String sosId) =>
+      throw StateError('Supabase no está configurado');
+
+  @override
+  Future<String> iniciarConNegocio(String comercioId) =>
       throw StateError('Supabase no está configurado');
 
   @override

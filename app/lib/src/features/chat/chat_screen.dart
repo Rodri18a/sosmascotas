@@ -18,6 +18,10 @@ import '../recordatorios/recordatorios.dart';
 /// Cómo se llama al otro lado de la conversación (D73): a quien publicó un
 /// SOS se lo nombra por la mascota, nunca por su nombre de cuenta.
 String nombreDelOtro(AppLocalizations t, Conversacion c) {
+  // Con un comercio: quien escribe ve el negocio; el comercio, a la persona.
+  if (c.tipo == 'business' && !c.soyAutor) {
+    return c.negocioNombre ?? t.chatSinNombre;
+  }
   if (c.tipo == 'sos' && !c.soyAutor) {
     if (c.sosEncontrada) return t.chatQuienEncontro;
     return switch (c.sosNombre) {
@@ -531,6 +535,36 @@ Future<void> abrirChatDeSos(
     final demasiados = e.toString().contains('54000');
     mensajes.showSnackBar(
       SnackBar(content: Text(demasiados ? t.chatDemasiados : t.chatNoPuedo)),
+    );
+  }
+}
+
+/// Abre el chat con un comercio (1.4.3).
+Future<void> abrirChatConNegocio(
+  BuildContext context,
+  WidgetRef ref,
+  String comercioId,
+) async {
+  final t = context.t;
+  final mensajes = ScaffoldMessenger.of(context);
+  try {
+    final id = await ref
+        .read(chatRepositorioProvider)
+        .iniciarConNegocio(comercioId);
+    ref
+      ..read(metricasProvider).track(
+        Eventos.chatStart,
+        props: {'tipo': 'business'},
+        businessId: comercioId,
+      )
+      ..invalidate(conversacionesProvider);
+    if (context.mounted) await context.push(Rutas.chat(id));
+  } on Exception catch (e) {
+    final demasiados = e.toString().contains('54000');
+    mensajes.showSnackBar(
+      SnackBar(
+        content: Text(demasiados ? t.chatDemasiados : t.errorSinConexion),
+      ),
     );
   }
 }

@@ -31,6 +31,9 @@ abstract final class Funcionalidades {
   /// Comercios con cuenta: alta, reclamos, marcas y modo comercio (1.3, D77).
   static const comercios = 'comercios';
 
+  /// Reseñas de comercios con contacto real (1.7, D78).
+  static const resenas = 'resenas';
+
   /// Las que ya están en `todos`: la app las da por prendidas aunque no pueda
   /// preguntarle a la base (sin conexión y sin nada guardado). Las demás, en
   /// ese caso, quedan apagadas (lo seguro).

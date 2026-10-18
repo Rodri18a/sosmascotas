@@ -95,7 +95,13 @@ class _Tarjeta extends ConsumerWidget {
           children: [
             Row(
               children: [
-                Chip(label: Text(item.tipo == 'sos' ? T.sos : T.mensaje)),
+                Chip(
+                  label: Text(switch (item.tipo) {
+                    'sos' => T.sos,
+                    'review' => T.resena,
+                    _ => T.mensaje,
+                  }),
+                ),
                 const SizedBox(width: 8),
                 Text('${item.reportes} ${T.reportes}'),
                 if (item.estado == 'hidden') ...[

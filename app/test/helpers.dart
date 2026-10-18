@@ -10,6 +10,7 @@ import 'package:sosmascota/src/chat/posicion.dart';
 import 'package:sosmascota/src/comercios/comercios_repositorio.dart';
 import 'package:sosmascota/src/comercios/mis_lugares.dart';
 import 'package:sosmascota/src/comercios/negocios_repositorio.dart';
+import 'package:sosmascota/src/comercios/resenas_repositorio.dart';
 import 'package:sosmascota/src/config/env_provider.dart';
 import 'package:sosmascota/src/config/supabase_providers.dart';
 import 'package:sosmascota/src/cuenta/perfil_repositorio.dart';
@@ -49,6 +50,7 @@ import 'mascotas_falsas.dart';
 import 'perfil_falso.dart';
 import 'qr_falso.dart';
 import 'recordatorios_falsos.dart';
+import 'resenas_falsas.dart';
 import 'respaldo_falso.dart';
 import 'sos_falso.dart';
 import 'tareas_falsas.dart';
@@ -76,6 +78,7 @@ Widget appDePrueba({
   ChatRepositorio? chat,
   MisLugaresRepositorio? misLugares,
   NegociosRepositorio? negocios,
+  ResenasRepositorio? resenas,
   Posicion? posicion,
   SelectorFoto? selectorFoto,
   QrRepositorio? qr,
@@ -138,6 +141,7 @@ Widget appDePrueba({
     tareasRepositorioProvider.overrideWithValue(tareas ?? TareasFalsas()),
     chatRepositorioProvider.overrideWithValue(chat ?? ChatFalso()),
     negociosRepositorioProvider.overrideWithValue(negocios ?? NegociosFalsos()),
+    resenasRepositorioProvider.overrideWithValue(resenas ?? ResenasFalsas()),
     misLugaresRepositorioProvider.overrideWithValue(
       misLugares ?? MisLugaresFalsos(),
     ),

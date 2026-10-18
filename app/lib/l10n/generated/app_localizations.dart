@@ -4449,6 +4449,144 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Dirección (opcional)'**
   String get negocioDireccion;
+
+  /// No description provided for @resenasTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Reseñas'**
+  String get resenasTitulo;
+
+  /// No description provided for @resenasVacio.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no tiene reseñas.'**
+  String get resenasVacio;
+
+  /// No description provided for @resenasPromedio.
+  ///
+  /// In es, this message translates to:
+  /// **'{promedio} ★ · {n, plural, =1{1 reseña} other{{n} reseñas}}'**
+  String resenasPromedio(String promedio, int n);
+
+  /// No description provided for @resenaEscribir.
+  ///
+  /// In es, this message translates to:
+  /// **'Escribir una reseña'**
+  String get resenaEscribir;
+
+  /// No description provided for @resenaEditar.
+  ///
+  /// In es, this message translates to:
+  /// **'Editar mi reseña'**
+  String get resenaEditar;
+
+  /// No description provided for @resenaSoloConContacto.
+  ///
+  /// In es, this message translates to:
+  /// **'Podés dejar una reseña después de escribirle, llamar o ir.'**
+  String get resenaSoloConContacto;
+
+  /// No description provided for @resenaEstrellas.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =1{1 estrella} other{{n} estrellas}}'**
+  String resenaEstrellas(int n);
+
+  /// No description provided for @resenaComentario.
+  ///
+  /// In es, this message translates to:
+  /// **'Contá cómo te fue (opcional)'**
+  String get resenaComentario;
+
+  /// No description provided for @resenaPublicar.
+  ///
+  /// In es, this message translates to:
+  /// **'Publicar'**
+  String get resenaPublicar;
+
+  /// No description provided for @resenaPublicada.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Gracias por tu reseña!'**
+  String get resenaPublicada;
+
+  /// No description provided for @resenaRespuesta.
+  ///
+  /// In es, this message translates to:
+  /// **'Respuesta del comercio'**
+  String get resenaRespuesta;
+
+  /// No description provided for @resenaResponder.
+  ///
+  /// In es, this message translates to:
+  /// **'Responder'**
+  String get resenaResponder;
+
+  /// No description provided for @resenaRespuestaCampo.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu respuesta (es pública y se puede dar una sola vez)'**
+  String get resenaRespuestaCampo;
+
+  /// No description provided for @resenaRespondida.
+  ///
+  /// In es, this message translates to:
+  /// **'Respuesta publicada.'**
+  String get resenaRespondida;
+
+  /// No description provided for @resenaReportar.
+  ///
+  /// In es, this message translates to:
+  /// **'Reportar reseña'**
+  String get resenaReportar;
+
+  /// No description provided for @resenaReportada.
+  ///
+  /// In es, this message translates to:
+  /// **'Gracias. La vamos a revisar.'**
+  String get resenaReportada;
+
+  /// No description provided for @resenaMia.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu reseña'**
+  String get resenaMia;
+
+  /// No description provided for @resenaDe.
+  ///
+  /// In es, this message translates to:
+  /// **'{autor}'**
+  String resenaDe(String autor);
+
+  /// No description provided for @fichaEscribirChat.
+  ///
+  /// In es, this message translates to:
+  /// **'Escribir por chat'**
+  String get fichaEscribirChat;
+
+  /// No description provided for @panelResenas.
+  ///
+  /// In es, this message translates to:
+  /// **'Reseñas'**
+  String get panelResenas;
+
+  /// No description provided for @panelPromedio.
+  ///
+  /// In es, this message translates to:
+  /// **'Promedio'**
+  String get panelPromedio;
+
+  /// No description provided for @panelSinResponder.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =0{Todas respondidas} =1{1 sin responder} other{{n} sin responder}}'**
+  String panelSinResponder(int n);
+
+  /// No description provided for @panelChats.
+  ///
+  /// In es, this message translates to:
+  /// **'Chats nuevos'**
+  String get panelChats;
 }
 
 class _AppLocalizationsDelegate
