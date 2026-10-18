@@ -33,6 +33,10 @@ abstract final class Eventos {
   static const placeVisit = 'place_visit';
   static const myVetSet = 'my_vet_set';
   static const mapView = 'map_view';
+  static const placeMark = 'place_mark';
+  static const businessCreate = 'business_create';
+  static const businessClaim = 'business_claim';
+  static const verificationRequest = 'verification_request';
 }
 
 /// Valida el nombre de un evento con la misma regla que la base de datos.

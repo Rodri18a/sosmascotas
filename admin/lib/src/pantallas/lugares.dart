@@ -286,6 +286,23 @@ class _FormularioLugarState extends ConsumerState<FormularioLugar> {
       ),
     ),
     actions: [
+      if (widget.lugar case final l?)
+        TextButton(
+          onPressed: () async {
+            final hoy = DateTime.now();
+            final hasta = await showDatePicker(
+              context: context,
+              initialDate: DateTime(hoy.year, hoy.month + 6, hoy.day),
+              firstDate: hoy,
+              lastDate: DateTime(hoy.year + 2),
+              helpText: T.socioFundador,
+            );
+            if (hasta == null) return;
+            await ref.read(adminRepositorioProvider).socioFundador(l.id, hasta);
+            if (context.mounted) Navigator.pop(context, true);
+          },
+          child: const Text(T.socioFundador),
+        ),
       TextButton(
         onPressed: () => Navigator.pop(context, false),
         child: const Text(T.cancelar),

@@ -2209,4 +2209,346 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get comercioRenac => 'Operador RENAC · coloca microchip';
+
+  @override
+  String get marcarLugar => 'Marcar un lugar';
+
+  @override
+  String get marcarExplicacion =>
+      '¿Conocés un lugar que no está en el mapa? Elegí el rubro y tocá dónde queda. No hace falta el nombre: si varias personas lo marcan, se suma.';
+
+  @override
+  String get marcarRubro => 'Rubro';
+
+  @override
+  String get marcarToca => 'Tocá el mapa donde queda el lugar.';
+
+  @override
+  String get marcarEnlace => 'Enlace de Google Maps (opcional)';
+
+  @override
+  String get marcarEnlaceAyuda =>
+      'Pegalo si lo tenés: ayuda a confirmar el lugar.';
+
+  @override
+  String get marcarGuardar => 'Marcar';
+
+  @override
+  String get marcarListo => '¡Gracias! Quedó marcado.';
+
+  @override
+  String get marcarYa => 'Ya marcaste este lugar.';
+
+  @override
+  String get marcarDemasiados => 'Marcaste muchos lugares hoy. Probá mañana.';
+
+  @override
+  String get marcarInvalido =>
+      'Revisá el enlace: tiene que ser de Google Maps.';
+
+  @override
+  String get marcarFaltaPunto => 'Tocá el mapa para marcar dónde queda.';
+
+  @override
+  String sinReclamarTitulo(String rubro) {
+    return '$rubro sin reclamar';
+  }
+
+  @override
+  String sinReclamarMarcas(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Marcado por $n personas',
+      one: 'Marcado por 1 persona',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sinReclamarEsTuyo => '¿Es tu negocio? Dalo de alta';
+
+  @override
+  String get sinReclamarVerGoogle => 'Ver en Google Maps';
+
+  @override
+  String get leyendaSinReclamar => 'Sin reclamar';
+
+  @override
+  String get reclamarEsTuyo => '¿Es tu negocio? Reclamalo';
+
+  @override
+  String get reclamarTitulo => 'Reclamar este lugar';
+
+  @override
+  String get reclamarTexto =>
+      'Contanos que es tuyo. Para la insignia ✔️ el equipo valida el RUT. Si ya tiene a alguien a cargo, se revisa como disputa.';
+
+  @override
+  String get reclamarRut => 'RUT (12 números)';
+
+  @override
+  String get reclamarRutInvalido => 'El RUT tiene 12 números.';
+
+  @override
+  String get reclamarNota => '¿Cómo lo podemos comprobar? (opcional)';
+
+  @override
+  String get reclamarEnviar => 'Enviar reclamo';
+
+  @override
+  String get reclamarListo =>
+      'Recibimos tu reclamo. Te avisamos cuando lo revisemos.';
+
+  @override
+  String get fichaPromo => 'Promoción';
+
+  @override
+  String get fichaFacebook => 'Facebook';
+
+  @override
+  String fichaCobertura(String zona) {
+    return 'Trabaja en: $zona';
+  }
+
+  @override
+  String get negocioMi => 'Mi negocio';
+
+  @override
+  String get negocioMiAyuda => 'Sumá tu comercio o servicio al mapa (gratis).';
+
+  @override
+  String get negocioAltaTitulo => 'Sumar mi negocio';
+
+  @override
+  String get negocioAltaExplicacion =>
+      'Aparece al instante en el mapa como «no verificado». Para la insignia ✔️ pedís la verificación con tu RUT.';
+
+  @override
+  String get negocioNombre => 'Nombre del negocio';
+
+  @override
+  String get negocioNombreFalta => 'Escribí el nombre (2 letras o más).';
+
+  @override
+  String get negocioModalidad => 'Cómo atendés';
+
+  @override
+  String get negocioModalidadLocal => 'Con local';
+
+  @override
+  String get negocioModalidadOnline => 'Online';
+
+  @override
+  String get negocioModalidadDomicilio => 'A domicilio';
+
+  @override
+  String get negocioUbicacionToca => 'Tocá el mapa donde está tu local.';
+
+  @override
+  String get negocioCobertura => 'Zona donde trabajás';
+
+  @override
+  String get negocioCoberturaAyuda => 'Por ejemplo: Pando y alrededores.';
+
+  @override
+  String get negocioTelefono => 'Teléfono';
+
+  @override
+  String get negocioWhatsapp => 'WhatsApp (opcional)';
+
+  @override
+  String get negocioDescripcion => 'Descripción (opcional)';
+
+  @override
+  String get negocioWeb => 'Web (https://…)';
+
+  @override
+  String get negocioInstagram => 'Instagram (sin @)';
+
+  @override
+  String get negocioFacebook => 'Facebook (opcional)';
+
+  @override
+  String get negocioCrear => 'Sumar al mapa';
+
+  @override
+  String get negocioCreado => '¡Listo! Tu negocio ya está en el mapa.';
+
+  @override
+  String get negocioFaltaUbicacion => 'Tocá el mapa para marcar dónde está.';
+
+  @override
+  String get negocioDatosInvalidos =>
+      'Revisá los datos (teléfono, web o Instagram).';
+
+  @override
+  String get modoComercio => 'Modo comercio';
+
+  @override
+  String get volverModoDueno => 'Volver al modo dueño';
+
+  @override
+  String get negocioPanel => 'Panel';
+
+  @override
+  String get negocioAgenda => 'Agenda';
+
+  @override
+  String get negocioCatalogo => 'Catálogo';
+
+  @override
+  String get negocioPedidos => 'Pedidos';
+
+  @override
+  String get negocioFicha => 'Negocio';
+
+  @override
+  String get moduloNoAplica => 'No aplica para tu tipo de negocio.';
+
+  @override
+  String get moduloSoloPlus => 'Llega con el plan Plus (Fase 3).';
+
+  @override
+  String get planBasico => 'Básico';
+
+  @override
+  String get planDestacado => 'Destacado';
+
+  @override
+  String get planPlus => 'Plus';
+
+  @override
+  String get verifNo => 'No verificado';
+
+  @override
+  String get verifPendiente => 'Verificación pendiente';
+
+  @override
+  String get verifSi => 'Verificado ✔️';
+
+  @override
+  String socioFundadorHasta(String fecha) {
+    return 'Socio Fundador hasta el $fecha';
+  }
+
+  @override
+  String get panelAperturas => 'Aperturas de tu ficha';
+
+  @override
+  String panelAntes(int n) {
+    return '$n en los 30 días anteriores';
+  }
+
+  @override
+  String get panelContactos => 'Contactos';
+
+  @override
+  String get panelFavoritos => 'Te guardaron en favoritos';
+
+  @override
+  String get panelVisitas => 'Dijeron «Fui»';
+
+  @override
+  String get panelSocios => 'Te eligieron como su veterinaria';
+
+  @override
+  String get panelUltimos30 => 'Últimos 30 días';
+
+  @override
+  String get panelSinContactos => 'Todavía nadie tocó un contacto.';
+
+  @override
+  String get clicLlamar => 'Llamar';
+
+  @override
+  String get clicWhatsapp => 'WhatsApp';
+
+  @override
+  String get clicComoLlegar => 'Cómo llegar';
+
+  @override
+  String get clicWeb => 'Web';
+
+  @override
+  String get clicInstagram => 'Instagram';
+
+  @override
+  String get negocioGuardar => 'Guardar cambios';
+
+  @override
+  String get negocioGuardado => 'Cambios guardados.';
+
+  @override
+  String get negocioVisible => 'Visible en el mapa';
+
+  @override
+  String get negocioPromo => 'Promoción';
+
+  @override
+  String get negocioPromoSoloPago =>
+      'La promoción se muestra con los planes Destacado y Plus.';
+
+  @override
+  String get negocioFotos => 'Fotos';
+
+  @override
+  String get negocioAgregarFoto => 'Agregar foto';
+
+  @override
+  String get negocioFotosTope => 'Llegaste al máximo de fotos de tu plan.';
+
+  @override
+  String get negocioQuitarFoto => 'Quitar foto';
+
+  @override
+  String get negocioPedirVerificacion => 'Pedir la insignia ✔️';
+
+  @override
+  String get negocioPedirVerificacionTexto =>
+      'Ingresá el RUT del negocio. El equipo lo valida y te avisa.';
+
+  @override
+  String get negocioVerificacionPedida =>
+      'Pedido enviado. Te avisamos cuando lo revisemos.';
+
+  @override
+  String get negocioPedirRenac => 'Pedir la insignia Operador RENAC';
+
+  @override
+  String get negocioRenacTexto =>
+      'Si colocás microchip y estás en el listado oficial del MGAP, aparece la insignia y el filtro «Coloca microchip».';
+
+  @override
+  String get negocioRenacPedido => 'Insignia RENAC pedida.';
+
+  @override
+  String get negocioHorario => 'Horario';
+
+  @override
+  String get negocioCerrado => 'Cerrado';
+
+  @override
+  String get negocio24h => 'Abierto 24 h';
+
+  @override
+  String get negocioUrgencias => 'Atiende urgencias';
+
+  @override
+  String negocioDe(String desde, String hasta) {
+    return 'De $desde a $hasta';
+  }
+
+  @override
+  String get negocioEspecies => 'Especies que atendés';
+
+  @override
+  String get negocioEspeciesAyuda =>
+      'Si no elegís ninguna, se entiende que atendés a todas.';
+
+  @override
+  String get negocioOtro => 'Sumar otro negocio';
+
+  @override
+  String get negocioDireccion => 'Dirección (opcional)';
 }

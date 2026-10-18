@@ -24,6 +24,124 @@ enum Categoria {
 /// Con local (pin en el mapa), online o a domicilio ("Sin local").
 enum Modalidad { local, online, domicilio }
 
+/// Plan de una empresa (06): Básico, Destacado o Plus.
+enum PlanComercio { basic, featured, plus }
+
+/// Módulos del modo comercio (06 "Módulos según el tipo de negocio").
+enum Modulo { catalogo, agenda, socios }
+
+/// ¿El tipo de negocio admite el módulo? Si no, se muestra "No aplica".
+bool moduloAdmitido(Categoria c, Modalidad m, Modulo modulo) {
+  if (m == Modalidad.online) return modulo == Modulo.catalogo;
+  if (m == Modalidad.domicilio) return modulo == Modulo.agenda;
+  return switch ((c, modulo)) {
+    (Categoria.vet, _) => true,
+    (Categoria.petshop || Categoria.pharmacy, Modulo.catalogo) => true,
+    (
+      Categoria.grooming ||
+          Categoria.hotel ||
+          Categoria.walker ||
+          Categoria.trainer,
+      Modulo.agenda,
+    ) =>
+      true,
+    _ => false,
+  };
+}
+
+/// Regla de activación (06): solo con plan Plus, si el tipo lo admite y la
+/// empresa lo prendió.
+bool moduloActivo(
+  Categoria c,
+  Modalidad m,
+  PlanComercio plan,
+  Modulo modulo, {
+  required bool prendido,
+}) => plan == PlanComercio.plus && moduloAdmitido(c, m, modulo) && prendido;
+
+/// Estado de verificación de una empresa (`businesses.verification`).
+enum Verificacion { unverified, pending, verified }
+
+/// Un negocio propio (`mis_negocios()`, 1.3, D77): la ficha pública más lo
+/// que solo ve su dueño.
+class MiNegocio {
+  const MiNegocio({
+    required this.comercio,
+    required this.verificacion,
+    this.visible = true,
+    this.rut,
+    this.fundadorHasta,
+    this.renacPedido = false,
+    this.verificacionPedida = false,
+  });
+
+  factory MiNegocio.fromJson(Map<String, Object?> json) => MiNegocio(
+    comercio: Comercio.fromJson({...json, 'has_owner': true}),
+    verificacion:
+        Verificacion.values.asNameMap()[json['verification']] ??
+        Verificacion.unverified,
+    visible: json['status'] != 'hidden',
+    rut: json['rut'] as String?,
+    fundadorHasta: switch (json['founder_until']) {
+      final String f => DateTime.parse(f),
+      _ => null,
+    },
+    renacPedido: json['renac_requested_at'] != null,
+    verificacionPedida: json['verification_requested_at'] != null,
+  );
+
+  final Comercio comercio;
+  final Verificacion verificacion;
+  final bool visible;
+  final String? rut;
+
+  /// Socio Fundador: plan pago gratis hasta esta fecha.
+  final DateTime? fundadorHasta;
+  final bool renacPedido;
+  final bool verificacionPedida;
+
+  String get id => comercio.id;
+}
+
+/// Lugares marcados por usuarios (sin nombre) que se juntan a menos de 30 m
+/// (`lugares_sin_reclamar_en_zona()`, 1.3.2).
+class LugarSinReclamar {
+  const LugarSinReclamar({
+    required this.id,
+    required this.categoria,
+    required this.punto,
+    required this.marcas,
+    this.enlaceGoogle,
+  });
+
+  factory LugarSinReclamar.fromJson(Map<String, Object?> json) =>
+      LugarSinReclamar(
+        id: json['grupo']! as String,
+        categoria: Categoria.leer(json['category']) ?? Categoria.vet,
+        punto: Punto(
+          (json['lat']! as num).toDouble(),
+          (json['lng']! as num).toDouble(),
+        ),
+        marcas: (json['marcas'] as num?)?.toInt() ?? 1,
+        enlaceGoogle: json['google_link'] as String?,
+      );
+
+  final String id;
+  final Categoria categoria;
+  final Punto punto;
+
+  /// "Marcado por N usuarios".
+  final int marcas;
+  final String? enlaceGoogle;
+
+  Pin get pin =>
+      Pin(id: 'sin-reclamar:$id', tipo: TipoPin.sinReclamar, punto: punto);
+}
+
+/// RUT uruguayo: 12 números (se ignoran espacios, puntos y guiones).
+bool rutValido(String texto) =>
+    RegExp(r'^[0-9]{12}$').hasMatch(texto.replaceAll(RegExp(r'[\s.\-]'), ''));
+
 /// Días como los guarda la base (`businesses.hours`), de lunes a domingo.
 const diasHorario = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 
@@ -228,6 +346,12 @@ class Comercio {
     this.especieIds = const [],
     this.verificado = false,
     this.esEjemplo = false,
+    this.facebook,
+    this.promo,
+    this.plan = PlanComercio.basic,
+    this.cobertura,
+    this.tieneDuenio = false,
+    this.fotos = const [],
   });
 
   factory Comercio.fromJson(Map<String, Object?> json) => Comercio(
@@ -255,6 +379,12 @@ class Comercio {
     ],
     verificado: json['verified'] == true,
     esEjemplo: json['is_sample'] == true,
+    facebook: json['facebook'] as String?,
+    promo: json['promo'] as String?,
+    plan: PlanComercio.values.asNameMap()[json['plan']] ?? PlanComercio.basic,
+    cobertura: json['coverage'] as String?,
+    tieneDuenio: json['has_owner'] == true,
+    fotos: [for (final f in (json['photos'] as List?) ?? const []) '$f'],
   );
 
   final String id;
@@ -285,6 +415,20 @@ class Comercio {
 
   /// Dato de ejemplo (solo en desarrollo).
   final bool esEjemplo;
+  final String? facebook;
+
+  /// Promoción (solo planes pagos; la base no la manda con plan Básico).
+  final String? promo;
+  final PlanComercio plan;
+
+  /// Sin local: dónde trabaja ("Pando y alrededores").
+  final String? cobertura;
+
+  /// Ya tiene una cuenta a cargo (si no, se ofrece "¿Es tu negocio?").
+  final bool tieneDuenio;
+
+  /// Rutas en el bucket público `business-photos`.
+  final List<String> fotos;
 
   /// ¿Está abierto en [momento]?
   EstadoApertura estadoEn(DateTime momento) =>

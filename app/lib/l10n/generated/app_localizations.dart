@@ -3825,6 +3825,630 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Operador RENAC · coloca microchip'**
   String get comercioRenac;
+
+  /// No description provided for @marcarLugar.
+  ///
+  /// In es, this message translates to:
+  /// **'Marcar un lugar'**
+  String get marcarLugar;
+
+  /// No description provided for @marcarExplicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Conocés un lugar que no está en el mapa? Elegí el rubro y tocá dónde queda. No hace falta el nombre: si varias personas lo marcan, se suma.'**
+  String get marcarExplicacion;
+
+  /// No description provided for @marcarRubro.
+  ///
+  /// In es, this message translates to:
+  /// **'Rubro'**
+  String get marcarRubro;
+
+  /// No description provided for @marcarToca.
+  ///
+  /// In es, this message translates to:
+  /// **'Tocá el mapa donde queda el lugar.'**
+  String get marcarToca;
+
+  /// No description provided for @marcarEnlace.
+  ///
+  /// In es, this message translates to:
+  /// **'Enlace de Google Maps (opcional)'**
+  String get marcarEnlace;
+
+  /// No description provided for @marcarEnlaceAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Pegalo si lo tenés: ayuda a confirmar el lugar.'**
+  String get marcarEnlaceAyuda;
+
+  /// No description provided for @marcarGuardar.
+  ///
+  /// In es, this message translates to:
+  /// **'Marcar'**
+  String get marcarGuardar;
+
+  /// No description provided for @marcarListo.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Gracias! Quedó marcado.'**
+  String get marcarListo;
+
+  /// No description provided for @marcarYa.
+  ///
+  /// In es, this message translates to:
+  /// **'Ya marcaste este lugar.'**
+  String get marcarYa;
+
+  /// No description provided for @marcarDemasiados.
+  ///
+  /// In es, this message translates to:
+  /// **'Marcaste muchos lugares hoy. Probá mañana.'**
+  String get marcarDemasiados;
+
+  /// No description provided for @marcarInvalido.
+  ///
+  /// In es, this message translates to:
+  /// **'Revisá el enlace: tiene que ser de Google Maps.'**
+  String get marcarInvalido;
+
+  /// No description provided for @marcarFaltaPunto.
+  ///
+  /// In es, this message translates to:
+  /// **'Tocá el mapa para marcar dónde queda.'**
+  String get marcarFaltaPunto;
+
+  /// No description provided for @sinReclamarTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'{rubro} sin reclamar'**
+  String sinReclamarTitulo(String rubro);
+
+  /// No description provided for @sinReclamarMarcas.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =1{Marcado por 1 persona} other{Marcado por {n} personas}}'**
+  String sinReclamarMarcas(int n);
+
+  /// No description provided for @sinReclamarEsTuyo.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Es tu negocio? Dalo de alta'**
+  String get sinReclamarEsTuyo;
+
+  /// No description provided for @sinReclamarVerGoogle.
+  ///
+  /// In es, this message translates to:
+  /// **'Ver en Google Maps'**
+  String get sinReclamarVerGoogle;
+
+  /// No description provided for @leyendaSinReclamar.
+  ///
+  /// In es, this message translates to:
+  /// **'Sin reclamar'**
+  String get leyendaSinReclamar;
+
+  /// No description provided for @reclamarEsTuyo.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Es tu negocio? Reclamalo'**
+  String get reclamarEsTuyo;
+
+  /// No description provided for @reclamarTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Reclamar este lugar'**
+  String get reclamarTitulo;
+
+  /// No description provided for @reclamarTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Contanos que es tuyo. Para la insignia ✔️ el equipo valida el RUT. Si ya tiene a alguien a cargo, se revisa como disputa.'**
+  String get reclamarTexto;
+
+  /// No description provided for @reclamarRut.
+  ///
+  /// In es, this message translates to:
+  /// **'RUT (12 números)'**
+  String get reclamarRut;
+
+  /// No description provided for @reclamarRutInvalido.
+  ///
+  /// In es, this message translates to:
+  /// **'El RUT tiene 12 números.'**
+  String get reclamarRutInvalido;
+
+  /// No description provided for @reclamarNota.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Cómo lo podemos comprobar? (opcional)'**
+  String get reclamarNota;
+
+  /// No description provided for @reclamarEnviar.
+  ///
+  /// In es, this message translates to:
+  /// **'Enviar reclamo'**
+  String get reclamarEnviar;
+
+  /// No description provided for @reclamarListo.
+  ///
+  /// In es, this message translates to:
+  /// **'Recibimos tu reclamo. Te avisamos cuando lo revisemos.'**
+  String get reclamarListo;
+
+  /// No description provided for @fichaPromo.
+  ///
+  /// In es, this message translates to:
+  /// **'Promoción'**
+  String get fichaPromo;
+
+  /// No description provided for @fichaFacebook.
+  ///
+  /// In es, this message translates to:
+  /// **'Facebook'**
+  String get fichaFacebook;
+
+  /// No description provided for @fichaCobertura.
+  ///
+  /// In es, this message translates to:
+  /// **'Trabaja en: {zona}'**
+  String fichaCobertura(String zona);
+
+  /// No description provided for @negocioMi.
+  ///
+  /// In es, this message translates to:
+  /// **'Mi negocio'**
+  String get negocioMi;
+
+  /// No description provided for @negocioMiAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Sumá tu comercio o servicio al mapa (gratis).'**
+  String get negocioMiAyuda;
+
+  /// No description provided for @negocioAltaTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Sumar mi negocio'**
+  String get negocioAltaTitulo;
+
+  /// No description provided for @negocioAltaExplicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Aparece al instante en el mapa como «no verificado». Para la insignia ✔️ pedís la verificación con tu RUT.'**
+  String get negocioAltaExplicacion;
+
+  /// No description provided for @negocioNombre.
+  ///
+  /// In es, this message translates to:
+  /// **'Nombre del negocio'**
+  String get negocioNombre;
+
+  /// No description provided for @negocioNombreFalta.
+  ///
+  /// In es, this message translates to:
+  /// **'Escribí el nombre (2 letras o más).'**
+  String get negocioNombreFalta;
+
+  /// No description provided for @negocioModalidad.
+  ///
+  /// In es, this message translates to:
+  /// **'Cómo atendés'**
+  String get negocioModalidad;
+
+  /// No description provided for @negocioModalidadLocal.
+  ///
+  /// In es, this message translates to:
+  /// **'Con local'**
+  String get negocioModalidadLocal;
+
+  /// No description provided for @negocioModalidadOnline.
+  ///
+  /// In es, this message translates to:
+  /// **'Online'**
+  String get negocioModalidadOnline;
+
+  /// No description provided for @negocioModalidadDomicilio.
+  ///
+  /// In es, this message translates to:
+  /// **'A domicilio'**
+  String get negocioModalidadDomicilio;
+
+  /// No description provided for @negocioUbicacionToca.
+  ///
+  /// In es, this message translates to:
+  /// **'Tocá el mapa donde está tu local.'**
+  String get negocioUbicacionToca;
+
+  /// No description provided for @negocioCobertura.
+  ///
+  /// In es, this message translates to:
+  /// **'Zona donde trabajás'**
+  String get negocioCobertura;
+
+  /// No description provided for @negocioCoberturaAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Por ejemplo: Pando y alrededores.'**
+  String get negocioCoberturaAyuda;
+
+  /// No description provided for @negocioTelefono.
+  ///
+  /// In es, this message translates to:
+  /// **'Teléfono'**
+  String get negocioTelefono;
+
+  /// No description provided for @negocioWhatsapp.
+  ///
+  /// In es, this message translates to:
+  /// **'WhatsApp (opcional)'**
+  String get negocioWhatsapp;
+
+  /// No description provided for @negocioDescripcion.
+  ///
+  /// In es, this message translates to:
+  /// **'Descripción (opcional)'**
+  String get negocioDescripcion;
+
+  /// No description provided for @negocioWeb.
+  ///
+  /// In es, this message translates to:
+  /// **'Web (https://…)'**
+  String get negocioWeb;
+
+  /// No description provided for @negocioInstagram.
+  ///
+  /// In es, this message translates to:
+  /// **'Instagram (sin @)'**
+  String get negocioInstagram;
+
+  /// No description provided for @negocioFacebook.
+  ///
+  /// In es, this message translates to:
+  /// **'Facebook (opcional)'**
+  String get negocioFacebook;
+
+  /// No description provided for @negocioCrear.
+  ///
+  /// In es, this message translates to:
+  /// **'Sumar al mapa'**
+  String get negocioCrear;
+
+  /// No description provided for @negocioCreado.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Listo! Tu negocio ya está en el mapa.'**
+  String get negocioCreado;
+
+  /// No description provided for @negocioFaltaUbicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Tocá el mapa para marcar dónde está.'**
+  String get negocioFaltaUbicacion;
+
+  /// No description provided for @negocioDatosInvalidos.
+  ///
+  /// In es, this message translates to:
+  /// **'Revisá los datos (teléfono, web o Instagram).'**
+  String get negocioDatosInvalidos;
+
+  /// No description provided for @modoComercio.
+  ///
+  /// In es, this message translates to:
+  /// **'Modo comercio'**
+  String get modoComercio;
+
+  /// No description provided for @volverModoDueno.
+  ///
+  /// In es, this message translates to:
+  /// **'Volver al modo dueño'**
+  String get volverModoDueno;
+
+  /// No description provided for @negocioPanel.
+  ///
+  /// In es, this message translates to:
+  /// **'Panel'**
+  String get negocioPanel;
+
+  /// No description provided for @negocioAgenda.
+  ///
+  /// In es, this message translates to:
+  /// **'Agenda'**
+  String get negocioAgenda;
+
+  /// No description provided for @negocioCatalogo.
+  ///
+  /// In es, this message translates to:
+  /// **'Catálogo'**
+  String get negocioCatalogo;
+
+  /// No description provided for @negocioPedidos.
+  ///
+  /// In es, this message translates to:
+  /// **'Pedidos'**
+  String get negocioPedidos;
+
+  /// No description provided for @negocioFicha.
+  ///
+  /// In es, this message translates to:
+  /// **'Negocio'**
+  String get negocioFicha;
+
+  /// No description provided for @moduloNoAplica.
+  ///
+  /// In es, this message translates to:
+  /// **'No aplica para tu tipo de negocio.'**
+  String get moduloNoAplica;
+
+  /// No description provided for @moduloSoloPlus.
+  ///
+  /// In es, this message translates to:
+  /// **'Llega con el plan Plus (Fase 3).'**
+  String get moduloSoloPlus;
+
+  /// No description provided for @planBasico.
+  ///
+  /// In es, this message translates to:
+  /// **'Básico'**
+  String get planBasico;
+
+  /// No description provided for @planDestacado.
+  ///
+  /// In es, this message translates to:
+  /// **'Destacado'**
+  String get planDestacado;
+
+  /// No description provided for @planPlus.
+  ///
+  /// In es, this message translates to:
+  /// **'Plus'**
+  String get planPlus;
+
+  /// No description provided for @verifNo.
+  ///
+  /// In es, this message translates to:
+  /// **'No verificado'**
+  String get verifNo;
+
+  /// No description provided for @verifPendiente.
+  ///
+  /// In es, this message translates to:
+  /// **'Verificación pendiente'**
+  String get verifPendiente;
+
+  /// No description provided for @verifSi.
+  ///
+  /// In es, this message translates to:
+  /// **'Verificado ✔️'**
+  String get verifSi;
+
+  /// No description provided for @socioFundadorHasta.
+  ///
+  /// In es, this message translates to:
+  /// **'Socio Fundador hasta el {fecha}'**
+  String socioFundadorHasta(String fecha);
+
+  /// No description provided for @panelAperturas.
+  ///
+  /// In es, this message translates to:
+  /// **'Aperturas de tu ficha'**
+  String get panelAperturas;
+
+  /// No description provided for @panelAntes.
+  ///
+  /// In es, this message translates to:
+  /// **'{n} en los 30 días anteriores'**
+  String panelAntes(int n);
+
+  /// No description provided for @panelContactos.
+  ///
+  /// In es, this message translates to:
+  /// **'Contactos'**
+  String get panelContactos;
+
+  /// No description provided for @panelFavoritos.
+  ///
+  /// In es, this message translates to:
+  /// **'Te guardaron en favoritos'**
+  String get panelFavoritos;
+
+  /// No description provided for @panelVisitas.
+  ///
+  /// In es, this message translates to:
+  /// **'Dijeron «Fui»'**
+  String get panelVisitas;
+
+  /// No description provided for @panelSocios.
+  ///
+  /// In es, this message translates to:
+  /// **'Te eligieron como su veterinaria'**
+  String get panelSocios;
+
+  /// No description provided for @panelUltimos30.
+  ///
+  /// In es, this message translates to:
+  /// **'Últimos 30 días'**
+  String get panelUltimos30;
+
+  /// No description provided for @panelSinContactos.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía nadie tocó un contacto.'**
+  String get panelSinContactos;
+
+  /// No description provided for @clicLlamar.
+  ///
+  /// In es, this message translates to:
+  /// **'Llamar'**
+  String get clicLlamar;
+
+  /// No description provided for @clicWhatsapp.
+  ///
+  /// In es, this message translates to:
+  /// **'WhatsApp'**
+  String get clicWhatsapp;
+
+  /// No description provided for @clicComoLlegar.
+  ///
+  /// In es, this message translates to:
+  /// **'Cómo llegar'**
+  String get clicComoLlegar;
+
+  /// No description provided for @clicWeb.
+  ///
+  /// In es, this message translates to:
+  /// **'Web'**
+  String get clicWeb;
+
+  /// No description provided for @clicInstagram.
+  ///
+  /// In es, this message translates to:
+  /// **'Instagram'**
+  String get clicInstagram;
+
+  /// No description provided for @negocioGuardar.
+  ///
+  /// In es, this message translates to:
+  /// **'Guardar cambios'**
+  String get negocioGuardar;
+
+  /// No description provided for @negocioGuardado.
+  ///
+  /// In es, this message translates to:
+  /// **'Cambios guardados.'**
+  String get negocioGuardado;
+
+  /// No description provided for @negocioVisible.
+  ///
+  /// In es, this message translates to:
+  /// **'Visible en el mapa'**
+  String get negocioVisible;
+
+  /// No description provided for @negocioPromo.
+  ///
+  /// In es, this message translates to:
+  /// **'Promoción'**
+  String get negocioPromo;
+
+  /// No description provided for @negocioPromoSoloPago.
+  ///
+  /// In es, this message translates to:
+  /// **'La promoción se muestra con los planes Destacado y Plus.'**
+  String get negocioPromoSoloPago;
+
+  /// No description provided for @negocioFotos.
+  ///
+  /// In es, this message translates to:
+  /// **'Fotos'**
+  String get negocioFotos;
+
+  /// No description provided for @negocioAgregarFoto.
+  ///
+  /// In es, this message translates to:
+  /// **'Agregar foto'**
+  String get negocioAgregarFoto;
+
+  /// No description provided for @negocioFotosTope.
+  ///
+  /// In es, this message translates to:
+  /// **'Llegaste al máximo de fotos de tu plan.'**
+  String get negocioFotosTope;
+
+  /// No description provided for @negocioQuitarFoto.
+  ///
+  /// In es, this message translates to:
+  /// **'Quitar foto'**
+  String get negocioQuitarFoto;
+
+  /// No description provided for @negocioPedirVerificacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Pedir la insignia ✔️'**
+  String get negocioPedirVerificacion;
+
+  /// No description provided for @negocioPedirVerificacionTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Ingresá el RUT del negocio. El equipo lo valida y te avisa.'**
+  String get negocioPedirVerificacionTexto;
+
+  /// No description provided for @negocioVerificacionPedida.
+  ///
+  /// In es, this message translates to:
+  /// **'Pedido enviado. Te avisamos cuando lo revisemos.'**
+  String get negocioVerificacionPedida;
+
+  /// No description provided for @negocioPedirRenac.
+  ///
+  /// In es, this message translates to:
+  /// **'Pedir la insignia Operador RENAC'**
+  String get negocioPedirRenac;
+
+  /// No description provided for @negocioRenacTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Si colocás microchip y estás en el listado oficial del MGAP, aparece la insignia y el filtro «Coloca microchip».'**
+  String get negocioRenacTexto;
+
+  /// No description provided for @negocioRenacPedido.
+  ///
+  /// In es, this message translates to:
+  /// **'Insignia RENAC pedida.'**
+  String get negocioRenacPedido;
+
+  /// No description provided for @negocioHorario.
+  ///
+  /// In es, this message translates to:
+  /// **'Horario'**
+  String get negocioHorario;
+
+  /// No description provided for @negocioCerrado.
+  ///
+  /// In es, this message translates to:
+  /// **'Cerrado'**
+  String get negocioCerrado;
+
+  /// No description provided for @negocio24h.
+  ///
+  /// In es, this message translates to:
+  /// **'Abierto 24 h'**
+  String get negocio24h;
+
+  /// No description provided for @negocioUrgencias.
+  ///
+  /// In es, this message translates to:
+  /// **'Atiende urgencias'**
+  String get negocioUrgencias;
+
+  /// No description provided for @negocioDe.
+  ///
+  /// In es, this message translates to:
+  /// **'De {desde} a {hasta}'**
+  String negocioDe(String desde, String hasta);
+
+  /// No description provided for @negocioEspecies.
+  ///
+  /// In es, this message translates to:
+  /// **'Especies que atendés'**
+  String get negocioEspecies;
+
+  /// No description provided for @negocioEspeciesAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Si no elegís ninguna, se entiende que atendés a todas.'**
+  String get negocioEspeciesAyuda;
+
+  /// No description provided for @negocioOtro.
+  ///
+  /// In es, this message translates to:
+  /// **'Sumar otro negocio'**
+  String get negocioOtro;
+
+  /// No description provided for @negocioDireccion.
+  ///
+  /// In es, this message translates to:
+  /// **'Dirección (opcional)'**
+  String get negocioDireccion;
 }
 
 class _AppLocalizationsDelegate

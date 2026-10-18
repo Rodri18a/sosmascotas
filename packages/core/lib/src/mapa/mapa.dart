@@ -67,6 +67,9 @@ enum TipoPin {
   comercio,
   aceptaMascotas,
   grupo,
+
+  /// Lugar marcado por usuarios que todavía nadie reclamó (gris, 1.3.2).
+  sinReclamar,
 }
 
 /// Un pin del mapa: datos mínimos (el detalle se trae al tocarlo).

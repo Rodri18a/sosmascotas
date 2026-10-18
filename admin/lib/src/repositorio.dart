@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sosmascota_core/sosmascota_core.dart' show fechaIso;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'modelos.dart';
@@ -38,6 +39,19 @@ abstract interface class AdminRepositorio {
   Future<void> guardarProspecto(Prospecto prospecto);
 
   Future<List<EntradaAyuda>> ayuda();
+
+  /// Reclamos, disputas, verificaciones y pedidos de RENAC (1.3, D77).
+  Future<List<PendienteComercio>> pendientesComercios();
+
+  Future<void> resolverComercio(
+    String tipo,
+    String id, {
+    required bool aprobar,
+    String? motivo,
+  });
+
+  /// Socio Fundador hasta [hasta] (null: deja de serlo).
+  Future<void> socioFundador(String negocioId, DateTime? hasta);
 
   /// Crea (sin `id`) o actualiza una entrada de la Ayuda.
   Future<void> guardarAyuda(Map<String, Object?> datos);
@@ -145,6 +159,37 @@ class SupabaseAdminRepositorio implements AdminRepositorio {
             .eq('id', prospecto.id);
 
   @override
+  Future<List<PendienteComercio>> pendientesComercios() async => _filas(
+    await _cliente.rpc<List<dynamic>>('admin_pendientes_comercios'),
+  ).map(PendienteComercio.fromJson).toList();
+
+  @override
+  Future<void> resolverComercio(
+    String tipo,
+    String id, {
+    required bool aprobar,
+    String? motivo,
+  }) => _cliente.rpc<void>(
+    'admin_resolver_comercio',
+    params: {
+      'p_tipo': tipo,
+      'p_id': id,
+      'p_aprobar': aprobar,
+      'p_motivo': motivo,
+    },
+  );
+
+  @override
+  Future<void> socioFundador(String negocioId, DateTime? hasta) =>
+      _cliente.rpc<void>(
+        'admin_socio_fundador',
+        params: {
+          'p_business': negocioId,
+          'p_hasta': hasta == null ? null : fechaIso(hasta),
+        },
+      );
+
+  @override
   Future<List<EntradaAyuda>> ayuda() async =>
       (await _cliente
               .from('help_directory')
@@ -200,6 +245,10 @@ final lugaresProvider = FutureProvider.family<List<LugarAdmin>, String>(
 
 final prospectosProvider = FutureProvider<List<Prospecto>>(
   (ref) => ref.watch(adminRepositorioProvider).prospectos(),
+);
+
+final pendientesComerciosProvider = FutureProvider<List<PendienteComercio>>(
+  (ref) => ref.watch(adminRepositorioProvider).pendientesComercios(),
 );
 
 final ayudaProvider = FutureProvider<List<EntradaAyuda>>(

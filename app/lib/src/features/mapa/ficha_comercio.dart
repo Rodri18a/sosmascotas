@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
+import '../../comercios/comercios_repositorio.dart';
 import '../../comercios/mis_lugares.dart';
 import '../../comercios/textos_comercio.dart';
 import '../../cuenta/servicio_cuenta.dart';
@@ -11,6 +12,7 @@ import '../../mascotas/catalogo.dart';
 import '../../metricas/metricas.dart';
 import '../../theme/paleta.dart';
 import '../../utiles/enlaces.dart';
+import 'marcar_lugar.dart';
 
 IconData iconoCategoria(Categoria c) => switch (c) {
   Categoria.vet => Icons.local_hospital_outlined,
@@ -157,6 +159,47 @@ class FichaComercio extends ConsumerWidget {
               const SizedBox(height: 8),
               Text(t.comercioEjemploAviso, style: tema.textTheme.bodySmall),
             ],
+            if (c.fotos.isNotEmpty) ...[
+              const SizedBox(height: 12),
+              SizedBox(
+                height: 120,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    for (final f in c.fotos)
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.network(
+                            ref.watch(comerciosRepositorioProvider).urlFoto(f),
+                            height: 120,
+                            fit: BoxFit.cover,
+                            errorBuilder: (_, _, _) => const SizedBox(
+                              width: 120,
+                              child: Icon(Icons.photo_outlined),
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ],
+            if (c.promo case final promo?) ...[
+              const SizedBox(height: 12),
+              Card(
+                child: ListTile(
+                  leading: const Icon(Icons.local_offer_outlined),
+                  title: Text(promo),
+                  subtitle: Text(t.fichaPromo),
+                ),
+              ),
+            ],
+            if (c.cobertura case final zona?) ...[
+              const SizedBox(height: 8),
+              Text(t.fichaCobertura(zona)),
+            ],
             if (c.direccion != null) ...[
               const SizedBox(height: 8),
               Row(
@@ -220,6 +263,16 @@ class FichaComercio extends ConsumerWidget {
                     icon: const Icon(Icons.language),
                     label: Text(t.comercioWeb),
                   ),
+                if (c.facebook != null)
+                  OutlinedButton.icon(
+                    onPressed: () => _abrir(
+                      ref,
+                      'facebook',
+                      Uri.https('www.facebook.com', '/${c.facebook}'),
+                    ),
+                    icon: const Icon(Icons.facebook),
+                    label: Text(t.fichaFacebook),
+                  ),
                 if (c.instagram != null)
                   OutlinedButton.icon(
                     onPressed: () => _abrir(
@@ -239,6 +292,21 @@ class FichaComercio extends ConsumerWidget {
                   funcionalidadActivaProvider(Funcionalidades.mapaCompleto),
                 ))
               _MisBotones(comercio: c),
+            // "¿Es tu negocio?" en los lugares sin cuenta a cargo (1.3.4).
+            if (!c.tieneDuenio &&
+                !c.esEjemplo &&
+                ref.watch(conectadoProvider) &&
+                ref.watch(
+                  funcionalidadActivaProvider(Funcionalidades.comercios),
+                ))
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: TextButton.icon(
+                  onPressed: () => reclamarLugar(context, ref, c),
+                  icon: const Icon(Icons.storefront_outlined),
+                  label: Text(t.reclamarEsTuyo),
+                ),
+              ),
             if (!c.es24h && !c.horario.vacio)
               ExpansionTile(
                 tilePadding: EdgeInsets.zero,

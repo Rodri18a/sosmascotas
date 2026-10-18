@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'pantallas/ayuda.dart';
+import 'pantallas/comercios.dart';
 import 'pantallas/ingreso.dart';
 import 'pantallas/lugares.dart';
 import 'pantallas/moderacion.dart';
@@ -114,6 +115,7 @@ class _PortalState extends ConsumerState<Portal> {
     (Icons.dashboard_outlined, T.panel),
     (Icons.shield_outlined, T.moderacion),
     (Icons.storefront_outlined, T.lugares),
+    (Icons.verified_outlined, T.comercios),
     (Icons.handshake_outlined, T.prospectos),
     (Icons.volunteer_activism_outlined, T.ayuda),
   ];
@@ -125,7 +127,8 @@ class _PortalState extends ConsumerState<Portal> {
       0 => const PanelScreen(),
       1 => const ModeracionScreen(),
       2 => const LugaresScreen(),
-      3 => const ProspectosScreen(),
+      3 => const ComerciosScreen(),
+      4 => const ProspectosScreen(),
       _ => const AyudaScreen(),
     };
     return Scaffold(

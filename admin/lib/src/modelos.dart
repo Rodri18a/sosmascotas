@@ -193,3 +193,48 @@ class EntradaAyuda {
   final String? enlace;
   final bool activa;
 }
+
+/// Algo para resolver de un comercio (`admin_pendientes_comercios()`, 1.3).
+class PendienteComercio {
+  const PendienteComercio({
+    required this.tipo,
+    required this.id,
+    required this.negocioId,
+    required this.negocio,
+    required this.rubro,
+    this.usuarioNombre,
+    this.rut,
+    this.nota,
+    this.creado,
+    this.tieneDuenio = false,
+  });
+
+  factory PendienteComercio.fromJson(Map<String, Object?> json) =>
+      PendienteComercio(
+        tipo: json['tipo']! as String,
+        id: json['id']! as String,
+        negocioId: json['business_id']! as String,
+        negocio: (json['negocio'] as String?) ?? '',
+        rubro: (json['rubro'] as String?) ?? '',
+        usuarioNombre: json['usuario_nombre'] as String?,
+        rut: json['rut'] as String?,
+        nota: json['nota'] as String?,
+        creado: switch (json['creado']) {
+          final String f => DateTime.parse(f).toLocal(),
+          _ => null,
+        },
+        tieneDuenio: json['tiene_duenio'] == true,
+      );
+
+  /// `claim`, `dispute`, `verification` o `renac`.
+  final String tipo;
+  final String id;
+  final String negocioId;
+  final String negocio;
+  final String rubro;
+  final String? usuarioNombre;
+  final String? rut;
+  final String? nota;
+  final DateTime? creado;
+  final bool tieneDuenio;
+}

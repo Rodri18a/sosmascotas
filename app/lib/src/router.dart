@@ -15,10 +15,12 @@ import 'features/ingresar/ingresar_screen.dart';
 import 'features/legal/legal_screen.dart';
 import 'features/libreta/libreta.dart';
 import 'features/mapa/mapa_screen.dart';
+import 'features/mapa/marcar_lugar.dart';
 import 'features/mascotas/ficha_mascota_screen.dart';
 import 'features/mascotas/mascota_form_screen.dart';
 import 'features/mascotas/mascotas_screen.dart';
 import 'features/mascotas/qr_mascota_screen.dart';
+import 'features/negocio/negocio_screen.dart';
 import 'features/no_disponible/no_disponible_screen.dart';
 import 'features/perfil/perfil_screen.dart';
 import 'features/recordatorios/recordatorios.dart';
@@ -52,6 +54,8 @@ abstract final class Rutas {
   static const unirme = '/unirme';
   static const perfil = '/perfil';
   static const chats = '/chats';
+  static const negocio = '/negocio';
+  static const marcarLugar = '/lugares/marcar';
 
   /// Rutas detrás de una funcionalidad gradual (comienzo de la ruta → clave de
   /// `Funcionalidades`). Quien entra sin tenerla prendida ve "Todavía no está
@@ -62,6 +66,8 @@ abstract final class Rutas {
     hogar: Funcionalidades.hogar,
     perfil: Funcionalidades.perfil,
     chats: Funcionalidades.chat,
+    negocio: Funcionalidades.comercios,
+    marcarLugar: Funcionalidades.comercios,
   };
 
   /// Rutas que un visitante no puede ver: se le pide ingresar y después vuelve.
@@ -75,6 +81,8 @@ abstract final class Rutas {
     '$unirme/',
     perfil,
     chats,
+    negocio,
+    marcarLugar,
   ];
 
   static String fichaMascota(String id) => '$mascotas/$id';
@@ -90,6 +98,14 @@ abstract final class Rutas {
   static String editarRegistroSalud(String mascotaId, String id) =>
       '$libreta/$mascotaId/$id';
   static String chat(String id) => '$chats/$id';
+  static String altaNegocio({Categoria? rubro, Punto? punto}) => Uri(
+    path: '$negocio/alta',
+    queryParameters: {
+      'rubro': ?rubro?.valor,
+      if (punto != null) 'lat': '${punto.lat}',
+      if (punto != null) 'lng': '${punto.lng}',
+    },
+  ).toString();
   static String nuevoRecordatorio(
     String mascotaId, {
     TipoRecordatorio? tipo,
@@ -266,6 +282,30 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(path: Rutas.hogar, builder: (_, _) => const HogarScreen()),
       GoRoute(path: Rutas.perfil, builder: (_, _) => const PerfilScreen()),
+      GoRoute(
+        path: Rutas.negocio,
+        builder: (_, _) => const NegocioScreen(),
+        routes: [
+          GoRoute(
+            path: 'alta',
+            builder: (_, state) {
+              final q = state.uri.queryParameters;
+              final lat = double.tryParse(q['lat'] ?? '');
+              final lng = double.tryParse(q['lng'] ?? '');
+              return AltaNegocioScreen(
+                precarga: (
+                  rubro: Categoria.leer(q['rubro']),
+                  punto: lat == null || lng == null ? null : Punto(lat, lng),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+      GoRoute(
+        path: Rutas.marcarLugar,
+        builder: (_, _) => const MarcarLugarScreen(),
+      ),
       GoRoute(
         path: Rutas.chats,
         builder: (_, _) => const ConversacionesScreen(),

@@ -7,6 +7,7 @@ import '../../../l10n/l10n.dart';
 import '../../comercios/comercios_repositorio.dart';
 import '../../comercios/mis_lugares.dart';
 import '../../comercios/textos_comercio.dart';
+import '../../cuenta/servicio_cuenta.dart';
 import '../../funcionalidades/funcionalidades_activas.dart';
 import '../../mapa/mapa_vista.dart';
 import '../../mascotas/mascota_activa.dart';
@@ -20,6 +21,7 @@ import '../../widgets/boton_avisos.dart';
 import '../../widgets/boton_mensajes.dart';
 import '../instalar/instalar.dart';
 import 'ficha_comercio.dart';
+import 'marcar_lugar.dart';
 
 enum _Vista { mapa, lista, sinLocal }
 
@@ -43,6 +45,10 @@ class _MapaScreenState extends ConsumerState<MapaScreen> {
   bool? _completoCargado;
   List<Pin> _sos = const [];
 
+  /// Lugares marcados por usuarios sin reclamar (1.3.2), por id de pin.
+  Map<String, LugarSinReclamar> _sinReclamar = const {};
+  bool? _comerciosCargado;
+
   /// Lugares cargados, por id (para abrir la ficha al tocar su pin).
   Map<String, Comercio> _comercios = const {};
 
@@ -52,27 +58,36 @@ class _MapaScreenState extends ConsumerState<MapaScreen> {
   bool get _completo =>
       ref.read(funcionalidadActivaProvider(Funcionalidades.mapaCompleto));
 
+  bool get _conComercios =>
+      ref.read(funcionalidadActivaProvider(Funcionalidades.comercios));
+
   Future<void> _alQuedarQuieto(Limites visible) async {
     setState(() => _visible = visible);
     final completo = _completo;
+    final conComercios = _conComercios;
     if ((_cargado?.contiene(visible) ?? false) &&
-        _completoCargado == completo) {
+        _completoCargado == completo &&
+        _comerciosCargado == conComercios) {
       return;
     }
     final zona = visible.agrandado(1.5);
     _cargado = zona;
     _completoCargado = completo;
+    _comerciosCargado = conComercios;
+    final repo = ref.read(comerciosRepositorioProvider);
     try {
-      final (sos, comercios) = await (
+      final (sos, comercios, sinReclamar) = await (
         ref.read(sosRepositorioProvider).enZona(zona),
-        ref
-            .read(comerciosRepositorioProvider)
-            .enZona(zona, categorias: completo ? null : const {Categoria.vet}),
+        repo.enZona(zona, categorias: completo ? null : const {Categoria.vet}),
+        conComercios
+            ? repo.sinReclamarEnZona(zona)
+            : Future.value(const <LugarSinReclamar>[]),
       ).wait;
       if (!mounted) return;
       setState(() {
         _sos = sos;
         _comercios = {for (final c in comercios) c.id: c};
+        _sinReclamar = {for (final l in sinReclamar) l.pin.id: l};
       });
     } on Exception {
       _cargado = null; // Se reintenta en el próximo movimiento.
@@ -84,6 +99,8 @@ class _MapaScreenState extends ConsumerState<MapaScreen> {
   void _alTocarPin(Pin pin) {
     if (pin.esSos) {
       context.push(Rutas.detalleSos(pin.id));
+    } else if (_sinReclamar[pin.id] case final lugar?) {
+      mostrarSinReclamar(context, ref, lugar);
     } else if (_comercios[pin.id] case final comercio?) {
       mostrarFichaComercio(context, ref, comercio);
     }
@@ -117,7 +134,17 @@ class _MapaScreenState extends ConsumerState<MapaScreen> {
       return [for (final c in _comercios.values) ?c.pin, ..._sos];
     }
     final lugares = [for (final c in _filtrados()) ?c.pin];
-    final todos = [...lugares, if (_filtros.mostrarSos) ..._sos];
+    final sinReclamar = [
+      for (final l in _sinReclamar.values)
+        if (_filtros.categorias.isEmpty ||
+            _filtros.categorias.contains(l.categoria))
+          l.pin,
+    ];
+    final todos = [
+      ...sinReclamar,
+      ...lugares,
+      if (_filtros.mostrarSos) ..._sos,
+    ];
     final visible = _visible;
     return visible == null ? todos : agruparPins(todos, visible);
   }
@@ -145,6 +172,10 @@ class _MapaScreenState extends ConsumerState<MapaScreen> {
     final completo = ref.watch(
       funcionalidadActivaProvider(Funcionalidades.mapaCompleto),
     );
+    final puedeMarcar =
+        completo &&
+        ref.watch(conectadoProvider) &&
+        ref.watch(funcionalidadActivaProvider(Funcionalidades.comercios));
     final mapa = Stack(
       children: [
         MapaVista(
@@ -153,7 +184,31 @@ class _MapaScreenState extends ConsumerState<MapaScreen> {
           onCamaraQuieta: _alQuedarQuieto,
           onTocarPin: _alTocarPin,
         ),
-        Positioned(left: 8, bottom: 8, child: _Leyenda(completo: completo)),
+        Positioned(
+          left: 8,
+          bottom: 8,
+          child: _Leyenda(
+            completo: completo,
+            conComercios: ref.watch(
+              funcionalidadActivaProvider(Funcionalidades.comercios),
+            ),
+          ),
+        ),
+        if (puedeMarcar)
+          Positioned(
+            right: 12,
+            bottom: 12,
+            child: FloatingActionButton.extended(
+              heroTag: 'marcar-lugar',
+              onPressed: () async {
+                final marcado = await context.push<bool>(Rutas.marcarLugar);
+                // Para ver la marca nueva se vuelve a traer la zona.
+                if (marcado ?? false) setState(() => _cargado = null);
+              },
+              icon: const Icon(Icons.add_location_alt_outlined),
+              label: Text(t.marcarLugar),
+            ),
+          ),
         const Positioned(
           left: 8,
           right: 8,
@@ -504,9 +559,10 @@ class _SinLocal extends ConsumerWidget {
 
 /// Qué significa cada color de pin.
 class _Leyenda extends StatelessWidget {
-  const _Leyenda({required this.completo});
+  const _Leyenda({required this.completo, required this.conComercios});
 
   final bool completo;
+  final bool conComercios;
 
   @override
   Widget build(BuildContext context) {
@@ -526,6 +582,8 @@ class _Leyenda extends StatelessWidget {
               (TipoPin.veterinaria, t.leyendaVeterinaria),
               if (completo) (TipoPin.comercio, t.leyendaComercio),
               if (completo) (TipoPin.aceptaMascotas, t.leyendaAcepta),
+              if (completo && conComercios)
+                (TipoPin.sinReclamar, t.leyendaSinReclamar),
             ])
               Row(
                 mainAxisSize: MainAxisSize.min,
@@ -534,7 +592,7 @@ class _Leyenda extends StatelessWidget {
                     width: 12,
                     height: 12,
                     decoration: BoxDecoration(
-                      color: coloresPin[tipo],
+                      color: colorDePin(tipo),
                       shape: BoxShape.circle,
                       border: Border.all(color: bordePin, width: 1.5),
                     ),

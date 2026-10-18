@@ -54,6 +54,13 @@ const coloresPin = <TipoPin, Color>{
   TipoPin.grupo: Color(0xFF141414),
 };
 
+/// Lugares sin reclamar (1.3.2): grises, más chicos y sin borde oscuro. No
+/// entran en la escala de luminosidad de los demás: se distinguen por tamaño.
+const colorSinReclamar = Color(0xFF9E9E9E);
+
+/// Color de un pin (los sin reclamar van aparte).
+Color colorDePin(TipoPin tipo) => coloresPin[tipo] ?? colorSinReclamar;
+
 /// Borde de los pines: contrasta con el mapa claro y con el pin ámbar.
 const bordePin = Color(0xFF102A35);
 

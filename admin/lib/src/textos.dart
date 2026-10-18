@@ -94,6 +94,21 @@ abstract final class T {
   static const datosInvalidos =
       'Hay datos inválidos (revisá coordenadas, teléfonos, web o el horario).';
 
+  // Comercios (1.3)
+  static const comercios = 'Comercios';
+  static const sinPendientes = 'No hay reclamos ni pedidos pendientes.';
+  static const rechazar = 'Rechazar';
+  static const tiposPendiente = {
+    'claim': 'Reclamo de un lugar sin dueño',
+    'dispute': 'Disputa (el lugar ya tiene dueño)',
+    'verification': 'Pedido de verificación ✔️',
+    'renac': 'Pedido de insignia Operador RENAC',
+  };
+  static const rut = 'RUT';
+  static const socioFundador = 'Socio Fundador hasta…';
+  static const revisarRenac =
+      'Verificá el RUT contra el listado oficial de operadores RENAC del MGAP antes de aprobar.';
+
   // Prospectos
   static const nuevoProspecto = 'Nuevo prospecto';
   static const contacto = 'Contacto';

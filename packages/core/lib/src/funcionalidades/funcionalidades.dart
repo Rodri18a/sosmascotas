@@ -28,6 +28,9 @@ abstract final class Funcionalidades {
   /// (etapa 1.2, D75).
   static const mapaCompleto = 'mapa_completo';
 
+  /// Comercios con cuenta: alta, reclamos, marcas y modo comercio (1.3, D77).
+  static const comercios = 'comercios';
+
   /// Las que ya están en `todos`: la app las da por prendidas aunque no pueda
   /// preguntarle a la base (sin conexión y sin nada guardado). Las demás, en
   /// ese caso, quedan apagadas (lo seguro).

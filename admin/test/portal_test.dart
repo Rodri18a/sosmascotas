@@ -136,6 +136,38 @@ class RepoFalso implements AdminRepositorio {
   @override
   Future<List<EntradaAyuda>> ayuda() async => const [];
 
+  var pendientes = <PendienteComercio>[
+    const PendienteComercio(
+      tipo: 'claim',
+      id: 'c1',
+      negocioId: 'b2',
+      negocio: 'Petshop del Centro',
+      rubro: 'petshop',
+      usuarioNombre: 'Beto',
+      rut: '211111110019',
+    ),
+  ];
+  final resueltos = <(String, String, bool)>[];
+  final fundadores = <(String, DateTime?)>[];
+
+  @override
+  Future<List<PendienteComercio>> pendientesComercios() async => pendientes;
+
+  @override
+  Future<void> resolverComercio(
+    String tipo,
+    String id, {
+    required bool aprobar,
+    String? motivo,
+  }) async {
+    resueltos.add((tipo, id, aprobar));
+    pendientes = [];
+  }
+
+  @override
+  Future<void> socioFundador(String negocioId, DateTime? hasta) async =>
+      fundadores.add((negocioId, hasta));
+
   @override
   Future<void> guardarAyuda(Map<String, Object?> datos) async =>
       ayudaGuardada.add(datos);
@@ -332,5 +364,20 @@ void main() {
     await tester.pumpAndSettle();
     await _tocar(tester, find.byTooltip('Salir'));
     expect(find.text('Enviarme el código'), findsOneWidget);
+  });
+
+  testWidgets('comercios: aprobar un reclamo', (tester) async {
+    _pantallaGrande(tester);
+    final repo = RepoFalso();
+    await tester.pumpWidget(
+      _portal(sesion: SesionFalsa('admin@x.uy'), repo: repo),
+    );
+    await tester.pumpAndSettle();
+    await _tocar(tester, find.text('Comercios'));
+    expect(find.text('Reclamo de un lugar sin dueño'), findsOneWidget);
+    expect(find.text('RUT: 211111110019'), findsOneWidget);
+    await _tocar(tester, find.widgetWithText(FilledButton, 'Aprobar'));
+    expect(repo.resueltos.single, ('claim', 'c1', true));
+    expect(find.text('No hay reclamos ni pedidos pendientes.'), findsOneWidget);
   });
 }
