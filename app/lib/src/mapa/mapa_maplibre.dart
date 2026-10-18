@@ -27,6 +27,8 @@ class _MapaMapLibreState extends State<MapaMapLibre> {
   MapLibreMapController? _control;
   bool _estiloListo = false;
   final _pinsPorCirculo = <String, Pin>{};
+  final _numeros = <Symbol>[];
+  final _gruposPorNumero = <String, Circle>{};
   Circle? _circuloSeleccion;
 
   @override
@@ -43,6 +45,7 @@ class _MapaMapLibreState extends State<MapaMapLibre> {
   @override
   void dispose() {
     _control?.onCircleTapped.remove(_alTocarCirculo);
+    _control?.onSymbolTapped.remove(_alTocarNumero);
     super.dispose();
   }
 
@@ -56,7 +59,28 @@ class _MapaMapLibreState extends State<MapaMapLibre> {
 
   void _alTocarCirculo(Circle circulo) {
     final pin = _pinsPorCirculo[circulo.id];
-    if (pin != null) widget.config.onTocarPin?.call(pin);
+    if (pin == null) return;
+    // Un grupo (1.2.6) se abre acercando el mapa; los pines, con su ficha.
+    if (pin.tipo == TipoPin.grupo) {
+      final zoom = _control?.cameraPosition?.zoom ?? widget.config.zoom;
+      unawaited(
+        _control?.animateCamera(
+          CameraUpdate.newLatLngZoom(
+            LatLng(pin.punto.lat, pin.punto.lng),
+            zoom + 2,
+          ),
+        ),
+      );
+      return;
+    }
+    widget.config.onTocarPin?.call(pin);
+  }
+
+  /// El número de un grupo está encima de su círculo: tocarlo es tocar el grupo.
+  void _alTocarNumero(Symbol numero) {
+    if (_gruposPorNumero[numero.id] case final circulo?) {
+      _alTocarCirculo(circulo);
+    }
   }
 
   Future<void> _dibujarPins() async {
@@ -66,18 +90,36 @@ class _MapaMapLibreState extends State<MapaMapLibre> {
         .where((c) => c.id != _circuloSeleccion?.id)
         .toList();
     if (anteriores.isNotEmpty) await control.removeCircles(anteriores);
+    if (_numeros.isNotEmpty) {
+      await control.removeSymbols(List.of(_numeros));
+      _numeros.clear();
+      _gruposPorNumero.clear();
+    }
     _pinsPorCirculo.clear();
     for (final pin in widget.config.pins) {
+      final grupo = pin.tipo == TipoPin.grupo;
       final circulo = await control.addCircle(
         CircleOptions(
           geometry: LatLng(pin.punto.lat, pin.punto.lng),
-          circleRadius: 9,
+          circleRadius: grupo ? 15 : 9,
           circleColor: _hex(coloresPin[pin.tipo]!),
           circleStrokeWidth: 2,
-          circleStrokeColor: _hex(bordePin),
+          circleStrokeColor: grupo ? '#FFFFFF' : _hex(bordePin),
         ),
       );
       _pinsPorCirculo[circulo.id] = pin;
+      if (grupo) {
+        final numero = await control.addSymbol(
+          SymbolOptions(
+            geometry: LatLng(pin.punto.lat, pin.punto.lng),
+            textField: '${pin.cantidad}',
+            textColor: '#FFFFFF',
+            textSize: 13,
+          ),
+        );
+        _numeros.add(numero);
+        _gruposPorNumero[numero.id] = circulo;
+      }
     }
   }
 
@@ -133,6 +175,7 @@ class _MapaMapLibreState extends State<MapaMapLibre> {
       onMapCreated: (control) {
         _control = control;
         control.onCircleTapped.add(_alTocarCirculo);
+        control.onSymbolTapped.add(_alTocarNumero);
       },
       onStyleLoadedCallback: () async {
         _estiloListo = true;

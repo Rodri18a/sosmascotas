@@ -24,6 +24,10 @@ abstract final class Funcionalidades {
   /// Chat interno, por ahora desde un SOS (etapa 1.4, D73).
   static const chat = 'chat';
 
+  /// Mapa integral: rubros, filtros, lista, "sin local", grupos y favoritos
+  /// (etapa 1.2, D75).
+  static const mapaCompleto = 'mapa_completo';
+
   /// Las que ya están en `todos`: la app las da por prendidas aunque no pueda
   /// preguntarle a la base (sin conexión y sin nada guardado). Las demás, en
   /// ese caso, quedan apagadas (lo seguro).

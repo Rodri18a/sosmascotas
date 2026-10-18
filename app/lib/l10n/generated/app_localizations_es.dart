@@ -2048,4 +2048,165 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get sosSiguiendo => 'Te vamos a avisar cuando vuelva a casa.';
+
+  @override
+  String get catVeterinarias => 'Veterinarias';
+
+  @override
+  String get catPetshops => 'Petshops';
+
+  @override
+  String get catFarmacias => 'Farmacias';
+
+  @override
+  String get catPeluquerias => 'Peluquerías';
+
+  @override
+  String get catPaseadores => 'Paseadores';
+
+  @override
+  String get catHoteles => 'Hoteles y guarderías';
+
+  @override
+  String get catAdiestradores => 'Adiestradores';
+
+  @override
+  String get catAceptan => 'Aceptan mascotas';
+
+  @override
+  String get catRefugios => 'Refugios';
+
+  @override
+  String get catVeterinaria => 'Veterinaria';
+
+  @override
+  String get catPetshop => 'Petshop';
+
+  @override
+  String get catFarmacia => 'Farmacia veterinaria';
+
+  @override
+  String get catPeluqueria => 'Peluquería';
+
+  @override
+  String get catPaseador => 'Paseador';
+
+  @override
+  String get catHotel => 'Hotel o guardería';
+
+  @override
+  String get catAdiestrador => 'Adiestrador';
+
+  @override
+  String get catAcepta => 'Acepta mascotas';
+
+  @override
+  String get catRefugio => 'Refugio';
+
+  @override
+  String get mapaVistaMapa => 'Mapa';
+
+  @override
+  String get mapaVistaLista => 'Lista';
+
+  @override
+  String get mapaVistaSinLocal => 'Sin local';
+
+  @override
+  String get mapaPerdidos => 'Perdidos y encontrados';
+
+  @override
+  String get mapaFiltros => 'Filtros';
+
+  @override
+  String get mapaDistancia => 'Distancia';
+
+  @override
+  String get mapaDist300 => '300 m';
+
+  @override
+  String get mapaDist800 => '800 m';
+
+  @override
+  String get mapaDist2500 => '2,5 km';
+
+  @override
+  String get mapaDistTodo => 'Todo';
+
+  @override
+  String get mapaAbiertoAhora => 'Abierto ahora';
+
+  @override
+  String get mapaSoloFavoritos => 'Solo mis favoritos';
+
+  @override
+  String get mapaColocaMicrochip => 'Coloca microchip (Operador RENAC)';
+
+  @override
+  String get mapaEspecie => 'Para qué mascota';
+
+  @override
+  String mapaEspecieActiva(String nombre) {
+    return 'Para $nombre';
+  }
+
+  @override
+  String get mapaEspecieActivaSinNombre => 'Para mi mascota activa';
+
+  @override
+  String get mapaEspecieTodas => 'Para todas mis mascotas';
+
+  @override
+  String get mapaFiltrosLimpiar => 'Limpiar';
+
+  @override
+  String get mapaFiltrosListo => 'Listo';
+
+  @override
+  String get mapaListaVacia =>
+      'No hay lugares con estos filtros en esta zona. Mové el mapa o cambiá los filtros.';
+
+  @override
+  String get mapaSinLocalVacio =>
+      'Todavía no hay tiendas online ni servicios a domicilio cargados.';
+
+  @override
+  String mapaA(String distancia) {
+    return 'a $distancia';
+  }
+
+  @override
+  String get modalidadOnline => 'Tienda online';
+
+  @override
+  String get modalidadDomicilio => 'A domicilio';
+
+  @override
+  String get leyendaComercio => 'Comercios y servicios';
+
+  @override
+  String get leyendaAcepta => 'Aceptan mascotas';
+
+  @override
+  String get fichaFavorito => 'Favorito';
+
+  @override
+  String get fichaQuitarFavorito => 'Quitar de favoritos';
+
+  @override
+  String get fichaFui => 'Fui';
+
+  @override
+  String fichaFuiEl(String fecha) {
+    return 'Fuiste el $fecha';
+  }
+
+  @override
+  String get fichaMiVeterinaria => 'Es mi veterinaria';
+
+  @override
+  String get fichaEsTuVeterinaria => 'Tu veterinaria';
+
+  @override
+  String get comercioRenac => 'Operador RENAC · coloca microchip';
 }

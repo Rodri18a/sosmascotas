@@ -159,12 +159,12 @@ Regla de trabajo: **por cada etapa de desarrollo, avanzar al menos un paso de va
 ### Etapa 1.2 · Mapa integral
 - [ ] 1.2.1 💳 Google Cloud: clave restringida, alerta de presupuesto y tope (pide tarjeta, sin costo) (⏱️ 1 h)
 - [ ] 1.2.2 Implementación móvil de `MapView` con Google Maps nativo (⏱️ 3 h)
-- [ ] 1.2.3 Capas y categorías + filtros (categoría, especie, distancia) (⏱️ 4 h)
-- [ ] 1.2.4 Horario estructurado + "Abierto ahora" + orden de la lista (⏱️ 3 h)
-- [ ] 1.2.5 Regla de coincidencia por especie y opción "Todas" (⏱️ 2 h)
-- [ ] 1.2.6 Clusters y caché de pines (⏱️ 3 h)
-- [ ] 1.2.7 Vistas Lista y "Sin local" (⏱️ 3 h)
-- [ ] 1.2.8 Favoritos, "fui" y "es mi veterinaria" (`user_places`) (⏱️ 2 h)
+- [x] 1.2.3 Capas y categorías + filtros (categoría, especie, distancia) (⏱️ 4 h) — 18/10/2026 (D75), oculto detrás de `mapa_completo`: migración `mapa_integral` (9 rubros, `lugares_en_zona()`), chips de rubros y "Perdidos y encontrados", hoja de filtros (distancia 300 m/800 m/2,5 km/todo, abierto ahora, favoritos, coloca microchip, especie), todo sobre lo ya traído (sin consultas extra); colores de pin nuevos que también se distinguen por luminosidad
+- [x] 1.2.4 Horario estructurado + "Abierto ahora" + orden de la lista (⏱️ 3 h) — 18/10/2026 (D75), oculto detrás de `mapa_completo`: el horario por día ya estaba (0.7.2); se suman los **días especiales** (feriados, `special_days`) y `ordenarParaLista()` (abiertos, sin horario, cerrados; después por cercanía)
+- [x] 1.2.5 Regla de coincidencia por especie y opción "Todas" (⏱️ 2 h) — 18/10/2026 (D75), oculto detrás de `mapa_completo`: `coincideConEspecies()` (mascota activa o todas mis mascotas; un lugar sin especies cargadas atiende a todas; sin mascotas no se filtra)
+- [x] 1.2.6 Clusters y caché de pines (⏱️ 3 h) — 18/10/2026 (D75), oculto detrás de `mapa_completo`: `agruparPins()` en el núcleo (grilla sobre la zona visible, 3 o más por celda; los SOS nunca se agrupan), grupo con el número que acerca el mapa al tocarlo; la caché por zona 1,5× ya estaba
+- [x] 1.2.7 Vistas Lista y "Sin local" (⏱️ 3 h) — 18/10/2026 (D75), oculto detrás de `mapa_completo`: selector Mapa / Lista / Sin local (el mapa queda creado), lista con rubro, distancia y apertura, "Sin local" con `lugares_sin_local()` (online y a domicilio); la planilla de carga acepta `rubro` y `modalidad` y hay 14 lugares de ejemplo en dev
+- [x] 1.2.8 Favoritos, "fui" y "es mi veterinaria" (`user_places`) (⏱️ 2 h) — 18/10/2026 (D75), oculto detrás de `mapa_completo`: tabla `user_places` (privada; una sola "mi veterinaria", solo en veterinarias), botones en la ficha, filtro "Solo mis favoritos", eventos `favorite_add`/`place_visit`/`my_vet_set`; insignia "Operador RENAC" en la ficha. Pruebas OK (230 app, 101 núcleo, 360 seguridad)
 
 ### Etapa 1.3 · Empresas en la app
 - [ ] 1.3.1 Ampliar `businesses` + fotos + contactos privados (⏱️ 2 h)

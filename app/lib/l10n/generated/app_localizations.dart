@@ -3519,6 +3519,312 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Te vamos a avisar cuando vuelva a casa.'**
   String get sosSiguiendo;
+
+  /// No description provided for @catVeterinarias.
+  ///
+  /// In es, this message translates to:
+  /// **'Veterinarias'**
+  String get catVeterinarias;
+
+  /// No description provided for @catPetshops.
+  ///
+  /// In es, this message translates to:
+  /// **'Petshops'**
+  String get catPetshops;
+
+  /// No description provided for @catFarmacias.
+  ///
+  /// In es, this message translates to:
+  /// **'Farmacias'**
+  String get catFarmacias;
+
+  /// No description provided for @catPeluquerias.
+  ///
+  /// In es, this message translates to:
+  /// **'Peluquerías'**
+  String get catPeluquerias;
+
+  /// No description provided for @catPaseadores.
+  ///
+  /// In es, this message translates to:
+  /// **'Paseadores'**
+  String get catPaseadores;
+
+  /// No description provided for @catHoteles.
+  ///
+  /// In es, this message translates to:
+  /// **'Hoteles y guarderías'**
+  String get catHoteles;
+
+  /// No description provided for @catAdiestradores.
+  ///
+  /// In es, this message translates to:
+  /// **'Adiestradores'**
+  String get catAdiestradores;
+
+  /// No description provided for @catAceptan.
+  ///
+  /// In es, this message translates to:
+  /// **'Aceptan mascotas'**
+  String get catAceptan;
+
+  /// No description provided for @catRefugios.
+  ///
+  /// In es, this message translates to:
+  /// **'Refugios'**
+  String get catRefugios;
+
+  /// No description provided for @catVeterinaria.
+  ///
+  /// In es, this message translates to:
+  /// **'Veterinaria'**
+  String get catVeterinaria;
+
+  /// No description provided for @catPetshop.
+  ///
+  /// In es, this message translates to:
+  /// **'Petshop'**
+  String get catPetshop;
+
+  /// No description provided for @catFarmacia.
+  ///
+  /// In es, this message translates to:
+  /// **'Farmacia veterinaria'**
+  String get catFarmacia;
+
+  /// No description provided for @catPeluqueria.
+  ///
+  /// In es, this message translates to:
+  /// **'Peluquería'**
+  String get catPeluqueria;
+
+  /// No description provided for @catPaseador.
+  ///
+  /// In es, this message translates to:
+  /// **'Paseador'**
+  String get catPaseador;
+
+  /// No description provided for @catHotel.
+  ///
+  /// In es, this message translates to:
+  /// **'Hotel o guardería'**
+  String get catHotel;
+
+  /// No description provided for @catAdiestrador.
+  ///
+  /// In es, this message translates to:
+  /// **'Adiestrador'**
+  String get catAdiestrador;
+
+  /// No description provided for @catAcepta.
+  ///
+  /// In es, this message translates to:
+  /// **'Acepta mascotas'**
+  String get catAcepta;
+
+  /// No description provided for @catRefugio.
+  ///
+  /// In es, this message translates to:
+  /// **'Refugio'**
+  String get catRefugio;
+
+  /// No description provided for @mapaVistaMapa.
+  ///
+  /// In es, this message translates to:
+  /// **'Mapa'**
+  String get mapaVistaMapa;
+
+  /// No description provided for @mapaVistaLista.
+  ///
+  /// In es, this message translates to:
+  /// **'Lista'**
+  String get mapaVistaLista;
+
+  /// No description provided for @mapaVistaSinLocal.
+  ///
+  /// In es, this message translates to:
+  /// **'Sin local'**
+  String get mapaVistaSinLocal;
+
+  /// No description provided for @mapaPerdidos.
+  ///
+  /// In es, this message translates to:
+  /// **'Perdidos y encontrados'**
+  String get mapaPerdidos;
+
+  /// No description provided for @mapaFiltros.
+  ///
+  /// In es, this message translates to:
+  /// **'Filtros'**
+  String get mapaFiltros;
+
+  /// No description provided for @mapaDistancia.
+  ///
+  /// In es, this message translates to:
+  /// **'Distancia'**
+  String get mapaDistancia;
+
+  /// No description provided for @mapaDist300.
+  ///
+  /// In es, this message translates to:
+  /// **'300 m'**
+  String get mapaDist300;
+
+  /// No description provided for @mapaDist800.
+  ///
+  /// In es, this message translates to:
+  /// **'800 m'**
+  String get mapaDist800;
+
+  /// No description provided for @mapaDist2500.
+  ///
+  /// In es, this message translates to:
+  /// **'2,5 km'**
+  String get mapaDist2500;
+
+  /// No description provided for @mapaDistTodo.
+  ///
+  /// In es, this message translates to:
+  /// **'Todo'**
+  String get mapaDistTodo;
+
+  /// No description provided for @mapaAbiertoAhora.
+  ///
+  /// In es, this message translates to:
+  /// **'Abierto ahora'**
+  String get mapaAbiertoAhora;
+
+  /// No description provided for @mapaSoloFavoritos.
+  ///
+  /// In es, this message translates to:
+  /// **'Solo mis favoritos'**
+  String get mapaSoloFavoritos;
+
+  /// No description provided for @mapaColocaMicrochip.
+  ///
+  /// In es, this message translates to:
+  /// **'Coloca microchip (Operador RENAC)'**
+  String get mapaColocaMicrochip;
+
+  /// No description provided for @mapaEspecie.
+  ///
+  /// In es, this message translates to:
+  /// **'Para qué mascota'**
+  String get mapaEspecie;
+
+  /// No description provided for @mapaEspecieActiva.
+  ///
+  /// In es, this message translates to:
+  /// **'Para {nombre}'**
+  String mapaEspecieActiva(String nombre);
+
+  /// No description provided for @mapaEspecieActivaSinNombre.
+  ///
+  /// In es, this message translates to:
+  /// **'Para mi mascota activa'**
+  String get mapaEspecieActivaSinNombre;
+
+  /// No description provided for @mapaEspecieTodas.
+  ///
+  /// In es, this message translates to:
+  /// **'Para todas mis mascotas'**
+  String get mapaEspecieTodas;
+
+  /// No description provided for @mapaFiltrosLimpiar.
+  ///
+  /// In es, this message translates to:
+  /// **'Limpiar'**
+  String get mapaFiltrosLimpiar;
+
+  /// No description provided for @mapaFiltrosListo.
+  ///
+  /// In es, this message translates to:
+  /// **'Listo'**
+  String get mapaFiltrosListo;
+
+  /// No description provided for @mapaListaVacia.
+  ///
+  /// In es, this message translates to:
+  /// **'No hay lugares con estos filtros en esta zona. Mové el mapa o cambiá los filtros.'**
+  String get mapaListaVacia;
+
+  /// No description provided for @mapaSinLocalVacio.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no hay tiendas online ni servicios a domicilio cargados.'**
+  String get mapaSinLocalVacio;
+
+  /// No description provided for @mapaA.
+  ///
+  /// In es, this message translates to:
+  /// **'a {distancia}'**
+  String mapaA(String distancia);
+
+  /// No description provided for @modalidadOnline.
+  ///
+  /// In es, this message translates to:
+  /// **'Tienda online'**
+  String get modalidadOnline;
+
+  /// No description provided for @modalidadDomicilio.
+  ///
+  /// In es, this message translates to:
+  /// **'A domicilio'**
+  String get modalidadDomicilio;
+
+  /// No description provided for @leyendaComercio.
+  ///
+  /// In es, this message translates to:
+  /// **'Comercios y servicios'**
+  String get leyendaComercio;
+
+  /// No description provided for @leyendaAcepta.
+  ///
+  /// In es, this message translates to:
+  /// **'Aceptan mascotas'**
+  String get leyendaAcepta;
+
+  /// No description provided for @fichaFavorito.
+  ///
+  /// In es, this message translates to:
+  /// **'Favorito'**
+  String get fichaFavorito;
+
+  /// No description provided for @fichaQuitarFavorito.
+  ///
+  /// In es, this message translates to:
+  /// **'Quitar de favoritos'**
+  String get fichaQuitarFavorito;
+
+  /// No description provided for @fichaFui.
+  ///
+  /// In es, this message translates to:
+  /// **'Fui'**
+  String get fichaFui;
+
+  /// No description provided for @fichaFuiEl.
+  ///
+  /// In es, this message translates to:
+  /// **'Fuiste el {fecha}'**
+  String fichaFuiEl(String fecha);
+
+  /// No description provided for @fichaMiVeterinaria.
+  ///
+  /// In es, this message translates to:
+  /// **'Es mi veterinaria'**
+  String get fichaMiVeterinaria;
+
+  /// No description provided for @fichaEsTuVeterinaria.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu veterinaria'**
+  String get fichaEsTuVeterinaria;
+
+  /// No description provided for @comercioRenac.
+  ///
+  /// In es, this message translates to:
+  /// **'Operador RENAC · coloca microchip'**
+  String get comercioRenac;
 }
 
 class _AppLocalizationsDelegate

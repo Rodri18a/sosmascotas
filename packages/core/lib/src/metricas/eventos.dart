@@ -29,6 +29,10 @@ abstract final class Eventos {
   static const chatMessage = 'chat_message';
   static const chatBlock = 'chat_block';
   static const sosFollow = 'sos_follow';
+  static const favoriteAdd = 'favorite_add';
+  static const placeVisit = 'place_visit';
+  static const myVetSet = 'my_vet_set';
+  static const mapView = 'map_view';
 }
 
 /// Valida el nombre de un evento con la misma regla que la base de datos.

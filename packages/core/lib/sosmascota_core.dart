@@ -5,6 +5,7 @@ export 'src/avisos/aviso.dart';
 export 'src/ayuda/ayuda.dart';
 export 'src/chat/chat.dart';
 export 'src/comercios/comercio.dart';
+export 'src/comercios/filtros.dart';
 export 'src/config/app_env.dart';
 export 'src/config/config_firebase.dart';
 export 'src/cuenta/hogar.dart';

@@ -8,6 +8,7 @@ import 'package:sosmascota/src/ayuda/ayuda_repositorio.dart';
 import 'package:sosmascota/src/chat/chat_repositorio.dart';
 import 'package:sosmascota/src/chat/posicion.dart';
 import 'package:sosmascota/src/comercios/comercios_repositorio.dart';
+import 'package:sosmascota/src/comercios/mis_lugares.dart';
 import 'package:sosmascota/src/config/env_provider.dart';
 import 'package:sosmascota/src/config/supabase_providers.dart';
 import 'package:sosmascota/src/cuenta/perfil_repositorio.dart';
@@ -72,6 +73,7 @@ Widget appDePrueba({
   HogarRepositorio? hogar,
   TareasRepositorio? tareas,
   ChatRepositorio? chat,
+  MisLugaresRepositorio? misLugares,
   Posicion? posicion,
   SelectorFoto? selectorFoto,
   QrRepositorio? qr,
@@ -133,6 +135,9 @@ Widget appDePrueba({
     hogarRepositorioProvider.overrideWithValue(hogar ?? HogarFalso()),
     tareasRepositorioProvider.overrideWithValue(tareas ?? TareasFalsas()),
     chatRepositorioProvider.overrideWithValue(chat ?? ChatFalso()),
+    misLugaresRepositorioProvider.overrideWithValue(
+      misLugares ?? MisLugaresFalsos(),
+    ),
     posicionActualProvider.overrideWithValue(() async => posicion),
     almacenRespaldoProvider.overrideWithValue(
       respaldo ?? AlmacenRespaldoFalso(),

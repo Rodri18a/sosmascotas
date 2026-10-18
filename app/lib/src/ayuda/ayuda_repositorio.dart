@@ -61,7 +61,9 @@ final veterinariasUrgenciaProvider = FutureProvider<List<Comercio>>((
     maxLat: centro.lat + 0.09,
     maxLng: centro.lng + 0.11,
   );
-  final todas = await ref.watch(comerciosRepositorioProvider).enZona(zona);
+  final todas = await ref
+      .watch(comerciosRepositorioProvider)
+      .enZona(zona, categorias: const {Categoria.vet});
   return [
     for (final c in todas)
       if (c.urgencias || c.es24h) c,

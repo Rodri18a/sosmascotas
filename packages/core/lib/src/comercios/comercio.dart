@@ -1,4 +1,28 @@
 import '../mapa/mapa.dart';
+import '../mascotas/mascota.dart';
+
+/// Rubro de un lugar (valores iguales a la base: `businesses.business_type`).
+enum Categoria {
+  vet('vet'),
+  petshop('petshop'),
+  pharmacy('pharmacy'),
+  grooming('grooming'),
+  walker('walker'),
+  hotel('hotel'),
+  trainer('trainer'),
+  petFriendly('pet_friendly'),
+  shelter('shelter');
+
+  const Categoria(this.valor);
+
+  final String valor;
+
+  static Categoria? leer(Object? valor) =>
+      values.where((c) => c.valor == valor).firstOrNull;
+}
+
+/// Con local (pin en el mapa), online o a domicilio ("Sin local").
+enum Modalidad { local, online, domicilio }
 
 /// Días como los guarda la base (`businesses.hours`), de lunes a domingo.
 const diasHorario = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
@@ -89,8 +113,9 @@ class EstadoApertura {
 }
 
 /// Horario semanal de un comercio. Un día sin franjas está cerrado.
+/// [especiales] reemplaza el horario de fechas puntuales (feriados, D75).
 class Horario {
-  const Horario(this.porDia);
+  const Horario(this.porDia, {this.especiales = const {}});
 
   /// `{"mon": [["09:00","13:00"], ...], ...}` (formato de la base). Ignora lo
   /// que no entiende en vez de fallar: un horario raro no rompe el mapa.
@@ -114,19 +139,43 @@ class Horario {
     return Horario(porDia);
   }
 
+  /// Igual, con los días especiales de `special_days`
+  /// (`{"2026-12-25": [], "2026-12-24": [["09:00","13:00"]]}`).
+  factory Horario.conEspeciales(Object? horas, Object? especiales) {
+    final base = Horario.fromJson(horas);
+    final porFecha = <String, List<Franja>>{};
+    if (especiales is Map) {
+      for (final MapEntry(:key, :value) in especiales.entries) {
+        if (key is! String || !RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(key)) {
+          continue;
+        }
+        porFecha[key] = Horario.fromJson({'mon': value}).delDia(0);
+      }
+    }
+    return Horario(base.porDia, especiales: porFecha);
+  }
+
   /// Franjas por día: 0 = lunes … 6 = domingo.
   final Map<int, List<Franja>> porDia;
+
+  /// Fechas puntuales (`2026-12-25`): reemplazan al día de la semana.
+  final Map<String, List<Franja>> especiales;
 
   bool get vacio => porDia.isEmpty;
 
   List<Franja> delDia(int dia) => porDia[dia] ?? const [];
+
+  /// Franjas de una fecha (hora de Uruguay): la especial si la hay.
+  List<Franja> deLaFecha(DateTime fecha) =>
+      especiales[fechaIso(fecha)] ?? delDia(fecha.weekday - 1);
 
   /// ¿Está abierto en [momento]? (se pasa a la hora de Uruguay).
   EstadoApertura estadoEn(DateTime momento) {
     final local = momento.toUtc().add(diferenciaUruguay);
     final hoy = local.weekday - 1;
     final ahora = local.hour * 60 + local.minute;
-    for (final f in delDia(hoy)) {
+    DateTime fecha(int n) => DateTime(local.year, local.month, local.day + n);
+    for (final f in deLaFecha(fecha(0))) {
       if (f.desde <= ahora && ahora < f.hasta) {
         return EstadoApertura.abierto(cierra: f.hasta);
       }
@@ -134,7 +183,7 @@ class Horario {
     for (var n = 0; n <= 7; n++) {
       final dia = (hoy + n) % 7;
       final siguientes = [
-        for (final f in delDia(dia))
+        for (final f in deLaFecha(fecha(n)))
           if (n > 0 || f.desde > ahora) f.desde,
       ]..sort();
       if (siguientes.isNotEmpty) {
@@ -163,9 +212,11 @@ class Comercio {
   const Comercio({
     required this.id,
     required this.nombre,
-    required this.punto,
     required this.horario,
+    this.punto,
     this.tipo = 'vet',
+    this.modalidad = Modalidad.local,
+    this.operadorRenac = false,
     this.descripcion,
     this.direccion,
     this.telefono,
@@ -182,18 +233,20 @@ class Comercio {
   factory Comercio.fromJson(Map<String, Object?> json) => Comercio(
     id: json['id']! as String,
     tipo: (json['business_type'] as String?) ?? 'vet',
+    modalidad: Modalidad.values.asNameMap()[json['kind']] ?? Modalidad.local,
+    operadorRenac: json['renac_operator'] == true,
     nombre: json['name']! as String,
     descripcion: json['description'] as String?,
     direccion: json['address'] as String?,
-    punto: Punto(
-      (json['lat']! as num).toDouble(),
-      (json['lng']! as num).toDouble(),
-    ),
+    punto: switch ((json['lat'], json['lng'])) {
+      (final num lat, final num lng) => Punto(lat.toDouble(), lng.toDouble()),
+      _ => null,
+    },
     telefono: json['phone'] as String?,
     whatsapp: json['whatsapp'] as String?,
     web: json['web'] as String?,
     instagram: json['instagram'] as String?,
-    horario: Horario.fromJson(json['hours']),
+    horario: Horario.conEspeciales(json['hours'], json['special_days']),
     es24h: json['is_24h'] == true,
     urgencias: json['emergencies'] == true,
     especieIds: [
@@ -206,10 +259,18 @@ class Comercio {
 
   final String id;
   final String tipo;
+  final Modalidad modalidad;
+
+  /// Insignia "Operador RENAC" (coloca microchip; la marca el administrador).
+  final bool operadorRenac;
   final String nombre;
   final String? descripcion;
   final String? direccion;
-  final Punto punto;
+
+  /// `null` si no tiene local (online o a domicilio).
+  final Punto? punto;
+
+  Categoria get categoria => Categoria.leer(tipo) ?? Categoria.vet;
   final String? telefono;
   final String? whatsapp;
   final String? web;
@@ -229,10 +290,20 @@ class Comercio {
   EstadoApertura estadoEn(DateTime momento) =>
       es24h ? const EstadoApertura.abierto24h() : horario.estadoEn(momento);
 
-  /// Pin del mapa: las de urgencia o 24 h se destacan.
-  Pin get pin => Pin(
-    id: id,
-    tipo: urgencias || es24h ? TipoPin.urgencia : TipoPin.veterinaria,
-    punto: punto,
-  );
+  /// Pin del mapa (`null` sin local): las veterinarias de urgencia o 24 h se
+  /// destacan; los lugares que aceptan mascotas y los demás rubros tienen su
+  /// color.
+  Pin? get pin => switch (punto) {
+    final p? => Pin(
+      id: id,
+      tipo: switch (categoria) {
+        Categoria.vet =>
+          urgencias || es24h ? TipoPin.urgencia : TipoPin.veterinaria,
+        Categoria.petFriendly => TipoPin.aceptaMascotas,
+        _ => TipoPin.comercio,
+      },
+      punto: p,
+    ),
+    null => null,
+  };
 }

@@ -34,7 +34,7 @@ void main() {
     expect(c.horario.delDia(6), isEmpty, reason: 'domingo cerrado');
     expect(c.especieIds, [1, 2]);
     expect(c.esEjemplo, isTrue);
-    expect(c.pin.tipo, TipoPin.veterinaria);
+    expect(c.pin!.tipo, TipoPin.veterinaria);
   });
 
   test('las de urgencia o 24 h usan el pin de urgencia', () {
@@ -46,8 +46,8 @@ void main() {
       urgencias: urgencias,
       es24h: es24h,
     );
-    expect(con(urgencias: true).pin.tipo, TipoPin.urgencia);
-    expect(con(es24h: true).pin.tipo, TipoPin.urgencia);
+    expect(con(urgencias: true).pin!.tipo, TipoPin.urgencia);
+    expect(con(es24h: true).pin!.tipo, TipoPin.urgencia);
   });
 
   test('un horario raro no rompe: se ignora lo que no se entiende', () {

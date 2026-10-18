@@ -3,12 +3,28 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
+import '../../comercios/mis_lugares.dart';
+import '../../comercios/textos_comercio.dart';
+import '../../cuenta/servicio_cuenta.dart';
+import '../../funcionalidades/funcionalidades_activas.dart';
 import '../../mascotas/catalogo.dart';
 import '../../metricas/metricas.dart';
 import '../../theme/paleta.dart';
 import '../../utiles/enlaces.dart';
 
-/// Abre la ficha de una veterinaria desde abajo (al tocar su pin).
+IconData iconoCategoria(Categoria c) => switch (c) {
+  Categoria.vet => Icons.local_hospital_outlined,
+  Categoria.petshop => Icons.storefront_outlined,
+  Categoria.pharmacy => Icons.medication_outlined,
+  Categoria.grooming => Icons.content_cut,
+  Categoria.walker => Icons.directions_walk,
+  Categoria.hotel => Icons.house_outlined,
+  Categoria.trainer => Icons.school_outlined,
+  Categoria.petFriendly => Icons.local_cafe_outlined,
+  Categoria.shelter => Icons.volunteer_activism_outlined,
+};
+
+/// Abre la ficha de un lugar desde abajo (al tocar su pin o en la lista).
 Future<void> mostrarFichaComercio(
   BuildContext context,
   WidgetRef ref,
@@ -89,11 +105,24 @@ class FichaComercio extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(c.nombre, style: tema.textTheme.titleLarge),
+            Text(
+              [
+                textoCategoria(t, c.categoria),
+                switch (c.modalidad) {
+                  Modalidad.online => t.modalidadOnline,
+                  Modalidad.domicilio => t.modalidadDomicilio,
+                  Modalidad.local => null,
+                },
+              ].nonNulls.join(' · '),
+              style: tema.textTheme.bodySmall,
+            ),
             const SizedBox(height: 8),
             Wrap(
               spacing: 8,
               runSpacing: 4,
               children: [
+                if (c.operadorRenac)
+                  _Etiqueta(t.comercioRenac, context.marca.exito),
                 if (c.es24h) _Etiqueta(t.comercio24h, context.marca.urgencia),
                 if (c.urgencias && !c.es24h)
                   _Etiqueta(t.comercioUrgencias, context.marca.urgencia),
@@ -172,18 +201,19 @@ class FichaComercio extends ConsumerWidget {
                     label: Text(t.comercioWhatsapp),
                   ),
                 // Enlace común a Google Maps: sin API ni costo (regla del mapa).
-                FilledButton.tonalIcon(
-                  onPressed: () => _abrir(
-                    ref,
-                    'como_llegar',
-                    Uri.https('www.google.com', '/maps/dir/', {
-                      'api': '1',
-                      'destination': '${c.punto.lat},${c.punto.lng}',
-                    }),
+                if (c.punto case final p?)
+                  FilledButton.tonalIcon(
+                    onPressed: () => _abrir(
+                      ref,
+                      'como_llegar',
+                      Uri.https('www.google.com', '/maps/dir/', {
+                        'api': '1',
+                        'destination': '${p.lat},${p.lng}',
+                      }),
+                    ),
+                    icon: const Icon(Icons.directions_outlined),
+                    label: Text(t.comercioComoLlegar),
                   ),
-                  icon: const Icon(Icons.directions_outlined),
-                  label: Text(t.comercioComoLlegar),
-                ),
                 if (c.web != null)
                   OutlinedButton.icon(
                     onPressed: () => _abrir(ref, 'web', Uri.parse(c.web!)),
@@ -202,6 +232,13 @@ class FichaComercio extends ConsumerWidget {
                   ),
               ],
             ),
+            // Favorito, "fui" y "es mi veterinaria" (1.2.8), con sesión y
+            // con el mapa completo.
+            if (ref.watch(conectadoProvider) &&
+                ref.watch(
+                  funcionalidadActivaProvider(Funcionalidades.mapaCompleto),
+                ))
+              _MisBotones(comercio: c),
             if (!c.es24h && !c.horario.vacio)
               ExpansionTile(
                 tilePadding: EdgeInsets.zero,
@@ -256,4 +293,96 @@ class _Etiqueta extends StatelessWidget {
       style: Theme.of(context).textTheme.labelMedium?.copyWith(color: color),
     ),
   );
+}
+
+class _MisBotones extends ConsumerWidget {
+  const _MisBotones({required this.comercio});
+
+  final Comercio comercio;
+
+  Future<void> _marcar(
+    BuildContext context,
+    WidgetRef ref, {
+    bool? favorito,
+    bool? fui,
+    bool? miVeterinaria,
+  }) async {
+    final t = context.t;
+    final mensajes = ScaffoldMessenger.of(context);
+    try {
+      await ref
+          .read(misLugaresRepositorioProvider)
+          .marcar(
+            comercio.id,
+            favorito: favorito,
+            fui: fui,
+            miVeterinaria: miVeterinaria,
+          );
+      final metricas = ref.read(metricasProvider);
+      if (favorito ?? false) {
+        metricas.track(Eventos.favoriteAdd, businessId: comercio.id);
+      }
+      if (fui ?? false) {
+        metricas.track(Eventos.placeVisit, businessId: comercio.id);
+      }
+      if (miVeterinaria ?? false) {
+        metricas.track(Eventos.myVetSet, businessId: comercio.id);
+      }
+    } on Exception {
+      mensajes.showSnackBar(SnackBar(content: Text(t.errorSinConexion)));
+    }
+    ref.invalidate(misLugaresProvider);
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = context.t;
+    final mio = (ref.watch(misLugaresProvider).value ?? const {})[comercio.id];
+    final fuiEn = mio?.fuiEn;
+    return Padding(
+      padding: const EdgeInsets.only(top: 12),
+      child: Wrap(
+        spacing: 8,
+        runSpacing: 8,
+        children: [
+          FilterChip(
+            avatar: Icon(
+              (mio?.favorito ?? false) ? Icons.favorite : Icons.favorite_border,
+              size: 18,
+            ),
+            label: Text(
+              (mio?.favorito ?? false)
+                  ? t.fichaQuitarFavorito
+                  : t.fichaFavorito,
+            ),
+            selected: mio?.favorito ?? false,
+            showCheckmark: false,
+            onSelected: (si) => _marcar(context, ref, favorito: si),
+          ),
+          ActionChip(
+            avatar: const Icon(Icons.where_to_vote_outlined, size: 18),
+            label: Text(
+              fuiEn == null
+                  ? t.fichaFui
+                  : t.fichaFuiEl(
+                      MaterialLocalizations.of(context).formatShortDate(fuiEn),
+                    ),
+            ),
+            onPressed: () => _marcar(context, ref, fui: true),
+          ),
+          if (comercio.categoria == Categoria.vet)
+            FilterChip(
+              avatar: const Icon(Icons.verified_outlined, size: 18),
+              label: Text(
+                (mio?.miVeterinaria ?? false)
+                    ? t.fichaEsTuVeterinaria
+                    : t.fichaMiVeterinaria,
+              ),
+              selected: mio?.miVeterinaria ?? false,
+              onSelected: (si) => _marcar(context, ref, miVeterinaria: si),
+            ),
+        ],
+      ),
+    );
+  }
 }

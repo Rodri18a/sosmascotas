@@ -46,6 +46,12 @@ const coloresPin = <TipoPin, Color>{
   TipoPin.encontrado: Color(0xFF1F9E8E),
   TipoPin.veterinaria: Color(0xFF0B3D52),
   TipoPin.urgencia: Color(0xFFFFB238),
+  // Etapa 1.2 (D75): los demás rubros en violeta, quienes aceptan mascotas en
+  // verde muy claro y los grupos casi negros (con el número blanco adentro).
+  // Elegidos para que también se distingan por luminosidad (≥ 1,5:1).
+  TipoPin.comercio: Color(0xFF673CA3),
+  TipoPin.aceptaMascotas: Color(0xFFE2F5C4),
+  TipoPin.grupo: Color(0xFF141414),
 };
 
 /// Borde de los pines: contrasta con el mapa claro y con el pin ámbar.
