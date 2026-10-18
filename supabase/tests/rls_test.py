@@ -17,6 +17,7 @@ import os
 import pathlib
 import struct
 import sys
+import time
 import urllib.error
 import urllib.request
 import uuid
@@ -31,7 +32,7 @@ TOKEN = os.environ['SUPABASE_ACCESS_TOKEN']
 fallas = 0
 
 
-def pedir(metodo, url, cuerpo=None, headers=None):
+def pedir(metodo, url, cuerpo=None, headers=None, intentos=4):
     datos = json.dumps(cuerpo).encode() if cuerpo is not None else None
     req = urllib.request.Request(url, data=datos, method=metodo, headers={
         'Content-Type': 'application/json', 'User-Agent': 'sosmascotas-rls-test', **(headers or {})})
@@ -45,6 +46,12 @@ def pedir(metodo, url, cuerpo=None, headers=None):
             return e.code, json.loads(texto)
         except json.JSONDecodeError:
             return e.code, texto
+    except (urllib.error.URLError, ConnectionError, TimeoutError):
+        # Un corte de red (no una respuesta): se reintenta con una pausa.
+        if intentos <= 1:
+            raise
+        time.sleep(2)
+        return pedir(metodo, url, cuerpo, headers, intentos - 1)
 
 
 def clave_secreta():
@@ -1085,6 +1092,87 @@ def main():
                  and len(filas(rest('GET', 'help_directory?select=id&name=eq.Prueba%20RLS%20ayuda', quien=x))) == 1
                  and filas(rest('GET', 'help_directory?select=id&name=eq.Prueba%20RLS%20ayuda', quien=a)) == [])
             pedir('DELETE', f'{URL}/rest/v1/help_directory?name=eq.Prueba%20RLS%20ayuda', headers=ADMIN)
+
+            print('comercios con cuenta (1.3)')
+            s_n, negocio = rest('POST', 'rpc/alta_negocio', {'p': {
+                'name': 'Peluquería Prueba RLS', 'business_type': 'grooming', 'kind': 'local',
+                'lat': -34.7101, 'lng': -55.9501, 'phone': '099111222'}}, a)
+            caso('A da de alta su negocio (al instante, sin verificar)', s_n == 200 and isinstance(negocio, str))
+            mio = filas(rest('POST', 'rpc/mis_negocios', {}, a))
+            caso('A ve su negocio como no verificado', len(mio) == 1 and mio[0]['verification'] == 'unverified')
+            caso('el negocio aparece en el mapa con dueño',
+                 any(l['id'] == negocio and l['has_owner'] for l in filas(rest('POST', 'rpc/lugares_en_zona', pando_rect))))
+            caso('A no puede darse la verificación en el alta',
+                 rest('POST', 'rpc/alta_negocio', {'p': {'name': 'X', 'kind': 'online', 'verification': 'verified'}}, a)[0] >= 400)
+            caso('A edita su negocio', rest('POST', 'rpc/editar_mi_negocio', {'p_id': negocio, 'p': {'description': 'Baños y cortes'}}, a)[0] in (200, 204))
+            caso('A no puede ponerse RENAC ni plan',
+                 rest('POST', 'rpc/editar_mi_negocio', {'p_id': negocio, 'p': {'renac_operator': True}}, a)[0] >= 400
+                 and rest('POST', 'rpc/editar_mi_negocio', {'p_id': negocio, 'p': {'plan': 'plus'}}, a)[0] >= 400)
+            caso('B no puede editar el negocio de A',
+                 rest('POST', 'rpc/editar_mi_negocio', {'p_id': negocio, 'p': {'name': 'Hackeado'}}, b)[0] >= 400)
+            caso('B no ve el panel del negocio de A', rest('POST', 'rpc/panel_negocio', {'p_id': negocio}, b)[0] >= 400)
+            s_pn, panel_n = rest('POST', 'rpc/panel_negocio', {'p_id': negocio}, a)
+            caso('A ve su panel', s_pn == 200 and 'aperturas' in panel_n)
+            caso('A pide la verificación con su RUT',
+                 rest('POST', 'rpc/pedir_verificacion', {'p_id': negocio, 'p_rut': '21 234567 0019'}, a)[0] in (200, 204)
+                 and filas(rest('POST', 'rpc/mis_negocios', {}, a))[0]['verification'] == 'pending')
+            caso('el RUT no sale en el mapa',
+                 all('rut' not in l for l in filas(rest('POST', 'rpc/lugares_en_zona', pando_rect))))
+            caso('la insignia RENAC solo la piden veterinarias',
+                 rest('POST', 'rpc/pedir_insignia_renac', {'p_id': negocio}, a)[0] >= 400)
+            caso('A sube el contacto privado y B no lo ve',
+                 rest('POST', 'business_contacts_private', {'business_id': negocio, 'email': 'a@prueba.uy'}, a, 'return=minimal')[0] == 201
+                 and filas(rest('GET', 'business_contacts_private?select=email', quien=b)) == [])
+            caso('B no puede cargar fotos en el negocio de A',
+                 bloqueado(rest('POST', 'business_photos', {'business_id': negocio, 'path': 'x.jpg'}, b, 'return=minimal')))
+            caso('A carga hasta 3 fotos con el plan Básico',
+                 all(rest('POST', 'business_photos', {'business_id': negocio, 'path': f'{negocio}/{i}.jpg'}, a, 'return=minimal')[0] == 201
+                     for i in range(3))
+                 and rest('POST', 'business_photos', {'business_id': negocio, 'path': f'{negocio}/4.jpg'}, a, 'return=minimal')[0] >= 400)
+            pend = filas(rest('POST', 'rpc/admin_pendientes_comercios', {}, x))
+            caso('X ve el pedido de verificación', any(q['tipo'] == 'verification' and q['business_id'] == negocio for q in pend))
+            caso('A no ve los pendientes de administración', rest('POST', 'rpc/admin_pendientes_comercios', {}, a)[0] >= 400)
+            rest('POST', 'rpc/admin_resolver_comercio', {'p_tipo': 'verification', 'p_id': negocio, 'p_aprobar': True}, x)
+            caso('X verifica el negocio', filas(rest('POST', 'rpc/mis_negocios', {}, a))[0]['verification'] == 'verified')
+            s_r, reclamo = rest('POST', 'rpc/reclamar_negocio', {'p_business': negocio, 'p_rut': '211111110019', 'p_nota': 'Es mío'}, b)
+            caso('B reclama un negocio que ya tiene dueño: se abre una disputa',
+                 s_r == 200 and any(q['tipo'] == 'dispute' and q['id'] == reclamo for q in filas(rest('POST', 'rpc/admin_pendientes_comercios', {}, x))))
+            rest('POST', 'rpc/admin_resolver_comercio', {'p_tipo': 'dispute', 'p_id': reclamo, 'p_aprobar': False}, x)
+            caso('rechazada la disputa, A sigue siendo el dueño', len(filas(rest('POST', 'rpc/mis_negocios', {}, a))) == 1)
+            s_l2, sin_duenio = rest('POST', 'rpc/admin_guardar_lugar', {'p': {
+                'name': 'Petshop sin dueño RLS', 'business_type': 'petshop', 'kind': 'local', 'lat': -34.712, 'lng': -55.952}}, x)
+            s_r2, reclamo2 = rest('POST', 'rpc/reclamar_negocio', {'p_business': sin_duenio, 'p_rut': '211111110019'}, b)
+            rest('POST', 'rpc/admin_resolver_comercio', {'p_tipo': 'claim', 'p_id': reclamo2, 'p_aprobar': True}, x)
+            caso('aprobado el reclamo, B pasa a ser el dueño y queda verificado',
+                 any(n['id'] == sin_duenio and n['verification'] == 'verified' for n in filas(rest('POST', 'rpc/mis_negocios', {}, b))))
+            caso('A no puede nombrar Socios Fundadores', rest('POST', 'rpc/admin_socio_fundador', {'p_business': sin_duenio, 'p_hasta': '2027-06-30'}, a)[0] >= 400)
+            rest('POST', 'rpc/admin_socio_fundador', {'p_business': sin_duenio, 'p_hasta': '2027-06-30'}, x)
+            caso('X lo nombra Socio Fundador (plan Destacado)',
+                 any(n['id'] == sin_duenio and n['plan'] == 'featured' and n['founder_until'] == '2027-06-30'
+                     for n in filas(rest('POST', 'rpc/mis_negocios', {}, b))))
+
+            print('place_marks (lugares sin reclamar)')
+            caso('A marca un lugar (solo el rubro)',
+                 rest('POST', 'rpc/marcar_lugar', {'p_rubro': 'trainer', 'p_lat': -34.7300, 'p_lng': -55.9300}, a)[0] == 200)
+            caso('A no lo marca dos veces',
+                 rest('POST', 'rpc/marcar_lugar', {'p_rubro': 'trainer', 'p_lat': -34.73001, 'p_lng': -55.93001}, a)[0] >= 400)
+            rest('POST', 'rpc/marcar_lugar', {'p_rubro': 'trainer', 'p_lat': -34.73005, 'p_lng': -55.93003,
+                                              'p_link': 'https://maps.app.goo.gl/abc'}, b)
+            grupos = [g for g in filas(rest('POST', 'rpc/lugares_sin_reclamar_en_zona', pando_rect)) if g['category'] == 'trainer']
+            caso('dos marcas del mismo rubro a menos de 30 m se suman ("marcado por 2")',
+                 any(g['marcas'] == 2 for g in grupos))
+            caso('un visitante ve los grupos sin saber quién marcó',
+                 all('user_id' not in g for g in filas(rest('POST', 'rpc/lugares_sin_reclamar_en_zona', pando_rect))))
+            caso('B no ve las marcas de A', all(m.get('user_id') == b_id for m in filas(rest('GET', 'place_marks?select=user_id', quien=b))))
+            caso('un enlace que no es de Google Maps se rechaza',
+                 rest('POST', 'rpc/marcar_lugar', {'p_rubro': 'vet', 'p_lat': -34.74, 'p_lng': -55.94, 'p_link': 'https://estafa.com/x'}, a)[0] >= 400)
+            s_n3, desde_marca = rest('POST', 'rpc/alta_negocio', {'p': {
+                'name': 'Adiestramiento RLS', 'business_type': 'trainer', 'kind': 'local', 'lat': -34.73002, 'lng': -55.93002}}, a)
+            caso('al dar de alta el negocio, las marcas cercanas del rubro quedan absorbidas',
+                 s_n3 == 200 and not any(g['category'] == 'trainer' and abs(g['lat'] + 34.73) < 0.001
+                                         for g in filas(rest('POST', 'rpc/lugares_sin_reclamar_en_zona', pando_rect))))
+            pedir('DELETE', f'{URL}/rest/v1/businesses?id=in.({negocio},{sin_duenio},{desde_marca})', headers=ADMIN)
+            pedir('DELETE', f'{URL}/rest/v1/place_marks?user_id=in.({a_id},{b_id})', headers=ADMIN)
         finally:
             pedir('DELETE', f"{URL}/rest/v1/admin_actions?admin_id=eq.{x_id}", headers=ADMIN)
             pedir('DELETE', f'{URL}/auth/v1/admin/users/{x_id}', headers=ADMIN)
