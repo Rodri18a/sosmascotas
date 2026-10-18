@@ -175,7 +175,7 @@ Regla de trabajo: **por cada etapa de desarrollo, avanzar al menos un paso de va
 - [ ] 1.3.6 Panel del comercio básico con los contadores de `events` (⏱️ 3 h)
 
 ### Etapa 1.4 · Chat híbrido y seguimiento
-- [ ] 1.4.1 Tablas de chat + RLS + Realtime (⏱️ 3 h)
+- [x] 1.4.1 Tablas de chat + RLS + Realtime (⏱️ 3 h) — 18/10/2026 (D73): migración `chat` (`conversations`, `conversation_members`, `messages`, `iniciar_chat_sos()`, `mis_conversaciones()`, bucket privado `chat-photos`, Realtime, reportes de mensajes); aplicada en dev, `rls_test.py` OK (337)
 - [ ] 1.4.2 Pantallas de conversaciones y mensajes (texto, foto, ubicación) (⏱️ 5 h)
 - [ ] 1.4.3 Chat desde SOS y desde la ficha de un negocio + WhatsApp opcional (⏱️ 2 h)
 - [ ] 1.4.4 Bloquear y reportar + aviso de seguridad contra estafas (⏱️ 2 h)

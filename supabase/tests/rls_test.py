@@ -368,6 +368,46 @@ def main():
         s_sos, sos_id = rest('POST', 'rpc/crear_sos', {'p': reporte}, a)
         caso('A publica un SOS de su mascota', s_sos == 200 and isinstance(sos_id, str))
         OBJETIVOS_DE_PRUEBA.append(sos_id if isinstance(sos_id, str) else '')
+
+        print('chat (conversaciones y mensajes)')
+        s_ch, conv = rest('POST', 'rpc/iniciar_chat_sos', {'p_sos': sos_id}, b)
+        caso('B abre un chat con quien publicó el SOS', s_ch == 200 and isinstance(conv, str))
+        caso('el mismo chat se reusa', rest('POST', 'rpc/iniciar_chat_sos', {'p_sos': sos_id}, b)[1] == conv)
+        caso('A no puede abrir un chat con su propio SOS', rest('POST', 'rpc/iniciar_chat_sos', {'p_sos': sos_id}, a)[0] >= 400)
+        caso('un visitante no abre chats', rest('POST', 'rpc/iniciar_chat_sos', {'p_sos': sos_id})[0] in (401, 403))
+        caso('B escribe', rest('POST', 'messages', {'conversation_id': conv, 'body': 'La vi en la plaza'}, b, 'return=minimal')[0] == 201)
+        caso('B no escribe a nombre de A',
+             bloqueado(rest('POST', 'messages', {'conversation_id': conv, 'body': 'X', 'sender_id': a_id}, b, 'return=minimal')))
+        lista_a = filas(rest('POST', 'rpc/mis_conversaciones', {}, a))
+        caso('A ve el chat con un mensaje sin leer y el nombre de B',
+             len(lista_a) == 1 and lista_a[0]['sin_leer'] == 1 and lista_a[0]['otro_nombre'] == 'Prueba b'
+             and lista_a[0]['soy_autor'] is True)
+        lista_b = filas(rest('POST', 'rpc/mis_conversaciones', {}, b))
+        caso('B no ve el nombre de cuenta de A (ve la mascota)',
+             len(lista_b) == 1 and lista_b[0]['otro_nombre'] is None and lista_b[0]['sos_nombre'] == 'Firulais')
+        caso('A responde', rest('POST', 'messages', {'conversation_id': conv, 'body': 'Gracias!'}, a, 'return=minimal')[0] == 201)
+        caso('un visitante no ve mensajes', bloqueado(rest('GET', 'messages?select=id')))
+        caso('nadie edita ni borra mensajes',
+             bloqueado(rest('PATCH', f'messages?conversation_id=eq.{conv}', {'body': 'X'}, a))
+             and bloqueado(rest('DELETE', f'messages?conversation_id=eq.{conv}', quien=a)))
+        caso('nadie se agrega a una conversación',
+             bloqueado(rest('POST', 'conversation_members', {'conversation_id': conv, 'user_id': a_id}, a)))
+        caso('A marca leído', len(filas(rest('PATCH', f'conversation_members?conversation_id=eq.{conv}&user_id=eq.{a_id}',
+                                             {'last_read_at': '2099-01-01T00:00:00Z'}, a))) == 1)
+        caso('A no puede tocar la fila de B',
+             bloqueado(rest('PATCH', f'conversation_members?conversation_id=eq.{conv}&user_id=eq.{b_id}', {'blocked': True}, a)))
+        rest('PATCH', f'conversation_members?conversation_id=eq.{conv}&user_id=eq.{a_id}', {'blocked': True}, a)
+        caso('con el chat bloqueado, B ya no puede escribir',
+             bloqueado(rest('POST', 'messages', {'conversation_id': conv, 'body': 'Hola?'}, b, 'return=minimal')))
+        caso('A puede reportar un mensaje',
+             rest('POST', 'flags', {'target_type': 'message', 'target_id': conv}, a, 'return=minimal')[0] == 201)
+        caso('A sube una foto al chat en su carpeta',
+             subir(f'chat-photos/{a_id}/{conv}/f.jpg', JPEG_MINIMO, 'image/jpeg', a) == 200)
+        caso('B no sube fotos a nombre de A',
+             subir(f'chat-photos/{a_id}/{conv}/g.jpg', JPEG_MINIMO, 'image/jpeg', b) != 200)
+        caso('las fotos del chat no son públicas',
+             pedir('GET', f'{URL}/storage/v1/object/public/chat-photos/{a_id}/{conv}/f.jpg')[0] >= 400)
+        pedir('DELETE', f'{URL}/storage/v1/object/chat-photos', {'prefixes': [f'{a_id}/{conv}/f.jpg']}, ADMIN)
         caso('nadie lee la tabla de SOS directo (ni el autor)',
              bloqueado(rest('GET', 'sos_reports?select=*', quien=a)) and bloqueado(rest('GET', 'sos_reports?select=*')))
         mios = filas(rest('POST', 'rpc/mis_sos', {}, a))
@@ -933,6 +973,7 @@ def main():
     finally:
         pedir('DELETE', f'{URL}/storage/v1/object/pet-photos', {'prefixes': [f'{a_id}/prueba.jpg']}, ADMIN)
         pedir('DELETE', f'{URL}/storage/v1/object/sos-photos', {'prefixes': [f'{a_id}/sos1.jpg']}, ADMIN)
+        pedir('DELETE', f'{URL}/rest/v1/flags?target_type=eq.message&reporter_id=eq.{a_id}', headers=ADMIN)
         for uid in (a_id, b_id):
             pedir('DELETE', f'{URL}/auth/v1/admin/users/{uid}', headers=ADMIN)
         pedir('DELETE', f'{URL}/rest/v1/events?name=eq.prueba_rls', headers=ADMIN)
