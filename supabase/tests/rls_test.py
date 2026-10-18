@@ -408,6 +408,22 @@ def main():
         caso('las fotos del chat no son públicas',
              pedir('GET', f'{URL}/storage/v1/object/public/chat-photos/{a_id}/{conv}/f.jpg')[0] >= 400)
         pedir('DELETE', f'{URL}/storage/v1/object/chat-photos', {'prefixes': [f'{a_id}/{conv}/f.jpg']}, ADMIN)
+
+        print('sos_follows (seguir un SOS)')
+        caso('quien abre un chat desde el SOS lo sigue solo',
+             len(filas(rest('GET', f'sos_follows?select=sos_id&sos_id=eq.{sos_id}', quien=b))) == 1)
+        caso('A no ve quién sigue su SOS', filas(rest('GET', 'sos_follows?select=user_id', quien=a)) == [])
+        caso('A no puede seguir su propio SOS', rest('POST', 'rpc/seguir_sos', {'p_sos': sos_id}, a)[0] >= 400)
+        caso('nadie inserta seguimientos a mano',
+             bloqueado(rest('POST', 'sos_follows', {'sos_id': sos_id, 'user_id': b_id}, b)))
+        caso('B deja de seguir y vuelve a seguir',
+             rest('POST', 'rpc/seguir_sos', {'p_sos': sos_id, 'p_seguir': False}, b)[1] is False
+             and filas(rest('GET', 'sos_follows?select=sos_id', quien=b)) == []
+             and rest('POST', 'rpc/seguir_sos', {'p_sos': sos_id}, b)[1] is True)
+        caso('solo el servidor avisa a los seguidores',
+             rest('POST', 'rpc/avisar_seguidores_sos', {'p_sos': sos_id, 'p_autor': a_id}, a)[0] in (401, 403, 404))
+        caso('mientras está activo, no se avisa a nadie',
+             filas(pedir('POST', f'{URL}/rest/v1/rpc/avisar_seguidores_sos', {'p_sos': sos_id, 'p_autor': a_id}, ADMIN)) == [])
         caso('nadie lee la tabla de SOS directo (ni el autor)',
              bloqueado(rest('GET', 'sos_reports?select=*', quien=a)) and bloqueado(rest('GET', 'sos_reports?select=*')))
         mios = filas(rest('POST', 'rpc/mis_sos', {}, a))
@@ -506,6 +522,13 @@ def main():
             caso('resuelto: la página del QR deja de decir "Estoy perdido"',
                  rest('POST', 'rpc/public_pet_page', {'p_code': nuevo})[1].get('lost') is False)
             caso('no se puede cerrar dos veces', rest('POST', 'rpc/cerrar_sos', {'p_id': sos_id, 'p_estado': 'archived'}, a)[0] >= 400)
+            aviso_seg = filas(pedir('POST', f'{URL}/rest/v1/rpc/avisar_seguidores_sos', {'p_sos': sos_id, 'p_autor': a_id}, ADMIN))
+            caso('resuelto: se avisa a los seguidores con el nombre de la mascota',
+                 len(aviso_seg) == 1 and aviso_seg[0]['nombre'] == 'Firulais')
+            caso('cada seguidor recibe el aviso una sola vez',
+                 filas(pedir('POST', f'{URL}/rest/v1/rpc/avisar_seguidores_sos', {'p_sos': sos_id, 'p_autor': a_id}, ADMIN))[0]['tokens'] == [])
+            caso('con otro autor no avisa nada',
+                 filas(pedir('POST', f'{URL}/rest/v1/rpc/avisar_seguidores_sos', {'p_sos': sos_id, 'p_autor': b_id}, ADMIN)) == [])
             caso('B no ve los reportes de contenido de otros', all(f['reporter_id'] == b_id for f in filas(rest('GET', 'flags?select=*', quien=b))))
         finally:
             pedir('DELETE', f'{URL}/auth/v1/admin/users/{c_id}', headers=ADMIN)

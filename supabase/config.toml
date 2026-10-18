@@ -431,3 +431,8 @@ verify_jwt = false
 # de un escaneo recién registrado y limita a una push por QR cada 10 minutos.
 [functions.qr-scan-alert]
 verify_jwt = false
+
+# Paso 1.4.5: la llama la app al marcar "¡Apareció!". Valida la sesión por su
+# cuenta y solo avisa si el SOS es de quien llama y ya está resuelto.
+[functions.sos-follow-alert]
+verify_jwt = false
