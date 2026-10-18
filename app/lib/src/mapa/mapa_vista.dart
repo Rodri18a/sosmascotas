@@ -58,8 +58,13 @@ const coloresPin = <TipoPin, Color>{
 /// entran en la escala de luminosidad de los demás: se distinguen por tamaño.
 const colorSinReclamar = Color(0xFF9E9E9E);
 
-/// Color de un pin (los sin reclamar van aparte).
-Color colorDePin(TipoPin tipo) => coloresPin[tipo] ?? colorSinReclamar;
+/// Eventos (2.7): anillo coral con centro blanco; se distinguen por la forma.
+const colorEvento = Color(0xFFFF7A59);
+
+/// Color de un pin (los sin reclamar y los eventos van aparte).
+Color colorDePin(TipoPin tipo) =>
+    coloresPin[tipo] ??
+    (tipo == TipoPin.evento ? colorEvento : colorSinReclamar);
 
 /// Borde de los pines: contrasta con el mapa claro y con el pin ámbar.
 const bordePin = Color(0xFF102A35);

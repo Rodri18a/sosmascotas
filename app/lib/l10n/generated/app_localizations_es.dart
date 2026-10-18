@@ -3077,4 +3077,134 @@ class AppLocalizationsEs extends AppLocalizations {
   String calcTotal(String mes, String anio) {
     return 'Total: \$$mes por mes · \$$anio por año';
   }
+
+  @override
+  String get eventoCastracion => 'Jornada de castración';
+
+  @override
+  String get eventoAdopcion => 'Feria de adopción';
+
+  @override
+  String get eventoEncuentro => 'Encuentro';
+
+  @override
+  String get eventoOtro => 'Evento';
+
+  @override
+  String get eventosProximos => 'Próximos eventos';
+
+  @override
+  String get eventosVacio => 'No hay eventos próximos en la zona.';
+
+  @override
+  String eventoCuando(String desde, String hasta) {
+    return '$desde a $hasta';
+  }
+
+  @override
+  String eventoOrganiza(String nombre) {
+    return 'Organiza: $nombre';
+  }
+
+  @override
+  String get eventoEnCurso => '¡Está pasando ahora!';
+
+  @override
+  String get eventoMasInfo => 'Más información';
+
+  @override
+  String get eventoCancelar => 'Cancelar el evento';
+
+  @override
+  String get eventoCancelado => 'Evento cancelado.';
+
+  @override
+  String get eventoPublicar => 'Publicar un evento';
+
+  @override
+  String get eventoTitulo => 'Título';
+
+  @override
+  String get eventoDescripcion => 'Descripción (opcional)';
+
+  @override
+  String get eventoTipo => 'Tipo';
+
+  @override
+  String get eventoDesde => 'Empieza';
+
+  @override
+  String get eventoHasta => 'Termina';
+
+  @override
+  String get eventoLugar => 'Tocá el mapa donde es (o queda en tu local).';
+
+  @override
+  String get eventoDireccion => 'Dirección (opcional)';
+
+  @override
+  String get eventoEnlace => 'Enlace con más información (https://…, opcional)';
+
+  @override
+  String get eventoPublicado => '¡Evento publicado! Ya aparece en el mapa.';
+
+  @override
+  String get eventoSoloVerificados =>
+      'Los eventos los publican comercios y refugios verificados ✔️.';
+
+  @override
+  String get eventoDatos =>
+      'Revisá los datos: el evento dura como máximo 14 días y el título lleva 3 letras o más.';
+
+  @override
+  String get leyendaEvento => 'Eventos';
+
+  @override
+  String get denunciaTitulo => 'Denunciar maltrato';
+
+  @override
+  String get denunciaEntradaAyuda =>
+      'Contanos qué pasa; la revisa el equipo y te orienta.';
+
+  @override
+  String get denunciaInfo =>
+      'Esta denuncia **no reemplaza la denuncia oficial**. Podés hacerla ante el **INBA** (Instituto Nacional de Bienestar Animal) o en la seccional policial. Si hay una persona en riesgo, llamá al **911**.';
+
+  @override
+  String get denunciaDescripcion => 'Qué pasa (cuanto más detalle, mejor)';
+
+  @override
+  String get denunciaDescripcionCorta => 'Contá un poco más (10 letras o más).';
+
+  @override
+  String get denunciaUbicacion =>
+      'Ubicación (opcional, solo la ve el equipo): tocá el mapa.';
+
+  @override
+  String get denunciaDireccion => 'Dirección o referencia (opcional)';
+
+  @override
+  String get denunciaFoto => 'Agregar foto';
+
+  @override
+  String get denunciaEnviar => 'Enviar denuncia';
+
+  @override
+  String get denunciaEnviada => 'Recibimos tu denuncia. La vamos a revisar.';
+
+  @override
+  String get denunciaMias => 'Mis denuncias';
+
+  @override
+  String get denunciaNueva => 'Recibida';
+
+  @override
+  String get denunciaDerivada => 'Derivada';
+
+  @override
+  String get denunciaCerrada => 'Cerrada';
+
+  @override
+  String get denunciaDemasiadas =>
+      'Hiciste muchas denuncias hoy. Probá mañana.';
 }

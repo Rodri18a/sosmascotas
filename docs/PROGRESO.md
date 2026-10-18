@@ -234,7 +234,7 @@ Regla de trabajo: **por cada etapa de desarrollo, avanzar al menos un paso de va
 - [ ] 2.5 Promociones, catálogo con "Consultar" y módulos según el plan
 - [ ] 2.6 Módulo Socios de la veterinaria con recordatorios
 - [ ] 2.6b "Busco veterinaria": consentimiento, propuestas y resultados
-- [ ] 2.7 Eventos, lugares que aceptan mascotas, denuncias de maltrato
+- [x] 2.7 Eventos, lugares que aceptan mascotas, denuncias de maltrato — 19/10/2026 (D80), detrás de `eventos`: eventos (castración, adopción, encuentros) que publican comercios y refugios **verificados** desde el modo comercio, en el mapa (anillo coral) y en Ayuda ("Próximos eventos"); denuncias de maltrato privadas (solo quien denuncia y la administración, fotos en bucket privado, ubicación opcional) con la información de INBA y 911, y la sección Denuncias del portal. Los lugares que aceptan mascotas ya eran un rubro del mapa (D75). Pruebas OK (258 app, 118 núcleo, 11 portal, 483 seguridad)
 - [ ] 2.8 Noticias con contenido patrocinado
 - [ ] 2.9 Chapitas: programa de sponsors (logo, reporte por lote), stock en veterinarias, venta de diseños personalizados
 - [ ] 2.10 Portal web de empresas v1

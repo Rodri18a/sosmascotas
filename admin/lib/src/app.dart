@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'pantallas/ayuda.dart';
 import 'pantallas/comercios.dart';
+import 'pantallas/denuncias.dart';
 import 'pantallas/ingreso.dart';
 import 'pantallas/lugares.dart';
 import 'pantallas/moderacion.dart';
@@ -114,6 +115,7 @@ class _PortalState extends ConsumerState<Portal> {
   static const _secciones = [
     (Icons.dashboard_outlined, T.panel),
     (Icons.shield_outlined, T.moderacion),
+    (Icons.report_outlined, T.denuncias),
     (Icons.storefront_outlined, T.lugares),
     (Icons.verified_outlined, T.comercios),
     (Icons.handshake_outlined, T.prospectos),
@@ -126,9 +128,10 @@ class _PortalState extends ConsumerState<Portal> {
     final contenido = switch (_seccion) {
       0 => const PanelScreen(),
       1 => const ModeracionScreen(),
-      2 => const LugaresScreen(),
-      3 => const ComerciosScreen(),
-      4 => const ProspectosScreen(),
+      2 => const DenunciasScreen(),
+      3 => const LugaresScreen(),
+      4 => const ComerciosScreen(),
+      5 => const ProspectosScreen(),
       _ => const AyudaScreen(),
     };
     return Scaffold(

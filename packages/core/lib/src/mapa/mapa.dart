@@ -70,6 +70,9 @@ enum TipoPin {
 
   /// Lugar marcado por usuarios que todavía nadie reclamó (gris, 1.3.2).
   sinReclamar,
+
+  /// Evento (2.7): anillo coral, se distingue por la forma.
+  evento,
 }
 
 /// Un pin del mapa: datos mínimos (el detalle se trae al tocarlo).
@@ -89,6 +92,9 @@ class Pin {
   final int cantidad;
 
   bool get esSos => tipo == TipoPin.perdido || tipo == TipoPin.encontrado;
+
+  /// Los SOS y los eventos nunca se agrupan.
+  bool get suelto => esSos || tipo == TipoPin.evento;
 
   @override
   bool operator ==(Object other) =>
@@ -119,7 +125,7 @@ List<Pin> agruparPins(
   final celdas = <(int, int), List<Pin>>{};
   final resultado = <Pin>[];
   for (final pin in pins) {
-    if (pin.esSos) continue;
+    if (pin.suelto) continue;
     final celda = (
       ((pin.punto.lat - visible.minLat) / alto).floor(),
       ((pin.punto.lng - visible.minLng) / ancho).floor(),
@@ -142,8 +148,8 @@ List<Pin> agruparPins(
       ),
     );
   }
-  // Los SOS al final: se dibujan encima.
-  return [...resultado, ...pins.where((p) => p.esSos)];
+  // Los SOS y los eventos al final: se dibujan encima.
+  return [...resultado, ...pins.where((p) => p.suelto)];
 }
 
 /// Distancia en metros entre dos puntos (fórmula de haversine).

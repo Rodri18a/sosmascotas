@@ -495,6 +495,25 @@ class _Ficha extends ConsumerWidget {
             padding: const EdgeInsets.only(top: 4),
             child: Text(t.negocioRenacTexto, style: tema.textTheme.bodySmall),
           ),
+        if (negocio.verificacion == Verificacion.verified &&
+            ref.watch(funcionalidadActivaProvider(Funcionalidades.eventos)))
+          Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: OutlinedButton.icon(
+              onPressed: () => context.push(
+                Uri(
+                  path: Rutas.nuevoEvento,
+                  queryParameters: {
+                    'negocio': negocio.id,
+                    if (c.punto case final p?) 'lat': '${p.lat}',
+                    if (c.punto case final p?) 'lng': '${p.lng}',
+                  },
+                ).toString(),
+              ),
+              icon: const Icon(Icons.event_outlined),
+              label: Text(t.eventoPublicar),
+            ),
+          ),
         const Divider(height: 32),
         FormularioNegocio(
           key: ValueKey('form-${negocio.id}'),

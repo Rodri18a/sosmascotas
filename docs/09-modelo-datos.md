@@ -130,3 +130,10 @@ Trigger: con 3 `flags` de usuarios distintos, el contenido pasa a `hidden`.
 | `prospects` | id, name, business_type, zone_id, location, contact, stage (`prospect`, `contacted`, `demo`, `founder`, `paying`, `renewed`, `lost`), business_id, next_contact_at, owner_admin_id | 1 |
 | `prospect_notes` | id, prospect_id, admin_id, note, created_at | 1 |
 | `admin_audit_log` | id, admin_id, action, target, data, created_at | 3 |
+
+## Eventos y denuncias (2.7, D80)
+
+| Tabla | Campos clave | Fase |
+|---|---|---|
+| `events_calendar` | id, organizer_id, business_id (comercio verificado), kind (`castracion`, `adopcion`, `encuentro`, `otro`), title, description, starts_at, ends_at (máx. 14 días), location, address, link, zone_id, status. Sin acceso directo: `publicar_evento()`, `eventos_en_zona()`, `cancelar_evento()` | 2 |
+| `abuse_reports` | id, reporter_id, description, location (opcional, privada), address, photos (bucket privado `abuse-photos`), status (`new`, `referred`, `closed`), admin_note. Solo quien denuncia y la administración | 2 |

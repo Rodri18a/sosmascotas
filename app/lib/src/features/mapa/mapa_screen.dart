@@ -8,6 +8,7 @@ import '../../comercios/comercios_repositorio.dart';
 import '../../comercios/mis_lugares.dart';
 import '../../comercios/textos_comercio.dart';
 import '../../cuenta/servicio_cuenta.dart';
+import '../../eventos/eventos_repositorio.dart';
 import '../../funcionalidades/funcionalidades_activas.dart';
 import '../../mapa/mapa_vista.dart';
 import '../../mascotas/mascota_activa.dart';
@@ -19,6 +20,7 @@ import '../../utiles/enlaces.dart';
 import '../../widgets/boton_ajustes.dart';
 import '../../widgets/boton_avisos.dart';
 import '../../widgets/boton_mensajes.dart';
+import '../eventos/eventos.dart';
 import '../instalar/instalar.dart';
 import 'ficha_comercio.dart';
 import 'marcar_lugar.dart';
@@ -47,6 +49,10 @@ class _MapaScreenState extends ConsumerState<MapaScreen> {
 
   /// Lugares marcados por usuarios sin reclamar (1.3.2), por id de pin.
   Map<String, LugarSinReclamar> _sinReclamar = const {};
+
+  /// Eventos (2.7), por id de pin.
+  Map<String, Evento> _eventos = const {};
+  bool? _eventosCargado;
   bool? _comerciosCargado;
 
   /// Lugares cargados, por id (para abrir la ficha al tocar su pin).
@@ -61,33 +67,43 @@ class _MapaScreenState extends ConsumerState<MapaScreen> {
   bool get _conComercios =>
       ref.read(funcionalidadActivaProvider(Funcionalidades.comercios));
 
+  bool get _conEventos =>
+      ref.read(funcionalidadActivaProvider(Funcionalidades.eventos));
+
   Future<void> _alQuedarQuieto(Limites visible) async {
     setState(() => _visible = visible);
     final completo = _completo;
     final conComercios = _conComercios;
+    final conEventos = _conEventos;
     if ((_cargado?.contiene(visible) ?? false) &&
         _completoCargado == completo &&
-        _comerciosCargado == conComercios) {
+        _comerciosCargado == conComercios &&
+        _eventosCargado == conEventos) {
       return;
     }
+    _eventosCargado = conEventos;
     final zona = visible.agrandado(1.5);
     _cargado = zona;
     _completoCargado = completo;
     _comerciosCargado = conComercios;
     final repo = ref.read(comerciosRepositorioProvider);
     try {
-      final (sos, comercios, sinReclamar) = await (
+      final (sos, comercios, sinReclamar, eventos) = await (
         ref.read(sosRepositorioProvider).enZona(zona),
         repo.enZona(zona, categorias: completo ? null : const {Categoria.vet}),
         conComercios
             ? repo.sinReclamarEnZona(zona)
             : Future.value(const <LugarSinReclamar>[]),
+        conEventos
+            ? ref.read(eventosRepositorioProvider).enZona(zona)
+            : Future.value(const <Evento>[]),
       ).wait;
       if (!mounted) return;
       setState(() {
         _sos = sos;
         _comercios = {for (final c in comercios) c.id: c};
         _sinReclamar = {for (final l in sinReclamar) l.pin.id: l};
+        _eventos = {for (final e in eventos) e.pin.id: e};
       });
     } on Exception {
       _cargado = null; // Se reintenta en el próximo movimiento.
@@ -99,6 +115,8 @@ class _MapaScreenState extends ConsumerState<MapaScreen> {
   void _alTocarPin(Pin pin) {
     if (pin.esSos) {
       context.push(Rutas.detalleSos(pin.id));
+    } else if (_eventos[pin.id] case final evento?) {
+      mostrarEvento(context, ref, evento);
     } else if (_sinReclamar[pin.id] case final lugar?) {
       mostrarSinReclamar(context, ref, lugar);
     } else if (_comercios[pin.id] case final comercio?) {
@@ -131,7 +149,11 @@ class _MapaScreenState extends ConsumerState<MapaScreen> {
   List<Pin> _pins(bool completo) {
     if (!completo) {
       // Las veterinarias primero: los SOS quedan dibujados encima.
-      return [for (final c in _comercios.values) ?c.pin, ..._sos];
+      return [
+        for (final c in _comercios.values) ?c.pin,
+        for (final e in _eventos.values) e.pin,
+        ..._sos,
+      ];
     }
     final lugares = [for (final c in _filtrados()) ?c.pin];
     final sinReclamar = [
@@ -143,6 +165,7 @@ class _MapaScreenState extends ConsumerState<MapaScreen> {
     final todos = [
       ...sinReclamar,
       ...lugares,
+      for (final e in _eventos.values) e.pin,
       if (_filtros.mostrarSos) ..._sos,
     ];
     final visible = _visible;
@@ -191,6 +214,9 @@ class _MapaScreenState extends ConsumerState<MapaScreen> {
             completo: completo,
             conComercios: ref.watch(
               funcionalidadActivaProvider(Funcionalidades.comercios),
+            ),
+            conEventos: ref.watch(
+              funcionalidadActivaProvider(Funcionalidades.eventos),
             ),
           ),
         ),
@@ -559,10 +585,15 @@ class _SinLocal extends ConsumerWidget {
 
 /// Qué significa cada color de pin.
 class _Leyenda extends StatelessWidget {
-  const _Leyenda({required this.completo, required this.conComercios});
+  const _Leyenda({
+    required this.completo,
+    required this.conComercios,
+    required this.conEventos,
+  });
 
   final bool completo;
   final bool conComercios;
+  final bool conEventos;
 
   @override
   Widget build(BuildContext context) {
@@ -584,6 +615,7 @@ class _Leyenda extends StatelessWidget {
               if (completo) (TipoPin.aceptaMascotas, t.leyendaAcepta),
               if (completo && conComercios)
                 (TipoPin.sinReclamar, t.leyendaSinReclamar),
+              if (conEventos) (TipoPin.evento, t.leyendaEvento),
             ])
               Row(
                 mainAxisSize: MainAxisSize.min,

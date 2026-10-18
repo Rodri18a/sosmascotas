@@ -13,6 +13,7 @@ import '../../utiles/enlaces.dart';
 import '../../widgets/boton_ajustes.dart';
 import '../../widgets/boton_avisos.dart';
 import '../../widgets/boton_mensajes.dart';
+import '../eventos/eventos.dart';
 import '../mapa/ficha_comercio.dart';
 
 /// Pestaña Ayuda (también para visitantes): 911, veterinarias de urgencia y
@@ -49,6 +50,26 @@ class AyudaScreen extends ConsumerWidget {
           children: [
             const _Tarjeta911(),
             const SizedBox(height: 16),
+            // Eventos y denuncias de maltrato (2.7, D80).
+            SiFuncionalidad(
+              Funcionalidades.eventos,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const SeccionEventos(),
+                  Card(
+                    child: ListTile(
+                      leading: const Icon(Icons.report_outlined),
+                      title: Text(t.denunciaTitulo),
+                      subtitle: Text(t.denunciaEntradaAyuda),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () => context.push(Rutas.denuncia),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                ],
+              ),
+            ),
             // Adopción responsable (2.0, D79).
             SiFuncionalidad(
               Funcionalidades.adopcion,

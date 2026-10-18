@@ -174,6 +174,24 @@ class RepoFalso implements AdminRepositorio {
   @override
   Future<void> revisarAdopcion(String id, {required bool aprobar}) async {}
 
+  final estadosDenuncia = <(String, String)>[];
+
+  @override
+  Future<List<Map<String, Object?>>> denuncias() async => [
+    if (estadosDenuncia.isEmpty)
+      {
+        'id': 'd1',
+        'status': 'new',
+        'description': 'Perro atado sin agua',
+        'reporter': 'Beto',
+        'photos': <String>[],
+      },
+  ];
+
+  @override
+  Future<void> estadoDenuncia(String id, String estado, {String? nota}) async =>
+      estadosDenuncia.add((id, estado));
+
   @override
   Future<void> guardarAyuda(Map<String, Object?> datos) async =>
       ayudaGuardada.add(datos);
@@ -385,5 +403,18 @@ void main() {
     await _tocar(tester, find.widgetWithText(FilledButton, 'Aprobar'));
     expect(repo.resueltos.single, ('claim', 'c1', true));
     expect(find.text('No hay reclamos ni pedidos pendientes.'), findsOneWidget);
+  });
+
+  testWidgets('denuncias: derivar una nueva', (tester) async {
+    _pantallaGrande(tester);
+    final repo = RepoFalso();
+    await tester.pumpWidget(
+      _portal(sesion: SesionFalsa('admin@x.uy'), repo: repo),
+    );
+    await tester.pumpAndSettle();
+    await _tocar(tester, find.text('Denuncias'));
+    expect(find.text('Perro atado sin agua'), findsOneWidget);
+    await _tocar(tester, find.text('Derivada al INBA o la policía'));
+    expect(repo.estadosDenuncia.single, ('d1', 'referred'));
   });
 }

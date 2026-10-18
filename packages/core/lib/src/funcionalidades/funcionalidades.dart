@@ -37,6 +37,9 @@ abstract final class Funcionalidades {
   /// Adopción responsable (etapa 2.0, D79).
   static const adopcion = 'adopcion';
 
+  /// Eventos en el mapa y denuncias de maltrato (2.7, D80).
+  static const eventos = 'eventos';
+
   /// Las que ya están en `todos`: la app las da por prendidas aunque no pueda
   /// preguntarle a la base (sin conexión y sin nada guardado). Las demás, en
   /// ese caso, quedan apagadas (lo seguro).

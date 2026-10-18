@@ -99,13 +99,17 @@ class _MapaMapLibreState extends State<MapaMapLibre> {
     for (final pin in widget.config.pins) {
       final grupo = pin.tipo == TipoPin.grupo;
       final sinReclamar = pin.tipo == TipoPin.sinReclamar;
+      final evento = pin.tipo == TipoPin.evento;
       final circulo = await control.addCircle(
         CircleOptions(
           geometry: LatLng(pin.punto.lat, pin.punto.lng),
           circleRadius: grupo ? 15 : (sinReclamar ? 6 : 9),
-          circleColor: _hex(colorDePin(pin.tipo)),
-          circleStrokeWidth: 2,
-          circleStrokeColor: grupo || sinReclamar ? '#FFFFFF' : _hex(bordePin),
+          // Un evento es un anillo: centro blanco y borde coral grueso.
+          circleColor: evento ? '#FFFFFF' : _hex(colorDePin(pin.tipo)),
+          circleStrokeWidth: evento ? 4 : 2,
+          circleStrokeColor: evento
+              ? _hex(colorEvento)
+              : (grupo || sinReclamar ? '#FFFFFF' : _hex(bordePin)),
         ),
       );
       _pinsPorCirculo[circulo.id] = pin;

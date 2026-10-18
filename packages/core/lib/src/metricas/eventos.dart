@@ -44,6 +44,9 @@ abstract final class Eventos {
   static const adoptionStage = 'adoption_stage';
   static const adoptionCommit = 'adoption_commit';
   static const adoptionFollowup = 'adoption_followup';
+  static const eventPublish = 'event_publish';
+  static const eventOpen = 'event_open';
+  static const abuseReport = 'abuse_report';
 }
 
 /// Valida el nombre de un evento con la misma regla que la base de datos.

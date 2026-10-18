@@ -115,6 +115,18 @@ abstract final class T {
   static const revisarRenac =
       'Verificá el RUT contra el listado oficial de operadores RENAC del MGAP antes de aprobar.';
 
+  // Denuncias (2.7)
+  static const denuncias = 'Denuncias';
+  static const sinDenuncias = 'No hay denuncias.';
+  static const derivar = 'Derivada al INBA o la policía';
+  static const cerrar = 'Cerrar';
+  static const estadosDenuncia = {
+    'new': 'Nueva',
+    'referred': 'Derivada',
+    'closed': 'Cerrada',
+  };
+  static const verUbicacion = 'Ver ubicación';
+
   // Prospectos
   static const nuevoProspecto = 'Nuevo prospecto';
   static const contacto = 'Contacto';

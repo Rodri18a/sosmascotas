@@ -5325,6 +5325,246 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Total: \${mes} por mes · \${anio} por año'**
   String calcTotal(String mes, String anio);
+
+  /// No description provided for @eventoCastracion.
+  ///
+  /// In es, this message translates to:
+  /// **'Jornada de castración'**
+  String get eventoCastracion;
+
+  /// No description provided for @eventoAdopcion.
+  ///
+  /// In es, this message translates to:
+  /// **'Feria de adopción'**
+  String get eventoAdopcion;
+
+  /// No description provided for @eventoEncuentro.
+  ///
+  /// In es, this message translates to:
+  /// **'Encuentro'**
+  String get eventoEncuentro;
+
+  /// No description provided for @eventoOtro.
+  ///
+  /// In es, this message translates to:
+  /// **'Evento'**
+  String get eventoOtro;
+
+  /// No description provided for @eventosProximos.
+  ///
+  /// In es, this message translates to:
+  /// **'Próximos eventos'**
+  String get eventosProximos;
+
+  /// No description provided for @eventosVacio.
+  ///
+  /// In es, this message translates to:
+  /// **'No hay eventos próximos en la zona.'**
+  String get eventosVacio;
+
+  /// No description provided for @eventoCuando.
+  ///
+  /// In es, this message translates to:
+  /// **'{desde} a {hasta}'**
+  String eventoCuando(String desde, String hasta);
+
+  /// No description provided for @eventoOrganiza.
+  ///
+  /// In es, this message translates to:
+  /// **'Organiza: {nombre}'**
+  String eventoOrganiza(String nombre);
+
+  /// No description provided for @eventoEnCurso.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Está pasando ahora!'**
+  String get eventoEnCurso;
+
+  /// No description provided for @eventoMasInfo.
+  ///
+  /// In es, this message translates to:
+  /// **'Más información'**
+  String get eventoMasInfo;
+
+  /// No description provided for @eventoCancelar.
+  ///
+  /// In es, this message translates to:
+  /// **'Cancelar el evento'**
+  String get eventoCancelar;
+
+  /// No description provided for @eventoCancelado.
+  ///
+  /// In es, this message translates to:
+  /// **'Evento cancelado.'**
+  String get eventoCancelado;
+
+  /// No description provided for @eventoPublicar.
+  ///
+  /// In es, this message translates to:
+  /// **'Publicar un evento'**
+  String get eventoPublicar;
+
+  /// No description provided for @eventoTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Título'**
+  String get eventoTitulo;
+
+  /// No description provided for @eventoDescripcion.
+  ///
+  /// In es, this message translates to:
+  /// **'Descripción (opcional)'**
+  String get eventoDescripcion;
+
+  /// No description provided for @eventoTipo.
+  ///
+  /// In es, this message translates to:
+  /// **'Tipo'**
+  String get eventoTipo;
+
+  /// No description provided for @eventoDesde.
+  ///
+  /// In es, this message translates to:
+  /// **'Empieza'**
+  String get eventoDesde;
+
+  /// No description provided for @eventoHasta.
+  ///
+  /// In es, this message translates to:
+  /// **'Termina'**
+  String get eventoHasta;
+
+  /// No description provided for @eventoLugar.
+  ///
+  /// In es, this message translates to:
+  /// **'Tocá el mapa donde es (o queda en tu local).'**
+  String get eventoLugar;
+
+  /// No description provided for @eventoDireccion.
+  ///
+  /// In es, this message translates to:
+  /// **'Dirección (opcional)'**
+  String get eventoDireccion;
+
+  /// No description provided for @eventoEnlace.
+  ///
+  /// In es, this message translates to:
+  /// **'Enlace con más información (https://…, opcional)'**
+  String get eventoEnlace;
+
+  /// No description provided for @eventoPublicado.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Evento publicado! Ya aparece en el mapa.'**
+  String get eventoPublicado;
+
+  /// No description provided for @eventoSoloVerificados.
+  ///
+  /// In es, this message translates to:
+  /// **'Los eventos los publican comercios y refugios verificados ✔️.'**
+  String get eventoSoloVerificados;
+
+  /// No description provided for @eventoDatos.
+  ///
+  /// In es, this message translates to:
+  /// **'Revisá los datos: el evento dura como máximo 14 días y el título lleva 3 letras o más.'**
+  String get eventoDatos;
+
+  /// No description provided for @leyendaEvento.
+  ///
+  /// In es, this message translates to:
+  /// **'Eventos'**
+  String get leyendaEvento;
+
+  /// No description provided for @denunciaTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Denunciar maltrato'**
+  String get denunciaTitulo;
+
+  /// No description provided for @denunciaEntradaAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Contanos qué pasa; la revisa el equipo y te orienta.'**
+  String get denunciaEntradaAyuda;
+
+  /// No description provided for @denunciaInfo.
+  ///
+  /// In es, this message translates to:
+  /// **'Esta denuncia **no reemplaza la denuncia oficial**. Podés hacerla ante el **INBA** (Instituto Nacional de Bienestar Animal) o en la seccional policial. Si hay una persona en riesgo, llamá al **911**.'**
+  String get denunciaInfo;
+
+  /// No description provided for @denunciaDescripcion.
+  ///
+  /// In es, this message translates to:
+  /// **'Qué pasa (cuanto más detalle, mejor)'**
+  String get denunciaDescripcion;
+
+  /// No description provided for @denunciaDescripcionCorta.
+  ///
+  /// In es, this message translates to:
+  /// **'Contá un poco más (10 letras o más).'**
+  String get denunciaDescripcionCorta;
+
+  /// No description provided for @denunciaUbicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Ubicación (opcional, solo la ve el equipo): tocá el mapa.'**
+  String get denunciaUbicacion;
+
+  /// No description provided for @denunciaDireccion.
+  ///
+  /// In es, this message translates to:
+  /// **'Dirección o referencia (opcional)'**
+  String get denunciaDireccion;
+
+  /// No description provided for @denunciaFoto.
+  ///
+  /// In es, this message translates to:
+  /// **'Agregar foto'**
+  String get denunciaFoto;
+
+  /// No description provided for @denunciaEnviar.
+  ///
+  /// In es, this message translates to:
+  /// **'Enviar denuncia'**
+  String get denunciaEnviar;
+
+  /// No description provided for @denunciaEnviada.
+  ///
+  /// In es, this message translates to:
+  /// **'Recibimos tu denuncia. La vamos a revisar.'**
+  String get denunciaEnviada;
+
+  /// No description provided for @denunciaMias.
+  ///
+  /// In es, this message translates to:
+  /// **'Mis denuncias'**
+  String get denunciaMias;
+
+  /// No description provided for @denunciaNueva.
+  ///
+  /// In es, this message translates to:
+  /// **'Recibida'**
+  String get denunciaNueva;
+
+  /// No description provided for @denunciaDerivada.
+  ///
+  /// In es, this message translates to:
+  /// **'Derivada'**
+  String get denunciaDerivada;
+
+  /// No description provided for @denunciaCerrada.
+  ///
+  /// In es, this message translates to:
+  /// **'Cerrada'**
+  String get denunciaCerrada;
+
+  /// No description provided for @denunciaDemasiadas.
+  ///
+  /// In es, this message translates to:
+  /// **'Hiciste muchas denuncias hoy. Probá mañana.'**
+  String get denunciaDemasiadas;
 }
 
 class _AppLocalizationsDelegate

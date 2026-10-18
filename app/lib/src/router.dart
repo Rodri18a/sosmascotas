@@ -11,6 +11,7 @@ import 'features/avisos/avisos_screen.dart';
 import 'features/ayuda/ayuda_screen.dart';
 import 'features/chat/chat_screen.dart';
 import 'features/consentimiento/consentimiento_screen.dart';
+import 'features/eventos/eventos.dart';
 import 'features/hogar/hogar_screen.dart';
 import 'features/ingresar/ingresar_screen.dart';
 import 'features/legal/legal_screen.dart';
@@ -57,6 +58,8 @@ abstract final class Rutas {
   static const chats = '/chats';
   static const negocio = '/negocio';
   static const adopcion = '/adopcion';
+  static const denuncia = '/denuncia';
+  static const nuevoEvento = '/eventos/nuevo';
   static const marcarLugar = '/lugares/marcar';
 
   /// Rutas detrás de una funcionalidad gradual (comienzo de la ruta → clave de
@@ -70,6 +73,8 @@ abstract final class Rutas {
     chats: Funcionalidades.chat,
     negocio: Funcionalidades.comercios,
     adopcion: Funcionalidades.adopcion,
+    denuncia: Funcionalidades.eventos,
+    nuevoEvento: Funcionalidades.eventos,
     marcarLugar: Funcionalidades.comercios,
   };
 
@@ -89,6 +94,8 @@ abstract final class Rutas {
     '$adopcion/perfil',
     '$adopcion/publicar',
     '$adopcion/compromiso',
+    denuncia,
+    nuevoEvento,
   ];
 
   static String fichaMascota(String id) => '$mascotas/$id';
@@ -337,6 +344,19 @@ final routerProvider = Provider<GoRouter>((ref) {
             ),
           ),
         ],
+      ),
+      GoRoute(path: Rutas.denuncia, builder: (_, _) => const DenunciaScreen()),
+      GoRoute(
+        path: Rutas.nuevoEvento,
+        builder: (_, state) {
+          final q = state.uri.queryParameters;
+          final lat = double.tryParse(q['lat'] ?? '');
+          final lng = double.tryParse(q['lng'] ?? '');
+          return EventoFormScreen(
+            comercioId: q['negocio'] ?? '',
+            punto: lat == null || lng == null ? null : Punto(lat, lng),
+          );
+        },
       ),
       GoRoute(
         path: Rutas.marcarLugar,

@@ -16,6 +16,7 @@ import 'package:sosmascota/src/config/env_provider.dart';
 import 'package:sosmascota/src/config/supabase_providers.dart';
 import 'package:sosmascota/src/cuenta/perfil_repositorio.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
+import 'package:sosmascota/src/eventos/eventos_repositorio.dart';
 import 'package:sosmascota/src/fotos/selector_foto.dart';
 import 'package:sosmascota/src/funcionalidades/funcionalidades_activas.dart';
 import 'package:sosmascota/src/hogar/hogar_repositorio.dart';
@@ -43,6 +44,7 @@ import 'ayuda_falsa.dart';
 import 'chat_falso.dart';
 import 'comercios_falsos.dart';
 import 'cuenta_falsa.dart';
+import 'eventos_falsos.dart';
 import 'funcionalidades_falsas.dart';
 import 'hogar_falso.dart';
 import 'instalacion_falsa.dart';
@@ -82,6 +84,7 @@ Widget appDePrueba({
   NegociosRepositorio? negocios,
   ResenasRepositorio? resenas,
   AdopcionRepositorio? adopcion,
+  EventosRepositorio? eventosRepo,
   Posicion? posicion,
   SelectorFoto? selectorFoto,
   QrRepositorio? qr,
@@ -146,6 +149,9 @@ Widget appDePrueba({
     negociosRepositorioProvider.overrideWithValue(negocios ?? NegociosFalsos()),
     resenasRepositorioProvider.overrideWithValue(resenas ?? ResenasFalsas()),
     adopcionRepositorioProvider.overrideWithValue(adopcion ?? AdopcionFalsa()),
+    eventosRepositorioProvider.overrideWithValue(
+      eventosRepo ?? EventosFalsos(),
+    ),
     misLugaresRepositorioProvider.overrideWithValue(
       misLugares ?? MisLugaresFalsos(),
     ),
