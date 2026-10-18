@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
+import 'package:sosmascota/src/adopcion/adopcion_repositorio.dart';
 import 'package:sosmascota/src/app.dart';
 import 'package:sosmascota/src/avisos/avisos_repositorio.dart';
 import 'package:sosmascota/src/ayuda/ayuda_repositorio.dart';
@@ -36,6 +37,7 @@ import 'package:sosmascota/src/utiles/enlaces.dart';
 import 'package:sosmascota/src/utiles/respaldo.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
+import 'adopcion_falsa.dart';
 import 'avisos_falsos.dart';
 import 'ayuda_falsa.dart';
 import 'chat_falso.dart';
@@ -79,6 +81,7 @@ Widget appDePrueba({
   MisLugaresRepositorio? misLugares,
   NegociosRepositorio? negocios,
   ResenasRepositorio? resenas,
+  AdopcionRepositorio? adopcion,
   Posicion? posicion,
   SelectorFoto? selectorFoto,
   QrRepositorio? qr,
@@ -142,6 +145,7 @@ Widget appDePrueba({
     chatRepositorioProvider.overrideWithValue(chat ?? ChatFalso()),
     negociosRepositorioProvider.overrideWithValue(negocios ?? NegociosFalsos()),
     resenasRepositorioProvider.overrideWithValue(resenas ?? ResenasFalsas()),
+    adopcionRepositorioProvider.overrideWithValue(adopcion ?? AdopcionFalsa()),
     misLugaresRepositorioProvider.overrideWithValue(
       misLugares ?? MisLugaresFalsos(),
     ),

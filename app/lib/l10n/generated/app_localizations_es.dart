@@ -2649,4 +2649,432 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get panelChats => 'Chats nuevos';
+
+  @override
+  String get adopcionTitulo => 'Adopción responsable';
+
+  @override
+  String get adopcionEntrada => 'Adoptar o dar en adopción';
+
+  @override
+  String get adopcionEntradaAyuda =>
+      'Siempre gratis. Con guía, compatibilidad y seguimiento.';
+
+  @override
+  String get adopcionAdoptar => 'Adoptar';
+
+  @override
+  String get adopcionMias => 'Mis solicitudes';
+
+  @override
+  String get adopcionPublicar => 'Dar en adopción';
+
+  @override
+  String get adopcionGuia => '¿Estoy listo para adoptar?';
+
+  @override
+  String get adopcionCalculadora => 'Calculadora de costos';
+
+  @override
+  String get adopcionMiPerfil => 'Mi perfil de adoptante';
+
+  @override
+  String get adopcionVacio => 'No hay animales en adopción con este filtro.';
+
+  @override
+  String get adopcionTodas => 'Todas';
+
+  @override
+  String adopcionEdad(int meses) {
+    String _temp0 = intl.Intl.pluralLogic(
+      meses,
+      locale: localeName,
+      other: '$meses meses',
+      one: '1 mes',
+      zero: 'Menos de 1 mes',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String adopcionEdadAnios(int anios) {
+    String _temp0 = intl.Intl.pluralLogic(
+      anios,
+      locale: localeName,
+      other: '$anios años',
+      one: '1 año',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get adopcionChico => 'Chico';
+
+  @override
+  String get adopcionMediano => 'Mediano';
+
+  @override
+  String get adopcionGrande => 'Grande';
+
+  @override
+  String get adopcionEnergiaBaja => 'Tranquilo';
+
+  @override
+  String get adopcionEnergiaMedia => 'Energía media';
+
+  @override
+  String get adopcionEnergiaAlta => 'Mucha energía';
+
+  @override
+  String get adopcionCastrado => 'Castrado';
+
+  @override
+  String get adopcionVacunado => 'Vacunado';
+
+  @override
+  String get adopcionConChip => 'Con microchip';
+
+  @override
+  String get adopcionConNinos => 'Se lleva bien con niños';
+
+  @override
+  String get adopcionConPerros => 'Se lleva bien con perros';
+
+  @override
+  String get adopcionConGatos => 'Se lleva bien con gatos';
+
+  @override
+  String get adopcionNecesitaPatio => 'Necesita patio';
+
+  @override
+  String get adopcionNecesidades => 'Necesidades especiales';
+
+  @override
+  String get adopcionRequisitos => 'Requisitos';
+
+  @override
+  String adopcionAporte(String monto, String cubre) {
+    return 'Aporte: \$$monto — cubre $cubre';
+  }
+
+  @override
+  String get adopcionAporteAyuda =>
+      'Es un aporte transparente del refugio, no una venta. Los particulares no pueden pedir dinero.';
+
+  @override
+  String adopcionRefugio(String nombre) {
+    return 'Refugio verificado: $nombre';
+  }
+
+  @override
+  String get adopcionParticular => 'Lo da en adopción un particular';
+
+  @override
+  String get adopcionCamada => 'Parte de una camada';
+
+  @override
+  String get adopcionMeInteresa => 'Me interesa';
+
+  @override
+  String get adopcionMensaje => 'Contale algo de vos (opcional)';
+
+  @override
+  String get adopcionEnviado =>
+      '¡Listo! Quien lo publicó va a ver tu solicitud.';
+
+  @override
+  String get adopcionLimite =>
+      'Ya tenés 3 solicitudes activas. Retirá alguna para pedir otra.';
+
+  @override
+  String get adopcionNoDisponible => 'Ya no está disponible.';
+
+  @override
+  String get adopcionPerfilPrimero =>
+      'Completalo una vez: se usa para orientarte sobre la compatibilidad con cada animal y lo ve quien publica cuando le escribís.';
+
+  @override
+  String get compatBuena => 'Buena compatibilidad con tu perfil.';
+
+  @override
+  String get compatPatio => 'Ojo: necesita patio y vos indicaste que no tenés.';
+
+  @override
+  String get compatNinos => 'Ojo: no se lleva bien con niños y en tu casa hay.';
+
+  @override
+  String get compatAnimales =>
+      'Ojo: no se lleva bien con otros animales y vos tenés.';
+
+  @override
+  String get compatSolo =>
+      'Ojo: tiene mucha energía y estaría muchas horas solo.';
+
+  @override
+  String get compatCasa =>
+      'Ojo: indicaste que no todos en tu casa están de acuerdo.';
+
+  @override
+  String get compatExperiencia =>
+      'Ojo: tiene necesidades especiales y no tenés experiencia.';
+
+  @override
+  String get compatNota =>
+      'Es una orientación: la decisión es de quien adopta y de quien lo da.';
+
+  @override
+  String get perfilVivienda => 'Vivienda';
+
+  @override
+  String get perfilCasa => 'Casa';
+
+  @override
+  String get perfilApartamento => 'Apartamento';
+
+  @override
+  String get perfilOtra => 'Otra';
+
+  @override
+  String get perfilPatio => 'Tengo patio';
+
+  @override
+  String get perfilHorasSolo => 'Horas que estaría solo por día';
+
+  @override
+  String perfilHoras(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n horas',
+      one: '1 hora',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get perfilExperiencia => 'Experiencia con mascotas';
+
+  @override
+  String get perfilExpNinguna => 'Ninguna';
+
+  @override
+  String get perfilExpAlguna => 'Alguna';
+
+  @override
+  String get perfilExpMucha => 'Mucha';
+
+  @override
+  String get perfilOtrosAnimales => 'Tengo otros animales';
+
+  @override
+  String get perfilNinos => 'Hay niños en casa';
+
+  @override
+  String get perfilCasaDeAcuerdo => 'Todos en casa están de acuerdo';
+
+  @override
+  String get perfilGuardar => 'Guardar perfil';
+
+  @override
+  String get perfilGuardado => 'Perfil guardado.';
+
+  @override
+  String get etapaInterest => 'Me interesa';
+
+  @override
+  String get etapaQuestionnaire => 'Cuestionario';
+
+  @override
+  String get etapaInterview => 'Chat / entrevista';
+
+  @override
+  String get etapaVisit => 'Visita';
+
+  @override
+  String get etapaAgreement => 'Compromiso';
+
+  @override
+  String get etapaAdopted => 'Adoptado';
+
+  @override
+  String get etapaRejected => 'No avanzó';
+
+  @override
+  String get etapaWithdrawn => 'Retirada';
+
+  @override
+  String adopcionAvanzarA(String etapa) {
+    return 'Pasar a «$etapa»';
+  }
+
+  @override
+  String get adopcionRechazar => 'No avanzar';
+
+  @override
+  String get adopcionRetirar => 'Retirar mi solicitud';
+
+  @override
+  String get adopcionNotaPrivada => 'Nota privada (solo la ves vos)';
+
+  @override
+  String get adopcionNotaGuardada => 'Nota guardada.';
+
+  @override
+  String get adopcionSinSolicitudes => 'Todavía no pediste adoptar.';
+
+  @override
+  String get adopcionSinRecibidas => 'Todavía no recibiste solicitudes.';
+
+  @override
+  String get adopcionRecibidas => 'Solicitudes recibidas';
+
+  @override
+  String adopcionDe(String nombre) {
+    return 'De $nombre';
+  }
+
+  @override
+  String get adopcionVerCompromiso => 'Ver y aceptar el compromiso';
+
+  @override
+  String get adopcionCompromisoTitulo => 'Compromiso de adopción';
+
+  @override
+  String get adopcionAcepto => 'Leí y acepto el compromiso';
+
+  @override
+  String get adopcionAceptar => 'Adoptar';
+
+  @override
+  String get adopcionBienvenida =>
+      '¡Bienvenida a casa! Ya está en «Mis mascotas» con sus recordatorios.';
+
+  @override
+  String adopcionSeguimiento(String nombre) {
+    return 'Seguimiento: ¿cómo va $nombre?';
+  }
+
+  @override
+  String adopcionSeguimientoDia(int dia) {
+    return 'A los $dia días';
+  }
+
+  @override
+  String get adopcionSeguimientoTexto =>
+      'Contale a quien te lo dio en adopción cómo va (y si querés, mandá una foto).';
+
+  @override
+  String get adopcionSeguimientoEnviar => 'Enviar';
+
+  @override
+  String get adopcionSeguimientoListo => '¡Gracias por contar cómo va!';
+
+  @override
+  String get adopcionSeguimientoRespuestas => 'Seguimiento';
+
+  @override
+  String get adopcionSeguimientoSin => 'Sin respuesta todavía';
+
+  @override
+  String get publicarTitulo => 'Dar en adopción';
+
+  @override
+  String get publicarExplicacion =>
+      'Es gratis y nunca es una venta. Como particular podés tener hasta 2 publicaciones activas; una camada cuenta como una.';
+
+  @override
+  String publicarAnimal(int n) {
+    return 'Animal $n';
+  }
+
+  @override
+  String get publicarAgregarAnimal => 'Sumar otro de la camada';
+
+  @override
+  String get publicarNombre => 'Nombre (opcional)';
+
+  @override
+  String get publicarEdadMeses => 'Edad aproximada en meses';
+
+  @override
+  String get publicarTamano => 'Tamaño';
+
+  @override
+  String get publicarEnergia => 'Energía';
+
+  @override
+  String get publicarFoto => 'Agregar foto';
+
+  @override
+  String get publicarFaltaFoto => 'Cada animal necesita al menos una foto.';
+
+  @override
+  String get publicarDescripcion => 'Descripción';
+
+  @override
+  String get publicarRequisitos => 'Requisitos (opcional)';
+
+  @override
+  String get publicarComoRefugio => 'Publicar como refugio verificado';
+
+  @override
+  String get publicarAporteMonto => 'Aporte (pesos, opcional)';
+
+  @override
+  String get publicarAporteCubre => 'Qué cubre el aporte';
+
+  @override
+  String get publicarEnviar => 'Publicar';
+
+  @override
+  String get publicarListo =>
+      '¡Publicado! Te avisamos cuando alguien se interese.';
+
+  @override
+  String get publicarLimite =>
+      'Ya tenés 2 publicaciones activas. Marcá alguna como adoptada o pausala.';
+
+  @override
+  String get publicarRevision =>
+      'Publicaste dos camadas en un año: la publicación queda en revisión. Castrar evita camadas no deseadas.';
+
+  @override
+  String get publicarDatos => 'Revisá los datos.';
+
+  @override
+  String get guiaTitulo => '¿Estoy listo para adoptar?';
+
+  @override
+  String get guiaTexto =>
+      'Adoptar es un compromiso de muchos años. Antes de decidir, pensá en:\n\n• **Tiempo:** paseos, juego y compañía todos los días.\n• **Espacio:** que tenga lugar para moverse y descansar.\n• **Acuerdo de toda la casa:** que todos quieran y se comprometan.\n• **Vacaciones y mudanzas:** quién lo cuida y si podés llevarlo.\n• **Costos:** comida, vacunas, antiparasitarios, castración y veterinaria (probá la calculadora).\n• **Paciencia:** al principio puede tener miedo o romper cosas.\n\nSi todo esto te cierra, ¡adelante! Y si dudás, también podés ayudar como hogar de tránsito o apadrinando en un refugio.';
+
+  @override
+  String get calcExplicacion =>
+      'Poné cuánto pensás gastar en cada cosa (los precios cambian según la zona y el tamaño). La app suma y te da el total.';
+
+  @override
+  String get calcComida => 'Comida (por mes)';
+
+  @override
+  String get calcArena => 'Arena o piedritas (por mes)';
+
+  @override
+  String get calcAntiparasitarios => 'Antiparasitarios (por mes)';
+
+  @override
+  String get calcVacunas => 'Vacunas (por año)';
+
+  @override
+  String get calcCastracion => 'Castración (una vez, la dividimos en 12 meses)';
+
+  @override
+  String get calcVeterinaria => 'Consultas veterinarias (por año)';
+
+  @override
+  String get calcImprevistos => 'Imprevistos (por mes)';
+
+  @override
+  String calcTotal(String mes, String anio) {
+    return 'Total: \$$mes por mes · \$$anio por año';
+  }
 }

@@ -11,26 +11,102 @@ class ModeracionScreen extends ConsumerWidget {
   const ModeracionScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) =>
-      switch (ref.watch(moderacionProvider)) {
-        AsyncData(value: final cola) when cola.isEmpty => const Center(
-          child: Text(T.colaVacia),
-        ),
-        AsyncData(value: final cola) => RefreshIndicator(
-          onRefresh: () => ref.refresh(moderacionProvider.future),
-          child: ListView(
-            padding: const EdgeInsets.all(12),
-            children: [for (final item in cola) _Tarjeta(item: item)],
+  Widget build(BuildContext context, WidgetRef ref) {
+    final revision =
+        ref.watch(adopcionesEnRevisionProvider).value ??
+        const <Map<String, Object?>>[];
+    return Column(
+      children: [
+        if (revision.isNotEmpty) _RevisionAdopciones(revision: revision),
+        Expanded(child: _Cola(ref: ref)),
+      ],
+    );
+  }
+}
+
+class _RevisionAdopciones extends ConsumerWidget {
+  const _RevisionAdopciones({required this.revision});
+
+  final List<Map<String, Object?>> revision;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) => Card(
+    margin: const EdgeInsets.all(12),
+    child: Padding(
+      padding: const EdgeInsets.all(12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            T.adopcionesRevision,
+            style: Theme.of(context).textTheme.titleSmall,
           ),
-        ),
-        AsyncError() => Center(
-          child: TextButton(
-            onPressed: () => ref.invalidate(moderacionProvider),
-            child: const Text(T.reintentar),
-          ),
-        ),
-        _ => const Center(child: CircularProgressIndicator()),
-      };
+          const Text(T.adopcionesRevisionAyuda),
+          for (final a in revision)
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              title: Text('${a['publicador'] ?? ''}'),
+              subtitle: Text(
+                '${a['animales']} ${T.animales} · '
+                '${a['camadas_12m']} ${T.camadas12m}',
+              ),
+              trailing: Wrap(
+                spacing: 4,
+                children: [
+                  IconButton(
+                    tooltip: T.aprobar,
+                    onPressed: () async {
+                      await ref
+                          .read(adminRepositorioProvider)
+                          .revisarAdopcion('${a['id']}', aprobar: true);
+                      ref.invalidate(adopcionesEnRevisionProvider);
+                    },
+                    icon: const Icon(Icons.check),
+                  ),
+                  IconButton(
+                    tooltip: T.eliminar,
+                    onPressed: () async {
+                      await ref
+                          .read(adminRepositorioProvider)
+                          .revisarAdopcion('${a['id']}', aprobar: false);
+                      ref.invalidate(adopcionesEnRevisionProvider);
+                    },
+                    icon: const Icon(Icons.close),
+                  ),
+                ],
+              ),
+            ),
+        ],
+      ),
+    ),
+  );
+}
+
+class _Cola extends StatelessWidget {
+  const _Cola({required this.ref});
+
+  final WidgetRef ref;
+
+  @override
+  Widget build(BuildContext context) => switch (ref.watch(moderacionProvider)) {
+    AsyncData(value: final cola) when cola.isEmpty => const Center(
+      child: Text(T.colaVacia),
+    ),
+    AsyncData(value: final cola) => RefreshIndicator(
+      onRefresh: () => ref.refresh(moderacionProvider.future),
+      child: ListView(
+        padding: const EdgeInsets.all(12),
+        children: [for (final item in cola) _Tarjeta(item: item)],
+      ),
+    ),
+    AsyncError() => Center(
+      child: TextButton(
+        onPressed: () => ref.invalidate(moderacionProvider),
+        child: const Text(T.reintentar),
+      ),
+    ),
+    _ => const Center(child: CircularProgressIndicator()),
+  };
 }
 
 class _Tarjeta extends ConsumerWidget {

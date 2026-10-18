@@ -169,6 +169,12 @@ class RepoFalso implements AdminRepositorio {
       fundadores.add((negocioId, hasta));
 
   @override
+  Future<List<Map<String, Object?>>> adopcionesEnRevision() async => const [];
+
+  @override
+  Future<void> revisarAdopcion(String id, {required bool aprobar}) async {}
+
+  @override
   Future<void> guardarAyuda(Map<String, Object?> datos) async =>
       ayudaGuardada.add(datos);
 }

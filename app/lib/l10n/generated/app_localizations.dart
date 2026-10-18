@@ -4587,6 +4587,744 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Chats nuevos'**
   String get panelChats;
+
+  /// No description provided for @adopcionTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Adopción responsable'**
+  String get adopcionTitulo;
+
+  /// No description provided for @adopcionEntrada.
+  ///
+  /// In es, this message translates to:
+  /// **'Adoptar o dar en adopción'**
+  String get adopcionEntrada;
+
+  /// No description provided for @adopcionEntradaAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Siempre gratis. Con guía, compatibilidad y seguimiento.'**
+  String get adopcionEntradaAyuda;
+
+  /// No description provided for @adopcionAdoptar.
+  ///
+  /// In es, this message translates to:
+  /// **'Adoptar'**
+  String get adopcionAdoptar;
+
+  /// No description provided for @adopcionMias.
+  ///
+  /// In es, this message translates to:
+  /// **'Mis solicitudes'**
+  String get adopcionMias;
+
+  /// No description provided for @adopcionPublicar.
+  ///
+  /// In es, this message translates to:
+  /// **'Dar en adopción'**
+  String get adopcionPublicar;
+
+  /// No description provided for @adopcionGuia.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Estoy listo para adoptar?'**
+  String get adopcionGuia;
+
+  /// No description provided for @adopcionCalculadora.
+  ///
+  /// In es, this message translates to:
+  /// **'Calculadora de costos'**
+  String get adopcionCalculadora;
+
+  /// No description provided for @adopcionMiPerfil.
+  ///
+  /// In es, this message translates to:
+  /// **'Mi perfil de adoptante'**
+  String get adopcionMiPerfil;
+
+  /// No description provided for @adopcionVacio.
+  ///
+  /// In es, this message translates to:
+  /// **'No hay animales en adopción con este filtro.'**
+  String get adopcionVacio;
+
+  /// No description provided for @adopcionTodas.
+  ///
+  /// In es, this message translates to:
+  /// **'Todas'**
+  String get adopcionTodas;
+
+  /// No description provided for @adopcionEdad.
+  ///
+  /// In es, this message translates to:
+  /// **'{meses, plural, =0{Menos de 1 mes} =1{1 mes} other{{meses} meses}}'**
+  String adopcionEdad(int meses);
+
+  /// No description provided for @adopcionEdadAnios.
+  ///
+  /// In es, this message translates to:
+  /// **'{anios, plural, =1{1 año} other{{anios} años}}'**
+  String adopcionEdadAnios(int anios);
+
+  /// No description provided for @adopcionChico.
+  ///
+  /// In es, this message translates to:
+  /// **'Chico'**
+  String get adopcionChico;
+
+  /// No description provided for @adopcionMediano.
+  ///
+  /// In es, this message translates to:
+  /// **'Mediano'**
+  String get adopcionMediano;
+
+  /// No description provided for @adopcionGrande.
+  ///
+  /// In es, this message translates to:
+  /// **'Grande'**
+  String get adopcionGrande;
+
+  /// No description provided for @adopcionEnergiaBaja.
+  ///
+  /// In es, this message translates to:
+  /// **'Tranquilo'**
+  String get adopcionEnergiaBaja;
+
+  /// No description provided for @adopcionEnergiaMedia.
+  ///
+  /// In es, this message translates to:
+  /// **'Energía media'**
+  String get adopcionEnergiaMedia;
+
+  /// No description provided for @adopcionEnergiaAlta.
+  ///
+  /// In es, this message translates to:
+  /// **'Mucha energía'**
+  String get adopcionEnergiaAlta;
+
+  /// No description provided for @adopcionCastrado.
+  ///
+  /// In es, this message translates to:
+  /// **'Castrado'**
+  String get adopcionCastrado;
+
+  /// No description provided for @adopcionVacunado.
+  ///
+  /// In es, this message translates to:
+  /// **'Vacunado'**
+  String get adopcionVacunado;
+
+  /// No description provided for @adopcionConChip.
+  ///
+  /// In es, this message translates to:
+  /// **'Con microchip'**
+  String get adopcionConChip;
+
+  /// No description provided for @adopcionConNinos.
+  ///
+  /// In es, this message translates to:
+  /// **'Se lleva bien con niños'**
+  String get adopcionConNinos;
+
+  /// No description provided for @adopcionConPerros.
+  ///
+  /// In es, this message translates to:
+  /// **'Se lleva bien con perros'**
+  String get adopcionConPerros;
+
+  /// No description provided for @adopcionConGatos.
+  ///
+  /// In es, this message translates to:
+  /// **'Se lleva bien con gatos'**
+  String get adopcionConGatos;
+
+  /// No description provided for @adopcionNecesitaPatio.
+  ///
+  /// In es, this message translates to:
+  /// **'Necesita patio'**
+  String get adopcionNecesitaPatio;
+
+  /// No description provided for @adopcionNecesidades.
+  ///
+  /// In es, this message translates to:
+  /// **'Necesidades especiales'**
+  String get adopcionNecesidades;
+
+  /// No description provided for @adopcionRequisitos.
+  ///
+  /// In es, this message translates to:
+  /// **'Requisitos'**
+  String get adopcionRequisitos;
+
+  /// No description provided for @adopcionAporte.
+  ///
+  /// In es, this message translates to:
+  /// **'Aporte: \${monto} — cubre {cubre}'**
+  String adopcionAporte(String monto, String cubre);
+
+  /// No description provided for @adopcionAporteAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Es un aporte transparente del refugio, no una venta. Los particulares no pueden pedir dinero.'**
+  String get adopcionAporteAyuda;
+
+  /// No description provided for @adopcionRefugio.
+  ///
+  /// In es, this message translates to:
+  /// **'Refugio verificado: {nombre}'**
+  String adopcionRefugio(String nombre);
+
+  /// No description provided for @adopcionParticular.
+  ///
+  /// In es, this message translates to:
+  /// **'Lo da en adopción un particular'**
+  String get adopcionParticular;
+
+  /// No description provided for @adopcionCamada.
+  ///
+  /// In es, this message translates to:
+  /// **'Parte de una camada'**
+  String get adopcionCamada;
+
+  /// No description provided for @adopcionMeInteresa.
+  ///
+  /// In es, this message translates to:
+  /// **'Me interesa'**
+  String get adopcionMeInteresa;
+
+  /// No description provided for @adopcionMensaje.
+  ///
+  /// In es, this message translates to:
+  /// **'Contale algo de vos (opcional)'**
+  String get adopcionMensaje;
+
+  /// No description provided for @adopcionEnviado.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Listo! Quien lo publicó va a ver tu solicitud.'**
+  String get adopcionEnviado;
+
+  /// No description provided for @adopcionLimite.
+  ///
+  /// In es, this message translates to:
+  /// **'Ya tenés 3 solicitudes activas. Retirá alguna para pedir otra.'**
+  String get adopcionLimite;
+
+  /// No description provided for @adopcionNoDisponible.
+  ///
+  /// In es, this message translates to:
+  /// **'Ya no está disponible.'**
+  String get adopcionNoDisponible;
+
+  /// No description provided for @adopcionPerfilPrimero.
+  ///
+  /// In es, this message translates to:
+  /// **'Completalo una vez: se usa para orientarte sobre la compatibilidad con cada animal y lo ve quien publica cuando le escribís.'**
+  String get adopcionPerfilPrimero;
+
+  /// No description provided for @compatBuena.
+  ///
+  /// In es, this message translates to:
+  /// **'Buena compatibilidad con tu perfil.'**
+  String get compatBuena;
+
+  /// No description provided for @compatPatio.
+  ///
+  /// In es, this message translates to:
+  /// **'Ojo: necesita patio y vos indicaste que no tenés.'**
+  String get compatPatio;
+
+  /// No description provided for @compatNinos.
+  ///
+  /// In es, this message translates to:
+  /// **'Ojo: no se lleva bien con niños y en tu casa hay.'**
+  String get compatNinos;
+
+  /// No description provided for @compatAnimales.
+  ///
+  /// In es, this message translates to:
+  /// **'Ojo: no se lleva bien con otros animales y vos tenés.'**
+  String get compatAnimales;
+
+  /// No description provided for @compatSolo.
+  ///
+  /// In es, this message translates to:
+  /// **'Ojo: tiene mucha energía y estaría muchas horas solo.'**
+  String get compatSolo;
+
+  /// No description provided for @compatCasa.
+  ///
+  /// In es, this message translates to:
+  /// **'Ojo: indicaste que no todos en tu casa están de acuerdo.'**
+  String get compatCasa;
+
+  /// No description provided for @compatExperiencia.
+  ///
+  /// In es, this message translates to:
+  /// **'Ojo: tiene necesidades especiales y no tenés experiencia.'**
+  String get compatExperiencia;
+
+  /// No description provided for @compatNota.
+  ///
+  /// In es, this message translates to:
+  /// **'Es una orientación: la decisión es de quien adopta y de quien lo da.'**
+  String get compatNota;
+
+  /// No description provided for @perfilVivienda.
+  ///
+  /// In es, this message translates to:
+  /// **'Vivienda'**
+  String get perfilVivienda;
+
+  /// No description provided for @perfilCasa.
+  ///
+  /// In es, this message translates to:
+  /// **'Casa'**
+  String get perfilCasa;
+
+  /// No description provided for @perfilApartamento.
+  ///
+  /// In es, this message translates to:
+  /// **'Apartamento'**
+  String get perfilApartamento;
+
+  /// No description provided for @perfilOtra.
+  ///
+  /// In es, this message translates to:
+  /// **'Otra'**
+  String get perfilOtra;
+
+  /// No description provided for @perfilPatio.
+  ///
+  /// In es, this message translates to:
+  /// **'Tengo patio'**
+  String get perfilPatio;
+
+  /// No description provided for @perfilHorasSolo.
+  ///
+  /// In es, this message translates to:
+  /// **'Horas que estaría solo por día'**
+  String get perfilHorasSolo;
+
+  /// No description provided for @perfilHoras.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =1{1 hora} other{{n} horas}}'**
+  String perfilHoras(int n);
+
+  /// No description provided for @perfilExperiencia.
+  ///
+  /// In es, this message translates to:
+  /// **'Experiencia con mascotas'**
+  String get perfilExperiencia;
+
+  /// No description provided for @perfilExpNinguna.
+  ///
+  /// In es, this message translates to:
+  /// **'Ninguna'**
+  String get perfilExpNinguna;
+
+  /// No description provided for @perfilExpAlguna.
+  ///
+  /// In es, this message translates to:
+  /// **'Alguna'**
+  String get perfilExpAlguna;
+
+  /// No description provided for @perfilExpMucha.
+  ///
+  /// In es, this message translates to:
+  /// **'Mucha'**
+  String get perfilExpMucha;
+
+  /// No description provided for @perfilOtrosAnimales.
+  ///
+  /// In es, this message translates to:
+  /// **'Tengo otros animales'**
+  String get perfilOtrosAnimales;
+
+  /// No description provided for @perfilNinos.
+  ///
+  /// In es, this message translates to:
+  /// **'Hay niños en casa'**
+  String get perfilNinos;
+
+  /// No description provided for @perfilCasaDeAcuerdo.
+  ///
+  /// In es, this message translates to:
+  /// **'Todos en casa están de acuerdo'**
+  String get perfilCasaDeAcuerdo;
+
+  /// No description provided for @perfilGuardar.
+  ///
+  /// In es, this message translates to:
+  /// **'Guardar perfil'**
+  String get perfilGuardar;
+
+  /// No description provided for @perfilGuardado.
+  ///
+  /// In es, this message translates to:
+  /// **'Perfil guardado.'**
+  String get perfilGuardado;
+
+  /// No description provided for @etapaInterest.
+  ///
+  /// In es, this message translates to:
+  /// **'Me interesa'**
+  String get etapaInterest;
+
+  /// No description provided for @etapaQuestionnaire.
+  ///
+  /// In es, this message translates to:
+  /// **'Cuestionario'**
+  String get etapaQuestionnaire;
+
+  /// No description provided for @etapaInterview.
+  ///
+  /// In es, this message translates to:
+  /// **'Chat / entrevista'**
+  String get etapaInterview;
+
+  /// No description provided for @etapaVisit.
+  ///
+  /// In es, this message translates to:
+  /// **'Visita'**
+  String get etapaVisit;
+
+  /// No description provided for @etapaAgreement.
+  ///
+  /// In es, this message translates to:
+  /// **'Compromiso'**
+  String get etapaAgreement;
+
+  /// No description provided for @etapaAdopted.
+  ///
+  /// In es, this message translates to:
+  /// **'Adoptado'**
+  String get etapaAdopted;
+
+  /// No description provided for @etapaRejected.
+  ///
+  /// In es, this message translates to:
+  /// **'No avanzó'**
+  String get etapaRejected;
+
+  /// No description provided for @etapaWithdrawn.
+  ///
+  /// In es, this message translates to:
+  /// **'Retirada'**
+  String get etapaWithdrawn;
+
+  /// No description provided for @adopcionAvanzarA.
+  ///
+  /// In es, this message translates to:
+  /// **'Pasar a «{etapa}»'**
+  String adopcionAvanzarA(String etapa);
+
+  /// No description provided for @adopcionRechazar.
+  ///
+  /// In es, this message translates to:
+  /// **'No avanzar'**
+  String get adopcionRechazar;
+
+  /// No description provided for @adopcionRetirar.
+  ///
+  /// In es, this message translates to:
+  /// **'Retirar mi solicitud'**
+  String get adopcionRetirar;
+
+  /// No description provided for @adopcionNotaPrivada.
+  ///
+  /// In es, this message translates to:
+  /// **'Nota privada (solo la ves vos)'**
+  String get adopcionNotaPrivada;
+
+  /// No description provided for @adopcionNotaGuardada.
+  ///
+  /// In es, this message translates to:
+  /// **'Nota guardada.'**
+  String get adopcionNotaGuardada;
+
+  /// No description provided for @adopcionSinSolicitudes.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no pediste adoptar.'**
+  String get adopcionSinSolicitudes;
+
+  /// No description provided for @adopcionSinRecibidas.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no recibiste solicitudes.'**
+  String get adopcionSinRecibidas;
+
+  /// No description provided for @adopcionRecibidas.
+  ///
+  /// In es, this message translates to:
+  /// **'Solicitudes recibidas'**
+  String get adopcionRecibidas;
+
+  /// No description provided for @adopcionDe.
+  ///
+  /// In es, this message translates to:
+  /// **'De {nombre}'**
+  String adopcionDe(String nombre);
+
+  /// No description provided for @adopcionVerCompromiso.
+  ///
+  /// In es, this message translates to:
+  /// **'Ver y aceptar el compromiso'**
+  String get adopcionVerCompromiso;
+
+  /// No description provided for @adopcionCompromisoTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Compromiso de adopción'**
+  String get adopcionCompromisoTitulo;
+
+  /// No description provided for @adopcionAcepto.
+  ///
+  /// In es, this message translates to:
+  /// **'Leí y acepto el compromiso'**
+  String get adopcionAcepto;
+
+  /// No description provided for @adopcionAceptar.
+  ///
+  /// In es, this message translates to:
+  /// **'Adoptar'**
+  String get adopcionAceptar;
+
+  /// No description provided for @adopcionBienvenida.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Bienvenida a casa! Ya está en «Mis mascotas» con sus recordatorios.'**
+  String get adopcionBienvenida;
+
+  /// No description provided for @adopcionSeguimiento.
+  ///
+  /// In es, this message translates to:
+  /// **'Seguimiento: ¿cómo va {nombre}?'**
+  String adopcionSeguimiento(String nombre);
+
+  /// No description provided for @adopcionSeguimientoDia.
+  ///
+  /// In es, this message translates to:
+  /// **'A los {dia} días'**
+  String adopcionSeguimientoDia(int dia);
+
+  /// No description provided for @adopcionSeguimientoTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Contale a quien te lo dio en adopción cómo va (y si querés, mandá una foto).'**
+  String get adopcionSeguimientoTexto;
+
+  /// No description provided for @adopcionSeguimientoEnviar.
+  ///
+  /// In es, this message translates to:
+  /// **'Enviar'**
+  String get adopcionSeguimientoEnviar;
+
+  /// No description provided for @adopcionSeguimientoListo.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Gracias por contar cómo va!'**
+  String get adopcionSeguimientoListo;
+
+  /// No description provided for @adopcionSeguimientoRespuestas.
+  ///
+  /// In es, this message translates to:
+  /// **'Seguimiento'**
+  String get adopcionSeguimientoRespuestas;
+
+  /// No description provided for @adopcionSeguimientoSin.
+  ///
+  /// In es, this message translates to:
+  /// **'Sin respuesta todavía'**
+  String get adopcionSeguimientoSin;
+
+  /// No description provided for @publicarTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Dar en adopción'**
+  String get publicarTitulo;
+
+  /// No description provided for @publicarExplicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Es gratis y nunca es una venta. Como particular podés tener hasta 2 publicaciones activas; una camada cuenta como una.'**
+  String get publicarExplicacion;
+
+  /// No description provided for @publicarAnimal.
+  ///
+  /// In es, this message translates to:
+  /// **'Animal {n}'**
+  String publicarAnimal(int n);
+
+  /// No description provided for @publicarAgregarAnimal.
+  ///
+  /// In es, this message translates to:
+  /// **'Sumar otro de la camada'**
+  String get publicarAgregarAnimal;
+
+  /// No description provided for @publicarNombre.
+  ///
+  /// In es, this message translates to:
+  /// **'Nombre (opcional)'**
+  String get publicarNombre;
+
+  /// No description provided for @publicarEdadMeses.
+  ///
+  /// In es, this message translates to:
+  /// **'Edad aproximada en meses'**
+  String get publicarEdadMeses;
+
+  /// No description provided for @publicarTamano.
+  ///
+  /// In es, this message translates to:
+  /// **'Tamaño'**
+  String get publicarTamano;
+
+  /// No description provided for @publicarEnergia.
+  ///
+  /// In es, this message translates to:
+  /// **'Energía'**
+  String get publicarEnergia;
+
+  /// No description provided for @publicarFoto.
+  ///
+  /// In es, this message translates to:
+  /// **'Agregar foto'**
+  String get publicarFoto;
+
+  /// No description provided for @publicarFaltaFoto.
+  ///
+  /// In es, this message translates to:
+  /// **'Cada animal necesita al menos una foto.'**
+  String get publicarFaltaFoto;
+
+  /// No description provided for @publicarDescripcion.
+  ///
+  /// In es, this message translates to:
+  /// **'Descripción'**
+  String get publicarDescripcion;
+
+  /// No description provided for @publicarRequisitos.
+  ///
+  /// In es, this message translates to:
+  /// **'Requisitos (opcional)'**
+  String get publicarRequisitos;
+
+  /// No description provided for @publicarComoRefugio.
+  ///
+  /// In es, this message translates to:
+  /// **'Publicar como refugio verificado'**
+  String get publicarComoRefugio;
+
+  /// No description provided for @publicarAporteMonto.
+  ///
+  /// In es, this message translates to:
+  /// **'Aporte (pesos, opcional)'**
+  String get publicarAporteMonto;
+
+  /// No description provided for @publicarAporteCubre.
+  ///
+  /// In es, this message translates to:
+  /// **'Qué cubre el aporte'**
+  String get publicarAporteCubre;
+
+  /// No description provided for @publicarEnviar.
+  ///
+  /// In es, this message translates to:
+  /// **'Publicar'**
+  String get publicarEnviar;
+
+  /// No description provided for @publicarListo.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Publicado! Te avisamos cuando alguien se interese.'**
+  String get publicarListo;
+
+  /// No description provided for @publicarLimite.
+  ///
+  /// In es, this message translates to:
+  /// **'Ya tenés 2 publicaciones activas. Marcá alguna como adoptada o pausala.'**
+  String get publicarLimite;
+
+  /// No description provided for @publicarRevision.
+  ///
+  /// In es, this message translates to:
+  /// **'Publicaste dos camadas en un año: la publicación queda en revisión. Castrar evita camadas no deseadas.'**
+  String get publicarRevision;
+
+  /// No description provided for @publicarDatos.
+  ///
+  /// In es, this message translates to:
+  /// **'Revisá los datos.'**
+  String get publicarDatos;
+
+  /// No description provided for @guiaTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Estoy listo para adoptar?'**
+  String get guiaTitulo;
+
+  /// No description provided for @guiaTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Adoptar es un compromiso de muchos años. Antes de decidir, pensá en:\n\n• **Tiempo:** paseos, juego y compañía todos los días.\n• **Espacio:** que tenga lugar para moverse y descansar.\n• **Acuerdo de toda la casa:** que todos quieran y se comprometan.\n• **Vacaciones y mudanzas:** quién lo cuida y si podés llevarlo.\n• **Costos:** comida, vacunas, antiparasitarios, castración y veterinaria (probá la calculadora).\n• **Paciencia:** al principio puede tener miedo o romper cosas.\n\nSi todo esto te cierra, ¡adelante! Y si dudás, también podés ayudar como hogar de tránsito o apadrinando en un refugio.'**
+  String get guiaTexto;
+
+  /// No description provided for @calcExplicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Poné cuánto pensás gastar en cada cosa (los precios cambian según la zona y el tamaño). La app suma y te da el total.'**
+  String get calcExplicacion;
+
+  /// No description provided for @calcComida.
+  ///
+  /// In es, this message translates to:
+  /// **'Comida (por mes)'**
+  String get calcComida;
+
+  /// No description provided for @calcArena.
+  ///
+  /// In es, this message translates to:
+  /// **'Arena o piedritas (por mes)'**
+  String get calcArena;
+
+  /// No description provided for @calcAntiparasitarios.
+  ///
+  /// In es, this message translates to:
+  /// **'Antiparasitarios (por mes)'**
+  String get calcAntiparasitarios;
+
+  /// No description provided for @calcVacunas.
+  ///
+  /// In es, this message translates to:
+  /// **'Vacunas (por año)'**
+  String get calcVacunas;
+
+  /// No description provided for @calcCastracion.
+  ///
+  /// In es, this message translates to:
+  /// **'Castración (una vez, la dividimos en 12 meses)'**
+  String get calcCastracion;
+
+  /// No description provided for @calcVeterinaria.
+  ///
+  /// In es, this message translates to:
+  /// **'Consultas veterinarias (por año)'**
+  String get calcVeterinaria;
+
+  /// No description provided for @calcImprevistos.
+  ///
+  /// In es, this message translates to:
+  /// **'Imprevistos (por mes)'**
+  String get calcImprevistos;
+
+  /// No description provided for @calcTotal.
+  ///
+  /// In es, this message translates to:
+  /// **'Total: \${mes} por mes · \${anio} por año'**
+  String calcTotal(String mes, String anio);
 }
 
 class _AppLocalizationsDelegate

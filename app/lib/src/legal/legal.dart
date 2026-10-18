@@ -7,7 +7,10 @@ const versionTerminos = '2026-10-14-borrador';
 
 enum DocumentoLegal {
   terminos('assets/legal/terminos.md'),
-  privacidad('assets/legal/privacidad.md');
+  privacidad('assets/legal/privacidad.md'),
+
+  /// Compromiso de adopción (2.0, D79). Borrador hasta la revisión legal (P13).
+  compromisoAdopcion('assets/legal/compromiso_adopcion.md');
 
   const DocumentoLegal(this.archivo);
 
@@ -17,3 +20,6 @@ enum DocumentoLegal {
 final textoLegalProvider = FutureProvider.family<String, DocumentoLegal>(
   (ref, documento) => rootBundle.loadString(documento.archivo),
 );
+
+/// Versión del compromiso de adopción que se registra al aceptarlo.
+const versionCompromisoAdopcion = 'borrador-2026-10';

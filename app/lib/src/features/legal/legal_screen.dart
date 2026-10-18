@@ -16,11 +16,12 @@ class LegalScreen extends ConsumerWidget {
     final titulo = switch (documento) {
       DocumentoLegal.terminos => t.legalTerminos,
       DocumentoLegal.privacidad => t.legalPrivacidad,
+      DocumentoLegal.compromisoAdopcion => t.adopcionCompromisoTitulo,
     };
     return Scaffold(
       appBar: AppBar(title: Text(titulo)),
       body: switch (ref.watch(textoLegalProvider(documento))) {
-        AsyncData(:final value) => _Markdown(value),
+        AsyncData(:final value) => TextoMarkdown(value),
         AsyncError() => Center(child: Text(t.errorDesconocido)),
         _ => const Center(child: CircularProgressIndicator()),
       },
@@ -29,8 +30,8 @@ class LegalScreen extends ConsumerWidget {
 }
 
 /// Lo justo de Markdown para los textos legales: títulos, viñetas, citas y negritas.
-class _Markdown extends StatelessWidget {
-  const _Markdown(this.texto);
+class TextoMarkdown extends StatelessWidget {
+  const TextoMarkdown(this.texto, {super.key});
 
   final String texto;
 

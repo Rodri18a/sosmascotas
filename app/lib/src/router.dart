@@ -5,6 +5,7 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'cuenta/perfil_repositorio.dart';
 import 'cuenta/servicio_cuenta.dart';
+import 'features/adopcion/adopcion_screen.dart';
 import 'features/ajustes/ajustes_screen.dart';
 import 'features/avisos/avisos_screen.dart';
 import 'features/ayuda/ayuda_screen.dart';
@@ -55,6 +56,7 @@ abstract final class Rutas {
   static const perfil = '/perfil';
   static const chats = '/chats';
   static const negocio = '/negocio';
+  static const adopcion = '/adopcion';
   static const marcarLugar = '/lugares/marcar';
 
   /// Rutas detrás de una funcionalidad gradual (comienzo de la ruta → clave de
@@ -67,6 +69,7 @@ abstract final class Rutas {
     perfil: Funcionalidades.perfil,
     chats: Funcionalidades.chat,
     negocio: Funcionalidades.comercios,
+    adopcion: Funcionalidades.adopcion,
     marcarLugar: Funcionalidades.comercios,
   };
 
@@ -83,6 +86,9 @@ abstract final class Rutas {
     chats,
     negocio,
     marcarLugar,
+    '$adopcion/perfil',
+    '$adopcion/publicar',
+    '$adopcion/compromiso',
   ];
 
   static String fichaMascota(String id) => '$mascotas/$id';
@@ -299,6 +305,36 @@ final routerProvider = Provider<GoRouter>((ref) {
                 ),
               );
             },
+          ),
+        ],
+      ),
+      GoRoute(
+        path: Rutas.adopcion,
+        builder: (_, _) => const AdopcionScreen(),
+        routes: [
+          GoRoute(
+            path: 'animal/:id',
+            builder: (_, state) =>
+                AnimalAdopcionScreen(animalId: state.pathParameters['id']!),
+          ),
+          GoRoute(
+            path: 'perfil',
+            builder: (_, _) => const PerfilAdoptanteScreen(),
+          ),
+          GoRoute(path: 'guia', builder: (_, _) => const GuiaAdopcionScreen()),
+          GoRoute(
+            path: 'calculadora',
+            builder: (_, _) => const CalculadoraCostosScreen(),
+          ),
+          GoRoute(
+            path: 'publicar',
+            builder: (_, _) => const PublicarAdopcionScreen(),
+          ),
+          GoRoute(
+            path: 'compromiso/:id',
+            builder: (_, state) => CompromisoAdopcionScreen(
+              solicitudId: state.pathParameters['id']!,
+            ),
           ),
         ],
       ),

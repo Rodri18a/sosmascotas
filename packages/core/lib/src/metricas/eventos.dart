@@ -39,6 +39,11 @@ abstract final class Eventos {
   static const verificationRequest = 'verification_request';
   static const reviewCreate = 'review_create';
   static const reviewReply = 'review_reply';
+  static const adoptionPublish = 'adoption_publish';
+  static const adoptionInterest = 'adoption_interest';
+  static const adoptionStage = 'adoption_stage';
+  static const adoptionCommit = 'adoption_commit';
+  static const adoptionFollowup = 'adoption_followup';
 }
 
 /// Valida el nombre de un evento con la misma regla que la base de datos.

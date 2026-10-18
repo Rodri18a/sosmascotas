@@ -226,7 +226,7 @@ Regla de trabajo: **por cada etapa de desarrollo, avanzar al menos un paso de va
 ---
 
 ## FASE 2 · Monetización — mediados de 2027 (etapas, a detallar en pasos)
-- [ ] 2.0 Adopción responsable: guía, calculadora, perfil de adoptante, publicación (refugios con aporte, particulares con límites), compatibilidad, proceso por etapas, compromiso, seguimiento 7/30/90
+- [x] 2.0 Adopción responsable: guía, calculadora, perfil de adoptante, publicación (refugios con aporte, particulares con límites), compatibilidad, proceso por etapas, compromiso, seguimiento 7/30/90 — 19/10/2026 (D79), oculto detrás de `adopcion` (entrada en la pestaña Ayuda): migración `adopcion` (perfil, publicaciones con camadas y fotos, solicitudes, notas privadas, compromiso, seguimiento; límites de 06 en la base: particulares sin dinero y con 2 activas, revisión con 2 camadas en 12 meses, 3 solicitudes por adoptante), `compatibilidad()` y calculadora en el núcleo (sin precios inventados: la persona pone sus montos), pantallas Adoptar · Mis solicitudes · Dar en adopción, compromiso (**borrador** `assets/legal/compromiso_adopcion.md`, falta la revisión legal P13) que al aceptarse pasa la mascota a la cuenta con recordatorios de castración (fecha límite a 6 meses), vacunas y microchip, seguimiento a los 7/30/90 días y cola de revisión en el portal. Pruebas OK (255 app, 115 núcleo, 10 portal, 466 seguridad)
 - [ ] 2.1 Planes Pro y Familia con suscripción dentro de la app
 - [ ] 2.2 Planes Destacado y Plus con cobro manual + `subscriptions` y `payments`
 - [ ] 2.3 Estadísticas para empresas (`daily_stats`) + reporte mensual automático

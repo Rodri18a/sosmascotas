@@ -34,6 +34,9 @@ abstract final class Funcionalidades {
   /// Reseñas de comercios con contacto real (1.7, D78).
   static const resenas = 'resenas';
 
+  /// Adopción responsable (etapa 2.0, D79).
+  static const adopcion = 'adopcion';
+
   /// Las que ya están en `todos`: la app las da por prendidas aunque no pueda
   /// preguntarle a la base (sin conexión y sin nada guardado). Las demás, en
   /// ese caso, quedan apagadas (lo seguro).

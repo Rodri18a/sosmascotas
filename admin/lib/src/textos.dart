@@ -55,6 +55,11 @@ abstract final class T {
   static const sos = 'SOS';
   static const mensaje = 'Mensaje del chat';
   static const resena = 'Reseña';
+  static const adopcionesRevision = 'Adopciones en revisión';
+  static const adopcionesRevisionAyuda =
+      'Particulares con 2 camadas o más en 12 meses (posible cría irregular). Antes de aprobar, ofrecé información sobre castración.';
+  static const animales = 'animales';
+  static const camadas12m = 'camadas en 12 meses';
   static const hecho = 'Listo.';
   static const motivo = 'Motivo (queda registrado)';
   static const confirmar = 'Confirmar';

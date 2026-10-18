@@ -53,6 +53,11 @@ abstract interface class AdminRepositorio {
   /// Socio Fundador hasta [hasta] (null: deja de serlo).
   Future<void> socioFundador(String negocioId, DateTime? hasta);
 
+  /// Publicaciones de adopción en revisión (2 camadas en 12 meses, 06).
+  Future<List<Map<String, Object?>>> adopcionesEnRevision();
+
+  Future<void> revisarAdopcion(String id, {required bool aprobar});
+
   /// Crea (sin `id`) o actualiza una entrada de la Ayuda.
   Future<void> guardarAyuda(Map<String, Object?> datos);
 }
@@ -190,6 +195,17 @@ class SupabaseAdminRepositorio implements AdminRepositorio {
       );
 
   @override
+  Future<List<Map<String, Object?>>> adopcionesEnRevision() async =>
+      _filas(await _cliente.rpc<List<dynamic>>('admin_adopciones_en_revision'));
+
+  @override
+  Future<void> revisarAdopcion(String id, {required bool aprobar}) =>
+      _cliente.rpc<void>(
+        'admin_revisar_adopcion',
+        params: {'p_id': id, 'p_aprobar': aprobar},
+      );
+
+  @override
   Future<List<EntradaAyuda>> ayuda() async =>
       (await _cliente
               .from('help_directory')
@@ -249,6 +265,10 @@ final prospectosProvider = FutureProvider<List<Prospecto>>(
 
 final pendientesComerciosProvider = FutureProvider<List<PendienteComercio>>(
   (ref) => ref.watch(adminRepositorioProvider).pendientesComercios(),
+);
+
+final adopcionesEnRevisionProvider = FutureProvider<List<Map<String, Object?>>>(
+  (ref) => ref.watch(adminRepositorioProvider).adopcionesEnRevision(),
 );
 
 final ayudaProvider = FutureProvider<List<EntradaAyuda>>(

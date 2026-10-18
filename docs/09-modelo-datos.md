@@ -88,10 +88,10 @@ Propuesta inicial. Se ajusta al implementar cada fase. **RLS activado en todas l
 
 | Tabla | Campos clave | Fase |
 |---|---|---|
-| `adoptions` | id, publisher_id, publisher_kind (`shelter`, `individual`), is_litter, description, requirements, contribution_amount, contribution_covers, zone_id, status (`active`, `paused`, `adopted`, `hidden`) | 2 |
+| `adoptions` | id, publisher_id, publisher_kind (`shelter`, `individual`), shelter_id (refugio verificado propio), is_litter, description, requirements, contribution_amount y contribution_covers (solo refugios), zone_id, status (`active`, `paused`, `adopted`, `hidden`, `review`). Sin acceso directo: `publicar_adopcion()`, `adopciones_disponibles()` (D79) | 2 |
 | `adoption_animals` | id, adoption_id, name, species_id, breed_id, age, size, energy, neutered, vaccinated, microchip, good_with (niños, perros, gatos), special_needs, photos, adopted_pet_id | 2 |
 | `adopter_profiles` | user_id, housing, has_yard, hours_alone, experience, other_pets, kids, household_agrees, updated_at | 2 |
-| `adoption_requests` | id, adoption_animal_id, adopter_id, stage (`interest`, `questionnaire`, `interview`, `visit`, `adopted`, `rejected`, `withdrawn`), compatibility, private_notes (solo publicador) | 2 |
+| `adoption_requests` | id, adoption_animal_id, adopter_id, stage (`interest`, `questionnaire`, `interview`, `visit`, `agreement`, `adopted`, `rejected`, `withdrawn`), message. La compatibilidad se calcula en la app; las notas privadas van en `adoption_request_notes` (solo el publicador) (D79) | 2 |
 | `adoption_commitments` | request_id, accepted_at, text_version, neuter_deadline | 2 |
 | `adoption_followups` | request_id, day (7, 30, 90), photo_path, answer, answered_at | 2 |
 | `foster_homes` | user_id, species_ids[], capacity, available, zone_id | 3 |

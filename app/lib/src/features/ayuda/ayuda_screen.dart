@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
 import '../../ayuda/ayuda_repositorio.dart';
+import '../../funcionalidades/funcionalidades_activas.dart';
 import '../../metricas/metricas.dart';
+import '../../router.dart';
 import '../../theme/paleta.dart';
 import '../../utiles/enlaces.dart';
 import '../../widgets/boton_ajustes.dart';
@@ -46,6 +49,19 @@ class AyudaScreen extends ConsumerWidget {
           children: [
             const _Tarjeta911(),
             const SizedBox(height: 16),
+            // Adopción responsable (2.0, D79).
+            SiFuncionalidad(
+              Funcionalidades.adopcion,
+              child: Card(
+                child: ListTile(
+                  leading: const Icon(Icons.volunteer_activism_outlined),
+                  title: Text(t.adopcionEntrada),
+                  subtitle: Text(t.adopcionEntradaAyuda),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => context.push(Rutas.adopcion),
+                ),
+              ),
+            ),
             _Titulo(t.ayudaUrgencias),
             switch (urgencias) {
               AsyncData(value: final lista) when lista.isEmpty => Text(
