@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Carga las veterinarias de la Fase 0 desde una planilla CSV (paso 0.7.1, D59).
+"""Carga los comercios desde una planilla CSV (paso 0.7.1, D59; rubros y "sin local" en 1.2, D75).
 
 Hasta el panel de administración (Fase 1) los comercios se cargan a mano: la
 planilla es la fuente de verdad. Sin --aplicar solo valida y muestra qué haría.
@@ -14,6 +14,10 @@ Columnas (la primera fila es el encabezado):
   mie jue vie sab dom. Si un día no figura, cerrado. Vacío si es 24 h.
 - urgencias / 24h: "si" o vacío.
 - especies: nombres de la app separados por coma ("Perro, Gato"); vacío = todas.
+- rubro (opcional, por defecto veterinaria): veterinaria, petshop, farmacia,
+  peluqueria, paseador, hotel, adiestrador, acepta_mascotas, refugio.
+- modalidad (opcional, por defecto local): local, online o domicilio. Sin
+  local, lat / lng pueden quedar vacías (no tienen pin: van a "Sin local").
 
 Uso (desde la raíz del repo, con las credenciales de dev):
     set -a; . ~/.config/sosmascotas/supabase-dev.env; set +a
@@ -40,6 +44,11 @@ ORDEN = list(DIAS)
 HORA = r'([01][0-9]|2[0-3]):[0-5][0-9]'
 FRANJA = re.compile(rf'^({HORA})-({HORA}|24:00)$')
 TELEFONO = re.compile(r'^\+?[0-9 ]{6,20}$')
+RUBROS = {'veterinaria': 'vet', 'vet': 'vet', 'petshop': 'petshop', 'farmacia': 'pharmacy',
+          'peluqueria': 'grooming', 'peluquería': 'grooming', 'paseador': 'walker', 'hotel': 'hotel',
+          'guarderia': 'hotel', 'guardería': 'hotel', 'adiestrador': 'trainer',
+          'acepta_mascotas': 'pet_friendly', 'refugio': 'shelter'}
+MODALIDADES = {'local', 'online', 'domicilio'}
 COLUMNAS = ['nombre', 'direccion', 'lat', 'lng', 'telefono', 'whatsapp', 'web', 'instagram',
             'horario', 'urgencias', '24h', 'especies', 'descripcion']
 
@@ -85,9 +94,18 @@ def filas_del_csv(ruta, especies, ejemplo):
                 continue
             r = {k: (v or '').strip() for k, v in r.items()}
             try:
-                lat, lng = float(r['lat'].replace(',', '.')), float(r['lng'].replace(',', '.'))
-                if not (-35.1 < lat < -30 and -58.5 < lng < -53):
-                    raise ValueError('lat/lng fuera de Uruguay (¿están invertidas?)')
+                rubro = RUBROS.get((r.get('rubro') or 'veterinaria').lower())
+                if rubro is None:
+                    raise ValueError(f'rubro desconocido "{r.get("rubro")}"')
+                modalidad = (r.get('modalidad') or 'local').lower()
+                if modalidad not in MODALIDADES:
+                    raise ValueError(f'modalidad desconocida "{modalidad}" (local, online o domicilio)')
+                ubicacion = None
+                if modalidad == 'local' or r['lat'] or r['lng']:
+                    lat, lng = float(r['lat'].replace(',', '.')), float(r['lng'].replace(',', '.'))
+                    if not (-35.1 < lat < -30 and -58.5 < lng < -53):
+                        raise ValueError('lat/lng fuera de Uruguay (¿están invertidas?)')
+                    ubicacion = f'SRID=4326;POINT({lng} {lat})'
                 for campo in ('telefono', 'whatsapp'):
                     if r[campo] and not TELEFONO.match(r[campo]):
                         raise ValueError(f'{campo} inválido')
@@ -100,11 +118,12 @@ def filas_del_csv(ruta, especies, ejemplo):
                     ids.append(especies[e])
                 es_24h = si(r['24h'])
                 fila = {
-                    'business_type': 'vet',
+                    'business_type': rubro,
+                    'kind': modalidad,
                     'name': r['nombre'],
                     'address': r['direccion'] or None,
                     'description': r['descripcion'] or None,
-                    'location': f'SRID=4326;POINT({lng} {lat})',
+                    'location': ubicacion,
                     'phone': r['telefono'] or None,
                     'whatsapp': r['whatsapp'] or None,
                     'web': r['web'] or None,
@@ -117,7 +136,7 @@ def filas_del_csv(ruta, especies, ejemplo):
                 }
                 if len(fila['name']) < 2:
                     raise ValueError('falta el nombre')
-                if not es_24h and not fila['hours']:
+                if not es_24h and not fila['hours'] and modalidad == 'local':
                     raise ValueError('falta el horario (o marcar 24h)')
                 filas.append(fila)
             except ValueError as e:
@@ -162,10 +181,11 @@ def main():
         f['zone_id'] = zonas[0]['id'] if zonas else None
 
     tipo = 'de ejemplo' if ejemplo else 'reales'
-    print(f'{len(filas)} veterinarias {tipo} válidas:')
+    print(f'{len(filas)} comercios {tipo} válidos:')
     for f in filas:
         marca = '24 h' if f['is_24h'] else ('urgencias' if f['emergencies'] else '')
-        print(f"  - {f['name']} {f'({marca})' if marca else ''}")
+        extra = ', '.join(x for x in (f['business_type'], f['kind'] if f['kind'] != 'local' else '', marca) if x)
+        print(f"  - {f['name']} ({extra})")
     if not aplicar:
         print('\nNo se cambió nada. Para cargarlas, repetir con --aplicar.')
         return
@@ -176,20 +196,20 @@ def main():
             sys.exit(f'No se pudo {que}: {s} {r}')
 
     # Las de ejemplo no tienen historia: se borran siempre.
-    ok(pedir('DELETE', f'{url}/rest/v1/businesses?business_type=eq.vet&is_sample=eq.true', headers=admin),
-       'borrar las de ejemplo')
+    ok(pedir('DELETE', f'{url}/rest/v1/businesses?is_sample=eq.true', headers=admin),
+       'borrar los de ejemplo')
     if ejemplo:
         ok(pedir('POST', f'{url}/rest/v1/businesses', filas, {**admin, 'Prefer': 'return=minimal'}), 'cargar')
-        print(f'\n✅ Cargadas {len(filas)} veterinarias de ejemplo.')
+        print(f'\n✅ Cargados {len(filas)} comercios de ejemplo.')
         return
 
-    # Reales: por nombre, para conservar el id (y las métricas de cada una).
-    _, existentes = pedir('GET', f'{url}/rest/v1/businesses?select=id,name&business_type=eq.vet&is_sample=eq.false',
+    # Reales: por rubro y nombre, para conservar el id (y las métricas de cada uno).
+    _, existentes = pedir('GET', f'{url}/rest/v1/businesses?select=id,name,business_type&is_sample=eq.false',
                           headers=admin)
-    por_nombre = {e['name'].strip().lower(): e['id'] for e in existentes}
+    por_nombre = {(e['business_type'], e['name'].strip().lower()): e['id'] for e in existentes}
     nuevas, actualizadas = [], 0
     for f in filas:
-        existente = por_nombre.pop(f['name'].strip().lower(), None)
+        existente = por_nombre.pop((f['business_type'], f['name'].strip().lower()), None)
         if existente:
             ok(pedir('PATCH', f'{url}/rest/v1/businesses?id=eq.{existente}', {**f, 'status': 'active'},
                      {**admin, 'Prefer': 'return=minimal'}), f"actualizar {f['name']}")
@@ -198,7 +218,7 @@ def main():
             nuevas.append(f)
     if nuevas:
         ok(pedir('POST', f'{url}/rest/v1/businesses', nuevas, {**admin, 'Prefer': 'return=minimal'}), 'cargar las nuevas')
-    for nombre, id_ in por_nombre.items():
+    for (_, nombre), id_ in por_nombre.items():
         ok(pedir('PATCH', f'{url}/rest/v1/businesses?id=eq.{id_}', {'status': 'hidden'},
                  {**admin, 'Prefer': 'return=minimal'}), f'ocultar {nombre}')
     print(f'\n✅ {len(nuevas)} nuevas, {actualizadas} actualizadas, {len(por_nombre)} ocultadas '

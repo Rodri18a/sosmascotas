@@ -645,6 +645,43 @@ def main():
             caso('un visitante registra place_open de una veterinaria (métrica con business_id)',
                  rest('POST', 'events', {'name': 'prueba_rls', 'anon_id': str(uuid.uuid4()), 'business_id': vets[0]['id']},
                       prefer='return=minimal')[0] == 201)
+        print('lugares (mapa integral) y user_places')
+        lugares = filas(rest('POST', 'rpc/lugares_en_zona', pando_rect))
+        caso('el mapa integral trae varios rubros, solo con local',
+             len({l['business_type'] for l in lugares}) >= 2 and all(l['kind'] == 'local' for l in lugares))
+        solo_vets = filas(rest('POST', 'rpc/lugares_en_zona', {**pando_rect, 'p_tipos': ['vet']}))
+        caso('se puede pedir un rubro', solo_vets and all(l['business_type'] == 'vet' for l in solo_vets))
+        sin_local = filas(rest('POST', 'rpc/lugares_sin_local', {}))
+        caso('"Sin local" trae los online y a domicilio', sin_local and all(l['kind'] != 'local' for l in sin_local))
+        caso('un local sin ubicación se rechaza',
+             pedir('POST', f'{URL}/rest/v1/businesses', {'name': 'Sin punto', 'kind': 'local', 'is_sample': True},
+                   {**ADMIN, 'Prefer': 'return=minimal'})[0] >= 400)
+        caso('un rubro inventado se rechaza',
+             pedir('POST', f'{URL}/rest/v1/businesses', {'name': 'Rubro raro', 'kind': 'online', 'business_type': 'casino',
+                                                         'is_sample': True}, {**ADMIN, 'Prefer': 'return=minimal'})[0] >= 400)
+        caso('un feriado mal escrito se rechaza',
+             pedir('POST', f'{URL}/rest/v1/businesses', {'name': 'Feriado raro', 'kind': 'online', 'special_days': {'navidad': []},
+                                                         'is_sample': True}, {**ADMIN, 'Prefer': 'return=minimal'})[0] >= 400)
+        vet = next((l for l in lugares if l['business_type'] == 'vet'), None)
+        otro_rubro = next((l for l in lugares if l['business_type'] != 'vet'), None)
+        if vet:
+            caso('A marca favorita una veterinaria',
+                 rest('POST', 'user_places', {'business_id': vet['id'], 'favorite': True}, a, 'return=minimal')[0] == 201)
+            caso('B no ve los favoritos de A', filas(rest('GET', 'user_places?select=business_id', quien=b)) == [])
+            caso('un visitante no ve user_places', bloqueado(rest('GET', 'user_places?select=business_id')))
+            caso('A no marca a nombre de B',
+                 bloqueado(rest('POST', 'user_places', {'business_id': vet['id'], 'user_id': b_id, 'favorite': True}, a, 'return=minimal')))
+            caso('A la marca como su veterinaria',
+                 len(filas(rest('PATCH', f"user_places?business_id=eq.{vet['id']}", {'is_my_vet': True}, a))) == 1)
+            otra_vet = next((l for l in lugares if l['business_type'] == 'vet' and l['id'] != vet['id']), None)
+            if otra_vet:
+                rest('POST', 'user_places', {'business_id': otra_vet['id'], 'is_my_vet': True}, a, 'return=minimal')
+                mias = [x for x in filas(rest('GET', 'user_places?select=business_id,is_my_vet', quien=a)) if x['is_my_vet']]
+                caso('solo una "mi veterinaria" por persona', [x['business_id'] for x in mias] == [otra_vet['id']])
+        if otro_rubro:
+            caso('"mi veterinaria" solo en veterinarias',
+                 rest('POST', 'user_places', {'business_id': otro_rubro['id'], 'is_my_vet': True}, a, 'return=minimal')[0] >= 400)
+
         caso('no se aceptan métricas de un comercio que no existe',
              rest('POST', 'events', {'name': 'prueba_rls', 'anon_id': str(uuid.uuid4()), 'business_id': str(uuid.uuid4())},
                   prefer='return=minimal')[0] >= 400)
