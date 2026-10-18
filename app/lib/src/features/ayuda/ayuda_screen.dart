@@ -9,6 +9,7 @@ import '../../theme/paleta.dart';
 import '../../utiles/enlaces.dart';
 import '../../widgets/boton_ajustes.dart';
 import '../../widgets/boton_avisos.dart';
+import '../../widgets/boton_mensajes.dart';
 import '../mapa/ficha_comercio.dart';
 
 /// Pestaña Ayuda (también para visitantes): 911, veterinarias de urgencia y
@@ -31,7 +32,7 @@ class AyudaScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(t.pestanaAyuda),
-        actions: const [BotonAvisos(), BotonAjustes()],
+        actions: const [BotonMensajes(), BotonAvisos(), BotonAjustes()],
       ),
       body: RefreshIndicator(
         onRefresh: () async {

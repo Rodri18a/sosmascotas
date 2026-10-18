@@ -10,6 +10,7 @@ import '../../router.dart';
 import '../../sos/sos_repositorio.dart';
 import '../../widgets/boton_ajustes.dart';
 import '../../widgets/boton_avisos.dart';
+import '../../widgets/boton_mensajes.dart';
 import '../instalar/instalar.dart';
 import 'ficha_comercio.dart';
 
@@ -65,7 +66,7 @@ class _MapaScreenState extends ConsumerState<MapaScreen> {
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
       title: Text(context.t.pestanaMapa),
-      actions: const [BotonAvisos(), BotonAjustes()],
+      actions: const [BotonMensajes(), BotonAvisos(), BotonAjustes()],
     ),
     body: Stack(
       children: [

@@ -8,6 +8,7 @@ import 'cuenta/servicio_cuenta.dart';
 import 'features/ajustes/ajustes_screen.dart';
 import 'features/avisos/avisos_screen.dart';
 import 'features/ayuda/ayuda_screen.dart';
+import 'features/chat/chat_screen.dart';
 import 'features/consentimiento/consentimiento_screen.dart';
 import 'features/hogar/hogar_screen.dart';
 import 'features/ingresar/ingresar_screen.dart';
@@ -50,6 +51,7 @@ abstract final class Rutas {
   static const hogar = '/hogar';
   static const unirme = '/unirme';
   static const perfil = '/perfil';
+  static const chats = '/chats';
 
   /// Rutas detrás de una funcionalidad gradual (comienzo de la ruta → clave de
   /// `Funcionalidades`). Quien entra sin tenerla prendida ve "Todavía no está
@@ -59,6 +61,7 @@ abstract final class Rutas {
     '$recordatorios/': Funcionalidades.recordatorios,
     hogar: Funcionalidades.hogar,
     perfil: Funcionalidades.perfil,
+    chats: Funcionalidades.chat,
   };
 
   /// Rutas que un visitante no puede ver: se le pide ingresar y después vuelve.
@@ -71,6 +74,7 @@ abstract final class Rutas {
     hogar,
     '$unirme/',
     perfil,
+    chats,
   ];
 
   static String fichaMascota(String id) => '$mascotas/$id';
@@ -85,6 +89,7 @@ abstract final class Rutas {
       '$libreta/$mascotaId/nuevo';
   static String editarRegistroSalud(String mascotaId, String id) =>
       '$libreta/$mascotaId/$id';
+  static String chat(String id) => '$chats/$id';
   static String nuevoRecordatorio(
     String mascotaId, {
     TipoRecordatorio? tipo,
@@ -261,6 +266,17 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(path: Rutas.hogar, builder: (_, _) => const HogarScreen()),
       GoRoute(path: Rutas.perfil, builder: (_, _) => const PerfilScreen()),
+      GoRoute(
+        path: Rutas.chats,
+        builder: (_, _) => const ConversacionesScreen(),
+        routes: [
+          GoRoute(
+            path: ':id',
+            builder: (_, state) =>
+                ChatScreen(conversacionId: state.pathParameters['id']!),
+          ),
+        ],
+      ),
       // Sin funcionalidad: quien recibe la invitación tiene que poder unirse
       // aunque todavía no tenga "Mi hogar" prendido.
       GoRoute(

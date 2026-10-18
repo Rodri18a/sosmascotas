@@ -1933,4 +1933,110 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get cuidadorInvitar => 'Crear invitación';
+
+  @override
+  String get chatMensajes => 'Mensajes';
+
+  @override
+  String get chatVacio =>
+      'Todavía no tenés conversaciones. Desde un reporte de mascota perdida o encontrada podés escribirle a quien lo publicó.';
+
+  @override
+  String chatFamiliaDe(String nombre) {
+    return 'Familia de $nombre';
+  }
+
+  @override
+  String get chatFamiliaSinNombre => 'Familia de la mascota perdida';
+
+  @override
+  String get chatQuienEncontro => 'Quien la encontró';
+
+  @override
+  String get chatSinNombre => 'Persona de SOS Mascota';
+
+  @override
+  String chatSobreReporte(String nombre) {
+    return 'Sobre el reporte de $nombre';
+  }
+
+  @override
+  String get chatEscribir => 'Escribí un mensaje';
+
+  @override
+  String get chatEnviar => 'Enviar';
+
+  @override
+  String get chatFoto => 'Mandar una foto';
+
+  @override
+  String get chatUbicacion => 'Mandar mi ubicación';
+
+  @override
+  String get chatUbicacionTitulo => '¿Mandar tu ubicación exacta?';
+
+  @override
+  String get chatUbicacionTexto =>
+      'La otra persona va a ver en el mapa dónde estás ahora. Mandala solo si hace falta, por ejemplo para encontrarse con la mascota.';
+
+  @override
+  String get chatUbicacionMandar => 'Mandar';
+
+  @override
+  String get chatUbicacionNoDisponible =>
+      'No pudimos saber tu ubicación. Revisá los permisos del navegador.';
+
+  @override
+  String get chatVerEnMapa => 'Ver en el mapa';
+
+  @override
+  String get chatEscribirPorChat => 'Escribir por chat';
+
+  @override
+  String get chatSeguridad =>
+      'Seguridad: nunca pagues por adelantado ni pases códigos, contraseñas o datos de tarjetas. Si alguien pide plata para devolver una mascota, reportalo.';
+
+  @override
+  String get chatPosibleEstafa =>
+      'Ojo: este mensaje habla de plata o códigos. Nunca pagues por adelantado.';
+
+  @override
+  String get chatBloquear => 'Bloquear';
+
+  @override
+  String get chatDesbloquear => 'Desbloquear';
+
+  @override
+  String get chatBloquearTitulo => '¿Bloquear esta conversación?';
+
+  @override
+  String get chatBloquearTexto =>
+      'No van a poder escribirse más. Podés desbloquearla después.';
+
+  @override
+  String get chatBloqueadaPorVos => 'Bloqueaste esta conversación.';
+
+  @override
+  String get chatBloqueadaPorOtro => 'Esta conversación ya no recibe mensajes.';
+
+  @override
+  String get chatReportar => 'Reportar mensaje';
+
+  @override
+  String get chatReportado => 'Gracias. Lo vamos a revisar.';
+
+  @override
+  String get chatMotivoEstafa => 'Me pide plata o datos';
+
+  @override
+  String get chatMotivoOfensivo => 'Es ofensivo o me acosa';
+
+  @override
+  String get chatMotivoOtro => 'Otro motivo';
+
+  @override
+  String get chatNoPuedo => 'Este reporte ya no está activo o es tuyo.';
+
+  @override
+  String get chatDemasiados => 'Abriste muchos chats hoy. Probá mañana.';
 }

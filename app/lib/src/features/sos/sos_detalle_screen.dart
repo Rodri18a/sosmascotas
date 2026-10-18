@@ -10,11 +10,13 @@ import '../../config/env_provider.dart';
 import '../../cuenta/con_cuenta.dart';
 import '../../cuenta/perfil_repositorio.dart';
 import '../../cuenta/servicio_cuenta.dart';
+import '../../funcionalidades/funcionalidades_activas.dart';
 import '../../mapa/mapa_vista.dart';
 import '../../mascotas/textos_mascota.dart';
 import '../../metricas/metricas.dart';
 import '../../router.dart';
 import '../../sos/sos_repositorio.dart';
+import '../chat/chat_screen.dart';
 
 /// Detalle de un SOS: fotos, datos, zona aproximada y cómo ayudar.
 class SosDetalleScreen extends ConsumerWidget {
@@ -324,6 +326,18 @@ class _Detalle extends ConsumerWidget {
                 const SizedBox(height: 8),
               ],
               if (activo && !detalle.esMio) ...[
+                // Chat interno (1.4.3, D73), con la funcionalidad `chat`.
+                if (ref.watch(conectadoProvider) &&
+                    ref.watch(
+                      funcionalidadActivaProvider(Funcionalidades.chat),
+                    )) ...[
+                  FilledButton.icon(
+                    onPressed: () => abrirChatDeSos(context, ref, detalle.id),
+                    icon: const Icon(Icons.chat_bubble_outline),
+                    label: Text(t.chatEscribirPorChat),
+                  ),
+                  const SizedBox(height: 8),
+                ],
                 FilledButton.icon(
                   onPressed: () => _avisar(context, ref),
                   icon: const Icon(Icons.campaign_outlined),

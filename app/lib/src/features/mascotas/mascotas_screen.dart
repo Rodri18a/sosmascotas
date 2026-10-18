@@ -14,6 +14,7 @@ import '../../mascotas/textos_mascota.dart';
 import '../../router.dart';
 import '../../widgets/boton_ajustes.dart';
 import '../../widgets/boton_avisos.dart';
+import '../../widgets/boton_mensajes.dart';
 import '../../widgets/en_construccion.dart';
 import '../../widgets/foto_mascota.dart';
 
@@ -57,7 +58,7 @@ class MascotasScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(t.pestanaMascotas),
-        actions: const [BotonAvisos(), BotonAjustes()],
+        actions: const [BotonMensajes(), BotonAvisos(), BotonAjustes()],
       ),
       body: cuerpo,
       floatingActionButton: hayLista

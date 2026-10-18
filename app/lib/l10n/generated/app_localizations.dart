@@ -3309,6 +3309,198 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Crear invitación'**
   String get cuidadorInvitar;
+
+  /// No description provided for @chatMensajes.
+  ///
+  /// In es, this message translates to:
+  /// **'Mensajes'**
+  String get chatMensajes;
+
+  /// No description provided for @chatVacio.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no tenés conversaciones. Desde un reporte de mascota perdida o encontrada podés escribirle a quien lo publicó.'**
+  String get chatVacio;
+
+  /// No description provided for @chatFamiliaDe.
+  ///
+  /// In es, this message translates to:
+  /// **'Familia de {nombre}'**
+  String chatFamiliaDe(String nombre);
+
+  /// No description provided for @chatFamiliaSinNombre.
+  ///
+  /// In es, this message translates to:
+  /// **'Familia de la mascota perdida'**
+  String get chatFamiliaSinNombre;
+
+  /// No description provided for @chatQuienEncontro.
+  ///
+  /// In es, this message translates to:
+  /// **'Quien la encontró'**
+  String get chatQuienEncontro;
+
+  /// No description provided for @chatSinNombre.
+  ///
+  /// In es, this message translates to:
+  /// **'Persona de SOS Mascota'**
+  String get chatSinNombre;
+
+  /// No description provided for @chatSobreReporte.
+  ///
+  /// In es, this message translates to:
+  /// **'Sobre el reporte de {nombre}'**
+  String chatSobreReporte(String nombre);
+
+  /// No description provided for @chatEscribir.
+  ///
+  /// In es, this message translates to:
+  /// **'Escribí un mensaje'**
+  String get chatEscribir;
+
+  /// No description provided for @chatEnviar.
+  ///
+  /// In es, this message translates to:
+  /// **'Enviar'**
+  String get chatEnviar;
+
+  /// No description provided for @chatFoto.
+  ///
+  /// In es, this message translates to:
+  /// **'Mandar una foto'**
+  String get chatFoto;
+
+  /// No description provided for @chatUbicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Mandar mi ubicación'**
+  String get chatUbicacion;
+
+  /// No description provided for @chatUbicacionTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Mandar tu ubicación exacta?'**
+  String get chatUbicacionTitulo;
+
+  /// No description provided for @chatUbicacionTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'La otra persona va a ver en el mapa dónde estás ahora. Mandala solo si hace falta, por ejemplo para encontrarse con la mascota.'**
+  String get chatUbicacionTexto;
+
+  /// No description provided for @chatUbicacionMandar.
+  ///
+  /// In es, this message translates to:
+  /// **'Mandar'**
+  String get chatUbicacionMandar;
+
+  /// No description provided for @chatUbicacionNoDisponible.
+  ///
+  /// In es, this message translates to:
+  /// **'No pudimos saber tu ubicación. Revisá los permisos del navegador.'**
+  String get chatUbicacionNoDisponible;
+
+  /// No description provided for @chatVerEnMapa.
+  ///
+  /// In es, this message translates to:
+  /// **'Ver en el mapa'**
+  String get chatVerEnMapa;
+
+  /// No description provided for @chatEscribirPorChat.
+  ///
+  /// In es, this message translates to:
+  /// **'Escribir por chat'**
+  String get chatEscribirPorChat;
+
+  /// No description provided for @chatSeguridad.
+  ///
+  /// In es, this message translates to:
+  /// **'Seguridad: nunca pagues por adelantado ni pases códigos, contraseñas o datos de tarjetas. Si alguien pide plata para devolver una mascota, reportalo.'**
+  String get chatSeguridad;
+
+  /// No description provided for @chatPosibleEstafa.
+  ///
+  /// In es, this message translates to:
+  /// **'Ojo: este mensaje habla de plata o códigos. Nunca pagues por adelantado.'**
+  String get chatPosibleEstafa;
+
+  /// No description provided for @chatBloquear.
+  ///
+  /// In es, this message translates to:
+  /// **'Bloquear'**
+  String get chatBloquear;
+
+  /// No description provided for @chatDesbloquear.
+  ///
+  /// In es, this message translates to:
+  /// **'Desbloquear'**
+  String get chatDesbloquear;
+
+  /// No description provided for @chatBloquearTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Bloquear esta conversación?'**
+  String get chatBloquearTitulo;
+
+  /// No description provided for @chatBloquearTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'No van a poder escribirse más. Podés desbloquearla después.'**
+  String get chatBloquearTexto;
+
+  /// No description provided for @chatBloqueadaPorVos.
+  ///
+  /// In es, this message translates to:
+  /// **'Bloqueaste esta conversación.'**
+  String get chatBloqueadaPorVos;
+
+  /// No description provided for @chatBloqueadaPorOtro.
+  ///
+  /// In es, this message translates to:
+  /// **'Esta conversación ya no recibe mensajes.'**
+  String get chatBloqueadaPorOtro;
+
+  /// No description provided for @chatReportar.
+  ///
+  /// In es, this message translates to:
+  /// **'Reportar mensaje'**
+  String get chatReportar;
+
+  /// No description provided for @chatReportado.
+  ///
+  /// In es, this message translates to:
+  /// **'Gracias. Lo vamos a revisar.'**
+  String get chatReportado;
+
+  /// No description provided for @chatMotivoEstafa.
+  ///
+  /// In es, this message translates to:
+  /// **'Me pide plata o datos'**
+  String get chatMotivoEstafa;
+
+  /// No description provided for @chatMotivoOfensivo.
+  ///
+  /// In es, this message translates to:
+  /// **'Es ofensivo o me acosa'**
+  String get chatMotivoOfensivo;
+
+  /// No description provided for @chatMotivoOtro.
+  ///
+  /// In es, this message translates to:
+  /// **'Otro motivo'**
+  String get chatMotivoOtro;
+
+  /// No description provided for @chatNoPuedo.
+  ///
+  /// In es, this message translates to:
+  /// **'Este reporte ya no está activo o es tuyo.'**
+  String get chatNoPuedo;
+
+  /// No description provided for @chatDemasiados.
+  ///
+  /// In es, this message translates to:
+  /// **'Abriste muchos chats hoy. Probá mañana.'**
+  String get chatDemasiados;
 }
 
 class _AppLocalizationsDelegate

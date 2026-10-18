@@ -5,6 +5,8 @@ import 'package:http/testing.dart';
 import 'package:sosmascota/src/app.dart';
 import 'package:sosmascota/src/avisos/avisos_repositorio.dart';
 import 'package:sosmascota/src/ayuda/ayuda_repositorio.dart';
+import 'package:sosmascota/src/chat/chat_repositorio.dart';
+import 'package:sosmascota/src/chat/posicion.dart';
 import 'package:sosmascota/src/comercios/comercios_repositorio.dart';
 import 'package:sosmascota/src/config/env_provider.dart';
 import 'package:sosmascota/src/config/supabase_providers.dart';
@@ -33,6 +35,7 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'avisos_falsos.dart';
 import 'ayuda_falsa.dart';
+import 'chat_falso.dart';
 import 'comercios_falsos.dart';
 import 'cuenta_falsa.dart';
 import 'funcionalidades_falsas.dart';
@@ -68,6 +71,8 @@ Widget appDePrueba({
   AlmacenRespaldo? respaldo,
   HogarRepositorio? hogar,
   TareasRepositorio? tareas,
+  ChatRepositorio? chat,
+  Posicion? posicion,
   SelectorFoto? selectorFoto,
   QrRepositorio? qr,
   AvisosRepositorio? avisos,
@@ -127,6 +132,8 @@ Widget appDePrueba({
     ),
     hogarRepositorioProvider.overrideWithValue(hogar ?? HogarFalso()),
     tareasRepositorioProvider.overrideWithValue(tareas ?? TareasFalsas()),
+    chatRepositorioProvider.overrideWithValue(chat ?? ChatFalso()),
+    posicionActualProvider.overrideWithValue(() async => posicion),
     almacenRespaldoProvider.overrideWithValue(
       respaldo ?? AlmacenRespaldoFalso(),
     ),

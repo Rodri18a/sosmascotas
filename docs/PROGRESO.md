@@ -176,9 +176,9 @@ Regla de trabajo: **por cada etapa de desarrollo, avanzar al menos un paso de va
 
 ### Etapa 1.4 · Chat híbrido y seguimiento
 - [x] 1.4.1 Tablas de chat + RLS + Realtime (⏱️ 3 h) — 18/10/2026 (D73): migración `chat` (`conversations`, `conversation_members`, `messages`, `iniciar_chat_sos()`, `mis_conversaciones()`, bucket privado `chat-photos`, Realtime, reportes de mensajes); aplicada en dev, `rls_test.py` OK (337)
-- [ ] 1.4.2 Pantallas de conversaciones y mensajes (texto, foto, ubicación) (⏱️ 5 h)
-- [ ] 1.4.3 Chat desde SOS y desde la ficha de un negocio + WhatsApp opcional (⏱️ 2 h)
-- [ ] 1.4.4 Bloquear y reportar + aviso de seguridad contra estafas (⏱️ 2 h)
+- [x] 1.4.2 Pantallas de conversaciones y mensajes (texto, foto, ubicación) (⏱️ 5 h) — 18/10/2026 (D73), oculto detrás de `chat`: botón "Mensajes" con no leídos en las pestañas, lista de conversaciones, chat con mensajes al instante (Realtime), foto (sin EXIF, bucket privado con enlace temporal) y ubicación exacta solo con confirmación; quien publicó el SOS aparece como "Familia de <mascota>"; pruebas OK (218 app, 91 núcleo)
+- [ ] 1.4.3 Chat desde SOS y desde la ficha de un negocio + WhatsApp opcional (⏱️ 2 h) — 18/10/2026 **desde SOS hecho** ("Escribir por chat" en el detalle, `iniciar_chat_sos()`); el WhatsApp opcional del SOS ya existía (0.5.5). **Falta:** desde la ficha de un negocio, cuando los comercios tengan cuenta (etapa 1.3)
+- [x] 1.4.4 Bloquear y reportar + aviso de seguridad contra estafas (⏱️ 2 h) — 18/10/2026 (D73): bloquear/desbloquear (corta la conversación para los dos), reportar un mensaje con motivo (`flags` tipo `message`, evento `content_flag`), aviso de seguridad fijo arriba del chat y alerta en los mensajes que piden plata o códigos (`pareceEstafa()` en el núcleo)
 - [ ] 1.4.5 Seguir un SOS y notificar novedades y resolución (⏱️ 3 h)
 
 ### Etapa 1.5 · Libreta y recordatorios

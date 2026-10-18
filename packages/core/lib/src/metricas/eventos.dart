@@ -25,6 +25,9 @@ abstract final class Eventos {
   static const householdLeave = 'household_leave';
   static const taskCreate = 'task_create';
   static const taskDone = 'task_done';
+  static const chatStart = 'chat_start';
+  static const chatMessage = 'chat_message';
+  static const chatBlock = 'chat_block';
 }
 
 /// Valida el nombre de un evento con la misma regla que la base de datos.

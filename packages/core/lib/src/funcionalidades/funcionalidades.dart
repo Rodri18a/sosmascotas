@@ -21,6 +21,9 @@ abstract final class Funcionalidades {
   /// Pantalla "Mi perfil" con rol, mascotas a cargo y hogar (D70).
   static const perfil = 'perfil';
 
+  /// Chat interno, por ahora desde un SOS (etapa 1.4, D73).
+  static const chat = 'chat';
+
   /// Las que ya están en `todos`: la app las da por prendidas aunque no pueda
   /// preguntarle a la base (sin conexión y sin nada guardado). Las demás, en
   /// ese caso, quedan apagadas (lo seguro).
