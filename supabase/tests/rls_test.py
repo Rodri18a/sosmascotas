@@ -1030,6 +1030,65 @@ def main():
         finally:
             pedir('DELETE', f'{URL}/auth/v1/admin/users/{c_id}', headers=ADMIN)
 
+        print('portal de administración')
+        x_id, x = crear_usuario('admin')
+        try:
+            pedir('PATCH', f'{URL}/rest/v1/profiles?id=eq.{x_id}', {'role': 'admin'}, ADMIN)
+            caso('A no es admin', rest('POST', 'rpc/es_admin', {}, a)[1] is False)
+            caso('X es admin (el rol lo pone solo el servidor)', rest('POST', 'rpc/es_admin', {}, x)[1] is True)
+            caso('A no ve el panel', rest('POST', 'rpc/admin_panel', {}, a)[0] >= 400)
+            caso('un visitante no ve el panel', rest('POST', 'rpc/admin_panel', {})[0] >= 400)
+            s_p, panel = rest('POST', 'rpc/admin_panel', {'p_dias': 30}, x)
+            caso('X ve el panel con los indicadores', s_p == 200 and {'usuarios', 'sos_activos', 'comercios_por_rubro'} <= set(panel))
+            caso('A no ve la cola de moderación', rest('POST', 'rpc/admin_moderacion', {}, a)[0] >= 400)
+            caso('X ve la cola de moderación', rest('POST', 'rpc/admin_moderacion', {}, x)[0] == 200)
+            caso('A no puede moderar', rest('POST', 'rpc/admin_moderar', {'p_tipo': 'sos', 'p_id': str(uuid.uuid4()), 'p_accion': 'eliminar'}, a)[0] >= 400)
+            caso('una acción inventada se rechaza',
+                 rest('POST', 'rpc/admin_moderar', {'p_tipo': 'sos', 'p_id': str(uuid.uuid4()), 'p_accion': 'borrar_todo'}, x)[0] >= 400)
+            caso('A no puede sancionar', rest('POST', 'rpc/admin_sancionar', {'p_user': b_id, 'p_tipo': 'block'}, a)[0] >= 400)
+            s_s, sancion = rest('POST', 'rpc/admin_sancionar', {'p_user': b_id, 'p_tipo': 'block', 'p_motivo': 'prueba', 'p_dias': 1}, x)
+            caso('X bloquea a B', s_s == 200 and rest('POST', 'rpc/esta_bloqueado', {'p_user': b_id}, a)[1] is True)
+            # A desbloquea el chat de las pruebas de arriba: así solo frena la sanción.
+            rest('PATCH', f'conversation_members?conversation_id=eq.{conv}&user_id=eq.{a_id}', {'blocked': False}, a)
+            caso('bloqueado, B no puede escribir mensajes',
+                 rest('POST', 'messages', {'conversation_id': conv, 'body': 'hola'}, b, 'return=minimal')[0] >= 400)
+            hist = rest('POST', 'rpc/admin_historial_usuario', {'p_user': b_id}, x)[1]
+            caso('X ve el historial de B', isinstance(hist, dict) and hist.get('bloqueado') is True and len(hist.get('sanciones', [])) == 1)
+            rest('POST', 'rpc/admin_levantar_sancion', {'p_sancion': sancion}, x)
+            caso('al levantar la sanción, B deja de estar bloqueado', rest('POST', 'rpc/esta_bloqueado', {'p_user': b_id}, a)[1] is False)
+            caso('y vuelve a poder escribir',
+                 rest('POST', 'messages', {'conversation_id': conv, 'body': 'hola de nuevo'}, b, 'return=minimal')[0] == 201)
+            caso('nadie lee las sanciones ni el registro de acciones directo',
+                 bloqueado(rest('GET', 'user_sanctions?select=id', quien=x)) and bloqueado(rest('GET', 'admin_actions?select=id', quien=x)))
+            caso('A no ve la lista de lugares de administración', rest('POST', 'rpc/admin_lugares', {}, a)[0] >= 400)
+            caso('X ve todos los lugares', len(filas(rest('POST', 'rpc/admin_lugares', {}, x))) >= 1)
+            s_l, lugar = rest('POST', 'rpc/admin_guardar_lugar', {'p': {
+                'name': 'Prueba RLS admin', 'business_type': 'grooming', 'kind': 'local',
+                'lat': -34.71, 'lng': -55.95, 'hours': {'mon': [['09:00', '18:00']]}}}, x)
+            caso('X carga un lugar', s_l == 200 and isinstance(lugar, str))
+            caso('X lo verifica y le pone Operador RENAC',
+                 rest('POST', 'rpc/admin_guardar_lugar', {'p': {'id': lugar, 'verification': 'verified', 'renac_operator': True}}, x)[0] == 200
+                 and any(l['id'] == lugar and l['verification'] == 'verified' and l['renac_operator']
+                         for l in filas(rest('POST', 'rpc/admin_lugares', {'p_buscar': 'Prueba RLS admin'}, x))))
+            caso('un horario inválido se rechaza',
+                 rest('POST', 'rpc/admin_guardar_lugar', {'p': {'id': lugar, 'hours': {'lunes': 'todo el día'}}}, x)[0] >= 400)
+            caso('A no puede cargar lugares', rest('POST', 'rpc/admin_guardar_lugar', {'p': {'name': 'X', 'lat': -34.7, 'lng': -55.9}}, a)[0] >= 400)
+            pedir('DELETE', f'{URL}/rest/v1/businesses?id=eq.{lugar}', headers=ADMIN)
+            caso('A no ve prospectos', bloqueado(rest('GET', 'prospects?select=id', quien=a)))
+            caso('X carga un prospecto', rest('POST', 'prospects', {'name': 'Peluquería Prueba RLS', 'stage': 'contacted'}, x, 'return=minimal')[0] == 201)
+            caso('A no puede cargar prospectos', bloqueado(rest('POST', 'prospects', {'name': 'X'}, a, 'return=minimal')))
+            pedir('DELETE', f'{URL}/rest/v1/prospects?name=eq.Peluquer%C3%ADa%20Prueba%20RLS', headers=ADMIN)
+            caso('A no puede cargar en la Ayuda',
+                 bloqueado(rest('POST', 'help_directory', {'kind': 'grupo', 'name': 'Prueba RLS', 'status': 'hidden'}, a, 'return=minimal')))
+            caso('X carga en la Ayuda (oculto) y lo ve',
+                 rest('POST', 'help_directory', {'kind': 'grupo', 'name': 'Prueba RLS ayuda', 'status': 'hidden', 'is_sample': True}, x, 'return=minimal')[0] == 201
+                 and len(filas(rest('GET', 'help_directory?select=id&name=eq.Prueba%20RLS%20ayuda', quien=x))) == 1
+                 and filas(rest('GET', 'help_directory?select=id&name=eq.Prueba%20RLS%20ayuda', quien=a)) == [])
+            pedir('DELETE', f'{URL}/rest/v1/help_directory?name=eq.Prueba%20RLS%20ayuda', headers=ADMIN)
+        finally:
+            pedir('DELETE', f"{URL}/rest/v1/admin_actions?admin_id=eq.{x_id}", headers=ADMIN)
+            pedir('DELETE', f'{URL}/auth/v1/admin/users/{x_id}', headers=ADMIN)
+
     finally:
         pedir('DELETE', f'{URL}/storage/v1/object/pet-photos', {'prefixes': [f'{a_id}/prueba.jpg']}, ADMIN)
         pedir('DELETE', f'{URL}/storage/v1/object/sos-photos', {'prefixes': [f'{a_id}/sos1.jpg']}, ADMIN)
