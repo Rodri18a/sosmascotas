@@ -1212,6 +1212,68 @@ def main():
             caso('X elimina la reseña', filas(rest('POST', 'rpc/resenas_de', {'p_business': negocio})) == [])
             pedir('DELETE', f'{URL}/rest/v1/flags?target_type=eq.review', headers=ADMIN)
 
+            print('adopción responsable (2.0)')
+            animal = {'name': 'Pelusa', 'species_id': 2, 'age_months': 6, 'size': 'chico', 'energy': 'media',
+                      'neutered': False, 'vaccinated': False, 'microchip': False, 'photos': [f'{a_id}/pelusa.jpg']}
+            s_ad, adopcion1 = rest('POST', 'rpc/publicar_adopcion', {'p': {'description': 'Muy cariñosa'}, 'p_animales': [animal]}, a)
+            caso('A publica un animal en adopción (particular)', s_ad == 200 and isinstance(adopcion1, str))
+            caso('un particular no puede pedir dinero',
+                 rest('POST', 'rpc/publicar_adopcion', {'p': {'contribution_amount': 800}, 'p_animales': [animal]}, a)[0] >= 400)
+            caso('no se usan fotos de otra persona',
+                 rest('POST', 'rpc/publicar_adopcion', {'p': {}, 'p_animales': [{**animal, 'photos': [f'{b_id}/x.jpg']}]}, a)[0] >= 400)
+            caso('sin foto no se publica',
+                 rest('POST', 'rpc/publicar_adopcion', {'p': {}, 'p_animales': [{**animal, 'photos': []}]}, a)[0] >= 400)
+            caso('A publica una segunda',
+                 rest('POST', 'rpc/publicar_adopcion', {'p': {}, 'p_animales': [{**animal, 'name': 'Michi'}]}, a)[0] == 200)
+            caso('una tercera activa no (máximo 2 de particulares)',
+                 rest('POST', 'rpc/publicar_adopcion', {'p': {}, 'p_animales': [{**animal, 'name': 'Otra'}]}, a)[0] >= 400)
+            caso('un refugio sin verificar no publica como refugio',
+                 rest('POST', 'rpc/publicar_adopcion', {'p': {'shelter_id': negocio}, 'p_animales': [animal]}, a)[0] >= 400)
+            disponibles = filas(rest('POST', 'rpc/adopciones_disponibles', {}))
+            pelusa = next((d for d in disponibles if d['adoption_id'] == adopcion1), None)
+            caso('un visitante ve el animal sin datos de quien publica',
+                 pelusa is not None and pelusa['publisher_kind'] == 'individual' and 'publisher_id' not in pelusa)
+            caso('nadie lee las tablas de adopción directo',
+                 bloqueado(rest('GET', 'adoptions?select=id', quien=a)) and bloqueado(rest('GET', 'adoption_requests?select=id', quien=b)))
+            caso('A no puede interesarse en su propio animal', rest('POST', 'rpc/me_interesa', {'p_animal': pelusa['animal_id']}, a)[0] >= 400)
+            caso('B completa su perfil de adoptante',
+                 rest('POST', 'adopter_profiles', {'housing': 'apartamento', 'has_yard': False, 'hours_alone': 6, 'kids': True}, b, 'return=minimal')[0] == 201)
+            caso('A no lee el perfil de B directo', filas(rest('GET', 'adopter_profiles?select=user_id', quien=a)) == [])
+            s_mi, solicitud = rest('POST', 'rpc/me_interesa', {'p_animal': pelusa['animal_id'], 'p_mensaje': 'Me encantaría'}, b)
+            caso('B dice "Me interesa"', s_mi == 200 and isinstance(solicitud, str))
+            recibidas = filas(rest('POST', 'rpc/solicitudes_recibidas', {}, a))
+            caso('A ve la solicitud con el perfil de B (para la compatibilidad), sin su id',
+                 len(recibidas) == 1 and recibidas[0]['perfil']['housing'] == 'apartamento' and 'user_id' not in recibidas[0]['perfil'])
+            caso('B no ve solicitudes de otros', filas(rest('POST', 'rpc/solicitudes_recibidas', {}, b)) == [])
+            caso('A deja una nota privada', rest('POST', 'rpc/nota_de_solicitud', {'p_id': solicitud, 'p_nota': 'Muy amable'}, a)[0] in (200, 204))
+            caso('B no puede escribir notas', rest('POST', 'rpc/nota_de_solicitud', {'p_id': solicitud, 'p_nota': 'X'}, b)[0] >= 400)
+            caso('B no puede avanzar su propia solicitud', rest('POST', 'rpc/avanzar_solicitud', {'p_id': solicitud, 'p_etapa': 'agreement'}, b)[0] >= 400)
+            caso('nadie salta a "adoptado" sin el compromiso', rest('POST', 'rpc/avanzar_solicitud', {'p_id': solicitud, 'p_etapa': 'adopted'}, a)[0] >= 400)
+            caso('B no acepta el compromiso antes de tiempo',
+                 rest('POST', 'rpc/aceptar_compromiso', {'p_id': solicitud, 'p_version': 'borrador'}, b)[0] >= 400)
+            for etapa in ('questionnaire', 'interview', 'visit', 'agreement'):
+                rest('POST', 'rpc/avanzar_solicitud', {'p_id': solicitud, 'p_etapa': etapa}, a)
+            caso('A no acepta el compromiso por B', rest('POST', 'rpc/aceptar_compromiso', {'p_id': solicitud, 'p_version': 'borrador'}, a)[0] >= 400)
+            s_ac, mascota_b = rest('POST', 'rpc/aceptar_compromiso', {'p_id': solicitud, 'p_version': 'borrador-2026-10'}, b)
+            caso('B acepta el compromiso y la mascota pasa a su cuenta',
+                 s_ac == 200 and len(filas(rest('GET', f'pets?select=id&id=eq.{mascota_b}', quien=b))) == 1)
+            rec_b = filas(rest('GET', f'reminders?select=title&pet_id=eq.{mascota_b}', quien=b))
+            caso('se crean los recordatorios de castración, vacunas y microchip', len(rec_b) == 3)
+            caso('el seguimiento queda a los 7, 30 y 90 días',
+                 sorted(f['day'] for f in filas(rest('POST', 'rpc/mis_seguimientos', {}, b))) == [7, 30, 90])
+            caso('ya no aparece en adopción',
+                 all(d['adoption_id'] != adopcion1 for d in filas(rest('POST', 'rpc/adopciones_disponibles', {}))))
+            seg = filas(rest('POST', 'rpc/mis_seguimientos', {}, b))
+            caso('no se responde el seguimiento antes de tiempo',
+                 rest('POST', 'rpc/responder_seguimiento', {'p_id': seg[0]['id'], 'p_respuesta': 'Bien'}, b)[0] >= 400)
+            caso('A no responde el seguimiento de B',
+                 rest('POST', 'rpc/responder_seguimiento', {'p_id': seg[0]['id'], 'p_respuesta': 'X'}, a)[0] >= 400)
+            caso('X ve la cola de revisión de adopciones', rest('POST', 'rpc/admin_adopciones_en_revision', {}, x)[0] == 200)
+            caso('A no la ve', rest('POST', 'rpc/admin_adopciones_en_revision', {}, a)[0] >= 400)
+            pedir('DELETE', f'{URL}/rest/v1/adoptions?publisher_id=eq.{a_id}', headers=ADMIN)
+            pedir('DELETE', f'{URL}/rest/v1/qr_tags?pet_id=eq.{mascota_b}', headers=ADMIN)
+            pedir('DELETE', f'{URL}/rest/v1/pets?id=eq.{mascota_b}', headers=ADMIN)
+
             pedir('DELETE', f'{URL}/rest/v1/businesses?id=in.({negocio},{sin_duenio},{desde_marca})', headers=ADMIN)
             pedir('DELETE', f'{URL}/rest/v1/place_marks?user_id=in.({a_id},{b_id})', headers=ADMIN)
         finally:
