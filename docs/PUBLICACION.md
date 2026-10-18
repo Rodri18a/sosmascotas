@@ -28,6 +28,8 @@ La **web pública** de prueba (páginas del QR `/m/<código>` y del SOS `/s/<id>
 
 El **login** (Supabase Auth de dev) tiene como dirección principal la app online y permite también `localhost:3001` (`supabase/configurar_auth.py`): los enlaces de los correos y Google vuelven a la app desde donde se pidieron.
 
+El **portal de administración** (D76) está en **`sosmascota-admin`** → <https://sosmascota-admin.vercel.app> (no indexable; los datos solo los ve el rol `admin`, verificado en la base). Se sube con `npx --yes vercel@latest deploy --prod --yes` desde `admin/build/web` después de `flutter build web --release --no-wasm-dry-run --dart-define-from-file=config/dev.json` (en `admin/`) y de copiar `web/vercel.json` a `build/web/`. Si `vercel link` crea un `.env.local` en esa carpeta, **borrarlo antes de subir** (tiene un token).
+
 La app de prueba (base de dev) está en **`sosmascota-dev`** → <https://sosmascota-dev.vercel.app> (pública: es la app, no tiene nada privado). Se sube con `npx --yes vercel@latest deploy --prod --yes` desde `app/build/web` después de `flutter build web --release --no-wasm-dry-run --dart-define-from-file=config/dev.json` (`--no-wasm-dry-run` evita una segunda compilación de prueba a WebAssembly: con poca memoria, como en la PC de casa con 3,4 GB, el sistema cortaba la compilación). **Nunca** correr `vercel` desde la raíz del repo: publicaría la documentación en esa dirección pública. Ninguno de los dos proyectos tiene que estar **conectado a GitHub** (`vercel git disconnect`): si lo está, cada push publica la raíz del repo (la documentación) encima de la app. Pasó el 16/10 y se desconectó.
 
 ## Pendiente (opcional): web online con login en Cloudflare

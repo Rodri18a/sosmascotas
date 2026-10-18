@@ -41,10 +41,13 @@ CORREO = """<div style="font-family:system-ui,-apple-system,'Segoe UI',Roboto,sa
 # Supabase manda ahí si el pedido no trae una dirección permitida; localhost
 # queda permitido para desarrollar en la máquina.
 APP_ONLINE = 'https://sosmascota-dev.vercel.app'
+# Portal de administración (etapa 1.8, D76): el enlace del correo vuelve ahí.
+ADMIN_ONLINE = 'https://sosmascota-admin.vercel.app'
 DESEADO = {
     'site_url': APP_ONLINE,
     'uri_allow_list': ','.join([
         f'{APP_ONLINE}/**',
+        f'{ADMIN_ONLINE}/**',
         'http://localhost:3001/**',
         'http://127.0.0.1:3001/**',
     ]),
@@ -93,8 +96,10 @@ def main():
         print('La configuración de login ya está al día.')
         return
     for clave, valor in cambios.items():
-        antes = repr(actual.get(clave))[:60]
-        despues = '«oculto»' if 'secret' in clave else repr(valor)[:60]
+        # Los secretos no se muestran nunca, ni el valor nuevo ni el actual.
+        secreto = 'secret' in clave
+        antes = '«oculto»' if secreto else repr(actual.get(clave))[:60]
+        despues = '«oculto»' if secreto else repr(valor)[:60]
         print(f'- {clave}: {antes} → {despues}')
     if '--aplicar' in sys.argv:
         pedir('PATCH', cambios)

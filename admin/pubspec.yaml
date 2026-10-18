@@ -1,0 +1,29 @@
+name: sosmascota_admin
+description: "Portal de administración de SOS Mascota (etapa 1.8, D76)."
+publish_to: none
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.11.4
+
+resolution: workspace
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  flutter_riverpod: ^3.3.2
+  sosmascota_core:
+    path: ../packages/core
+  supabase_flutter: ^2.18.3
+
+dev_dependencies:
+  flutter_lints: ^6.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true

@@ -8,7 +8,7 @@ Herramienta propia del administrador, y a futuro de un equipo. Tiene tres objeti
 ## Evolución
 
 - **Fase 0:** sin portal propio. Se usa el **panel de Supabase** para moderar reportes, ocultar contenido y cargar las veterinarias de urgencia. **Los eventos de métricas se registran desde el día 1** (ver `08-arquitectura.md`), aunque los paneles se programen después.
-- **Fase 1:** portal v1 en **Flutter Web** con moderación, empresas, lugares, indicadores generales y mini CRM.
+- **Fase 1:** portal v1 en **Flutter Web** con moderación, empresas, lugares, indicadores generales y mini CRM. **Hecho el 18/10/2026 (D76):** proyecto `admin/`, publicado en https://sosmascota-admin.vercel.app con la base de prueba; secciones Panel, Moderación, Lugares, Prospectos y Ayuda.
 - **Fase 2:** resultados por empresa, reporte mensual, generador de propuestas, planes y cobros, contenido patrocinado, chapitas QR.
 - **Fase 3–4:** zonas, roles de equipo, auditoría completa.
 

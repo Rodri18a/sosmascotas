@@ -42,6 +42,7 @@ Si un dato de `reference/` contradice `docs/`, **manda `docs/`** (ver `docs/12-d
 - `flutter pub get` en la raíz (espacio de trabajo: `app/` + `packages/core`).
 - Desde `app/`: `flutter analyze`, `flutter test`, `flutter run -d chrome --dart-define-from-file=config/dev.json`.
 - Desde `packages/core/`: `flutter test`.
+- Portal de administración (`admin/`, D76): `flutter analyze`, `flutter test` y `flutter run -d chrome --dart-define-from-file=config/dev.json` desde `admin/` (config real en `admin/config/dev.json`, ignorada por git). El rol `admin` se pone solo desde la base (`profiles.role`).
 - La configuración real va en `app/config/dev.json` / `prod.json` (ignorados por git; copiar de `*.example.json`).
 - Textos de la app: solo en `app/lib/l10n/app_es.arb` (voseo), usados con `context.t.<clave>`.
 - Base de datos: migraciones en `supabase/migrations/`. Aplicar con `set -a; . ~/.config/sosmascotas/supabase-dev.env; set +a; supabase db push --linked` (probar antes con `--dry-run` y mostrar el SQL y las políticas para aprobar). En otra máquina: instalar la CLI, crear ese archivo y `supabase link --project-ref <ref>`.

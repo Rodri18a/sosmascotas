@@ -201,14 +201,14 @@ Regla de trabajo: **por cada etapa de desarrollo, avanzar al menos un paso de va
 - [ ] 1.7.2 Escribir, ver y responder reseñas (⏱️ 3 h)
 
 ### Etapa 1.8 · Portal de administración v1 (Flutter Web)
-- [ ] 1.8.1 Proyecto `admin/` + login con validación del rol en el servidor (⏱️ 3 h)
-- [ ] 1.8.2 Panel general con los KPIs de `05-portal-admin.md` (⏱️ 5 h)
-- [ ] 1.8.3 Cola de moderación + acciones + sanciones (⏱️ 4 h)
-- [ ] 1.8.4 Empresas: verificación, reclamos, Socios Fundadores, insignia "Operador RENAC" + filtro "Coloca microchip" (⏱️ 5 h)
-- [ ] 1.8.5 Lugares: carga manual y lugares sin reclamar con su tracción (⏱️ 3 h)
-- [ ] 1.8.6 Mini CRM: `prospects` + embudo + notas + próximo contacto (⏱️ 4 h)
-- [ ] 1.8.7 Demanda sin cubrir (búsquedas sin resultados por rubro y zona) (⏱️ 2 h)
-- [ ] 1.8.8 Directorio de Ayuda: enlaces a las adopciones de cada refugio (⏱️ 1 h)
+- [x] 1.8.1 Proyecto `admin/` + login con validación del rol en el servidor (⏱️ 3 h) — 18/10/2026 (D76): proyecto Flutter Web `admin/` en el espacio de trabajo, ingreso con código o enlace por correo (sin crear cuentas), `es_admin()`/`exigir_admin()` en la base (cada función la vuelve a verificar), registro de acciones `admin_actions`; publicado en https://sosmascota-admin.vercel.app (no indexable); rodrigo18a@gmail.com con rol `admin` en dev; 9 pruebas del portal
+- [x] 1.8.2 Panel general con los KPIs de `05-portal-admin.md` (⏱️ 5 h) — 18/10/2026 (D76): `admin_panel()` (usuarios, nuevos, activos día/semana/mes, mascotas, hogares, SOS activos/publicados/resueltos y días hasta resolverse, escaneos, avisos, pendientes de moderar, comercios por rubro y por estado) con período de 7/30/90 días y filtro de zona en la base
+- [x] 1.8.3 Cola de moderación + acciones + sanciones (⏱️ 4 h) — 18/10/2026 (D76): `admin_moderacion()` (SOS ocultos o reportados y mensajes reportados), aprobar/eliminar con motivo, advertir/bloquear 30 días (`user_sanctions`; un bloqueo frena SOS, mensajes, chats nuevos y avisos con sesión por disparador), historial de la cuenta y levantar sanciones
+- [ ] 1.8.4 Empresas: verificación, reclamos, Socios Fundadores, insignia "Operador RENAC" + filtro "Coloca microchip" (⏱️ 5 h) — 18/10/2026 (D76) **en parte**: verificar ✔️, marcar Operador RENAC y el filtro "Coloca microchip" (1.2.3) hechos. **Falta:** reclamos y Socios Fundadores, que necesitan que los comercios tengan cuenta (etapa 1.3)
+- [ ] 1.8.5 Lugares: carga manual y lugares sin reclamar con su tracción (⏱️ 3 h) — 18/10/2026 (D76) **en parte**: carga y edición manual de cualquier rubro (`admin_guardar_lugar()`), ocultar, y la tracción de cada lugar (aperturas de ficha en 30 días y favoritos). **Falta:** lugares sin reclamar marcados por usuarios (`place_marks`, etapa 1.3.2)
+- [x] 1.8.6 Mini CRM: `prospects` + embudo + notas + próximo contacto (⏱️ 4 h) — 18/10/2026 (D76): tabla `prospects` (solo administración), embudo con conteo por etapa, rubro, contacto, notas y próximo contacto
+- [ ] 1.8.7 Demanda sin cubrir (búsquedas sin resultados por rubro y zona) (⏱️ 2 h) — 18/10/2026 **pendiente**: la app todavía no tiene búsqueda (no hay eventos `search`); el panel ya muestra la oferta por rubro para compararla cuando exista
+- [x] 1.8.8 Directorio de Ayuda: enlaces a las adopciones de cada refugio (⏱️ 1 h) — 18/10/2026 (D76): sección Ayuda del portal (cargar, editar, ocultar, enlace a adopciones), con políticas que solo dejan escribir al rol `admin`
 
 ### Etapa 1.8b · Chapitas físicas
 - [ ] 1.8b.1 `qr_batches` + generación de lotes pre-codificados y exportación para el productor (⏱️ 3 h)
