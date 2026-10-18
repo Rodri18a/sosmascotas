@@ -1307,6 +1307,88 @@ def main():
             pedir('DELETE', f'{URL}/rest/v1/qr_tags?pet_id=eq.{mascota_b}', headers=ADMIN)
             pedir('DELETE', f'{URL}/rest/v1/pets?id=eq.{mascota_b}', headers=ADMIN)
 
+            print('socios de la veterinaria y "Busco veterinaria" (2.6)')
+            s_vet, vet = rest('POST', 'rpc/alta_negocio', {'p': {
+                'name': 'Veterinaria Socios RLS', 'business_type': 'vet', 'kind': 'local', 'lat': -34.7201, 'lng': -55.9601}}, a)
+            caso('A da de alta una veterinaria', s_vet == 200)
+            caso('sin plan Plus no se prende el módulo Socios',
+                 rest('POST', 'rpc/prender_modulo', {'p_business': vet, 'p_modulo': 'socios', 'p_prendido': True}, a)[0] >= 400)
+            caso('A no se pone el plan', rest('POST', 'rpc/admin_plan_comercio', {'p_business': vet, 'p_plan': 'plus'}, a)[0] >= 400)
+            caso('X le pone el plan Plus', rest('POST', 'rpc/admin_plan_comercio', {'p_business': vet, 'p_plan': 'plus'}, x)[0] in (200, 204))
+            caso('una peluquería no admite Socios',
+                 rest('POST', 'rpc/admin_plan_comercio', {'p_business': negocio, 'p_plan': 'plus'}, x)[0] in (200, 204)
+                 and rest('POST', 'rpc/prender_modulo', {'p_business': negocio, 'p_modulo': 'socios', 'p_prendido': True}, a)[0] >= 400)
+            caso('sin prenderlo, no hay socios', rest('POST', 'rpc/mis_socios', {'p_business': vet}, a)[0] >= 400)
+            caso('A prende Socios', rest('POST', 'rpc/prender_modulo', {'p_business': vet, 'p_modulo': 'socios', 'p_prendido': True}, a)[0] in (200, 204))
+            caso('B no prende módulos ajenos',
+                 rest('POST', 'rpc/prender_modulo', {'p_business': vet, 'p_modulo': 'agenda', 'p_prendido': True}, b)[0] >= 400)
+            caso('nadie escribe los módulos directo',
+                 bloqueado(rest('POST', 'business_modules', {'business_id': vet, 'module': 'catalogo'}, a)))
+            s_tb, toby = rest('POST', 'pets', {'name': 'Toby', 'species_id': 1}, b)
+            toby = toby[0]['id']
+            caso('A no comparte la mascota de B',
+                 rest('POST', 'rpc/compartir_con_veterinaria', {'p_pet': toby, 'p_business': vet, 'p_compartir': True}, a)[0] >= 400)
+            caso('solo se comparte con veterinarias',
+                 rest('POST', 'rpc/compartir_con_veterinaria', {'p_pet': toby, 'p_business': negocio, 'p_compartir': True}, b)[0] >= 400)
+            caso('B comparte a Toby con la veterinaria',
+                 rest('POST', 'rpc/compartir_con_veterinaria', {'p_pet': toby, 'p_business': vet, 'p_compartir': True}, b)[0] in (200, 204))
+            socios = filas(rest('POST', 'rpc/mis_socios', {'p_business': vet}, a))
+            caso('la veterinaria ve a Toby con el primer nombre del dueño (sin su id ni teléfono)',
+                 len(socios) == 1 and socios[0]['nombre'] == 'Toby' and socios[0]['duenio'] == 'Prueba'
+                 and set(socios[0]) == {'pet_id', 'nombre', 'especie', 'duenio', 'proximo', 'proximo_que'})
+            caso('B no ve los socios', rest('POST', 'rpc/mis_socios', {'p_business': vet}, b)[0] >= 400)
+            caso('"Recordar" crea un recordatorio en la mascota',
+                 rest('POST', 'rpc/recordar_a_socio', {'p_business': vet, 'p_pet': toby, 'p_titulo': 'Control anual',
+                                                       'p_cuando': '2027-03-01T13:00:00Z'}, a)[0] in (200, 204)
+                 and any(r['title'] == 'Control anual (de tu veterinaria)'
+                         for r in filas(rest('GET', f'reminders?select=title&pet_id=eq.{toby}', quien=b))))
+            caso('no se recuerda con fecha pasada',
+                 rest('POST', 'rpc/recordar_a_socio', {'p_business': vet, 'p_pet': toby, 'p_titulo': 'X',
+                                                       'p_cuando': '2020-01-01T00:00:00Z'}, a)[0] >= 400)
+            rest('POST', 'rpc/compartir_con_veterinaria', {'p_pet': toby, 'p_business': vet, 'p_compartir': False}, b)
+            caso('B deja de compartir y la veterinaria ya no la ve', filas(rest('POST', 'rpc/mis_socios', {'p_business': vet}, a)) == [])
+            caso('ni le puede recordar',
+                 rest('POST', 'rpc/recordar_a_socio', {'p_business': vet, 'p_pet': toby, 'p_titulo': 'X',
+                                                       'p_cuando': '2027-03-01T13:00:00Z'}, a)[0] >= 400)
+            caso('nadie lee lo compartido directo (salvo quien cuida)',
+                 filas(rest('GET', 'pet_vet_shares?select=pet_id', quien=a)) == []
+                 and len(filas(rest('GET', 'pet_vet_shares?select=pet_id', quien=b))) == 1)
+            estado = rest('POST', 'rpc/estado_busco_veterinaria', {'p_pet': toby}, b)[1]
+            caso('a B se le puede preguntar si busca veterinaria', estado == {'buscando': False, 'preguntar': True})
+            caso('A no decide por B', rest('POST', 'rpc/busco_veterinaria', {'p_pet': toby, 'p_quiero': True}, a)[0] >= 400)
+            zona(b, -34.7205, -55.9605)
+            caso('B dice que busca veterinaria', rest('POST', 'rpc/busco_veterinaria', {'p_pet': toby, 'p_quiero': True}, b)[0] in (200, 204))
+            caso('con menos de 5 mascotas cerca la demanda no se muestra',
+                 filas(rest('POST', 'rpc/demanda_de_veterinaria', {'p_business': vet}, a)) == [])
+            caso('B no ve la demanda', rest('POST', 'rpc/demanda_de_veterinaria', {'p_business': vet}, b)[0] >= 400)
+            caso('nadie lee los consentimientos ni las propuestas directo',
+                 bloqueado(rest('GET', 'vet_search_consents?select=pet_id', quien=b))
+                 and bloqueado(rest('GET', 'vet_proposals?select=id', quien=a)))
+            s_pr, llegaron = rest('POST', 'rpc/enviar_propuesta_veterinaria', {'p_business': vet, 'p_mensaje': 'Primera consulta sin cargo'}, a)
+            caso('la propuesta le llega a Toby', s_pr == 200 and llegaron == 1)
+            bandeja = filas(rest('POST', 'rpc/propuestas_para', {'p_pet': toby}, b))
+            caso('B ve la propuesta con el nombre de la veterinaria', len(bandeja) == 1 and bandeja[0]['negocio'] == 'Veterinaria Socios RLS')
+            caso('A no ve la bandeja de B', rest('POST', 'rpc/propuestas_para', {'p_pet': toby}, a)[0] >= 400)
+            propuesta = bandeja[0]['proposal_id'] if bandeja else '00000000-0000-0000-0000-000000000000'
+            resultados = filas(rest('POST', 'rpc/resultados_propuestas', {'p_business': vet}, a))
+            caso('la veterinaria ve cantidades, no personas',
+                 bool(resultados) and resultados[0]['enviadas'] == 1 and resultados[0]['vistas'] == 1 and 'pet_id' not in resultados[0])
+            caso('A no acepta por B',
+                 rest('POST', 'rpc/responder_propuesta', {'p_proposal': propuesta, 'p_pet': toby, 'p_acepto': True}, a)[0] >= 400)
+            caso('B acepta y Toby pasa a ser socio',
+                 rest('POST', 'rpc/responder_propuesta', {'p_proposal': propuesta, 'p_pet': toby, 'p_acepto': True}, b)[1] == vet
+                 and len(filas(rest('POST', 'rpc/mis_socios', {'p_business': vet}, a))) == 1)
+            caso('no se responde dos veces',
+                 rest('POST', 'rpc/responder_propuesta', {'p_proposal': propuesta, 'p_pet': toby, 'p_acepto': False}, b)[0] >= 400)
+            rest('POST', 'rpc/enviar_propuesta_veterinaria', {'p_business': vet, 'p_mensaje': 'Segunda propuesta'}, a)
+            caso('como máximo 2 propuestas por semana',
+                 rest('POST', 'rpc/enviar_propuesta_veterinaria', {'p_business': vet, 'p_mensaje': 'Tercera propuesta'}, a)[0] >= 400)
+            rest('POST', 'rpc/ahora_no_busco_veterinaria', {'p_pet': toby}, b)
+            caso('"Ahora no" deja de buscar y no vuelve a preguntar',
+                 rest('POST', 'rpc/estado_busco_veterinaria', {'p_pet': toby}, b)[1] == {'buscando': False, 'preguntar': False})
+            pedir('DELETE', f'{URL}/rest/v1/pets?id=eq.{toby}', headers=ADMIN)
+            pedir('DELETE', f'{URL}/rest/v1/businesses?id=eq.{vet}', headers=ADMIN)
+
             pedir('DELETE', f'{URL}/rest/v1/businesses?id=in.({negocio},{sin_duenio},{desde_marca})', headers=ADMIN)
             pedir('DELETE', f'{URL}/rest/v1/place_marks?user_id=in.({a_id},{b_id})', headers=ADMIN)
         finally:

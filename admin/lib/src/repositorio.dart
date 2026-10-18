@@ -53,6 +53,9 @@ abstract interface class AdminRepositorio {
   /// Socio Fundador hasta [hasta] (null: deja de serlo).
   Future<void> socioFundador(String negocioId, DateTime? hasta);
 
+  /// Plan del comercio (`basic`, `featured`, `plus`) hasta que haya cobros (2.2).
+  Future<void> planComercio(String negocioId, String plan);
+
   /// Publicaciones de adopción en revisión (2 camadas en 12 meses, 06).
   Future<List<Map<String, Object?>>> adopcionesEnRevision();
 
@@ -198,6 +201,13 @@ class SupabaseAdminRepositorio implements AdminRepositorio {
           'p_business': negocioId,
           'p_hasta': hasta == null ? null : fechaIso(hasta),
         },
+      );
+
+  @override
+  Future<void> planComercio(String negocioId, String plan) =>
+      _cliente.rpc<void>(
+        'admin_plan_comercio',
+        params: {'p_business': negocioId, 'p_plan': plan},
       );
 
   @override

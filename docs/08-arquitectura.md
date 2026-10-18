@@ -162,6 +162,7 @@ Tabla `events` (append-only), escrita por el cliente con `ref.read(metricasProvi
 | `household_invite` / `household_join` / `household_leave` | — (sin datos de nadie; D69) |
 | `map_view` | vista elegida (`mapa`, `lista`, `sinLocal`; D75) |
 | `event_publish` / `event_open` / `abuse_report` | tipo de evento o target_id; la denuncia sin datos (D80) |
+| `module_toggle` / `vet_share` / `vet_remind` / `vet_search_opt_in` / `vet_search_snooze` / `vet_proposal_send` / `vet_proposal_answer` | socios y "Busco veterinaria", sin datos de la mascota ni del dueño (D81) |
 | `adoption_publish` / `adoption_interest` / `adoption_stage` / `adoption_commit` / `adoption_followup` | cantidad de animales, etapa o día del seguimiento; sin datos de nadie (D79) |
 | `review_create` / `review_reply` | business_id; `review_create` con las estrellas (D78) |
 | `place_mark` / `business_create` / `business_claim` / `verification_request` | rubro y modalidad o business_id (1.3, D77) |

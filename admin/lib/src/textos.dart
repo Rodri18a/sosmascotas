@@ -112,6 +112,12 @@ abstract final class T {
   };
   static const rut = 'RUT';
   static const socioFundador = 'Socio Fundador hasta…';
+  static const plan = 'Plan…';
+  static const planes = {
+    'basic': 'Básico',
+    'featured': 'Destacado',
+    'plus': 'Plus (módulos, como Socios)',
+  };
   static const revisarRenac =
       'Verificá el RUT contra el listado oficial de operadores RENAC del MGAP antes de aprobar.';
 

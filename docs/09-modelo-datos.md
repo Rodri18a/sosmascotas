@@ -79,10 +79,11 @@ Propuesta inicial. Se ajusta al implementar cada fase. **RLS activado en todas l
 | `agenda_config` | business_id, days[], from_time, to_time, slot_minutes, services[] | 3 |
 | `bookings` | id, business_id, user_id, pet_id, date, time, service, status (`pending`, `confirmed`, `rejected`, `cancelled`, `done`) | 3 |
 | `orders` / `order_items` | cliente, negocio, estado (`new`, `preparing`, `ready`, `delivered`), total, ítems | 3 |
-| `vet_members` | business_id, pet_id, since | 2 |
-| `offer_consents` | pet_id, user_id, scope (`vet`, luego otros rubros), granted_at, revoked_at, last_prompt_at, snoozed_until | 2 |
-| `business_offers` | id, business_id, title, body, target (zona, radio, especies), starts_at, ends_at | 2 |
-| `offer_deliveries` | offer_id, pet_id, delivered_at, seen_at, status (`sent`, `seen`, `accepted`, `dismissed`) | 2 |
+| `business_modules` | business_id, module (`catalogo`, `agenda`, `socios`), enabled. Activo solo con plan Plus y si el tipo lo admite (`modulo_activo()`); se cambia con `prender_modulo()` (D81) | 2 |
+| `pet_vet_shares` | pet_id, business_id, shared_by, consent_at, revoked_at. El dueño comparte con `compartir_con_veterinaria()`; la veterinaria ve `mis_socios()` y usa `recordar_a_socio()` (D81; antes `vet_members`) | 2 |
+| `vet_search_consents` | pet_id, owner_id, scope (`vet`), consent_at, revoked_at, snoozed_until. `busco_veterinaria()`, `ahora_no_busco_veterinaria()`, `estado_busco_veterinaria()` (D81; antes `offer_consents`) | 2 |
+| `vet_proposals` | id, business_id, message, species_id, radius_km. `demanda_de_veterinaria()` (solo grupos de 5 o más), `enviar_propuesta_veterinaria()`, `resultados_propuestas()` (D81; antes `business_offers`) | 2 |
+| `vet_proposal_deliveries` | proposal_id, pet_id, status (`sent`, `seen`, `accepted`, `declined`), answered_at. `propuestas_para()`, `responder_propuesta()` (D81; antes `offer_deliveries`). Ninguna de estas tablas se lee directo | 2 |
 
 ## Comunidad y contenido
 

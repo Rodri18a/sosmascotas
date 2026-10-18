@@ -303,6 +303,22 @@ class _FormularioLugarState extends ConsumerState<FormularioLugar> {
           },
           child: const Text(T.socioFundador),
         ),
+      if (widget.lugar case final l?)
+        PopupMenuButton<String>(
+          tooltip: T.plan,
+          onSelected: (plan) async {
+            await ref.read(adminRepositorioProvider).planComercio(l.id, plan);
+            if (context.mounted) Navigator.pop(context, true);
+          },
+          itemBuilder: (_) => [
+            for (final MapEntry(:key, :value) in T.planes.entries)
+              PopupMenuItem(value: key, child: Text(value)),
+          ],
+          child: const Padding(
+            padding: EdgeInsets.all(12),
+            child: Text(T.plan),
+          ),
+        ),
       TextButton(
         onPressed: () => Navigator.pop(context, false),
         child: const Text(T.cancelar),

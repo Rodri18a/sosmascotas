@@ -47,6 +47,13 @@ abstract final class Eventos {
   static const eventPublish = 'event_publish';
   static const eventOpen = 'event_open';
   static const abuseReport = 'abuse_report';
+  static const moduleToggle = 'module_toggle';
+  static const vetShare = 'vet_share';
+  static const vetRemind = 'vet_remind';
+  static const vetSearchOptIn = 'vet_search_opt_in';
+  static const vetSearchSnooze = 'vet_search_snooze';
+  static const vetProposalSend = 'vet_proposal_send';
+  static const vetProposalAnswer = 'vet_proposal_answer';
 }
 
 /// Valida el nombre de un evento con la misma regla que la base de datos.

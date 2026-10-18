@@ -17,6 +17,7 @@ import 'package:sosmascota/src/config/supabase_providers.dart';
 import 'package:sosmascota/src/cuenta/perfil_repositorio.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
 import 'package:sosmascota/src/eventos/eventos_repositorio.dart';
+import 'package:sosmascota/src/veterinarias/veterinarias_repositorio.dart';
 import 'package:sosmascota/src/fotos/selector_foto.dart';
 import 'package:sosmascota/src/funcionalidades/funcionalidades_activas.dart';
 import 'package:sosmascota/src/hogar/hogar_repositorio.dart';
@@ -59,6 +60,7 @@ import 'respaldo_falso.dart';
 import 'sos_falso.dart';
 import 'tareas_falsas.dart';
 import 'tema_falso.dart';
+import 'veterinarias_falsas.dart';
 
 const urlPrueba = 'https://abc.supabase.co';
 const clavePrueba = 'sb_publishable_prueba';
@@ -85,6 +87,7 @@ Widget appDePrueba({
   ResenasRepositorio? resenas,
   AdopcionRepositorio? adopcion,
   EventosRepositorio? eventosRepo,
+  VeterinariasRepositorio? veterinarias,
   Posicion? posicion,
   SelectorFoto? selectorFoto,
   QrRepositorio? qr,
@@ -151,6 +154,9 @@ Widget appDePrueba({
     adopcionRepositorioProvider.overrideWithValue(adopcion ?? AdopcionFalsa()),
     eventosRepositorioProvider.overrideWithValue(
       eventosRepo ?? EventosFalsos(),
+    ),
+    veterinariasRepositorioProvider.overrideWithValue(
+      veterinarias ?? VeterinariasFalsas(),
     ),
     misLugaresRepositorioProvider.overrideWithValue(
       misLugares ?? MisLugaresFalsos(),

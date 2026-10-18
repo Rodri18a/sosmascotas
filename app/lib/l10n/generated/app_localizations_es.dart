@@ -3207,4 +3207,164 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get denunciaDemasiadas =>
       'Hiciste muchas denuncias hoy. Probá mañana.';
+
+  @override
+  String get vetTitulo => 'Su veterinaria';
+
+  @override
+  String vetCompartirCon(String negocio) {
+    return 'Compartir con $negocio';
+  }
+
+  @override
+  String get vetCompartirAyuda =>
+      'Ve el nombre, la especie, tu primer nombre y el próximo control de la libreta; nunca tu teléfono. Te puede mandar recordatorios. Lo podés dejar de compartir cuando quieras.';
+
+  @override
+  String vetSinMiVeterinaria(String nombre) {
+    return 'Si marcás tu veterinaria en el mapa (ficha → «Es mi veterinaria»), le vas a poder compartir a $nombre.';
+  }
+
+  @override
+  String vetBuscasPregunta(String nombre) {
+    return '¿Buscás veterinaria para $nombre?';
+  }
+
+  @override
+  String get vetBuscasAyuda =>
+      'Las veterinarias cercanas te pueden mandar propuestas (como máximo 3 por mes). No saben quién sos hasta que aceptás una.';
+
+  @override
+  String get vetBuscarSi => 'Sí, quiero propuestas';
+
+  @override
+  String get vetAhoraNo => 'Ahora no';
+
+  @override
+  String get vetBuscando =>
+      'Estás recibiendo propuestas de veterinarias cercanas.';
+
+  @override
+  String get vetDejarDeBuscar => 'Dejar de buscar';
+
+  @override
+  String vetPropuestaDe(String negocio) {
+    return 'Propuesta de $negocio';
+  }
+
+  @override
+  String get vetAceptar => 'Aceptar';
+
+  @override
+  String get vetRechazar => 'No, gracias';
+
+  @override
+  String vetAceptada(String negocio) {
+    return 'Aceptada: ahora $negocio es su veterinaria.';
+  }
+
+  @override
+  String get vetRechazada => 'La rechazaste.';
+
+  @override
+  String get sociosTitulo => 'Socios';
+
+  @override
+  String get sociosAbrir => 'Socios y «Busco veterinaria»';
+
+  @override
+  String get sociosModulo => 'Módulo Socios';
+
+  @override
+  String get sociosModuloAyuda =>
+      'Tus clientes te comparten su mascota y les podés recordar los controles.';
+
+  @override
+  String get sociosSoloPlus => 'Socios necesita el plan Plus.';
+
+  @override
+  String get sociosVacio => 'Todavía nadie te compartió su mascota.';
+
+  @override
+  String sociosProximo(String que, String fecha) {
+    return 'Próximo: $que · $fecha';
+  }
+
+  @override
+  String get sociosSinProximo => 'Sin controles próximos en la libreta';
+
+  @override
+  String sociosDeDuenio(String nombre) {
+    return 'De $nombre';
+  }
+
+  @override
+  String get sociosRecordar => 'Recordar';
+
+  @override
+  String sociosRecordarTitulo(String nombre) {
+    return 'Recordatorio para $nombre';
+  }
+
+  @override
+  String get sociosRecordarQue => '¿Qué hay que recordar?';
+
+  @override
+  String sociosRecordarFecha(String fecha) {
+    return 'Día: $fecha';
+  }
+
+  @override
+  String get sociosElegirFecha => 'Cambiar día';
+
+  @override
+  String get sociosRecordado => 'Listo: le va a sonar en el celular del dueño.';
+
+  @override
+  String get sociosDemasiados =>
+      'Ya le mandaste muchos recordatorios esta semana.';
+
+  @override
+  String get demandaTitulo => 'Busco veterinaria';
+
+  @override
+  String get demandaAyuda =>
+      'Mascotas a menos de 2 km cuyos dueños buscan veterinaria. Solo se muestran grupos de 5 o más, y nunca quiénes son.';
+
+  @override
+  String get demandaVacia =>
+      'Por ahora no hay suficientes mascotas buscando cerca.';
+
+  @override
+  String demandaFila(String especie, int cantidad) {
+    return '$especie: $cantidad';
+  }
+
+  @override
+  String get propuestaMensaje =>
+      'Tu propuesta (por ejemplo: primera consulta sin cargo)';
+
+  @override
+  String get propuestaEnviar => 'Enviar propuesta';
+
+  @override
+  String propuestaEnviada(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Le llegó a $n mascotas.',
+      one: 'Le llegó a 1 mascota.',
+      zero: 'No le llegó a nadie: este mes ya recibieron sus 3 propuestas.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get propuestaLimite =>
+      'Como máximo podés mandar 2 propuestas por semana.';
+
+  @override
+  String propuestaResultado(int enviadas, int vistas, int aceptadas) {
+    return '$enviadas enviadas · $vistas vistas · $aceptadas aceptadas';
+  }
 }

@@ -40,6 +40,9 @@ abstract final class Funcionalidades {
   /// Eventos en el mapa y denuncias de maltrato (2.7, D80).
   static const eventos = 'eventos';
 
+  /// Socios de la veterinaria y "Busco veterinaria" (2.6, D81).
+  static const veterinarias = 'veterinarias';
+
   /// Las que ya están en `todos`: la app las da por prendidas aunque no pueda
   /// preguntarle a la base (sin conexión y sin nada guardado). Las demás, en
   /// ese caso, quedan apagadas (lo seguro).

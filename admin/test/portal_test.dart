@@ -168,6 +168,12 @@ class RepoFalso implements AdminRepositorio {
   Future<void> socioFundador(String negocioId, DateTime? hasta) async =>
       fundadores.add((negocioId, hasta));
 
+  final planes = <(String, String)>[];
+
+  @override
+  Future<void> planComercio(String negocioId, String plan) async =>
+      planes.add((negocioId, plan));
+
   @override
   Future<List<Map<String, Object?>>> adopcionesEnRevision() async => const [];
 
@@ -310,6 +316,20 @@ void main() {
     expect(guardado['verification'], 'verified');
     expect(guardado['renac_operator'], isTrue);
     expect(guardado['lat'], -34.71);
+  });
+
+  testWidgets('lugares: poner el plan Plus', (tester) async {
+    _pantallaGrande(tester);
+    final repo = RepoFalso();
+    await tester.pumpWidget(
+      _portal(sesion: SesionFalsa('admin@x.uy'), repo: repo),
+    );
+    await tester.pumpAndSettle();
+    await _tocar(tester, find.text('Lugares'));
+    await _tocar(tester, find.text('Veterinaria Centro'));
+    await _tocar(tester, find.text('Plan…'));
+    await _tocar(tester, find.text('Plus (módulos, como Socios)'));
+    expect(repo.planes.single, ('b1', 'plus'));
   });
 
   testWidgets('lugares: sin coordenadas no se guarda un local', (tester) async {

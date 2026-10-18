@@ -16,6 +16,7 @@ import '../../widgets/foto_mascota.dart';
 import '../hogar/tareas.dart';
 import '../libreta/libreta.dart';
 import '../recordatorios/recordatorios.dart';
+import '../veterinarias/tarjeta_veterinaria.dart';
 
 /// Ficha de una mascota propia.
 class FichaMascotaScreen extends ConsumerWidget {
@@ -181,6 +182,16 @@ class _Ficha extends ConsumerWidget {
               child: TarjetaRecordatorios(mascotaId: mascota.id),
             ),
           ),
+          // Compartirla con su veterinaria y "Busco veterinaria" (2.6): decide
+          // el dueño.
+          if (esDueno)
+            SiFuncionalidad(
+              Funcionalidades.veterinarias,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 12),
+                child: TarjetaVeterinaria(mascota: mascota),
+              ),
+            ),
         ],
       ),
     );

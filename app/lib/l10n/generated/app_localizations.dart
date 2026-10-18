@@ -5565,6 +5565,246 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Hiciste muchas denuncias hoy. Probá mañana.'**
   String get denunciaDemasiadas;
+
+  /// No description provided for @vetTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Su veterinaria'**
+  String get vetTitulo;
+
+  /// No description provided for @vetCompartirCon.
+  ///
+  /// In es, this message translates to:
+  /// **'Compartir con {negocio}'**
+  String vetCompartirCon(String negocio);
+
+  /// No description provided for @vetCompartirAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Ve el nombre, la especie, tu primer nombre y el próximo control de la libreta; nunca tu teléfono. Te puede mandar recordatorios. Lo podés dejar de compartir cuando quieras.'**
+  String get vetCompartirAyuda;
+
+  /// No description provided for @vetSinMiVeterinaria.
+  ///
+  /// In es, this message translates to:
+  /// **'Si marcás tu veterinaria en el mapa (ficha → «Es mi veterinaria»), le vas a poder compartir a {nombre}.'**
+  String vetSinMiVeterinaria(String nombre);
+
+  /// No description provided for @vetBuscasPregunta.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Buscás veterinaria para {nombre}?'**
+  String vetBuscasPregunta(String nombre);
+
+  /// No description provided for @vetBuscasAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Las veterinarias cercanas te pueden mandar propuestas (como máximo 3 por mes). No saben quién sos hasta que aceptás una.'**
+  String get vetBuscasAyuda;
+
+  /// No description provided for @vetBuscarSi.
+  ///
+  /// In es, this message translates to:
+  /// **'Sí, quiero propuestas'**
+  String get vetBuscarSi;
+
+  /// No description provided for @vetAhoraNo.
+  ///
+  /// In es, this message translates to:
+  /// **'Ahora no'**
+  String get vetAhoraNo;
+
+  /// No description provided for @vetBuscando.
+  ///
+  /// In es, this message translates to:
+  /// **'Estás recibiendo propuestas de veterinarias cercanas.'**
+  String get vetBuscando;
+
+  /// No description provided for @vetDejarDeBuscar.
+  ///
+  /// In es, this message translates to:
+  /// **'Dejar de buscar'**
+  String get vetDejarDeBuscar;
+
+  /// No description provided for @vetPropuestaDe.
+  ///
+  /// In es, this message translates to:
+  /// **'Propuesta de {negocio}'**
+  String vetPropuestaDe(String negocio);
+
+  /// No description provided for @vetAceptar.
+  ///
+  /// In es, this message translates to:
+  /// **'Aceptar'**
+  String get vetAceptar;
+
+  /// No description provided for @vetRechazar.
+  ///
+  /// In es, this message translates to:
+  /// **'No, gracias'**
+  String get vetRechazar;
+
+  /// No description provided for @vetAceptada.
+  ///
+  /// In es, this message translates to:
+  /// **'Aceptada: ahora {negocio} es su veterinaria.'**
+  String vetAceptada(String negocio);
+
+  /// No description provided for @vetRechazada.
+  ///
+  /// In es, this message translates to:
+  /// **'La rechazaste.'**
+  String get vetRechazada;
+
+  /// No description provided for @sociosTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Socios'**
+  String get sociosTitulo;
+
+  /// No description provided for @sociosAbrir.
+  ///
+  /// In es, this message translates to:
+  /// **'Socios y «Busco veterinaria»'**
+  String get sociosAbrir;
+
+  /// No description provided for @sociosModulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Módulo Socios'**
+  String get sociosModulo;
+
+  /// No description provided for @sociosModuloAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Tus clientes te comparten su mascota y les podés recordar los controles.'**
+  String get sociosModuloAyuda;
+
+  /// No description provided for @sociosSoloPlus.
+  ///
+  /// In es, this message translates to:
+  /// **'Socios necesita el plan Plus.'**
+  String get sociosSoloPlus;
+
+  /// No description provided for @sociosVacio.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía nadie te compartió su mascota.'**
+  String get sociosVacio;
+
+  /// No description provided for @sociosProximo.
+  ///
+  /// In es, this message translates to:
+  /// **'Próximo: {que} · {fecha}'**
+  String sociosProximo(String que, String fecha);
+
+  /// No description provided for @sociosSinProximo.
+  ///
+  /// In es, this message translates to:
+  /// **'Sin controles próximos en la libreta'**
+  String get sociosSinProximo;
+
+  /// No description provided for @sociosDeDuenio.
+  ///
+  /// In es, this message translates to:
+  /// **'De {nombre}'**
+  String sociosDeDuenio(String nombre);
+
+  /// No description provided for @sociosRecordar.
+  ///
+  /// In es, this message translates to:
+  /// **'Recordar'**
+  String get sociosRecordar;
+
+  /// No description provided for @sociosRecordarTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Recordatorio para {nombre}'**
+  String sociosRecordarTitulo(String nombre);
+
+  /// No description provided for @sociosRecordarQue.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Qué hay que recordar?'**
+  String get sociosRecordarQue;
+
+  /// No description provided for @sociosRecordarFecha.
+  ///
+  /// In es, this message translates to:
+  /// **'Día: {fecha}'**
+  String sociosRecordarFecha(String fecha);
+
+  /// No description provided for @sociosElegirFecha.
+  ///
+  /// In es, this message translates to:
+  /// **'Cambiar día'**
+  String get sociosElegirFecha;
+
+  /// No description provided for @sociosRecordado.
+  ///
+  /// In es, this message translates to:
+  /// **'Listo: le va a sonar en el celular del dueño.'**
+  String get sociosRecordado;
+
+  /// No description provided for @sociosDemasiados.
+  ///
+  /// In es, this message translates to:
+  /// **'Ya le mandaste muchos recordatorios esta semana.'**
+  String get sociosDemasiados;
+
+  /// No description provided for @demandaTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Busco veterinaria'**
+  String get demandaTitulo;
+
+  /// No description provided for @demandaAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Mascotas a menos de 2 km cuyos dueños buscan veterinaria. Solo se muestran grupos de 5 o más, y nunca quiénes son.'**
+  String get demandaAyuda;
+
+  /// No description provided for @demandaVacia.
+  ///
+  /// In es, this message translates to:
+  /// **'Por ahora no hay suficientes mascotas buscando cerca.'**
+  String get demandaVacia;
+
+  /// No description provided for @demandaFila.
+  ///
+  /// In es, this message translates to:
+  /// **'{especie}: {cantidad}'**
+  String demandaFila(String especie, int cantidad);
+
+  /// No description provided for @propuestaMensaje.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu propuesta (por ejemplo: primera consulta sin cargo)'**
+  String get propuestaMensaje;
+
+  /// No description provided for @propuestaEnviar.
+  ///
+  /// In es, this message translates to:
+  /// **'Enviar propuesta'**
+  String get propuestaEnviar;
+
+  /// No description provided for @propuestaEnviada.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =0{No le llegó a nadie: este mes ya recibieron sus 3 propuestas.} =1{Le llegó a 1 mascota.} other{Le llegó a {n} mascotas.}}'**
+  String propuestaEnviada(int n);
+
+  /// No description provided for @propuestaLimite.
+  ///
+  /// In es, this message translates to:
+  /// **'Como máximo podés mandar 2 propuestas por semana.'**
+  String get propuestaLimite;
+
+  /// No description provided for @propuestaResultado.
+  ///
+  /// In es, this message translates to:
+  /// **'{enviadas} enviadas · {vistas} vistas · {aceptadas} aceptadas'**
+  String propuestaResultado(int enviadas, int vistas, int aceptadas);
 }
 
 class _AppLocalizationsDelegate

@@ -270,6 +270,19 @@ class _Panel extends ConsumerWidget {
                 subtitle: Text(texto),
               ),
             ),
+          // Socios y "Busco veterinaria" (2.6, D81).
+          if (negocio.comercio.categoria == Categoria.vet &&
+              ref.watch(
+                funcionalidadActivaProvider(Funcionalidades.veterinarias),
+              ))
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.groups_outlined),
+                title: Text(t.sociosAbrir),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => context.push(Rutas.sociosNegocio(negocio.id)),
+              ),
+            ),
           // Reputación y respuestas (1.7): el comercio responde una vez.
           if (ref.watch(funcionalidadActivaProvider(Funcionalidades.resenas)))
             Card(
