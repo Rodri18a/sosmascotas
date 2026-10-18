@@ -1271,6 +1271,39 @@ def main():
             caso('X ve la cola de revisión de adopciones', rest('POST', 'rpc/admin_adopciones_en_revision', {}, x)[0] == 200)
             caso('A no la ve', rest('POST', 'rpc/admin_adopciones_en_revision', {}, a)[0] >= 400)
             pedir('DELETE', f'{URL}/rest/v1/adoptions?publisher_id=eq.{a_id}', headers=ADMIN)
+
+            print('eventos y denuncias (2.7)')
+            evento = {'kind': 'castracion', 'title': 'Jornada de castración', 'starts_at': '2027-01-10T12:00:00Z',
+                      'ends_at': '2027-01-10T20:00:00Z', 'lat': -34.715, 'lng': -55.955, 'business_id': negocio}
+            caso('un negocio sin verificar no publica eventos',
+                 rest('POST', 'rpc/publicar_evento', {'p': {**evento, 'business_id': sin_duenio}}, a)[0] >= 400)
+            caso('B no publica eventos a nombre del negocio de A', rest('POST', 'rpc/publicar_evento', {'p': evento}, b)[0] >= 400)
+            s_ev, ev = rest('POST', 'rpc/publicar_evento', {'p': evento}, a)
+            caso('A (negocio verificado) publica un evento', s_ev == 200)
+            en_zona_ev = filas(rest('POST', 'rpc/eventos_en_zona', pando_rect))
+            caso('un visitante lo ve en el mapa con el organizador',
+                 any(e['id'] == ev and e['organizador'] == 'Peluquería Prueba RLS' and e['mine'] is False for e in en_zona_ev))
+            caso('un evento de más de 14 días se rechaza',
+                 rest('POST', 'rpc/publicar_evento', {'p': {**evento, 'ends_at': '2027-02-10T20:00:00Z'}}, a)[0] >= 400)
+            caso('B no cancela el evento de A', rest('POST', 'rpc/cancelar_evento', {'p_id': ev}, b)[0] >= 400)
+            rest('POST', 'rpc/cancelar_evento', {'p_id': ev}, a)
+            caso('cancelado, ya no aparece', all(e['id'] != ev for e in filas(rest('POST', 'rpc/eventos_en_zona', pando_rect))))
+            caso('nadie lee la tabla de eventos directo', bloqueado(rest('GET', 'events_calendar?select=id', quien=a)))
+            s_dn, denuncia = rest('POST', 'rpc/denunciar_maltrato', {'p_descripcion': 'Perro atado sin agua desde hace días',
+                                                                     'p_lat': -34.72, 'p_lng': -55.96}, b)
+            caso('B denuncia un maltrato', s_dn == 200)
+            caso('B ve su denuncia', len(filas(rest('POST', 'rpc/mis_denuncias', {}, b))) == 1)
+            caso('A no ve las denuncias de B', filas(rest('POST', 'rpc/mis_denuncias', {}, a)) == [])
+            caso('una denuncia muy corta se rechaza', rest('POST', 'rpc/denunciar_maltrato', {'p_descripcion': 'mal'}, b)[0] >= 400)
+            caso('fotos de otra persona no', rest('POST', 'rpc/denunciar_maltrato',
+                 {'p_descripcion': 'Descripción suficiente', 'p_fotos': [f'{a_id}/x.jpg']}, b)[0] >= 400)
+            caso('A no ve las denuncias de administración', rest('POST', 'rpc/admin_denuncias', {}, a)[0] >= 400)
+            caso('X las ve con la ubicación', any(d['id'] == denuncia and d['lat'] is not None
+                                                  for d in filas(rest('POST', 'rpc/admin_denuncias', {}, x))))
+            rest('POST', 'rpc/admin_estado_denuncia', {'p_id': denuncia, 'p_estado': 'referred', 'p_nota': 'Derivada al INBA'}, x)
+            caso('X la deriva y B ve el estado', filas(rest('POST', 'rpc/mis_denuncias', {}, b))[0]['status'] == 'referred')
+            caso('las fotos de denuncias no son públicas',
+                 pedir('GET', f'{URL}/storage/v1/object/public/abuse-photos/{b_id}/x.jpg')[0] >= 400)
             pedir('DELETE', f'{URL}/rest/v1/qr_tags?pet_id=eq.{mascota_b}', headers=ADMIN)
             pedir('DELETE', f'{URL}/rest/v1/pets?id=eq.{mascota_b}', headers=ADMIN)
 
