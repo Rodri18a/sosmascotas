@@ -49,7 +49,14 @@ abstract interface class SosRepositorio {
   });
 
   /// El autor cierra su reporte: ¡apareció! ([resuelto] = true) o archivado.
+  /// Si apareció, se avisa a quienes lo seguían (1.4.5).
   Future<void> cerrar(String id, {required bool resuelto});
+
+  /// ¿Sigo este SOS? (1.4.5, D74)
+  Future<bool> sigo(String sosId);
+
+  /// Seguir o dejar de seguir un SOS ajeno.
+  Future<void> seguir(String sosId, {required bool seguir});
 
   /// WhatsApp directo opcional en un reporte propio (desactivado por defecto).
   Future<void> mostrarWhatsapp(
@@ -184,11 +191,33 @@ class SupabaseSosRepositorio implements SosRepositorio {
   }
 
   @override
-  Future<void> cerrar(String id, {required bool resuelto}) =>
-      _cliente.rpc<void>(
-        'cerrar_sos',
-        params: {'p_id': id, 'p_estado': resuelto ? 'resolved' : 'archived'},
-      );
+  Future<void> cerrar(String id, {required bool resuelto}) async {
+    await _cliente.rpc<void>(
+      'cerrar_sos',
+      params: {'p_id': id, 'p_estado': resuelto ? 'resolved' : 'archived'},
+    );
+    if (!resuelto) return;
+    try {
+      // Avisa una sola vez a cada seguidor; si falla, no se insiste.
+      await _cliente.functions.invoke('sos-follow-alert', body: {'sos_id': id});
+    } on Exception {
+      // El reporte ya quedó cerrado.
+    }
+  }
+
+  @override
+  Future<bool> sigo(String sosId) async {
+    final fila = await _cliente
+        .from('sos_follows')
+        .select('sos_id')
+        .eq('sos_id', sosId)
+        .maybeSingle();
+    return fila != null;
+  }
+
+  @override
+  Future<void> seguir(String sosId, {required bool seguir}) => _cliente
+      .rpc<bool>('seguir_sos', params: {'p_sos': sosId, 'p_seguir': seguir});
 
   @override
   Future<void> mostrarWhatsapp(
@@ -275,6 +304,12 @@ class SosSinConfigurar implements SosRepositorio {
   Future<void> cerrar(String id, {required bool resuelto}) async {}
 
   @override
+  Future<bool> sigo(String sosId) async => false;
+
+  @override
+  Future<void> seguir(String sosId, {required bool seguir}) async {}
+
+  @override
   Future<void> mostrarWhatsapp(
     String sosId, {
     required String? numero,
@@ -313,3 +348,9 @@ final sosCercanosProvider = FutureProvider<List<SosResumen>>(
 final sosDetalleProvider = FutureProvider.family<SosDetalle?, String>(
   (ref, id) => ref.watch(sosRepositorioProvider).detalle(id),
 );
+
+/// ¿Sigo este SOS? Se vuelve a leer al cambiarlo.
+final sigoSosProvider = FutureProvider.family<bool, String>((ref, sosId) {
+  if (ref.watch(usuarioActualProvider).value == null) return false;
+  return ref.watch(sosRepositorioProvider).sigo(sosId);
+});

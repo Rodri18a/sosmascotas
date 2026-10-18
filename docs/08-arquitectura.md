@@ -112,7 +112,7 @@ Se despliegan con `supabase functions deploy <nombre> --use-api` y se prueban en
 |---|---|---|
 | Avisos de SOS por zona | Edge Function + PostGIS + FCM | "Se perdió un perro a 1,2 km tuyo" |
 | Escaneo de QR | Edge Function + FCM | "Escanearon el QR de Toby cerca de…" |
-| Novedades de búsquedas que sigo | Edge Function + FCM | "¡Apareció Luna!" |
+| Novedades de búsquedas que sigo | Edge Function `sos-follow-alert` + FCM (D74) | "¡Luna volvió a casa!" |
 | Chat, turnos, pedidos | Realtime + FCM | |
 | Recordatorios de medicación, comida y vacunas | **Locales** (sin servidor). En la web, solo con la app abierta (D67) | "Antibiótico para Toby" |
 | Recordatorios del hogar compartido | Locales + sincronización por Realtime / FCM | "Ana ya le dio la pastilla" |
@@ -160,6 +160,7 @@ Tabla `events` (append-only), escrita por el cliente con `ref.read(metricasProvi
 | `signup` / `pet_create` | — |
 | `health_record_create` | tipo del registro de la libreta (`vaccine`, `deworming`, `checkup`, `allergy`, `other`; D66) |
 | `household_invite` / `household_join` / `household_leave` | — (sin datos de nadie; D69) |
+| `sos_follow` / `sos_follow_push` | target_id del SOS; `sos_follow_push` con los dispositivos avisados (lo registra `sos-follow-alert`; D74) |
 | `chat_start` / `chat_message` / `chat_block` | `chat_start` con el origen (`sos`); sin contenido de los mensajes (D73) |
 | `task_create` / `task_done` | tipo de tarea (`walk`, `food`, `bath`, `vet`, `other`; D71) |
 | `reminder_create` | tipo del recordatorio (`medication`, `food`, `vaccine`, `checkup`; D67) |

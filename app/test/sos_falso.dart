@@ -106,6 +106,15 @@ class SosFalso implements SosRepositorio {
     return true;
   }
 
+  final seguidos = <String>{};
+
+  @override
+  Future<bool> sigo(String sosId) async => seguidos.contains(sosId);
+
+  @override
+  Future<void> seguir(String sosId, {required bool seguir}) async =>
+      seguir ? seguidos.add(sosId) : seguidos.remove(sosId);
+
   @override
   Future<void> cerrar(String id, {required bool resuelto}) async {
     cerrados[id] = resuelto;

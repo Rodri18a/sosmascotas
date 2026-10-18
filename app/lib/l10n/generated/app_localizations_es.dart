@@ -2039,4 +2039,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get chatDemasiados => 'Abriste muchos chats hoy. Probá mañana.';
+
+  @override
+  String get sosSeguir => 'Seguir este reporte';
+
+  @override
+  String get sosDejarDeSeguir => 'Dejar de seguir';
+
+  @override
+  String get sosSiguiendo => 'Te vamos a avisar cuando vuelva a casa.';
 }

@@ -175,4 +175,41 @@ void main() {
       'tipo': 'sos',
     });
   });
+
+  testWidgets('seguir un SOS ajeno y dejar de seguirlo', (tester) async {
+    _pantallaDeCelular(tester);
+    final sos = SosFalso(
+      detalles: {
+        's1': SosDetalle(
+          id: 's1',
+          tipo: TipoSos.perdida,
+          estado: EstadoSos.activo,
+          especie: 'Perro',
+          especieIcono: '🐶',
+          nombre: 'Luna',
+          cuando: DateTime(2026, 10, 13),
+          zona: const Punto(-34.72, -55.95),
+          fotos: const ['sos-photos/u1/a.jpg'],
+          esMio: false,
+        ),
+      },
+    );
+    final eventos = <Map<String, Object?>>[];
+    await tester.pumpWidget(
+      _app(chat: ChatFalso(), sos: sos, eventos: eventos),
+    );
+    await _ir(tester, '/sos/s1');
+
+    await _tocar(tester, find.text('Seguir este reporte'));
+    expect(sos.seguidos, {'s1'});
+    expect(
+      find.text('Te vamos a avisar cuando vuelva a casa.'),
+      findsOneWidget,
+    );
+    expect(eventos.map((e) => e['name']), contains('sos_follow'));
+
+    await _tocar(tester, find.text('Dejar de seguir'));
+    expect(sos.seguidos, isEmpty);
+    expect(find.text('Seguir este reporte'), findsOneWidget);
+  });
 }

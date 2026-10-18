@@ -28,6 +28,7 @@ abstract final class Eventos {
   static const chatStart = 'chat_start';
   static const chatMessage = 'chat_message';
   static const chatBlock = 'chat_block';
+  static const sosFollow = 'sos_follow';
 }
 
 /// Valida el nombre de un evento con la misma regla que la base de datos.

@@ -786,5 +786,8 @@
   "chatMotivoOfensivo": "Es ofensivo o me acosa",
   "chatMotivoOtro": "Otro motivo",
   "chatNoPuedo": "Este reporte ya no está activo o es tuyo.",
-  "chatDemasiados": "Abriste muchos chats hoy. Probá mañana."
+  "chatDemasiados": "Abriste muchos chats hoy. Probá mañana.",
+  "sosSeguir": "Seguir este reporte",
+  "sosDejarDeSeguir": "Dejar de seguir",
+  "sosSiguiendo": "Te vamos a avisar cuando vuelva a casa."
 }

@@ -65,6 +65,7 @@ Propuesta inicial. Se ajusta al implementar cada fase. **RLS activado en todas l
 
 | Tabla | Campos clave | Fase |
 |---|---|---|
+| `sos_follows` | sos_id, user_id, created_at, notified_at. Cada uno ve solo lo que sigue; nadie ve quién más sigue un reporte; se escribe con `seguir_sos()` (D74) |
 | `conversations` | id, kind (`sos`, `qr`, `business`, `user`), context_id, created_by, last_message_at. Se crean solo con funciones (`iniciar_chat_sos()`; una por persona y contexto; 10 nuevas por día) (D73) | 1 |
 | `conversation_members` | conversation_id, user_id, last_read_at, blocked (cada uno edita solo esas dos columnas de su fila; si alguien bloquea, nadie escribe) | 1 |
 | `messages` | id, conversation_id, sender_id, body, attachment_path (bucket privado `chat-photos`), lat/lng (si se comparte), created_at (del servidor). Sin edición ni borrado; 30 por minuto; Realtime. Lista con `mis_conversaciones()` | 1 |

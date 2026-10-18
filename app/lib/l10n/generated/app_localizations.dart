@@ -3501,6 +3501,24 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Abriste muchos chats hoy. Probá mañana.'**
   String get chatDemasiados;
+
+  /// No description provided for @sosSeguir.
+  ///
+  /// In es, this message translates to:
+  /// **'Seguir este reporte'**
+  String get sosSeguir;
+
+  /// No description provided for @sosDejarDeSeguir.
+  ///
+  /// In es, this message translates to:
+  /// **'Dejar de seguir'**
+  String get sosDejarDeSeguir;
+
+  /// No description provided for @sosSiguiendo.
+  ///
+  /// In es, this message translates to:
+  /// **'Te vamos a avisar cuando vuelva a casa.'**
+  String get sosSiguiendo;
 }
 
 class _AppLocalizationsDelegate

@@ -354,6 +354,14 @@ class _Detalle extends ConsumerWidget {
                   ),
                 ],
                 const SizedBox(height: 8),
+                // Seguir el reporte (1.4.5, D74), con la funcionalidad `chat`.
+                if (ref.watch(conectadoProvider) &&
+                    ref.watch(
+                      funcionalidadActivaProvider(Funcionalidades.chat),
+                    )) ...[
+                  _BotonSeguir(sosId: detalle.id),
+                  const SizedBox(height: 8),
+                ],
               ],
               OutlinedButton.icon(
                 onPressed: () => _compartir(context, ref),
@@ -626,5 +634,42 @@ class _FormularioAvisoState extends ConsumerState<_FormularioAviso> {
         ),
       ),
     );
+  }
+}
+
+class _BotonSeguir extends ConsumerWidget {
+  const _BotonSeguir({required this.sosId});
+
+  final String sosId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = context.t;
+    final sigo = ref.watch(sigoSosProvider(sosId)).value ?? false;
+    Future<void> cambiar() async {
+      final mensajes = ScaffoldMessenger.of(context);
+      try {
+        await ref.read(sosRepositorioProvider).seguir(sosId, seguir: !sigo);
+        if (!sigo) {
+          ref.read(metricasProvider).track(Eventos.sosFollow, targetId: sosId);
+          mensajes.showSnackBar(SnackBar(content: Text(t.sosSiguiendo)));
+        }
+      } on Exception {
+        mensajes.showSnackBar(SnackBar(content: Text(t.errorSinConexion)));
+      }
+      ref.invalidate(sigoSosProvider(sosId));
+    }
+
+    return sigo
+        ? TextButton.icon(
+            onPressed: cambiar,
+            icon: const Icon(Icons.notifications_off_outlined),
+            label: Text(t.sosDejarDeSeguir),
+          )
+        : OutlinedButton.icon(
+            onPressed: cambiar,
+            icon: const Icon(Icons.notifications_active_outlined),
+            label: Text(t.sosSeguir),
+          );
   }
 }
