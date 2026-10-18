@@ -23,6 +23,8 @@ abstract final class Eventos {
   static const householdInvite = 'household_invite';
   static const householdJoin = 'household_join';
   static const householdLeave = 'household_leave';
+  static const taskCreate = 'task_create';
+  static const taskDone = 'task_done';
 }
 
 /// Valida el nombre de un evento con la misma regla que la base de datos.

@@ -8,6 +8,7 @@ export 'src/config/app_env.dart';
 export 'src/config/config_firebase.dart';
 export 'src/cuenta/hogar.dart';
 export 'src/cuenta/perfil.dart';
+export 'src/cuenta/tarea.dart';
 export 'src/fotos/preparar_foto.dart';
 export 'src/funcionalidades/funcionalidades.dart';
 export 'src/mapa/mapa.dart';

@@ -13,6 +13,7 @@ import '../../mascotas/textos_mascota.dart';
 import '../../router.dart';
 import '../../theme/paleta.dart';
 import '../../widgets/foto_mascota.dart';
+import '../hogar/tareas.dart';
 import '../libreta/libreta.dart';
 import '../recordatorios/recordatorios.dart';
 
@@ -164,6 +165,13 @@ class _Ficha extends ConsumerWidget {
             child: Padding(
               padding: const EdgeInsets.only(top: 12),
               child: TarjetaLibreta(mascotaId: mascota.id),
+            ),
+          ),
+          SiFuncionalidad(
+            Funcionalidades.hogar,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 12),
+              child: TarjetaTareas(mascota: mascota),
             ),
           ),
           SiFuncionalidad(

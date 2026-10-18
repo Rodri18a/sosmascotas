@@ -3111,6 +3111,156 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Compartí tus mascotas con tu familia.'**
   String get ajustesHogarAyuda;
+
+  /// No description provided for @tareasTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Tareas de hoy'**
+  String get tareasTitulo;
+
+  /// No description provided for @tareasVacio.
+  ///
+  /// In es, this message translates to:
+  /// **'Repartan el paseo, la comida o el baño: cada uno ve qué le toca y quién lo hizo.'**
+  String get tareasVacio;
+
+  /// No description provided for @tareasAgregar.
+  ///
+  /// In es, this message translates to:
+  /// **'Agregar tarea'**
+  String get tareasAgregar;
+
+  /// No description provided for @tareaNueva.
+  ///
+  /// In es, this message translates to:
+  /// **'Nueva tarea'**
+  String get tareaNueva;
+
+  /// No description provided for @tareaPaseo.
+  ///
+  /// In es, this message translates to:
+  /// **'Paseo'**
+  String get tareaPaseo;
+
+  /// No description provided for @tareaComida.
+  ///
+  /// In es, this message translates to:
+  /// **'Comida'**
+  String get tareaComida;
+
+  /// No description provided for @tareaBano.
+  ///
+  /// In es, this message translates to:
+  /// **'Baño'**
+  String get tareaBano;
+
+  /// No description provided for @tareaVeterinaria.
+  ///
+  /// In es, this message translates to:
+  /// **'Veterinaria'**
+  String get tareaVeterinaria;
+
+  /// No description provided for @tareaOtra.
+  ///
+  /// In es, this message translates to:
+  /// **'Otra'**
+  String get tareaOtra;
+
+  /// No description provided for @tareaNota.
+  ///
+  /// In es, this message translates to:
+  /// **'Detalle (opcional)'**
+  String get tareaNota;
+
+  /// No description provided for @tareaNotaAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Por ejemplo: a la plaza, media porción.'**
+  String get tareaNotaAyuda;
+
+  /// No description provided for @tareaCuando.
+  ///
+  /// In es, this message translates to:
+  /// **'Cuándo'**
+  String get tareaCuando;
+
+  /// No description provided for @tareaHoy.
+  ///
+  /// In es, this message translates to:
+  /// **'Hoy'**
+  String get tareaHoy;
+
+  /// No description provided for @tareaManana.
+  ///
+  /// In es, this message translates to:
+  /// **'Mañana'**
+  String get tareaManana;
+
+  /// No description provided for @tareaAsignar.
+  ///
+  /// In es, this message translates to:
+  /// **'Le toca a'**
+  String get tareaAsignar;
+
+  /// No description provided for @tareaNadie.
+  ///
+  /// In es, this message translates to:
+  /// **'Cualquiera'**
+  String get tareaNadie;
+
+  /// No description provided for @tareaLeToca.
+  ///
+  /// In es, this message translates to:
+  /// **'Le toca a {nombre}'**
+  String tareaLeToca(String nombre);
+
+  /// No description provided for @tareaTeToca.
+  ///
+  /// In es, this message translates to:
+  /// **'Te toca a vos'**
+  String get tareaTeToca;
+
+  /// No description provided for @tareaSinAsignar.
+  ///
+  /// In es, this message translates to:
+  /// **'Cualquiera la puede hacer'**
+  String get tareaSinAsignar;
+
+  /// No description provided for @tareaHechaPor.
+  ///
+  /// In es, this message translates to:
+  /// **'Hecha por {nombre} {cuando}'**
+  String tareaHechaPor(String nombre, String cuando);
+
+  /// No description provided for @tareaHechaPorVos.
+  ///
+  /// In es, this message translates to:
+  /// **'La hiciste vos {cuando}'**
+  String tareaHechaPorVos(String cuando);
+
+  /// No description provided for @tareaMarcar.
+  ///
+  /// In es, this message translates to:
+  /// **'Marcar hecha'**
+  String get tareaMarcar;
+
+  /// No description provided for @tareaDesmarcar.
+  ///
+  /// In es, this message translates to:
+  /// **'Marcar pendiente'**
+  String get tareaDesmarcar;
+
+  /// No description provided for @tareaBorrar.
+  ///
+  /// In es, this message translates to:
+  /// **'Borrar tarea'**
+  String get tareaBorrar;
+
+  /// No description provided for @tareaCrear.
+  ///
+  /// In es, this message translates to:
+  /// **'Agregar'**
+  String get tareaCrear;
 }
 
 class _AppLocalizationsDelegate

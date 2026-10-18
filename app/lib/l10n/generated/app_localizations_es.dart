@@ -1818,4 +1818,86 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get ajustesHogarAyuda => 'Compartí tus mascotas con tu familia.';
+
+  @override
+  String get tareasTitulo => 'Tareas de hoy';
+
+  @override
+  String get tareasVacio =>
+      'Repartan el paseo, la comida o el baño: cada uno ve qué le toca y quién lo hizo.';
+
+  @override
+  String get tareasAgregar => 'Agregar tarea';
+
+  @override
+  String get tareaNueva => 'Nueva tarea';
+
+  @override
+  String get tareaPaseo => 'Paseo';
+
+  @override
+  String get tareaComida => 'Comida';
+
+  @override
+  String get tareaBano => 'Baño';
+
+  @override
+  String get tareaVeterinaria => 'Veterinaria';
+
+  @override
+  String get tareaOtra => 'Otra';
+
+  @override
+  String get tareaNota => 'Detalle (opcional)';
+
+  @override
+  String get tareaNotaAyuda => 'Por ejemplo: a la plaza, media porción.';
+
+  @override
+  String get tareaCuando => 'Cuándo';
+
+  @override
+  String get tareaHoy => 'Hoy';
+
+  @override
+  String get tareaManana => 'Mañana';
+
+  @override
+  String get tareaAsignar => 'Le toca a';
+
+  @override
+  String get tareaNadie => 'Cualquiera';
+
+  @override
+  String tareaLeToca(String nombre) {
+    return 'Le toca a $nombre';
+  }
+
+  @override
+  String get tareaTeToca => 'Te toca a vos';
+
+  @override
+  String get tareaSinAsignar => 'Cualquiera la puede hacer';
+
+  @override
+  String tareaHechaPor(String nombre, String cuando) {
+    return 'Hecha por $nombre $cuando';
+  }
+
+  @override
+  String tareaHechaPorVos(String cuando) {
+    return 'La hiciste vos $cuando';
+  }
+
+  @override
+  String get tareaMarcar => 'Marcar hecha';
+
+  @override
+  String get tareaDesmarcar => 'Marcar pendiente';
+
+  @override
+  String get tareaBorrar => 'Borrar tarea';
+
+  @override
+  String get tareaCrear => 'Agregar';
 }

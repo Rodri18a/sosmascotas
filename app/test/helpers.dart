@@ -13,6 +13,7 @@ import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
 import 'package:sosmascota/src/fotos/selector_foto.dart';
 import 'package:sosmascota/src/funcionalidades/funcionalidades_activas.dart';
 import 'package:sosmascota/src/hogar/hogar_repositorio.dart';
+import 'package:sosmascota/src/hogar/tareas_repositorio.dart';
 import 'package:sosmascota/src/instalar/servicio_instalacion.dart';
 import 'package:sosmascota/src/mapa/mapa_vista.dart';
 import 'package:sosmascota/src/mascotas/catalogo.dart';
@@ -45,6 +46,7 @@ import 'qr_falso.dart';
 import 'recordatorios_falsos.dart';
 import 'respaldo_falso.dart';
 import 'sos_falso.dart';
+import 'tareas_falsas.dart';
 import 'tema_falso.dart';
 
 const urlPrueba = 'https://abc.supabase.co';
@@ -65,6 +67,7 @@ Widget appDePrueba({
   AvisadorRecordatorios? avisador,
   AlmacenRespaldo? respaldo,
   HogarRepositorio? hogar,
+  TareasRepositorio? tareas,
   SelectorFoto? selectorFoto,
   QrRepositorio? qr,
   AvisosRepositorio? avisos,
@@ -123,6 +126,7 @@ Widget appDePrueba({
       recordatorios ?? RecordatoriosFalsos(),
     ),
     hogarRepositorioProvider.overrideWithValue(hogar ?? HogarFalso()),
+    tareasRepositorioProvider.overrideWithValue(tareas ?? TareasFalsas()),
     almacenRespaldoProvider.overrideWithValue(
       respaldo ?? AlmacenRespaldoFalso(),
     ),

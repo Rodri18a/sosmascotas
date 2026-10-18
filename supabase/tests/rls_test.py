@@ -863,6 +863,31 @@ def main():
             tokens = pedir('POST', f'{URL}/rest/v1/rpc/tokens_de_cuidadores', {'p_owner': a_id}, ADMIN)
             caso('los push del dueño también van al hogar (solo el servidor lo consulta)',
                  tokens[0] == 200 and rpc('tokens_de_cuidadores', {'p_owner': a_id}, b)[0] in (401, 403, 404))
+            print('household_tasks (tareas del hogar)')
+            r_t = rest('POST', 'household_tasks', {'pet_id': pet_id, 'kind': 'walk', 'day': '2026-10-18',
+                                                   'assigned_to': b_id, 'created_by': a_id}, a)
+            tarea = filas(r_t)[0] if filas(r_t) else {}
+            caso('A crea una tarea y se la asigna a B', tarea.get('assigned_to') == b_id)
+            caso('B ve la tarea', len(filas(rest('GET', f"household_tasks?select=id&id=eq.{tarea.get('id')}", quien=b))) == 1)
+            caso('C (de afuera) no ve tareas', filas(rest('GET', 'household_tasks?select=id', quien=c)) == [])
+            caso('no se le asigna a alguien de afuera',
+                 bloqueado(rest('PATCH', f"household_tasks?id=eq.{tarea.get('id')}", {'assigned_to': c_id}, a)))
+            hecha = filas(rest('PATCH', f"household_tasks?id=eq.{tarea.get('id')}", {'done_by': b_id}, b))
+            caso('B la marca hecha a su nombre, con la hora del servidor',
+                 bool(hecha) and hecha[0]['done_by'] == b_id and hecha[0]['done_at'] is not None)
+            caso('A no puede ponerla a nombre de B',
+                 rest('POST', 'household_tasks', {'pet_id': pet_id, 'kind': 'food', 'day': '2026-10-18',
+                                                   'created_by': a_id, 'done_by': b_id}, a)[0] in (400, 401, 403))
+            caso('C no puede crear tareas para la mascota de A',
+                 bloqueado(rest('POST', 'household_tasks', {'pet_id': pet_id, 'kind': 'walk', 'day': '2026-10-18',
+                                                            'created_by': c_id}, c)))
+            caso('un tipo inventado se rechaza',
+                 rest('POST', 'household_tasks', {'pet_id': pet_id, 'kind': 'magia', 'day': '2026-10-18',
+                                                   'created_by': a_id}, a)[0] == 400)
+            caso('B no puede crear una tarea a nombre de otro',
+                 bloqueado(rest('POST', 'household_tasks', {'pet_id': pet_id, 'kind': 'walk', 'day': '2026-10-18',
+                                                            'created_by': a_id}, b)))
+
             caso('B no puede sacar a A ni renombrar el hogar',
                  bloqueado(rest('PATCH', f'households?id=eq.{hogar}', {'name': 'X'}, b)))
             caso('B se puede ir', len(filas(rest('DELETE', f'household_members?user_id=eq.{b_id}', quien=b))) == 1)
