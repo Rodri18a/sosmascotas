@@ -1,5 +1,7 @@
 import 'dart:math' as math;
 
+import '../comercios/comercio.dart';
+
 /// Un punto en el mapa.
 class Punto {
   const Punto(this.lat, this.lng);
@@ -82,11 +84,16 @@ class Pin {
     required this.tipo,
     required this.punto,
     this.cantidad = 1,
+    this.categoria,
   });
 
   final String id;
   final TipoPin tipo;
   final Punto punto;
+
+  /// Rubro de un lugar (define el ícono del pin, D82). `null` en SOS, eventos
+  /// y grupos.
+  final Categoria? categoria;
 
   /// Cuántos lugares junta (solo en un [TipoPin.grupo]).
   final int cantidad;
@@ -102,10 +109,11 @@ class Pin {
       other.id == id &&
       other.tipo == tipo &&
       other.punto == punto &&
-      other.cantidad == cantidad;
+      other.cantidad == cantidad &&
+      other.categoria == categoria;
 
   @override
-  int get hashCode => Object.hash(id, tipo, punto, cantidad);
+  int get hashCode => Object.hash(id, tipo, punto, cantidad, categoria);
 }
 
 /// Junta los pines de lugares que caen en la misma celda de una grilla sobre

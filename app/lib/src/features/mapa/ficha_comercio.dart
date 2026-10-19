@@ -16,18 +16,6 @@ import '../chat/chat_screen.dart';
 import '../resenas/resenas.dart';
 import 'marcar_lugar.dart';
 
-IconData iconoCategoria(Categoria c) => switch (c) {
-  Categoria.vet => Icons.local_hospital_outlined,
-  Categoria.petshop => Icons.storefront_outlined,
-  Categoria.pharmacy => Icons.medication_outlined,
-  Categoria.grooming => Icons.content_cut,
-  Categoria.walker => Icons.directions_walk,
-  Categoria.hotel => Icons.house_outlined,
-  Categoria.trainer => Icons.school_outlined,
-  Categoria.petFriendly => Icons.local_cafe_outlined,
-  Categoria.shelter => Icons.volunteer_activism_outlined,
-};
-
 /// Abre la ficha de un lugar desde abajo (al tocar su pin o en la lista).
 Future<void> mostrarFichaComercio(
   BuildContext context,

@@ -7,7 +7,6 @@ import '../../comercios/textos_comercio.dart';
 import '../../mapa/mapa_vista.dart';
 import '../../mascotas/catalogo.dart';
 import '../../sos/sos_repositorio.dart';
-import '../mapa/ficha_comercio.dart';
 
 /// Datos con los que arranca un alta (por ejemplo, desde un lugar marcado).
 typedef PrecargaNegocio = ({Categoria? rubro, Punto? punto});

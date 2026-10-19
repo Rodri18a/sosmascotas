@@ -134,8 +134,12 @@ class LugarSinReclamar {
   final int marcas;
   final String? enlaceGoogle;
 
-  Pin get pin =>
-      Pin(id: 'sin-reclamar:$id', tipo: TipoPin.sinReclamar, punto: punto);
+  Pin get pin => Pin(
+    id: 'sin-reclamar:$id',
+    tipo: TipoPin.sinReclamar,
+    punto: punto,
+    categoria: categoria,
+  );
 }
 
 /// RUT uruguayo: 12 números (se ignoran espacios, puntos y guiones).
@@ -447,6 +451,7 @@ class Comercio {
         _ => TipoPin.comercio,
       },
       punto: p,
+      categoria: categoria,
     ),
     null => null,
   };

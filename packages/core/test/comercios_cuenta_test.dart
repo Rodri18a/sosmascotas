@@ -78,7 +78,7 @@ void main() {
     expect(n.rut, '211111110019');
   });
 
-  test('lugar sin reclamar: gris y con la cantidad de marcas', () {
+  test('lugar sin reclamar: gris, con su rubro y la cantidad de marcas', () {
     final l = LugarSinReclamar.fromJson({
       'grupo': 'trainer:abc',
       'category': 'trainer',
@@ -90,6 +90,33 @@ void main() {
     expect(l.categoria, Categoria.trainer);
     expect(l.marcas, 2);
     expect(l.pin.tipo, TipoPin.sinReclamar);
+    // El rubro viaja en el pin: define el ícono (D82).
+    expect(l.pin.categoria, Categoria.trainer);
+  });
+
+  test('el pin de un lugar lleva su rubro (D82)', () {
+    final c = Comercio.fromJson({
+      'id': 'b1',
+      'name': 'X',
+      'business_type': 'grooming',
+      'lat': -34.72,
+      'lng': -55.95,
+      'hours': {},
+    });
+    expect(c.pin?.tipo, TipoPin.comercio);
+    expect(c.pin?.categoria, Categoria.grooming);
+    const punto = Punto(-34.72, -55.95);
+    expect(
+      const Pin(id: 'a', tipo: TipoPin.comercio, punto: punto),
+      isNot(
+        const Pin(
+          id: 'a',
+          tipo: TipoPin.comercio,
+          punto: punto,
+          categoria: Categoria.petshop,
+        ),
+      ),
+    );
   });
 
   test('RUT', () {

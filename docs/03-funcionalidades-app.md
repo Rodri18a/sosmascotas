@@ -73,6 +73,7 @@ Pantalla inicial: logo sobre el azul petróleo de la marca (`#0F5E7A`, D62) dura
 - Filtros: categoría, especie de la mascota activa, distancia (300 m, 800 m, 2,5 km, todo), "Abierto ahora", favoritos, **"Coloca microchip"** (veterinarias con la insignia Operador RENAC, Fase 1).
 - **Guardar filtros y favoritos:** función Pro.
 - **Estados de un lugar:** sin reclamar (gris) · no verificado · verificado ✔️ · destacado (naranja, plan pago).
+- **Íconos de los pines (D82):** el ícono dice el rubro (veterinaria cruz, pet shop carrito, farmacia pastilla, peluquería tijera, paseador persona caminando, hotel cama, adiestrador birrete, acepta mascotas huella, refugio casita) y el color, el estado. Perdidos y encontrados: lupa roja o verde. Eventos: calendario coral. Un lugar sin reclamar es gris **con el ícono de su rubro**.
 - **Marcar lugar (Fase 1):** el usuario elige el rubro, toca el mapa y puede pegar un link de Google. **No puede ponerle nombre.** Queda "sin reclamar", con el texto "marcado por N usuarios".
 - **Ficha del lugar:** sube desde abajo; horario, dirección, distancia, especies que atiende, promoción, contactos, reseñas, favorito, "fui", "**cómo llegar**" (enlace a Google Maps) y "es la veterinaria de mi mascota".
 - **Fase 0:** el mapa muestra solo perdidos y encontrados + **veterinarias de urgencia cargadas a mano**.

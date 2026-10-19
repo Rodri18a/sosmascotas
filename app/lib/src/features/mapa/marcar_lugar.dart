@@ -11,7 +11,6 @@ import '../../metricas/metricas.dart';
 import '../../router.dart';
 import '../../sos/sos_repositorio.dart';
 import '../../utiles/enlaces.dart';
-import 'ficha_comercio.dart';
 
 /// Marcar un lugar que no está en el mapa (1.3.2): solo el rubro y el punto.
 class MarcarLugarScreen extends ConsumerStatefulWidget {

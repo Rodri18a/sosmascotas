@@ -620,14 +620,10 @@ class _Leyenda extends StatelessWidget {
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Container(
-                    width: 12,
-                    height: 12,
-                    decoration: BoxDecoration(
-                      color: colorDePin(tipo),
-                      shape: BoxShape.circle,
-                      border: Border.all(color: bordePin, width: 1.5),
-                    ),
+                  MarcaPin(
+                    aspectoDePin(
+                      Pin(id: '', tipo: tipo, punto: const Punto(0, 0)),
+                    )!,
                   ),
                   const SizedBox(width: 6),
                   Text(texto, style: tema.textTheme.labelSmall),

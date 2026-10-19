@@ -78,7 +78,7 @@
 
 - Cualquier usuario con cuenta puede marcar un lugar indicando **solo el rubro** (sin nombre) y un link de Google opcional.
 - Si varios usuarios marcan el mismo rubro a menos de 30 m, se suman ("marcado por N usuarios").
-- Se muestran en gris. Cuando un comercio los reclama, pasan a su ficha.
+- Se muestran en gris **con el ícono de su rubro** (D82), así se entiende qué son. Cuando un comercio los reclama, pasan a su ficha.
 
 ## Regla de coincidencia por especie
 

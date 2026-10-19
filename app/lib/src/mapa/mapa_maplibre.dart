@@ -1,10 +1,12 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../theme/paleta.dart';
+import 'dibujo_pin.dart';
 import 'mapa_vista.dart';
 
 /// Estilo de OpenFreeMap (gratis, sin cuenta ni clave, basado en OpenStreetMap).
@@ -30,6 +32,19 @@ class _MapaMapLibreState extends State<MapaMapLibre> {
   final _numeros = <Symbol>[];
   final _gruposPorNumero = <String, Circle>{};
   Circle? _circuloSeleccion;
+
+  /// Pines con ícono (D82): son símbolos con una imagen dibujada por la app.
+  final _iconos = <Symbol>[];
+  final _pinsPorIcono = <String, Pin>{};
+
+  /// Imágenes ya registradas en el estilo del mapa (una por aspecto).
+  final _imagenes = <String>{};
+
+  /// Densidad de la pantalla, para dibujar los íconos nítidos.
+  double _densidad = 1;
+
+  /// Cada redibujo cancela al anterior si todavía no terminó.
+  int _dibujo = 0;
 
   @override
   void didUpdateWidget(MapaMapLibre anterior) {
@@ -76,55 +91,105 @@ class _MapaMapLibreState extends State<MapaMapLibre> {
     widget.config.onTocarPin?.call(pin);
   }
 
-  /// El número de un grupo está encima de su círculo: tocarlo es tocar el grupo.
-  void _alTocarNumero(Symbol numero) {
-    if (_gruposPorNumero[numero.id] case final circulo?) {
+  /// El número de un grupo está encima de su círculo: tocarlo es tocar el
+  /// grupo. Los demás símbolos son pines con ícono.
+  void _alTocarNumero(Symbol simbolo) {
+    if (_gruposPorNumero[simbolo.id] case final circulo?) {
       _alTocarCirculo(circulo);
+    } else if (_pinsPorIcono[simbolo.id] case final pin?) {
+      widget.config.onTocarPin?.call(pin);
     }
   }
+
+  /// Registra la imagen de [aspecto] la primera vez y devuelve su nombre.
+  Future<String> _imagen(
+    MapLibreMapController control,
+    AspectoPin aspecto,
+  ) async {
+    final nombre = aspecto.clave;
+    if (_imagenes.add(nombre)) {
+      await control.addImage(
+        nombre,
+        await dibujarPin(aspecto, escala: _densidad),
+      );
+    }
+    return nombre;
+  }
+
+  /// En Android y iPhone la imagen se toma con la densidad de la pantalla; en
+  /// la web, a un píxel por punto: se achica para que mida lo mismo.
+  double get _tamanioIcono => kIsWeb ? 1 / _densidad : 1;
+
+  /// Orden de dibujo: los SOS arriba de todo, los sin reclamar abajo.
+  static int _capa(Pin pin) => switch (pin.tipo) {
+    TipoPin.perdido || TipoPin.encontrado => 3,
+    TipoPin.evento => 2,
+    TipoPin.sinReclamar => 0,
+    _ => 1,
+  };
 
   Future<void> _dibujarPins() async {
     final control = _control;
     if (control == null || !_estiloListo) return;
+    final dibujo = ++_dibujo;
+    // Las imágenes se preparan antes de borrar lo anterior: así el mapa no
+    // queda vacío mientras se dibujan.
+    final pins = widget.config.pins;
+    final imagenes = <Pin, String>{};
+    for (final pin in pins) {
+      if (aspectoDePin(pin) case final aspecto?) {
+        imagenes[pin] = await _imagen(control, aspecto);
+      }
+    }
+    if (dibujo != _dibujo) return;
     final anteriores = control.circles
         .where((c) => c.id != _circuloSeleccion?.id)
         .toList();
     if (anteriores.isNotEmpty) await control.removeCircles(anteriores);
-    if (_numeros.isNotEmpty) {
-      await control.removeSymbols(List.of(_numeros));
-      _numeros.clear();
-      _gruposPorNumero.clear();
-    }
+    final simbolos = [..._numeros, ..._iconos];
+    if (simbolos.isNotEmpty) await control.removeSymbols(simbolos);
+    _numeros.clear();
+    _gruposPorNumero.clear();
+    _iconos.clear();
+    _pinsPorIcono.clear();
     _pinsPorCirculo.clear();
-    for (final pin in widget.config.pins) {
-      final grupo = pin.tipo == TipoPin.grupo;
-      final sinReclamar = pin.tipo == TipoPin.sinReclamar;
-      final evento = pin.tipo == TipoPin.evento;
+    final ordenados = [...pins]..sort((a, b) => _capa(a).compareTo(_capa(b)));
+    for (final pin in ordenados) {
+      if (imagenes[pin] case final imagen?) {
+        final icono = await control.addSymbol(
+          SymbolOptions(
+            geometry: LatLng(pin.punto.lat, pin.punto.lng),
+            iconImage: imagen,
+            iconSize: _tamanioIcono,
+            zIndex: _capa(pin),
+          ),
+        );
+        _iconos.add(icono);
+        _pinsPorIcono[icono.id] = pin;
+        continue;
+      }
+      // Sin ícono solo quedan los grupos (1.2.6): círculo casi negro con el
+      // número adentro.
       final circulo = await control.addCircle(
         CircleOptions(
           geometry: LatLng(pin.punto.lat, pin.punto.lng),
-          circleRadius: grupo ? 15 : (sinReclamar ? 6 : 9),
-          // Un evento es un anillo: centro blanco y borde coral grueso.
-          circleColor: evento ? '#FFFFFF' : _hex(colorDePin(pin.tipo)),
-          circleStrokeWidth: evento ? 4 : 2,
-          circleStrokeColor: evento
-              ? _hex(colorEvento)
-              : (grupo || sinReclamar ? '#FFFFFF' : _hex(bordePin)),
+          circleRadius: 15,
+          circleColor: _hex(colorDePin(pin.tipo)),
+          circleStrokeWidth: 2,
+          circleStrokeColor: '#FFFFFF',
         ),
       );
       _pinsPorCirculo[circulo.id] = pin;
-      if (grupo) {
-        final numero = await control.addSymbol(
-          SymbolOptions(
-            geometry: LatLng(pin.punto.lat, pin.punto.lng),
-            textField: '${pin.cantidad}',
-            textColor: '#FFFFFF',
-            textSize: 13,
-          ),
-        );
-        _numeros.add(numero);
-        _gruposPorNumero[numero.id] = circulo;
-      }
+      final numero = await control.addSymbol(
+        SymbolOptions(
+          geometry: LatLng(pin.punto.lat, pin.punto.lng),
+          textField: '${pin.cantidad}',
+          textColor: '#FFFFFF',
+          textSize: 13,
+        ),
+      );
+      _numeros.add(numero);
+      _gruposPorNumero[numero.id] = circulo;
     }
   }
 
@@ -167,6 +232,7 @@ class _MapaMapLibreState extends State<MapaMapLibre> {
   @override
   Widget build(BuildContext context) {
     final c = widget.config;
+    _densidad = MediaQuery.devicePixelRatioOf(context);
     return MapLibreMap(
       styleString: estiloMapa,
       initialCameraPosition: CameraPosition(
@@ -184,6 +250,15 @@ class _MapaMapLibreState extends State<MapaMapLibre> {
       },
       onStyleLoadedCallback: () async {
         _estiloListo = true;
+        // El estilo nuevo no trae las imágenes registradas antes.
+        _imagenes.clear();
+        // Los pines con ícono nunca se esconden por chocar entre sí o con
+        // los nombres de las calles.
+        final control = _control!;
+        await control.setSymbolIconAllowOverlap(true);
+        await control.setSymbolIconIgnorePlacement(true);
+        await control.setSymbolTextAllowOverlap(true);
+        await control.setSymbolTextIgnorePlacement(true);
         await _dibujarPins();
         await _dibujarSeleccion();
         await _avisarZonaVisible();

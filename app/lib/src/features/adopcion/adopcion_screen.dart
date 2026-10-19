@@ -119,7 +119,7 @@ class _Foto extends ConsumerWidget {
     final r = ruta;
     final vacio = SizedBox(
       height: alto,
-      child: const Icon(Icons.pets, size: 48),
+      child: const Icon(Icons.volunteer_activism, size: 48),
     );
     if (r == null) return vacio;
     return Image.network(
