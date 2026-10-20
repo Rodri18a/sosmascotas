@@ -752,10 +752,19 @@ class _InterruptorReencuentro extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final t = context.t;
     final compartido = ref.watch(reencuentroCompartidoProvider(sosId)).value;
+    // Cuántos reaccionaron (D87): solo el total, nunca quiénes.
+    final reacciones = (compartido ?? false)
+        ? ref.watch(reaccionesDeMiReencuentroProvider(sosId)).value ?? 0
+        : 0;
     return SwitchListTile(
       secondary: const Icon(Icons.diversity_3_outlined),
       title: Text(t.comunidadInterruptor),
-      subtitle: Text(t.comunidadInterruptorDetalle),
+      subtitle: Text(
+        [
+          t.comunidadInterruptorDetalle,
+          if (reacciones > 0) t.comunidadReaccionesTuyo(reacciones),
+        ].join('\n'),
+      ),
       value: compartido ?? false,
       onChanged: compartido == null
           ? null

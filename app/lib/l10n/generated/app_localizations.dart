@@ -5122,6 +5122,72 @@ abstract class AppLocalizations {
   /// **'Nombre, especie y foto; nunca la ubicación ni tus datos.'**
   String get comunidadInterruptorDetalle;
 
+  /// No description provided for @comunidadReaccionesTuyo.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =1{A 1 persona le alegró la noticia ❤️} other{A {n} personas les alegró la noticia ❤️}}'**
+  String comunidadReaccionesTuyo(int n);
+
+  /// No description provided for @comunidadSeBusca.
+  ///
+  /// In es, this message translates to:
+  /// **'Se busca a {nombre}'**
+  String comunidadSeBusca(String nombre);
+
+  /// No description provided for @comunidadSeBuscaSinNombre.
+  ///
+  /// In es, this message translates to:
+  /// **'Se busca una mascota perdida'**
+  String get comunidadSeBuscaSinNombre;
+
+  /// No description provided for @comunidadPerdidaDias.
+  ///
+  /// In es, this message translates to:
+  /// **'{dias, plural, =0{Se perdió hoy.} =1{Lleva 1 día perdida.} other{Lleva {dias} días perdida.}}'**
+  String comunidadPerdidaDias(int dias);
+
+  /// No description provided for @comunidadPerdidaAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Entrá al reporte para avisar si la viste o seguirlo.'**
+  String get comunidadPerdidaAyuda;
+
+  /// No description provided for @comunidadVerReporte.
+  ///
+  /// In es, this message translates to:
+  /// **'Ver el reporte'**
+  String get comunidadVerReporte;
+
+  /// No description provided for @reaccionAlegra.
+  ///
+  /// In es, this message translates to:
+  /// **'Me alegra'**
+  String get reaccionAlegra;
+
+  /// No description provided for @reaccionFestejo.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Qué bueno!'**
+  String get reaccionFestejo;
+
+  /// No description provided for @reaccionGracias.
+  ///
+  /// In es, this message translates to:
+  /// **'Gracias'**
+  String get reaccionGracias;
+
+  /// No description provided for @reaccionesMotivoCuenta.
+  ///
+  /// In es, this message translates to:
+  /// **'Para reaccionar a las noticias necesitás una cuenta.'**
+  String get reaccionesMotivoCuenta;
+
+  /// No description provided for @reaccionesTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Qué te pareció?'**
+  String get reaccionesTitulo;
+
   /// No description provided for @adopcionEntrada.
   ///
   /// In es, this message translates to:

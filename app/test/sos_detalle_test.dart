@@ -257,7 +257,7 @@ void main() {
       listaCercanos: [_enLista],
       detalles: {'s1': _detalle(mio: true)},
     );
-    final noticias = NoticiasFalsas();
+    final noticias = NoticiasFalsas()..reaccionesDeMiReencuentroTotal = 4;
     final metricas = <Map<String, Object?>>[];
     await tester.pumpWidget(
       appDePrueba(
@@ -294,6 +294,11 @@ void main() {
     );
     await _ver(tester, interruptor);
     expect(tester.widget<SwitchListTile>(interruptor).value, isTrue);
+    // Ve cuántos reaccionaron (D87), nunca quiénes.
+    expect(
+      find.textContaining('A 4 personas les alegró la noticia'),
+      findsOneWidget,
+    );
     await tester.tap(interruptor);
     await tester.pumpAndSettle();
     expect(noticias.compartidos, isEmpty);

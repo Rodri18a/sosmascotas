@@ -501,6 +501,13 @@ def main():
         caso('con el SOS activo, la página del QR dice "Estoy perdido" y enlaza el reporte',
              pag_qr.get('lost') is True and pag_qr.get('sos_id') == sos_id)
         caso('B no puede cerrar el SOS de A', rest('POST', 'rpc/cerrar_sos', {'p_id': sos_id, 'p_estado': 'resolved'}, b)[0] >= 400)
+        def en_comunidad():
+            return [n for n in filas(rest('POST', 'rpc/novedades_comunidad', {})) if n['origin_id'] == sos_id]
+        perdida = [n for n in en_comunidad() if n['kind'] == 'perdida']
+        caso('perdida activa: aparece en Comunidad sin ubicación ni datos del dueño (D87)',
+             len(perdida) == 1 and not ({'lat', 'lng', 'location', 'user_id', 'phone'} & set(perdida[0])))
+        caso('a una perdida no se le reacciona',
+             rest('POST', 'rpc/reaccionar', {'p_id': sos_id, 'p_tipo': 'alegra'}, b)[0] >= 400)
         caso('no se aceptan estados inventados', rest('POST', 'rpc/cerrar_sos', {'p_id': sos_id, 'p_estado': 'hidden'}, a)[0] >= 400)
 
         print('flags (reportar contenido)')
@@ -517,6 +524,7 @@ def main():
             caso('un SOS oculto no se ve para otros', rest('POST', 'rpc/sos_publico', {'p_id': sos_id}, b)[1].get('status') in ('active', 'not_found'))
             caso('con 3 personas distintas se oculta solo',
                  any(r['id'] == sos_id and r['status'] == 'hidden' for r in filas(rest('POST', 'rpc/mis_sos', {}, a))))
+            caso('oculto: tampoco aparece en Comunidad', en_comunidad() == [])
             caso('oculto: otros ven not_found y el autor lo sigue viendo',
                  rest('POST', 'rpc/sos_publico', {'p_id': sos_id}, b)[1].get('status') == 'not_found'
                  and rest('POST', 'rpc/sos_publico', {'p_id': sos_id}, a)[1].get('status') == 'hidden')
@@ -548,8 +556,15 @@ def main():
             visibles = reencuentros()
             caso('un visitante lo ve, sin ubicación ni datos del dueño',
                  len(visibles) == antes + 1
-                 and set(visibles[0]) == {'id', 'kind', 'name', 'detail', 'species_id', 'amount', 'starts_at',
-                                          'photo_path', 'created_at'})
+                 and set(visibles[0]) == {'id', 'kind', 'origin_id', 'name', 'detail', 'species_id', 'amount',
+                                          'starts_at', 'photo_path', 'created_at'})
+            nov_r = visibles[0]['id']
+            caso('un visitante no reacciona',
+                 rest('POST', 'rpc/reaccionar', {'p_id': nov_r, 'p_tipo': 'alegra'})[0] >= 400)
+            caso('B reacciona al reencuentro de A (D87)',
+                 rest('POST', 'rpc/reaccionar', {'p_id': nov_r, 'p_tipo': 'alegra'}, b)[0] in (200, 204))
+            caso('A ve cuántos reaccionaron', rest('POST', 'rpc/reacciones_de_mi_reencuentro', {'p_sos': sos_id}, a)[1] == 1)
+            caso('B no ve el total del de A', rest('POST', 'rpc/reacciones_de_mi_reencuentro', {'p_sos': sos_id}, b)[1] == 0)
             caso('B no ve el estado del de A', rest('POST', 'rpc/reencuentro_compartido', {'p_sos': sos_id}, b)[1] is False)
             rest('POST', 'rpc/quitar_reencuentro', {'p_sos': sos_id}, b)
             caso('B no puede quitarlo', len(reencuentros()) == antes + 1)
@@ -1435,6 +1450,10 @@ def main():
             caso('la patrocinada dice de qué marca es', len(gatos) == 1 and gatos[0]['sponsored'] and gatos[0]['sponsor_name'] == 'Marca Prueba')
             caso('los borradores no se ven', all(n['id'] != nt_b for n in filas(rest('POST', 'rpc/noticias', {}))))
             caso('A no ve la lista de administración', rest('POST', 'rpc/admin_noticias', {}, a)[0] >= 400)
+            caso('A reacciona a una noticia publicada (D87)',
+                 rest('POST', 'rpc/reaccionar', {'p_id': nt, 'p_tipo': 'gracias'}, a)[0] in (200, 204)
+                 and filas(rest('POST', 'rpc/reacciones', {'p_ids': [nt]}))[0]['gracias'] == 1)
+            caso('a un borrador no', rest('POST', 'rpc/reaccionar', {'p_id': nt_b, 'p_tipo': 'gracias'}, a)[0] >= 400)
             rest('POST', 'rpc/admin_guardar_noticia', {'p': {**noticia, 'id': nt, 'status': 'hidden'}}, x)
             caso('oculta, ya no aparece', all(n['id'] != nt for n in filas(rest('POST', 'rpc/noticias', {}))))
             pedir('DELETE', f'{URL}/rest/v1/news?title=like.Prueba%20RLS*', headers=ADMIN)
@@ -1451,7 +1470,27 @@ def main():
             nov = del_lugar()[0]['id']
             caso('A no puede ocultar una novedad',
                  rest('POST', 'rpc/admin_estado_novedad', {'p_id': nov, 'p_estado': 'hidden'}, a)[0] >= 400)
+            print('reacciones (D87)')
+            def reacciones(quien=None):
+                return {k: v for k, v in (filas(rest('POST', 'rpc/reacciones', {'p_ids': [nov]}, quien)) or [{}])[0].items() if k != 'id'}
+            caso('nadie lee ni escribe las reacciones directo',
+                 bloqueado(rest('GET', 'news_reactions?select=*', quien=a))
+                 and bloqueado(rest('POST', 'news_reactions', {'update_id': nov, 'user_id': a_id, 'kind': 'alegra'}, a)))
+            caso('no se aceptan reacciones inventadas',
+                 rest('POST', 'rpc/reaccionar', {'p_id': nov, 'p_tipo': 'enojo'}, a)[0] >= 400)
+            rest('POST', 'rpc/reaccionar', {'p_id': nov, 'p_tipo': 'alegra'}, a)
+            rest('POST', 'rpc/reaccionar', {'p_id': nov, 'p_tipo': 'alegra'}, a)
+            rest('POST', 'rpc/reaccionar', {'p_id': nov, 'p_tipo': 'gracias'}, b)
+            caso('un visitante ve solo totales (una por persona)',
+                 reacciones() == {'alegra': 1, 'festejo': 0, 'gracias': 1, 'mia': None})
+            caso('cada uno ve la suya', reacciones(a)['mia'] == 'alegra' and reacciones(b)['mia'] == 'gracias')
+            rest('POST', 'rpc/reaccionar', {'p_id': nov, 'p_tipo': 'festejo'}, a)
+            caso('A la cambia', reacciones(a) == {'alegra': 0, 'festejo': 1, 'gracias': 1, 'mia': 'festejo'})
+            rest('POST', 'rpc/reaccionar', {'p_id': nov, 'p_tipo': None}, b)
+            caso('B la quita', reacciones(b) == {'alegra': 0, 'festejo': 1, 'gracias': 0, 'mia': None})
             caso('X la oculta', rest('POST', 'rpc/admin_estado_novedad', {'p_id': nov, 'p_estado': 'hidden'}, x)[0] in (200, 204))
+            caso('oculta, no se le reacciona',
+                 rest('POST', 'rpc/reaccionar', {'p_id': nov, 'p_tipo': 'alegra'}, b)[0] >= 400)
             caso('oculta, ya no aparece', del_lugar() == [])
             caso('el resumen solo trae totales',
                  set(filas(rest('POST', 'rpc/resumen_comunidad', {}))[0]) ==

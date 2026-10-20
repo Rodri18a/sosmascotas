@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
+import 'package:sosmascota/src/features/sos/sos_detalle_screen.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'cuenta_falsa.dart';
@@ -53,6 +54,8 @@ Future<void> _abrir(
   List<Map<String, Object?>>? metricas,
   List<Novedad> novedades = const [],
   ResumenComunidad resumen = const ResumenComunidad(),
+  NoticiasFalsas? repo,
+  bool visitante = false,
 }) async {
   tester.view
     ..physicalSize = const Size(1080, 2400)
@@ -60,13 +63,15 @@ Future<void> _abrir(
   addTearDown(tester.view.reset);
   await tester.pumpWidget(
     appDePrueba(
-      cuenta: ServicioCuentaFalso(conectado: _ana),
+      cuenta: ServicioCuentaFalso(conectado: visitante ? null : _ana),
       mascotas: MascotasFalsas(mascotas),
-      noticias: NoticiasFalsas(
-        [_paraGatos, _paraTodas, _patrocinada],
-        novedades,
-        resumen,
-      ),
+      noticias:
+          repo ??
+          NoticiasFalsas(
+            [_paraGatos, _paraTodas, _patrocinada],
+            novedades,
+            resumen,
+          ),
       enlacesAbiertos: enlaces,
       eventos: metricas,
       funcionalidades: FuncionalidadesFalsas({
@@ -203,5 +208,90 @@ void main() {
     await _tocar(tester, find.text('Comunidad'));
     expect(find.textContaining('Todavía no hay novedades'), findsOneWidget);
     expect(find.text('Últimos 30 días en la comunidad'), findsNothing);
+  });
+
+  testWidgets('reaccionar a una noticia: poner, cambiar y quitar', (
+    tester,
+  ) async {
+    final repo = NoticiasFalsas([_paraTodas]);
+    repo.reaccionesGuardadas['n2'] = const Reacciones(
+      totales: {Reaccion.alegra: 2},
+    );
+    await _abrir(tester, repo: repo);
+    await _tocar(tester, find.text('Noticias'));
+    expect(find.text('❤️ 2'), findsOneWidget, reason: 'totales en la tarjeta');
+
+    await _tocar(tester, find.text('Campaña de vacunación'));
+    expect(find.text('❤️ Me alegra · 2'), findsOneWidget);
+    await _tocar(tester, find.text('🎉 ¡Qué bueno!'));
+    expect(find.text('🎉 ¡Qué bueno! · 1'), findsOneWidget);
+    await _tocar(tester, find.text('❤️ Me alegra · 2'));
+    expect(find.text('❤️ Me alegra · 3'), findsOneWidget);
+    expect(find.text('🎉 ¡Qué bueno!'), findsOneWidget, reason: 'se cambió');
+    await _tocar(tester, find.text('❤️ Me alegra · 3'));
+    expect(find.text('❤️ Me alegra · 2'), findsOneWidget, reason: 'se quitó');
+    expect(repo.reaccionesEnviadas, [
+      ('n2', Reaccion.festejo),
+      ('n2', Reaccion.alegra),
+      ('n2', null),
+    ]);
+  });
+
+  testWidgets('un visitante tiene que ingresar para reaccionar', (
+    tester,
+  ) async {
+    final repo = NoticiasFalsas([_paraTodas]);
+    await _abrir(tester, repo: repo, visitante: true);
+    await _tocar(tester, find.text('Noticias'));
+    await _tocar(tester, find.text('Campaña de vacunación'));
+    await _tocar(tester, find.text('❤️ Me alegra'));
+    expect(
+      find.text('Para reaccionar a las noticias necesitás una cuenta.'),
+      findsOneWidget,
+    );
+    expect(repo.reaccionesEnviadas, isEmpty);
+  });
+
+  testWidgets('Comunidad: un reencuentro abre el detalle con reacciones', (
+    tester,
+  ) async {
+    final repo = NoticiasFalsas(const [], [
+      Novedad(
+        id: 'r1',
+        tipo: TipoNovedad.reencuentro,
+        fecha: DateTime(2026, 10, 20),
+        nombre: 'Lola',
+        detalle: 'lost',
+      ),
+    ]);
+    await _abrir(tester, repo: repo);
+    await _tocar(tester, find.text('Noticias'));
+    await _tocar(tester, find.text('Comunidad'));
+    await _tocar(tester, find.text('¡Lola volvió a casa! 🎉'));
+    await _tocar(tester, find.text('🙏 Gracias'));
+    expect(repo.reaccionesEnviadas, [('r1', Reaccion.gracias)]);
+  });
+
+  testWidgets('Comunidad: una perdida lleva a su reporte (sin reacciones)', (
+    tester,
+  ) async {
+    final repo = NoticiasFalsas(const [], [
+      Novedad(
+        id: 's1',
+        tipo: TipoNovedad.perdida,
+        fecha: DateTime(2026, 10, 20),
+        origenId: 's1',
+        nombre: 'Toby',
+        cantidad: 2,
+      ),
+    ]);
+    await _abrir(tester, repo: repo);
+    await _tocar(tester, find.text('Noticias'));
+    await _tocar(tester, find.text('Comunidad'));
+    expect(find.text('Se busca a Toby'), findsOneWidget);
+    expect(find.textContaining('Lleva 2 días perdida.'), findsOneWidget);
+    await _tocar(tester, find.text('Se busca a Toby'));
+    expect(find.byType(SosDetalleScreen), findsOneWidget);
+    expect(find.text('¿Qué te pareció?'), findsNothing);
   });
 }

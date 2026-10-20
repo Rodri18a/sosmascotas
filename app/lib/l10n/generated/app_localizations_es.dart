@@ -3008,6 +3008,60 @@ class AppLocalizationsEs extends AppLocalizations {
       'Nombre, especie y foto; nunca la ubicación ni tus datos.';
 
   @override
+  String comunidadReaccionesTuyo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'A $n personas les alegró la noticia ❤️',
+      one: 'A 1 persona le alegró la noticia ❤️',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String comunidadSeBusca(String nombre) {
+    return 'Se busca a $nombre';
+  }
+
+  @override
+  String get comunidadSeBuscaSinNombre => 'Se busca una mascota perdida';
+
+  @override
+  String comunidadPerdidaDias(int dias) {
+    String _temp0 = intl.Intl.pluralLogic(
+      dias,
+      locale: localeName,
+      other: 'Lleva $dias días perdida.',
+      one: 'Lleva 1 día perdida.',
+      zero: 'Se perdió hoy.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get comunidadPerdidaAyuda =>
+      'Entrá al reporte para avisar si la viste o seguirlo.';
+
+  @override
+  String get comunidadVerReporte => 'Ver el reporte';
+
+  @override
+  String get reaccionAlegra => 'Me alegra';
+
+  @override
+  String get reaccionFestejo => '¡Qué bueno!';
+
+  @override
+  String get reaccionGracias => 'Gracias';
+
+  @override
+  String get reaccionesMotivoCuenta =>
+      'Para reaccionar a las noticias necesitás una cuenta.';
+
+  @override
+  String get reaccionesTitulo => '¿Qué te pareció?';
+
+  @override
   String get adopcionEntrada => 'Adoptar o dar en adopción';
 
   @override

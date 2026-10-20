@@ -113,6 +113,7 @@ Pantalla inicial: logo sobre el azul petróleo de la marca (`#0F5E7A`, D62) dura
 - Grilla de tarjetas filtrada por la especie de la mascota activa.
 - Mezcla novedades de la comunidad, eventos y **promociones de marcas** con la etiqueta "Promocionado".
 - **Comunidad (D86):** sección que se arma sola con lo que pasa en la app: reencuentros (solo si el dueño lo comparte al tocar "¡Apareció!"; lo puede quitar después), adopciones concretadas, lugares verificados y eventos, más un resumen de los últimos 30 días con totales. Nunca ubicaciones ni datos de personas; la administración puede ocultar cualquiera.
+- **Reacciones y perdidas activas (D87):** a las noticias y a las novedades se reacciona con ❤️ Me alegra, 🎉 ¡Qué bueno! o 🙏 Gracias (una por persona, se cambia o se quita; sin comentarios; se muestran solo los totales; un visitante tiene que ingresar). Al tocar una novedad se abre su detalle con la foto y las reacciones; el autor de un reencuentro compartido ve cuántos reaccionaron. Las mascotas perdidas que se siguen buscando (últimos 30 días) aparecen en Comunidad sin ubicación y abren su reporte, donde se puede avisar o **Seguirlo** (D74). Pendiente: "Avisame" para eventos y aviso push al dueño cuando reaccionan (necesitan tareas programadas).
 - Mientras está detrás de la funcionalidad gradual `noticias` (D83), se entra desde la pestaña **Ayuda**; pasa a ser pestaña cuando llegue a todos. Las carga la administración desde el portal.
 
 ## 11. Adopción responsable — Fase 1 (directorio) / Fase 2 (proceso) / Fase 3 (packs y tránsito)

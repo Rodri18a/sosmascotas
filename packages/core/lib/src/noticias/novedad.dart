@@ -1,8 +1,9 @@
 import '../comercios/comercio.dart';
 import '../eventos/evento.dart';
 
-/// De dónde sale una novedad de la comunidad (D86).
-enum TipoNovedad { reencuentro, adopcion, comercio, evento }
+/// De dónde sale una novedad de la comunidad (D86). `perdida`: una mascota
+/// que se sigue buscando (D87); se abre su reporte para seguirlo.
+enum TipoNovedad { reencuentro, adopcion, comercio, evento, perdida }
 
 /// Una novedad de la comunidad (`novedades_comunidad()`, D86). Se arma sola
 /// con lo que pasa en la app; los textos los pone la app con estos datos.
@@ -12,6 +13,7 @@ class Novedad {
     required this.id,
     required this.tipo,
     required this.fecha,
+    this.origenId,
     this.nombre,
     this.detalle,
     this.especieId,
@@ -29,6 +31,7 @@ class Novedad {
       id: json['id']! as String,
       tipo: tipo,
       fecha: DateTime.parse(json['created_at']! as String).toLocal(),
+      origenId: json['origin_id'] as String?,
       nombre: json['name'] as String?,
       detalle: json['detail'] as String?,
       especieId: (json['species_id'] as num?)?.toInt(),
@@ -42,6 +45,9 @@ class Novedad {
   final TipoNovedad tipo;
   final DateTime fecha;
 
+  /// Id de lo que la originó (SOS, adopción, lugar o evento).
+  final String? origenId;
+
   /// Nombre de la mascota (puede faltar), del lugar o del evento.
   final String? nombre;
 
@@ -49,7 +55,8 @@ class Novedad {
   final String? detalle;
   final int? especieId;
 
-  /// Días que estuvo perdida (reencuentro) o animales adoptados (adopción).
+  /// Días que estuvo perdida (reencuentro), que lleva perdida (perdida) o
+  /// animales adoptados (adopción).
   final int? cantidad;
 
   /// Cuándo empieza (evento).
@@ -68,6 +75,9 @@ class Novedad {
   TipoEvento? get tipoEvento => tipo == TipoNovedad.evento
       ? TipoEvento.values.asNameMap()[detalle]
       : null;
+
+  /// Se puede reaccionar a todo menos a una perdida que se sigue buscando.
+  bool get admiteReacciones => tipo != TipoNovedad.perdida;
 
   /// La misma regla de las noticias: sin especie es para todas.
   bool esPara(Set<int> especies) =>
@@ -100,4 +110,53 @@ class ResumenComunidad {
   /// Sin nada que contar, la tarjeta no se muestra.
   bool get vacio =>
       reencuentros + adopciones + perdidasActivas + lugaresVerificados == 0;
+}
+
+/// Reacciones fijas, sin comentarios (D87).
+enum Reaccion {
+  alegra('❤️'),
+  festejo('🎉'),
+  gracias('🙏');
+
+  const Reaccion(this.emoji);
+
+  final String emoji;
+}
+
+/// Totales de reacciones de una noticia o novedad y la mía (si reaccioné).
+class Reacciones {
+  const Reacciones({this.totales = const {}, this.mia});
+
+  factory Reacciones.fromJson(Map<String, Object?> json) => Reacciones(
+    totales: {
+      for (final r in Reaccion.values)
+        if ((json[r.name] as num?)?.toInt() case final n? when n > 0) r: n,
+    },
+    mia: Reaccion.values.asNameMap()[json['mia']],
+  );
+
+  final Map<Reaccion, int> totales;
+  final Reaccion? mia;
+
+  int cuantas(Reaccion r) => totales[r] ?? 0;
+
+  int get total => totales.values.fold(0, (a, b) => a + b);
+
+  /// Cómo queda al tocar [r]: si ya era la mía se quita; si no, la reemplaza.
+  Reacciones tocar(Reaccion r) {
+    final nuevos = {...totales};
+    void sumar(Reaccion x, int d) {
+      final n = (nuevos[x] ?? 0) + d;
+      if (n > 0) {
+        nuevos[x] = n;
+      } else {
+        nuevos.remove(x);
+      }
+    }
+
+    if (mia case final antes?) sumar(antes, -1);
+    if (mia == r) return Reacciones(totales: nuevos);
+    sumar(r, 1);
+    return Reacciones(totales: nuevos, mia: r);
+  }
 }

@@ -58,6 +58,7 @@ abstract final class Eventos {
   static const newsLink = 'news_link';
   static const communityShare = 'community_share';
   static const communityUnshare = 'community_unshare';
+  static const newsReaction = 'news_reaction';
   static const catalogOpen = 'catalog_open';
   static const catalogAsk = 'catalog_ask';
   static const productSave = 'product_save';

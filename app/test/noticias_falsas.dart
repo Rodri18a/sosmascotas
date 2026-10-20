@@ -35,6 +35,24 @@ class NoticiasFalsas implements NoticiasRepositorio {
   Future<bool> reencuentroCompartido(String sosId) async =>
       compartidos.contains(sosId);
 
+  /// Reacciones por id (con la mía) y las que se mandaron.
+  final reaccionesGuardadas = <String, Reacciones>{};
+  final reaccionesEnviadas = <(String, Reaccion?)>[];
+  var reaccionesDeMiReencuentroTotal = 0;
+
+  @override
+  Future<Map<String, Reacciones>> reacciones(List<String> ids) async => {
+    for (final id in ids) id: ?reaccionesGuardadas[id],
+  };
+
+  @override
+  Future<void> reaccionar(String id, Reaccion? reaccion) async =>
+      reaccionesEnviadas.add((id, reaccion));
+
+  @override
+  Future<int> reaccionesDeMiReencuentro(String sosId) async =>
+      reaccionesDeMiReencuentroTotal;
+
   @override
   String? urlFoto(String? ruta) => null;
 }

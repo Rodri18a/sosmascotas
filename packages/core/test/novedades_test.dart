@@ -80,4 +80,46 @@ void main() {
     expect(r.vacio, isFalse);
     expect(r.reencuentros, 2);
   });
+
+  test('una perdida trae su reporte y no admite reacciones', () {
+    final n = Novedad.fromJson({
+      'id': 's1',
+      'kind': 'perdida',
+      'origin_id': 's1',
+      'name': 'Toby',
+      'amount': 2,
+      'created_at': '2026-10-20T13:00:00+00:00',
+    })!;
+    expect(n.tipo, TipoNovedad.perdida);
+    expect(n.origenId, 's1');
+    expect(n.admiteReacciones, isFalse);
+  });
+
+  test('lee las reacciones y la mía', () {
+    final r = Reacciones.fromJson({
+      'id': 'n1',
+      'alegra': 3,
+      'festejo': 0,
+      'gracias': 1,
+      'mia': 'gracias',
+    });
+    expect(r.cuantas(Reaccion.alegra), 3);
+    expect(r.cuantas(Reaccion.festejo), 0);
+    expect(r.total, 4);
+    expect(r.mia, Reaccion.gracias);
+  });
+
+  test('tocar una reacción la pone, la cambia o la quita', () {
+    const nada = Reacciones();
+    final puse = nada.tocar(Reaccion.alegra);
+    expect(puse.mia, Reaccion.alegra);
+    expect(puse.cuantas(Reaccion.alegra), 1);
+    final cambie = puse.tocar(Reaccion.gracias);
+    expect(cambie.mia, Reaccion.gracias);
+    expect(cambie.cuantas(Reaccion.alegra), 0);
+    expect(cambie.cuantas(Reaccion.gracias), 1);
+    final quite = cambie.tocar(Reaccion.gracias);
+    expect(quite.mia, isNull);
+    expect(quite.total, 0);
+  });
 }
