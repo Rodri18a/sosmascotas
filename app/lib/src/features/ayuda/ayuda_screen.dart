@@ -15,6 +15,7 @@ import '../../widgets/boton_avisos.dart';
 import '../../widgets/boton_mensajes.dart';
 import '../eventos/eventos.dart';
 import '../mapa/ficha_comercio.dart';
+import '../menu/menu_principal.dart';
 
 /// Pestaña Ayuda (también para visitantes): 911, veterinarias de urgencia y
 /// directorio de refugios, protectoras y grupos de la zona.
@@ -34,6 +35,7 @@ class AyudaScreen extends ConsumerWidget {
     ];
 
     return Scaffold(
+      drawer: const MenuPrincipal(),
       appBar: AppBar(
         title: Text(t.pestanaAyuda),
         actions: const [BotonMensajes(), BotonAvisos(), BotonAjustes()],
@@ -70,32 +72,8 @@ class AyudaScreen extends ConsumerWidget {
                 ],
               ),
             ),
-            // Noticias (2.8, D83): mientras es gradual, se entra desde acá.
-            SiFuncionalidad(
-              Funcionalidades.noticias,
-              child: Card(
-                child: ListTile(
-                  leading: const Icon(Icons.newspaper_outlined),
-                  title: Text(t.noticiasTitulo),
-                  subtitle: Text(t.noticiasEntradaAyuda),
-                  trailing: const Icon(Icons.chevron_right),
-                  onTap: () => context.push(Rutas.noticias),
-                ),
-              ),
-            ),
-            // Adopción responsable (2.0, D79).
-            SiFuncionalidad(
-              Funcionalidades.adopcion,
-              child: Card(
-                child: ListTile(
-                  leading: const Icon(Icons.volunteer_activism_outlined),
-                  title: Text(t.adopcionEntrada),
-                  subtitle: Text(t.adopcionEntradaAyuda),
-                  trailing: const Icon(Icons.chevron_right),
-                  onTap: () => context.push(Rutas.adopcion),
-                ),
-              ),
-            ),
+            // Noticias y Adopción se abren desde el menú ☰ (D88): Ayuda
+            // queda para urgencias.
             _Titulo(t.ayudaUrgencias),
             switch (urgencias) {
               AsyncData(value: final lista) when lista.isEmpty => Text(

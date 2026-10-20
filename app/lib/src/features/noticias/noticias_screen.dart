@@ -7,6 +7,7 @@ import '../../comercios/textos_comercio.dart';
 import '../../cuenta/con_cuenta.dart';
 import '../../cuenta/servicio_cuenta.dart';
 import '../../mascotas/catalogo.dart';
+import '../../mascotas/mascota_elegida.dart';
 import '../../mascotas/mascotas_repositorio.dart';
 import '../../metricas/metricas.dart';
 import '../../noticias/noticias_repositorio.dart';
@@ -28,8 +29,10 @@ class NoticiasScreen extends ConsumerStatefulWidget {
 }
 
 class _NoticiasScreenState extends ConsumerState<NoticiasScreen> {
-  /// Especie elegida en los chips; `null` = "Todas".
+  /// Especie elegida en los chips; `null` = "Todas". Hasta tocar uno, manda
+  /// la mascota elegida en el menú (D88).
   int? _especie;
+  bool _tocoChip = false;
 
   bool _comunidad = false;
 
@@ -64,7 +67,8 @@ class _NoticiasScreenState extends ConsumerState<NoticiasScreen> {
       for (final e in especies)
         if (mascotas.any((m) => m.especieId == e.id)) e,
     ];
-    final filtro = _especie == null ? const <int>{} : {_especie!};
+    final especie = _tocoChip ? _especie : ref.watch(especieElegidaProvider);
+    final filtro = especie == null ? const <int>{} : {especie};
 
     return Scaffold(
       appBar: AppBar(title: Text(t.noticiasTitulo)),
@@ -115,15 +119,21 @@ class _NoticiasScreenState extends ConsumerState<NoticiasScreen> {
                   children: [
                     ChoiceChip(
                       label: Text(t.noticiasTodas),
-                      selected: _especie == null,
-                      onSelected: (_) => setState(() => _especie = null),
+                      selected: especie == null,
+                      onSelected: (_) => setState(() {
+                        _tocoChip = true;
+                        _especie = null;
+                      }),
                     ),
                     for (final e in mias) ...[
                       const SizedBox(width: 6),
                       ChoiceChip(
                         label: Text('${e.icono} ${e.nombre}'),
-                        selected: _especie == e.id,
-                        onSelected: (_) => setState(() => _especie = e.id),
+                        selected: especie == e.id,
+                        onSelected: (_) => setState(() {
+                          _tocoChip = true;
+                          _especie = e.id;
+                        }),
                       ),
                     ],
                   ],

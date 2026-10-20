@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:sosmascota/src/adopcion/adopcion_repositorio.dart';
@@ -25,6 +26,7 @@ import 'package:sosmascota/src/instalar/servicio_instalacion.dart';
 import 'package:sosmascota/src/mapa/mapa_vista.dart';
 import 'package:sosmascota/src/mascotas/catalogo.dart';
 import 'package:sosmascota/src/mascotas/libreta_repositorio.dart';
+import 'package:sosmascota/src/mascotas/mascota_elegida.dart';
 import 'package:sosmascota/src/mascotas/mascotas_repositorio.dart';
 import 'package:sosmascota/src/metricas/metricas.dart';
 import 'package:sosmascota/src/noticias/noticias_repositorio.dart';
@@ -53,6 +55,7 @@ import 'hogar_falso.dart';
 import 'instalacion_falsa.dart';
 import 'libreta_falsa.dart';
 import 'mapa_falso.dart';
+import 'mascota_elegida_falsa.dart';
 import 'mascotas_falsas.dart';
 import 'noticias_falsas.dart';
 import 'perfil_falso.dart';
@@ -110,6 +113,7 @@ Widget appDePrueba({
   CacheFuncionalidades? cacheFuncionalidades,
   ServicioInstalacion? instalacion,
   AlmacenInstalacion? almacenInstalacion,
+  AlmacenMascotaElegida? almacenMascotaElegida,
   String urlPublica = 'https://sosmascotas.uy',
 }) => ProviderScope(
   overrides: [
@@ -125,6 +129,9 @@ Widget appDePrueba({
     ),
     cacheFuncionalidadesProvider.overrideWithValue(
       cacheFuncionalidades ?? CacheFuncionalidadesFalsa(),
+    ),
+    almacenMascotaElegidaProvider.overrideWithValue(
+      almacenMascotaElegida ?? AlmacenMascotaElegidaFalso(),
     ),
     almacenTemaProvider.overrideWithValue(almacenTema ?? AlmacenTemaFalso()),
     cargadorFuentesProvider.overrideWithValue(const FuentesFalsas()),
@@ -213,3 +220,10 @@ Widget appDePrueba({
   ],
   child: const SosMascotaApp(),
 );
+
+/// Abre el menú ☰ de la pestaña que se está viendo (D88).
+Future<void> abrirMenu(WidgetTester tester) async {
+  await tester.pumpAndSettle();
+  await tester.tap(find.byIcon(Icons.menu).last);
+  await tester.pumpAndSettle();
+}

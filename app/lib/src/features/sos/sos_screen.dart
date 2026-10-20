@@ -12,6 +12,7 @@ import '../../utiles/tiempo.dart';
 import '../../widgets/boton_ajustes.dart';
 import '../../widgets/boton_avisos.dart';
 import '../../widgets/boton_mensajes.dart';
+import '../menu/menu_principal.dart';
 
 /// Pestaña SOS: reportes activos ordenados por cercanía, y botón para reportar.
 class SosScreen extends ConsumerStatefulWidget {
@@ -29,6 +30,7 @@ class _SosScreenState extends ConsumerState<SosScreen> {
     final t = context.t;
     final reportes = ref.watch(sosCercanosProvider);
     return Scaffold(
+      drawer: const MenuPrincipal(),
       appBar: AppBar(
         title: Text(t.pestanaSos),
         actions: const [BotonMensajes(), BotonAvisos(), BotonAjustes()],

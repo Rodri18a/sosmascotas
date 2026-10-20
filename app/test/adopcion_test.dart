@@ -80,17 +80,11 @@ Future<void> _abrir(
 }
 
 void main() {
-  testWidgets('la entrada está en Ayuda y lleva a los animales', (
+  testWidgets('la entrada está en el menú y lleva a los animales', (
     tester,
   ) async {
     await _abrir(tester, AdopcionFalsa(animales: const [_pelusa]));
-    await _tocar(
-      tester,
-      find.descendant(
-        of: find.byType(NavigationBar),
-        matching: find.text('Ayuda'),
-      ),
-    );
+    await abrirMenu(tester);
     await _tocar(tester, find.text('Adoptar o dar en adopción'));
     expect(find.text('Pelusa'), findsOneWidget);
     expect(
@@ -102,6 +96,7 @@ void main() {
   testWidgets('sin la funcionalidad no hay entrada', (tester) async {
     await _abrir(tester, AdopcionFalsa(), prendida: false);
     await _ir(tester, '/ayuda');
+    await abrirMenu(tester);
     expect(find.text('Adoptar o dar en adopción'), findsNothing);
   });
 

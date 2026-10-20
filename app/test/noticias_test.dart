@@ -80,12 +80,11 @@ Future<void> _abrir(
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(find.text('Ayuda').last);
-  await tester.pumpAndSettle();
+  await abrirMenu(tester);
 }
 
 void main() {
-  testWidgets('sin la funcionalidad no hay entrada en Ayuda', (tester) async {
+  testWidgets('sin la funcionalidad no hay entrada en el menú', (tester) async {
     await _abrir(tester, conFuncionalidad: false);
     expect(find.text('Noticias'), findsNothing);
   });

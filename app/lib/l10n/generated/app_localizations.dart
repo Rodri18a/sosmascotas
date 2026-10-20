@@ -5122,6 +5122,60 @@ abstract class AppLocalizations {
   /// **'Nombre, especie y foto; nunca la ubicación ni tus datos.'**
   String get comunidadInterruptorDetalle;
 
+  /// No description provided for @menuAbrir.
+  ///
+  /// In es, this message translates to:
+  /// **'Menú'**
+  String get menuAbrir;
+
+  /// No description provided for @menuIngresar.
+  ///
+  /// In es, this message translates to:
+  /// **'Ingresá o creá tu cuenta'**
+  String get menuIngresar;
+
+  /// No description provided for @menuIngresarAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Para cargar tus mascotas y recibir avisos.'**
+  String get menuIngresarAyuda;
+
+  /// No description provided for @menuVerPara.
+  ///
+  /// In es, this message translates to:
+  /// **'Ver todo para'**
+  String get menuVerPara;
+
+  /// No description provided for @menuTodas.
+  ///
+  /// In es, this message translates to:
+  /// **'Todas'**
+  String get menuTodas;
+
+  /// No description provided for @menuTodasAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Noticias y adopción muestran lo de todas tus mascotas.'**
+  String get menuTodasAyuda;
+
+  /// No description provided for @menuElegidaAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Noticias y adopción se muestran para la especie de {nombre}.'**
+  String menuElegidaAyuda(String nombre);
+
+  /// No description provided for @menuFicha.
+  ///
+  /// In es, this message translates to:
+  /// **'Ver su ficha'**
+  String get menuFicha;
+
+  /// No description provided for @menuReportarPerdida.
+  ///
+  /// In es, this message translates to:
+  /// **'Reportar que se perdió'**
+  String get menuReportarPerdida;
+
   /// No description provided for @comunidadReaccionesTuyo.
   ///
   /// In es, this message translates to:

@@ -24,6 +24,7 @@ import '../../widgets/boton_avisos.dart';
 import '../../widgets/boton_mensajes.dart';
 import '../eventos/eventos.dart';
 import '../instalar/instalar.dart';
+import '../menu/menu_principal.dart';
 import '../sos/sos_screen.dart';
 import 'ficha_comercio.dart';
 import 'marcar_lugar.dart';
@@ -236,6 +237,7 @@ class _MapaScreenState extends ConsumerState<MapaScreen> {
     );
 
     return Scaffold(
+      drawer: const MenuPrincipal(),
       appBar: AppBar(
         title: Text(t.pestanaMapa),
         actions: const [BotonMensajes(), BotonAvisos(), BotonAjustes()],

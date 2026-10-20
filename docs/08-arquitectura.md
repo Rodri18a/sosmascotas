@@ -164,6 +164,7 @@ Tabla `events` (append-only), escrita por el cliente con `ref.read(metricasProvi
 | `event_publish` / `event_open` / `abuse_report` | tipo de evento o target_id; la denuncia sin datos (D80) |
 | `module_toggle` / `vet_share` / `vet_remind` / `vet_search_opt_in` / `vet_search_snooze` / `vet_proposal_send` / `vet_proposal_answer` | socios y "Busco veterinaria", sin datos de la mascota ni del dueño (D81) |
 | `news_open` / `news_link` | abrir una noticia y tocar "Leer más", con `patrocinada` (D83) |
+| `menu_open` / `pet_select` | se abre el menú ☰; se elige una mascota o "Todas" para filtrar (D88) |
 | `news_reaction` | alguien reacciona a una noticia o novedad (D87; lo registra la base, con el tipo y si es noticia o comunidad) |
 | `community_share` / `community_unshare` | el autor de un SOS resuelto comparte o quita el reencuentro en Comunidad (D86; compartir lo registra la base) |
 | `catalog_open` / `catalog_ask` / `product_save` / `order_create` / `order_status` | catálogo y pedidos: abrir, consultar, cargar un producto, pedir (con las unidades) y cada cambio de estado; sin datos de quien pide (D85) |

@@ -17,6 +17,7 @@ import '../../widgets/boton_avisos.dart';
 import '../../widgets/boton_mensajes.dart';
 import '../../widgets/en_construccion.dart';
 import '../../widgets/foto_mascota.dart';
+import '../menu/menu_principal.dart';
 
 class MascotasScreen extends ConsumerWidget {
   const MascotasScreen({super.key});
@@ -56,6 +57,7 @@ class MascotasScreen extends ConsumerWidget {
 
     final hayLista = conectado && (mascotas.value?.isNotEmpty ?? false);
     return Scaffold(
+      drawer: const MenuPrincipal(),
       appBar: AppBar(
         title: Text(t.pestanaMascotas),
         actions: const [BotonMensajes(), BotonAvisos(), BotonAjustes()],

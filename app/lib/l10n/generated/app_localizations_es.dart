@@ -3008,6 +3008,36 @@ class AppLocalizationsEs extends AppLocalizations {
       'Nombre, especie y foto; nunca la ubicación ni tus datos.';
 
   @override
+  String get menuAbrir => 'Menú';
+
+  @override
+  String get menuIngresar => 'Ingresá o creá tu cuenta';
+
+  @override
+  String get menuIngresarAyuda => 'Para cargar tus mascotas y recibir avisos.';
+
+  @override
+  String get menuVerPara => 'Ver todo para';
+
+  @override
+  String get menuTodas => 'Todas';
+
+  @override
+  String get menuTodasAyuda =>
+      'Noticias y adopción muestran lo de todas tus mascotas.';
+
+  @override
+  String menuElegidaAyuda(String nombre) {
+    return 'Noticias y adopción se muestran para la especie de $nombre.';
+  }
+
+  @override
+  String get menuFicha => 'Ver su ficha';
+
+  @override
+  String get menuReportarPerdida => 'Reportar que se perdió';
+
+  @override
   String comunidadReaccionesTuyo(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

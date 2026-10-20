@@ -6,6 +6,12 @@ Cada función indica la **fase** en la que se construye (ver `11-roadmap.md`) y 
 
 Barra inferior: **Explorar** (mapa) · **Noticias** · **SOS** (en rojo) · **Mascotas** · **Ajustes**. Arriba, una fila con las mascotas del usuario, la opción "Todas" y "＋".
 
+**Hecho hasta ahora (D88):** la barra inferior es Mapa · SOS · Mascotas · Ayuda, y cada pestaña tiene un **menú ☰** con:
+- **Mis datos** (nombre, correo; abre Mi perfil o Ajustes) o "Ingresá o creá tu cuenta" para un visitante.
+- **Ver todo para:** "Todas" o una de mis mascotas. La elegida filtra Noticias, Comunidad y Adopción por su especie (los chips de cada pantalla la pueden cambiar) y suma accesos a su ficha, su chapita QR y "Reportar que se perdió". Se recuerda en el dispositivo, por cuenta.
+- **Secciones:** Noticias, Adopción, Mensajes, Avisos, Mi hogar, Mis pedidos, Mi negocio y Ajustes, cada una según su funcionalidad gradual y si hace falta cuenta.
+Ayuda queda para urgencias (911, guardias, refugios, eventos y denuncias).
+
 Pantalla inicial: logo sobre el azul petróleo de la marca (`#0F5E7A`, D62) durante 1,5 segundos. Hasta tener el logo (0.0.9b) se usa 🐾 y el nombre en Sora.
 
 ---
