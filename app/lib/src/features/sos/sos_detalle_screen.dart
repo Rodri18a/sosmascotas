@@ -14,6 +14,7 @@ import '../../funcionalidades/funcionalidades_activas.dart';
 import '../../mapa/mapa_vista.dart';
 import '../../mascotas/textos_mascota.dart';
 import '../../metricas/metricas.dart';
+import '../../noticias/noticias_repositorio.dart';
 import '../../router.dart';
 import '../../sos/sos_repositorio.dart';
 import '../chat/chat_screen.dart';
@@ -146,6 +147,9 @@ class _Detalle extends ConsumerWidget {
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(SnackBar(content: Text(t.sosAparecioGracias)));
+        if (ref.read(funcionalidadActivaProvider(Funcionalidades.noticias))) {
+          await ofrecerCompartirReencuentro(context, ref, detalle.id);
+        }
       }
     } on Exception {
       if (context.mounted) {
@@ -325,6 +329,12 @@ class _Detalle extends ConsumerWidget {
                 ),
                 const SizedBox(height: 8),
               ],
+              if (detalle.esMio &&
+                  detalle.estado == EstadoSos.resuelto &&
+                  ref.watch(
+                    funcionalidadActivaProvider(Funcionalidades.noticias),
+                  ))
+                _InterruptorReencuentro(sosId: detalle.id),
               if (activo && !detalle.esMio) ...[
                 // Chat interno (1.4.3, D73), con la funcionalidad `chat`.
                 if (ref.watch(conectadoProvider) &&
@@ -671,5 +681,85 @@ class _BotonSeguir extends ConsumerWidget {
             icon: const Icon(Icons.notifications_active_outlined),
             label: Text(t.sosSeguir),
           );
+  }
+}
+
+/// Después de "¡Apareció!": ofrece compartir la buena noticia en Comunidad
+/// (D86). Sin respuesta, no se comparte.
+Future<void> ofrecerCompartirReencuentro(
+  BuildContext context,
+  WidgetRef ref,
+  String sosId,
+) async {
+  final t = context.t;
+  final compartir = await showDialog<bool>(
+    context: context,
+    builder: (context) => AlertDialog(
+      icon: const Icon(Icons.celebration_outlined),
+      title: Text(t.comunidadCompartirTitulo),
+      content: Text(t.comunidadCompartirExplicacion),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context, false),
+          child: Text(t.ahoraNo),
+        ),
+        FilledButton(
+          onPressed: () => Navigator.pop(context, true),
+          child: Text(t.comunidadCompartir),
+        ),
+      ],
+    ),
+  );
+  if (!(compartir ?? false) || !context.mounted) return;
+  await _compartirReencuentro(context, ref, sosId, compartir: true);
+}
+
+Future<void> _compartirReencuentro(
+  BuildContext context,
+  WidgetRef ref,
+  String sosId, {
+  required bool compartir,
+}) async {
+  final t = context.t;
+  final mensajes = ScaffoldMessenger.of(context);
+  try {
+    await ref
+        .read(noticiasRepositorioProvider)
+        .compartirReencuentro(sosId, compartir: compartir);
+    // Compartir lo registra la base; quitarlo, la app.
+    if (compartir) {
+      mensajes.showSnackBar(SnackBar(content: Text(t.comunidadCompartida)));
+    } else {
+      ref
+          .read(metricasProvider)
+          .track(Eventos.communityUnshare, targetId: sosId);
+    }
+  } on Exception {
+    mensajes.showSnackBar(SnackBar(content: Text(t.errorSinConexion)));
+  }
+  ref
+    ..invalidate(reencuentroCompartidoProvider(sosId))
+    ..invalidate(novedadesProvider);
+}
+
+/// En un SOS mío ya resuelto: compartir o quitar el reencuentro de Comunidad.
+class _InterruptorReencuentro extends ConsumerWidget {
+  const _InterruptorReencuentro({required this.sosId});
+
+  final String sosId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = context.t;
+    final compartido = ref.watch(reencuentroCompartidoProvider(sosId)).value;
+    return SwitchListTile(
+      secondary: const Icon(Icons.diversity_3_outlined),
+      title: Text(t.comunidadInterruptor),
+      subtitle: Text(t.comunidadInterruptorDetalle),
+      value: compartido ?? false,
+      onChanged: compartido == null
+          ? null
+          : (v) => _compartirReencuentro(context, ref, sosId, compartir: v),
+    );
   }
 }

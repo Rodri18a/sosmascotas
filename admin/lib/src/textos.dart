@@ -146,6 +146,21 @@ abstract final class T {
   static const patrocinada = 'Patrocinada (se ve "Promocionado · marca")';
   static const marca = 'Marca';
   static const faltaMarca = 'Una noticia patrocinada necesita la marca.';
+  // Novedades de la comunidad (D86)
+  static const comunidad = 'Comunidad';
+  static const sinNovedades = 'Todavía no hay novedades de la comunidad.';
+  static const ayudaNovedades =
+      'Se generan solas (reencuentros que el dueño compartió, adopciones, '
+      'lugares verificados y eventos). Apagá la que no deba verse.';
+  static const tiposNovedad = {
+    'reencuentro': 'Reencuentro',
+    'adopcion': 'Adopción',
+    'comercio': 'Lugar verificado',
+    'evento': 'Evento',
+  };
+  static const sinNombre = 'Sin nombre';
+  static const novedadVisible = 'Visible';
+  static const oculta = 'Oculta';
   static const estadosNoticia = {
     'draft': 'Borrador',
     'published': 'Publicada',

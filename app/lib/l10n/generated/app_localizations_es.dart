@@ -2865,6 +2865,149 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get noticiasSeccionNoticias => 'Noticias';
+
+  @override
+  String get noticiasSeccionComunidad => 'Comunidad';
+
+  @override
+  String get comunidadExplicacion =>
+      'Se arma sola con lo que pasa en la app. Nunca mostramos ubicaciones ni datos de personas.';
+
+  @override
+  String get comunidadVacio =>
+      'Todavía no hay novedades. Cuando una mascota vuelva a casa o haya un evento cerca, lo vas a ver acá.';
+
+  @override
+  String get comunidadResumenTitulo => 'Últimos 30 días en la comunidad';
+
+  @override
+  String comunidadResumenReencuentros(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n mascotas volvieron a casa',
+      one: '1 mascota volvió a casa',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String comunidadResumenAdopciones(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n adopciones concretadas',
+      one: '1 adopción concretada',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String comunidadResumenPerdidas(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n mascotas perdidas siguen buscando su casa',
+      one: '1 mascota perdida sigue buscando su casa',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String comunidadResumenLugares(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n lugares verificados en el mapa',
+      one: '1 lugar verificado en el mapa',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String comunidadVolvioACasa(String nombre) {
+    return '¡$nombre volvió a casa! 🎉';
+  }
+
+  @override
+  String get comunidadVolvioACasaSinNombre =>
+      '¡Una mascota perdida volvió a casa! 🎉';
+
+  @override
+  String comunidadDiasPerdida(int dias) {
+    String _temp0 = intl.Intl.pluralLogic(
+      dias,
+      locale: localeName,
+      other: 'Estuvo $dias días perdida.',
+      one: 'Estuvo 1 día perdida.',
+      zero: 'La encontraron el mismo día.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String comunidadVolvioConSuFamilia(String nombre) {
+    return '¡$nombre volvió con su familia! 🏡';
+  }
+
+  @override
+  String get comunidadVolvioConSuFamiliaSinNombre =>
+      'Una mascota encontrada volvió con su familia 🏡';
+
+  @override
+  String get comunidadGracias => 'Gracias a todos los que ayudaron a difundir.';
+
+  @override
+  String comunidadAdoptado(String nombre) {
+    return '¡$nombre encontró un hogar! 💛';
+  }
+
+  @override
+  String comunidadAdoptados(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n mascotas encontraron un hogar 💛',
+      one: 'Una mascota encontró un hogar 💛',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get comunidadAdopcionDetalle => 'Adopción responsable en SOS Mascota.';
+
+  @override
+  String comunidadLugarNuevo(String nombre) {
+    return 'Nuevo lugar verificado: $nombre';
+  }
+
+  @override
+  String comunidadEvento(String nombre) {
+    return 'Evento: $nombre';
+  }
+
+  @override
+  String get comunidadCompartirTitulo => '¿Compartís la buena noticia?';
+
+  @override
+  String get comunidadCompartirExplicacion =>
+      'Se publica en Noticias → Comunidad con el nombre, la especie y la primera foto del reporte. Nunca la ubicación ni tus datos. La podés quitar cuando quieras.';
+
+  @override
+  String get comunidadCompartir => 'Compartir';
+
+  @override
+  String get comunidadCompartida => '¡Listo! Ya está en Comunidad.';
+
+  @override
+  String get comunidadInterruptor => 'Compartido en Comunidad';
+
+  @override
+  String get comunidadInterruptorDetalle =>
+      'Nombre, especie y foto; nunca la ubicación ni tus datos.';
+
+  @override
   String get adopcionEntrada => 'Adoptar o dar en adopción';
 
   @override

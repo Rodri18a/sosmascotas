@@ -208,6 +208,23 @@ class RepoFalso implements AdminRepositorio {
     ...noticiasGuardadas,
   ];
 
+  final novedadesCambiadas = <(String, bool)>[];
+
+  @override
+  Future<List<Map<String, Object?>>> novedades() async => [
+    {
+      'id': 'c1',
+      'kind': 'reencuentro',
+      'name': 'Lola',
+      'status': 'visible',
+      'created_at': '2026-10-20T13:00:00+00:00',
+    },
+  ];
+
+  @override
+  Future<void> estadoNovedad(String id, {required bool visible}) async =>
+      novedadesCambiadas.add((id, visible));
+
   @override
   Future<void> guardarNoticia(Map<String, Object?> datos) async =>
       noticiasGuardadas.add({
@@ -470,7 +487,9 @@ void main() {
     expect(find.text('Campaña de vacunación'), findsOneWidget);
     expect(find.textContaining('Todas las especies'), findsOneWidget);
 
-    await _tocar(tester, find.text('Nueva noticia'));
+    // Sin ensureVisible: movería las pestañas (TabBarView) y no el botón.
+    await tester.tap(find.text('Nueva noticia'));
+    await tester.pumpAndSettle();
     await tester.enterText(
       find.widgetWithText(TextField, 'Título'),
       'Alimento para cachorros',
@@ -497,5 +516,19 @@ void main() {
     expect(guardada['sponsor_name'], 'Perruna');
     expect(guardada['species_ids'], [1]);
     expect(guardada['status'], 'draft');
+  });
+
+  testWidgets('comunidad: se puede ocultar una novedad', (tester) async {
+    _pantallaGrande(tester);
+    final repo = RepoFalso();
+    await tester.pumpWidget(
+      _portal(sesion: SesionFalsa('admin@x.uy'), repo: repo),
+    );
+    await tester.pumpAndSettle();
+    await _tocar(tester, find.text('Noticias'));
+    await _tocar(tester, find.text('Comunidad'));
+    expect(find.text('Reencuentro: Lola'), findsOneWidget);
+    await _tocar(tester, find.byType(Switch));
+    expect(repo.novedadesCambiadas.single, ('c1', false));
   });
 }

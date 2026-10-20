@@ -529,6 +529,32 @@ def main():
             caso('resuelto: la página del QR deja de decir "Estoy perdido"',
                  rest('POST', 'rpc/public_pet_page', {'p_code': nuevo})[1].get('lost') is False)
             caso('no se puede cerrar dos veces', rest('POST', 'rpc/cerrar_sos', {'p_id': sos_id, 'p_estado': 'archived'}, a)[0] >= 400)
+
+            print('novedades de la comunidad: reencuentros (D86)')
+            def reencuentros():
+                return [n for n in filas(rest('POST', 'rpc/novedades_comunidad', {}))
+                        if n['kind'] == 'reencuentro' and n['name'] == 'Firulais']
+            antes = len(reencuentros())
+            caso('sin el consentimiento del dueño no se publica',
+                 rest('POST', 'rpc/reencuentro_compartido', {'p_sos': sos_id}, a)[1] is False)
+            caso('B no puede compartir el reencuentro de A',
+                 rest('POST', 'rpc/compartir_reencuentro', {'p_sos': sos_id}, b)[0] >= 400)
+            caso('nadie lee ni escribe la tabla directo',
+                 bloqueado(rest('GET', 'community_updates?select=*', quien=a))
+                 and bloqueado(rest('POST', 'community_updates', {'kind': 'reencuentro', 'sos_id': sos_id}, a)))
+            caso('A comparte su reencuentro',
+                 rest('POST', 'rpc/compartir_reencuentro', {'p_sos': sos_id}, a)[0] in (200, 204)
+                 and rest('POST', 'rpc/reencuentro_compartido', {'p_sos': sos_id}, a)[1] is True)
+            visibles = reencuentros()
+            caso('un visitante lo ve, sin ubicación ni datos del dueño',
+                 len(visibles) == antes + 1
+                 and set(visibles[0]) == {'id', 'kind', 'name', 'detail', 'species_id', 'amount', 'starts_at',
+                                          'photo_path', 'created_at'})
+            caso('B no ve el estado del de A', rest('POST', 'rpc/reencuentro_compartido', {'p_sos': sos_id}, b)[1] is False)
+            rest('POST', 'rpc/quitar_reencuentro', {'p_sos': sos_id}, b)
+            caso('B no puede quitarlo', len(reencuentros()) == antes + 1)
+            rest('POST', 'rpc/quitar_reencuentro', {'p_sos': sos_id}, a)
+            caso('A lo quita cuando quiere', len(reencuentros()) == antes)
             aviso_seg = filas(pedir('POST', f'{URL}/rest/v1/rpc/avisar_seguidores_sos', {'p_sos': sos_id, 'p_autor': a_id}, ADMIN))
             caso('resuelto: se avisa a los seguidores con el nombre de la mascota',
                  len(aviso_seg) == 1 and aviso_seg[0]['nombre'] == 'Firulais')
@@ -1412,6 +1438,25 @@ def main():
             rest('POST', 'rpc/admin_guardar_noticia', {'p': {**noticia, 'id': nt, 'status': 'hidden'}}, x)
             caso('oculta, ya no aparece', all(n['id'] != nt for n in filas(rest('POST', 'rpc/noticias', {}))))
             pedir('DELETE', f'{URL}/rest/v1/news?title=like.Prueba%20RLS*', headers=ADMIN)
+
+            print('novedades de la comunidad: generadas solas y moderación (D86)')
+            lugar = filas(pedir('POST', f'{URL}/rest/v1/businesses', {
+                'name': 'Veterinaria Novedad RLS', 'business_type': 'vet', 'verification': 'verified',
+                'location': 'SRID=4326;POINT(-55.9581 -34.7171)'}, {**ADMIN, 'Prefer': 'return=representation'}))[0]['id']
+            def del_lugar():
+                return [n for n in filas(rest('POST', 'rpc/novedades_comunidad', {}))
+                        if n['kind'] == 'comercio' and n['name'] == 'Veterinaria Novedad RLS']
+            caso('un lugar verificado aparece solo en la comunidad', len(del_lugar()) == 1)
+            caso('A no ve la lista de moderación', rest('POST', 'rpc/admin_novedades', {}, a)[0] >= 400)
+            nov = del_lugar()[0]['id']
+            caso('A no puede ocultar una novedad',
+                 rest('POST', 'rpc/admin_estado_novedad', {'p_id': nov, 'p_estado': 'hidden'}, a)[0] >= 400)
+            caso('X la oculta', rest('POST', 'rpc/admin_estado_novedad', {'p_id': nov, 'p_estado': 'hidden'}, x)[0] in (200, 204))
+            caso('oculta, ya no aparece', del_lugar() == [])
+            caso('el resumen solo trae totales',
+                 set(filas(rest('POST', 'rpc/resumen_comunidad', {}))[0]) ==
+                 {'reencuentros', 'adopciones', 'perdidas_activas', 'lugares_verificados'})
+            pedir('DELETE', f'{URL}/rest/v1/businesses?id=eq.{lugar}', headers=ADMIN)
 
             print('catálogo y pedidos (2.5 y 3.2)')
             s_ps, tienda = rest('POST', 'rpc/alta_negocio', {'p': {

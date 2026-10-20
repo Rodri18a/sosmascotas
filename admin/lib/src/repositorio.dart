@@ -73,6 +73,11 @@ abstract interface class AdminRepositorio {
   /// Crea (sin `id`) o actualiza una noticia.
   Future<void> guardarNoticia(Map<String, Object?> datos);
 
+  /// Novedades de la comunidad (D86): las que se generan solas.
+  Future<List<Map<String, Object?>>> novedades();
+
+  Future<void> estadoNovedad(String id, {required bool visible});
+
   /// Crea (sin `id`) o actualiza una entrada de la Ayuda.
   Future<void> guardarAyuda(Map<String, Object?> datos);
 }
@@ -247,6 +252,17 @@ class SupabaseAdminRepositorio implements AdminRepositorio {
       _cliente.rpc<String>('admin_guardar_noticia', params: {'p': datos});
 
   @override
+  Future<List<Map<String, Object?>>> novedades() async =>
+      _filas(await _cliente.rpc<List<dynamic>>('admin_novedades'));
+
+  @override
+  Future<void> estadoNovedad(String id, {required bool visible}) =>
+      _cliente.rpc<void>(
+        'admin_estado_novedad',
+        params: {'p_id': id, 'p_estado': visible ? 'visible' : 'hidden'},
+      );
+
+  @override
   Future<List<EntradaAyuda>> ayuda() async =>
       (await _cliente
               .from('help_directory')
@@ -318,6 +334,10 @@ final denunciasProvider = FutureProvider<List<Map<String, Object?>>>(
 
 final noticiasProvider = FutureProvider<List<Map<String, Object?>>>(
   (ref) => ref.watch(adminRepositorioProvider).noticias(),
+);
+
+final novedadesProvider = FutureProvider<List<Map<String, Object?>>>(
+  (ref) => ref.watch(adminRepositorioProvider).novedades(),
 );
 
 final ayudaProvider = FutureProvider<List<EntradaAyuda>>(

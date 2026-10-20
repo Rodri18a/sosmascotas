@@ -99,6 +99,7 @@ Propuesta inicial. Se ajusta al implementar cada fase. **RLS activado en todas l
 | `community_events` | id, organizer_id, title, kind, location, starts_at, ends_at | 2 |
 | `abuse_reports` | id, user_id, description, location, photos, status | 2 |
 | `news` | id, title, body, source, link (https), species_ids[] (vacío = todas), sponsored, sponsor_name (obligatorio si es patrocinada), zone_id, status (`draft`, `published`, `hidden`), published_at. Sin acceso directo: `noticias(p_especies)` (también visitantes), `admin_noticias()`, `admin_guardar_noticia()` (D83) | 2 |
+| `community_updates` | id, kind (`reencuentro`, `adopcion`, `comercio`, `evento`), una sola referencia (sos_id / adoption_id / business_id / event_id, únicas, se borran con su origen), name, detail (tipo de SOS, rubro o tipo de evento), species_id, amount (días perdida o animales adoptados), starts_at, photo_path (`<bucket>/<ruta>` ya pública), zone_id, status (`visible`, `hidden`). Sin acceso directo: `novedades_comunidad()` y `resumen_comunidad()` (también visitantes), `compartir_reencuentro()` / `quitar_reencuentro()` / `reencuentro_compartido()` (autor del SOS), `admin_novedades()` y `admin_estado_novedad()`; disparadores en `adoptions`, `businesses` y `events_calendar` (D86) | 2 |
 | `groups` | id, name, kind (`breed`, `species`, `topic`), species_id, breed_id, zone_id (opcional) | 3 |
 | `group_members` | group_id, user_id, role | 3 |
 | `posts` / `comments` | id, group_id, author_id, body, photos (sin EXIF), status | 3 |

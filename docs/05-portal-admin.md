@@ -70,6 +70,7 @@ Por cada empresa:
 ### 8. Contenido — Fase 2
 Noticias, promociones patrocinadas, eventos, directorio de Ayuda y textos de la app.
 - **Noticias (hecho, D83):** sección Noticias con borrador / publicada / oculta, fuente, enlace, especies (ninguna = todas) y patrocinio con la marca obligatoria. En la app se ve "Promocionado · marca".
+- **Comunidad (hecho, D86):** pestaña dentro de Noticias con las novedades que se generan solas (reencuentros compartidos, adopciones, lugares verificados, eventos); un interruptor las oculta o las vuelve a mostrar, con registro de la acción.
 
 ### 9. Chapitas QR — Fase 1 (básico) / Fase 2 (completo)
 - **Lotes:** generar códigos pre-codificados para fabricar (exportar la lista para el productor), con su material, costo y sponsor.

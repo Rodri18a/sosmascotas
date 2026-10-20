@@ -4,10 +4,31 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../repositorio.dart';
 import '../textos.dart';
 
-/// Noticias de la app (2.8, D83): borradores, publicadas y ocultas. Las
-/// patrocinadas llevan la marca y en la app se ven "Promocionado · marca".
-class NoticiasScreen extends ConsumerWidget {
+/// Noticias de la app (2.8, D83) y novedades de la comunidad (D86).
+class NoticiasScreen extends StatelessWidget {
   const NoticiasScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) => const DefaultTabController(
+    length: 2,
+    child: Column(
+      children: [
+        TabBar(
+          tabs: [
+            Tab(text: T.noticias),
+            Tab(text: T.comunidad),
+          ],
+        ),
+        Expanded(child: TabBarView(children: [_Noticias(), _Comunidad()])),
+      ],
+    ),
+  );
+}
+
+/// Borradores, publicadas y ocultas. Las patrocinadas llevan la marca y en la
+/// app se ven "Promocionado · marca".
+class _Noticias extends ConsumerWidget {
+  const _Noticias();
 
   Future<void> _editar(
     BuildContext context,
@@ -59,6 +80,67 @@ class NoticiasScreen extends ConsumerWidget {
       _ => const Center(child: CircularProgressIndicator()),
     },
   );
+}
+
+/// Las que se generan solas: se pueden ocultar (moderación).
+class _Comunidad extends ConsumerWidget {
+  const _Comunidad();
+
+  Future<void> _cambiar(
+    BuildContext context,
+    WidgetRef ref,
+    String id, {
+    required bool visible,
+  }) async {
+    final mensajes = ScaffoldMessenger.of(context);
+    try {
+      await ref
+          .read(adminRepositorioProvider)
+          .estadoNovedad(id, visible: visible);
+    } on Exception {
+      mensajes.showSnackBar(const SnackBar(content: Text(T.errorConexion)));
+    }
+    ref.invalidate(novedadesProvider);
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) => switch (ref.watch(
+    novedadesProvider,
+  )) {
+    AsyncData(value: final lista) when lista.isEmpty => const Center(
+      child: Text(T.sinNovedades),
+    ),
+    AsyncData(value: final lista) => ListView(
+      children: [
+        const Padding(
+          padding: EdgeInsets.all(16),
+          child: Text(T.ayudaNovedades),
+        ),
+        for (final n in lista)
+          SwitchListTile(
+            title: Text(
+              '${T.tiposNovedad[n['kind']] ?? n['kind']}: '
+              '${n['name'] ?? T.sinNombre}',
+            ),
+            subtitle: Text(
+              [
+                '${n['created_at']}'.split('T').first,
+                if (n['status'] == 'visible') T.novedadVisible else T.oculta,
+              ].join(' · '),
+            ),
+            value: n['status'] == 'visible',
+            onChanged: (v) => _cambiar(context, ref, '${n['id']}', visible: v),
+          ),
+      ],
+    ),
+    AsyncError() => Center(
+      child: TextButton(
+        onPressed: () => ref.invalidate(novedadesProvider),
+        child: const Text(T.reintentar),
+      ),
+    ),
+    _ => const Center(child: CircularProgressIndicator()),
+  };
 }
 
 String _especies(Object? ids) {

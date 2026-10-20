@@ -1096,6 +1096,109 @@
       }
     }
   },
+  "noticiasSeccionNoticias": "Noticias",
+  "noticiasSeccionComunidad": "Comunidad",
+  "comunidadExplicacion": "Se arma sola con lo que pasa en la app. Nunca mostramos ubicaciones ni datos de personas.",
+  "comunidadVacio": "Todavía no hay novedades. Cuando una mascota vuelva a casa o haya un evento cerca, lo vas a ver acá.",
+  "comunidadResumenTitulo": "Últimos 30 días en la comunidad",
+  "comunidadResumenReencuentros": "{n, plural, =1{1 mascota volvió a casa} other{{n} mascotas volvieron a casa}}",
+  "@comunidadResumenReencuentros": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "comunidadResumenAdopciones": "{n, plural, =1{1 adopción concretada} other{{n} adopciones concretadas}}",
+  "@comunidadResumenAdopciones": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "comunidadResumenPerdidas": "{n, plural, =1{1 mascota perdida sigue buscando su casa} other{{n} mascotas perdidas siguen buscando su casa}}",
+  "@comunidadResumenPerdidas": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "comunidadResumenLugares": "{n, plural, =1{1 lugar verificado en el mapa} other{{n} lugares verificados en el mapa}}",
+  "@comunidadResumenLugares": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "comunidadVolvioACasa": "¡{nombre} volvió a casa! 🎉",
+  "@comunidadVolvioACasa": {
+    "placeholders": {
+      "nombre": {
+        "type": "String"
+      }
+    }
+  },
+  "comunidadVolvioACasaSinNombre": "¡Una mascota perdida volvió a casa! 🎉",
+  "comunidadDiasPerdida": "{dias, plural, =0{La encontraron el mismo día.} =1{Estuvo 1 día perdida.} other{Estuvo {dias} días perdida.}}",
+  "@comunidadDiasPerdida": {
+    "placeholders": {
+      "dias": {
+        "type": "int"
+      }
+    }
+  },
+  "comunidadVolvioConSuFamilia": "¡{nombre} volvió con su familia! 🏡",
+  "@comunidadVolvioConSuFamilia": {
+    "placeholders": {
+      "nombre": {
+        "type": "String"
+      }
+    }
+  },
+  "comunidadVolvioConSuFamiliaSinNombre": "Una mascota encontrada volvió con su familia 🏡",
+  "comunidadGracias": "Gracias a todos los que ayudaron a difundir.",
+  "comunidadAdoptado": "¡{nombre} encontró un hogar! 💛",
+  "@comunidadAdoptado": {
+    "placeholders": {
+      "nombre": {
+        "type": "String"
+      }
+    }
+  },
+  "comunidadAdoptados": "{n, plural, =1{Una mascota encontró un hogar 💛} other{{n} mascotas encontraron un hogar 💛}}",
+  "@comunidadAdoptados": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "comunidadAdopcionDetalle": "Adopción responsable en SOS Mascota.",
+  "comunidadLugarNuevo": "Nuevo lugar verificado: {nombre}",
+  "@comunidadLugarNuevo": {
+    "placeholders": {
+      "nombre": {
+        "type": "String"
+      }
+    }
+  },
+  "comunidadEvento": "Evento: {nombre}",
+  "@comunidadEvento": {
+    "placeholders": {
+      "nombre": {
+        "type": "String"
+      }
+    }
+  },
+  "comunidadCompartirTitulo": "¿Compartís la buena noticia?",
+  "comunidadCompartirExplicacion": "Se publica en Noticias → Comunidad con el nombre, la especie y la primera foto del reporte. Nunca la ubicación ni tus datos. La podés quitar cuando quieras.",
+  "comunidadCompartir": "Compartir",
+  "comunidadCompartida": "¡Listo! Ya está en Comunidad.",
+  "comunidadInterruptor": "Compartido en Comunidad",
+  "comunidadInterruptorDetalle": "Nombre, especie y foto; nunca la ubicación ni tus datos.",
   "adopcionEntrada": "Adoptar o dar en adopción",
   "adopcionEntradaAyuda": "Siempre gratis. Con guía, compatibilidad y seguimiento.",
   "adopcionAdoptar": "Adoptar",

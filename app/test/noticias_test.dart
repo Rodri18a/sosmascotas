@@ -51,6 +51,8 @@ Future<void> _abrir(
   List<Mascota> mascotas = const [],
   List<Uri>? enlaces,
   List<Map<String, Object?>>? metricas,
+  List<Novedad> novedades = const [],
+  ResumenComunidad resumen = const ResumenComunidad(),
 }) async {
   tester.view
     ..physicalSize = const Size(1080, 2400)
@@ -60,7 +62,11 @@ Future<void> _abrir(
     appDePrueba(
       cuenta: ServicioCuentaFalso(conectado: _ana),
       mascotas: MascotasFalsas(mascotas),
-      noticias: NoticiasFalsas([_paraGatos, _paraTodas, _patrocinada]),
+      noticias: NoticiasFalsas(
+        [_paraGatos, _paraTodas, _patrocinada],
+        novedades,
+        resumen,
+      ),
       enlacesAbiertos: enlaces,
       eventos: metricas,
       funcionalidades: FuncionalidadesFalsas({
@@ -126,5 +132,76 @@ void main() {
     GoRouter.of(tester.element(find.byType(Scaffold).first)).go('/noticias');
     await tester.pumpAndSettle();
     expect(find.text('Gatos y el calor'), findsNothing);
+  });
+
+  testWidgets('Comunidad: resumen y novedades, filtradas por especie', (
+    tester,
+  ) async {
+    await _abrir(
+      tester,
+      mascotas: const [Mascota(id: 'm1', nombre: 'Luna', especieId: 2)],
+      resumen: const ResumenComunidad(reencuentros: 2, lugaresVerificados: 1),
+      novedades: [
+        Novedad(
+          id: 'r1',
+          tipo: TipoNovedad.reencuentro,
+          fecha: DateTime(2026, 10, 20),
+          nombre: 'Lola',
+          detalle: 'lost',
+          especieId: 1,
+          cantidad: 3,
+        ),
+        Novedad(
+          id: 'r2',
+          tipo: TipoNovedad.reencuentro,
+          fecha: DateTime(2026, 10, 19),
+          detalle: 'found',
+          especieId: 2,
+        ),
+        Novedad(
+          id: 'a1',
+          tipo: TipoNovedad.adopcion,
+          fecha: DateTime(2026, 10, 18),
+          especieId: 2,
+          cantidad: 3,
+        ),
+        Novedad(
+          id: 'c1',
+          tipo: TipoNovedad.comercio,
+          fecha: DateTime(2026, 10, 17),
+          nombre: 'Vet Pando',
+          detalle: 'vet',
+        ),
+      ],
+    );
+    await _tocar(tester, find.text('Noticias'));
+    await _tocar(tester, find.text('Comunidad'));
+
+    expect(find.text('Últimos 30 días en la comunidad'), findsOneWidget);
+    expect(find.text('2 mascotas volvieron a casa'), findsOneWidget);
+    expect(find.text('1 lugar verificado en el mapa'), findsOneWidget);
+    expect(find.textContaining('adopciones concretadas'), findsNothing);
+
+    expect(find.text('¡Lola volvió a casa! 🎉'), findsOneWidget);
+    expect(find.textContaining('Estuvo 3 días perdida.'), findsOneWidget);
+    expect(
+      find.text('Una mascota encontrada volvió con su familia 🏡'),
+      findsOneWidget,
+    );
+    expect(find.text('3 mascotas encontraron un hogar 💛'), findsOneWidget);
+    expect(find.text('Nuevo lugar verificado: Vet Pando'), findsOneWidget);
+    expect(find.text('Gatos y el calor'), findsNothing, reason: 'otra sección');
+
+    await _tocar(tester, find.text('🐱 Gato'));
+    expect(find.text('¡Lola volvió a casa! 🎉'), findsNothing);
+    expect(find.text('Nuevo lugar verificado: Vet Pando'), findsOneWidget);
+  });
+
+  testWidgets('Comunidad vacía explica qué va a aparecer', (tester) async {
+    await _abrir(tester);
+    await _tocar(tester, find.text('Noticias'));
+    await _tocar(tester, find.text('Comunidad'));
+    expect(find.textContaining('Todavía no hay novedades'), findsOneWidget);
+    expect(find.text('Últimos 30 días en la comunidad'), findsNothing);
   });
 }

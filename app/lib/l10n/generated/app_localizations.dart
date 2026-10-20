@@ -4966,6 +4966,162 @@ abstract class AppLocalizations {
   /// **'Promocionado · {marca}'**
   String noticiasPromocionado(String marca);
 
+  /// No description provided for @noticiasSeccionNoticias.
+  ///
+  /// In es, this message translates to:
+  /// **'Noticias'**
+  String get noticiasSeccionNoticias;
+
+  /// No description provided for @noticiasSeccionComunidad.
+  ///
+  /// In es, this message translates to:
+  /// **'Comunidad'**
+  String get noticiasSeccionComunidad;
+
+  /// No description provided for @comunidadExplicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Se arma sola con lo que pasa en la app. Nunca mostramos ubicaciones ni datos de personas.'**
+  String get comunidadExplicacion;
+
+  /// No description provided for @comunidadVacio.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no hay novedades. Cuando una mascota vuelva a casa o haya un evento cerca, lo vas a ver acá.'**
+  String get comunidadVacio;
+
+  /// No description provided for @comunidadResumenTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Últimos 30 días en la comunidad'**
+  String get comunidadResumenTitulo;
+
+  /// No description provided for @comunidadResumenReencuentros.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =1{1 mascota volvió a casa} other{{n} mascotas volvieron a casa}}'**
+  String comunidadResumenReencuentros(int n);
+
+  /// No description provided for @comunidadResumenAdopciones.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =1{1 adopción concretada} other{{n} adopciones concretadas}}'**
+  String comunidadResumenAdopciones(int n);
+
+  /// No description provided for @comunidadResumenPerdidas.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =1{1 mascota perdida sigue buscando su casa} other{{n} mascotas perdidas siguen buscando su casa}}'**
+  String comunidadResumenPerdidas(int n);
+
+  /// No description provided for @comunidadResumenLugares.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =1{1 lugar verificado en el mapa} other{{n} lugares verificados en el mapa}}'**
+  String comunidadResumenLugares(int n);
+
+  /// No description provided for @comunidadVolvioACasa.
+  ///
+  /// In es, this message translates to:
+  /// **'¡{nombre} volvió a casa! 🎉'**
+  String comunidadVolvioACasa(String nombre);
+
+  /// No description provided for @comunidadVolvioACasaSinNombre.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Una mascota perdida volvió a casa! 🎉'**
+  String get comunidadVolvioACasaSinNombre;
+
+  /// No description provided for @comunidadDiasPerdida.
+  ///
+  /// In es, this message translates to:
+  /// **'{dias, plural, =0{La encontraron el mismo día.} =1{Estuvo 1 día perdida.} other{Estuvo {dias} días perdida.}}'**
+  String comunidadDiasPerdida(int dias);
+
+  /// No description provided for @comunidadVolvioConSuFamilia.
+  ///
+  /// In es, this message translates to:
+  /// **'¡{nombre} volvió con su familia! 🏡'**
+  String comunidadVolvioConSuFamilia(String nombre);
+
+  /// No description provided for @comunidadVolvioConSuFamiliaSinNombre.
+  ///
+  /// In es, this message translates to:
+  /// **'Una mascota encontrada volvió con su familia 🏡'**
+  String get comunidadVolvioConSuFamiliaSinNombre;
+
+  /// No description provided for @comunidadGracias.
+  ///
+  /// In es, this message translates to:
+  /// **'Gracias a todos los que ayudaron a difundir.'**
+  String get comunidadGracias;
+
+  /// No description provided for @comunidadAdoptado.
+  ///
+  /// In es, this message translates to:
+  /// **'¡{nombre} encontró un hogar! 💛'**
+  String comunidadAdoptado(String nombre);
+
+  /// No description provided for @comunidadAdoptados.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =1{Una mascota encontró un hogar 💛} other{{n} mascotas encontraron un hogar 💛}}'**
+  String comunidadAdoptados(int n);
+
+  /// No description provided for @comunidadAdopcionDetalle.
+  ///
+  /// In es, this message translates to:
+  /// **'Adopción responsable en SOS Mascota.'**
+  String get comunidadAdopcionDetalle;
+
+  /// No description provided for @comunidadLugarNuevo.
+  ///
+  /// In es, this message translates to:
+  /// **'Nuevo lugar verificado: {nombre}'**
+  String comunidadLugarNuevo(String nombre);
+
+  /// No description provided for @comunidadEvento.
+  ///
+  /// In es, this message translates to:
+  /// **'Evento: {nombre}'**
+  String comunidadEvento(String nombre);
+
+  /// No description provided for @comunidadCompartirTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Compartís la buena noticia?'**
+  String get comunidadCompartirTitulo;
+
+  /// No description provided for @comunidadCompartirExplicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Se publica en Noticias → Comunidad con el nombre, la especie y la primera foto del reporte. Nunca la ubicación ni tus datos. La podés quitar cuando quieras.'**
+  String get comunidadCompartirExplicacion;
+
+  /// No description provided for @comunidadCompartir.
+  ///
+  /// In es, this message translates to:
+  /// **'Compartir'**
+  String get comunidadCompartir;
+
+  /// No description provided for @comunidadCompartida.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Listo! Ya está en Comunidad.'**
+  String get comunidadCompartida;
+
+  /// No description provided for @comunidadInterruptor.
+  ///
+  /// In es, this message translates to:
+  /// **'Compartido en Comunidad'**
+  String get comunidadInterruptor;
+
+  /// No description provided for @comunidadInterruptorDetalle.
+  ///
+  /// In es, this message translates to:
+  /// **'Nombre, especie y foto; nunca la ubicación ni tus datos.'**
+  String get comunidadInterruptorDetalle;
+
   /// No description provided for @adopcionEntrada.
   ///
   /// In es, this message translates to:

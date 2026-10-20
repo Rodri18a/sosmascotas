@@ -56,6 +56,8 @@ abstract final class Eventos {
   static const vetProposalAnswer = 'vet_proposal_answer';
   static const newsOpen = 'news_open';
   static const newsLink = 'news_link';
+  static const communityShare = 'community_share';
+  static const communityUnshare = 'community_unshare';
   static const catalogOpen = 'catalog_open';
   static const catalogAsk = 'catalog_ask';
   static const productSave = 'product_save';

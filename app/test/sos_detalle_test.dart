@@ -5,7 +5,9 @@ import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'cuenta_falsa.dart';
+import 'funcionalidades_falsas.dart';
 import 'helpers.dart';
+import 'noticias_falsas.dart';
 import 'sos_falso.dart';
 
 const _beto = Usuario(id: 'u2', email: 'beto@correo.com');
@@ -240,6 +242,63 @@ void main() {
     );
     expect(find.textContaining('ya está resuelto'), findsOneWidget);
     expect(find.widgetWithText(FilledButton, '¡Apareció!'), findsNothing);
+    expect(
+      find.text('¿Compartís la buena noticia?'),
+      findsNothing,
+      reason: 'sin Noticias no se ofrece compartir',
+    );
+  });
+
+  testWidgets('al resolver, comparte el reencuentro solo si el dueño quiere', (
+    tester,
+  ) async {
+    _pantallaDeCelular(tester);
+    final sos = SosFalso(
+      listaCercanos: [_enLista],
+      detalles: {'s1': _detalle(mio: true)},
+    );
+    final noticias = NoticiasFalsas();
+    final metricas = <Map<String, Object?>>[];
+    await tester.pumpWidget(
+      appDePrueba(
+        cuenta: ServicioCuentaFalso(conectado: _beto),
+        sos: sos,
+        noticias: noticias,
+        eventos: metricas,
+        funcionalidades: FuncionalidadesFalsas({Funcionalidades.noticias}),
+      ),
+    );
+    await _abrirDetalle(tester);
+
+    await _ver(tester, find.widgetWithText(FilledButton, '¡Apareció!'));
+    await tester.tap(find.widgetWithText(FilledButton, '¡Apareció!'));
+    await tester.pumpAndSettle();
+    await tester.tap(
+      find.descendant(
+        of: find.byType(AlertDialog),
+        matching: find.text('¡Apareció!'),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('¿Compartís la buena noticia?'), findsOneWidget);
+    expect(noticias.compartidos, isEmpty, reason: 'sin respuesta, no');
+    await tester.tap(find.text('Compartir').last);
+    await tester.pumpAndSettle();
+    expect(noticias.compartidos, {'s1'});
+
+    // Se puede quitar después desde el mismo reporte.
+    final interruptor = find.widgetWithText(
+      SwitchListTile,
+      'Compartido en Comunidad',
+    );
+    await _ver(tester, interruptor);
+    expect(tester.widget<SwitchListTile>(interruptor).value, isTrue);
+    await tester.tap(interruptor);
+    await tester.pumpAndSettle();
+    expect(noticias.compartidos, isEmpty);
+    expect(tester.widget<SwitchListTile>(interruptor).value, isFalse);
+    expect(metricas.map((e) => e['name']), contains('community_unshare'));
   });
 
   testWidgets('un visitante que quiere reportar ve por qué hace falta cuenta', (
