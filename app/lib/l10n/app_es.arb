@@ -145,6 +145,10 @@
   "mascotaCastrada": "¿Está castrada/o?",
   "mascotaNotas": "Notas",
   "mascotaNotasAyuda": "Carácter, miedos, medicación… (solo lo ves vos).",
+  "mascotaSalirTitulo": "¿Salir sin guardar?",
+  "mascotaSalirExplicacion": "Si salís ahora, se pierden los cambios (también la foto). Para que queden, tocá Guardar.",
+  "mascotaSalirSeguir": "Seguir editando",
+  "mascotaSalirDescartar": "Salir sin guardar",
   "mascotaBorrar": "Borrar mascota",
   "mascotaBorrarTitulo": "¿Borrar a {nombre}?",
   "@mascotaBorrarTitulo": {

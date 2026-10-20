@@ -205,6 +205,53 @@ void main() {
     expect(find.widgetWithText(AppBar, 'Mis mascotas'), findsOneWidget);
   });
 
+  testWidgets('salir con una foto sin guardar pregunta antes', (tester) async {
+    _pantallaDeCelular(tester);
+    final mascotas = MascotasFalsas([_luna]);
+    await tester.pumpWidget(
+      appDePrueba(
+        cuenta: ServicioCuentaFalso(conectado: _ana),
+        mascotas: mascotas,
+        selectorFoto: (_) async => _fotoConGps(),
+      ),
+    );
+    await _irAMisMascotas(tester);
+    await tester.tap(find.widgetWithText(ListTile, 'Luna'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('Editar'));
+    await tester.pumpAndSettle();
+
+    // Sin cambios (solo tocar un campo) sale directo.
+    await tester.tap(find.widgetWithText(TextFormField, 'Nombre'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byType(BackButton));
+    await tester.pumpAndSettle();
+    expect(find.text('¿Salir sin guardar?'), findsNothing);
+    expect(find.widgetWithText(AppBar, 'Luna'), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Editar'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Agregar foto'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Elegir de la galería'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byType(BackButton));
+    await tester.pumpAndSettle();
+    expect(find.text('¿Salir sin guardar?'), findsOneWidget);
+    await tester.tap(find.text('Seguir editando'));
+    await tester.pumpAndSettle();
+    expect(find.widgetWithText(AppBar, 'Editar mascota'), findsOneWidget);
+
+    await tester.tap(find.byType(BackButton));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Salir sin guardar').last);
+    await tester.pumpAndSettle();
+    expect(find.widgetWithText(AppBar, 'Luna'), findsOneWidget);
+    expect(mascotas.fotosSubidas, isEmpty);
+    expect(mascotas.mascotas.single.fotoPath, isNull);
+  });
+
   testWidgets('la fila superior elige la mascota activa', (tester) async {
     _pantallaDeCelular(tester);
     await tester.pumpWidget(

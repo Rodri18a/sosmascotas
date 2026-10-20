@@ -712,6 +712,30 @@ abstract class AppLocalizations {
   /// **'Carácter, miedos, medicación… (solo lo ves vos).'**
   String get mascotaNotasAyuda;
 
+  /// No description provided for @mascotaSalirTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Salir sin guardar?'**
+  String get mascotaSalirTitulo;
+
+  /// No description provided for @mascotaSalirExplicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Si salís ahora, se pierden los cambios (también la foto). Para que queden, tocá Guardar.'**
+  String get mascotaSalirExplicacion;
+
+  /// No description provided for @mascotaSalirSeguir.
+  ///
+  /// In es, this message translates to:
+  /// **'Seguir editando'**
+  String get mascotaSalirSeguir;
+
+  /// No description provided for @mascotaSalirDescartar.
+  ///
+  /// In es, this message translates to:
+  /// **'Salir sin guardar'**
+  String get mascotaSalirDescartar;
+
   /// No description provided for @mascotaBorrar.
   ///
   /// In es, this message translates to:

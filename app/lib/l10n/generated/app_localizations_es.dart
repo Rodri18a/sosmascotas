@@ -354,6 +354,19 @@ class AppLocalizationsEs extends AppLocalizations {
       'Carácter, miedos, medicación… (solo lo ves vos).';
 
   @override
+  String get mascotaSalirTitulo => '¿Salir sin guardar?';
+
+  @override
+  String get mascotaSalirExplicacion =>
+      'Si salís ahora, se pierden los cambios (también la foto). Para que queden, tocá Guardar.';
+
+  @override
+  String get mascotaSalirSeguir => 'Seguir editando';
+
+  @override
+  String get mascotaSalirDescartar => 'Salir sin guardar';
+
+  @override
   String get mascotaBorrar => 'Borrar mascota';
 
   @override

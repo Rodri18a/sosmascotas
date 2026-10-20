@@ -81,18 +81,68 @@ class _FormularioState extends ConsumerState<_Formulario> {
   bool _guardando = false;
   String? _error;
 
+  /// Hay cambios sin guardar (por ejemplo, una foto nueva): al salir se pregunta.
+  bool _modificado = false;
+
   bool get _esNueva => widget.original == null;
+
+  List<TextEditingController> get _campos => [
+    _nombre,
+    _razaOtraTexto,
+    _color,
+    _senas,
+    _microchip,
+    _notas,
+  ];
+
+  /// Textos al abrir: tocar un campo (mover el cursor) no es un cambio.
+  late final List<String> _textosIniciales;
+
+  @override
+  void initState() {
+    super.initState();
+    _textosIniciales = [for (final c in _campos) c.text];
+    for (final c in _campos) {
+      c.addListener(_marcarCambio);
+    }
+  }
+
+  void _marcarCambio() {
+    if (_modificado) return;
+    final campos = _campos;
+    for (var i = 0; i < campos.length; i++) {
+      if (campos[i].text != _textosIniciales[i]) {
+        setState(() => _modificado = true);
+        return;
+      }
+    }
+  }
+
+  Future<void> _confirmarSalida() async {
+    final t = context.t;
+    final salir = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(t.mascotaSalirTitulo),
+        content: Text(t.mascotaSalirExplicacion),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: Text(t.mascotaSalirDescartar),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text(t.mascotaSalirSeguir),
+          ),
+        ],
+      ),
+    );
+    if ((salir ?? false) && mounted) Navigator.of(context).pop();
+  }
 
   @override
   void dispose() {
-    for (final c in [
-      _nombre,
-      _razaOtraTexto,
-      _color,
-      _senas,
-      _microchip,
-      _notas,
-    ]) {
+    for (final c in _campos) {
       c.dispose();
     }
     super.dispose();
@@ -109,6 +159,7 @@ class _FormularioState extends ConsumerState<_Formulario> {
     setState(() {
       _procesandoFoto = false;
       _fotoNueva = preparada ?? _fotoNueva;
+      _modificado = _modificado || preparada != null;
       _error = preparada == null ? t.mascotaFotoInvalida : null;
     });
   }
@@ -122,7 +173,12 @@ class _FormularioState extends ConsumerState<_Formulario> {
       lastDate: hoy,
       helpText: context.t.mascotaNacimiento,
     );
-    if (fecha != null) setState(() => _nacimiento = fecha);
+    if (fecha != null) {
+      setState(() {
+        _nacimiento = fecha;
+        _modificado = true;
+      });
+    }
   }
 
   Future<void> _guardar() async {
@@ -170,6 +226,10 @@ class _FormularioState extends ConsumerState<_Formulario> {
       if (mounted) context.go(Rutas.fichaMascota(guardada.id));
     } on Exception {
       if (mounted) setState(() => _error = t.errorSinConexion);
+    } catch (e) {
+      // En la web también llegan errores que no son Exception: que se vean.
+      debugPrint('[mascota] No se pudo guardar: $e');
+      if (mounted) setState(() => _error = t.errorDesconocido);
     } finally {
       if (mounted) setState(() => _guardando = false);
     }
@@ -223,243 +283,260 @@ class _FormularioState extends ConsumerState<_Formulario> {
     final mostrarRazaOtra =
         especieId != null && (razas.isEmpty || _razaId == _razaOtra);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.titulo)),
-      body: SafeArea(
-        child: Form(
-          key: _form,
-          // SingleChildScrollView (no ListView): todos los campos quedan
-          // construidos, así el formulario valida también los que no se ven.
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Center(
-                  child: Column(
-                    children: [
-                      _fotoNueva != null
-                          ? CircleAvatar(
-                              radius: 56,
-                              backgroundImage: MemoryImage(_fotoNueva!),
-                            )
-                          : FotoMascota(
-                              ruta: widget.original?.fotoPath,
-                              radio: 56,
-                            ),
-                      TextButton.icon(
-                        onPressed: _procesandoFoto || _guardando
-                            ? null
-                            : _elegirFoto,
-                        icon: _procesandoFoto
-                            ? const SizedBox.square(
-                                dimension: 16,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                ),
+    return PopScope(
+      canPop: !_modificado,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop) _confirmarSalida();
+      },
+      child: Scaffold(
+        appBar: AppBar(title: Text(widget.titulo)),
+        body: SafeArea(
+          child: Form(
+            key: _form,
+            // SingleChildScrollView (no ListView): todos los campos quedan
+            // construidos, así el formulario valida también los que no se ven.
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Center(
+                    child: Column(
+                      children: [
+                        _fotoNueva != null
+                            ? CircleAvatar(
+                                radius: 56,
+                                backgroundImage: MemoryImage(_fotoNueva!),
                               )
-                            : const Icon(Icons.add_a_photo_outlined),
-                        label: Text(
-                          _fotoNueva == null &&
-                                  widget.original?.fotoPath == null
-                              ? t.mascotaAgregarFoto
-                              : t.mascotaCambiarFoto,
+                            : FotoMascota(
+                                ruta: widget.original?.fotoPath,
+                                radio: 56,
+                              ),
+                        TextButton.icon(
+                          onPressed: _procesandoFoto || _guardando
+                              ? null
+                              : _elegirFoto,
+                          icon: _procesandoFoto
+                              ? const SizedBox.square(
+                                  dimension: 16,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                  ),
+                                )
+                              : const Icon(Icons.add_a_photo_outlined),
+                          label: Text(
+                            _fotoNueva == null &&
+                                    widget.original?.fotoPath == null
+                                ? t.mascotaAgregarFoto
+                                : t.mascotaCambiarFoto,
+                          ),
                         ),
-                      ),
-                      Text(
-                        t.mascotaFotoAyuda,
-                        textAlign: TextAlign.center,
-                        style: tema.textTheme.bodySmall,
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: _nombre,
-                  maxLength: 40,
-                  textCapitalization: TextCapitalization.words,
-                  decoration: InputDecoration(labelText: t.mascotaNombre),
-                  validator: (v) =>
-                      (v ?? '').trim().isEmpty ? t.mascotaNombreFalta : null,
-                ),
-                const SizedBox(height: 8),
-                Text(t.mascotaEspecie, style: tema.textTheme.titleSmall),
-                const SizedBox(height: 8),
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: [
-                    for (final especie in especies)
-                      ChoiceChip(
-                        label: Text('${especie.icono} ${especie.nombre}'),
-                        selected: especie.id == especieId,
-                        onSelected: (_) => setState(() {
-                          _especieId = especie.id;
-                          _razaId = null;
-                        }),
-                      ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                if (razas.isNotEmpty)
-                  DropdownButtonFormField<int>(
-                    key: ValueKey('raza-$especieId'),
-                    initialValue: _razaId,
-                    isExpanded: true,
-                    decoration: InputDecoration(labelText: t.mascotaRaza),
-                    items: [
-                      for (final raza in razas)
-                        DropdownMenuItem(
-                          value: raza.id,
-                          child: Text(raza.nombre),
+                        Text(
+                          t.mascotaFotoAyuda,
+                          textAlign: TextAlign.center,
+                          style: tema.textTheme.bodySmall,
                         ),
-                      DropdownMenuItem(
-                        value: _razaOtra,
-                        child: Text(t.mascotaRazaOtra),
-                      ),
-                    ],
-                    onChanged: (v) => setState(() => _razaId = v),
+                      ],
+                    ),
                   ),
-                if (mostrarRazaOtra) ...[
                   const SizedBox(height: 16),
                   TextFormField(
-                    controller: _razaOtraTexto,
+                    controller: _nombre,
+                    maxLength: 40,
+                    textCapitalization: TextCapitalization.words,
+                    decoration: InputDecoration(labelText: t.mascotaNombre),
+                    validator: (v) =>
+                        (v ?? '').trim().isEmpty ? t.mascotaNombreFalta : null,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(t.mascotaEspecie, style: tema.textTheme.titleSmall),
+                  const SizedBox(height: 8),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: [
+                      for (final especie in especies)
+                        ChoiceChip(
+                          label: Text('${especie.icono} ${especie.nombre}'),
+                          selected: especie.id == especieId,
+                          onSelected: (_) => setState(() {
+                            _especieId = especie.id;
+                            _razaId = null;
+                            _modificado = true;
+                          }),
+                        ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  if (razas.isNotEmpty)
+                    DropdownButtonFormField<int>(
+                      key: ValueKey('raza-$especieId'),
+                      initialValue: _razaId,
+                      isExpanded: true,
+                      decoration: InputDecoration(labelText: t.mascotaRaza),
+                      items: [
+                        for (final raza in razas)
+                          DropdownMenuItem(
+                            value: raza.id,
+                            child: Text(raza.nombre),
+                          ),
+                        DropdownMenuItem(
+                          value: _razaOtra,
+                          child: Text(t.mascotaRazaOtra),
+                        ),
+                      ],
+                      onChanged: (v) => setState(() {
+                        _razaId = v;
+                        _modificado = true;
+                      }),
+                    ),
+                  if (mostrarRazaOtra) ...[
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      controller: _razaOtraTexto,
+                      maxLength: 60,
+                      decoration: InputDecoration(
+                        labelText: razas.isEmpty
+                            ? t.mascotaRaza
+                            : t.mascotaRazaOtraCampo,
+                      ),
+                    ),
+                  ],
+                  const SizedBox(height: 16),
+                  Text(t.mascotaSexo, style: tema.textTheme.titleSmall),
+                  const SizedBox(height: 8),
+                  SegmentedButton<Sexo>(
+                    segments: [
+                      ButtonSegment(value: Sexo.male, label: Text(t.sexoMacho)),
+                      ButtonSegment(
+                        value: Sexo.female,
+                        label: Text(t.sexoHembra),
+                      ),
+                      ButtonSegment(value: Sexo.unknown, label: Text(t.noSe)),
+                    ],
+                    selected: {_sexo},
+                    onSelectionChanged: (s) => setState(() {
+                      _sexo = s.first;
+                      _modificado = true;
+                    }),
+                  ),
+                  const SizedBox(height: 16),
+                  TextFormField(
+                    controller: _color,
                     maxLength: 60,
+                    decoration: InputDecoration(labelText: t.mascotaColor),
+                  ),
+                  TextFormField(
+                    controller: _senas,
+                    maxLength: 300,
+                    maxLines: 3,
+                    minLines: 1,
                     decoration: InputDecoration(
-                      labelText: razas.isEmpty
-                          ? t.mascotaRaza
-                          : t.mascotaRazaOtraCampo,
+                      labelText: t.mascotaSenas,
+                      helperText: t.mascotaSenasAyuda,
                     ),
                   ),
-                ],
-                const SizedBox(height: 16),
-                Text(t.mascotaSexo, style: tema.textTheme.titleSmall),
-                const SizedBox(height: 8),
-                SegmentedButton<Sexo>(
-                  segments: [
-                    ButtonSegment(value: Sexo.male, label: Text(t.sexoMacho)),
-                    ButtonSegment(
-                      value: Sexo.female,
-                      label: Text(t.sexoHembra),
-                    ),
-                    ButtonSegment(value: Sexo.unknown, label: Text(t.noSe)),
-                  ],
-                  selected: {_sexo},
-                  onSelectionChanged: (s) => setState(() => _sexo = s.first),
-                ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: _color,
-                  maxLength: 60,
-                  decoration: InputDecoration(labelText: t.mascotaColor),
-                ),
-                TextFormField(
-                  controller: _senas,
-                  maxLength: 300,
-                  maxLines: 3,
-                  minLines: 1,
-                  decoration: InputDecoration(
-                    labelText: t.mascotaSenas,
-                    helperText: t.mascotaSenasAyuda,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  leading: const Icon(Icons.cake_outlined),
-                  title: Text(t.mascotaNacimiento),
-                  subtitle: Text(
-                    _nacimiento == null
-                        ? t.mascotaNacimientoAyuda
-                        : MaterialLocalizations.of(
-                            context,
-                          ).formatMediumDate(_nacimiento!),
-                  ),
-                  trailing: TextButton(
-                    onPressed: _elegirNacimiento,
-                    child: Text(t.mascotaNacimientoElegir),
-                  ),
-                ),
-                TextFormField(
-                  controller: _microchip,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp(r'[0-9 \-]')),
-                  ],
-                  decoration: InputDecoration(
-                    labelText: t.mascotaMicrochip,
-                    helperText: t.mascotaMicrochipAyuda,
-                  ),
-                  validator: (v) =>
-                      validarMicrochip(v) ==
-                          ValidacionMicrochip.noSonQuinceNumeros
-                      ? t.mascotaMicrochipInvalido
-                      : null,
-                ),
-                const SizedBox(height: 16),
-                Text(t.mascotaCastrada, style: tema.textTheme.titleSmall),
-                const SizedBox(height: 8),
-                SegmentedButton<int>(
-                  segments: [
-                    ButtonSegment(value: 1, label: Text(t.si)),
-                    ButtonSegment(value: 0, label: Text(t.no)),
-                    ButtonSegment(value: -1, label: Text(t.noSe)),
-                  ],
-                  selected: {
-                    switch (_castrada) {
-                      true => 1,
-                      false => 0,
-                      null => -1,
-                    },
-                  },
-                  onSelectionChanged: (s) => setState(
-                    () => _castrada = switch (s.first) {
-                      1 => true,
-                      0 => false,
-                      _ => null,
-                    },
-                  ),
-                ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: _notas,
-                  maxLength: 1000,
-                  maxLines: 4,
-                  minLines: 2,
-                  decoration: InputDecoration(
-                    labelText: t.mascotaNotas,
-                    helperText: t.mascotaNotasAyuda,
-                  ),
-                ),
-                if (_error case final error?) ...[
                   const SizedBox(height: 8),
-                  Text(error, style: TextStyle(color: tema.colorScheme.error)),
-                ],
-                const SizedBox(height: 16),
-                FilledButton(
-                  onPressed: _guardando || _procesandoFoto ? null : _guardar,
-                  child: Text(_guardando ? t.guardando : t.guardar),
-                ),
-                // Borrar la mascota es solo del dueño (D69).
-                if (!_esNueva &&
-                    widget.original!.esDe(
-                      ref.watch(usuarioActualProvider).value?.id,
-                    )) ...[
-                  const SizedBox(height: 8),
-                  TextButton.icon(
-                    onPressed: _guardando ? null : _borrar,
-                    icon: Icon(
-                      Icons.delete_outline,
-                      color: tema.colorScheme.error,
+                  ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(Icons.cake_outlined),
+                    title: Text(t.mascotaNacimiento),
+                    subtitle: Text(
+                      _nacimiento == null
+                          ? t.mascotaNacimientoAyuda
+                          : MaterialLocalizations.of(
+                              context,
+                            ).formatMediumDate(_nacimiento!),
                     ),
-                    label: Text(
-                      t.mascotaBorrar,
+                    trailing: TextButton(
+                      onPressed: _elegirNacimiento,
+                      child: Text(t.mascotaNacimientoElegir),
+                    ),
+                  ),
+                  TextFormField(
+                    controller: _microchip,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'[0-9 \-]')),
+                    ],
+                    decoration: InputDecoration(
+                      labelText: t.mascotaMicrochip,
+                      helperText: t.mascotaMicrochipAyuda,
+                    ),
+                    validator: (v) =>
+                        validarMicrochip(v) ==
+                            ValidacionMicrochip.noSonQuinceNumeros
+                        ? t.mascotaMicrochipInvalido
+                        : null,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(t.mascotaCastrada, style: tema.textTheme.titleSmall),
+                  const SizedBox(height: 8),
+                  SegmentedButton<int>(
+                    segments: [
+                      ButtonSegment(value: 1, label: Text(t.si)),
+                      ButtonSegment(value: 0, label: Text(t.no)),
+                      ButtonSegment(value: -1, label: Text(t.noSe)),
+                    ],
+                    selected: {
+                      switch (_castrada) {
+                        true => 1,
+                        false => 0,
+                        null => -1,
+                      },
+                    },
+                    onSelectionChanged: (s) => setState(() {
+                      _castrada = switch (s.first) {
+                        1 => true,
+                        0 => false,
+                        _ => null,
+                      };
+                      _modificado = true;
+                    }),
+                  ),
+                  const SizedBox(height: 16),
+                  TextFormField(
+                    controller: _notas,
+                    maxLength: 1000,
+                    maxLines: 4,
+                    minLines: 2,
+                    decoration: InputDecoration(
+                      labelText: t.mascotaNotas,
+                      helperText: t.mascotaNotasAyuda,
+                    ),
+                  ),
+                  if (_error case final error?) ...[
+                    const SizedBox(height: 8),
+                    Text(
+                      error,
                       style: TextStyle(color: tema.colorScheme.error),
                     ),
+                  ],
+                  const SizedBox(height: 16),
+                  FilledButton(
+                    onPressed: _guardando || _procesandoFoto ? null : _guardar,
+                    child: Text(_guardando ? t.guardando : t.guardar),
                   ),
+                  // Borrar la mascota es solo del dueño (D69).
+                  if (!_esNueva &&
+                      widget.original!.esDe(
+                        ref.watch(usuarioActualProvider).value?.id,
+                      )) ...[
+                    const SizedBox(height: 8),
+                    TextButton.icon(
+                      onPressed: _guardando ? null : _borrar,
+                      icon: Icon(
+                        Icons.delete_outline,
+                        color: tema.colorScheme.error,
+                      ),
+                      label: Text(
+                        t.mascotaBorrar,
+                        style: TextStyle(color: tema.colorScheme.error),
+                      ),
+                    ),
+                  ],
                 ],
-              ],
+              ),
             ),
           ),
         ),
