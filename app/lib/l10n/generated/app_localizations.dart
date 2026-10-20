@@ -4594,6 +4594,42 @@ abstract class AppLocalizations {
   /// **'Adopción responsable'**
   String get adopcionTitulo;
 
+  /// No description provided for @noticiasTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Noticias'**
+  String get noticiasTitulo;
+
+  /// No description provided for @noticiasEntradaAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Novedades, campañas y consejos para tus mascotas.'**
+  String get noticiasEntradaAyuda;
+
+  /// No description provided for @noticiasTodas.
+  ///
+  /// In es, this message translates to:
+  /// **'Todas'**
+  String get noticiasTodas;
+
+  /// No description provided for @noticiasVacio.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no hay noticias para mostrarte.'**
+  String get noticiasVacio;
+
+  /// No description provided for @noticiasLeerMas.
+  ///
+  /// In es, this message translates to:
+  /// **'Leer más'**
+  String get noticiasLeerMas;
+
+  /// No description provided for @noticiasPromocionado.
+  ///
+  /// In es, this message translates to:
+  /// **'Promocionado · {marca}'**
+  String noticiasPromocionado(String marca);
+
   /// No description provided for @adopcionEntrada.
   ///
   /// In es, this message translates to:

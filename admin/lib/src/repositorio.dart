@@ -67,6 +67,12 @@ abstract interface class AdminRepositorio {
   /// [estado]: `new`, `referred` (derivada) o `closed`.
   Future<void> estadoDenuncia(String id, String estado, {String? nota});
 
+  /// Noticias (2.8, D83): todas, también borradores y ocultas.
+  Future<List<Map<String, Object?>>> noticias();
+
+  /// Crea (sin `id`) o actualiza una noticia.
+  Future<void> guardarNoticia(Map<String, Object?> datos);
+
   /// Crea (sin `id`) o actualiza una entrada de la Ayuda.
   Future<void> guardarAyuda(Map<String, Object?> datos);
 }
@@ -233,6 +239,14 @@ class SupabaseAdminRepositorio implements AdminRepositorio {
       );
 
   @override
+  Future<List<Map<String, Object?>>> noticias() async =>
+      _filas(await _cliente.rpc<List<dynamic>>('admin_noticias'));
+
+  @override
+  Future<void> guardarNoticia(Map<String, Object?> datos) =>
+      _cliente.rpc<String>('admin_guardar_noticia', params: {'p': datos});
+
+  @override
   Future<List<EntradaAyuda>> ayuda() async =>
       (await _cliente
               .from('help_directory')
@@ -300,6 +314,10 @@ final adopcionesEnRevisionProvider = FutureProvider<List<Map<String, Object?>>>(
 
 final denunciasProvider = FutureProvider<List<Map<String, Object?>>>(
   (ref) => ref.watch(adminRepositorioProvider).denuncias(),
+);
+
+final noticiasProvider = FutureProvider<List<Map<String, Object?>>>(
+  (ref) => ref.watch(adminRepositorioProvider).noticias(),
 );
 
 final ayudaProvider = FutureProvider<List<EntradaAyuda>>(

@@ -54,6 +54,8 @@ abstract final class Eventos {
   static const vetSearchSnooze = 'vet_search_snooze';
   static const vetProposalSend = 'vet_proposal_send';
   static const vetProposalAnswer = 'vet_proposal_answer';
+  static const newsOpen = 'news_open';
+  static const newsLink = 'news_link';
 }
 
 /// Valida el nombre de un evento con la misma regla que la base de datos.

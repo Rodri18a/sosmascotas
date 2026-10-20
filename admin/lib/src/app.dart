@@ -8,6 +8,7 @@ import 'pantallas/denuncias.dart';
 import 'pantallas/ingreso.dart';
 import 'pantallas/lugares.dart';
 import 'pantallas/moderacion.dart';
+import 'pantallas/noticias.dart';
 import 'pantallas/panel.dart';
 import 'pantallas/prospectos.dart';
 import 'repositorio.dart';
@@ -120,6 +121,7 @@ class _PortalState extends ConsumerState<Portal> {
     (Icons.verified_outlined, T.comercios),
     (Icons.handshake_outlined, T.prospectos),
     (Icons.volunteer_activism_outlined, T.ayuda),
+    (Icons.newspaper_outlined, T.noticias),
   ];
 
   @override
@@ -132,7 +134,8 @@ class _PortalState extends ConsumerState<Portal> {
       3 => const LugaresScreen(),
       4 => const ComerciosScreen(),
       5 => const ProspectosScreen(),
-      _ => const AyudaScreen(),
+      6 => const AyudaScreen(),
+      _ => const NoticiasScreen(),
     };
     return Scaffold(
       appBar: AppBar(

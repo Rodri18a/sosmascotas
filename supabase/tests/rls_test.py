@@ -1389,6 +1389,30 @@ def main():
             pedir('DELETE', f'{URL}/rest/v1/pets?id=eq.{toby}', headers=ADMIN)
             pedir('DELETE', f'{URL}/rest/v1/businesses?id=eq.{vet}', headers=ADMIN)
 
+            print('noticias (2.8)')
+            noticia = {'title': 'Prueba RLS: vacunación', 'body': 'Jornada de vacunación antirrábica en la plaza.',
+                       'species_ids': [1], 'status': 'published'}
+            caso('A no carga noticias', rest('POST', 'rpc/admin_guardar_noticia', {'p': noticia}, a)[0] >= 400)
+            caso('nadie escribe la tabla directo', bloqueado(rest('POST', 'news', noticia, a)))
+            s_nt, nt = rest('POST', 'rpc/admin_guardar_noticia', {'p': noticia}, x)
+            caso('X carga una noticia para perros', s_nt == 200)
+            s_np, nt_p = rest('POST', 'rpc/admin_guardar_noticia', {'p': {
+                'title': 'Prueba RLS: alimento', 'body': 'Nuevo alimento para gatos adultos.', 'species_ids': [2],
+                'sponsored': True, 'sponsor_name': 'Marca Prueba', 'status': 'published'}}, x)
+            caso('X carga una patrocinada para gatos', s_np == 200)
+            caso('una patrocinada sin marca no se acepta', rest('POST', 'rpc/admin_guardar_noticia', {'p': {
+                **noticia, 'sponsored': True}}, x)[0] >= 400)
+            s_nb, nt_b = rest('POST', 'rpc/admin_guardar_noticia', {'p': {**noticia, 'title': 'Prueba RLS: borrador', 'status': 'draft'}}, x)
+            perros = [n['id'] for n in filas(rest('POST', 'rpc/noticias', {'p_especies': [1]}))]
+            caso('un visitante ve la de perros y no la de gatos', nt in perros and nt_p not in perros)
+            gatos = [n for n in filas(rest('POST', 'rpc/noticias', {'p_especies': [2]})) if n['id'] == nt_p]
+            caso('la patrocinada dice de qué marca es', len(gatos) == 1 and gatos[0]['sponsored'] and gatos[0]['sponsor_name'] == 'Marca Prueba')
+            caso('los borradores no se ven', all(n['id'] != nt_b for n in filas(rest('POST', 'rpc/noticias', {}))))
+            caso('A no ve la lista de administración', rest('POST', 'rpc/admin_noticias', {}, a)[0] >= 400)
+            rest('POST', 'rpc/admin_guardar_noticia', {'p': {**noticia, 'id': nt, 'status': 'hidden'}}, x)
+            caso('oculta, ya no aparece', all(n['id'] != nt for n in filas(rest('POST', 'rpc/noticias', {}))))
+            pedir('DELETE', f'{URL}/rest/v1/news?title=like.Prueba%20RLS*', headers=ADMIN)
+
             pedir('DELETE', f'{URL}/rest/v1/businesses?id=in.({negocio},{sin_duenio},{desde_marca})', headers=ADMIN)
             pedir('DELETE', f'{URL}/rest/v1/place_marks?user_id=in.({a_id},{b_id})', headers=ADMIN)
         finally:

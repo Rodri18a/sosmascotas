@@ -194,6 +194,27 @@ class RepoFalso implements AdminRepositorio {
       },
   ];
 
+  final noticiasGuardadas = <Map<String, Object?>>[];
+
+  @override
+  Future<List<Map<String, Object?>>> noticias() async => [
+    {
+      'id': 'n1',
+      'title': 'Campaña de vacunación',
+      'status': 'published',
+      'sponsored': false,
+      'species_ids': <int>[],
+    },
+    ...noticiasGuardadas,
+  ];
+
+  @override
+  Future<void> guardarNoticia(Map<String, Object?> datos) async =>
+      noticiasGuardadas.add({
+        ...datos,
+        'id': 'n${noticiasGuardadas.length + 2}',
+      });
+
   @override
   Future<void> estadoDenuncia(String id, String estado, {String? nota}) async =>
       estadosDenuncia.add((id, estado));
@@ -436,5 +457,45 @@ void main() {
     expect(find.text('Perro atado sin agua'), findsOneWidget);
     await _tocar(tester, find.text('Derivada al INBA o la policía'));
     expect(repo.estadosDenuncia.single, ('d1', 'referred'));
+  });
+
+  testWidgets('noticias: una patrocinada necesita la marca', (tester) async {
+    _pantallaGrande(tester);
+    final repo = RepoFalso();
+    await tester.pumpWidget(
+      _portal(sesion: SesionFalsa('admin@x.uy'), repo: repo),
+    );
+    await tester.pumpAndSettle();
+    await _tocar(tester, find.text('Noticias'));
+    expect(find.text('Campaña de vacunación'), findsOneWidget);
+    expect(find.textContaining('Todas las especies'), findsOneWidget);
+
+    await _tocar(tester, find.text('Nueva noticia'));
+    await tester.enterText(
+      find.widgetWithText(TextField, 'Título'),
+      'Alimento para cachorros',
+    );
+    await tester.enterText(
+      find.widgetWithText(TextField, 'Texto'),
+      'Una guía para elegir el alimento.',
+    );
+    await _tocar(tester, find.widgetWithText(FilterChip, 'Perro'));
+    await _tocar(
+      tester,
+      find.text('Patrocinada (se ve "Promocionado · marca")'),
+    );
+    await _tocar(tester, find.text('Guardar'));
+    expect(
+      find.text('Una noticia patrocinada necesita la marca.'),
+      findsOneWidget,
+    );
+    expect(repo.noticiasGuardadas, isEmpty);
+
+    await tester.enterText(find.widgetWithText(TextField, 'Marca'), 'Perruna');
+    await _tocar(tester, find.text('Guardar'));
+    final guardada = repo.noticiasGuardadas.single;
+    expect(guardada['sponsor_name'], 'Perruna');
+    expect(guardada['species_ids'], [1]);
+    expect(guardada['status'], 'draft');
   });
 }

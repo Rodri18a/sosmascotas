@@ -982,6 +982,19 @@
   "@panelSinResponder": {"placeholders": {"n": {"type": "int"}}},
   "panelChats": "Chats nuevos",
   "adopcionTitulo": "Adopción responsable",
+  "noticiasTitulo": "Noticias",
+  "noticiasEntradaAyuda": "Novedades, campañas y consejos para tus mascotas.",
+  "noticiasTodas": "Todas",
+  "noticiasVacio": "Todavía no hay noticias para mostrarte.",
+  "noticiasLeerMas": "Leer más",
+  "noticiasPromocionado": "Promocionado · {marca}",
+  "@noticiasPromocionado": {
+    "placeholders": {
+      "marca": {
+        "type": "String"
+      }
+    }
+  },
   "adopcionEntrada": "Adoptar o dar en adopción",
   "adopcionEntradaAyuda": "Siempre gratis. Con guía, compatibilidad y seguimiento.",
   "adopcionAdoptar": "Adoptar",

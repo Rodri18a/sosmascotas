@@ -24,6 +24,7 @@ import 'features/mascotas/mascotas_screen.dart';
 import 'features/mascotas/qr_mascota_screen.dart';
 import 'features/negocio/negocio_screen.dart';
 import 'features/no_disponible/no_disponible_screen.dart';
+import 'features/noticias/noticias_screen.dart';
 import 'features/perfil/perfil_screen.dart';
 import 'features/recordatorios/recordatorios.dart';
 import 'features/shell/app_shell.dart';
@@ -59,6 +60,7 @@ abstract final class Rutas {
   static const chats = '/chats';
   static const negocio = '/negocio';
   static const adopcion = '/adopcion';
+  static const noticias = '/noticias';
   static const denuncia = '/denuncia';
   static const nuevoEvento = '/eventos/nuevo';
   static const marcarLugar = '/lugares/marcar';
@@ -76,6 +78,7 @@ abstract final class Rutas {
     '$negocio/socios/': Funcionalidades.veterinarias,
     negocio: Funcionalidades.comercios,
     adopcion: Funcionalidades.adopcion,
+    noticias: Funcionalidades.noticias,
     denuncia: Funcionalidades.eventos,
     nuevoEvento: Funcionalidades.eventos,
     marcarLugar: Funcionalidades.comercios,
@@ -355,6 +358,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         ],
       ),
       GoRoute(path: Rutas.denuncia, builder: (_, _) => const DenunciaScreen()),
+      GoRoute(path: Rutas.noticias, builder: (_, _) => const NoticiasScreen()),
       GoRoute(
         path: Rutas.nuevoEvento,
         builder: (_, state) {

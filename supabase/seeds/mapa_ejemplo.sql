@@ -16,10 +16,14 @@
 begin;
 
 -- Usuario de ejemplo (sin contraseña: no se puede entrar con él).
-insert into auth.users (id, instance_id, aud, role, email, raw_user_meta_data, created_at, updated_at)
+-- Los textos de Auth van vacíos y no NULL: con NULL, la API de Auth falla
+-- (500) al listar las cuentas.
+insert into auth.users (id, instance_id, aud, role, email, raw_user_meta_data, created_at, updated_at,
+                        confirmation_token, recovery_token, email_change_token_new, email_change,
+                        email_change_token_current, phone_change, phone_change_token, reauthentication_token)
 values ('00000000-0000-4000-a000-00000000e1e1', '00000000-0000-0000-0000-000000000000',
         'authenticated', 'authenticated', 'ejemplo-mapa@sosmascota.test',
-        '{"full_name": "Ejemplo del mapa"}', now(), now())
+        '{"full_name": "Ejemplo del mapa"}', now(), now(), '', '', '', '', '', '', '', '')
 on conflict (id) do nothing;
 
 -- Limpieza de la corrida anterior.

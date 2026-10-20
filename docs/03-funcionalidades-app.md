@@ -112,6 +112,7 @@ Pantalla inicial: logo sobre el azul petróleo de la marca (`#0F5E7A`, D62) dura
 
 - Grilla de tarjetas filtrada por la especie de la mascota activa.
 - Mezcla novedades de la comunidad, eventos y **promociones de marcas** con la etiqueta "Promocionado".
+- Mientras está detrás de la funcionalidad gradual `noticias` (D83), se entra desde la pestaña **Ayuda**; pasa a ser pestaña cuando llegue a todos. Las carga la administración desde el portal.
 
 ## 11. Adopción responsable — Fase 1 (directorio) / Fase 2 (proceso) / Fase 3 (packs y tránsito)
 

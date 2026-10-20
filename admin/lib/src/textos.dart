@@ -133,6 +133,37 @@ abstract final class T {
   };
   static const verUbicacion = 'Ver ubicación';
 
+  // Noticias (2.8)
+  static const noticias = 'Noticias';
+  static const nuevaNoticia = 'Nueva noticia';
+  static const estado = 'Estado';
+  static const todasLasEspecies = 'Todas las especies';
+  static const sinNoticias = 'Todavía no hay noticias.';
+  static const tituloNoticia = 'Título';
+  static const cuerpo = 'Texto';
+  static const fuente = 'Fuente';
+  static const especiesNoticia = 'Para qué especies (ninguna marcada: todas)';
+  static const patrocinada = 'Patrocinada (se ve "Promocionado · marca")';
+  static const marca = 'Marca';
+  static const faltaMarca = 'Una noticia patrocinada necesita la marca.';
+  static const estadosNoticia = {
+    'draft': 'Borrador',
+    'published': 'Publicada',
+    'hidden': 'Oculta',
+  };
+  static const especies = {
+    1: 'Perro',
+    2: 'Gato',
+    3: 'Ave',
+    4: 'Conejo',
+    5: 'Roedor',
+    6: 'Tortuga',
+    7: 'Reptil',
+    8: 'Pez',
+    9: 'Caballo',
+    10: 'Otro',
+  };
+
   // Prospectos
   static const nuevoProspecto = 'Nuevo prospecto';
   static const contacto = 'Contacto';

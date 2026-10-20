@@ -43,6 +43,9 @@ abstract final class Funcionalidades {
   /// Socios de la veterinaria y "Busco veterinaria" (2.6, D81).
   static const veterinarias = 'veterinarias';
 
+  /// Noticias con contenido patrocinado (2.8, D83).
+  static const noticias = 'noticias';
+
   /// Las que ya están en `todos`: la app las da por prendidas aunque no pueda
   /// preguntarle a la base (sin conexión y sin nada guardado). Las demás, en
   /// ese caso, quedan apagadas (lo seguro).

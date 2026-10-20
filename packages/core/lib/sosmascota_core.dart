@@ -23,6 +23,7 @@ export 'src/mascotas/recordatorio.dart';
 export 'src/mascotas/registro_salud.dart';
 export 'src/metricas/anon_id.dart';
 export 'src/metricas/eventos.dart';
+export 'src/noticias/noticia.dart';
 export 'src/qr/qr_tag.dart';
 export 'src/sos/sos.dart';
 export 'src/veterinarias/veterinarias.dart';

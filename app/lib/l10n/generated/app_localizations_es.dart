@@ -2654,6 +2654,27 @@ class AppLocalizationsEs extends AppLocalizations {
   String get adopcionTitulo => 'Adopción responsable';
 
   @override
+  String get noticiasTitulo => 'Noticias';
+
+  @override
+  String get noticiasEntradaAyuda =>
+      'Novedades, campañas y consejos para tus mascotas.';
+
+  @override
+  String get noticiasTodas => 'Todas';
+
+  @override
+  String get noticiasVacio => 'Todavía no hay noticias para mostrarte.';
+
+  @override
+  String get noticiasLeerMas => 'Leer más';
+
+  @override
+  String noticiasPromocionado(String marca) {
+    return 'Promocionado · $marca';
+  }
+
+  @override
   String get adopcionEntrada => 'Adoptar o dar en adopción';
 
   @override

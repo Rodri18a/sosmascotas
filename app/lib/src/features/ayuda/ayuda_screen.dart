@@ -70,6 +70,19 @@ class AyudaScreen extends ConsumerWidget {
                 ],
               ),
             ),
+            // Noticias (2.8, D83): mientras es gradual, se entra desde acá.
+            SiFuncionalidad(
+              Funcionalidades.noticias,
+              child: Card(
+                child: ListTile(
+                  leading: const Icon(Icons.newspaper_outlined),
+                  title: Text(t.noticiasTitulo),
+                  subtitle: Text(t.noticiasEntradaAyuda),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => context.push(Rutas.noticias),
+                ),
+              ),
+            ),
             // Adopción responsable (2.0, D79).
             SiFuncionalidad(
               Funcionalidades.adopcion,

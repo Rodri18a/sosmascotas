@@ -27,6 +27,7 @@ import 'package:sosmascota/src/mascotas/catalogo.dart';
 import 'package:sosmascota/src/mascotas/libreta_repositorio.dart';
 import 'package:sosmascota/src/mascotas/mascotas_repositorio.dart';
 import 'package:sosmascota/src/metricas/metricas.dart';
+import 'package:sosmascota/src/noticias/noticias_repositorio.dart';
 import 'package:sosmascota/src/push/servicio_push.dart';
 import 'package:sosmascota/src/qr/qr_repositorio.dart';
 import 'package:sosmascota/src/recordatorios/avisador.dart';
@@ -52,6 +53,7 @@ import 'instalacion_falsa.dart';
 import 'libreta_falsa.dart';
 import 'mapa_falso.dart';
 import 'mascotas_falsas.dart';
+import 'noticias_falsas.dart';
 import 'perfil_falso.dart';
 import 'qr_falso.dart';
 import 'recordatorios_falsos.dart';
@@ -88,6 +90,7 @@ Widget appDePrueba({
   AdopcionRepositorio? adopcion,
   EventosRepositorio? eventosRepo,
   VeterinariasRepositorio? veterinarias,
+  NoticiasRepositorio? noticias,
   Posicion? posicion,
   SelectorFoto? selectorFoto,
   QrRepositorio? qr,
@@ -158,6 +161,7 @@ Widget appDePrueba({
     veterinariasRepositorioProvider.overrideWithValue(
       veterinarias ?? VeterinariasFalsas(),
     ),
+    noticiasRepositorioProvider.overrideWithValue(noticias ?? NoticiasFalsas()),
     misLugaresRepositorioProvider.overrideWithValue(
       misLugares ?? MisLugaresFalsos(),
     ),
