@@ -164,6 +164,7 @@ Tabla `events` (append-only), escrita por el cliente con `ref.read(metricasProvi
 | `event_publish` / `event_open` / `abuse_report` | tipo de evento o target_id; la denuncia sin datos (D80) |
 | `module_toggle` / `vet_share` / `vet_remind` / `vet_search_opt_in` / `vet_search_snooze` / `vet_proposal_send` / `vet_proposal_answer` | socios y "Busco veterinaria", sin datos de la mascota ni del dueño (D81) |
 | `news_open` / `news_link` | abrir una noticia y tocar "Leer más", con `patrocinada` (D83) |
+| `catalog_open` / `catalog_ask` / `product_save` / `order_create` / `order_status` | catálogo y pedidos: abrir, consultar, cargar un producto, pedir (con las unidades) y cada cambio de estado; sin datos de quien pide (D85) |
 | `adoption_publish` / `adoption_interest` / `adoption_stage` / `adoption_commit` / `adoption_followup` | cantidad de animales, etapa o día del seguimiento; sin datos de nadie (D79) |
 | `review_create` / `review_reply` | business_id; `review_create` con las estrellas (D78) |
 | `place_mark` / `business_create` / `business_claim` / `verification_request` | rubro y modalidad o business_id (1.3, D77) |

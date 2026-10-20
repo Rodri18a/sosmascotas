@@ -56,6 +56,11 @@ abstract final class Eventos {
   static const vetProposalAnswer = 'vet_proposal_answer';
   static const newsOpen = 'news_open';
   static const newsLink = 'news_link';
+  static const catalogOpen = 'catalog_open';
+  static const catalogAsk = 'catalog_ask';
+  static const productSave = 'product_save';
+  static const orderCreate = 'order_create';
+  static const orderStatus = 'order_status';
 }
 
 /// Valida el nombre de un evento con la misma regla que la base de datos.

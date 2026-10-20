@@ -4594,6 +4594,318 @@ abstract class AppLocalizations {
   /// **'Adopción responsable'**
   String get adopcionTitulo;
 
+  /// No description provided for @catalogoTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Catálogo'**
+  String get catalogoTitulo;
+
+  /// No description provided for @catalogoVacio.
+  ///
+  /// In es, this message translates to:
+  /// **'Este comercio todavía no cargó productos.'**
+  String get catalogoVacio;
+
+  /// No description provided for @catalogoPagoDirecto.
+  ///
+  /// In es, this message translates to:
+  /// **'El pago y la entrega los arreglás directo con el comercio.'**
+  String get catalogoPagoDirecto;
+
+  /// No description provided for @catalogoVerPedido.
+  ///
+  /// In es, this message translates to:
+  /// **'Ver pedido · {cantidad} · {total}'**
+  String catalogoVerPedido(int cantidad, String total);
+
+  /// No description provided for @catalogoConsultaTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Hola, te escribo desde SOS Mascota. Quería consultar por: {producto}'**
+  String catalogoConsultaTexto(String producto);
+
+  /// No description provided for @catalogoSinContacto.
+  ///
+  /// In es, this message translates to:
+  /// **'Este comercio no dejó cómo contactarlo.'**
+  String get catalogoSinContacto;
+
+  /// No description provided for @catalogoConsultarPrecio.
+  ///
+  /// In es, this message translates to:
+  /// **'Consultar precio'**
+  String get catalogoConsultarPrecio;
+
+  /// No description provided for @catalogoConsultar.
+  ///
+  /// In es, this message translates to:
+  /// **'Consultar'**
+  String get catalogoConsultar;
+
+  /// No description provided for @catalogoAgregar.
+  ///
+  /// In es, this message translates to:
+  /// **'Agregar'**
+  String get catalogoAgregar;
+
+  /// No description provided for @catalogoQuitarUno.
+  ///
+  /// In es, this message translates to:
+  /// **'Quitar uno'**
+  String get catalogoQuitarUno;
+
+  /// No description provided for @catalogoSumarUno.
+  ///
+  /// In es, this message translates to:
+  /// **'Sumar uno'**
+  String get catalogoSumarUno;
+
+  /// No description provided for @catalogoVer.
+  ///
+  /// In es, this message translates to:
+  /// **'Ver catálogo ({cantidad})'**
+  String catalogoVer(int cantidad);
+
+  /// No description provided for @catalogoPrender.
+  ///
+  /// In es, this message translates to:
+  /// **'Catálogo y pedidos'**
+  String get catalogoPrender;
+
+  /// No description provided for @catalogoPrendidoAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Prendido: tus productos se ven en tu ficha y te pueden hacer pedidos.'**
+  String get catalogoPrendidoAyuda;
+
+  /// No description provided for @catalogoApagadoAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Apagado: podés cargar productos; nadie los ve hasta que lo prendas.'**
+  String get catalogoApagadoAyuda;
+
+  /// No description provided for @catalogoSinProductos.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no cargaste productos. Tocá «Agregar producto».'**
+  String get catalogoSinProductos;
+
+  /// No description provided for @pedidoTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu pedido'**
+  String get pedidoTitulo;
+
+  /// No description provided for @pedidoTotal.
+  ///
+  /// In es, this message translates to:
+  /// **'Total'**
+  String get pedidoTotal;
+
+  /// No description provided for @pedidoNota.
+  ///
+  /// In es, this message translates to:
+  /// **'Nota para el comercio (opcional)'**
+  String get pedidoNota;
+
+  /// No description provided for @pedidoNotaAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Por ejemplo: paso a retirarlo a las 18'**
+  String get pedidoNotaAyuda;
+
+  /// No description provided for @pedidoHacer.
+  ///
+  /// In es, this message translates to:
+  /// **'Hacer pedido'**
+  String get pedidoHacer;
+
+  /// No description provided for @pedidoIngresar.
+  ///
+  /// In es, this message translates to:
+  /// **'Ingresá para hacer el pedido'**
+  String get pedidoIngresar;
+
+  /// No description provided for @pedidoHecho.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Listo! El comercio recibió tu pedido.'**
+  String get pedidoHecho;
+
+  /// No description provided for @pedidoDemasiados.
+  ///
+  /// In es, this message translates to:
+  /// **'Hiciste muchos pedidos hoy. Probá mañana.'**
+  String get pedidoDemasiados;
+
+  /// No description provided for @pedidoCambio.
+  ///
+  /// In es, this message translates to:
+  /// **'Algún producto cambió o ya no está. Revisá el catálogo y probá de nuevo.'**
+  String get pedidoCambio;
+
+  /// No description provided for @pedidoSinModulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Este comercio ya no está tomando pedidos.'**
+  String get pedidoSinModulo;
+
+  /// No description provided for @pedidoNuevo.
+  ///
+  /// In es, this message translates to:
+  /// **'Nuevo'**
+  String get pedidoNuevo;
+
+  /// No description provided for @pedidoPreparando.
+  ///
+  /// In es, this message translates to:
+  /// **'Preparando'**
+  String get pedidoPreparando;
+
+  /// No description provided for @pedidoListo.
+  ///
+  /// In es, this message translates to:
+  /// **'Listo para retirar'**
+  String get pedidoListo;
+
+  /// No description provided for @pedidoEntregado.
+  ///
+  /// In es, this message translates to:
+  /// **'Entregado'**
+  String get pedidoEntregado;
+
+  /// No description provided for @pedidoCancelado.
+  ///
+  /// In es, this message translates to:
+  /// **'Cancelado'**
+  String get pedidoCancelado;
+
+  /// No description provided for @pedidoCancelar.
+  ///
+  /// In es, this message translates to:
+  /// **'Cancelar pedido'**
+  String get pedidoCancelar;
+
+  /// No description provided for @pedidoNumero.
+  ///
+  /// In es, this message translates to:
+  /// **'Pedido #{numero}'**
+  String pedidoNumero(int numero);
+
+  /// No description provided for @pedidoNotaDe.
+  ///
+  /// In es, this message translates to:
+  /// **'Nota: {nota}'**
+  String pedidoNotaDe(String nota);
+
+  /// No description provided for @pedidoPasarA.
+  ///
+  /// In es, this message translates to:
+  /// **'Pasar a «{estado}»'**
+  String pedidoPasarA(String estado);
+
+  /// No description provided for @misPedidos.
+  ///
+  /// In es, this message translates to:
+  /// **'Mis pedidos'**
+  String get misPedidos;
+
+  /// No description provided for @misPedidosAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Lo que pediste a los comercios y en qué estado está.'**
+  String get misPedidosAyuda;
+
+  /// No description provided for @misPedidosVacio.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no hiciste pedidos. Los comercios con catálogo tienen el botón «Ver catálogo» en su ficha.'**
+  String get misPedidosVacio;
+
+  /// No description provided for @pedidosNegocioVacio.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no te hicieron pedidos.'**
+  String get pedidosNegocioVacio;
+
+  /// No description provided for @productoNuevo.
+  ///
+  /// In es, this message translates to:
+  /// **'Agregar producto'**
+  String get productoNuevo;
+
+  /// No description provided for @productoEditar.
+  ///
+  /// In es, this message translates to:
+  /// **'Editar producto'**
+  String get productoEditar;
+
+  /// No description provided for @productoNombre.
+  ///
+  /// In es, this message translates to:
+  /// **'Nombre'**
+  String get productoNombre;
+
+  /// No description provided for @productoDescripcion.
+  ///
+  /// In es, this message translates to:
+  /// **'Descripción (opcional)'**
+  String get productoDescripcion;
+
+  /// No description provided for @productoPrecio.
+  ///
+  /// In es, this message translates to:
+  /// **'Precio'**
+  String get productoPrecio;
+
+  /// No description provided for @productoPrecioAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Vacío: se muestra «Consultar precio» y no se puede pedir.'**
+  String get productoPrecioAyuda;
+
+  /// No description provided for @productoDisponible.
+  ///
+  /// In es, this message translates to:
+  /// **'Disponible'**
+  String get productoDisponible;
+
+  /// No description provided for @productoNoDisponible.
+  ///
+  /// In es, this message translates to:
+  /// **'No disponible'**
+  String get productoNoDisponible;
+
+  /// No description provided for @productoFoto.
+  ///
+  /// In es, this message translates to:
+  /// **'Agregar foto'**
+  String get productoFoto;
+
+  /// No description provided for @productoCambiarFoto.
+  ///
+  /// In es, this message translates to:
+  /// **'Cambiar foto'**
+  String get productoCambiarFoto;
+
+  /// No description provided for @productoBorrar.
+  ///
+  /// In es, this message translates to:
+  /// **'Borrar'**
+  String get productoBorrar;
+
+  /// No description provided for @productoDatosInvalidos.
+  ///
+  /// In es, this message translates to:
+  /// **'Revisá el nombre (2 letras o más) y el precio.'**
+  String get productoDatosInvalidos;
+
+  /// No description provided for @productoLimite.
+  ///
+  /// In es, this message translates to:
+  /// **'Llegaste al máximo de 200 productos.'**
+  String get productoLimite;
+
   /// No description provided for @noticiasTitulo.
   ///
   /// In es, this message translates to:

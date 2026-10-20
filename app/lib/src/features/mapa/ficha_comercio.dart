@@ -14,6 +14,7 @@ import '../../theme/paleta.dart';
 import '../../utiles/enlaces.dart';
 import '../chat/chat_screen.dart';
 import '../resenas/resenas.dart';
+import '../tienda/catalogo_screen.dart';
 import 'marcar_lugar.dart';
 
 /// Abre la ficha de un lugar desde abajo (al tocar su pin o en la lista).
@@ -275,6 +276,8 @@ class FichaComercio extends ConsumerWidget {
                   ),
               ],
             ),
+            // Catálogo (2.5, D85): solo si el comercio lo tiene prendido.
+            BotonCatalogo(comercio: c),
             // Favorito, "fui" y "es mi veterinaria" (1.2.8), con sesión y
             // con el mapa completo.
             if (ref.watch(conectadoProvider) &&

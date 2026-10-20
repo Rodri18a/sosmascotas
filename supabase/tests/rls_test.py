@@ -1413,6 +1413,79 @@ def main():
             caso('oculta, ya no aparece', all(n['id'] != nt for n in filas(rest('POST', 'rpc/noticias', {}))))
             pedir('DELETE', f'{URL}/rest/v1/news?title=like.Prueba%20RLS*', headers=ADMIN)
 
+            print('catálogo y pedidos (2.5 y 3.2)')
+            s_ps, tienda = rest('POST', 'rpc/alta_negocio', {'p': {
+                'name': 'Pet Shop Catálogo RLS', 'business_type': 'petshop', 'kind': 'local', 'lat': -34.7211, 'lng': -55.9611}}, a)
+            caso('A da de alta un pet shop', s_ps == 200)
+            producto = {'name': 'Alimento perro adulto 3 kg', 'price': 890, 'species_ids': [1]}
+            caso('sin plan Plus no se cargan productos',
+                 rest('POST', 'rpc/guardar_producto', {'p_negocio': tienda, 'p': producto}, a)[0] >= 400)
+            rest('POST', 'rpc/admin_plan_comercio', {'p_business': tienda, 'p_plan': 'plus'}, x)
+            s_p1, p1 = rest('POST', 'rpc/guardar_producto', {'p_negocio': tienda, 'p': producto}, a)
+            caso('con Plus, A carga un producto', s_p1 == 200)
+            s_p2, p2 = rest('POST', 'rpc/guardar_producto', {'p_negocio': tienda, 'p': {'name': 'Cucha a medida'}}, a)
+            caso('y uno sin precio ("Consultar")', s_p2 == 200)
+            s_p3, p3 = rest('POST', 'rpc/guardar_producto', {'p_negocio': tienda, 'p': {
+                'name': 'Collar', 'price': 250, 'available': False}}, a)
+            caso('B no carga productos en un comercio ajeno',
+                 rest('POST', 'rpc/guardar_producto', {'p_negocio': tienda, 'p': producto}, b)[0] >= 400)
+            caso('la foto tiene que estar en la carpeta del comercio',
+                 rest('POST', 'rpc/guardar_producto', {'p_negocio': tienda, 'p': {
+                     **producto, 'photo_path': f'{b_id}/catalogo/x.jpg'}}, a)[0] >= 400)
+            caso('nadie lee ni escribe las tablas directo',
+                 bloqueado(rest('GET', 'catalog_items?select=id', quien=a))
+                 and bloqueado(rest('POST', 'catalog_items', {'business_id': tienda, 'name': 'X'}, a))
+                 and bloqueado(rest('GET', 'orders?select=id', quien=a))
+                 and bloqueado(rest('POST', 'orders', {'business_id': tienda, 'total': 0}, b)))
+            caso('sin prender el módulo, el catálogo no se ve',
+                 filas(rest('POST', 'rpc/catalogo_de', {'p_negocio': tienda})) == [])
+            caso('ni toma pedidos', rest('POST', 'rpc/hacer_pedido', {
+                'p_negocio': tienda, 'p_items': [{'id': p1, 'qty': 1}]}, b)[0] >= 400)
+            rest('POST', 'rpc/prender_modulo', {'p_business': tienda, 'p_modulo': 'catalogo', 'p_prendido': True}, a)
+            publico = filas(rest('POST', 'rpc/catalogo_de', {'p_negocio': tienda}))
+            caso('prendido, un visitante ve lo disponible (no lo agotado)',
+                 {i['id'] for i in publico} == {p1, p2})
+            caso('el dueño ve también lo no disponible', len(filas(rest('POST', 'rpc/mi_catalogo', {'p_negocio': tienda}, a))) == 3)
+            caso('B no ve el catálogo interno', rest('POST', 'rpc/mi_catalogo', {'p_negocio': tienda}, b)[0] >= 400)
+            caso('un visitante no hace pedidos', rest('POST', 'rpc/hacer_pedido', {
+                'p_negocio': tienda, 'p_items': [{'id': p1, 'qty': 1}]})[0] >= 400)
+            caso('no se pide lo que no tiene precio', rest('POST', 'rpc/hacer_pedido', {
+                'p_negocio': tienda, 'p_items': [{'id': p2, 'qty': 1}]}, b)[0] >= 400)
+            caso('ni lo que no está disponible', rest('POST', 'rpc/hacer_pedido', {
+                'p_negocio': tienda, 'p_items': [{'id': p3, 'qty': 1}]}, b)[0] >= 400)
+            caso('ni cantidades fuera de 1 a 99', rest('POST', 'rpc/hacer_pedido', {
+                'p_negocio': tienda, 'p_items': [{'id': p1, 'qty': 0}]}, b)[0] >= 400)
+            s_pe, pedido = rest('POST', 'rpc/hacer_pedido', {
+                'p_negocio': tienda, 'p_items': [{'id': p1, 'qty': 2, 'price': 1}], 'p_nota': 'Paso a las 18'}, b)
+            caso('B hace un pedido', s_pe == 200)
+            mios = filas(rest('POST', 'rpc/mis_pedidos', {}, b))
+            caso('el total lo calcula la base (no el precio que manda la app)',
+                 len(mios) == 1 and float(mios[0]['total']) == 1780 and mios[0]['items'][0]['qty'] == 2
+                 and mios[0]['status'] == 'new' and mios[0]['business_name'] == 'Pet Shop Catálogo RLS')
+            caso('A no ve los pedidos de B como propios', filas(rest('POST', 'rpc/mis_pedidos', {}, a)) == [])
+            del_negocio = filas(rest('POST', 'rpc/pedidos_del_negocio', {'p_negocio': tienda}, a))
+            caso('el comercio ve el pedido con el primer nombre (sin id ni contacto)',
+                 len(del_negocio) == 1 and del_negocio[0]['cliente'] == 'Prueba'
+                 and 'user_id' not in del_negocio[0] and 'phone' not in del_negocio[0])
+            caso('B no ve los pedidos del comercio', rest('POST', 'rpc/pedidos_del_negocio', {'p_negocio': tienda}, b)[0] >= 400)
+            caso('el comercio cuenta los nuevos', rest('POST', 'rpc/pedidos_nuevos', {'p_negocio': tienda}, a)[1] == 1)
+            caso('el comercio no salta pasos', rest('POST', 'rpc/cambiar_estado_pedido', {'p_id': pedido, 'p_estado': 'ready'}, a)[0] >= 400)
+            caso('B no avanza su propio pedido', rest('POST', 'rpc/cambiar_estado_pedido', {'p_id': pedido, 'p_estado': 'preparing'}, b)[0] >= 400)
+            for paso in ('preparing', 'ready', 'delivered'):
+                rest('POST', 'rpc/cambiar_estado_pedido', {'p_id': pedido, 'p_estado': paso}, a)
+            caso('el comercio lo lleva hasta entregado y B lo ve',
+                 filas(rest('POST', 'rpc/mis_pedidos', {}, b))[0]['status'] == 'delivered')
+            caso('entregado ya no se cancela', rest('POST', 'rpc/cambiar_estado_pedido', {'p_id': pedido, 'p_estado': 'cancelled'}, a)[0] >= 400)
+            s_p4, otro = rest('POST', 'rpc/hacer_pedido', {'p_negocio': tienda, 'p_items': [{'id': p1, 'qty': 1}]}, b)
+            caso('B cancela un pedido nuevo', rest('POST', 'rpc/cambiar_estado_pedido', {'p_id': otro, 'p_estado': 'cancelled'}, b)[0] in (200, 204))
+            caso('quien no es el comercio ni quien pidió no lo toca',
+                 rest('POST', 'rpc/cambiar_estado_pedido', {'p_id': pedido, 'p_estado': 'cancelled'}, x)[0] >= 400)
+            caso('B no borra productos ajenos', rest('POST', 'rpc/borrar_producto', {'p_id': p3}, b)[0] >= 400)
+            caso('A borra un producto y el pedido conserva su renglón',
+                 rest('POST', 'rpc/borrar_producto', {'p_id': p1}, a)[0] in (200, 204)
+                 and filas(rest('POST', 'rpc/mis_pedidos', {}, b))[-1]['items'][0]['name'] == 'Alimento perro adulto 3 kg')
+            pedir('DELETE', f'{URL}/rest/v1/businesses?id=eq.{tienda}', headers=ADMIN)
+
             pedir('DELETE', f'{URL}/rest/v1/businesses?id=in.({negocio},{sin_duenio},{desde_marca})', headers=ADMIN)
             pedir('DELETE', f'{URL}/rest/v1/place_marks?user_id=in.({a_id},{b_id})', headers=ADMIN)
         finally:

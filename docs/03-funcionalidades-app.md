@@ -152,6 +152,7 @@ El objetivo no es solo publicar animales: es que **la adopción salga bien y el 
 
 - **Reservar turno:** día, horario libre, servicio y mascota. El comercio confirma o rechaza.
 - **Catálogo y pedidos:** cantidades y total. Estados: nuevo → preparando → listo → entregado. El pago se hace directo al comercio (pago en la app en la Fase 4).
+  - **Hecho (D85), detrás de `catalogo`:** en la ficha, "Ver catálogo" (si el comercio lo tiene prendido); se suman productos con precio, se ve el total, se deja una nota y "Hacer pedido" (pide cuenta). "Mis pedidos" está en Ajustes. El comercio ve solo el primer nombre de quien pide y lo avanza de a un paso desde el modo comercio → Pedidos. Falta: aviso push al comercio y a quien pidió cuando cambia el estado (hoy se ve al volver a la pantalla o tirando hacia abajo).
 - **Contratar paseadores, hoteles y cuidadores:** solicitud por chat y reserva. El pago es entre las partes hasta la Fase 4.
   - Idea a evaluar: **seguir el paseo en vivo** con la ubicación del paseador (`16-ideas-futuras.md`, I1).
 - "**Mis turnos y pedidos**" con el estado en vivo.
@@ -190,7 +191,7 @@ Conecta mascotas sin veterinaria con veterinarias cercanas, **solo con permiso d
 
 ## 15. Tienda — Fase 2 (catálogo) / Fase 4 (marketplace)
 
-- Fase 2: catálogo de cada petshop con fotos, precios y botón "Consultar" (chat o WhatsApp).
+- Fase 2: catálogo de cada petshop con fotos, precios y botón "Consultar" (chat o WhatsApp). **Hecho (D85):** "Consultar" abre el chat con el comercio (si tiene cuenta y la funcionalidad `chat`) o su WhatsApp con el nombre del producto; un producto sin precio dice "Consultar precio".
 - Fase 4: carrito, pago con Mercado Pago y envío.
 
 ---

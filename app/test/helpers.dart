@@ -34,6 +34,7 @@ import 'package:sosmascota/src/recordatorios/avisador.dart';
 import 'package:sosmascota/src/recordatorios/recordatorios_repositorio.dart';
 import 'package:sosmascota/src/sos/sos_repositorio.dart';
 import 'package:sosmascota/src/theme/tema_elegido.dart';
+import 'package:sosmascota/src/tienda/tienda_repositorio.dart';
 import 'package:sosmascota/src/ubicacion/servicio_ubicacion.dart';
 import 'package:sosmascota/src/utiles/enlaces.dart';
 import 'package:sosmascota/src/utiles/respaldo.dart';
@@ -62,6 +63,7 @@ import 'respaldo_falso.dart';
 import 'sos_falso.dart';
 import 'tareas_falsas.dart';
 import 'tema_falso.dart';
+import 'tienda_falsa.dart';
 import 'veterinarias_falsas.dart';
 
 const urlPrueba = 'https://abc.supabase.co';
@@ -91,6 +93,7 @@ Widget appDePrueba({
   EventosRepositorio? eventosRepo,
   VeterinariasRepositorio? veterinarias,
   NoticiasRepositorio? noticias,
+  TiendaRepositorio? tienda,
   Posicion? posicion,
   SelectorFoto? selectorFoto,
   QrRepositorio? qr,
@@ -162,6 +165,7 @@ Widget appDePrueba({
       veterinarias ?? VeterinariasFalsas(),
     ),
     noticiasRepositorioProvider.overrideWithValue(noticias ?? NoticiasFalsas()),
+    tiendaRepositorioProvider.overrideWithValue(tienda ?? TiendaFalsa()),
     misLugaresRepositorioProvider.overrideWithValue(
       misLugares ?? MisLugaresFalsos(),
     ),

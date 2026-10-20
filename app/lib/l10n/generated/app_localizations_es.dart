@@ -2654,6 +2654,183 @@ class AppLocalizationsEs extends AppLocalizations {
   String get adopcionTitulo => 'Adopción responsable';
 
   @override
+  String get catalogoTitulo => 'Catálogo';
+
+  @override
+  String get catalogoVacio => 'Este comercio todavía no cargó productos.';
+
+  @override
+  String get catalogoPagoDirecto =>
+      'El pago y la entrega los arreglás directo con el comercio.';
+
+  @override
+  String catalogoVerPedido(int cantidad, String total) {
+    return 'Ver pedido · $cantidad · $total';
+  }
+
+  @override
+  String catalogoConsultaTexto(String producto) {
+    return 'Hola, te escribo desde SOS Mascota. Quería consultar por: $producto';
+  }
+
+  @override
+  String get catalogoSinContacto => 'Este comercio no dejó cómo contactarlo.';
+
+  @override
+  String get catalogoConsultarPrecio => 'Consultar precio';
+
+  @override
+  String get catalogoConsultar => 'Consultar';
+
+  @override
+  String get catalogoAgregar => 'Agregar';
+
+  @override
+  String get catalogoQuitarUno => 'Quitar uno';
+
+  @override
+  String get catalogoSumarUno => 'Sumar uno';
+
+  @override
+  String catalogoVer(int cantidad) {
+    return 'Ver catálogo ($cantidad)';
+  }
+
+  @override
+  String get catalogoPrender => 'Catálogo y pedidos';
+
+  @override
+  String get catalogoPrendidoAyuda =>
+      'Prendido: tus productos se ven en tu ficha y te pueden hacer pedidos.';
+
+  @override
+  String get catalogoApagadoAyuda =>
+      'Apagado: podés cargar productos; nadie los ve hasta que lo prendas.';
+
+  @override
+  String get catalogoSinProductos =>
+      'Todavía no cargaste productos. Tocá «Agregar producto».';
+
+  @override
+  String get pedidoTitulo => 'Tu pedido';
+
+  @override
+  String get pedidoTotal => 'Total';
+
+  @override
+  String get pedidoNota => 'Nota para el comercio (opcional)';
+
+  @override
+  String get pedidoNotaAyuda => 'Por ejemplo: paso a retirarlo a las 18';
+
+  @override
+  String get pedidoHacer => 'Hacer pedido';
+
+  @override
+  String get pedidoIngresar => 'Ingresá para hacer el pedido';
+
+  @override
+  String get pedidoHecho => '¡Listo! El comercio recibió tu pedido.';
+
+  @override
+  String get pedidoDemasiados => 'Hiciste muchos pedidos hoy. Probá mañana.';
+
+  @override
+  String get pedidoCambio =>
+      'Algún producto cambió o ya no está. Revisá el catálogo y probá de nuevo.';
+
+  @override
+  String get pedidoSinModulo => 'Este comercio ya no está tomando pedidos.';
+
+  @override
+  String get pedidoNuevo => 'Nuevo';
+
+  @override
+  String get pedidoPreparando => 'Preparando';
+
+  @override
+  String get pedidoListo => 'Listo para retirar';
+
+  @override
+  String get pedidoEntregado => 'Entregado';
+
+  @override
+  String get pedidoCancelado => 'Cancelado';
+
+  @override
+  String get pedidoCancelar => 'Cancelar pedido';
+
+  @override
+  String pedidoNumero(int numero) {
+    return 'Pedido #$numero';
+  }
+
+  @override
+  String pedidoNotaDe(String nota) {
+    return 'Nota: $nota';
+  }
+
+  @override
+  String pedidoPasarA(String estado) {
+    return 'Pasar a «$estado»';
+  }
+
+  @override
+  String get misPedidos => 'Mis pedidos';
+
+  @override
+  String get misPedidosAyuda =>
+      'Lo que pediste a los comercios y en qué estado está.';
+
+  @override
+  String get misPedidosVacio =>
+      'Todavía no hiciste pedidos. Los comercios con catálogo tienen el botón «Ver catálogo» en su ficha.';
+
+  @override
+  String get pedidosNegocioVacio => 'Todavía no te hicieron pedidos.';
+
+  @override
+  String get productoNuevo => 'Agregar producto';
+
+  @override
+  String get productoEditar => 'Editar producto';
+
+  @override
+  String get productoNombre => 'Nombre';
+
+  @override
+  String get productoDescripcion => 'Descripción (opcional)';
+
+  @override
+  String get productoPrecio => 'Precio';
+
+  @override
+  String get productoPrecioAyuda =>
+      'Vacío: se muestra «Consultar precio» y no se puede pedir.';
+
+  @override
+  String get productoDisponible => 'Disponible';
+
+  @override
+  String get productoNoDisponible => 'No disponible';
+
+  @override
+  String get productoFoto => 'Agregar foto';
+
+  @override
+  String get productoCambiarFoto => 'Cambiar foto';
+
+  @override
+  String get productoBorrar => 'Borrar';
+
+  @override
+  String get productoDatosInvalidos =>
+      'Revisá el nombre (2 letras o más) y el precio.';
+
+  @override
+  String get productoLimite => 'Llegaste al máximo de 200 productos.';
+
+  @override
   String get noticiasTitulo => 'Noticias';
 
   @override

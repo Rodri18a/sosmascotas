@@ -982,6 +982,103 @@
   "@panelSinResponder": {"placeholders": {"n": {"type": "int"}}},
   "panelChats": "Chats nuevos",
   "adopcionTitulo": "Adopción responsable",
+  "catalogoTitulo": "Catálogo",
+  "catalogoVacio": "Este comercio todavía no cargó productos.",
+  "catalogoPagoDirecto": "El pago y la entrega los arreglás directo con el comercio.",
+  "catalogoVerPedido": "Ver pedido · {cantidad} · {total}",
+  "@catalogoVerPedido": {
+    "placeholders": {
+      "cantidad": {
+        "type": "int"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "catalogoConsultaTexto": "Hola, te escribo desde SOS Mascota. Quería consultar por: {producto}",
+  "@catalogoConsultaTexto": {
+    "placeholders": {
+      "producto": {
+        "type": "String"
+      }
+    }
+  },
+  "catalogoSinContacto": "Este comercio no dejó cómo contactarlo.",
+  "catalogoConsultarPrecio": "Consultar precio",
+  "catalogoConsultar": "Consultar",
+  "catalogoAgregar": "Agregar",
+  "catalogoQuitarUno": "Quitar uno",
+  "catalogoSumarUno": "Sumar uno",
+  "catalogoVer": "Ver catálogo ({cantidad})",
+  "@catalogoVer": {
+    "placeholders": {
+      "cantidad": {
+        "type": "int"
+      }
+    }
+  },
+  "catalogoPrender": "Catálogo y pedidos",
+  "catalogoPrendidoAyuda": "Prendido: tus productos se ven en tu ficha y te pueden hacer pedidos.",
+  "catalogoApagadoAyuda": "Apagado: podés cargar productos; nadie los ve hasta que lo prendas.",
+  "catalogoSinProductos": "Todavía no cargaste productos. Tocá «Agregar producto».",
+  "pedidoTitulo": "Tu pedido",
+  "pedidoTotal": "Total",
+  "pedidoNota": "Nota para el comercio (opcional)",
+  "pedidoNotaAyuda": "Por ejemplo: paso a retirarlo a las 18",
+  "pedidoHacer": "Hacer pedido",
+  "pedidoIngresar": "Ingresá para hacer el pedido",
+  "pedidoHecho": "¡Listo! El comercio recibió tu pedido.",
+  "pedidoDemasiados": "Hiciste muchos pedidos hoy. Probá mañana.",
+  "pedidoCambio": "Algún producto cambió o ya no está. Revisá el catálogo y probá de nuevo.",
+  "pedidoSinModulo": "Este comercio ya no está tomando pedidos.",
+  "pedidoNuevo": "Nuevo",
+  "pedidoPreparando": "Preparando",
+  "pedidoListo": "Listo para retirar",
+  "pedidoEntregado": "Entregado",
+  "pedidoCancelado": "Cancelado",
+  "pedidoCancelar": "Cancelar pedido",
+  "pedidoNumero": "Pedido #{numero}",
+  "@pedidoNumero": {
+    "placeholders": {
+      "numero": {
+        "type": "int"
+      }
+    }
+  },
+  "pedidoNotaDe": "Nota: {nota}",
+  "@pedidoNotaDe": {
+    "placeholders": {
+      "nota": {
+        "type": "String"
+      }
+    }
+  },
+  "pedidoPasarA": "Pasar a «{estado}»",
+  "@pedidoPasarA": {
+    "placeholders": {
+      "estado": {
+        "type": "String"
+      }
+    }
+  },
+  "misPedidos": "Mis pedidos",
+  "misPedidosAyuda": "Lo que pediste a los comercios y en qué estado está.",
+  "misPedidosVacio": "Todavía no hiciste pedidos. Los comercios con catálogo tienen el botón «Ver catálogo» en su ficha.",
+  "pedidosNegocioVacio": "Todavía no te hicieron pedidos.",
+  "productoNuevo": "Agregar producto",
+  "productoEditar": "Editar producto",
+  "productoNombre": "Nombre",
+  "productoDescripcion": "Descripción (opcional)",
+  "productoPrecio": "Precio",
+  "productoPrecioAyuda": "Vacío: se muestra «Consultar precio» y no se puede pedir.",
+  "productoDisponible": "Disponible",
+  "productoNoDisponible": "No disponible",
+  "productoFoto": "Agregar foto",
+  "productoCambiarFoto": "Cambiar foto",
+  "productoBorrar": "Borrar",
+  "productoDatosInvalidos": "Revisá el nombre (2 letras o más) y el precio.",
+  "productoLimite": "Llegaste al máximo de 200 productos.",
   "noticiasTitulo": "Noticias",
   "noticiasEntradaAyuda": "Novedades, campañas y consejos para tus mascotas.",
   "noticiasTodas": "Todas",

@@ -11,7 +11,10 @@ import '../../fotos/elegir_foto.dart';
 import '../../funcionalidades/funcionalidades_activas.dart';
 import '../../metricas/metricas.dart';
 import '../../router.dart';
+import '../../tienda/tienda_repositorio.dart';
+import '../../veterinarias/veterinarias_repositorio.dart';
 import '../resenas/resenas.dart';
+import '../tienda/pedidos.dart';
 import 'formulario_negocio.dart';
 
 /// Alta de un negocio (1.3.3, opción C).
@@ -115,14 +118,8 @@ class _NegocioScreenState extends ConsumerState<NegocioScreen> {
                     negocio: negocio,
                     modulo: Modulo.agenda,
                   ),
-                  _Seccion.catalogo => _Modulo(
-                    negocio: negocio,
-                    modulo: Modulo.catalogo,
-                  ),
-                  _Seccion.pedidos => _Modulo(
-                    negocio: negocio,
-                    modulo: Modulo.catalogo,
-                  ),
+                  _Seccion.catalogo => _Tienda(negocio: negocio),
+                  _Seccion.pedidos => _Tienda(negocio: negocio, pedidos: true),
                   _Seccion.negocio => _Ficha(negocio: negocio),
                 },
               ),
@@ -329,6 +326,51 @@ class _Modulo extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
       ),
+    );
+  }
+}
+
+/// Catálogo y pedidos (2.5 y 3.2, D85), detrás de `catalogo`: con plan Plus
+/// y si el tipo lo admite; si no, el aviso de [_Modulo].
+class _Tienda extends ConsumerWidget {
+  const _Tienda({required this.negocio, this.pedidos = false});
+
+  final MiNegocio negocio;
+  final bool pedidos;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final c = negocio.comercio;
+    if (!ref.watch(funcionalidadActivaProvider(Funcionalidades.catalogo)) ||
+        c.plan != PlanComercio.plus ||
+        !moduloAdmitido(c.categoria, c.modalidad, Modulo.catalogo)) {
+      return _Modulo(negocio: negocio, modulo: Modulo.catalogo);
+    }
+    if (pedidos) return PedidosNegocio(negocioId: negocio.id);
+    final prendido =
+        ref
+            .watch(modulosPrendidosProvider(negocio.id))
+            .value
+            ?.contains(Modulo.catalogo) ??
+        false;
+    return CatalogoNegocio(
+      negocioId: negocio.id,
+      prendido: prendido,
+      onPrender: (si) async {
+        final mensajes = ScaffoldMessenger.of(context);
+        final t = context.t;
+        try {
+          await ref
+              .read(veterinariasRepositorioProvider)
+              .prenderModulo(negocio.id, Modulo.catalogo, si);
+          ref.read(metricasProvider).track(Eventos.moduleToggle);
+        } on Object {
+          mensajes.showSnackBar(SnackBar(content: Text(t.errorDesconocido)));
+        }
+        ref
+          ..invalidate(modulosPrendidosProvider(negocio.id))
+          ..invalidate(catalogoDeProvider(negocio.id));
+      },
     );
   }
 }

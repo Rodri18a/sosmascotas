@@ -31,6 +31,7 @@ import 'features/shell/app_shell.dart';
 import 'features/sos/sos_detalle_screen.dart';
 import 'features/sos/sos_nuevo_screen.dart';
 import 'features/sos/sos_screen.dart';
+import 'features/tienda/catalogo_screen.dart';
 import 'features/veterinarias/socios_screen.dart';
 import 'funcionalidades/funcionalidades_activas.dart';
 import 'legal/legal.dart';
@@ -61,6 +62,9 @@ abstract final class Rutas {
   static const negocio = '/negocio';
   static const adopcion = '/adopcion';
   static const noticias = '/noticias';
+  static const misPedidos = '/pedidos';
+  static const _tienda = '/tienda';
+  static String tienda(String negocioId) => '$_tienda/$negocioId';
   static const denuncia = '/denuncia';
   static const nuevoEvento = '/eventos/nuevo';
   static const marcarLugar = '/lugares/marcar';
@@ -79,6 +83,8 @@ abstract final class Rutas {
     negocio: Funcionalidades.comercios,
     adopcion: Funcionalidades.adopcion,
     noticias: Funcionalidades.noticias,
+    '$_tienda/': Funcionalidades.catalogo,
+    misPedidos: Funcionalidades.catalogo,
     denuncia: Funcionalidades.eventos,
     nuevoEvento: Funcionalidades.eventos,
     marcarLugar: Funcionalidades.comercios,
@@ -102,6 +108,7 @@ abstract final class Rutas {
     '$adopcion/compromiso',
     denuncia,
     nuevoEvento,
+    misPedidos,
   ];
 
   static String fichaMascota(String id) => '$mascotas/$id';
@@ -359,6 +366,17 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(path: Rutas.denuncia, builder: (_, _) => const DenunciaScreen()),
       GoRoute(path: Rutas.noticias, builder: (_, _) => const NoticiasScreen()),
+      GoRoute(
+        path: '${Rutas._tienda}/:id',
+        builder: (_, state) => CatalogoScreen(
+          negocioId: state.pathParameters['id']!,
+          comercio: state.extra is Comercio ? state.extra! as Comercio : null,
+        ),
+      ),
+      GoRoute(
+        path: Rutas.misPedidos,
+        builder: (_, _) => const MisPedidosScreen(),
+      ),
       GoRoute(
         path: Rutas.nuevoEvento,
         builder: (_, state) {

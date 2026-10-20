@@ -46,6 +46,9 @@ abstract final class Funcionalidades {
   /// Noticias con contenido patrocinado (2.8, D83).
   static const noticias = 'noticias';
 
+  /// Catálogo con "Consultar" y pedidos (2.5 y 3.2, D85).
+  static const catalogo = 'catalogo';
+
   /// Las que ya están en `todos`: la app las da por prendidas aunque no pueda
   /// preguntarle a la base (sin conexión y sin nada guardado). Las demás, en
   /// ese caso, quedan apagadas (lo seguro).

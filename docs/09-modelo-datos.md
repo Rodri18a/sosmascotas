@@ -75,10 +75,10 @@ Propuesta inicial. Se ajusta al implementar cada fase. **RLS activado en todas l
 
 | Tabla | Campos clave | Fase |
 |---|---|---|
-| `catalog_items` | id, business_id, name, description, price, photo_path, available, species_ids[] | 2 |
+| `catalog_items` | id, business_id, name, description, price (vacío = "Consultar precio", no se puede pedir), photo_path (`<negocio>/catalogo/…` en `business-photos`), available, species_ids[], sort. Sin acceso directo: `catalogo_de()` (también visitantes, solo con el módulo activo), `mi_catalogo()`, `guardar_producto()` (plan Plus, hasta 200), `borrar_producto()` (D85) | 2 |
 | `agenda_config` | business_id, days[], from_time, to_time, slot_minutes, services[] | 3 |
 | `bookings` | id, business_id, user_id, pet_id, date, time, service, status (`pending`, `confirmed`, `rejected`, `cancelled`, `done`) | 3 |
-| `orders` / `order_items` | cliente, negocio, estado (`new`, `preparing`, `ready`, `delivered`), total, ítems | 3 |
+| `orders` / `order_items` | `orders`: number, business_id, user_id, status (`new`, `preparing`, `ready`, `delivered`, `cancelled`), note, total (lo calcula la base). `order_items`: nombre y precio del momento, qty 1–99. Sin acceso directo: `hacer_pedido()` (con sesión, hasta 30 productos y 10 pedidos por día), `mis_pedidos()`, `pedidos_del_negocio()` (solo el primer nombre de quien pide), `cambiar_estado_pedido()` (el comercio de a un paso o cancela; quien pide cancela mientras es nuevo), `pedidos_nuevos()` (D85) | 3 (adelantado, D85) |
 | `business_modules` | business_id, module (`catalogo`, `agenda`, `socios`), enabled. Activo solo con plan Plus y si el tipo lo admite (`modulo_activo()`); se cambia con `prender_modulo()` (D81) | 2 |
 | `pet_vet_shares` | pet_id, business_id, shared_by, consent_at, revoked_at. El dueño comparte con `compartir_con_veterinaria()`; la veterinaria ve `mis_socios()` y usa `recordar_a_socio()` (D81; antes `vet_members`) | 2 |
 | `vet_search_consents` | pet_id, owner_id, scope (`vet`), consent_at, revoked_at, snoozed_until. `busco_veterinaria()`, `ahora_no_busco_veterinaria()`, `estado_busco_veterinaria()` (D81; antes `offer_consents`) | 2 |
