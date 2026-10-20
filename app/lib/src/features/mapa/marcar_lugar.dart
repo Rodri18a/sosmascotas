@@ -6,6 +6,8 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 import '../../../l10n/l10n.dart';
 import '../../comercios/comercios_repositorio.dart';
 import '../../comercios/textos_comercio.dart';
+import '../../cuenta/servicio_cuenta.dart';
+import '../../funcionalidades/funcionalidades_activas.dart';
 import '../../mapa/mapa_vista.dart';
 import '../../metricas/metricas.dart';
 import '../../router.dart';
@@ -175,17 +177,28 @@ Future<void> mostrarSinReclamar(
                 icon: const Icon(Icons.map_outlined),
                 label: Text(t.sinReclamarVerGoogle),
               ),
-            const SizedBox(height: 8),
-            FilledButton.icon(
-              onPressed: () {
-                Navigator.pop(context);
-                context.push(
-                  Rutas.altaNegocio(rubro: lugar.categoria, punto: lugar.punto),
-                );
-              },
-              icon: const Icon(Icons.add_business_outlined),
-              label: Text(t.sinReclamarEsTuyo),
-            ),
+            // Reclamarlo es una acción: con sesión y la funcionalidad
+            // `comercios` (verlo es para todos, D84).
+            if (ref.read(conectadoProvider) &&
+                ref.read(
+                  funcionalidadActivaProvider(Funcionalidades.comercios),
+                ))
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: FilledButton.icon(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    context.push(
+                      Rutas.altaNegocio(
+                        rubro: lugar.categoria,
+                        punto: lugar.punto,
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.add_business_outlined),
+                  label: Text(t.sinReclamarEsTuyo),
+                ),
+              ),
           ],
         ),
       ),

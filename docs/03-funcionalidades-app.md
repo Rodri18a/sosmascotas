@@ -69,6 +69,8 @@ Pantalla inicial: logo sobre el azul petróleo de la marca (`#0F5E7A`, D62) dura
 ## 5. Mapa integral (Explorar) — Fase 0 (perdidos + urgencias) / Fase 1 (completo)
 
 - Vistas: **Mapa**, **Lista** y **Sin local** (tiendas online y servicios a domicilio).
+- **Lo que se ve es para todos, también visitantes (D84):** rubros, lugares sin reclamar, eventos, lista y filtros. Con cuenta y la funcionalidad correspondiente se suman las acciones (marcar, reclamar, favoritos).
+- **Chips (D84):** sin ninguno elegido se ve todo; con alguno, solo lo elegido. "Perdidos y encontrados" solo muestra únicamente los SOS. La lista arranca con las tarjetas de perdidos y encontrados y sigue con los lugares.
 - **Capas / categorías:** veterinarias (y urgencias 24 h), petshops, farmacias veterinarias, peluquerías, paseadores, hoteles y guarderías, adiestradores, **lugares que aceptan mascotas** (bares, restaurantes, alojamientos), refugios, eventos, perdidos y encontrados.
 - Filtros: categoría, especie de la mascota activa, distancia (300 m, 800 m, 2,5 km, todo), "Abierto ahora", favoritos, **"Coloca microchip"** (veterinarias con la insignia Operador RENAC, Fase 1).
 - **Guardar filtros y favoritos:** función Pro.

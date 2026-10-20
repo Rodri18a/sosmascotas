@@ -18,7 +18,7 @@ enum Distancia {
 class FiltrosMapa {
   const FiltrosMapa({
     this.categorias = const {},
-    this.mostrarSos = true,
+    this.sos = false,
     this.distancia = Distancia.todo,
     this.abiertoAhora = false,
     this.soloFavoritos = false,
@@ -26,9 +26,20 @@ class FiltrosMapa {
     this.porMascotaActiva = true,
   });
 
-  /// Vacío: todos los rubros.
+  /// Chips de rubros elegidos. Con [sos], son los chips de arriba del mapa:
+  /// sin ninguno elegido se ve todo; si hay alguno, solo lo elegido (D84).
   final Set<Categoria> categorias;
-  final bool mostrarSos;
+
+  /// Chip "Perdidos y encontrados" elegido.
+  final bool sos;
+
+  /// Ningún chip elegido: se ve todo (también los eventos).
+  bool get sinChips => categorias.isEmpty && !sos;
+
+  bool get muestraSos => sos || categorias.isEmpty;
+
+  bool muestraCategoria(Categoria c) =>
+      categorias.isEmpty ? !sos : categorias.contains(c);
   final Distancia distancia;
   final bool abiertoAhora;
   final bool soloFavoritos;
@@ -50,7 +61,7 @@ class FiltrosMapa {
 
   FiltrosMapa copyWith({
     Set<Categoria>? categorias,
-    bool? mostrarSos,
+    bool? sos,
     Distancia? distancia,
     bool? abiertoAhora,
     bool? soloFavoritos,
@@ -58,7 +69,7 @@ class FiltrosMapa {
     bool? porMascotaActiva,
   }) => FiltrosMapa(
     categorias: categorias ?? this.categorias,
-    mostrarSos: mostrarSos ?? this.mostrarSos,
+    sos: sos ?? this.sos,
     distancia: distancia ?? this.distancia,
     abiertoAhora: abiertoAhora ?? this.abiertoAhora,
     soloFavoritos: soloFavoritos ?? this.soloFavoritos,
@@ -85,8 +96,7 @@ List<Comercio> filtrarComercios(
   Set<int> especies = const {},
 }) => [
   for (final c in comercios)
-    if ((filtros.categorias.isEmpty ||
-            filtros.categorias.contains(c.categoria)) &&
+    if (filtros.muestraCategoria(c.categoria) &&
         coincideConEspecies(c, especies) &&
         (!filtros.abiertoAhora || c.estadoEn(ahora).abierto) &&
         (!filtros.soloFavoritos || favoritos.contains(c.id)) &&

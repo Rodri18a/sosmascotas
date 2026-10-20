@@ -79,6 +79,17 @@ Future<void> _abrir(
         pins: const [
           Pin(id: 's1', tipo: TipoPin.perdido, punto: Punto(-34.72, -55.95)),
         ],
+        listaCercanos: [
+          SosResumen(
+            id: 's1',
+            tipo: TipoSos.perdida,
+            especie: 'Perro',
+            especieIcono: '🐶',
+            nombre: 'Firulais',
+            cuando: DateTime(2026, 10, 17, 8),
+            distanciaMetros: 300,
+          ),
+        ],
       ),
       funcionalidades: FuncionalidadesFalsas({
         if (completo) Funcionalidades.mapaCompleto,
@@ -92,11 +103,15 @@ Future<void> _abrir(
 }
 
 /// Los chips de rubros están en una fila que se desplaza de costado.
-Future<void> _chip(WidgetTester tester, String nombre) async {
+Future<void> _chip(
+  WidgetTester tester,
+  String nombre, {
+  bool haciaAtras = false,
+}) async {
   final chip = find.widgetWithText(FilterChip, nombre);
   await tester.scrollUntilVisible(
     chip,
-    150,
+    haciaAtras ? -150 : 150,
     scrollable: find.byWidgetPredicate(
       (w) => w is Scrollable && w.axisDirection == AxisDirection.right,
     ),
@@ -107,15 +122,17 @@ Future<void> _chip(WidgetTester tester, String nombre) async {
 ComerciosFalsos _todos() => ComerciosFalsos([_vet, _petshop, _cafe, _paseos]);
 
 void main() {
-  testWidgets('apagado: el mapa de la Fase 0 (solo veterinarias)', (
+  testWidgets('sin funcionalidades igual se ve todo el mapa (D84)', (
     tester,
   ) async {
     final comercios = _todos();
     await _abrir(tester, comercios: comercios, completo: false);
 
-    expect(comercios.categoriasPedidas.last, {Categoria.vet});
-    expect(find.text('mapa: 2 pines'), findsOneWidget);
-    expect(find.text('Lista'), findsNothing);
+    expect(comercios.categoriasPedidas.last, isNull);
+    expect(find.text('mapa: 4 pines'), findsOneWidget);
+    expect(find.text('Lista'), findsOneWidget);
+    // Marcar un lugar es una acción: sigue detrás de `comercios`.
+    expect(find.text('Marcar un lugar'), findsNothing);
   });
 
   testWidgets('completo: todos los rubros con local y los SOS', (tester) async {
@@ -138,10 +155,13 @@ void main() {
       tester,
       find.widgetWithText(FilterChip, 'Perdidos y encontrados'),
     );
-    expect(find.text('mapa: 3 pines'), findsOneWidget, reason: 'sin el SOS');
+    expect(find.text('mapa: 1 pines'), findsOneWidget, reason: 'solo el SOS');
+    expect(find.byKey(const ValueKey('pin-s1')), findsOneWidget);
     await _chip(tester, 'Petshops');
-    expect(find.text('mapa: 1 pines'), findsOneWidget);
+    expect(find.text('mapa: 2 pines'), findsOneWidget);
     expect(find.byKey(const ValueKey('pin-petshop')), findsOneWidget);
+    await _chip(tester, 'Perdidos y encontrados', haciaAtras: true);
+    expect(find.text('mapa: 1 pines'), findsOneWidget, reason: 'sin el SOS');
     expect(comercios.zonasConsultadas, hasLength(1));
   });
 
@@ -158,6 +178,26 @@ void main() {
     expect(nombres.first, 'Veterinaria Gatuna', reason: 'abierta 24 h');
     expect(nombres.last, 'Petshop Perruno', reason: 'cerrada');
     expect(find.textContaining('Veterinaria · a '), findsOneWidget);
+  });
+
+  testWidgets('la lista muestra los perdidos y encontrados primero', (
+    tester,
+  ) async {
+    await _abrir(tester, comercios: _todos());
+    await _tocar(tester, find.text('Lista'));
+    expect(find.text('Se perdió: Firulais'), findsOneWidget);
+    expect(find.text('Veterinaria Gatuna'), findsOneWidget);
+
+    // Solo "Perdidos y encontrados": los lugares se van, el SOS queda.
+    await _chip(tester, 'Perdidos y encontrados');
+    expect(find.text('Se perdió: Firulais'), findsOneWidget);
+    expect(find.text('Veterinaria Gatuna'), findsNothing);
+
+    // Solo un rubro: el SOS se va.
+    await _chip(tester, 'Perdidos y encontrados');
+    await _chip(tester, 'Petshops');
+    expect(find.text('Se perdió: Firulais'), findsNothing);
+    expect(find.text('Petshop Perruno'), findsOneWidget);
   });
 
   testWidgets('"Sin local" muestra los servicios a domicilio', (tester) async {

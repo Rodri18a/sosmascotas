@@ -3745,7 +3745,7 @@ abstract class AppLocalizations {
   /// No description provided for @mapaListaVacia.
   ///
   /// In es, this message translates to:
-  /// **'No hay lugares con estos filtros en esta zona. Mové el mapa o cambiá los filtros.'**
+  /// **'No hay nada con estos filtros en esta zona. Mové el mapa o cambiá los filtros.'**
   String get mapaListaVacia;
 
   /// No description provided for @mapaSinLocalVacio.

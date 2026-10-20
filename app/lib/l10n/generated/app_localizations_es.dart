@@ -2164,7 +2164,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get mapaListaVacia =>
-      'No hay lugares con estos filtros en esta zona. Mové el mapa o cambiá los filtros.';
+      'No hay nada con estos filtros en esta zona. Mové el mapa o cambiá los filtros.';
 
   @override
   String get mapaSinLocalVacio =>

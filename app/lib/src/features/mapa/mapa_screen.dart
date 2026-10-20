@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -22,14 +24,17 @@ import '../../widgets/boton_avisos.dart';
 import '../../widgets/boton_mensajes.dart';
 import '../eventos/eventos.dart';
 import '../instalar/instalar.dart';
+import '../sos/sos_screen.dart';
 import 'ficha_comercio.dart';
 import 'marcar_lugar.dart';
 
 enum _Vista { mapa, lista, sinLocal }
 
-/// Mapa. Fase 0: perdidos, encontrados y veterinarias. Con la funcionalidad
-/// `mapa_completo` (etapa 1.2, D75): todos los rubros, filtros, lista,
-/// "Sin local" y pines agrupados.
+/// Mapa: perdidos y encontrados, todos los rubros, lugares sin reclamar y
+/// eventos, con filtros, lista, "Sin local" y pines agrupados (1.2, D75).
+/// Lo que se ve es para todos, también visitantes: prima la información
+/// (D84). Las funcionalidades graduales solo frenan las acciones (marcar un
+/// lugar, reclamarlo, favoritos).
 ///
 /// Regla de costo: se traen solo los pines de la zona visible (agrandada 1,5×)
 /// y no se vuelve a consultar mientras la vista quede dentro de lo ya cargado.
@@ -44,16 +49,16 @@ class MapaScreen extends ConsumerStatefulWidget {
 class _MapaScreenState extends ConsumerState<MapaScreen> {
   Limites? _cargado;
   Limites? _visible;
-  bool? _completoCargado;
   List<Pin> _sos = const [];
+
+  /// Perdidos y encontrados con sus datos, para la lista (se traen al abrirla).
+  List<SosResumen> _sosLista = const [];
 
   /// Lugares marcados por usuarios sin reclamar (1.3.2), por id de pin.
   Map<String, LugarSinReclamar> _sinReclamar = const {};
 
   /// Eventos (2.7), por id de pin.
   Map<String, Evento> _eventos = const {};
-  bool? _eventosCargado;
-  bool? _comerciosCargado;
 
   /// Lugares cargados, por id (para abrir la ficha al tocar su pin).
   Map<String, Comercio> _comercios = const {};
@@ -61,42 +66,19 @@ class _MapaScreenState extends ConsumerState<MapaScreen> {
   var _vista = _Vista.mapa;
   var _filtros = const FiltrosMapa();
 
-  bool get _completo =>
-      ref.read(funcionalidadActivaProvider(Funcionalidades.mapaCompleto));
-
-  bool get _conComercios =>
-      ref.read(funcionalidadActivaProvider(Funcionalidades.comercios));
-
-  bool get _conEventos =>
-      ref.read(funcionalidadActivaProvider(Funcionalidades.eventos));
-
   Future<void> _alQuedarQuieto(Limites visible) async {
     setState(() => _visible = visible);
-    final completo = _completo;
-    final conComercios = _conComercios;
-    final conEventos = _conEventos;
-    if ((_cargado?.contiene(visible) ?? false) &&
-        _completoCargado == completo &&
-        _comerciosCargado == conComercios &&
-        _eventosCargado == conEventos) {
-      return;
-    }
-    _eventosCargado = conEventos;
+    if (_cargado?.contiene(visible) ?? false) return;
     final zona = visible.agrandado(1.5);
     _cargado = zona;
-    _completoCargado = completo;
-    _comerciosCargado = conComercios;
+    if (_vista == _Vista.lista) unawaited(_cargarSosLista());
     final repo = ref.read(comerciosRepositorioProvider);
     try {
       final (sos, comercios, sinReclamar, eventos) = await (
         ref.read(sosRepositorioProvider).enZona(zona),
-        repo.enZona(zona, categorias: completo ? null : const {Categoria.vet}),
-        conComercios
-            ? repo.sinReclamarEnZona(zona)
-            : Future.value(const <LugarSinReclamar>[]),
-        conEventos
-            ? ref.read(eventosRepositorioProvider).enZona(zona)
-            : Future.value(const <Evento>[]),
+        repo.enZona(zona),
+        repo.sinReclamarEnZona(zona),
+        ref.read(eventosRepositorioProvider).enZona(zona),
       ).wait;
       if (!mounted) return;
       setState(() {
@@ -112,6 +94,28 @@ class _MapaScreenState extends ConsumerState<MapaScreen> {
     }
   }
 
+  /// La lista muestra las tarjetas de los SOS: se traen solo al abrirla
+  /// (regla de costo) y cuando la zona cargada cambia.
+  Future<void> _cargarSosLista() async {
+    final centro = _visible?.centro;
+    if (centro == null) return;
+    try {
+      final lista = await ref.read(sosRepositorioProvider).cercanos(centro);
+      if (mounted) setState(() => _sosLista = lista);
+    } on Exception {
+      // Sin conexión: la lista sigue con los lugares.
+    }
+  }
+
+  List<SosResumen> _sosFiltrados() {
+    if (!_filtros.muestraSos) return const [];
+    final maximo = _filtros.distancia.metros;
+    return [
+      for (final r in _sosLista)
+        if (maximo == null || r.distanciaMetros <= maximo) r,
+    ];
+  }
+
   void _alTocarPin(Pin pin) {
     if (pin.esSos) {
       context.push(Rutas.detalleSos(pin.id));
@@ -125,48 +129,50 @@ class _MapaScreenState extends ConsumerState<MapaScreen> {
   }
 
   /// Especies para la regla de coincidencia: la mascota activa o todas.
+  /// Sin sesión no hay mascotas: no se filtra.
   Set<int> _especies() {
+    if (!ref.watch(conectadoProvider)) return const {};
+    final todas = ref.watch(misMascotasProvider).value ?? const <Mascota>[];
     if (_filtros.porMascotaActiva) {
-      final activa = ref.watch(mascotaActivaProvider);
+      final id = ref.watch(mascotaActivaIdProvider);
+      final activa =
+          todas.where((m) => m.id == id).firstOrNull ?? todas.firstOrNull;
       if (activa != null) return {activa.especieId};
     }
-    final todas = ref.watch(misMascotasProvider).value ?? const <Mascota>[];
     return {for (final m in todas) m.especieId};
   }
+
+  /// Mis favoritos (solo con sesión: un visitante no tiene).
+  Set<String> _favoritos() => !ref.watch(conectadoProvider)
+      ? const {}
+      : {
+          for (final l
+              in (ref.watch(misLugaresProvider).value ?? const {}).values)
+            if (l.favorito) l.comercioId,
+        };
 
   List<Comercio> _filtrados() => filtrarComercios(
     _comercios.values,
     _filtros,
     ahora: ref.watch(relojProvider)(),
     desde: _visible?.centro,
-    favoritos: {
-      for (final l in (ref.watch(misLugaresProvider).value ?? const {}).values)
-        if (l.favorito) l.comercioId,
-    },
+    favoritos: _filtros.soloFavoritos ? _favoritos() : const {},
     especies: _especies(),
   );
 
-  List<Pin> _pins(bool completo) {
-    if (!completo) {
-      // Las veterinarias primero: los SOS quedan dibujados encima.
-      return [
-        for (final c in _comercios.values) ?c.pin,
-        for (final e in _eventos.values) e.pin,
-        ..._sos,
-      ];
-    }
+  List<Pin> _pins() {
     final lugares = [for (final c in _filtrados()) ?c.pin];
     final sinReclamar = [
       for (final l in _sinReclamar.values)
-        if (_filtros.categorias.isEmpty ||
-            _filtros.categorias.contains(l.categoria))
-          l.pin,
+        if (_filtros.muestraCategoria(l.categoria)) l.pin,
     ];
+    // Los SOS al final: quedan dibujados encima.
     final todos = [
       ...sinReclamar,
       ...lugares,
-      for (final e in _eventos.values) e.pin,
-      if (_filtros.mostrarSos) ..._sos,
+      if (_filtros.sinChips)
+        for (final e in _eventos.values) e.pin,
+      if (_filtros.muestraSos) ..._sos,
     ];
     final visible = _visible;
     return visible == null ? todos : agruparPins(todos, visible);
@@ -174,6 +180,7 @@ class _MapaScreenState extends ConsumerState<MapaScreen> {
 
   void _cambiarVista(_Vista vista) {
     setState(() => _vista = vista);
+    if (vista == _Vista.lista) unawaited(_cargarSosLista());
     ref
         .read(metricasProvider)
         .track(Eventos.mapView, props: {'vista': vista.name});
@@ -192,34 +199,18 @@ class _MapaScreenState extends ConsumerState<MapaScreen> {
   @override
   Widget build(BuildContext context) {
     final t = context.t;
-    final completo = ref.watch(
-      funcionalidadActivaProvider(Funcionalidades.mapaCompleto),
-    );
     final puedeMarcar =
-        completo &&
         ref.watch(conectadoProvider) &&
         ref.watch(funcionalidadActivaProvider(Funcionalidades.comercios));
     final mapa = Stack(
       children: [
         MapaVista(
           centro: ref.watch(miZonaProvider),
-          pins: _pins(completo),
+          pins: _pins(),
           onCamaraQuieta: _alQuedarQuieto,
           onTocarPin: _alTocarPin,
         ),
-        Positioned(
-          left: 8,
-          bottom: 8,
-          child: _Leyenda(
-            completo: completo,
-            conComercios: ref.watch(
-              funcionalidadActivaProvider(Funcionalidades.comercios),
-            ),
-            conEventos: ref.watch(
-              funcionalidadActivaProvider(Funcionalidades.eventos),
-            ),
-          ),
-        ),
+        const Positioned(left: 8, bottom: 8, child: _Leyenda()),
         if (puedeMarcar)
           Positioned(
             right: 12,
@@ -249,61 +240,64 @@ class _MapaScreenState extends ConsumerState<MapaScreen> {
         title: Text(t.pestanaMapa),
         actions: const [BotonMensajes(), BotonAvisos(), BotonAjustes()],
       ),
-      body: !completo
-          ? mapa
-          : Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
-                  child: SegmentedButton<_Vista>(
-                    segments: [
-                      ButtonSegment(
-                        value: _Vista.mapa,
-                        icon: const Icon(Icons.map_outlined),
-                        label: Text(t.mapaVistaMapa),
-                      ),
-                      ButtonSegment(
-                        value: _Vista.lista,
-                        icon: const Icon(Icons.list),
-                        label: Text(t.mapaVistaLista),
-                      ),
-                      ButtonSegment(
-                        value: _Vista.sinLocal,
-                        icon: const Icon(Icons.local_shipping_outlined),
-                        label: Text(t.mapaVistaSinLocal),
-                      ),
-                    ],
-                    selected: {_vista},
-                    onSelectionChanged: (s) => _cambiarVista(s.first),
-                  ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+            child: SegmentedButton<_Vista>(
+              segments: [
+                ButtonSegment(
+                  value: _Vista.mapa,
+                  icon: const Icon(Icons.map_outlined),
+                  label: Text(t.mapaVistaMapa),
                 ),
-                _BarraFiltros(
-                  filtros: _filtros,
-                  sinLocal: _vista == _Vista.sinLocal,
-                  onCambiar: (f) => setState(() => _filtros = f),
-                  onMasFiltros: _abrirFiltros,
+                ButtonSegment(
+                  value: _Vista.lista,
+                  icon: const Icon(Icons.list),
+                  label: Text(t.mapaVistaLista),
                 ),
-                Expanded(
-                  // El mapa queda creado aunque se vea la lista: se crea una
-                  // sola vez por sesión (regla de costo 5).
-                  child: IndexedStack(
-                    index: _vista.index,
-                    children: [
-                      mapa,
-                      _Lista(
-                        comercios: ordenarParaLista(
-                          _filtrados(),
-                          ahora: ref.watch(relojProvider)(),
-                          desde: _visible?.centro,
-                        ),
-                        desde: _visible?.centro,
-                      ),
-                      _SinLocal(filtros: _filtros, especies: _especies()),
-                    ],
-                  ),
+                ButtonSegment(
+                  value: _Vista.sinLocal,
+                  icon: const Icon(Icons.local_shipping_outlined),
+                  label: Text(t.mapaVistaSinLocal),
                 ),
               ],
+              selected: {_vista},
+              onSelectionChanged: (s) => _cambiarVista(s.first),
             ),
+          ),
+          _BarraFiltros(
+            filtros: _filtros,
+            sinLocal: _vista == _Vista.sinLocal,
+            onCambiar: (f) => setState(() => _filtros = f),
+            onMasFiltros: _abrirFiltros,
+          ),
+          Expanded(
+            // El mapa queda creado aunque se vea la lista: se crea una
+            // sola vez por sesión (regla de costo 5).
+            child: IndexedStack(
+              index: _vista.index,
+              children: [
+                mapa,
+                _Lista(
+                  sos: _sosFiltrados(),
+                  comercios: ordenarParaLista(
+                    _filtrados(),
+                    ahora: ref.watch(relojProvider)(),
+                    desde: _visible?.centro,
+                  ),
+                  desde: _visible?.centro,
+                ),
+                // Se arma (y consulta) solo al abrirla.
+                if (_vista == _Vista.sinLocal)
+                  _SinLocal(filtros: _filtros, especies: _especies())
+                else
+                  const SizedBox.shrink(),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -345,8 +339,8 @@ class _BarraFiltros extends StatelessWidget {
             const SizedBox(width: 6),
             FilterChip(
               label: Text(t.mapaPerdidos),
-              selected: filtros.mostrarSos,
-              onSelected: (si) => onCambiar(filtros.copyWith(mostrarSos: si)),
+              selected: filtros.sos,
+              onSelected: (si) => onCambiar(filtros.copyWith(sos: si)),
             ),
           ],
           for (final c in Categoria.values) ...[
@@ -463,10 +457,7 @@ class _HojaFiltrosState extends ConsumerState<_HojaFiltros> {
                 TextButton(
                   onPressed: () => Navigator.pop(
                     context,
-                    FiltrosMapa(
-                      categorias: _f.categorias,
-                      mostrarSos: _f.mostrarSos,
-                    ),
+                    FiltrosMapa(categorias: _f.categorias, sos: _f.sos),
                   ),
                   child: Text(t.mapaFiltrosLimpiar),
                 ),
@@ -521,13 +512,15 @@ class _FilaLugar extends ConsumerWidget {
 }
 
 class _Lista extends StatelessWidget {
-  const _Lista({required this.comercios, this.desde});
+  const _Lista({required this.sos, required this.comercios, this.desde});
 
+  /// Perdidos y encontrados primero (lo más urgente), por cercanía.
+  final List<SosResumen> sos;
   final List<Comercio> comercios;
   final Punto? desde;
 
   @override
-  Widget build(BuildContext context) => comercios.isEmpty
+  Widget build(BuildContext context) => sos.isEmpty && comercios.isEmpty
       ? Padding(
           padding: const EdgeInsets.all(24),
           child: Center(
@@ -536,6 +529,8 @@ class _Lista extends StatelessWidget {
         )
       : ListView(
           children: [
+            for (final r in sos) TarjetaSos(reporte: r),
+            if (sos.isNotEmpty) const SizedBox(height: 12),
             for (final c in comercios) _FilaLugar(comercio: c, desde: desde),
           ],
         );
@@ -585,15 +580,7 @@ class _SinLocal extends ConsumerWidget {
 
 /// Qué significa cada color de pin.
 class _Leyenda extends StatelessWidget {
-  const _Leyenda({
-    required this.completo,
-    required this.conComercios,
-    required this.conEventos,
-  });
-
-  final bool completo;
-  final bool conComercios;
-  final bool conEventos;
+  const _Leyenda();
 
   @override
   Widget build(BuildContext context) {
@@ -611,11 +598,10 @@ class _Leyenda extends StatelessWidget {
               (TipoPin.encontrado, t.leyendaEncontrado),
               (TipoPin.urgencia, t.leyendaUrgencia),
               (TipoPin.veterinaria, t.leyendaVeterinaria),
-              if (completo) (TipoPin.comercio, t.leyendaComercio),
-              if (completo) (TipoPin.aceptaMascotas, t.leyendaAcepta),
-              if (completo && conComercios)
-                (TipoPin.sinReclamar, t.leyendaSinReclamar),
-              if (conEventos) (TipoPin.evento, t.leyendaEvento),
+              (TipoPin.comercio, t.leyendaComercio),
+              (TipoPin.aceptaMascotas, t.leyendaAcepta),
+              (TipoPin.sinReclamar, t.leyendaSinReclamar),
+              (TipoPin.evento, t.leyendaEvento),
             ])
               Row(
                 mainAxisSize: MainAxisSize.min,

@@ -109,6 +109,23 @@ void main() {
     test('sin filtros, todo', () {
       expect(ids(const FiltrosMapa()), ['cerca', 'lejos']);
       expect(const FiltrosMapa().activos, 0);
+      expect(const FiltrosMapa().muestraSos, isTrue);
+      expect(const FiltrosMapa().sinChips, isTrue);
+    });
+
+    test('chips: solo "Perdidos y encontrados" deja afuera los lugares', () {
+      const soloSos = FiltrosMapa(sos: true);
+      expect(ids(soloSos), isEmpty);
+      expect(soloSos.muestraSos, isTrue);
+      const sosYPetshop = FiltrosMapa(
+        sos: true,
+        categorias: {Categoria.petshop},
+      );
+      expect(ids(sosYPetshop), ['lejos']);
+      expect(sosYPetshop.muestraSos, isTrue);
+      const soloPetshop = FiltrosMapa(categorias: {Categoria.petshop});
+      expect(soloPetshop.muestraSos, isFalse);
+      expect(soloPetshop.sinChips, isFalse);
     });
 
     test('por rubro, distancia, abierto, favoritos y microchip', () {

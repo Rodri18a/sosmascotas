@@ -828,7 +828,7 @@
   "mapaEspecieTodas": "Para todas mis mascotas",
   "mapaFiltrosLimpiar": "Limpiar",
   "mapaFiltrosListo": "Listo",
-  "mapaListaVacia": "No hay lugares con estos filtros en esta zona. Mové el mapa o cambiá los filtros.",
+  "mapaListaVacia": "No hay nada con estos filtros en esta zona. Mové el mapa o cambiá los filtros.",
   "mapaSinLocalVacio": "Todavía no hay tiendas online ni servicios a domicilio cargados.",
   "mapaA": "a {distancia}",
   "@mapaA": {"placeholders": {"distancia": {"type": "String"}}},

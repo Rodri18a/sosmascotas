@@ -17,7 +17,6 @@ import 'package:sosmascota/src/config/supabase_providers.dart';
 import 'package:sosmascota/src/cuenta/perfil_repositorio.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
 import 'package:sosmascota/src/eventos/eventos_repositorio.dart';
-import 'package:sosmascota/src/veterinarias/veterinarias_repositorio.dart';
 import 'package:sosmascota/src/fotos/selector_foto.dart';
 import 'package:sosmascota/src/funcionalidades/funcionalidades_activas.dart';
 import 'package:sosmascota/src/hogar/hogar_repositorio.dart';
@@ -37,6 +36,7 @@ import 'package:sosmascota/src/theme/tema_elegido.dart';
 import 'package:sosmascota/src/ubicacion/servicio_ubicacion.dart';
 import 'package:sosmascota/src/utiles/enlaces.dart';
 import 'package:sosmascota/src/utiles/respaldo.dart';
+import 'package:sosmascota/src/veterinarias/veterinarias_repositorio.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'adopcion_falsa.dart';
