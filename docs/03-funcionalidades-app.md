@@ -75,6 +75,8 @@ Pantalla inicial: logo sobre el azul petróleo de la marca (`#0F5E7A`, D62) dura
 ## 5. Mapa integral (Explorar) — Fase 0 (perdidos + urgencias) / Fase 1 (completo)
 
 - Vistas: **Mapa**, **Lista** y **Sin local** (tiendas online y servicios a domicilio).
+- **Chips agrupados (D91):** arriba del mapa, "Perdidos y encontrados" y un chip por grupo: **Salud** (veterinarias, farmacias), **Tiendas** (pet shops, agropecuarias), **Cuidado** (peluquerías, paseadores, hoteles y guarderías, adiestradores), **Salidas** (aceptan mascotas) y **Refugios**. El primer toque elige el grupo entero; el siguiente abre sus rubros para elegir solo algunos (el chip muestra "Cuidado · 1"); "Quitar" lo saca. Sin chips elegidos se ve todo.
+- **Referencias de los pines:** abajo a la izquierda, se pliegan tocando "Referencias" y la app lo recuerda en el dispositivo.
 - **Lo que se ve es para todos, también visitantes (D84):** rubros, lugares sin reclamar, eventos, lista y filtros. Con cuenta y la funcionalidad correspondiente se suman las acciones (marcar, reclamar, favoritos).
 - **Chips (D84):** sin ninguno elegido se ve todo; con alguno, solo lo elegido. "Perdidos y encontrados" solo muestra únicamente los SOS. La lista arranca con las tarjetas de perdidos y encontrados y sigue con los lugares.
 - **Capas / categorías:** veterinarias (y urgencias 24 h), petshops, farmacias veterinarias, peluquerías, paseadores, hoteles y guarderías, adiestradores, **lugares que aceptan mascotas** (bares, restaurantes, alojamientos), refugios, agropecuarias / agroveterinarias (D89: salen también al filtrar "Pet shop"), eventos, perdidos y encontrados.

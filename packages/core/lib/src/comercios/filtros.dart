@@ -13,6 +13,35 @@ enum Distancia {
   final int? metros;
 }
 
+/// Grupos de rubros de los chips del mapa (D91): en vez de un chip por rubro,
+/// uno por grupo; dentro de cada grupo se eligen los rubros que interesan.
+enum GrupoRubros {
+  salud({Categoria.vet, Categoria.pharmacy}),
+  tiendas({Categoria.petshop, Categoria.agro}),
+  cuidado({
+    Categoria.grooming,
+    Categoria.walker,
+    Categoria.hotel,
+    Categoria.trainer,
+  }),
+  salidas({Categoria.petFriendly}),
+  refugios({Categoria.shelter});
+
+  const GrupoRubros(this.categorias);
+
+  final Set<Categoria> categorias;
+
+  /// Cuántos de sus rubros están entre los [elegidos].
+  int elegidosEn(Set<Categoria> elegidos) =>
+      categorias.where(elegidos.contains).length;
+
+  /// Hay algo elegido, pero no todo el grupo (el chip muestra el número).
+  bool parcialEn(Set<Categoria> elegidos) {
+    final n = elegidosEn(elegidos);
+    return n > 0 && n < categorias.length;
+  }
+}
+
 /// Filtros del mapa integral (1.2.3, D75). Se aplican sobre lo ya traído de la
 /// zona visible: cambiar un filtro no hace otra consulta (regla de costo).
 class FiltrosMapa {

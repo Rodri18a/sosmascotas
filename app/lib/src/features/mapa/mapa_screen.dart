@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
@@ -345,21 +346,136 @@ class _BarraFiltros extends StatelessWidget {
               onSelected: (si) => onCambiar(filtros.copyWith(sos: si)),
             ),
           ],
-          for (final c in Categoria.values) ...[
+          // Un chip por grupo (D91): el primer toque elige todo el grupo;
+          // con algo elegido, se abre la hoja para elegir sus rubros.
+          for (final g in GrupoRubros.values) ...[
             const SizedBox(width: 6),
             FilterChip(
-              label: Text(textoCategorias(t, c)),
-              selected: filtros.categorias.contains(c),
-              onSelected: (si) => onCambiar(
-                filtros.copyWith(
-                  categorias: si
-                      ? {...filtros.categorias, c}
-                      : ({...filtros.categorias}..remove(c)),
-                ),
+              key: ValueKey('grupo-${g.name}'),
+              label: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    g.parcialEn(filtros.categorias)
+                        ? t.mapaGrupoParcial(
+                            textoGrupo(t, g),
+                            g.elegidosEn(filtros.categorias),
+                          )
+                        : textoGrupo(t, g),
+                  ),
+                  if (g.categorias.length > 1)
+                    const Icon(Icons.arrow_drop_down, size: 18),
+                ],
               ),
+              selected: g.elegidosEn(filtros.categorias) > 0,
+              onSelected: (_) async {
+                final elegidos = filtros.categorias;
+                if (g.elegidosEn(elegidos) == 0) {
+                  onCambiar(
+                    filtros.copyWith(
+                      categorias: {...elegidos, ...g.categorias},
+                    ),
+                  );
+                  return;
+                }
+                if (g.categorias.length == 1) {
+                  onCambiar(
+                    filtros.copyWith(
+                      categorias: elegidos.difference(g.categorias),
+                    ),
+                  );
+                  return;
+                }
+                final delGrupo = await showModalBottomSheet<Set<Categoria>>(
+                  context: context,
+                  showDragHandle: true,
+                  builder: (_) => _HojaGrupo(
+                    grupo: g,
+                    elegidos: elegidos.intersection(g.categorias),
+                  ),
+                );
+                if (delGrupo == null) return;
+                onCambiar(
+                  filtros.copyWith(
+                    categorias: {
+                      ...elegidos.difference(g.categorias),
+                      ...delGrupo,
+                    },
+                  ),
+                );
+              },
             ),
           ],
         ],
+      ),
+    );
+  }
+}
+
+/// Nombre de cada grupo de chips.
+String textoGrupo(AppLocalizations t, GrupoRubros g) => switch (g) {
+  GrupoRubros.salud => t.mapaGrupoSalud,
+  GrupoRubros.tiendas => t.mapaGrupoTiendas,
+  GrupoRubros.cuidado => t.mapaGrupoCuidado,
+  GrupoRubros.salidas => t.mapaGrupoSalidas,
+  GrupoRubros.refugios => t.mapaGrupoRefugios,
+};
+
+/// Los rubros de un grupo, para elegir solo los que interesan.
+class _HojaGrupo extends StatefulWidget {
+  const _HojaGrupo({required this.grupo, required this.elegidos});
+
+  final GrupoRubros grupo;
+  final Set<Categoria> elegidos;
+
+  @override
+  State<_HojaGrupo> createState() => _HojaGrupoState();
+}
+
+class _HojaGrupoState extends State<_HojaGrupo> {
+  late var _elegidos = {...widget.elegidos};
+
+  @override
+  Widget build(BuildContext context) {
+    final t = context.t;
+    final tema = Theme.of(context);
+    return SafeArea(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(textoGrupo(t, widget.grupo), style: tema.textTheme.titleLarge),
+            for (final c in widget.grupo.categorias)
+              CheckboxListTile(
+                key: ValueKey('rubro-${c.valor}'),
+                contentPadding: EdgeInsets.zero,
+                secondary: Icon(iconoCategoria(c)),
+                title: Text(textoCategorias(t, c)),
+                value: _elegidos.contains(c),
+                onChanged: (si) => setState(
+                  () => _elegidos = (si ?? false)
+                      ? {..._elegidos, c}
+                      : ({..._elegidos}..remove(c)),
+                ),
+              ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context, <Categoria>{}),
+                  child: Text(t.mapaGrupoQuitar),
+                ),
+                const Spacer(),
+                FilledButton(
+                  onPressed: () => Navigator.pop(context, _elegidos),
+                  child: Text(t.mapaFiltrosListo),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -581,8 +697,41 @@ class _SinLocal extends ConsumerWidget {
 }
 
 /// Qué significa cada color de pin.
-class _Leyenda extends StatelessWidget {
+/// Referencias de los pines (D91): se puede colapsar y se recuerda en el
+/// dispositivo, para quien no las quiera ver encima del mapa.
+class _Leyenda extends StatefulWidget {
   const _Leyenda();
+
+  static const clave = 'mapa_leyenda_abierta';
+
+  @override
+  State<_Leyenda> createState() => _LeyendaState();
+}
+
+class _LeyendaState extends State<_Leyenda> {
+  var _abierta = true;
+
+  @override
+  void initState() {
+    super.initState();
+    unawaited(_leer());
+  }
+
+  Future<void> _leer() async {
+    final guardada = (await SharedPreferences.getInstance()).getBool(
+      _Leyenda.clave,
+    );
+    if (guardada != null && mounted) setState(() => _abierta = guardada);
+  }
+
+  void _cambiar() {
+    setState(() => _abierta = !_abierta);
+    unawaited(
+      SharedPreferences.getInstance().then(
+        (p) => p.setBool(_Leyenda.clave, _abierta),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -590,33 +739,51 @@ class _Leyenda extends StatelessWidget {
     final tema = Theme.of(context);
     return Card(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+        padding: const EdgeInsets.fromLTRB(10, 2, 2, 6),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            for (final (tipo, texto) in [
-              (TipoPin.perdido, t.leyendaPerdido),
-              (TipoPin.encontrado, t.leyendaEncontrado),
-              (TipoPin.urgencia, t.leyendaUrgencia),
-              (TipoPin.veterinaria, t.leyendaVeterinaria),
-              (TipoPin.comercio, t.leyendaComercio),
-              (TipoPin.aceptaMascotas, t.leyendaAcepta),
-              (TipoPin.sinReclamar, t.leyendaSinReclamar),
-              (TipoPin.evento, t.leyendaEvento),
-            ])
-              Row(
+            InkWell(
+              key: const ValueKey('leyenda-plegar'),
+              onTap: _cambiar,
+              child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  MarcaPin(
-                    aspectoDePin(
-                      Pin(id: '', tipo: tipo, punto: const Punto(0, 0)),
-                    )!,
+                  Text(t.leyendaTitulo, style: tema.textTheme.labelMedium),
+                  Icon(
+                    _abierta ? Icons.expand_more : Icons.expand_less,
+                    size: 20,
+                    semanticLabel: _abierta
+                        ? t.leyendaOcultar
+                        : t.leyendaMostrar,
                   ),
-                  const SizedBox(width: 6),
-                  Text(texto, style: tema.textTheme.labelSmall),
                 ],
               ),
+            ),
+            if (_abierta)
+              for (final (tipo, texto) in [
+                (TipoPin.perdido, t.leyendaPerdido),
+                (TipoPin.encontrado, t.leyendaEncontrado),
+                (TipoPin.urgencia, t.leyendaUrgencia),
+                (TipoPin.veterinaria, t.leyendaVeterinaria),
+                (TipoPin.comercio, t.leyendaComercio),
+                (TipoPin.aceptaMascotas, t.leyendaAcepta),
+                (TipoPin.sinReclamar, t.leyendaSinReclamar),
+                (TipoPin.evento, t.leyendaEvento),
+              ])
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    MarcaPin(
+                      aspectoDePin(
+                        Pin(id: '', tipo: tipo, punto: const Punto(0, 0)),
+                      )!,
+                    ),
+                    const SizedBox(width: 6),
+                    Text(texto, style: tema.textTheme.labelSmall),
+                  ],
+                ),
           ],
         ),
       ),

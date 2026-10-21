@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sosmascota/src/comercios/mis_lugares.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'comercios_falsos.dart';
@@ -122,6 +123,8 @@ Future<void> _chip(
 ComerciosFalsos _todos() => ComerciosFalsos([_vet, _petshop, _cafe, _paseos]);
 
 void main() {
+  setUp(() => SharedPreferences.setMockInitialValues({}));
+
   testWidgets('sin funcionalidades igual se ve todo el mapa (D84)', (
     tester,
   ) async {
@@ -157,12 +160,49 @@ void main() {
     );
     expect(find.text('mapa: 1 pines'), findsOneWidget, reason: 'solo el SOS');
     expect(find.byKey(const ValueKey('pin-s1')), findsOneWidget);
-    await _chip(tester, 'Petshops');
+    await _chip(tester, 'Tiendas');
     expect(find.text('mapa: 2 pines'), findsOneWidget);
     expect(find.byKey(const ValueKey('pin-petshop')), findsOneWidget);
     await _chip(tester, 'Perdidos y encontrados', haciaAtras: true);
     expect(find.text('mapa: 1 pines'), findsOneWidget, reason: 'sin el SOS');
     expect(comercios.zonasConsultadas, hasLength(1));
+  });
+
+  testWidgets('chips por grupo: dentro de "Tiendas" se elige un rubro (D91)', (
+    tester,
+  ) async {
+    final comercios = _todos();
+    await _abrir(tester, comercios: comercios);
+    await _chip(tester, 'Tiendas');
+    expect(find.byKey(const ValueKey('pin-petshop')), findsOneWidget);
+    expect(find.byKey(const ValueKey('pin-vet')), findsNothing);
+
+    // Con el grupo elegido, el segundo toque abre sus rubros.
+    await _tocar(tester, find.byKey(const ValueKey('grupo-tiendas')));
+    expect(find.byKey(const ValueKey('rubro-agro')), findsOneWidget);
+    await _tocar(tester, find.byKey(const ValueKey('rubro-agro')));
+    await _tocar(tester, find.text('Listo'));
+    expect(find.widgetWithText(FilterChip, 'Tiendas · 1'), findsOneWidget);
+    expect(find.byKey(const ValueKey('pin-petshop')), findsOneWidget);
+
+    // "Quitar" saca el grupo: sin chips elegidos se ve todo otra vez.
+    await _tocar(tester, find.byKey(const ValueKey('grupo-tiendas')));
+    await _tocar(tester, find.text('Quitar'));
+    expect(find.byKey(const ValueKey('pin-vet')), findsOneWidget);
+    expect(find.byKey(const ValueKey('pin-s1')), findsOneWidget);
+    expect(comercios.zonasConsultadas, hasLength(1));
+  });
+
+  testWidgets('las referencias se ocultan y la app lo recuerda (D91)', (
+    tester,
+  ) async {
+    await _abrir(tester, comercios: _todos());
+    expect(find.text('Perdido'), findsOneWidget);
+    await _tocar(tester, find.byKey(const ValueKey('leyenda-plegar')));
+    expect(find.text('Perdido'), findsNothing);
+    expect(find.text('Referencias'), findsOneWidget);
+    final prefs = await SharedPreferences.getInstance();
+    expect(prefs.getBool('mapa_leyenda_abierta'), isFalse);
   });
 
   testWidgets('lista ordenada: abiertos primero, con rubro y distancia', (
@@ -195,7 +235,7 @@ void main() {
 
     // Solo un rubro: el SOS se va.
     await _chip(tester, 'Perdidos y encontrados');
-    await _chip(tester, 'Petshops');
+    await _chip(tester, 'Tiendas');
     expect(find.text('Se perdió: Firulais'), findsNothing);
     expect(find.text('Petshop Perruno'), findsOneWidget);
   });

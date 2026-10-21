@@ -128,6 +128,21 @@ void main() {
       expect(soloPetshop.sinChips, isFalse);
     });
 
+    test('cada rubro está en un solo grupo de chips (D91)', () {
+      final todos = [for (final g in GrupoRubros.values) ...g.categorias];
+      expect(todos.toSet(), Categoria.values.toSet());
+      expect(todos, hasLength(Categoria.values.length));
+      const elegidos = {Categoria.walker, Categoria.vet};
+      expect(GrupoRubros.cuidado.elegidosEn(elegidos), 1);
+      expect(GrupoRubros.cuidado.parcialEn(elegidos), isTrue);
+      expect(GrupoRubros.salud.parcialEn(elegidos), isTrue);
+      expect(
+        GrupoRubros.salud.parcialEn({Categoria.vet, Categoria.pharmacy}),
+        isFalse,
+      );
+      expect(GrupoRubros.tiendas.parcialEn(elegidos), isFalse);
+    });
+
     test('"Solo mis favoritos" deja solo los favoritos', () {
       const favs = FiltrosMapa(soloFavoritos: true);
       expect(favs.muestraSos, isFalse);

@@ -826,6 +826,26 @@
   "mapaDistTodo": "Todo",
   "mapaAbiertoAhora": "Abierto ahora",
   "mapaSoloFavoritos": "Solo mis favoritos",
+  "mapaGrupoSalud": "Salud",
+  "mapaGrupoTiendas": "Tiendas",
+  "mapaGrupoCuidado": "Cuidado",
+  "mapaGrupoSalidas": "Salidas",
+  "mapaGrupoRefugios": "Refugios",
+  "mapaGrupoQuitar": "Quitar",
+  "mapaGrupoParcial": "{grupo} · {cantidad}",
+  "@mapaGrupoParcial": {
+    "placeholders": {
+      "grupo": {
+        "type": "String"
+      },
+      "cantidad": {
+        "type": "int"
+      }
+    }
+  },
+  "leyendaTitulo": "Referencias",
+  "leyendaMostrar": "Mostrar las referencias",
+  "leyendaOcultar": "Ocultar las referencias",
   "mapaColocaMicrochip": "Coloca microchip (Operador RENAC)",
   "mapaEspecie": "Para qué mascota",
   "mapaEspecieActiva": "Para {nombre}",

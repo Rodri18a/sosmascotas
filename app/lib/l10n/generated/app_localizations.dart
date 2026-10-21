@@ -3736,6 +3736,66 @@ abstract class AppLocalizations {
   /// **'Solo mis favoritos'**
   String get mapaSoloFavoritos;
 
+  /// No description provided for @mapaGrupoSalud.
+  ///
+  /// In es, this message translates to:
+  /// **'Salud'**
+  String get mapaGrupoSalud;
+
+  /// No description provided for @mapaGrupoTiendas.
+  ///
+  /// In es, this message translates to:
+  /// **'Tiendas'**
+  String get mapaGrupoTiendas;
+
+  /// No description provided for @mapaGrupoCuidado.
+  ///
+  /// In es, this message translates to:
+  /// **'Cuidado'**
+  String get mapaGrupoCuidado;
+
+  /// No description provided for @mapaGrupoSalidas.
+  ///
+  /// In es, this message translates to:
+  /// **'Salidas'**
+  String get mapaGrupoSalidas;
+
+  /// No description provided for @mapaGrupoRefugios.
+  ///
+  /// In es, this message translates to:
+  /// **'Refugios'**
+  String get mapaGrupoRefugios;
+
+  /// No description provided for @mapaGrupoQuitar.
+  ///
+  /// In es, this message translates to:
+  /// **'Quitar'**
+  String get mapaGrupoQuitar;
+
+  /// No description provided for @mapaGrupoParcial.
+  ///
+  /// In es, this message translates to:
+  /// **'{grupo} · {cantidad}'**
+  String mapaGrupoParcial(String grupo, int cantidad);
+
+  /// No description provided for @leyendaTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Referencias'**
+  String get leyendaTitulo;
+
+  /// No description provided for @leyendaMostrar.
+  ///
+  /// In es, this message translates to:
+  /// **'Mostrar las referencias'**
+  String get leyendaMostrar;
+
+  /// No description provided for @leyendaOcultar.
+  ///
+  /// In es, this message translates to:
+  /// **'Ocultar las referencias'**
+  String get leyendaOcultar;
+
   /// No description provided for @mapaColocaMicrochip.
   ///
   /// In es, this message translates to:

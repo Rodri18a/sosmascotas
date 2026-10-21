@@ -2159,6 +2159,38 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mapaSoloFavoritos => 'Solo mis favoritos';
 
   @override
+  String get mapaGrupoSalud => 'Salud';
+
+  @override
+  String get mapaGrupoTiendas => 'Tiendas';
+
+  @override
+  String get mapaGrupoCuidado => 'Cuidado';
+
+  @override
+  String get mapaGrupoSalidas => 'Salidas';
+
+  @override
+  String get mapaGrupoRefugios => 'Refugios';
+
+  @override
+  String get mapaGrupoQuitar => 'Quitar';
+
+  @override
+  String mapaGrupoParcial(String grupo, int cantidad) {
+    return '$grupo · $cantidad';
+  }
+
+  @override
+  String get leyendaTitulo => 'Referencias';
+
+  @override
+  String get leyendaMostrar => 'Mostrar las referencias';
+
+  @override
+  String get leyendaOcultar => 'Ocultar las referencias';
+
+  @override
   String get mapaColocaMicrochip => 'Coloca microchip (Operador RENAC)';
 
   @override
