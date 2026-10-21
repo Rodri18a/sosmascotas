@@ -1,5 +1,6 @@
 import '../mapa/mapa.dart';
 import '../mascotas/mascota.dart';
+import '../qr/qr_tag.dart';
 
 /// Rubro de un lugar (valores iguales a la base: `businesses.business_type`).
 enum Categoria {
@@ -461,3 +462,8 @@ class Comercio {
     null => null,
   };
 }
+
+/// Página pública del comercio para compartir (2.10b, D90): `<base>/n/<id>`.
+/// Solo existe con el plan Plus.
+String urlPaginaComercio(String id, {String base = urlPublicaPorDefecto}) =>
+    '${base.replaceAll(RegExp(r'/+$'), '')}/n/$id';

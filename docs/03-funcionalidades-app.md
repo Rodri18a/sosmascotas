@@ -201,6 +201,7 @@ Conecta mascotas sin veterinaria con veterinarias cercanas, **solo con permiso d
 
 - Fase 2: catálogo de cada petshop con fotos, precios y botón "Consultar" (chat o WhatsApp). **Hecho (D85):** "Consultar" abre el chat con el comercio (si tiene cuenta y la funcionalidad `chat`) o su WhatsApp con el nombre del producto; un producto sin precio dice "Consultar precio".
 - **Servicios del comercio (2.10a, D90), plan Plus, detrás de `catalogo`:** cualquier rubro carga sus servicios (nombre, descripción, precio opcional o "desde", duración) desde el modo comercio → Negocio → Tus servicios; en la ficha aparece la sección "Servicios" con "Consultar" (el mismo camino que el catálogo). Si el plan baja, se ocultan sin borrarse. Máximo 50 por comercio.
+- **Página pública del comercio (2.10b, D90), plan Plus:** `/n/<id>` en la web liviana, sin app ni cuenta: fotos, horario y "abierto ahora", contactos públicos, "Cómo llegar", servicios y productos con "Consultar" por WhatsApp. Se comparte desde Mi negocio → Negocio → "Compartir mi página" (copia el enlace) o se abre con "Ver".
 - Fase 4: carrito, pago con Mercado Pago y envío.
 
 ---

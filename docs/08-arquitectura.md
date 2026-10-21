@@ -83,6 +83,7 @@ Páginas livianas en **HTML + JavaScript sin frameworks** (cargan rápido en cua
 |---|---|---|
 | `/m/<código>` | `m.html` + `assets/qr.js` | Página del QR: foto, nombre, especie/raza, señas, nota del dueño, si tiene chip, "Estoy perdido 🆘" y **"Avisar a mi familia"** (contacto inverso) |
 | `/s/<id>` | `s.html` + `assets/sos.js` | Página pública de un SOS para compartir: fotos, datos, zona aproximada (enlace a Google Maps) y "Avisar a su familia" (mismo formulario que el QR, `assets/aviso.js`) |
+| `/n/<id>` | `n.html` + `assets/negocio.js` | Página pública de un comercio **Plus** (2.10b, D90): fotos, rubro, insignias, "abierto ahora", promoción, contactos públicos, "Cómo llegar", servicios y productos con "Consultar" por WhatsApp, y horario. Datos con `pagina_comercio()`; registra `business_page_open`. La vista previa al compartir es genérica (sin el nombre del comercio) hasta tener dominio propio, P25 |
 
 - Datos: funciones RPC públicas (`public_pet_page`) que devuelven solo lo pensado para quien encuentra a la mascota.
 - Seguridad: todo el texto se inserta con `textContent` (nunca HTML), CSP estricta, `_headers` con `X-Frame-Options: DENY`.
@@ -169,6 +170,7 @@ Tabla `events` (append-only), escrita por el cliente con `ref.read(metricasProvi
 | `community_share` / `community_unshare` | el autor de un SOS resuelto comparte o quita el reencuentro en Comunidad (D86; compartir lo registra la base) |
 | `catalog_open` / `catalog_ask` / `product_save` / `order_create` / `order_status` | catálogo y pedidos: abrir, consultar, cargar un producto, pedir (con las unidades) y cada cambio de estado; sin datos de quien pide (D85) |
 | `service_ask` / `service_save` | servicios del comercio: consultar por uno desde la ficha y cargarlo o editarlo (D90) |
+| `business_page_share` / `business_page_open` | página pública del comercio: el comercio copia su enlace (app) y alguien la abre (web pública, sin cuenta) (D90) |
 | `adoption_publish` / `adoption_interest` / `adoption_stage` / `adoption_commit` / `adoption_followup` | cantidad de animales, etapa o día del seguimiento; sin datos de nadie (D79) |
 | `review_create` / `review_reply` | business_id; `review_create` con las estrellas (D78) |
 | `place_mark` / `business_create` / `business_claim` / `verification_request` | rubro y modalidad o business_id (1.3, D77) |

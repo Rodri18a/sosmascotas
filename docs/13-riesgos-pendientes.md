@@ -27,6 +27,7 @@
 | P22 | **Diferencial frente a Taponto** (16/10/2026): ya tiene mapa de servicios, tag propio y descuentos con comercios; no se vio libreta ni datos en Pando. Decidir entre competir con foco local + salud + veterinarias, proponer una alianza o replantear. Ver `investigacion/competencia.md` | Antes de seguir con la Etapa 0.8 |
 | P23 | **Avisos de recordatorios en la web con la app cerrada** (17/10/2026, D67): hoy suenan solo con la app abierta; la alternativa es push desde el servidor (cron + FCM, sin costo a esta escala) | Antes de abrir los recordatorios a todos |
 | P24 | **Gamificación y "con quién me cruzo"** (18/10/2026): ¿se hacen G1–G3 (protección, libreta al día, tratamiento completo)? ¿insignias privadas o se pueden mostrar? ¿"Amigos de paseo" a la Fase 3? Ver `17-propuestas-perfil-gamificacion.md` | Cuando se quiera sumar a la Fase 1 |
+| P25 | **Vista previa de la página del comercio al compartir** (21/10/2026, D90): WhatsApp e Instagram leen el HTML sin ejecutar JavaScript, así que hoy muestran un título genérico de SOS Mascota. Para que salgan el nombre y la foto del comercio hace falta armar esas etiquetas en el servidor (función de Vercel o Cloudflare) | Con el dominio propio (0.8.6) |
 | P13 | Texto del **compromiso de adopción** | Redactarlo con protectoras de Pando y revisarlo en la asesoría legal |
 
 ## Riesgos

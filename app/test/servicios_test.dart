@@ -90,11 +90,15 @@ Future<void> _abrirFicha(WidgetTester tester) async {
   await _tocar(tester, find.byKey(const ValueKey('pin-pel')));
 }
 
-Future<void> _abrirMisServicios(WidgetTester tester) async {
+Future<void> _abrirNegocio(WidgetTester tester) async {
   await tester.pumpAndSettle();
   GoRouter.of(tester.element(find.byType(Scaffold).first)).go('/negocio');
   await tester.pumpAndSettle();
   await _tocar(tester, find.text('Negocio').last);
+}
+
+Future<void> _abrirMisServicios(WidgetTester tester) async {
+  await _abrirNegocio(tester);
   await _tocar(tester, find.byKey(const ValueKey('abrir-servicios')));
 }
 
@@ -192,5 +196,25 @@ void main() {
       findsWidgets,
     );
     expect(find.text('Agregar servicio'), findsNothing);
+  });
+
+  testWidgets('"Compartir mi página" solo con plan Plus (D90)', (tester) async {
+    await _abrir(
+      tester,
+      tienda: TiendaFalsa(),
+      negocios: NegociosFalsos([_miPeluqueria('plus')]),
+    );
+    await _abrirNegocio(tester);
+    expect(find.byKey(const ValueKey('compartir-pagina')), findsOneWidget);
+  });
+
+  testWidgets('sin Plus no hay página para compartir', (tester) async {
+    await _abrir(
+      tester,
+      tienda: TiendaFalsa(),
+      negocios: NegociosFalsos([_miPeluqueria('featured')]),
+    );
+    await _abrirNegocio(tester);
+    expect(find.byKey(const ValueKey('compartir-pagina')), findsNothing);
   });
 }

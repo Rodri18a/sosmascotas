@@ -2853,6 +2853,20 @@ class AppLocalizationsEs extends AppLocalizations {
   String get serviciosTitulo => 'Servicios';
 
   @override
+  String get paginaCompartir => 'Compartir mi página';
+
+  @override
+  String get paginaCompartirAyuda =>
+      'Tu página con fotos, servicios, productos y horario, para poner en Instagram, Facebook o WhatsApp.';
+
+  @override
+  String get paginaEnlaceCopiado =>
+      'Enlace copiado: pegalo en tus redes o en WhatsApp.';
+
+  @override
+  String get paginaVer => 'Ver';
+
+  @override
   String get serviciosAbrir => 'Tus servicios';
 
   @override

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
@@ -7,11 +8,13 @@ import '../../../l10n/l10n.dart';
 import '../../comercios/comercios_repositorio.dart';
 import '../../comercios/negocios_repositorio.dart';
 import '../../comercios/textos_comercio.dart';
+import '../../config/env_provider.dart';
 import '../../fotos/elegir_foto.dart';
 import '../../funcionalidades/funcionalidades_activas.dart';
 import '../../metricas/metricas.dart';
 import '../../router.dart';
 import '../../tienda/tienda_repositorio.dart';
+import '../../utiles/enlaces.dart';
 import '../../veterinarias/veterinarias_repositorio.dart';
 import '../resenas/resenas.dart';
 import '../tienda/pedidos.dart';
@@ -381,6 +384,9 @@ class _Ficha extends ConsumerWidget {
 
   final MiNegocio negocio;
 
+  String _urlPagina(WidgetRef ref) =>
+      urlPaginaComercio(negocio.id, base: ref.read(appEnvProvider).urlPublica);
+
   Future<void> _pedirVerificacion(BuildContext context, WidgetRef ref) async {
     final t = context.t;
     final rut = TextEditingController(text: negocio.rut);
@@ -567,6 +573,33 @@ class _Ficha extends ConsumerWidget {
               ),
               icon: const Icon(Icons.event_outlined),
               label: Text(t.eventoPublicar),
+            ),
+          ),
+        // Página pública (2.10b, D90): solo con plan Plus.
+        if (c.plan == PlanComercio.plus &&
+            ref.watch(funcionalidadActivaProvider(Funcionalidades.catalogo)))
+          Card(
+            margin: const EdgeInsets.only(top: 16),
+            child: ListTile(
+              key: const ValueKey('compartir-pagina'),
+              leading: const Icon(Icons.share_outlined),
+              title: Text(t.paginaCompartir),
+              subtitle: Text(t.paginaCompartirAyuda),
+              trailing: TextButton(
+                onPressed: () =>
+                    ref.read(abrirEnlaceProvider)(Uri.parse(_urlPagina(ref))),
+                child: Text(t.paginaVer),
+              ),
+              onTap: () async {
+                final mensajes = ScaffoldMessenger.of(context);
+                await Clipboard.setData(ClipboardData(text: _urlPagina(ref)));
+                ref
+                    .read(metricasProvider)
+                    .track(Eventos.businessPageShare, businessId: negocio.id);
+                mensajes.showSnackBar(
+                  SnackBar(content: Text(t.paginaEnlaceCopiado)),
+                );
+              },
             ),
           ),
         // Servicios (2.10a, D90), con la funcionalidad `catalogo`.

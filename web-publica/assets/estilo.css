@@ -71,3 +71,26 @@ textarea { min-height: 96px; }
 .ok { background: var(--primario-claro); border-radius: 12px; padding: 16px; }
 .aviso-911 { font-size: 14px; color: var(--suave); text-align: center; margin-top: 24px; }
 [hidden] { display: none !important; }
+
+/* Página del comercio (/n/<id>, 2.10b) */
+h2 { font-family: "Sora", sans-serif; font-weight: 700; font-size: 20px; margin: 0 0 8px; }
+.galeria { display: grid; grid-auto-flow: column; grid-auto-columns: 85%; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; }
+.galeria:empty { display: none; }
+.galeria .foto { scroll-snap-align: start; aspect-ratio: 4 / 3; }
+.galeria:has(.foto:only-child) { grid-auto-columns: 100%; }
+.insignias { margin: 0 0 8px; font-weight: 600; }
+.insignias:empty, .apertura:empty { display: none; }
+.apertura { font-weight: 700; margin: 0 0 8px; }
+.apertura.abierto { color: var(--primario); }
+.apertura.cerrado { color: var(--suave); }
+.acciones { display: grid; gap: 8px; margin-top: 12px; }
+.acciones .boton.secundario { margin-top: 0; }
+.lista { list-style: none; margin: 0; padding: 0; }
+.lista li { display: flex; gap: 12px; align-items: flex-start; justify-content: space-between; padding: 12px 0; border-top: 1px solid var(--borde); }
+.lista li:first-child { border-top: 0; padding-top: 0; }
+.lista li > div { min-width: 0; }
+.lista p { margin: 4px 0 0; white-space: pre-line; overflow-wrap: anywhere; }
+.consultar { flex: none; color: var(--primario); font-weight: 700; text-decoration: none; padding: 4px 0; }
+.horario { width: 100%; border-collapse: collapse; }
+.horario th { text-align: left; font-weight: 600; padding: 4px 8px 4px 0; }
+.horario td { text-align: right; padding: 4px 0; }

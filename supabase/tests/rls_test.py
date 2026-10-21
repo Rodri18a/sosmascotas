@@ -1625,6 +1625,29 @@ def main():
                  filas(rest('POST', 'rpc/servicios_de', {'p_negocio': pelu})) == []
                  and len(filas(rest('POST', 'rpc/mis_servicios', {'p_negocio': pelu}, a))) == 2)
             caso('A borra un servicio', rest('POST', 'rpc/borrar_servicio', {'p_id': s2}, a)[0] in (200, 204))
+
+            print('página pública del comercio (2.10b)')
+            def pagina():
+                return rest('POST', 'rpc/pagina_comercio', {'p_id': pelu})[1]
+            caso('sin plan Plus no hay página', pagina() == {'status': 'not_found'})
+            rest('POST', 'rpc/admin_plan_comercio', {'p_business': pelu, 'p_plan': 'plus'}, x)
+            pedir('PATCH', f'{URL}/rest/v1/businesses?id=eq.{pelu}', {'rut': '211234560018'}, ADMIN)
+            pag = pagina()
+            caso('con Plus, un visitante ve la página con sus servicios visibles',
+                 pag.get('status') == 'ok' and pag['name'] == 'Peluquería Servicios RLS'
+                 and [s['name'] for s in pag['services']] == ['Baño y corte'])
+            caso('sin el dueño, el RUT ni los contactos privados',
+                 not {'owner_id', 'rut', 'private_contacts', 'user_id'} & set(pag)
+                 and '211234560018' not in json.dumps(pag))
+            caso('sin el catálogo prendido no muestra productos', pag['products'] == [])
+            caso('un visitante registra la apertura (métrica anónima)',
+                 rest('POST', 'events', {'name': 'business_page_open', 'anon_id': str(uuid.uuid4()),
+                                         'business_id': pelu, 'platform': 'web'},
+                      prefer='return=minimal')[0] in (200, 201, 204))
+            pedir('PATCH', f'{URL}/rest/v1/businesses?id=eq.{pelu}', {'status': 'hidden'}, ADMIN)
+            caso('un comercio oculto no tiene página', pagina() == {'status': 'not_found'})
+            caso('un id que no existe tampoco',
+                 rest('POST', 'rpc/pagina_comercio', {'p_id': str(uuid.uuid4())})[1] == {'status': 'not_found'})
             pedir('DELETE', f'{URL}/rest/v1/businesses?id=eq.{pelu}', headers=ADMIN)
 
             pedir('DELETE', f'{URL}/rest/v1/businesses?id=in.({negocio},{sin_duenio},{desde_marca})', headers=ADMIN)

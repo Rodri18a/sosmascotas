@@ -4948,6 +4948,30 @@ abstract class AppLocalizations {
   /// **'Servicios'**
   String get serviciosTitulo;
 
+  /// No description provided for @paginaCompartir.
+  ///
+  /// In es, this message translates to:
+  /// **'Compartir mi página'**
+  String get paginaCompartir;
+
+  /// No description provided for @paginaCompartirAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu página con fotos, servicios, productos y horario, para poner en Instagram, Facebook o WhatsApp.'**
+  String get paginaCompartirAyuda;
+
+  /// No description provided for @paginaEnlaceCopiado.
+  ///
+  /// In es, this message translates to:
+  /// **'Enlace copiado: pegalo en tus redes o en WhatsApp.'**
+  String get paginaEnlaceCopiado;
+
+  /// No description provided for @paginaVer.
+  ///
+  /// In es, this message translates to:
+  /// **'Ver'**
+  String get paginaVer;
+
   /// No description provided for @serviciosAbrir.
   ///
   /// In es, this message translates to:

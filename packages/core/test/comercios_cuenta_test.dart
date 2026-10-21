@@ -142,4 +142,12 @@ void main() {
     expect(c.fotos, ['b1/a.jpg']);
     expect(c.promo, '10% los martes');
   });
+
+  test('enlace de la página pública del comercio (D90)', () {
+    expect(urlPaginaComercio('n1'), 'https://sosmascotas.uy/n/n1');
+    expect(
+      urlPaginaComercio('n1', base: 'https://sosmascota-web.vercel.app/'),
+      'https://sosmascota-web.vercel.app/n/n1',
+    );
+  });
 }

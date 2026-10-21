@@ -68,6 +68,10 @@ abstract final class Eventos {
   static const orderStatus = 'order_status';
   static const serviceAsk = 'service_ask';
   static const serviceSave = 'service_save';
+  static const businessPageShare = 'business_page_share';
+
+  /// Lo registra la web pública al abrir `/n/<id>` (no la app).
+  static const businessPageOpen = 'business_page_open';
 }
 
 /// Valida el nombre de un evento con la misma regla que la base de datos.

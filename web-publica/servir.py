@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Sirve la web pública en http://localhost:3002 con las mismas reglas que
-Cloudflare Pages (_redirects): /m/<código> → m.html y /s/<id> → s.html.
+Cloudflare Pages (_redirects): /m/<código> → m.html, /s/<id> → s.html y
+/n/<id> → n.html.
 
 Uso: python3 web-publica/servir.py  (antes: copiar config.example.js como config.js)
 """
@@ -9,7 +10,7 @@ import http.server
 import os
 
 RAIZ = os.path.dirname(os.path.abspath(__file__))
-REGLAS = {'/m/': '/m.html', '/s/': '/s.html'}
+REGLAS = {'/m/': '/m.html', '/s/': '/s.html', '/n/': '/n.html'}
 
 
 class ConReglas(http.server.SimpleHTTPRequestHandler):
