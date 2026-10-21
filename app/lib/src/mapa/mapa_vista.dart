@@ -81,6 +81,7 @@ IconData iconoCategoria(Categoria c) => switch (c) {
   Categoria.trainer => Icons.school,
   Categoria.petFriendly => Icons.pets,
   Categoria.shelter => Icons.house,
+  Categoria.agro => Icons.agriculture,
 };
 
 /// Ícono del pin (D82): lupa en los SOS (roja o verde), calendario en los

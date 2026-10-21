@@ -128,6 +128,21 @@ void main() {
       expect(soloPetshop.sinChips, isFalse);
     });
 
+    test('las agropecuarias salen también con el chip "Pet shop" (D89)', () {
+      const petshop = FiltrosMapa(categorias: {Categoria.petshop});
+      const agro = FiltrosMapa(categorias: {Categoria.agro});
+      expect(petshop.muestraCategoria(Categoria.agro), isTrue);
+      expect(petshop.muestraCategoria(Categoria.petshop), isTrue);
+      expect(agro.muestraCategoria(Categoria.agro), isTrue);
+      expect(agro.muestraCategoria(Categoria.petshop), isFalse);
+      expect(
+        const FiltrosMapa(
+          categorias: {Categoria.vet},
+        ).muestraCategoria(Categoria.agro),
+        isFalse,
+      );
+    });
+
     test('por rubro, distancia, abierto, favoritos y microchip', () {
       expect(ids(const FiltrosMapa(categorias: {Categoria.petshop})), [
         'lejos',

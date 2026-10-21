@@ -20,6 +20,7 @@ void main() {
     expect(iconoCategoria(Categoria.grooming), Icons.content_cut);
     expect(iconoCategoria(Categoria.petshop), Icons.shopping_cart);
     expect(iconoCategoria(Categoria.petFriendly), Icons.pets);
+    expect(iconoCategoria(Categoria.agro), Icons.agriculture);
   });
 
   test('perdidos y encontrados: lupa roja o verde', () {

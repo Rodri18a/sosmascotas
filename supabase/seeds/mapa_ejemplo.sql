@@ -83,6 +83,7 @@ select c.rubro, 'local', c.nombre, 'Ejemplo del mapa (solo dev). No es un comerc
 from (values
   ('walker',  'Paseos Ejemplo',                 'Calle de ejemplo 300', -34.7150, -55.9660, '099000011', '{"mon": [["08:00", "18:00"]], "tue": [["08:00", "18:00"]], "wed": [["08:00", "18:00"]], "thu": [["08:00", "18:00"]], "fri": [["08:00", "18:00"]]}', false, false, 'unverified', 'basic'),
   ('trainer', 'Adiestramiento Ejemplo',         'Calle de ejemplo 400', -34.7235, -55.9590, '099000012', '{"sat": [["09:00", "13:00"]], "sun": [["09:00", "13:00"]]}', false, false, 'unverified', 'basic'),
+  ('agro',    'Agropecuaria Ejemplo',           'Ruta de ejemplo 8 km 38', -34.7055, -55.9520, '099000014', '{"mon": [["08:00", "18:00"]], "tue": [["08:00", "18:00"]], "wed": [["08:00", "18:00"]], "thu": [["08:00", "18:00"]], "fri": [["08:00", "18:00"]], "sat": [["08:00", "12:00"]]}', false, false, 'unverified', 'basic'),
   ('vet',     'Veterinaria Ejemplo Plus 24 h',  'Avenida de ejemplo 50', -34.7190, -55.9510, '099000013', '{}', true, true, 'verified', 'plus')
 ) as c(rubro, nombre, direccion, lat, lng, telefono, horario, h24, urgencias, verificacion, plan);
 

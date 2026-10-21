@@ -219,6 +219,7 @@ abstract final class T {
     'trainer': 'Adiestrador',
     'pet_friendly': 'Acepta mascotas',
     'shelter': 'Refugio',
+    'agro': 'Agropecuaria',
   };
 
   static const modalidades = {

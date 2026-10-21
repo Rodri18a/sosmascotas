@@ -2090,6 +2090,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get catRefugios => 'Refugios';
 
   @override
+  String get catAgros => 'Agropecuarias';
+
+  @override
   String get catVeterinaria => 'Veterinaria';
 
   @override
@@ -2115,6 +2118,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get catRefugio => 'Refugio';
+
+  @override
+  String get catAgro => 'Agropecuaria / agroveterinaria';
 
   @override
   String get mapaVistaMapa => 'Mapa';

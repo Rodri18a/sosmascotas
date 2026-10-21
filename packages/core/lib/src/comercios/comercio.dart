@@ -11,7 +11,8 @@ enum Categoria {
   hotel('hotel'),
   trainer('trainer'),
   petFriendly('pet_friendly'),
-  shelter('shelter');
+  shelter('shelter'),
+  agro('agro');
 
   const Categoria(this.valor);
 
@@ -36,7 +37,11 @@ bool moduloAdmitido(Categoria c, Modalidad m, Modulo modulo) {
   if (m == Modalidad.domicilio) return modulo == Modulo.agenda;
   return switch ((c, modulo)) {
     (Categoria.vet, _) => true,
-    (Categoria.petshop || Categoria.pharmacy, Modulo.catalogo) => true,
+    (
+      Categoria.petshop || Categoria.pharmacy || Categoria.agro,
+      Modulo.catalogo,
+    ) =>
+      true,
     (
       Categoria.grooming ||
           Categoria.hotel ||

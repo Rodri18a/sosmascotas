@@ -15,7 +15,8 @@ Columnas (la primera fila es el encabezado):
 - urgencias / 24h: "si" o vacío.
 - especies: nombres de la app separados por coma ("Perro, Gato"); vacío = todas.
 - rubro (opcional, por defecto veterinaria): veterinaria, petshop, farmacia,
-  peluqueria, paseador, hotel, adiestrador, acepta_mascotas, refugio.
+  peluqueria, paseador, hotel, adiestrador, acepta_mascotas, refugio,
+  agropecuaria (o agroveterinaria).
 - modalidad (opcional, por defecto local): local, online o domicilio. Sin
   local, lat / lng pueden quedar vacías (no tienen pin: van a "Sin local").
 
@@ -47,7 +48,8 @@ TELEFONO = re.compile(r'^\+?[0-9 ]{6,20}$')
 RUBROS = {'veterinaria': 'vet', 'vet': 'vet', 'petshop': 'petshop', 'farmacia': 'pharmacy',
           'peluqueria': 'grooming', 'peluquería': 'grooming', 'paseador': 'walker', 'hotel': 'hotel',
           'guarderia': 'hotel', 'guardería': 'hotel', 'adiestrador': 'trainer',
-          'acepta_mascotas': 'pet_friendly', 'refugio': 'shelter'}
+          'acepta_mascotas': 'pet_friendly', 'refugio': 'shelter',
+          'agropecuaria': 'agro', 'agroveterinaria': 'agro', 'agro': 'agro'}
 MODALIDADES = {'local', 'online', 'domicilio'}
 COLUMNAS = ['nombre', 'direccion', 'lat', 'lng', 'telefono', 'whatsapp', 'web', 'instagram',
             'horario', 'urgencias', '24h', 'especies', 'descripcion']

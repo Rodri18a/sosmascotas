@@ -13,6 +13,7 @@ String textoCategorias(AppLocalizations t, Categoria c) => switch (c) {
   Categoria.trainer => t.catAdiestradores,
   Categoria.petFriendly => t.catAceptan,
   Categoria.shelter => t.catRefugios,
+  Categoria.agro => t.catAgros,
 };
 
 /// Nombre del rubro en singular (ficha y lista).
@@ -26,4 +27,5 @@ String textoCategoria(AppLocalizations t, Categoria c) => switch (c) {
   Categoria.trainer => t.catAdiestrador,
   Categoria.petFriendly => t.catAcepta,
   Categoria.shelter => t.catRefugio,
+  Categoria.agro => t.catAgro,
 };

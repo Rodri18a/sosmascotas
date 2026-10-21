@@ -3598,6 +3598,12 @@ abstract class AppLocalizations {
   /// **'Refugios'**
   String get catRefugios;
 
+  /// No description provided for @catAgros.
+  ///
+  /// In es, this message translates to:
+  /// **'Agropecuarias'**
+  String get catAgros;
+
   /// No description provided for @catVeterinaria.
   ///
   /// In es, this message translates to:
@@ -3651,6 +3657,12 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Refugio'**
   String get catRefugio;
+
+  /// No description provided for @catAgro.
+  ///
+  /// In es, this message translates to:
+  /// **'Agropecuaria / agroveterinaria'**
+  String get catAgro;
 
   /// No description provided for @mapaVistaMapa.
   ///

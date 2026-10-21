@@ -36,6 +36,7 @@
 | Promoción, web, Instagram, Facebook, WhatsApp | | ✅ | ✅ |
 | Estadísticas completas y reporte mensual | Resumen | ✅ | ✅ |
 | Módulos: catálogo, agenda, socios | | | ✅ |
+| Servicios publicados y página pública del comercio (D90) | | | ✅ |
 | **Precio de ejemplo (a validar)** | $0 | ~$600/mes | ~$1.200/mes |
 
 - **Suscripción mensual** con cobro manual al inicio (transferencia o link de pago). **Comisión** por ventas y reservas recién cuando haya pagos dentro de la app (Fase 4, 8–15%).
@@ -52,6 +53,7 @@
 | Hotel / guardería | No | Sí | No |
 | Paseador / adiestrador | No | Sí | No |
 | Tienda online | Sí | No | No |
+| Agropecuaria / agroveterinaria (D89) | Sí | No | No |
 | Servicio a domicilio | No | Sí | No |
 
 **Regla de activación:** un módulo está activo solo si el plan es Plus, el tipo de negocio lo admite y la empresa lo prendió. Si el tipo no lo admite, se muestra "No aplica".

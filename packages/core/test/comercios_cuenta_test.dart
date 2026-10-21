@@ -14,6 +14,8 @@ void main() {
       expect(a(Categoria.grooming, Modulo.catalogo), isFalse);
       expect(a(Categoria.pharmacy, Modulo.catalogo), isTrue);
       expect(a(Categoria.hotel, Modulo.agenda), isTrue);
+      expect(a(Categoria.agro, Modulo.catalogo), isTrue);
+      expect(a(Categoria.agro, Modulo.agenda), isFalse);
       expect(a(Categoria.walker, Modulo.agenda), isTrue);
       expect(a(Categoria.petshop, Modulo.catalogo, Modalidad.online), isTrue);
       expect(a(Categoria.vet, Modulo.socios, Modalidad.online), isFalse);

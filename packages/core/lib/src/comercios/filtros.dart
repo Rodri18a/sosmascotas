@@ -38,8 +38,11 @@ class FiltrosMapa {
 
   bool get muestraSos => sos || categorias.isEmpty;
 
-  bool muestraCategoria(Categoria c) =>
-      categorias.isEmpty ? !sos : categorias.contains(c);
+  /// Las agropecuarias también salen al elegir "Pet shop" (D89).
+  bool muestraCategoria(Categoria c) => categorias.isEmpty
+      ? !sos
+      : categorias.contains(c) ||
+            (c == Categoria.agro && categorias.contains(Categoria.petshop));
   final Distancia distancia;
   final bool abiertoAhora;
   final bool soloFavoritos;

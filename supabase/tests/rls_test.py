@@ -1570,6 +1570,23 @@ def main():
                  and filas(rest('POST', 'rpc/mis_pedidos', {}, b))[-1]['items'][0]['name'] == 'Alimento perro adulto 3 kg')
             pedir('DELETE', f'{URL}/rest/v1/businesses?id=eq.{tienda}', headers=ADMIN)
 
+            print('rubro Agropecuaria (2.8e)')
+            s_ag, agro = rest('POST', 'rpc/alta_negocio', {'p': {
+                'name': 'Agropecuaria RLS', 'business_type': 'agro', 'kind': 'local', 'lat': -34.7213, 'lng': -55.9613}}, a)
+            caso('A da de alta una agropecuaria', s_ag == 200)
+            caso('se marca una agropecuaria sin reclamar',
+                 rest('POST', 'rpc/marcar_lugar', {'p_rubro': 'agro', 'p_lat': -34.7400, 'p_lng': -55.9400}, b)[0] == 200)
+            caso('un rubro inventado no se marca',
+                 rest('POST', 'rpc/marcar_lugar', {'p_rubro': 'ferreteria', 'p_lat': -34.7410, 'p_lng': -55.9410}, b)[0] >= 400)
+            rest('POST', 'rpc/admin_plan_comercio', {'p_business': agro, 'p_plan': 'plus'}, x)
+            caso('con Plus, la agropecuaria carga productos y prende el catálogo',
+                 rest('POST', 'rpc/guardar_producto', {'p_negocio': agro, 'p': {'name': 'Ración ovina 25 kg', 'price': 1200}}, a)[0] == 200
+                 and rest('POST', 'rpc/prender_modulo', {'p_business': agro, 'p_modulo': 'catalogo', 'p_prendido': True}, a)[0] in (200, 204)
+                 and len(filas(rest('POST', 'rpc/catalogo_de', {'p_negocio': agro}))) == 1)
+            caso('pero no la agenda (no aplica)',
+                 rest('POST', 'rpc/prender_modulo', {'p_business': agro, 'p_modulo': 'agenda', 'p_prendido': True}, a)[0] >= 400)
+            pedir('DELETE', f'{URL}/rest/v1/businesses?id=eq.{agro}', headers=ADMIN)
+
             pedir('DELETE', f'{URL}/rest/v1/businesses?id=in.({negocio},{sin_duenio},{desde_marca})', headers=ADMIN)
             pedir('DELETE', f'{URL}/rest/v1/place_marks?user_id=in.({a_id},{b_id})', headers=ADMIN)
         finally:
