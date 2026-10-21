@@ -85,8 +85,6 @@ abstract final class Rutas {
     negocio: Funcionalidades.comercios,
     adopcion: Funcionalidades.adopcion,
     noticias: Funcionalidades.noticias,
-    '$_tienda/': Funcionalidades.catalogo,
-    misPedidos: Funcionalidades.catalogo,
     denuncia: Funcionalidades.eventos,
     nuevoEvento: Funcionalidades.eventos,
     marcarLugar: Funcionalidades.comercios,

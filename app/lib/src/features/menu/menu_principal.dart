@@ -105,12 +105,11 @@ class _MenuPrincipalState extends ConsumerState<MenuPrincipal> {
               ),
               if (activa(Funcionalidades.hogar))
                 opcion(Icons.family_restroom, t.ajustesHogar, Rutas.hogar),
-              if (activa(Funcionalidades.catalogo))
-                opcion(
-                  Icons.shopping_bag_outlined,
-                  t.misPedidos,
-                  Rutas.misPedidos,
-                ),
+              opcion(
+                Icons.shopping_bag_outlined,
+                t.misPedidos,
+                Rutas.misPedidos,
+              ),
               if (activa(Funcionalidades.comercios))
                 opcion(Icons.storefront_outlined, t.negocioMi, Rutas.negocio),
             ],

@@ -4,8 +4,8 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
 import '../../comercios/negocios_repositorio.dart';
-import '../../funcionalidades/funcionalidades_activas.dart';
 import '../../metricas/metricas.dart';
+import '../../router.dart';
 import '../../tienda/tienda_repositorio.dart';
 import 'catalogo_screen.dart';
 
@@ -26,8 +26,8 @@ String textoPrecioServicio(AppLocalizations t, Servicio s) =>
       null => t.catalogoConsultarPrecio,
     };
 
-/// Sección "Servicios" de la ficha (2.10a, D90): solo comercios con plan Plus
-/// y con la funcionalidad `catalogo`. Cada servicio se "Consulta".
+/// Sección "Servicios" de la ficha (2.10a, D90): solo comercios con plan Plus.
+/// La ve cualquiera; "Consultar" pide sesión (D93).
 class SeccionServicios extends ConsumerWidget {
   const SeccionServicios({required this.comercio, super.key});
 
@@ -36,10 +36,7 @@ class SeccionServicios extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // Solo los Plus pueden tener servicios: a los demás no se les pregunta.
-    if (comercio.plan != PlanComercio.plus ||
-        !ref.watch(funcionalidadActivaProvider(Funcionalidades.catalogo))) {
-      return const SizedBox.shrink();
-    }
+    if (comercio.plan != PlanComercio.plus) return const SizedBox.shrink();
     final servicios = ref.watch(serviciosDeProvider(comercio.id)).value;
     if (servicios == null || servicios.isEmpty) return const SizedBox.shrink();
     final t = context.t;
@@ -66,18 +63,15 @@ class SeccionServicios extends ConsumerWidget {
               ),
               isThreeLine: s.descripcion != null,
               trailing: TextButton(
-                onPressed: () {
-                  ref
-                      .read(metricasProvider)
-                      .track(Eventos.serviceAsk, businessId: comercio.id);
-                  consultarAlComercio(
-                    context,
-                    ref,
-                    negocioId: comercio.id,
-                    comercio: comercio,
-                    que: s.nombre,
-                  );
-                },
+                onPressed: () => consultarAlComercio(
+                  context,
+                  ref,
+                  negocioId: comercio.id,
+                  comercio: comercio,
+                  que: s.nombre,
+                  evento: Eventos.serviceAsk,
+                  volverA: Rutas.mapa,
+                ),
                 child: Text(t.catalogoConsultar),
               ),
             ),

@@ -144,6 +144,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get ahoraNo => 'Ahora no';
 
   @override
+  String get cuentaParaPedir =>
+      'Para armar un pedido necesitás una cuenta: así el comercio sabe quién le pide y vos lo seguís en «Mis pedidos».';
+
+  @override
+  String get cuentaParaConsultar =>
+      'Para consultarle al comercio necesitás una cuenta: así evitamos mensajes falsos y te puede responder.';
+
+  @override
   String get sosReportar => 'Reportar';
 
   @override

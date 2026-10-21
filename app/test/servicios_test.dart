@@ -62,6 +62,8 @@ Future<void> _abrir(
   NegociosFalsos? negocios,
   List<Uri>? enlaces,
   List<Map<String, Object?>>? metricas,
+  bool conectado = true,
+  bool conFuncionalidad = true,
 }) async {
   tester.view
     ..physicalSize = const Size(1080, 2400)
@@ -69,7 +71,7 @@ Future<void> _abrir(
   addTearDown(tester.view.reset);
   await tester.pumpWidget(
     appDePrueba(
-      cuenta: ServicioCuentaFalso(conectado: _ana),
+      cuenta: ServicioCuentaFalso(conectado: conectado ? _ana : null),
       comercios: ComerciosFalsos([_peluqueria(plan)]),
       tienda: tienda,
       negocios: negocios,
@@ -77,7 +79,7 @@ Future<void> _abrir(
       eventos: metricas,
       funcionalidades: FuncionalidadesFalsas({
         Funcionalidades.comercios,
-        Funcionalidades.catalogo,
+        if (conFuncionalidad) Funcionalidades.catalogo,
       }),
     ),
   );
@@ -134,6 +136,31 @@ void main() {
     expect(enlaces.single.path, '/59899000015');
     expect(enlaces.single.queryParameters['text'], contains('Deslanado'));
     expect(metricas.map((e) => e['name']), contains('service_ask'));
+  });
+
+  testWidgets('un visitante ve los servicios sin la funcionalidad y, para '
+      'consultar, ingresa (D93)', (tester) async {
+    final enlaces = <Uri>[];
+    await _abrir(
+      tester,
+      tienda: TiendaFalsa(servicios: _servicios()),
+      enlaces: enlaces,
+      conectado: false,
+      conFuncionalidad: false,
+    );
+    await _abrirFicha(tester);
+    expect(find.text('Servicios'), findsOneWidget);
+    await _tocar(
+      tester,
+      find.descendant(
+        of: find.byKey(const ValueKey('servicio-s2')),
+        matching: find.text('Consultar'),
+      ),
+    );
+    expect(find.text('Necesitás una cuenta'), findsOneWidget);
+    await _tocar(tester, find.text('Ingresar o crear cuenta'));
+    expect(enlaces, isEmpty);
+    expect(find.text('Ingresar'), findsWidgets);
   });
 
   testWidgets('sin plan Plus, la ficha no muestra servicios', (tester) async {

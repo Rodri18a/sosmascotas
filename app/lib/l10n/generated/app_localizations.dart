@@ -334,6 +334,18 @@ abstract class AppLocalizations {
   /// **'Ahora no'**
   String get ahoraNo;
 
+  /// No description provided for @cuentaParaPedir.
+  ///
+  /// In es, this message translates to:
+  /// **'Para armar un pedido necesitás una cuenta: así el comercio sabe quién le pide y vos lo seguís en «Mis pedidos».'**
+  String get cuentaParaPedir;
+
+  /// No description provided for @cuentaParaConsultar.
+  ///
+  /// In es, this message translates to:
+  /// **'Para consultarle al comercio necesitás una cuenta: así evitamos mensajes falsos y te puede responder.'**
+  String get cuentaParaConsultar;
+
   /// No description provided for @sosReportar.
   ///
   /// In es, this message translates to:

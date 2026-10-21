@@ -14,10 +14,23 @@ Future<void> abrirConCuenta(
   required String destino,
   required String motivo,
 }) async {
-  if (ref.read(conectadoProvider)) {
+  if (await hayCuenta(context, ref, volverA: destino, motivo: motivo) &&
+      context.mounted) {
     await context.push(destino);
-    return;
   }
+}
+
+/// `true` si hay sesión. Si es visitante, explica por qué necesita una cuenta
+/// ([motivo]) y, si acepta, lo lleva a ingresar y después a [volverA]; en ese
+/// caso devuelve `false` (la acción se hace al volver).
+Future<bool> hayCuenta(
+  BuildContext context,
+  WidgetRef ref, {
+  required String volverA,
+  required String motivo,
+}) async {
+  if (ref.read(conectadoProvider)) return true;
+  final router = GoRouter.of(context);
   final ingresar = await showModalBottomSheet<bool>(
     context: context,
     showDragHandle: true,
@@ -25,9 +38,8 @@ Future<void> abrirConCuenta(
     isScrollControlled: true,
     builder: (context) => _PedirCuenta(motivo: motivo),
   );
-  if ((ingresar ?? false) && context.mounted) {
-    await context.push(Rutas.ingresarYVolverA(destino));
-  }
+  if (ingresar ?? false) await router.push(Rutas.ingresarYVolverA(volverA));
+  return false;
 }
 
 class _PedirCuenta extends StatelessWidget {

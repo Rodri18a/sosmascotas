@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
+import '../../cuenta/con_cuenta.dart';
 import '../../cuenta/servicio_cuenta.dart';
 import '../../funcionalidades/funcionalidades_activas.dart';
 import '../../metricas/metricas.dart';
@@ -95,15 +96,28 @@ class _TarjetaProducto extends ConsumerWidget {
   final String negocioId;
   final Comercio? comercio;
 
-  Future<void> _consultar(BuildContext context, WidgetRef ref) {
-    ref.read(metricasProvider).track(Eventos.catalogAsk, businessId: negocioId);
-    return consultarAlComercio(
+  Future<void> _consultar(BuildContext context, WidgetRef ref) =>
+      consultarAlComercio(
+        context,
+        ref,
+        negocioId: negocioId,
+        comercio: comercio,
+        que: producto.nombre,
+        evento: Eventos.catalogAsk,
+        volverA: Rutas.tienda(negocioId),
+      );
+
+  /// Armar un pedido pide sesión desde el primer producto (D93): al ingresar
+  /// la app puede recargarse y el carrito se perdería.
+  Future<void> _agregar(BuildContext context, WidgetRef ref) async {
+    if (await hayCuenta(
       context,
       ref,
-      negocioId: negocioId,
-      comercio: comercio,
-      que: producto.nombre,
-    );
+      volverA: Rutas.tienda(negocioId),
+      motivo: context.t.cuentaParaPedir,
+    )) {
+      ref.read(carritoProvider(negocioId).notifier).sumar(producto);
+    }
   }
 
   @override
@@ -164,7 +178,7 @@ class _TarjetaProducto extends ConsumerWidget {
                       if (!p.soloConsultar)
                         if (cantidad == 0)
                           FilledButton.tonal(
-                            onPressed: () => notificador.sumar(p),
+                            onPressed: () => _agregar(context, ref),
                             child: Text(t.catalogoAgregar),
                           )
                         else
@@ -196,16 +210,29 @@ class _TarjetaProducto extends ConsumerWidget {
   }
 }
 
-/// "Consultar" por un producto o servicio: el chat de la app si el comercio
-/// tiene cuenta; si no, su WhatsApp o su teléfono (datos públicos del local).
+/// "Consultar" por un producto o servicio, con sesión (D93): el chat de la app
+/// si el comercio tiene cuenta; si no, su WhatsApp o su teléfono (datos
+/// públicos del local). Un visitante ingresa y vuelve a [volverA].
 Future<void> consultarAlComercio(
   BuildContext context,
   WidgetRef ref, {
   required String negocioId,
   required Comercio? comercio,
   required String que,
+  required String evento,
+  required String volverA,
 }) async {
   final t = context.t;
+  if (!await hayCuenta(
+        context,
+        ref,
+        volverA: volverA,
+        motivo: t.cuentaParaConsultar,
+      ) ||
+      !context.mounted) {
+    return;
+  }
+  ref.read(metricasProvider).track(evento, businessId: negocioId);
   final c = comercio;
   final conChat =
       ref.read(conectadoProvider) &&
@@ -620,10 +647,8 @@ class BotonCatalogo extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // Solo los Plus pueden tener catálogo: a los demás no se les pregunta.
-    if (comercio.plan != PlanComercio.plus ||
-        !ref.watch(funcionalidadActivaProvider(Funcionalidades.catalogo))) {
-      return const SizedBox.shrink();
-    }
+    // Lo ve cualquiera, también visitantes (D93).
+    if (comercio.plan != PlanComercio.plus) return const SizedBox.shrink();
     final productos = ref.watch(catalogoDeProvider(comercio.id)).value;
     if (productos == null || productos.isEmpty) return const SizedBox.shrink();
     return Padding(

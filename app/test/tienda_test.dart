@@ -94,7 +94,7 @@ Future<void> _abrirFicha(WidgetTester tester) async {
 }
 
 void main() {
-  testWidgets('sin la funcionalidad, la ficha no muestra el catálogo', (
+  testWidgets('el catálogo se ve sin la funcionalidad gradual (D93)', (
     tester,
   ) async {
     await _abrir(
@@ -103,7 +103,8 @@ void main() {
       conFuncionalidad: false,
     );
     await _abrirFicha(tester);
-    expect(find.textContaining('Ver catálogo'), findsNothing);
+    await _tocar(tester, find.text('Ver catálogo (3)'));
+    expect(find.text('Alimento perro adulto 3 kg'), findsOneWidget);
   });
 
   testWidgets('armar un pedido desde la ficha y verlo en "Mis pedidos"', (
@@ -285,11 +286,16 @@ void main() {
     expect(enlaces.single.queryParameters['text'], contains('Cucha a medida'));
   });
 
-  testWidgets('un visitante ve el catálogo y, para pedir, ingresa', (
+  testWidgets('un visitante ve el catálogo y, para armar un pedido, ingresa', (
     tester,
   ) async {
     final tienda = TiendaFalsa(productos: _productos());
-    await _abrir(tester, tienda: tienda, conectado: false);
+    await _abrir(
+      tester,
+      tienda: tienda,
+      conectado: false,
+      conFuncionalidad: false,
+    );
     await _abrirFicha(tester);
     await _tocar(tester, find.text('Ver catálogo (3)'));
     await _tocar(
@@ -299,11 +305,49 @@ void main() {
         matching: find.text('Agregar'),
       ),
     );
-    await _tocar(tester, find.byKey(const ValueKey('ver-pedido')));
-    expect(find.text('Hacer pedido'), findsNothing);
-    await _tocar(tester, find.text('Ingresá para hacer el pedido'));
+    expect(find.text('Necesitás una cuenta'), findsOneWidget);
+    expect(find.textContaining('Para armar un pedido'), findsOneWidget);
+    await _tocar(tester, find.text('Ahora no'));
+    // No se sumó nada al carrito.
+    expect(find.byKey(const ValueKey('ver-pedido')), findsNothing);
+
+    await _tocar(
+      tester,
+      find.descendant(
+        of: find.byKey(const ValueKey('producto-p2')),
+        matching: find.text('Agregar'),
+      ),
+    );
+    await _tocar(tester, find.text('Ingresar o crear cuenta'));
     expect(tienda.hechos, isEmpty);
     expect(find.text('Ingresar'), findsWidgets);
+  });
+
+  testWidgets('un visitante, para consultar, ingresa (no se abre WhatsApp)', (
+    tester,
+  ) async {
+    final enlaces = <Uri>[];
+    final metricas = <Map<String, Object?>>[];
+    await _abrir(
+      tester,
+      tienda: TiendaFalsa(productos: _productos()),
+      conectado: false,
+      enlaces: enlaces,
+      metricas: metricas,
+    );
+    await _abrirFicha(tester);
+    await _tocar(tester, find.text('Ver catálogo (3)'));
+    await _tocar(
+      tester,
+      find.descendant(
+        of: find.byKey(const ValueKey('producto-p3')),
+        matching: find.text('Consultar'),
+      ),
+    );
+    expect(find.textContaining('Para consultarle al comercio'), findsOneWidget);
+    await _tocar(tester, find.text('Ahora no'));
+    expect(enlaces, isEmpty);
+    expect(metricas.map((e) => e['name']), isNot(contains('catalog_ask')));
   });
 
   testWidgets('modo comercio: prender el catálogo y cargar un producto', (
