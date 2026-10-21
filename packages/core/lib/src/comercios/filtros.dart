@@ -36,7 +36,19 @@ class FiltrosMapa {
   /// Ningún chip elegido: se ve todo (también los eventos).
   bool get sinChips => categorias.isEmpty && !sos;
 
-  bool get muestraSos => sos || categorias.isEmpty;
+  /// "Solo mis favoritos" deja solo los favoritos: ni SOS, ni eventos, ni
+  /// lugares sin reclamar (antes se seguían viendo y parecía no filtrar).
+  bool get muestraSos => !soloFavoritos && (sos || categorias.isEmpty);
+
+  bool get muestraEventos => sinChips && !soloFavoritos;
+
+  /// Los lugares sin reclamar no tienen horario, insignias ni favoritos: con
+  /// esos filtros no se ven.
+  bool muestraSinReclamar(Categoria c) =>
+      !soloFavoritos &&
+      !abiertoAhora &&
+      !colocaMicrochip &&
+      muestraCategoria(c);
 
   /// Las agropecuarias también salen al elegir "Pet shop" (D89).
   bool muestraCategoria(Categoria c) => categorias.isEmpty

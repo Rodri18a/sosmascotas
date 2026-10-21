@@ -128,6 +128,28 @@ void main() {
       expect(soloPetshop.sinChips, isFalse);
     });
 
+    test('"Solo mis favoritos" deja solo los favoritos', () {
+      const favs = FiltrosMapa(soloFavoritos: true);
+      expect(favs.muestraSos, isFalse);
+      expect(favs.muestraEventos, isFalse);
+      expect(favs.muestraSinReclamar(Categoria.vet), isFalse);
+      const nada = FiltrosMapa();
+      expect(nada.muestraSos, isTrue);
+      expect(nada.muestraEventos, isTrue);
+      expect(nada.muestraSinReclamar(Categoria.vet), isTrue);
+      expect(
+        const FiltrosMapa(abiertoAhora: true).muestraSinReclamar(Categoria.vet),
+        isFalse,
+      );
+      expect(
+        const FiltrosMapa(
+          colocaMicrochip: true,
+        ).muestraSinReclamar(Categoria.vet),
+        isFalse,
+      );
+      expect(const FiltrosMapa(abiertoAhora: true).muestraSos, isTrue);
+    });
+
     test('las agropecuarias salen también con el chip "Pet shop" (D89)', () {
       const petshop = FiltrosMapa(categorias: {Categoria.petshop});
       const agro = FiltrosMapa(categorias: {Categoria.agro});

@@ -165,13 +165,13 @@ class _MapaScreenState extends ConsumerState<MapaScreen> {
     final lugares = [for (final c in _filtrados()) ?c.pin];
     final sinReclamar = [
       for (final l in _sinReclamar.values)
-        if (_filtros.muestraCategoria(l.categoria)) l.pin,
+        if (_filtros.muestraSinReclamar(l.categoria)) l.pin,
     ];
     // Los SOS al final: quedan dibujados encima.
     final todos = [
       ...sinReclamar,
       ...lugares,
-      if (_filtros.sinChips)
+      if (_filtros.muestraEventos)
         for (final e in _eventos.values) e.pin,
       if (_filtros.muestraSos) ..._sos,
     ];

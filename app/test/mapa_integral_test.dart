@@ -276,6 +276,8 @@ void main() {
     await _tocar(tester, find.text('Listo'));
     expect(find.byKey(const ValueKey('pin-vet')), findsOneWidget);
     expect(find.byKey(const ValueKey('pin-petshop')), findsNothing);
+    // Solo los favoritos: tampoco los perdidos y encontrados.
+    expect(find.byKey(const ValueKey('pin-s1')), findsNothing);
   });
 
   testWidgets('"es mi veterinaria" solo aparece en veterinarias', (
