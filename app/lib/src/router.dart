@@ -32,6 +32,7 @@ import 'features/sos/sos_detalle_screen.dart';
 import 'features/sos/sos_nuevo_screen.dart';
 import 'features/sos/sos_screen.dart';
 import 'features/tienda/catalogo_screen.dart';
+import 'features/tienda/servicios.dart';
 import 'features/veterinarias/socios_screen.dart';
 import 'funcionalidades/funcionalidades_activas.dart';
 import 'legal/legal.dart';
@@ -80,6 +81,7 @@ abstract final class Rutas {
     chats: Funcionalidades.chat,
     // Antes que `negocio`: gana el primer comienzo que coincide.
     '$negocio/socios/': Funcionalidades.veterinarias,
+    '$negocio/servicios/': Funcionalidades.catalogo,
     negocio: Funcionalidades.comercios,
     adopcion: Funcionalidades.adopcion,
     noticias: Funcionalidades.noticias,
@@ -125,6 +127,7 @@ abstract final class Rutas {
       '$libreta/$mascotaId/$id';
   static String chat(String id) => '$chats/$id';
   static String sociosNegocio(String id) => '$negocio/socios/$id';
+  static String serviciosNegocio(String id) => '$negocio/servicios/$id';
   static String altaNegocio({Categoria? rubro, Punto? punto}) => Uri(
     path: '$negocio/alta',
     queryParameters: {
@@ -317,6 +320,11 @@ final routerProvider = Provider<GoRouter>((ref) {
             path: 'socios/:id',
             builder: (_, state) =>
                 SociosScreen(negocioId: state.pathParameters['id']!),
+          ),
+          GoRoute(
+            path: 'servicios/:id',
+            builder: (_, state) =>
+                ServiciosNegocioScreen(negocioId: state.pathParameters['id']!),
           ),
           GoRoute(
             path: 'alta',

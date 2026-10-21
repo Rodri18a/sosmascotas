@@ -5,11 +5,17 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 
 /// Catálogo y pedidos en memoria para las pruebas.
 class TiendaFalsa implements TiendaRepositorio {
-  TiendaFalsa({List<Producto>? productos, List<Pedido>? pedidos})
-    : productos = [...?productos],
-      pedidos = [...?pedidos];
+  TiendaFalsa({
+    List<Producto>? productos,
+    List<Pedido>? pedidos,
+    List<Servicio>? servicios,
+  }) : productos = [...?productos],
+       pedidos = [...?pedidos],
+       servicios = [...?servicios];
 
   final List<Producto> productos;
+  final List<Servicio> servicios;
+  final serviciosGuardados = <Servicio>[];
   final List<Pedido> pedidos;
   final hechos = <(String, Map<String, int>, String?)>[];
   final estados = <(String, EstadoPedido)>[];
@@ -108,4 +114,39 @@ class TiendaFalsa implements TiendaRepositorio {
       negocio: p.negocio,
     );
   }
+
+  @override
+  Future<List<Servicio>> serviciosDe(String negocioId) async => [
+    for (final s in servicios)
+      if (s.disponible) s,
+  ];
+
+  @override
+  Future<List<Servicio>> misServicios(String negocioId) async => servicios;
+
+  @override
+  Future<String> guardarServicio(String negocioId, Servicio servicio) async {
+    serviciosGuardados.add(servicio);
+    final id = servicio.id.isEmpty
+        ? 's${serviciosGuardados.length}'
+        : servicio.id;
+    servicios
+      ..removeWhere((s) => s.id == id)
+      ..add(
+        Servicio(
+          id: id,
+          nombre: servicio.nombre,
+          descripcion: servicio.descripcion,
+          precio: servicio.precio,
+          desde: servicio.desde,
+          duracionMinutos: servicio.duracionMinutos,
+          disponible: servicio.disponible,
+        ),
+      );
+    return id;
+  }
+
+  @override
+  Future<void> borrarServicio(String servicioId) async =>
+      servicios.removeWhere((s) => s.id == servicioId);
 }

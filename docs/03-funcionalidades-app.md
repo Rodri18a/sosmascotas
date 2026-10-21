@@ -200,6 +200,7 @@ Conecta mascotas sin veterinaria con veterinarias cercanas, **solo con permiso d
 ## 15. Tienda — Fase 2 (catálogo) / Fase 4 (marketplace)
 
 - Fase 2: catálogo de cada petshop con fotos, precios y botón "Consultar" (chat o WhatsApp). **Hecho (D85):** "Consultar" abre el chat con el comercio (si tiene cuenta y la funcionalidad `chat`) o su WhatsApp con el nombre del producto; un producto sin precio dice "Consultar precio".
+- **Servicios del comercio (2.10a, D90), plan Plus, detrás de `catalogo`:** cualquier rubro carga sus servicios (nombre, descripción, precio opcional o "desde", duración) desde el modo comercio → Negocio → Tus servicios; en la ficha aparece la sección "Servicios" con "Consultar" (el mismo camino que el catálogo). Si el plan baja, se ocultan sin borrarse. Máximo 50 por comercio.
 - Fase 4: carrito, pago con Mercado Pago y envío.
 
 ---

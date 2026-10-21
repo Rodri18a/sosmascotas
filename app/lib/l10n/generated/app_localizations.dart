@@ -4942,6 +4942,126 @@ abstract class AppLocalizations {
   /// **'Llegaste al máximo de 200 productos.'**
   String get productoLimite;
 
+  /// No description provided for @serviciosTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Servicios'**
+  String get serviciosTitulo;
+
+  /// No description provided for @serviciosAbrir.
+  ///
+  /// In es, this message translates to:
+  /// **'Tus servicios'**
+  String get serviciosAbrir;
+
+  /// No description provided for @serviciosAbrirAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Baño, consulta, paseo… con precio o «Consultar precio».'**
+  String get serviciosAbrirAyuda;
+
+  /// No description provided for @serviciosAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Lo que cargues acá se ve en tu ficha, con «Consultar». Si tu plan deja de ser Plus, se ocultan (no se borran).'**
+  String get serviciosAyuda;
+
+  /// No description provided for @serviciosSoloPlus.
+  ///
+  /// In es, this message translates to:
+  /// **'Los servicios se publican con el plan Plus.'**
+  String get serviciosSoloPlus;
+
+  /// No description provided for @serviciosSinCargar.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no cargaste servicios. Tocá «Agregar servicio».'**
+  String get serviciosSinCargar;
+
+  /// No description provided for @servicioNuevo.
+  ///
+  /// In es, this message translates to:
+  /// **'Agregar servicio'**
+  String get servicioNuevo;
+
+  /// No description provided for @servicioEditar.
+  ///
+  /// In es, this message translates to:
+  /// **'Editar servicio'**
+  String get servicioEditar;
+
+  /// No description provided for @servicioNombreAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Por ejemplo: Baño y corte'**
+  String get servicioNombreAyuda;
+
+  /// No description provided for @servicioPrecioAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Vacío: se muestra «Consultar precio».'**
+  String get servicioPrecioAyuda;
+
+  /// No description provided for @servicioPrecioDesde.
+  ///
+  /// In es, this message translates to:
+  /// **'Es un precio «desde» (cambia según el caso)'**
+  String get servicioPrecioDesde;
+
+  /// No description provided for @servicioDuracion.
+  ///
+  /// In es, this message translates to:
+  /// **'Duración'**
+  String get servicioDuracion;
+
+  /// No description provided for @servicioSinDuracion.
+  ///
+  /// In es, this message translates to:
+  /// **'Sin indicar'**
+  String get servicioSinDuracion;
+
+  /// No description provided for @servicioVisible.
+  ///
+  /// In es, this message translates to:
+  /// **'Se ve en mi ficha'**
+  String get servicioVisible;
+
+  /// No description provided for @servicioOculto.
+  ///
+  /// In es, this message translates to:
+  /// **'Oculto'**
+  String get servicioOculto;
+
+  /// No description provided for @servicioLimite.
+  ///
+  /// In es, this message translates to:
+  /// **'Llegaste al máximo de 50 servicios.'**
+  String get servicioLimite;
+
+  /// No description provided for @servicioDesde.
+  ///
+  /// In es, this message translates to:
+  /// **'desde {precio}'**
+  String servicioDesde(String precio);
+
+  /// No description provided for @duracionMinutos.
+  ///
+  /// In es, this message translates to:
+  /// **'{minutos} min'**
+  String duracionMinutos(int minutos);
+
+  /// No description provided for @duracionHoras.
+  ///
+  /// In es, this message translates to:
+  /// **'{horas} h'**
+  String duracionHoras(int horas);
+
+  /// No description provided for @duracionHorasMinutos.
+  ///
+  /// In es, this message translates to:
+  /// **'{horas} h {minutos} min'**
+  String duracionHorasMinutos(int horas, int minutos);
+
   /// No description provided for @noticiasTitulo.
   ///
   /// In es, this message translates to:

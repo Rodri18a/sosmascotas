@@ -94,39 +94,15 @@ class _TarjetaProducto extends ConsumerWidget {
   final String negocioId;
   final Comercio? comercio;
 
-  Future<void> _consultar(BuildContext context, WidgetRef ref) async {
-    final t = context.t;
+  Future<void> _consultar(BuildContext context, WidgetRef ref) {
     ref.read(metricasProvider).track(Eventos.catalogAsk, businessId: negocioId);
-    final c = comercio;
-    final conChat =
-        ref.read(conectadoProvider) &&
-        ref.read(funcionalidadActivaProvider(Funcionalidades.chat)) &&
-        (c?.tieneDuenio ?? false);
-    if (conChat) {
-      await abrirChatConNegocio(context, ref, negocioId);
-      return;
-    }
-    if (c?.whatsapp case final w?) {
-      if (telefonoInternacionalUy(w) case final numero?) {
-        await ref.read(abrirEnlaceProvider)(
-          Uri.https('wa.me', '/$numero', {
-            'text': t.catalogoConsultaTexto(producto.nombre),
-          }),
-        );
-        return;
-      }
-    }
-    if (c?.telefono case final tel?) {
-      await ref.read(abrirEnlaceProvider)(
-        Uri(scheme: 'tel', path: tel.replaceAll(' ', '')),
-      );
-      return;
-    }
-    if (context.mounted) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(t.catalogoSinContacto)));
-    }
+    return consultarAlComercio(
+      context,
+      ref,
+      negocioId: negocioId,
+      comercio: comercio,
+      que: producto.nombre,
+    );
   }
 
   @override
@@ -216,6 +192,46 @@ class _TarjetaProducto extends ConsumerWidget {
         ],
       ),
     );
+  }
+}
+
+/// "Consultar" por un producto o servicio: el chat de la app si el comercio
+/// tiene cuenta; si no, su WhatsApp o su teléfono (datos públicos del local).
+Future<void> consultarAlComercio(
+  BuildContext context,
+  WidgetRef ref, {
+  required String negocioId,
+  required Comercio? comercio,
+  required String que,
+}) async {
+  final t = context.t;
+  final c = comercio;
+  final conChat =
+      ref.read(conectadoProvider) &&
+      ref.read(funcionalidadActivaProvider(Funcionalidades.chat)) &&
+      (c?.tieneDuenio ?? false);
+  if (conChat) {
+    await abrirChatConNegocio(context, ref, negocioId);
+    return;
+  }
+  if (c?.whatsapp case final w?) {
+    if (telefonoInternacionalUy(w) case final numero?) {
+      await ref.read(abrirEnlaceProvider)(
+        Uri.https('wa.me', '/$numero', {'text': t.catalogoConsultaTexto(que)}),
+      );
+      return;
+    }
+  }
+  if (c?.telefono case final tel?) {
+    await ref.read(abrirEnlaceProvider)(
+      Uri(scheme: 'tel', path: tel.replaceAll(' ', '')),
+    );
+    return;
+  }
+  if (context.mounted) {
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(t.catalogoSinContacto)));
   }
 }
 

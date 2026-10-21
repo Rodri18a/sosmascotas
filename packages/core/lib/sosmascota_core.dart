@@ -5,6 +5,7 @@ export 'src/adopcion/adopcion.dart';
 export 'src/avisos/aviso.dart';
 export 'src/ayuda/ayuda.dart';
 export 'src/catalogo/catalogo.dart';
+export 'src/catalogo/servicio.dart';
 export 'src/chat/chat.dart';
 export 'src/comercios/comercio.dart';
 export 'src/comercios/filtros.dart';

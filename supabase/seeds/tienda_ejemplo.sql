@@ -1,8 +1,10 @@
--- Pet shop de ejemplo con catálogo y pedidos (SOLO DEV, 2.5 y 3.2). El dueño
--- es la cuenta del dueño del proyecto, así puede probar los dos lados: pedir
+-- Pet shop de ejemplo con catálogo, pedidos y servicios (SOLO DEV, 2.5, 3.2 y
+-- 2.10a). El dueño es la cuenta del dueño del proyecto, así puede probar los
+-- dos lados: pedir
 -- desde la ficha (mapa → "Ver catálogo") y atenderlo desde el modo comercio
--- (Ajustes → Mi negocio → Catálogo / Pedidos). Se puede repetir: deja el
--- catálogo como al principio (los pedidos hechos se conservan).
+-- (Ajustes → Mi negocio → Catálogo / Pedidos; Negocio → Tus servicios). Se
+-- puede repetir: deja el catálogo y los servicios como al principio (los
+-- pedidos hechos se conservan).
 --
 --   set -a; . ~/.config/sosmascotas/supabase-dev.env; set +a
 --   supabase db query --linked -f supabase/seeds/tienda_ejemplo.sql
@@ -43,5 +45,18 @@ from (values
   ('Rascador para gatos',           'Ya no queda: vuelve la semana que viene.',         1800,          false, '{2}',             8),
   ('Cucha a medida',                'La hacemos a la medida de tu perro.',              null,          true,  '{1}',             9)
 ) as p(nombre, descripcion, precio, disponible, especies, orden);
+
+delete from public.business_services where business_id = '00000000-0000-4000-a000-0000000ca7a1';
+
+insert into public.business_services (business_id, name, description, price, price_from, duration_min,
+                                      available, species_ids, sort)
+select '00000000-0000-4000-a000-0000000ca7a1', s.nombre, s.descripcion, s.precio, s.desde, s.minutos,
+       s.visible, s.especies, s.orden
+from (values
+  ('Baño y secado',     'Según el tamaño del perro.',            600::numeric, true,  90,   true,  '{1}'::smallint[], 1),
+  ('Corte de uñas',     null,                                    150,          false, 15,   true,  '{1,2}',           2),
+  ('Deslanado',         'Para razas de pelo doble.',             null,         false, 60,   true,  '{1}',             3),
+  ('Baño para gatos',   'Lo estamos por ofrecer.',               700,          false, 60,   false, '{2}',             4)
+) as s(nombre, descripcion, precio, desde, minutos, visible, especies, orden);
 
 commit;

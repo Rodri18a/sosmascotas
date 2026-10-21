@@ -569,6 +569,23 @@ class _Ficha extends ConsumerWidget {
               label: Text(t.eventoPublicar),
             ),
           ),
+        // Servicios (2.10a, D90), con la funcionalidad `catalogo`.
+        if (ref.watch(funcionalidadActivaProvider(Funcionalidades.catalogo)))
+          Card(
+            margin: const EdgeInsets.only(top: 16),
+            child: ListTile(
+              key: const ValueKey('abrir-servicios'),
+              leading: const Icon(Icons.design_services_outlined),
+              title: Text(t.serviciosAbrir),
+              subtitle: Text(
+                c.plan == PlanComercio.plus
+                    ? t.serviciosAbrirAyuda
+                    : t.serviciosSoloPlus,
+              ),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => context.push(Rutas.serviciosNegocio(negocio.id)),
+            ),
+          ),
         const Divider(height: 32),
         FormularioNegocio(
           key: ValueKey('form-${negocio.id}'),

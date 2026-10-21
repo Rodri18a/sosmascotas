@@ -1085,6 +1085,57 @@
   "productoBorrar": "Borrar",
   "productoDatosInvalidos": "Revisá el nombre (2 letras o más) y el precio.",
   "productoLimite": "Llegaste al máximo de 200 productos.",
+  "serviciosTitulo": "Servicios",
+  "serviciosAbrir": "Tus servicios",
+  "serviciosAbrirAyuda": "Baño, consulta, paseo… con precio o «Consultar precio».",
+  "serviciosAyuda": "Lo que cargues acá se ve en tu ficha, con «Consultar». Si tu plan deja de ser Plus, se ocultan (no se borran).",
+  "serviciosSoloPlus": "Los servicios se publican con el plan Plus.",
+  "serviciosSinCargar": "Todavía no cargaste servicios. Tocá «Agregar servicio».",
+  "servicioNuevo": "Agregar servicio",
+  "servicioEditar": "Editar servicio",
+  "servicioNombreAyuda": "Por ejemplo: Baño y corte",
+  "servicioPrecioAyuda": "Vacío: se muestra «Consultar precio».",
+  "servicioPrecioDesde": "Es un precio «desde» (cambia según el caso)",
+  "servicioDuracion": "Duración",
+  "servicioSinDuracion": "Sin indicar",
+  "servicioVisible": "Se ve en mi ficha",
+  "servicioOculto": "Oculto",
+  "servicioLimite": "Llegaste al máximo de 50 servicios.",
+  "servicioDesde": "desde {precio}",
+  "@servicioDesde": {
+    "placeholders": {
+      "precio": {
+        "type": "String"
+      }
+    }
+  },
+  "duracionMinutos": "{minutos} min",
+  "@duracionMinutos": {
+    "placeholders": {
+      "minutos": {
+        "type": "int"
+      }
+    }
+  },
+  "duracionHoras": "{horas} h",
+  "@duracionHoras": {
+    "placeholders": {
+      "horas": {
+        "type": "int"
+      }
+    }
+  },
+  "duracionHorasMinutos": "{horas} h {minutos} min",
+  "@duracionHorasMinutos": {
+    "placeholders": {
+      "horas": {
+        "type": "int"
+      },
+      "minutos": {
+        "type": "int"
+      }
+    }
+  },
   "noticiasTitulo": "Noticias",
   "noticiasEntradaAyuda": "Novedades, campañas y consejos para tus mascotas.",
   "noticiasTodas": "Todas",

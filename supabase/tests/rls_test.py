@@ -1587,6 +1587,46 @@ def main():
                  rest('POST', 'rpc/prender_modulo', {'p_business': agro, 'p_modulo': 'agenda', 'p_prendido': True}, a)[0] >= 400)
             pedir('DELETE', f'{URL}/rest/v1/businesses?id=eq.{agro}', headers=ADMIN)
 
+            print('servicios del comercio (2.10a)')
+            s_pl, pelu = rest('POST', 'rpc/alta_negocio', {'p': {
+                'name': 'Peluquería Servicios RLS', 'business_type': 'grooming', 'kind': 'local',
+                'lat': -34.7215, 'lng': -55.9615}}, a)
+            caso('A da de alta una peluquería', s_pl == 200)
+            bano = {'name': 'Baño y corte', 'price': 600, 'price_from': True, 'duration_min': 90}
+            caso('sin plan Plus no se cargan servicios',
+                 rest('POST', 'rpc/guardar_servicio', {'p_negocio': pelu, 'p': bano}, a)[0] >= 400)
+            rest('POST', 'rpc/admin_plan_comercio', {'p_business': pelu, 'p_plan': 'plus'}, x)
+            s_s1, s1 = rest('POST', 'rpc/guardar_servicio', {'p_negocio': pelu, 'p': bano}, a)
+            caso('con Plus, A carga un servicio', s_s1 == 200)
+            s_s2, s2 = rest('POST', 'rpc/guardar_servicio', {'p_negocio': pelu, 'p': {
+                'name': 'Deslanado', 'available': False}}, a)
+            caso('y uno oculto, sin precio', s_s2 == 200)
+            caso('"desde" sin precio no se acepta',
+                 rest('POST', 'rpc/guardar_servicio', {'p_negocio': pelu, 'p': {
+                     'name': 'Paseo', 'price_from': True}}, a)[0] >= 400)
+            caso('ni una duración fuera de 5 min a 24 h',
+                 rest('POST', 'rpc/guardar_servicio', {'p_negocio': pelu, 'p': {
+                     'name': 'Paseo', 'duration_min': 2}}, a)[0] >= 400)
+            caso('B no carga servicios en un comercio ajeno',
+                 rest('POST', 'rpc/guardar_servicio', {'p_negocio': pelu, 'p': bano}, b)[0] >= 400)
+            caso('nadie lee ni escribe la tabla directo',
+                 bloqueado(rest('GET', 'business_services?select=id', quien=a))
+                 and bloqueado(rest('POST', 'business_services', {'business_id': pelu, 'name': 'X'}, a)))
+            publicos = filas(rest('POST', 'rpc/servicios_de', {'p_negocio': pelu}))
+            caso('un visitante ve lo visible, con precio "desde" y duración',
+                 [s['id'] for s in publicos] == [s1] and publicos[0]['price_from'] is True
+                 and publicos[0]['duration_min'] == 90)
+            caso('el dueño ve también lo oculto',
+                 len(filas(rest('POST', 'rpc/mis_servicios', {'p_negocio': pelu}, a))) == 2)
+            caso('B no ve la lista interna', rest('POST', 'rpc/mis_servicios', {'p_negocio': pelu}, b)[0] >= 400)
+            caso('B no borra servicios ajenos', rest('POST', 'rpc/borrar_servicio', {'p_id': s2}, b)[0] >= 400)
+            rest('POST', 'rpc/admin_plan_comercio', {'p_business': pelu, 'p_plan': 'basic'}, x)
+            caso('si el plan baja, dejan de verse (sin borrarse)',
+                 filas(rest('POST', 'rpc/servicios_de', {'p_negocio': pelu})) == []
+                 and len(filas(rest('POST', 'rpc/mis_servicios', {'p_negocio': pelu}, a))) == 2)
+            caso('A borra un servicio', rest('POST', 'rpc/borrar_servicio', {'p_id': s2}, a)[0] in (200, 204))
+            pedir('DELETE', f'{URL}/rest/v1/businesses?id=eq.{pelu}', headers=ADMIN)
+
             pedir('DELETE', f'{URL}/rest/v1/businesses?id=in.({negocio},{sin_duenio},{desde_marca})', headers=ADMIN)
             pedir('DELETE', f'{URL}/rest/v1/place_marks?user_id=in.({a_id},{b_id})', headers=ADMIN)
         finally:

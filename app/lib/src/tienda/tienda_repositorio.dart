@@ -45,6 +45,17 @@ abstract interface class TiendaRepositorio {
   Future<List<Pedido>> pedidosDelNegocio(String negocioId);
 
   Future<void> cambiarEstado(String pedidoId, EstadoPedido estado);
+
+  /// Servicios (2.10a, D90): lo disponible, si el comercio tiene plan Plus
+  /// (también visitantes).
+  Future<List<Servicio>> serviciosDe(String negocioId);
+
+  /// El dueño: todos, también los no disponibles.
+  Future<List<Servicio>> misServicios(String negocioId);
+
+  Future<String> guardarServicio(String negocioId, Servicio servicio);
+
+  Future<void> borrarServicio(String servicioId);
 }
 
 class SupabaseTiendaRepositorio implements TiendaRepositorio {
@@ -55,6 +66,11 @@ class SupabaseTiendaRepositorio implements TiendaRepositorio {
   List<Producto> _productos(List<dynamic> filas) => [
     for (final f in filas)
       Producto.fromJson((f as Map).cast<String, Object?>()),
+  ];
+
+  List<Servicio> _servicios(List<dynamic> filas) => [
+    for (final f in filas)
+      Servicio.fromJson((f as Map).cast<String, Object?>()),
   ];
 
   List<Pedido> _pedidos(List<dynamic> filas) => [
@@ -158,6 +174,36 @@ class SupabaseTiendaRepositorio implements TiendaRepositorio {
       params: {'p_id': pedidoId, 'p_estado': estado.base},
     ),
   );
+
+  @override
+  Future<List<Servicio>> serviciosDe(String negocioId) async => _servicios(
+    await _cliente.rpc<List<dynamic>>(
+      'servicios_de',
+      params: {'p_negocio': negocioId},
+    ),
+  );
+
+  @override
+  Future<List<Servicio>> misServicios(String negocioId) async => _servicios(
+    await _cliente.rpc<List<dynamic>>(
+      'mis_servicios',
+      params: {'p_negocio': negocioId},
+    ),
+  );
+
+  @override
+  Future<String> guardarServicio(String negocioId, Servicio servicio) =>
+      _traducir(
+        () => _cliente.rpc<String>(
+          'guardar_servicio',
+          params: {'p_negocio': negocioId, 'p': servicio.toJson()},
+        ),
+      );
+
+  @override
+  Future<void> borrarServicio(String servicioId) => _traducir(
+    () => _cliente.rpc<void>('borrar_servicio', params: {'p_id': servicioId}),
+  );
 }
 
 class TiendaSinConfigurar implements TiendaRepositorio {
@@ -198,6 +244,19 @@ class TiendaSinConfigurar implements TiendaRepositorio {
 
   @override
   Future<void> cambiarEstado(String pedidoId, EstadoPedido estado) async {}
+
+  @override
+  Future<List<Servicio>> serviciosDe(String negocioId) async => const [];
+
+  @override
+  Future<List<Servicio>> misServicios(String negocioId) async => const [];
+
+  @override
+  Future<String> guardarServicio(String negocioId, Servicio servicio) async =>
+      '';
+
+  @override
+  Future<void> borrarServicio(String servicioId) async {}
 }
 
 final tiendaRepositorioProvider = Provider<TiendaRepositorio>((ref) {
@@ -215,6 +274,16 @@ final catalogoDeProvider = FutureProvider.family<List<Producto>, String>(
 final miCatalogoProvider = FutureProvider.family<List<Producto>, String>(
   (ref, negocioId) =>
       ref.watch(tiendaRepositorioProvider).miCatalogo(negocioId),
+);
+
+final serviciosDeProvider = FutureProvider.family<List<Servicio>, String>(
+  (ref, negocioId) =>
+      ref.watch(tiendaRepositorioProvider).serviciosDe(negocioId),
+);
+
+final misServiciosProvider = FutureProvider.family<List<Servicio>, String>(
+  (ref, negocioId) =>
+      ref.watch(tiendaRepositorioProvider).misServicios(negocioId),
 );
 
 final misPedidosProvider = FutureProvider<List<Pedido>>((ref) {

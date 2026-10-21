@@ -2850,6 +2850,78 @@ class AppLocalizationsEs extends AppLocalizations {
   String get productoLimite => 'Llegaste al máximo de 200 productos.';
 
   @override
+  String get serviciosTitulo => 'Servicios';
+
+  @override
+  String get serviciosAbrir => 'Tus servicios';
+
+  @override
+  String get serviciosAbrirAyuda =>
+      'Baño, consulta, paseo… con precio o «Consultar precio».';
+
+  @override
+  String get serviciosAyuda =>
+      'Lo que cargues acá se ve en tu ficha, con «Consultar». Si tu plan deja de ser Plus, se ocultan (no se borran).';
+
+  @override
+  String get serviciosSoloPlus => 'Los servicios se publican con el plan Plus.';
+
+  @override
+  String get serviciosSinCargar =>
+      'Todavía no cargaste servicios. Tocá «Agregar servicio».';
+
+  @override
+  String get servicioNuevo => 'Agregar servicio';
+
+  @override
+  String get servicioEditar => 'Editar servicio';
+
+  @override
+  String get servicioNombreAyuda => 'Por ejemplo: Baño y corte';
+
+  @override
+  String get servicioPrecioAyuda => 'Vacío: se muestra «Consultar precio».';
+
+  @override
+  String get servicioPrecioDesde =>
+      'Es un precio «desde» (cambia según el caso)';
+
+  @override
+  String get servicioDuracion => 'Duración';
+
+  @override
+  String get servicioSinDuracion => 'Sin indicar';
+
+  @override
+  String get servicioVisible => 'Se ve en mi ficha';
+
+  @override
+  String get servicioOculto => 'Oculto';
+
+  @override
+  String get servicioLimite => 'Llegaste al máximo de 50 servicios.';
+
+  @override
+  String servicioDesde(String precio) {
+    return 'desde $precio';
+  }
+
+  @override
+  String duracionMinutos(int minutos) {
+    return '$minutos min';
+  }
+
+  @override
+  String duracionHoras(int horas) {
+    return '$horas h';
+  }
+
+  @override
+  String duracionHorasMinutos(int horas, int minutos) {
+    return '$horas h $minutos min';
+  }
+
+  @override
   String get noticiasTitulo => 'Noticias';
 
   @override
