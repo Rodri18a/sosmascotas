@@ -37,8 +37,22 @@ abstract interface class TiendaRepositorio {
 
   String? urlFoto(String? ruta);
 
-  /// Los precios y el total los pone la base.
-  Future<String> hacerPedido(String negocioId, Carrito carrito, {String? nota});
+  /// Formas de pago y entrega (2.10c, D92); `null` si no las configuró.
+  Future<CondicionesPedido?> condicionesPedido(String negocioId);
+
+  Future<void> guardarCondicionesPedido(
+    String negocioId,
+    CondicionesPedido condiciones,
+  );
+
+  /// Los precios, el envío y el total los pone la base.
+  Future<String> hacerPedido(
+    String negocioId,
+    Carrito carrito, {
+    String? nota,
+    FormaPago? pago,
+    Entrega? entrega,
+  });
 
   Future<List<Pedido>> misPedidos();
 
@@ -140,10 +154,34 @@ class SupabaseTiendaRepositorio implements TiendaRepositorio {
       : _cliente.storage.from('business-photos').getPublicUrl(ruta);
 
   @override
+  Future<CondicionesPedido?> condicionesPedido(String negocioId) async {
+    final json = await _cliente.rpc<Object?>(
+      'condiciones_pedido',
+      params: {'p_negocio': negocioId},
+    );
+    return json is Map
+        ? CondicionesPedido.fromJson(json.cast<String, Object?>())
+        : null;
+  }
+
+  @override
+  Future<void> guardarCondicionesPedido(
+    String negocioId,
+    CondicionesPedido condiciones,
+  ) => _traducir(
+    () => _cliente.rpc<void>(
+      'guardar_condiciones_pedido',
+      params: {'p_negocio': negocioId, 'p': condiciones.toJson()},
+    ),
+  );
+
+  @override
   Future<String> hacerPedido(
     String negocioId,
     Carrito carrito, {
     String? nota,
+    FormaPago? pago,
+    Entrega? entrega,
   }) => _traducir(
     () => _cliente.rpc<String>(
       'hacer_pedido',
@@ -151,6 +189,8 @@ class SupabaseTiendaRepositorio implements TiendaRepositorio {
         'p_negocio': negocioId,
         'p_items': carrito.paraPedir(),
         'p_nota': nota,
+        'p_pago': pago?.base,
+        'p_entrega': entrega?.base,
       },
     ),
   );
@@ -230,10 +270,21 @@ class TiendaSinConfigurar implements TiendaRepositorio {
   String? urlFoto(String? ruta) => null;
 
   @override
+  Future<CondicionesPedido?> condicionesPedido(String negocioId) async => null;
+
+  @override
+  Future<void> guardarCondicionesPedido(
+    String negocioId,
+    CondicionesPedido condiciones,
+  ) async {}
+
+  @override
   Future<String> hacerPedido(
     String negocioId,
     Carrito carrito, {
     String? nota,
+    FormaPago? pago,
+    Entrega? entrega,
   }) async => '';
 
   @override
@@ -285,6 +336,12 @@ final misServiciosProvider = FutureProvider.family<List<Servicio>, String>(
   (ref, negocioId) =>
       ref.watch(tiendaRepositorioProvider).misServicios(negocioId),
 );
+
+final condicionesPedidoProvider =
+    FutureProvider.family<CondicionesPedido?, String>(
+      (ref, negocioId) =>
+          ref.watch(tiendaRepositorioProvider).condicionesPedido(negocioId),
+    );
 
 final misPedidosProvider = FutureProvider<List<Pedido>>((ref) {
   if (ref.watch(usuarioActualProvider).value == null) return const [];

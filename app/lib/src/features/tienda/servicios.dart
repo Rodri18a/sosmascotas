@@ -221,19 +221,9 @@ class _FormularioServicioState extends ConsumerState<FormularioServicio> {
     super.dispose();
   }
 
-  /// "1.780,50" o "1780.5" → 1780.5; vacío → sin precio ("Consultar").
-  double? _leerPrecio() {
-    final texto = _precio.text.trim().replaceAll(r'$', '').replaceAll(' ', '');
-    if (texto.isEmpty) return null;
-    final normal = texto.contains(',')
-        ? texto.replaceAll('.', '').replaceAll(',', '.')
-        : texto;
-    return double.tryParse(normal);
-  }
-
   Future<void> _guardar() async {
     final t = context.t;
-    final precio = _leerPrecio();
+    final precio = leerPrecio(_precio.text);
     if (_nombre.text.trim().length < 2 ||
         (_precio.text.trim().isNotEmpty && (precio == null || precio < 0))) {
       setState(() => _error = t.productoDatosInvalidos);

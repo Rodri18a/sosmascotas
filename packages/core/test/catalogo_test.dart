@@ -85,4 +85,74 @@ void main() {
     expect(p.renglones.single.subtotal, 1780);
     expect(p.negocio, 'Pet Shop');
   });
+
+  test('leerPrecio entiende puntos de miles y coma decimal', () {
+    expect(leerPrecio('1.780,50'), 1780.5);
+    expect(leerPrecio(r'$ 150'), 150);
+    expect(leerPrecio('89.5'), 89.5);
+    expect(leerPrecio('3.000'), 3000);
+    expect(leerPrecio('1.250.000'), 1250000);
+    expect(leerPrecio('12.50'), 12.5);
+    expect(leerPrecio('  '), isNull);
+    expect(leerPrecio('abc'), isNull);
+  });
+
+  test('condiciones del pedido: costo del envío y gratis desde', () {
+    final c = CondicionesPedido.fromJson({
+      'payment_methods': ['mercadopago', 'cash', 'otra'],
+      'pickup': true,
+      'shipping': true,
+      'shipping_cost': '150.00',
+      'free_shipping_from': 3000,
+    });
+    expect(c.formasPago, [FormaPago.efectivo, FormaPago.mercadoPago]);
+    expect(c.entregas, [Entrega.retiro, Entrega.envio]);
+    expect(c.costoDe(Entrega.retiro, 1000), 0);
+    expect(c.costoDe(Entrega.envio, 1000), 150);
+    expect(c.costoDe(Entrega.envio, 3000), 0);
+    expect(c.costoDe(null, 1000), 0);
+    expect(const CondicionesPedido(envio: true).costoDe(Entrega.envio, 10), 0);
+  });
+
+  test('condiciones del pedido: sin envío no se mandan costos', () {
+    const c = CondicionesPedido(
+      formasPago: [FormaPago.transferencia],
+      costoEnvio: 150,
+      envioGratisDesde: 3000,
+    );
+    expect(c.toJson(), {
+      'payment_methods': ['transfer'],
+      'pickup': true,
+      'shipping': false,
+      'shipping_cost': null,
+      'free_shipping_from': null,
+    });
+    const gratis = CondicionesPedido(envio: true, envioGratisDesde: 3000);
+    expect(gratis.toJson()['free_shipping_from'], isNull);
+  });
+
+  test('el pedido trae el pago, la entrega y el envío', () {
+    final p = Pedido.fromJson({
+      'id': 'o2',
+      'number': 8,
+      'status': 'new',
+      'total': 2380,
+      'created_at': '2026-10-21T12:00:00Z',
+      'payment_method': 'transfer',
+      'delivery': 'shipping',
+      'shipping_cost': '150.00',
+    });
+    expect(p.formaPago, FormaPago.transferencia);
+    expect(p.entrega, Entrega.envio);
+    expect(p.costoEnvio, 150);
+    expect(p.subtotal, 2230);
+    final viejo = Pedido.fromJson({
+      'id': 'o1',
+      'number': 1,
+      'status': 'new',
+      'total': 890,
+      'created_at': '2026-10-20T12:00:00Z',
+    });
+    expect((viejo.formaPago, viejo.entrega, viejo.costoEnvio), (null, null, 0));
+  });
 }

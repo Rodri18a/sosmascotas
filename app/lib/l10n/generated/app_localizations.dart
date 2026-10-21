@@ -4924,6 +4924,234 @@ abstract class AppLocalizations {
   /// **'Todavía no te hicieron pedidos.'**
   String get pedidosNegocioVacio;
 
+  /// No description provided for @pagoTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Forma de pago'**
+  String get pagoTitulo;
+
+  /// No description provided for @pagoEfectivo.
+  ///
+  /// In es, this message translates to:
+  /// **'Efectivo'**
+  String get pagoEfectivo;
+
+  /// No description provided for @pagoTransferencia.
+  ///
+  /// In es, this message translates to:
+  /// **'Transferencia'**
+  String get pagoTransferencia;
+
+  /// No description provided for @pagoTarjeta.
+  ///
+  /// In es, this message translates to:
+  /// **'Débito o crédito'**
+  String get pagoTarjeta;
+
+  /// No description provided for @pagoMercadoPago.
+  ///
+  /// In es, this message translates to:
+  /// **'Mercado Pago'**
+  String get pagoMercadoPago;
+
+  /// No description provided for @entregaTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Entrega'**
+  String get entregaTitulo;
+
+  /// No description provided for @entregaRetiro.
+  ///
+  /// In es, this message translates to:
+  /// **'Retiro en el local'**
+  String get entregaRetiro;
+
+  /// No description provided for @entregaEnvio.
+  ///
+  /// In es, this message translates to:
+  /// **'Envío a domicilio'**
+  String get entregaEnvio;
+
+  /// No description provided for @pedidoSubtotal.
+  ///
+  /// In es, this message translates to:
+  /// **'Subtotal'**
+  String get pedidoSubtotal;
+
+  /// No description provided for @pedidoEnvio.
+  ///
+  /// In es, this message translates to:
+  /// **'Envío'**
+  String get pedidoEnvio;
+
+  /// No description provided for @pedidoEnvioGratis.
+  ///
+  /// In es, this message translates to:
+  /// **'Gratis'**
+  String get pedidoEnvioGratis;
+
+  /// No description provided for @pedidoDireccionAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'La dirección se la pasás directo al comercio: no la guardamos en la app.'**
+  String get pedidoDireccionAyuda;
+
+  /// No description provided for @pedidoElegiPagoYEntrega.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegí la forma de pago y la entrega.'**
+  String get pedidoElegiPagoYEntrega;
+
+  /// No description provided for @pedidoEnviarWhatsapp.
+  ///
+  /// In es, this message translates to:
+  /// **'Enviar pedido por WhatsApp'**
+  String get pedidoEnviarWhatsapp;
+
+  /// No description provided for @pedidoGuardadoWhatsapp.
+  ///
+  /// In es, this message translates to:
+  /// **'Ahora mandale el mensaje al comercio por WhatsApp para que lo vea enseguida. También le queda en la app.'**
+  String get pedidoGuardadoWhatsapp;
+
+  /// No description provided for @pedidoAbrirWhatsapp.
+  ///
+  /// In es, this message translates to:
+  /// **'Abrir WhatsApp'**
+  String get pedidoAbrirWhatsapp;
+
+  /// No description provided for @pedidoAhoraNo.
+  ///
+  /// In es, this message translates to:
+  /// **'Ahora no'**
+  String get pedidoAhoraNo;
+
+  /// No description provided for @pedidoMensajeDireccion.
+  ///
+  /// In es, this message translates to:
+  /// **'Te paso la dirección por acá.'**
+  String get pedidoMensajeDireccion;
+
+  /// No description provided for @condicionesTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Cómo cobrás y entregás'**
+  String get condicionesTitulo;
+
+  /// No description provided for @condicionesSinConfigurar.
+  ///
+  /// In es, this message translates to:
+  /// **'Sin configurar: quien pide arregla el pago y la entrega con vos.'**
+  String get condicionesSinConfigurar;
+
+  /// No description provided for @condicionesPagos.
+  ///
+  /// In es, this message translates to:
+  /// **'Formas de pago que aceptás'**
+  String get condicionesPagos;
+
+  /// No description provided for @condicionesRetiro.
+  ///
+  /// In es, this message translates to:
+  /// **'Retiro en el local'**
+  String get condicionesRetiro;
+
+  /// No description provided for @condicionesEnvio.
+  ///
+  /// In es, this message translates to:
+  /// **'Hacés envíos'**
+  String get condicionesEnvio;
+
+  /// No description provided for @condicionesCosto.
+  ///
+  /// In es, this message translates to:
+  /// **'Costo del envío'**
+  String get condicionesCosto;
+
+  /// No description provided for @condicionesCostoAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Vacío o 0: envío gratis.'**
+  String get condicionesCostoAyuda;
+
+  /// No description provided for @condicionesGratisDesde.
+  ///
+  /// In es, this message translates to:
+  /// **'Envío gratis desde (opcional)'**
+  String get condicionesGratisDesde;
+
+  /// No description provided for @condicionesUnaEntrega.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegí al menos retiro o envío.'**
+  String get condicionesUnaEntrega;
+
+  /// No description provided for @condicionesMontosInvalidos.
+  ///
+  /// In es, this message translates to:
+  /// **'Revisá los montos.'**
+  String get condicionesMontosInvalidos;
+
+  /// No description provided for @condicionesEnvioGratis.
+  ///
+  /// In es, this message translates to:
+  /// **'Envío gratis'**
+  String get condicionesEnvioGratis;
+
+  /// No description provided for @pedidoEnvioGratisDesde.
+  ///
+  /// In es, this message translates to:
+  /// **'Envío gratis desde {monto}'**
+  String pedidoEnvioGratisDesde(String monto);
+
+  /// No description provided for @pedidoGuardadoTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Pedido #{numero} guardado!'**
+  String pedidoGuardadoTitulo(int numero);
+
+  /// No description provided for @pedidoMensajeSaludo.
+  ///
+  /// In es, this message translates to:
+  /// **'Hola, te hago un pedido desde SOS Mascota (#{numero}):'**
+  String pedidoMensajeSaludo(int numero);
+
+  /// No description provided for @pedidoMensajeRenglon.
+  ///
+  /// In es, this message translates to:
+  /// **'• {cantidad} × {producto} — {precio}'**
+  String pedidoMensajeRenglon(int cantidad, String producto, String precio);
+
+  /// No description provided for @pedidoMensajeTotales.
+  ///
+  /// In es, this message translates to:
+  /// **'Subtotal: {subtotal} · Envío: {envio} · Total: {total}'**
+  String pedidoMensajeTotales(String subtotal, String envio, String total);
+
+  /// No description provided for @pedidoMensajeTotal.
+  ///
+  /// In es, this message translates to:
+  /// **'Total: {total}'**
+  String pedidoMensajeTotal(String total);
+
+  /// No description provided for @pedidoMensajePago.
+  ///
+  /// In es, this message translates to:
+  /// **'Pago: {pago}'**
+  String pedidoMensajePago(String pago);
+
+  /// No description provided for @pedidoMensajeEntrega.
+  ///
+  /// In es, this message translates to:
+  /// **'Entrega: {entrega}'**
+  String pedidoMensajeEntrega(String entrega);
+
+  /// No description provided for @condicionesEnvioCosto.
+  ///
+  /// In es, this message translates to:
+  /// **'Envío {costo}'**
+  String condicionesEnvioCosto(String costo);
+
   /// No description provided for @productoNuevo.
   ///
   /// In es, this message translates to:

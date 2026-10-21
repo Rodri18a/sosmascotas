@@ -2841,6 +2841,141 @@ class AppLocalizationsEs extends AppLocalizations {
   String get pedidosNegocioVacio => 'Todavía no te hicieron pedidos.';
 
   @override
+  String get pagoTitulo => 'Forma de pago';
+
+  @override
+  String get pagoEfectivo => 'Efectivo';
+
+  @override
+  String get pagoTransferencia => 'Transferencia';
+
+  @override
+  String get pagoTarjeta => 'Débito o crédito';
+
+  @override
+  String get pagoMercadoPago => 'Mercado Pago';
+
+  @override
+  String get entregaTitulo => 'Entrega';
+
+  @override
+  String get entregaRetiro => 'Retiro en el local';
+
+  @override
+  String get entregaEnvio => 'Envío a domicilio';
+
+  @override
+  String get pedidoSubtotal => 'Subtotal';
+
+  @override
+  String get pedidoEnvio => 'Envío';
+
+  @override
+  String get pedidoEnvioGratis => 'Gratis';
+
+  @override
+  String get pedidoDireccionAyuda =>
+      'La dirección se la pasás directo al comercio: no la guardamos en la app.';
+
+  @override
+  String get pedidoElegiPagoYEntrega => 'Elegí la forma de pago y la entrega.';
+
+  @override
+  String get pedidoEnviarWhatsapp => 'Enviar pedido por WhatsApp';
+
+  @override
+  String get pedidoGuardadoWhatsapp =>
+      'Ahora mandale el mensaje al comercio por WhatsApp para que lo vea enseguida. También le queda en la app.';
+
+  @override
+  String get pedidoAbrirWhatsapp => 'Abrir WhatsApp';
+
+  @override
+  String get pedidoAhoraNo => 'Ahora no';
+
+  @override
+  String get pedidoMensajeDireccion => 'Te paso la dirección por acá.';
+
+  @override
+  String get condicionesTitulo => 'Cómo cobrás y entregás';
+
+  @override
+  String get condicionesSinConfigurar =>
+      'Sin configurar: quien pide arregla el pago y la entrega con vos.';
+
+  @override
+  String get condicionesPagos => 'Formas de pago que aceptás';
+
+  @override
+  String get condicionesRetiro => 'Retiro en el local';
+
+  @override
+  String get condicionesEnvio => 'Hacés envíos';
+
+  @override
+  String get condicionesCosto => 'Costo del envío';
+
+  @override
+  String get condicionesCostoAyuda => 'Vacío o 0: envío gratis.';
+
+  @override
+  String get condicionesGratisDesde => 'Envío gratis desde (opcional)';
+
+  @override
+  String get condicionesUnaEntrega => 'Elegí al menos retiro o envío.';
+
+  @override
+  String get condicionesMontosInvalidos => 'Revisá los montos.';
+
+  @override
+  String get condicionesEnvioGratis => 'Envío gratis';
+
+  @override
+  String pedidoEnvioGratisDesde(String monto) {
+    return 'Envío gratis desde $monto';
+  }
+
+  @override
+  String pedidoGuardadoTitulo(int numero) {
+    return '¡Pedido #$numero guardado!';
+  }
+
+  @override
+  String pedidoMensajeSaludo(int numero) {
+    return 'Hola, te hago un pedido desde SOS Mascota (#$numero):';
+  }
+
+  @override
+  String pedidoMensajeRenglon(int cantidad, String producto, String precio) {
+    return '• $cantidad × $producto — $precio';
+  }
+
+  @override
+  String pedidoMensajeTotales(String subtotal, String envio, String total) {
+    return 'Subtotal: $subtotal · Envío: $envio · Total: $total';
+  }
+
+  @override
+  String pedidoMensajeTotal(String total) {
+    return 'Total: $total';
+  }
+
+  @override
+  String pedidoMensajePago(String pago) {
+    return 'Pago: $pago';
+  }
+
+  @override
+  String pedidoMensajeEntrega(String entrega) {
+    return 'Entrega: $entrega';
+  }
+
+  @override
+  String condicionesEnvioCosto(String costo) {
+    return 'Envío $costo';
+  }
+
+  @override
   String get productoNuevo => 'Agregar producto';
 
   @override

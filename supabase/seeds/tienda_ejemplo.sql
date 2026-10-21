@@ -1,5 +1,5 @@
--- Pet shop de ejemplo con catálogo, pedidos y servicios (SOLO DEV, 2.5, 3.2 y
--- 2.10a). El dueño es la cuenta del dueño del proyecto, así puede probar los
+-- Pet shop de ejemplo con catálogo, pedidos, pago y entrega, y servicios
+-- (SOLO DEV, 2.5, 3.2, 2.10a y 2.10c). El dueño es la cuenta del dueño del proyecto, así puede probar los
 -- dos lados: pedir
 -- desde la ficha (mapa → "Ver catálogo") y atenderlo desde el modo comercio
 -- (Ajustes → Mi negocio → Catálogo / Pedidos; Negocio → Tus servicios). Se
@@ -29,6 +29,15 @@ on conflict (id) do update
 insert into public.business_modules (business_id, module, enabled)
 values ('00000000-0000-4000-a000-0000000ca7a1', 'catalogo', true)
 on conflict (business_id, module) do update set enabled = true, updated_at = now();
+
+-- Pago y entrega (2.10c): efectivo, transferencia y Mercado Pago; retiro o
+-- envío de $ 150, gratis desde $ 3.000.
+insert into public.order_settings (business_id, payment_methods, pickup, shipping, shipping_cost,
+                                   free_shipping_from)
+values ('00000000-0000-4000-a000-0000000ca7a1', '{cash,transfer,mercadopago}', true, true, 150, 3000)
+on conflict (business_id) do update
+  set payment_methods = excluded.payment_methods, pickup = true, shipping = true,
+      shipping_cost = 150, free_shipping_from = 3000;
 
 delete from public.catalog_items where business_id = '00000000-0000-4000-a000-0000000ca7a1';
 

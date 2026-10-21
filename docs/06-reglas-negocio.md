@@ -58,6 +58,8 @@
 
 **Regla de activación:** un módulo está activo solo si el plan es Plus, el tipo de negocio lo admite y la empresa lo prendió. Si el tipo no lo admite, se muestra "No aplica".
 
+**Pago y entrega de los pedidos (D92):** el comercio elige las formas de pago (efectivo, transferencia, débito o crédito, Mercado Pago) y la entrega (retiro, envío gratis o con costo fijo, gratis desde un monto). El costo del envío y el total los calcula la base. El pago sigue siendo directo al comercio hasta la Fase 4. El pedido se guarda en la app y el resumen se manda al WhatsApp público del comercio; la dirección de envío no se guarda.
+
 ## Alta y verificación de empresas (opción C)
 
 1. La empresa se registra sola y **aparece al instante** como "no verificada".

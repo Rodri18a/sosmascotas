@@ -1564,6 +1564,50 @@ def main():
             caso('B cancela un pedido nuevo', rest('POST', 'rpc/cambiar_estado_pedido', {'p_id': otro, 'p_estado': 'cancelled'}, b)[0] in (200, 204))
             caso('quien no es el comercio ni quien pidió no lo toca',
                  rest('POST', 'rpc/cambiar_estado_pedido', {'p_id': pedido, 'p_estado': 'cancelled'}, x)[0] >= 400)
+            print('pago y entrega del pedido (2.10c)')
+            caso('sin configurar, no hay condiciones',
+                 rest('POST', 'rpc/condiciones_pedido', {'p_negocio': tienda})[1] is None)
+            cond = {'payment_methods': ['cash', 'transfer'], 'pickup': True, 'shipping': True,
+                    'shipping_cost': 150, 'free_shipping_from': 3000}
+            caso('B no configura un comercio ajeno',
+                 rest('POST', 'rpc/guardar_condiciones_pedido', {'p_negocio': tienda, 'p': cond}, b)[0] >= 400)
+            caso('una forma de pago inventada no se guarda',
+                 rest('POST', 'rpc/guardar_condiciones_pedido', {'p_negocio': tienda, 'p': {
+                     **cond, 'payment_methods': ['bitcoin']}}, a)[0] >= 400)
+            caso('sin retiro ni envío no se guarda',
+                 rest('POST', 'rpc/guardar_condiciones_pedido', {'p_negocio': tienda, 'p': {
+                     **cond, 'pickup': False, 'shipping': False}}, a)[0] >= 400)
+            caso('A configura pago y entrega',
+                 rest('POST', 'rpc/guardar_condiciones_pedido', {'p_negocio': tienda, 'p': cond}, a)[0] in (200, 204))
+            leidas = rest('POST', 'rpc/condiciones_pedido', {'p_negocio': tienda})[1]
+            caso('un visitante ve las condiciones',
+                 sorted(leidas['payment_methods']) == ['cash', 'transfer'] and leidas['shipping']
+                 and float(leidas['shipping_cost']) == 150)
+            caso('nadie lee ni escribe las condiciones directo',
+                 bloqueado(rest('GET', 'order_settings?select=business_id', quien=a))
+                 and bloqueado(rest('POST', 'order_settings', {'business_id': tienda}, a)))
+            caso('configurado, hay que elegir pago y entrega',
+                 rest('POST', 'rpc/hacer_pedido', {'p_negocio': tienda, 'p_items': [{'id': p1, 'qty': 1}]}, b)[0] >= 400)
+            caso('no se paga con lo que no acepta',
+                 rest('POST', 'rpc/hacer_pedido', {'p_negocio': tienda, 'p_items': [{'id': p1, 'qty': 1}],
+                                                   'p_pago': 'card', 'p_entrega': 'pickup'}, b)[0] >= 400)
+            s_e1, _ = rest('POST', 'rpc/hacer_pedido', {'p_negocio': tienda, 'p_items': [{'id': p1, 'qty': 1}],
+                                                        'p_pago': 'transfer', 'p_entrega': 'shipping'}, b)
+            nuevo = filas(rest('POST', 'rpc/mis_pedidos', {}, b))[0]
+            caso('con envío, la base suma el costo al total',
+                 s_e1 == 200 and float(nuevo['total']) == 1040 and float(nuevo['shipping_cost']) == 150
+                 and nuevo['payment_method'] == 'transfer' and nuevo['delivery'] == 'shipping')
+            rest('POST', 'rpc/hacer_pedido', {'p_negocio': tienda, 'p_items': [{'id': p1, 'qty': 4}],
+                                              'p_pago': 'cash', 'p_entrega': 'shipping'}, b)
+            nuevo = filas(rest('POST', 'rpc/mis_pedidos', {}, b))[0]
+            caso('desde el monto, el envío es gratis',
+                 float(nuevo['total']) == 3560 and float(nuevo['shipping_cost']) == 0)
+            rest('POST', 'rpc/hacer_pedido', {'p_negocio': tienda, 'p_items': [{'id': p1, 'qty': 1}],
+                                              'p_pago': 'cash', 'p_entrega': 'pickup'}, b)
+            caso('el comercio ve el pago y la entrega (sin dirección)',
+                 (lambda f: f['payment_method'] == 'cash' and f['delivery'] == 'pickup'
+                  and float(f['total']) == 890 and 'address' not in f)(
+                     filas(rest('POST', 'rpc/pedidos_del_negocio', {'p_negocio': tienda}, a))[0]))
             caso('B no borra productos ajenos', rest('POST', 'rpc/borrar_producto', {'p_id': p3}, b)[0] >= 400)
             caso('A borra un producto y el pedido conserva su renglón',
                  rest('POST', 'rpc/borrar_producto', {'p_id': p1}, a)[0] in (200, 204)

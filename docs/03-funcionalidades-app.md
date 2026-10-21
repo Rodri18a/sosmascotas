@@ -163,6 +163,7 @@ El objetivo no es solo publicar animales: es que **la adopción salga bien y el 
 - **Reservar turno:** día, horario libre, servicio y mascota. El comercio confirma o rechaza.
 - **Catálogo y pedidos:** cantidades y total. Estados: nuevo → preparando → listo → entregado. El pago se hace directo al comercio (pago en la app en la Fase 4).
   - **Hecho (D85), detrás de `catalogo`:** en la ficha, "Ver catálogo" (si el comercio lo tiene prendido); se suman productos con precio, se ve el total, se deja una nota y "Hacer pedido" (pide cuenta). "Mis pedidos" está en Ajustes. El comercio ve solo el primer nombre de quien pide y lo avanza de a un paso desde el modo comercio → Pedidos. Falta: aviso push al comercio y a quien pidió cuando cambia el estado (hoy se ve al volver a la pantalla o tirando hacia abajo).
+  - **Pago y entrega por WhatsApp (D92):** el comercio dice qué formas de pago acepta y si hace retiro, envío gratis o con costo (y gratis desde un monto). Quien pide elige el pago y la entrega, ve subtotal + envío = total y, después de guardar el pedido, «Abrir WhatsApp» manda el resumen al WhatsApp del comercio. La dirección se pasa por WhatsApp: no se guarda en la app.
 - **Contratar paseadores, hoteles y cuidadores:** solicitud por chat y reserva. El pago es entre las partes hasta la Fase 4.
   - Idea a evaluar: **seguir el paseo en vivo** con la ubicación del paseador (`16-ideas-futuras.md`, I1).
 - "**Mis turnos y pedidos**" con el estado en vivo.

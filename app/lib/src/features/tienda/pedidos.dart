@@ -65,6 +65,17 @@ class TarjetaPedido extends StatelessWidget {
                   Text(formatoPrecio(r.subtotal)),
                 ],
               ),
+            if (p.entrega == Entrega.envio)
+              Row(
+                children: [
+                  Expanded(child: Text(t.pedidoEnvio)),
+                  Text(
+                    p.costoEnvio == 0
+                        ? t.pedidoEnvioGratis
+                        : formatoPrecio(p.costoEnvio),
+                  ),
+                ],
+              ),
             const Divider(),
             Row(
               children: [
@@ -73,6 +84,17 @@ class TarjetaPedido extends StatelessWidget {
                 Text(formatoPrecio(p.total), style: tema.textTheme.titleSmall),
               ],
             ),
+            if (p.formaPago != null || p.entrega != null) ...[
+              const SizedBox(height: 8),
+              Text(
+                [
+                  if (p.formaPago case final f?)
+                    t.pedidoMensajePago(textoFormaPago(t, f)),
+                  if (p.entrega case final e?)
+                    t.pedidoMensajeEntrega(textoEntrega(t, e)),
+                ].join(' · '),
+              ),
+            ],
             if (p.nota case final nota?) ...[
               const SizedBox(height: 8),
               Text(t.pedidoNotaDe(nota)),
@@ -161,6 +183,7 @@ class CatalogoNegocio extends ConsumerWidget {
             value: prendido,
             onChanged: onPrender,
           ),
+          _CondicionesNegocio(negocioId: negocioId),
           const Divider(height: 1),
           switch (ref.watch(miCatalogoProvider(negocioId))) {
             AsyncData(value: final lista) when lista.isEmpty => Padding(
@@ -246,16 +269,6 @@ class _FormularioProductoState extends ConsumerState<FormularioProducto> {
     super.dispose();
   }
 
-  /// "1.780,50" o "1780.5" → 1780.5; vacío → sin precio ("Consultar").
-  double? _leerPrecio() {
-    final texto = _precio.text.trim().replaceAll(r'$', '').replaceAll(' ', '');
-    if (texto.isEmpty) return null;
-    final normal = texto.contains(',')
-        ? texto.replaceAll('.', '').replaceAll(',', '.')
-        : texto;
-    return double.tryParse(normal);
-  }
-
   Future<void> _elegirFoto() async {
     final t = context.t;
     final mensajes = ScaffoldMessenger.of(context);
@@ -275,7 +288,7 @@ class _FormularioProductoState extends ConsumerState<FormularioProducto> {
 
   Future<void> _guardar() async {
     final t = context.t;
-    final precio = _leerPrecio();
+    final precio = leerPrecio(_precio.text);
     if (_nombre.text.trim().length < 2 ||
         (_precio.text.trim().isNotEmpty && (precio == null || precio < 0))) {
       setState(() => _error = t.productoDatosInvalidos);
@@ -407,6 +420,230 @@ class _FormularioProductoState extends ConsumerState<FormularioProducto> {
       actions: [
         if (widget.producto != null)
           TextButton(onPressed: _borrar, child: Text(t.productoBorrar)),
+        TextButton(
+          onPressed: () => Navigator.pop(context, false),
+          child: Text(t.cancelar),
+        ),
+        FilledButton(
+          onPressed: _guardando ? null : _guardar,
+          child: Text(t.guardar),
+        ),
+      ],
+    );
+  }
+}
+
+/// "Cómo cobrás y entregás" (2.10c, D92): resumen y acceso al formulario.
+class _CondicionesNegocio extends ConsumerWidget {
+  const _CondicionesNegocio({required this.negocioId});
+
+  final String negocioId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = context.t;
+    final condiciones = ref.watch(condicionesPedidoProvider(negocioId));
+    return ListTile(
+      key: const ValueKey('condiciones-pedido'),
+      leading: const Icon(Icons.local_shipping_outlined),
+      title: Text(t.condicionesTitulo),
+      subtitle: Text(switch (condiciones) {
+        AsyncData(value: final c?) => [
+          if (c.formasPago.isNotEmpty)
+            c.formasPago.map((f) => textoFormaPago(t, f)).join(', '),
+          if (c.retiro) t.entregaRetiro,
+          if (c.envio)
+            c.envioGratis
+                ? t.condicionesEnvioGratis
+                : t.condicionesEnvioCosto(formatoPrecio(c.costoEnvio!)),
+        ].join(' · '),
+        AsyncData() => t.condicionesSinConfigurar,
+        _ => '',
+      }),
+      trailing: const Icon(Icons.edit_outlined),
+      onTap: () async {
+        final guardado = await showDialog<bool>(
+          context: context,
+          builder: (_) => FormularioCondiciones(
+            negocioId: negocioId,
+            condiciones: condiciones.value,
+          ),
+        );
+        if (guardado ?? false) {
+          ref.invalidate(condicionesPedidoProvider(negocioId));
+        }
+      },
+    );
+  }
+}
+
+class FormularioCondiciones extends ConsumerStatefulWidget {
+  const FormularioCondiciones({
+    required this.negocioId,
+    this.condiciones,
+    super.key,
+  });
+
+  final String negocioId;
+  final CondicionesPedido? condiciones;
+
+  @override
+  ConsumerState<FormularioCondiciones> createState() =>
+      _FormularioCondicionesState();
+}
+
+class _FormularioCondicionesState extends ConsumerState<FormularioCondiciones> {
+  late final _actual = widget.condiciones ?? const CondicionesPedido();
+  late var _formas = {..._actual.formasPago};
+  late var _retiro = _actual.retiro;
+  late var _envio = _actual.envio;
+  late final _costo = TextEditingController(text: _monto(_actual.costoEnvio));
+  late final _desde = TextEditingController(
+    text: _monto(_actual.envioGratisDesde),
+  );
+  String? _error;
+  var _guardando = false;
+
+  static String _monto(double? v) => switch (v) {
+    null || 0 => '',
+    final m when m == m.roundToDouble() => m.toInt().toString(),
+    final m => m.toStringAsFixed(2).replaceAll('.', ','),
+  };
+
+  @override
+  void dispose() {
+    _costo.dispose();
+    _desde.dispose();
+    super.dispose();
+  }
+
+  Future<void> _guardar() async {
+    final t = context.t;
+    final costo = leerPrecio(_costo.text);
+    final desde = leerPrecio(_desde.text);
+    if (!_retiro && !_envio) {
+      setState(() => _error = t.condicionesUnaEntrega);
+      return;
+    }
+    if ((_costo.text.trim().isNotEmpty && (costo == null || costo < 0)) ||
+        (_desde.text.trim().isNotEmpty && (desde == null || desde < 0))) {
+      setState(() => _error = t.condicionesMontosInvalidos);
+      return;
+    }
+    setState(() => _guardando = true);
+    try {
+      await ref
+          .read(tiendaRepositorioProvider)
+          .guardarCondicionesPedido(
+            widget.negocioId,
+            CondicionesPedido(
+              formasPago: [
+                for (final f in FormaPago.values)
+                  if (_formas.contains(f)) f,
+              ],
+              retiro: _retiro,
+              envio: _envio,
+              costoEnvio: costo,
+              envioGratisDesde: desde,
+            ),
+          );
+      ref
+          .read(metricasProvider)
+          .track(Eventos.orderSettingsSave, businessId: widget.negocioId);
+      if (mounted) Navigator.pop(context, true);
+    } on TiendaException catch (e) {
+      setState(() {
+        _guardando = false;
+        _error = e.motivo == ErrorTienda.soloPlus
+            ? t.moduloSoloPlus
+            : t.condicionesMontosInvalidos;
+      });
+    } on Exception {
+      setState(() {
+        _guardando = false;
+        _error = t.errorSinConexion;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final t = context.t;
+    final tema = Theme.of(context);
+    return AlertDialog(
+      title: Text(t.condicionesTitulo),
+      content: SizedBox(
+        width: 480,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(t.condicionesPagos, style: tema.textTheme.titleSmall),
+              Wrap(
+                spacing: 8,
+                children: [
+                  for (final f in FormaPago.values)
+                    FilterChip(
+                      key: ValueKey('acepta-${f.base}'),
+                      label: Text(textoFormaPago(t, f)),
+                      selected: _formas.contains(f),
+                      onSelected: (si) => setState(
+                        () => _formas = si
+                            ? {..._formas, f}
+                            : ({..._formas}..remove(f)),
+                      ),
+                    ),
+                ],
+              ),
+              SwitchListTile(
+                contentPadding: EdgeInsets.zero,
+                title: Text(t.condicionesRetiro),
+                value: _retiro,
+                onChanged: (v) => setState(() => _retiro = v),
+              ),
+              SwitchListTile(
+                contentPadding: EdgeInsets.zero,
+                title: Text(t.condicionesEnvio),
+                value: _envio,
+                onChanged: (v) => setState(() => _envio = v),
+              ),
+              if (_envio) ...[
+                TextField(
+                  controller: _costo,
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                  ),
+                  decoration: InputDecoration(
+                    labelText: t.condicionesCosto,
+                    helperText: t.condicionesCostoAyuda,
+                    prefixText: r'$ ',
+                  ),
+                ),
+                TextField(
+                  controller: _desde,
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                  ),
+                  decoration: InputDecoration(
+                    labelText: t.condicionesGratisDesde,
+                    prefixText: r'$ ',
+                  ),
+                ),
+              ],
+              if (_error case final e?)
+                Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: Text(
+                    e,
+                    style: TextStyle(color: tema.colorScheme.error),
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ),
+      actions: [
         TextButton(
           onPressed: () => Navigator.pop(context, false),
           child: Text(t.cancelar),

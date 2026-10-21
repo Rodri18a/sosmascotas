@@ -22,6 +22,18 @@ String formatoPrecio(double precio) {
       : '\$ $conPuntos,${resto.toString().padLeft(2, '0')}';
 }
 
+/// "1.780,50" o "1780.5" → 1780.5; "3.000" → 3000 (puntos de miles); vacío →
+/// `null` (sin precio). Lo que escribe el comercio en los formularios.
+double? leerPrecio(String texto) {
+  final limpio = texto.trim().replaceAll(r'$', '').replaceAll(' ', '');
+  if (limpio.isEmpty) return null;
+  final conMiles = RegExp(r'^\d{1,3}(\.\d{3})+$').hasMatch(limpio);
+  final normal = limpio.contains(',') || conMiles
+      ? limpio.replaceAll('.', '').replaceAll(',', '.')
+      : limpio;
+  return double.tryParse(normal);
+}
+
 /// Un producto o servicio del catálogo.
 class Producto {
   const Producto({
@@ -122,6 +134,90 @@ class Carrito {
   ];
 }
 
+/// Formas de pago que acepta un comercio (2.10c, D92). El pago se hace
+/// directo al comercio.
+enum FormaPago {
+  efectivo('cash'),
+  transferencia('transfer'),
+  tarjeta('card'),
+  mercadoPago('mercadopago');
+
+  const FormaPago(this.base);
+
+  final String base;
+
+  static FormaPago? desdeBase(Object? v) =>
+      values.where((e) => e.base == v).firstOrNull;
+}
+
+/// Cómo llega el pedido (2.10c, D92).
+enum Entrega {
+  retiro('pickup'),
+  envio('shipping');
+
+  const Entrega(this.base);
+
+  final String base;
+
+  static Entrega? desdeBase(Object? v) =>
+      values.where((e) => e.base == v).firstOrNull;
+}
+
+/// Formas de pago y entrega de un comercio (2.10c, D92).
+class CondicionesPedido {
+  const CondicionesPedido({
+    this.formasPago = const [],
+    this.retiro = true,
+    this.envio = false,
+    this.costoEnvio,
+    this.envioGratisDesde,
+  });
+
+  factory CondicionesPedido.fromJson(Map<String, Object?> json) =>
+      CondicionesPedido(
+        formasPago: [
+          for (final f in (json['payment_methods'] as List?) ?? const [])
+            ?FormaPago.desdeBase(f),
+        ]..sort((a, b) => a.index.compareTo(b.index)),
+        retiro: json['pickup'] as bool? ?? true,
+        envio: json['shipping'] as bool? ?? false,
+        costoEnvio: _numero(json['shipping_cost']),
+        envioGratisDesde: _numero(json['free_shipping_from']),
+      );
+
+  final List<FormaPago> formasPago;
+  final bool retiro;
+  final bool envio;
+
+  /// `null` o 0: el envío es gratis.
+  final double? costoEnvio;
+
+  /// Desde este subtotal el envío es gratis (`null`: no hay).
+  final double? envioGratisDesde;
+
+  List<Entrega> get entregas => [
+    if (retiro) Entrega.retiro,
+    if (envio) Entrega.envio,
+  ];
+
+  bool get envioGratis => (costoEnvio ?? 0) == 0;
+
+  /// Lo que se muestra; el que vale lo calcula la base.
+  double costoDe(Entrega? entrega, double subtotal) {
+    if (entrega != Entrega.envio) return 0;
+    if (envioGratisDesde case final desde? when subtotal >= desde) return 0;
+    return costoEnvio ?? 0;
+  }
+
+  Map<String, Object?> toJson() => {
+    'payment_methods': [for (final f in formasPago) f.base],
+    'pickup': retiro,
+    'shipping': envio,
+    'shipping_cost': envio ? costoEnvio : null,
+    'free_shipping_from': envio && !envioGratis ? envioGratisDesde : null,
+  };
+}
+
 enum EstadoPedido {
   nuevo('new'),
   preparando('preparing'),
@@ -180,6 +276,9 @@ class Pedido {
     this.negocio,
     this.cliente,
     this.nota,
+    this.formaPago,
+    this.entrega,
+    this.costoEnvio = 0,
   });
 
   factory Pedido.fromJson(Map<String, Object?> json) => Pedido(
@@ -199,6 +298,9 @@ class Pedido {
     negocio: json['business_name'] as String?,
     cliente: json['cliente'] as String?,
     nota: json['note'] as String?,
+    formaPago: FormaPago.desdeBase(json['payment_method']),
+    entrega: Entrega.desdeBase(json['delivery']),
+    costoEnvio: _numero(json['shipping_cost']) ?? 0,
   );
 
   final String id;
@@ -216,4 +318,14 @@ class Pedido {
   /// Para el comercio: el primer nombre de quien pidió.
   final String? cliente;
   final String? nota;
+
+  /// Lo que eligió quien pidió (2.10c); `null` en los pedidos de antes o si
+  /// el comercio no lo configuró.
+  final FormaPago? formaPago;
+  final Entrega? entrega;
+
+  /// Incluido en [total].
+  final double costoEnvio;
+
+  double get subtotal => total - costoEnvio;
 }

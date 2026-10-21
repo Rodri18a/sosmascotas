@@ -68,6 +68,7 @@ class CatalogoScreen extends ConsumerWidget {
                     ref,
                     negocioId: negocioId,
                     productos: productos,
+                    comercio: comercio,
                   ),
                   icon: const Icon(Icons.shopping_bag_outlined),
                   label: Text(
@@ -235,24 +236,66 @@ Future<void> consultarAlComercio(
   }
 }
 
-/// Resumen del pedido, nota y "Hacer pedido".
+/// Resumen del pedido, forma de pago, entrega, nota y "Hacer pedido" (o
+/// "Enviar pedido por WhatsApp" si el comercio tiene WhatsApp, D92).
 Future<void> mostrarPedido(
   BuildContext context,
   WidgetRef ref, {
   required String negocioId,
   required List<Producto> productos,
+  Comercio? comercio,
 }) => showModalBottomSheet<void>(
   context: context,
   isScrollControlled: true,
   showDragHandle: true,
-  builder: (_) => _HojaPedido(negocioId: negocioId, productos: productos),
+  builder: (_) => _HojaPedido(
+    negocioId: negocioId,
+    productos: productos,
+    comercio: comercio,
+  ),
 );
 
+String textoFormaPago(AppLocalizations t, FormaPago f) => switch (f) {
+  FormaPago.efectivo => t.pagoEfectivo,
+  FormaPago.transferencia => t.pagoTransferencia,
+  FormaPago.tarjeta => t.pagoTarjeta,
+  FormaPago.mercadoPago => t.pagoMercadoPago,
+};
+
+String textoEntrega(AppLocalizations t, Entrega e) => switch (e) {
+  Entrega.retiro => t.entregaRetiro,
+  Entrega.envio => t.entregaEnvio,
+};
+
+/// El mensaje para el WhatsApp del comercio, con lo que guardó la base.
+String mensajePedidoWhatsapp(AppLocalizations t, Pedido p) => [
+  t.pedidoMensajeSaludo(p.numero),
+  for (final r in p.renglones)
+    t.pedidoMensajeRenglon(r.cantidad, r.nombre, formatoPrecio(r.subtotal)),
+  if (p.entrega == Entrega.envio)
+    t.pedidoMensajeTotales(
+      formatoPrecio(p.subtotal),
+      p.costoEnvio == 0 ? t.pedidoEnvioGratis : formatoPrecio(p.costoEnvio),
+      formatoPrecio(p.total),
+    )
+  else
+    t.pedidoMensajeTotal(formatoPrecio(p.total)),
+  if (p.formaPago case final f?) t.pedidoMensajePago(textoFormaPago(t, f)),
+  if (p.entrega case final e?) t.pedidoMensajeEntrega(textoEntrega(t, e)),
+  if (p.entrega == Entrega.envio) t.pedidoMensajeDireccion,
+  if (p.nota case final nota?) t.pedidoNotaDe(nota),
+].join('\n');
+
 class _HojaPedido extends ConsumerStatefulWidget {
-  const _HojaPedido({required this.negocioId, required this.productos});
+  const _HojaPedido({
+    required this.negocioId,
+    required this.productos,
+    this.comercio,
+  });
 
   final String negocioId;
   final List<Producto> productos;
+  final Comercio? comercio;
 
   @override
   ConsumerState<_HojaPedido> createState() => _HojaPedidoState();
@@ -261,6 +304,12 @@ class _HojaPedido extends ConsumerStatefulWidget {
 class _HojaPedidoState extends ConsumerState<_HojaPedido> {
   final _nota = TextEditingController();
   var _enviando = false;
+  FormaPago? _pago;
+  Entrega? _entrega;
+
+  /// Ya guardado, esperando que se abra WhatsApp (con un toque propio, para
+  /// que el navegador no bloquee la ventana nueva).
+  Pedido? _guardado;
 
   @override
   void dispose() {
@@ -268,28 +317,53 @@ class _HojaPedidoState extends ConsumerState<_HojaPedido> {
     super.dispose();
   }
 
-  Future<void> _pedir() async {
+  /// El número del comercio para wa.me, si tiene un WhatsApp válido.
+  String? get _whatsapp => switch (widget.comercio?.whatsapp) {
+    final w? => telefonoInternacionalUy(w),
+    null => null,
+  };
+
+  Future<void> _pedir(
+    CondicionesPedido? condiciones,
+    FormaPago? pago,
+    Entrega? entrega,
+  ) async {
     final t = context.t;
     final carrito = ref.read(carritoProvider(widget.negocioId));
     final mensajes = ScaffoldMessenger.of(context);
     final router = GoRouter.of(context);
+    final repo = ref.read(tiendaRepositorioProvider);
     setState(() => _enviando = true);
     try {
-      await ref
-          .read(tiendaRepositorioProvider)
-          .hacerPedido(
-            widget.negocioId,
-            carrito,
-            nota: _nota.text.trim().isEmpty ? null : _nota.text.trim(),
-          );
+      final id = await repo.hacerPedido(
+        widget.negocioId,
+        carrito,
+        nota: _nota.text.trim().isEmpty ? null : _nota.text.trim(),
+        pago: condiciones == null ? null : pago,
+        entrega: condiciones == null ? null : entrega,
+      );
       ref
         ..read(metricasProvider).track(
           Eventos.orderCreate,
           businessId: widget.negocioId,
-          props: {'unidades': carrito.unidades},
+          props: {
+            'unidades': carrito.unidades,
+            if (pago != null) 'pago': pago.base,
+            if (entrega != null) 'entrega': entrega.base,
+          },
         )
         ..read(carritoProvider(widget.negocioId).notifier).vaciar()
         ..invalidate(misPedidosProvider);
+      // Con WhatsApp: el mensaje se arma con lo que guardó la base.
+      if (_whatsapp != null) {
+        final pedido = (await repo.misPedidos())
+            .where((p) => p.id == id)
+            .firstOrNull;
+        if (pedido != null && mounted) {
+          setState(() => _guardado = pedido);
+          return;
+        }
+      }
       if (!mounted) return;
       Navigator.pop(context);
       mensajes.showSnackBar(SnackBar(content: Text(t.pedidoHecho)));
@@ -314,13 +388,96 @@ class _HojaPedidoState extends ConsumerState<_HojaPedido> {
     }
   }
 
+  Future<void> _terminar(Pedido pedido, {required bool conWhatsapp}) async {
+    final router = GoRouter.of(context);
+    if (conWhatsapp) {
+      ref
+          .read(metricasProvider)
+          .track(
+            Eventos.orderWhatsapp,
+            businessId: widget.negocioId,
+            props: {
+              if (pedido.formaPago case final f?) 'pago': f.base,
+              if (pedido.entrega case final e?) 'entrega': e.base,
+            },
+          );
+      await ref.read(abrirEnlaceProvider)(
+        Uri.https('wa.me', '/$_whatsapp', {
+          'text': mensajePedidoWhatsapp(context.t, pedido),
+        }),
+      );
+    }
+    if (!mounted) return;
+    Navigator.pop(context);
+    await router.push(Rutas.misPedidos);
+  }
+
+  Widget _guardadoConWhatsapp(BuildContext context, Pedido pedido) {
+    final t = context.t;
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              t.pedidoGuardadoTitulo(pedido.numero),
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            const SizedBox(height: 8),
+            Text(t.pedidoGuardadoWhatsapp),
+            const SizedBox(height: 16),
+            FilledButton.icon(
+              key: const ValueKey('abrir-whatsapp'),
+              onPressed: () => _terminar(pedido, conWhatsapp: true),
+              icon: const Icon(Icons.chat_outlined),
+              label: Text(t.pedidoAbrirWhatsapp),
+            ),
+            TextButton(
+              onPressed: () => _terminar(pedido, conWhatsapp: false),
+              child: Text(t.pedidoAhoraNo),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (_guardado case final pedido?) {
+      return _guardadoConWhatsapp(context, pedido);
+    }
     final t = context.t;
     final tema = Theme.of(context);
     final carrito = ref.watch(carritoProvider(widget.negocioId));
     final porId = {for (final p in widget.productos) p.id: p};
     final conectado = ref.watch(conectadoProvider);
+    final condicionesAsync = ref.watch(
+      condicionesPedidoProvider(widget.negocioId),
+    );
+    final condiciones = condicionesAsync.value;
+    // Si hay una sola opción, ya queda elegida.
+    final formas = condiciones?.formasPago ?? const <FormaPago>[];
+    final entregas = condiciones?.entregas ?? const <Entrega>[];
+    final pago = _pago ?? (formas.length == 1 ? formas.single : null);
+    final entrega = _entrega ?? (entregas.length == 1 ? entregas.single : null);
+    final subtotal = carrito.total(widget.productos);
+    final envio = condiciones?.costoDe(entrega, subtotal) ?? 0;
+    final falta =
+        condiciones != null &&
+        ((formas.isNotEmpty && pago == null) || entrega == null);
+    final conWhatsapp = _whatsapp != null;
+
+    Widget fila(String texto, String valor) => Row(
+      children: [
+        Text(texto, style: tema.textTheme.titleMedium),
+        const Spacer(),
+        Text(valor, style: tema.textTheme.titleMedium),
+      ],
+    );
+
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.fromLTRB(
@@ -348,18 +505,57 @@ class _HojaPedidoState extends ConsumerState<_HojaPedido> {
                     trailing: Text(formatoPrecio((p.precio ?? 0) * cantidad)),
                   ),
               const Divider(),
-              Row(
-                children: [
-                  Text(t.pedidoTotal, style: tema.textTheme.titleMedium),
-                  const Spacer(),
-                  Text(
-                    formatoPrecio(carrito.total(widget.productos)),
-                    style: tema.textTheme.titleMedium,
+              if (condiciones != null) ...[
+                if (formas.isNotEmpty) ...[
+                  Text(t.pagoTitulo, style: tema.textTheme.titleSmall),
+                  Wrap(
+                    spacing: 8,
+                    children: [
+                      for (final f in formas)
+                        ChoiceChip(
+                          key: ValueKey('pago-${f.base}'),
+                          label: Text(textoFormaPago(t, f)),
+                          selected: pago == f,
+                          onSelected: (_) => setState(() => _pago = f),
+                        ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                ],
+                Text(t.entregaTitulo, style: tema.textTheme.titleSmall),
+                Wrap(
+                  spacing: 8,
+                  children: [
+                    for (final e in entregas)
+                      ChoiceChip(
+                        key: ValueKey('entrega-${e.base}'),
+                        label: Text(textoEntrega(t, e)),
+                        selected: entrega == e,
+                        onSelected: (_) => setState(() => _entrega = e),
+                      ),
+                  ],
+                ),
+                if (condiciones.envio && !condiciones.envioGratis)
+                  if (condiciones.envioGratisDesde case final desde?)
+                    Text(
+                      t.pedidoEnvioGratisDesde(formatoPrecio(desde)),
+                      style: tema.textTheme.bodySmall,
+                    ),
+                if (entrega == Entrega.envio)
+                  Text(t.pedidoDireccionAyuda, style: tema.textTheme.bodySmall),
+                const Divider(),
+                if (entrega == Entrega.envio) ...[
+                  fila(t.pedidoSubtotal, formatoPrecio(subtotal)),
+                  fila(
+                    t.pedidoEnvio,
+                    envio == 0 ? t.pedidoEnvioGratis : formatoPrecio(envio),
                   ),
                 ],
-              ),
+              ],
+              fila(t.pedidoTotal, formatoPrecio(subtotal + envio)),
               const SizedBox(height: 8),
-              Text(t.catalogoPagoDirecto, style: tema.textTheme.bodySmall),
+              if (condiciones == null)
+                Text(t.catalogoPagoDirecto, style: tema.textTheme.bodySmall),
               const SizedBox(height: 8),
               TextField(
                 controller: _nota,
@@ -369,10 +565,32 @@ class _HojaPedidoState extends ConsumerState<_HojaPedido> {
                   hintText: t.pedidoNotaAyuda,
                 ),
               ),
+              if (falta)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Text(
+                    t.pedidoElegiPagoYEntrega,
+                    style: tema.textTheme.bodySmall,
+                  ),
+                ),
               if (conectado)
-                FilledButton(
-                  onPressed: _enviando || carrito.vacio ? null : _pedir,
-                  child: Text(t.pedidoHacer),
+                FilledButton.icon(
+                  key: const ValueKey('hacer-pedido'),
+                  onPressed:
+                      _enviando ||
+                          carrito.vacio ||
+                          falta ||
+                          condicionesAsync.isLoading
+                      ? null
+                      : () => _pedir(condiciones, pago, entrega),
+                  icon: Icon(
+                    conWhatsapp
+                        ? Icons.chat_outlined
+                        : Icons.shopping_bag_outlined,
+                  ),
+                  label: Text(
+                    conWhatsapp ? t.pedidoEnviarWhatsapp : t.pedidoHacer,
+                  ),
                 )
               else
                 FilledButton(

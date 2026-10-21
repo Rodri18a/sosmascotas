@@ -66,6 +66,8 @@ abstract final class Eventos {
   static const productSave = 'product_save';
   static const orderCreate = 'order_create';
   static const orderStatus = 'order_status';
+  static const orderWhatsapp = 'order_whatsapp';
+  static const orderSettingsSave = 'order_settings_save';
   static const serviceAsk = 'service_ask';
   static const serviceSave = 'service_save';
   static const businessPageShare = 'business_page_share';

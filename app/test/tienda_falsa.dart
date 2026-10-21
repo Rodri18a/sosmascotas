@@ -9,6 +9,7 @@ class TiendaFalsa implements TiendaRepositorio {
     List<Producto>? productos,
     List<Pedido>? pedidos,
     List<Servicio>? servicios,
+    this.condiciones,
   }) : productos = [...?productos],
        pedidos = [...?pedidos],
        servicios = [...?servicios];
@@ -17,7 +18,9 @@ class TiendaFalsa implements TiendaRepositorio {
   final List<Servicio> servicios;
   final serviciosGuardados = <Servicio>[];
   final List<Pedido> pedidos;
+  CondicionesPedido? condiciones;
   final hechos = <(String, Map<String, int>, String?)>[];
+  final pagosYEntregas = <(FormaPago?, Entrega?)>[];
   final estados = <(String, EstadoPedido)>[];
   final guardados = <Producto>[];
 
@@ -60,24 +63,42 @@ class TiendaFalsa implements TiendaRepositorio {
   String? urlFoto(String? ruta) => null;
 
   @override
+  Future<CondicionesPedido?> condicionesPedido(String negocioId) async =>
+      condiciones;
+
+  @override
+  Future<void> guardarCondicionesPedido(
+    String negocioId,
+    CondicionesPedido condiciones,
+  ) async => this.condiciones = condiciones;
+
+  @override
   Future<String> hacerPedido(
     String negocioId,
     Carrito carrito, {
     String? nota,
+    FormaPago? pago,
+    Entrega? entrega,
   }) async {
     hechos.add((negocioId, carrito.cantidades, nota));
+    pagosYEntregas.add((pago, entrega));
     final porId = {for (final p in productos) p.id: p};
+    final subtotal = carrito.total(productos);
+    final envio = condiciones?.costoDe(entrega, subtotal) ?? 0;
     pedidos.insert(
       0,
       Pedido(
         id: 'o${hechos.length}',
         numero: hechos.length,
         estado: EstadoPedido.nuevo,
-        total: carrito.total(productos),
+        total: subtotal + envio,
         creado: DateTime(2026, 10, 20, 10),
         actualizado: DateTime(2026, 10, 20, 10),
         negocio: 'Pet Shop Ejemplo',
         nota: nota,
+        formaPago: pago,
+        entrega: entrega,
+        costoEnvio: envio,
         renglones: [
           for (final e in carrito.cantidades.entries)
             RenglonPedido(
@@ -112,6 +133,9 @@ class TiendaFalsa implements TiendaRepositorio {
       renglones: p.renglones,
       cliente: p.cliente,
       negocio: p.negocio,
+      formaPago: p.formaPago,
+      entrega: p.entrega,
+      costoEnvio: p.costoEnvio,
     );
   }
 

@@ -149,7 +149,9 @@ void main() {
     await _tocar(tester, find.byKey(const ValueKey('ver-pedido')));
     expect(find.text('Tu pedido'), findsOneWidget);
     await tester.enterText(find.byType(TextField), 'Paso a las 18');
-    await _tocar(tester, find.text('Hacer pedido'));
+    await _tocar(tester, find.text('Enviar pedido por WhatsApp'));
+    expect(find.text('¡Pedido #1 guardado!'), findsOneWidget);
+    await _tocar(tester, find.text('Ahora no'));
 
     final (negocio, cantidades, nota) = tienda.hechos.single;
     expect((negocio, nota), ('ps', 'Paso a las 18'));
@@ -166,6 +168,99 @@ void main() {
     await _tocar(tester, find.text('Cancelar pedido'));
     expect(tienda.estados.single, ('o1', EstadoPedido.cancelado));
     expect(find.text('Cancelado'), findsOneWidget);
+  });
+
+  testWidgets('elige pago y envío, y manda el pedido por WhatsApp', (
+    tester,
+  ) async {
+    final tienda = TiendaFalsa(
+      productos: _productos(),
+      condiciones: const CondicionesPedido(
+        formasPago: [FormaPago.efectivo, FormaPago.transferencia],
+        envio: true,
+        costoEnvio: 150,
+        envioGratisDesde: 3000,
+      ),
+    );
+    final enlaces = <Uri>[];
+    final metricas = <Map<String, Object?>>[];
+    await _abrir(tester, tienda: tienda, enlaces: enlaces, metricas: metricas);
+    await _abrirFicha(tester);
+    await _tocar(tester, find.text('Ver catálogo (3)'));
+    final alimento = find.byKey(const ValueKey('producto-p1'));
+    await _tocar(
+      tester,
+      find.descendant(of: alimento, matching: find.text('Agregar')),
+    );
+    await _tocar(
+      tester,
+      find.descendant(of: alimento, matching: find.byTooltip('Sumar uno')),
+    );
+    await _tocar(tester, find.byKey(const ValueKey('ver-pedido')));
+
+    // Sin elegir, no se puede mandar.
+    expect(find.text('Elegí la forma de pago y la entrega.'), findsOneWidget);
+    final boton = find.byKey(const ValueKey('hacer-pedido'));
+    expect(tester.widget<ButtonStyleButton>(boton).onPressed, isNull);
+
+    await _tocar(tester, find.byKey(const ValueKey('pago-transfer')));
+    await _tocar(tester, find.byKey(const ValueKey('entrega-shipping')));
+    expect(find.text(r'Envío gratis desde $ 3.000'), findsOneWidget);
+    expect(find.text(r'$ 1.780'), findsNWidgets(2));
+    expect(find.text(r'$ 150'), findsOneWidget);
+    expect(find.text(r'$ 1.930'), findsOneWidget);
+
+    await _tocar(tester, boton);
+    expect(tienda.pagosYEntregas.single, (
+      FormaPago.transferencia,
+      Entrega.envio,
+    ));
+    await _tocar(tester, find.byKey(const ValueKey('abrir-whatsapp')));
+    expect(enlaces.single.host, 'wa.me');
+    expect(enlaces.single.path, '/59899000014');
+    expect(
+      enlaces.single.queryParameters['text'],
+      'Hola, te hago un pedido desde SOS Mascota (#1):\n'
+      '• 2 × Alimento perro adulto 3 kg — \$ 1.780\n'
+      'Subtotal: \$ 1.780 · Envío: \$ 150 · Total: \$ 1.930\n'
+      'Pago: Transferencia\n'
+      'Entrega: Envío a domicilio\n'
+      'Te paso la dirección por acá.',
+    );
+    expect(find.text('Mis pedidos'), findsOneWidget);
+    expect(
+      find.text('Pago: Transferencia · Entrega: Envío a domicilio'),
+      findsOneWidget,
+    );
+    expect(
+      metricas.map((e) => e['name']),
+      containsAll(['order_create', 'order_whatsapp']),
+    );
+  });
+
+  testWidgets('con una sola opción ya queda elegida y el envío llega gratis '
+      'desde el monto', (tester) async {
+    final tienda = TiendaFalsa(
+      productos: const [
+        Producto(id: 'p1', nombre: 'Bolsa 15 kg', precio: 3200),
+      ],
+      condiciones: const CondicionesPedido(
+        formasPago: [FormaPago.efectivo],
+        retiro: false,
+        envio: true,
+        costoEnvio: 150,
+        envioGratisDesde: 3000,
+      ),
+    );
+    await _abrir(tester, tienda: tienda);
+    await _abrirFicha(tester);
+    await _tocar(tester, find.text('Ver catálogo (1)'));
+    await _tocar(tester, find.text('Agregar'));
+    await _tocar(tester, find.byKey(const ValueKey('ver-pedido')));
+    expect(find.text('Gratis'), findsOneWidget);
+    await _tocar(tester, find.byKey(const ValueKey('hacer-pedido')));
+    expect(tienda.pagosYEntregas.single, (FormaPago.efectivo, Entrega.envio));
+    expect(tienda.pedidos.single.total, 3200);
   });
 
   testWidgets('"Consultar" sin chat abre WhatsApp del comercio con el '
@@ -245,6 +340,56 @@ void main() {
     expect(tienda.guardados.single.precio, 1250.5);
     expect(find.text('Piedras sanitarias 4 kg'), findsOneWidget);
     expect(find.text(r'$ 1.250,50'), findsOneWidget);
+  });
+
+  testWidgets('modo comercio: cómo cobra y entrega', (tester) async {
+    final tienda = TiendaFalsa();
+    final metricas = <Map<String, Object?>>[];
+    await _abrir(
+      tester,
+      tienda: tienda,
+      negocios: NegociosFalsos([_miPetshop()]),
+      metricas: metricas,
+    );
+    await _ir(tester, '/negocio');
+    await _tocar(tester, find.text('Catálogo').last);
+    expect(
+      find.text(
+        'Sin configurar: quien pide arregla el pago y la entrega con vos.',
+      ),
+      findsOneWidget,
+    );
+    await _tocar(tester, find.byKey(const ValueKey('condiciones-pedido')));
+    await _tocar(tester, find.byKey(const ValueKey('acepta-cash')));
+    await _tocar(tester, find.byKey(const ValueKey('acepta-mercadopago')));
+    await _tocar(tester, find.text('Hacés envíos'));
+    await tester.enterText(
+      find.widgetWithText(TextField, 'Costo del envío'),
+      '150',
+    );
+    await tester.enterText(
+      find.widgetWithText(TextField, 'Envío gratis desde (opcional)'),
+      '3.000',
+    );
+    await _tocar(tester, find.text('Guardar'));
+    final c = tienda.condiciones!;
+    expect(c.formasPago, [FormaPago.efectivo, FormaPago.mercadoPago]);
+    expect(
+      (c.retiro, c.envio, c.costoEnvio, c.envioGratisDesde),
+      (true, true, 150, 3000),
+    );
+    expect(
+      find.text(r'Efectivo, Mercado Pago · Retiro en el local · Envío $ 150'),
+      findsOneWidget,
+    );
+    expect(metricas.map((e) => e['name']), contains('order_settings_save'));
+
+    // Sin retiro ni envío no se guarda.
+    await _tocar(tester, find.byKey(const ValueKey('condiciones-pedido')));
+    await _tocar(tester, find.text('Retiro en el local'));
+    await _tocar(tester, find.text('Hacés envíos'));
+    await _tocar(tester, find.text('Guardar'));
+    expect(find.text('Elegí al menos retiro o envío.'), findsOneWidget);
   });
 
   testWidgets('modo comercio: el pedido avanza de a un paso', (tester) async {
