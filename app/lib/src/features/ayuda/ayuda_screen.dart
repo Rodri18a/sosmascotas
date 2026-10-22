@@ -13,7 +13,6 @@ import '../../utiles/enlaces.dart';
 import '../../widgets/boton_ajustes.dart';
 import '../../widgets/boton_avisos.dart';
 import '../../widgets/boton_mensajes.dart';
-import '../eventos/eventos.dart';
 import '../mapa/ficha_comercio.dart';
 import '../menu/menu_principal.dart';
 
@@ -52,13 +51,13 @@ class AyudaScreen extends ConsumerWidget {
           children: [
             const _Tarjeta911(),
             const SizedBox(height: 16),
-            // Eventos y denuncias de maltrato (2.7, D80).
+            // Denuncias de maltrato (2.7, D80). Los próximos eventos están en
+            // Noticias → Comunidad (D94).
             SiFuncionalidad(
               Funcionalidades.eventos,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const SeccionEventos(),
                   Card(
                     child: ListTile(
                       leading: const Icon(Icons.report_outlined),

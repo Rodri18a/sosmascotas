@@ -6,6 +6,7 @@ import '../../../l10n/l10n.dart';
 import '../../comercios/textos_comercio.dart';
 import '../../cuenta/con_cuenta.dart';
 import '../../cuenta/servicio_cuenta.dart';
+import '../../eventos/eventos_repositorio.dart';
 import '../../mascotas/catalogo.dart';
 import '../../mascotas/mascota_elegida.dart';
 import '../../mascotas/mascotas_repositorio.dart';
@@ -87,7 +88,8 @@ class _NoticiasScreenState extends ConsumerState<NoticiasScreen> {
           if (_comunidad) {
             ref
               ..invalidate(novedadesProvider)
-              ..invalidate(resumenComunidadProvider);
+              ..invalidate(resumenComunidadProvider)
+              ..invalidate(eventosCercanosProvider);
             await ref.read(novedadesProvider.future);
           } else {
             ref.invalidate(noticiasProvider);
@@ -148,9 +150,14 @@ class _NoticiasScreenState extends ConsumerState<NoticiasScreen> {
                   ],
                 ),
               ),
-            if (_comunidad)
-              _Comunidad(filtro: filtro)
-            else
+            if (_comunidad) ...[
+              // Próximos eventos de la zona, arriba de las novedades (D94).
+              const Padding(
+                padding: EdgeInsets.fromLTRB(16, 8, 16, 0),
+                child: SeccionEventos(),
+              ),
+              _Comunidad(filtro: filtro),
+            ] else
               switch (ref.watch(noticiasProvider)) {
                 AsyncData(:final value) => () {
                   final lista = [

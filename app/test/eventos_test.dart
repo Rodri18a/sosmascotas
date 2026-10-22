@@ -75,12 +75,32 @@ void main() {
     expect(find.text('Cómo llegar'), findsOneWidget);
   });
 
-  testWidgets('Ayuda: próximos eventos y denunciar maltrato', (tester) async {
+  testWidgets('Noticias → Comunidad: próximos eventos, para todos', (
+    tester,
+  ) async {
+    tester.view
+      ..physicalSize = const Size(1080, 2400)
+      ..devicePixelRatio = 3;
+    addTearDown(tester.view.reset);
+    // Visitante y sin funcionalidades graduales (D94).
+    await tester.pumpWidget(
+      appDePrueba(eventosRepo: EventosFalsos([_jornada])),
+    );
+    await _ir(tester, '/ayuda');
+    expect(find.text('Próximos eventos'), findsNothing, reason: 'D94');
+    await _ir(tester, '/noticias');
+    await _tocar(tester, find.text('Comunidad'));
+    expect(find.text('Próximos eventos'), findsOneWidget);
+    await _tocar(tester, find.text('Jornada de castración'));
+    expect(find.text('Organiza: Veterinaria Centro'), findsOneWidget);
+  });
+
+  testWidgets('Ayuda: denunciar maltrato', (tester) async {
     final eventos = EventosFalsos([_jornada]);
     final metricas = <Map<String, Object?>>[];
     await _abrir(tester, eventos: eventos, metricas: metricas);
     await _ir(tester, '/ayuda');
-    expect(find.text('Jornada de castración'), findsOneWidget);
+    expect(find.text('Jornada de castración'), findsNothing);
 
     await _tocar(tester, find.text('Denunciar maltrato'));
     expect(
