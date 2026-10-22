@@ -4,7 +4,7 @@
 const ESTADOS = {
   not_found: ['Este código no existe', 'Revisá que la dirección esté completa.'],
   inactive: ['Este código ya no está activo', 'La familia de esta mascota lo cambió por uno nuevo.'],
-  unactivated: ['Chapita sin activar', 'Activá esta chapita desde la app SOS Mascota para vincularla a tu mascota.'],
+  inactive_physical: ['Esta chapita ya no está activa', 'Su familia la dio de baja. Si encontraste una mascota con ella, llevala a una veterinaria para que le lean el microchip.'],
   error: ['No pudimos cargar la información', 'Revisá tu conexión y volvé a intentar.'],
 };
 
@@ -13,6 +13,18 @@ function mostrarEstado(clave) {
   document.getElementById('estado-titulo').textContent = titulo;
   document.getElementById('estado-texto').textContent = texto;
   document.getElementById('estado').hidden = false;
+}
+
+// Chapita física sin vincular (1.8b.3, D95): invita a su dueño a activarla.
+function mostrarSinActivar(codigo) {
+  document.title = 'Chapita sin activar · SOS Mascota';
+  document.getElementById('codigo-chapita').textContent = codigo;
+  if (CONF.appUrl) {
+    const boton = document.getElementById('activar-chapita');
+    boton.href = `${CONF.appUrl.replace(/\/+$/, '')}/activar/${encodeURIComponent(codigo)}`;
+    boton.hidden = false;
+  }
+  document.getElementById('sin-activar').hidden = false;
 }
 
 function mostrarMascota(datos) {
@@ -56,8 +68,10 @@ async function iniciar() {
     if (datos.status === 'active') {
       mostrarMascota(datos);
       window.dispatchEvent(new CustomEvent('sos:mascota', { detail: { codigo, datos } }));
+    } else if (datos.status === 'unactivated') {
+      mostrarSinActivar(datos.code || codigo);
     } else {
-      mostrarEstado(datos.status);
+      mostrarEstado(datos.status === 'inactive' && datos.kind === 'physical' ? 'inactive_physical' : datos.status);
     }
   } catch (e) {
     console.error(e);

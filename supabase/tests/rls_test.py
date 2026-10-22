@@ -1725,6 +1725,9 @@ def main():
             pag_c1 = rest('POST', 'rpc/public_pet_page', {'p_code': c1})[1]
             caso('la página pública ya muestra la mascota',
                  pag_c1.get('status') == 'active' and pag_c1['pet']['name'] == 'Chapita RLS')
+            rest('PATCH', f'qr_tags?pet_id=eq.{chapa_pet}&kind=eq.digital', {'public_note': 'Toma medicación'}, a)
+            caso('la chapita muestra la nota que el dueño escribió en el QR digital',
+                 rest('POST', 'rpc/public_pet_page', {'p_code': c1})[1]['pet'].get('public_note') == 'Toma medicación')
             caso('A la ve entre sus chapitas',
                  any(t['id'] == tag_c1 for t in filas(rest('GET', f'qr_tags?select=id&pet_id=eq.{chapa_pet}&kind=eq.physical', quien=a))))
             caso('B no la ve', filas(rest('GET', f'qr_tags?select=id&id=eq.{tag_c1}', quien=b)) == [])
