@@ -31,6 +31,7 @@ Future<void> mostrarEvento(BuildContext context, WidgetRef ref, Evento e) {
   ref.read(metricasProvider).track(Eventos.eventOpen, targetId: e.id);
   return showModalBottomSheet<void>(
     context: context,
+    useRootNavigator: true,
     showDragHandle: true,
     isScrollControlled: true,
     builder: (context) {

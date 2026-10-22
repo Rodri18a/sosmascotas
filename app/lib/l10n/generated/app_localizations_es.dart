@@ -24,6 +24,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get pestanaAyuda => 'Ayuda';
 
   @override
+  String get barraMascotas => 'Mascotas';
+
+  @override
   String get mapaDescripcion =>
       'Veterinarias de urgencia y mascotas perdidas cerca tuyo';
 

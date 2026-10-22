@@ -154,6 +154,7 @@ Future<void> mostrarSinReclamar(
   LugarSinReclamar lugar,
 ) => showModalBottomSheet<void>(
   context: context,
+  useRootNavigator: true,
   showDragHandle: true,
   builder: (context) {
     final t = context.t;

@@ -20,11 +20,19 @@ abstract final class AppTheme {
       fontFamily: paleta.fuenteTexto,
       scaffoldBackgroundColor: colores.surface,
       extensions: [ColoresMarca.de(c)],
+      // La barra de arriba, del mismo color que la de abajo (D94).
       appBarTheme: AppBarTheme(
         centerTitle: false,
-        backgroundColor: colores.surface,
-        foregroundColor: colores.onSurface,
+        backgroundColor: colores.primary,
+        foregroundColor: colores.onPrimary,
         scrolledUnderElevation: 1,
+      ),
+      // La única TabBar va dentro de una barra de arriba (Adopción).
+      tabBarTheme: TabBarThemeData(
+        labelColor: colores.onPrimary,
+        unselectedLabelColor: colores.onPrimary.withValues(alpha: 0.8),
+        indicatorColor: colores.onPrimary,
+        dividerColor: Colors.transparent,
       ),
       cardTheme: const CardThemeData(
         margin: EdgeInsets.zero,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
+import 'package:sosmascota/src/features/shell/app_shell.dart';
 import 'package:sosmascota/src/redireccion.dart';
 
 import 'cuenta_falsa.dart';
@@ -10,7 +11,7 @@ import 'perfil_falso.dart';
 Future<void> _tocarPestana(WidgetTester tester, String nombre) async {
   await tester.tap(
     find.descendant(
-      of: find.byType(NavigationBar),
+      of: find.byType(BarraInferior),
       matching: find.text(nombre),
     ),
   );

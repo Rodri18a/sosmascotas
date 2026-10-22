@@ -69,7 +69,11 @@ void main() {
     await _abrir(tester, visitante: true);
     expect(find.text('Ingresá o creá tu cuenta'), findsOneWidget);
     expect(find.text('Ver todo para'), findsNothing);
-    expect(find.text('Noticias'), findsOneWidget);
+    expect(
+      find.descendant(of: find.byType(Drawer), matching: find.text('Noticias')),
+      findsNothing,
+      reason: 'es una pestaña (D94)',
+    );
     expect(find.text('Adoptar o dar en adopción'), findsOneWidget);
     expect(find.text('Avisos'), findsNothing, reason: 'necesita cuenta');
     expect(find.text('Ajustes'), findsWidgets);
@@ -94,7 +98,9 @@ void main() {
       containsAll(['menu_open', 'pet_select']),
     );
 
-    // Noticias se abre filtrada por gatos.
+    // Noticias (en la barra) se abre filtrada por gatos.
+    await tester.tapAt(const Offset(10, 300)); // cierra el menú
+    await tester.pumpAndSettle();
     await _tocar(tester, find.text('Noticias'));
     expect(find.text('Gatos y el calor'), findsOneWidget);
     expect(find.text('Paseos con calor'), findsNothing);

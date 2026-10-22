@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:image/image.dart' as img;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
+import 'package:sosmascota/src/features/shell/app_shell.dart';
 import 'package:sosmascota/src/sos/sos_repositorio.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
@@ -42,7 +43,7 @@ Future<void> _ver(WidgetTester tester, Finder objetivo) async {
 Future<void> _abrirFormulario(WidgetTester tester) async {
   await tester.pumpAndSettle();
   await tester.tap(
-    find.descendant(of: find.byType(NavigationBar), matching: find.text('SOS')),
+    find.descendant(of: find.byType(BarraInferior), matching: find.text('SOS')),
   );
   await tester.pumpAndSettle();
   await tester.tap(find.widgetWithText(FloatingActionButton, 'Reportar'));
@@ -182,8 +183,8 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(
       find.descendant(
-        of: find.byType(NavigationBar),
-        matching: find.text('Mis mascotas'),
+        of: find.byType(BarraInferior),
+        matching: find.text('Mascotas'),
       ),
     );
     await tester.pumpAndSettle();

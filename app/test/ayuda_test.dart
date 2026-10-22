@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:sosmascota/src/features/shell/app_shell.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'ayuda_falsa.dart';
@@ -48,7 +49,7 @@ Future<void> _irAAyuda(WidgetTester tester) async {
   await tester.pumpAndSettle();
   await tester.tap(
     find.descendant(
-      of: find.byType(NavigationBar),
+      of: find.byType(BarraInferior),
       matching: find.text('Ayuda'),
     ),
   );

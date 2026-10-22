@@ -84,7 +84,6 @@ abstract final class Rutas {
     '$negocio/servicios/': Funcionalidades.catalogo,
     negocio: Funcionalidades.comercios,
     adopcion: Funcionalidades.adopcion,
-    noticias: Funcionalidades.noticias,
     denuncia: Funcionalidades.eventos,
     nuevoEvento: Funcionalidades.eventos,
     marcarLugar: Funcionalidades.comercios,
@@ -199,8 +198,11 @@ final routerProvider = Provider<GoRouter>((ref) {
       StatefulShellRoute.indexedStack(
         builder: (context, state, shell) => AppShell(navigationShell: shell),
         branches: [
+          // El orden es el de `Pestana` en la barra inferior (D94).
           StatefulShellBranch(
-            routes: [_pestana(Rutas.mapa, (_, _) => const MapaScreen())],
+            routes: [
+              _pestana(Rutas.noticias, (_, _) => const NoticiasScreen()),
+            ],
           ),
           StatefulShellBranch(
             routes: [
@@ -222,6 +224,9 @@ final routerProvider = Provider<GoRouter>((ref) {
                 ],
               ),
             ],
+          ),
+          StatefulShellBranch(
+            routes: [_pestana(Rutas.mapa, (_, _) => const MapaScreen())],
           ),
           StatefulShellBranch(
             routes: [
@@ -371,7 +376,6 @@ final routerProvider = Provider<GoRouter>((ref) {
         ],
       ),
       GoRoute(path: Rutas.denuncia, builder: (_, _) => const DenunciaScreen()),
-      GoRoute(path: Rutas.noticias, builder: (_, _) => const NoticiasScreen()),
       GoRoute(
         path: '${Rutas._tienda}/:id',
         builder: (_, state) => CatalogoScreen(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
+import 'package:sosmascota/src/features/shell/app_shell.dart';
 import 'package:sosmascota/src/qr/cartel_qr.dart';
 import 'package:sosmascota/src/qr/qr_repositorio.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
@@ -25,8 +26,8 @@ Future<void> _abrirQrDeLuna(WidgetTester tester) async {
   await tester.pumpAndSettle();
   await tester.tap(
     find.descendant(
-      of: find.byType(NavigationBar),
-      matching: find.text('Mis mascotas'),
+      of: find.byType(BarraInferior),
+      matching: find.text('Mascotas'),
     ),
   );
   await tester.pumpAndSettle();

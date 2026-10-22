@@ -165,6 +165,7 @@ class TarjetaTareas extends ConsumerWidget {
     final cuidadores = cuidadoresDe(mascota, integrantes, yo, miNombre);
     final tarea = await showModalBottomSheet<Tarea>(
       context: context,
+      useRootNavigator: true,
       isScrollControlled: true,
       showDragHandle: true,
       builder: (_) => _FormularioTarea(

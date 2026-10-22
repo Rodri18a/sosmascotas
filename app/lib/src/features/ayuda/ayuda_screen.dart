@@ -72,8 +72,8 @@ class AyudaScreen extends ConsumerWidget {
                 ],
               ),
             ),
-            // Noticias y Adopción se abren desde el menú ☰ (D88): Ayuda
-            // queda para urgencias.
+            // Noticias es pestaña (D94) y Adopción se abre desde el menú ☰
+            // (D88): Ayuda queda para urgencias.
             _Titulo(t.ayudaUrgencias),
             switch (urgencias) {
               AsyncData(value: final lista) when lista.isEmpty => Text(

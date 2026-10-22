@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
+import 'package:sosmascota/src/features/shell/app_shell.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'cuenta_falsa.dart';
-import 'funcionalidades_falsas.dart';
 import 'helpers.dart';
 import 'noticias_falsas.dart';
 import 'sos_falso.dart';
@@ -42,7 +42,7 @@ void _pantallaDeCelular(WidgetTester tester) {
 Future<void> _abrirDetalle(WidgetTester tester) async {
   await tester.pumpAndSettle();
   await tester.tap(
-    find.descendant(of: find.byType(NavigationBar), matching: find.text('SOS')),
+    find.descendant(of: find.byType(BarraInferior), matching: find.text('SOS')),
   );
   await tester.pumpAndSettle();
   await tester.tap(find.text('Se perdió: Firulais'));
@@ -235,6 +235,10 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(sos.cerrados, {'s1': true});
+    // Se ofrece compartir en Comunidad, sin la funcionalidad gradual (D94).
+    expect(find.text('¿Compartís la buena noticia?'), findsOneWidget);
+    await tester.tap(find.text('Ahora no'));
+    await tester.pumpAndSettle();
     await tester.scrollUntilVisible(
       find.textContaining('ya está resuelto'),
       -150,
@@ -242,11 +246,6 @@ void main() {
     );
     expect(find.textContaining('ya está resuelto'), findsOneWidget);
     expect(find.widgetWithText(FilledButton, '¡Apareció!'), findsNothing);
-    expect(
-      find.text('¿Compartís la buena noticia?'),
-      findsNothing,
-      reason: 'sin Noticias no se ofrece compartir',
-    );
   });
 
   testWidgets('al resolver, comparte el reencuentro solo si el dueño quiere', (
@@ -265,7 +264,6 @@ void main() {
         sos: sos,
         noticias: noticias,
         eventos: metricas,
-        funcionalidades: FuncionalidadesFalsas({Funcionalidades.noticias}),
       ),
     );
     await _abrirDetalle(tester);
@@ -416,7 +414,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(
       find.descendant(
-        of: find.byType(NavigationBar),
+        of: find.byType(BarraInferior),
         matching: find.text('SOS'),
       ),
     );

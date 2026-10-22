@@ -33,6 +33,7 @@ Future<bool> hayCuenta(
   final router = GoRouter.of(context);
   final ingresar = await showModalBottomSheet<bool>(
     context: context,
+    useRootNavigator: true,
     showDragHandle: true,
     // Toma la altura que necesite (pantallas bajas o letra grande).
     isScrollControlled: true,

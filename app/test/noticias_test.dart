@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:go_router/go_router.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
 import 'package:sosmascota/src/features/sos/sos_detalle_screen.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
@@ -48,7 +47,6 @@ Future<void> _tocar(WidgetTester tester, Finder objetivo) async {
 
 Future<void> _abrir(
   WidgetTester tester, {
-  bool conFuncionalidad = true,
   List<Mascota> mascotas = const [],
   List<Uri>? enlaces,
   List<Map<String, Object?>>? metricas,
@@ -74,23 +72,17 @@ Future<void> _abrir(
           ),
       enlacesAbiertos: enlaces,
       eventos: metricas,
-      funcionalidades: FuncionalidadesFalsas({
-        if (conFuncionalidad) Funcionalidades.noticias,
-      }),
+      // Sin ninguna funcionalidad gradual: Noticias es para todos (D94).
+      funcionalidades: FuncionalidadesFalsas(),
     ),
   );
   await tester.pumpAndSettle();
-  await abrirMenu(tester);
 }
 
 void main() {
-  testWidgets('sin la funcionalidad no hay entrada en el menú', (tester) async {
-    await _abrir(tester, conFuncionalidad: false);
-    expect(find.text('Noticias'), findsNothing);
-  });
-
-  testWidgets('desde Ayuda: todas, con la patrocinada marcada', (tester) async {
-    await _abrir(tester);
+  testWidgets('desde la barra, también un visitante: todas, con la '
+      'patrocinada marcada', (tester) async {
+    await _abrir(tester, visitante: true);
     await _tocar(tester, find.text('Noticias'));
     expect(find.text('Gatos y el calor'), findsOneWidget);
     expect(find.text('Campaña de vacunación'), findsOneWidget);
@@ -129,13 +121,6 @@ void main() {
       metricas.map((e) => e['name']),
       containsAll(['news_open', 'news_link']),
     );
-  });
-
-  testWidgets('la ruta está detrás de la funcionalidad', (tester) async {
-    await _abrir(tester, conFuncionalidad: false);
-    GoRouter.of(tester.element(find.byType(Scaffold).first)).go('/noticias');
-    await tester.pumpAndSettle();
-    expect(find.text('Gatos y el calor'), findsNothing);
   });
 
   testWidgets('Comunidad: resumen y novedades, filtradas por especie', (

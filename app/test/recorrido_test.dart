@@ -8,6 +8,7 @@ import 'package:image/image.dart' as img;
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
+import 'package:sosmascota/src/features/shell/app_shell.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'avisos_falsos.dart';
@@ -45,7 +46,7 @@ Future<void> _tocar(WidgetTester tester, Finder objetivo) async {
 
 Future<void> _pestana(WidgetTester tester, String nombre) => _tocar(
   tester,
-  find.descendant(of: find.byType(NavigationBar), matching: find.text(nombre)),
+  find.descendant(of: find.byType(BarraInferior), matching: find.text(nombre)),
 );
 
 /// Lo que la app copia al portapapeles.
@@ -97,7 +98,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // 1. Visitante: quiere cargar su mascota y se le pide una cuenta.
-    await _pestana(tester, 'Mis mascotas');
+    await _pestana(tester, 'Mascotas');
     await _tocar(tester, find.text('Agregar mascota'));
     await _tocar(
       tester,

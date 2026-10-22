@@ -191,6 +191,7 @@ class _MapaScreenState extends ConsumerState<MapaScreen> {
   Future<void> _abrirFiltros() async {
     final nuevos = await showModalBottomSheet<FiltrosMapa>(
       context: context,
+      useRootNavigator: true,
       isScrollControlled: true,
       showDragHandle: true,
       builder: (_) => _HojaFiltros(filtros: _filtros),
@@ -388,6 +389,7 @@ class _BarraFiltros extends StatelessWidget {
                 }
                 final delGrupo = await showModalBottomSheet<Set<Categoria>>(
                   context: context,
+                  useRootNavigator: true,
                   showDragHandle: true,
                   builder: (_) => _HojaGrupo(
                     grupo: g,

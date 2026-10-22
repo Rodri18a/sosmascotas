@@ -69,6 +69,7 @@ class _Detalle extends ConsumerWidget {
     }
     final enviado = await showModalBottomSheet<bool>(
       context: context,
+      useRootNavigator: true,
       isScrollControlled: true,
       showDragHandle: true,
       builder: (_) => _FormularioAviso(sosId: detalle.id),
@@ -92,6 +93,7 @@ class _Detalle extends ConsumerWidget {
     }
     final nuevo = await showModalBottomSheet<bool>(
       context: context,
+      useRootNavigator: true,
       isScrollControlled: true,
       showDragHandle: true,
       builder: (_) => _FormularioReporte(sosId: detalle.id),
@@ -147,9 +149,7 @@ class _Detalle extends ConsumerWidget {
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(SnackBar(content: Text(t.sosAparecioGracias)));
-        if (ref.read(funcionalidadActivaProvider(Funcionalidades.noticias))) {
-          await ofrecerCompartirReencuentro(context, ref, detalle.id);
-        }
+        await ofrecerCompartirReencuentro(context, ref, detalle.id);
       }
     } on Exception {
       if (context.mounted) {
@@ -329,11 +329,7 @@ class _Detalle extends ConsumerWidget {
                 ),
                 const SizedBox(height: 8),
               ],
-              if (detalle.esMio &&
-                  detalle.estado == EstadoSos.resuelto &&
-                  ref.watch(
-                    funcionalidadActivaProvider(Funcionalidades.noticias),
-                  ))
+              if (detalle.esMio && detalle.estado == EstadoSos.resuelto)
                 _InterruptorReencuentro(sosId: detalle.id),
               if (activo && !detalle.esMio) ...[
                 // Chat interno (1.4.3, D73), con la funcionalidad `chat`.

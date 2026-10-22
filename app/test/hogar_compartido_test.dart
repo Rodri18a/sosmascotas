@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
+import 'package:sosmascota/src/features/shell/app_shell.dart';
 import 'package:sosmascota/src/hogar/hogar_repositorio.dart';
 import 'package:sosmascota/src/redireccion.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
@@ -288,8 +289,8 @@ void main() {
       await _tocar(
         tester,
         find.descendant(
-          of: find.byType(NavigationBar),
-          matching: find.text('Mis mascotas'),
+          of: find.byType(BarraInferior),
+          matching: find.text('Mascotas'),
         ),
       );
       expect(find.textContaining('Compartida por Ana'), findsOneWidget);
@@ -322,8 +323,8 @@ void main() {
       await _tocar(
         tester,
         find.descendant(
-          of: find.byType(NavigationBar),
-          matching: find.text('Mis mascotas'),
+          of: find.byType(BarraInferior),
+          matching: find.text('Mascotas'),
         ),
       );
       await _tocar(tester, find.widgetWithText(ListTile, 'Luna'));

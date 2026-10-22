@@ -273,6 +273,7 @@ Future<void> mostrarPedido(
   Comercio? comercio,
 }) => showModalBottomSheet<void>(
   context: context,
+  useRootNavigator: true,
   isScrollControlled: true,
   showDragHandle: true,
   builder: (_) => _HojaPedido(

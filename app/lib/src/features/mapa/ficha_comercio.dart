@@ -27,6 +27,7 @@ Future<void> mostrarFichaComercio(
   ref.read(metricasProvider).track(Eventos.placeOpen, businessId: comercio.id);
   return showModalBottomSheet<void>(
     context: context,
+    useRootNavigator: true,
     isScrollControlled: true,
     showDragHandle: true,
     builder: (_) => FichaComercio(comercio: comercio),

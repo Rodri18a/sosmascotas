@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
+import 'package:sosmascota/src/features/shell/app_shell.dart';
 import 'package:sosmascota/src/recordatorios/avisador.dart';
 import 'package:sosmascota/src/redireccion.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
@@ -62,8 +63,8 @@ Future<void> _abrirFicha(WidgetTester tester, Widget app) async {
   await _tocar(
     tester,
     find.descendant(
-      of: find.byType(NavigationBar),
-      matching: find.text('Mis mascotas'),
+      of: find.byType(BarraInferior),
+      matching: find.text('Mascotas'),
     ),
   );
   await _tocar(tester, find.widgetWithText(ListTile, 'Luna'));

@@ -8,6 +8,10 @@
   "pestanaSos": "SOS",
   "pestanaMascotas": "Mis mascotas",
   "pestanaAyuda": "Ayuda",
+  "barraMascotas": "Mascotas",
+  "@barraMascotas": {
+    "description": "Nombre corto de la pestaña Mis mascotas en la barra inferior (D94)."
+  },
   "@pestanaMapa": {
     "description": "Barra inferior y título de la pantalla."
   },

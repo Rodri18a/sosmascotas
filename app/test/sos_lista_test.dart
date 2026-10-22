@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:sosmascota/src/features/shell/app_shell.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'helpers.dart';
@@ -28,7 +29,7 @@ final _encontrada = SosResumen(
 Future<void> _irASos(WidgetTester tester) async {
   await tester.pumpAndSettle();
   await tester.tap(
-    find.descendant(of: find.byType(NavigationBar), matching: find.text('SOS')),
+    find.descendant(of: find.byType(BarraInferior), matching: find.text('SOS')),
   );
   await tester.pumpAndSettle();
 }

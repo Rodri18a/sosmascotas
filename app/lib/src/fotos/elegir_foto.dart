@@ -13,6 +13,7 @@ Future<Uint8List?> elegirFoto(BuildContext context, WidgetRef ref) async {
   final t = context.t;
   final origen = await showModalBottomSheet<OrigenFoto>(
     context: context,
+    useRootNavigator: true,
     showDragHandle: true,
     builder: (context) => SafeArea(
       child: Column(

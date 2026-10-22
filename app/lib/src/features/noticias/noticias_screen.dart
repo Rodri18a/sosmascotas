@@ -13,14 +13,19 @@ import '../../metricas/metricas.dart';
 import '../../noticias/noticias_repositorio.dart';
 import '../../router.dart';
 import '../../utiles/enlaces.dart';
+import '../../widgets/boton_ajustes.dart';
+import '../../widgets/boton_avisos.dart';
+import '../../widgets/boton_mensajes.dart';
 import '../eventos/eventos.dart';
+import '../menu/menu_principal.dart';
 import '../sos/sos_detalle_screen.dart';
 
 /// Noticias (2.8, D83): filtradas por las especies de mis mascotas, con las
 /// patrocinadas siempre marcadas "Promocionado · «marca»". La sección
 /// Comunidad (D86) muestra lo que pasa en la app: reencuentros, adopciones,
 /// lugares verificados, eventos y las perdidas que se siguen buscando. A las
-/// noticias y novedades se puede reaccionar (D87).
+/// noticias y novedades se puede reaccionar (D87). Es la primera pestaña y
+/// la ve cualquiera; reaccionar pide ingresar (D94).
 class NoticiasScreen extends ConsumerStatefulWidget {
   const NoticiasScreen({super.key});
 
@@ -71,7 +76,11 @@ class _NoticiasScreenState extends ConsumerState<NoticiasScreen> {
     final filtro = especie == null ? const <int>{} : {especie};
 
     return Scaffold(
-      appBar: AppBar(title: Text(t.noticiasTitulo)),
+      drawer: const MenuPrincipal(),
+      appBar: AppBar(
+        title: Text(t.noticiasTitulo),
+        actions: const [BotonMensajes(), BotonAvisos(), BotonAjustes()],
+      ),
       body: RefreshIndicator(
         onRefresh: () async {
           ref.invalidate(reaccionesProvider);
@@ -250,6 +259,7 @@ Future<void> abrirNoticia(BuildContext context, WidgetRef ref, Noticia n) {
       .track(Eventos.newsOpen, props: {'patrocinada': n.patrocinada});
   return showModalBottomSheet<void>(
     context: context,
+    useRootNavigator: true,
     isScrollControlled: true,
     showDragHandle: true,
     builder: (context) {
@@ -552,6 +562,7 @@ Future<void> abrirNovedad(BuildContext context, WidgetRef ref, Novedad n) {
   final url = ref.read(noticiasRepositorioProvider).urlFoto(n.fotoPath);
   return showModalBottomSheet<void>(
     context: context,
+    useRootNavigator: true,
     isScrollControlled: true,
     showDragHandle: true,
     builder: (context) {

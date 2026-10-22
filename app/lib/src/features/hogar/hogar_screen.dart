@@ -121,6 +121,7 @@ class _Contenido extends ConsumerWidget {
     if (!context.mounted) return;
     final eleccion = await showModalBottomSheet<(int, List<String>)>(
       context: context,
+      useRootNavigator: true,
       isScrollControlled: true,
       showDragHandle: true,
       builder: (_) => _FormularioCuidador(mascotas: propias),

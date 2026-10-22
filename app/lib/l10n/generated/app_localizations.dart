@@ -124,6 +124,12 @@ abstract class AppLocalizations {
   /// **'Ayuda'**
   String get pestanaAyuda;
 
+  /// Nombre corto de la pestaña Mis mascotas en la barra inferior (D94).
+  ///
+  /// In es, this message translates to:
+  /// **'Mascotas'**
+  String get barraMascotas;
+
   /// No description provided for @mapaDescripcion.
   ///
   /// In es, this message translates to:

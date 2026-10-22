@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sosmascota/src/comercios/mis_lugares.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'comercios_falsos.dart';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
+import 'package:sosmascota/src/features/shell/app_shell.dart';
 import 'package:sosmascota/src/redireccion.dart';
 
 import 'cuenta_falsa.dart';
@@ -9,7 +10,7 @@ import 'helpers.dart';
 Future<void> _tocarPestana(WidgetTester tester, String nombre) async {
   await tester.tap(
     find.descendant(
-      of: find.byType(NavigationBar),
+      of: find.byType(BarraInferior),
       matching: find.text(nombre),
     ),
   );
@@ -46,7 +47,7 @@ void main() {
   testWidgets('"Ahora no" deja al visitante donde estaba', (tester) async {
     await tester.pumpWidget(appDePrueba());
     await tester.pumpAndSettle();
-    await _tocarPestana(tester, 'Mis mascotas');
+    await _tocarPestana(tester, 'Mascotas');
 
     await tester.tap(find.text('Agregar mascota'));
     await tester.pumpAndSettle();
@@ -66,7 +67,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await _tocarPestana(tester, 'Mis mascotas');
+    await _tocarPestana(tester, 'Mascotas');
 
     await tester.tap(find.text('Agregar mascota'));
     await tester.pumpAndSettle();

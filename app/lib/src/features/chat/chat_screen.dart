@@ -219,6 +219,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     final t = context.t;
     final motivo = await showModalBottomSheet<String>(
       context: context,
+      useRootNavigator: true,
       showDragHandle: true,
       builder: (context) => SafeArea(
         child: Column(

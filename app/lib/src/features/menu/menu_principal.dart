@@ -83,12 +83,6 @@ class _MenuPrincipalState extends ConsumerState<MenuPrincipal> {
               ],
             ],
             const Divider(),
-            if (activa(Funcionalidades.noticias))
-              opcion(
-                Icons.newspaper_outlined,
-                t.noticiasTitulo,
-                Rutas.noticias,
-              ),
             if (activa(Funcionalidades.adopcion))
               opcion(
                 Icons.volunteer_activism_outlined,

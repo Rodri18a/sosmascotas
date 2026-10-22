@@ -6,10 +6,10 @@ Cada función indica la **fase** en la que se construye (ver `11-roadmap.md`) y 
 
 Barra inferior: **Explorar** (mapa) · **Noticias** · **SOS** (en rojo) · **Mascotas** · **Ajustes**. Arriba, una fila con las mascotas del usuario, la opción "Todas" y "＋".
 
-**Hecho hasta ahora (D88):** la barra inferior es Mapa · SOS · Mascotas · Ayuda, y cada pestaña tiene un **menú ☰** con:
+**Hecho hasta ahora (D88, D94):** la barra inferior es **Noticias · SOS · (Mapa) · Mascotas · Ayuda**. El Mapa va en el medio, como un botón redondo que sobresale de la barra (que se curva para dejarle lugar), y es donde abre la app. La barra reserva el lugar del botón, así que nunca tapa el contenido, y las hojas que se abren desde abajo quedan por encima de la barra. Cada pestaña tiene un **menú ☰** con:
 - **Mis datos** (nombre, correo; abre Mi perfil o Ajustes) o "Ingresá o creá tu cuenta" para un visitante.
 - **Ver todo para:** "Todas" o una de mis mascotas. La elegida filtra Noticias, Comunidad y Adopción por su especie (los chips de cada pantalla la pueden cambiar) y suma accesos a su ficha, su chapita QR y "Reportar que se perdió". Se recuerda en el dispositivo, por cuenta.
-- **Secciones:** Noticias, Adopción, Mensajes, Avisos, Mi hogar, Mis pedidos, Mi negocio y Ajustes, cada una según su funcionalidad gradual y si hace falta cuenta.
+- **Secciones:** Adopción, Mensajes, Avisos, Mi hogar, Mis pedidos, Mi negocio y Ajustes, cada una según su funcionalidad gradual y si hace falta cuenta.
 Ayuda queda para urgencias (911, guardias, refugios, eventos y denuncias).
 
 Pantalla inicial: logo sobre el azul petróleo de la marca (`#0F5E7A`, D62) durante 1,5 segundos. Hasta tener el logo (0.0.9b) se usa 🐾 y el nombre en Sora.
@@ -116,13 +116,13 @@ Pantalla inicial: logo sobre el azul petróleo de la marca (`#0F5E7A`, D62) dura
 - De 1 a 5 estrellas y comentario, **solo si hubo contacto real** (chat, reserva, pedido o "fui" verificado).
 - La empresa responde una vez y en público. No puede borrar reseñas, pero sí reportarlas.
 
-## 10. Noticias — Fase 2
+## 10. Noticias — desde el lanzamiento (patrocinadas: Fase 2)
 
 - Grilla de tarjetas filtrada por la especie de la mascota activa.
 - Mezcla novedades de la comunidad, eventos y **promociones de marcas** con la etiqueta "Promocionado".
 - **Comunidad (D86):** sección que se arma sola con lo que pasa en la app: reencuentros (solo si el dueño lo comparte al tocar "¡Apareció!"; lo puede quitar después), adopciones concretadas, lugares verificados y eventos, más un resumen de los últimos 30 días con totales. Nunca ubicaciones ni datos de personas; la administración puede ocultar cualquiera.
 - **Reacciones y perdidas activas (D87):** a las noticias y a las novedades se reacciona con ❤️ Me alegra, 🎉 ¡Qué bueno! o 🙏 Gracias (una por persona, se cambia o se quita; sin comentarios; se muestran solo los totales; un visitante tiene que ingresar). Al tocar una novedad se abre su detalle con la foto y las reacciones; el autor de un reencuentro compartido ve cuántos reaccionaron. Las mascotas perdidas que se siguen buscando (últimos 30 días) aparecen en Comunidad sin ubicación y abren su reporte, donde se puede avisar o **Seguirlo** (D74). Pendiente: "Avisame" para eventos y aviso push al dueño cuando reaccionan (necesitan tareas programadas).
-- Mientras está detrás de la funcionalidad gradual `noticias` (D83), se entra desde la pestaña **Ayuda**; pasa a ser pestaña cuando llegue a todos. Las carga la administración desde el portal.
+- **Es la primera pestaña y la ve cualquiera, también un visitante (D94);** reaccionar pide ingresar. Ya no depende de la funcionalidad gradual `noticias`, y compartir un reencuentro en Comunidad se ofrece a todos. Las carga la administración desde el portal. Las **patrocinadas** siguen siendo de la Fase 2 (hacen falta marcas).
 
 ## 11. Adopción responsable — Fase 1 (directorio) / Fase 2 (proceso) / Fase 3 (packs y tránsito)
 

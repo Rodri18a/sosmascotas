@@ -20,6 +20,7 @@ class TileTema extends ConsumerWidget {
       trailing: const Icon(Icons.chevron_right),
       onTap: () => showModalBottomSheet<void>(
         context: context,
+        useRootNavigator: true,
         showDragHandle: true,
         isScrollControlled: true,
         builder: (_) => const _SelectorTema(),
