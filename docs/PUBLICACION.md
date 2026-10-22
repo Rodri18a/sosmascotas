@@ -74,7 +74,7 @@ Revisado el 22/10/2026: las 51 migraciones sirven tal cual para producción. No 
 
 Pasos, en orden:
 
-1. **El dueño** crea el proyecto de Supabase de producción (región São Paulo, como dev) y guarda la contraseña de la base. Credenciales en un archivo aparte, por ejemplo `~/.config/sosmascotas/supabase-prod.env`, **nunca** en el repo.
+1. **El dueño** crea el proyecto de Supabase de producción (en la misma región que dev) y guarda la contraseña de la base. Credenciales en un archivo aparte, por ejemplo `~/.config/sosmascotas/supabase-prod.env`, **nunca** en el repo.
 2. `supabase link --project-ref <ref de prod>` y `supabase db push --linked --dry-run`, revisar, y después sin `--dry-run`. Ojo: `link` cambia `supabase/.temp/project-ref`, que usan también los scripts de Python. **Volver a linkear dev al terminar.**
 3. Edge Functions: `supabase functions deploy <nombre> --use-api` para `delete-account`, `owner-alert`, `qr-scan-alert`, `sos-follow-alert` y `sos-zone-alert`.
 4. Secretos de las funciones: `FIREBASE_SERVICE_ACCOUNT` (del proyecto Firebase de **producción**; en Windows, con `--env-file`) y `TURNSTILE_SECRET` (clave de Turnstile para `sosmascotas.uy`). `SUPABASE_URL` y `SUPABASE_SERVICE_ROLE_KEY` los pone Supabase.
@@ -82,5 +82,5 @@ Pasos, en orden:
 6. Datos reales: `cargar_comercios.py investigacion/veterinarias.csv --aplicar` y `cargar_ayuda.py investigacion/ayuda.csv --aplicar`. **Nunca** los seeds de `supabase/seeds/` (son solo para dev).
 7. Rol de administración: `update profiles set role = 'admin'` para la cuenta del dueño, desde la base.
 8. Configuración: `app/config/prod.json` (copiar de `prod.example.json`), `web-publica/config.js` con la clave publishable de producción y, para el portal, un `admin/config/prod.json` (no hay ejemplo todavía: copiar `dev.example.json` y cambiar la URL y la clave).
-9. Respaldo: Supabase gratis no tiene respaldos automáticos descargables. Hasta pagar Pro, `supabase db dump --linked` semanal guardado fuera del repo.
+9. Respaldo: el plan gratis de Supabase no incluye respaldos. Hasta pagar Pro, `supabase db dump --linked` semanal guardado fuera del repo.
 10. `rls_test.py` crea dos cuentas temporales y las borra: se puede correr contra producción, pero mejor antes de abrirla al público.
