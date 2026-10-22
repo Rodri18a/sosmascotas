@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
 import 'package:sosmascota/src/features/shell/app_shell.dart';
@@ -163,5 +164,147 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('14 de octubre, 09:05'), findsOneWidget);
+  });
+
+  testWidgets('activar una chapita con su código y desvincularla', (
+    tester,
+  ) async {
+    _pantallaDeCelular(tester);
+    final qr = QrFalso();
+    final eventos = <Map<String, Object?>>[];
+    await tester.pumpWidget(
+      appDePrueba(
+        cuenta: ServicioCuentaFalso(conectado: _ana),
+        mascotas: MascotasFalsas([_luna]),
+        qr: qr,
+        eventos: eventos,
+      ),
+    );
+    await _abrirQrDeLuna(tester);
+    await _ver(tester, find.text('Activar una chapita'));
+    expect(find.text('Todavía no vinculaste ninguna chapita.'), findsOneWidget);
+
+    await tester.tap(find.text('Activar una chapita'));
+    await tester.pumpAndSettle();
+    final campo = find.descendant(
+      of: find.byType(AlertDialog),
+      matching: find.byType(TextField),
+    );
+    await tester.enterText(campo, 'H4PZ7KQ');
+    await tester.tap(find.text('Activar'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('son 8 letras y números'), findsOneWidget);
+
+    await tester.enterText(campo, 'ZZZZ2222');
+    await tester.tap(find.text('Activar'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('No encontramos una chapita'), findsOneWidget);
+
+    await tester.enterText(campo, 'h4pz-7kq2');
+    await tester.tap(find.text('Activar'));
+    await tester.pumpAndSettle();
+    expect(qr.vinculadas.single.codigo, 'H4PZ7KQ2');
+    expect(
+      find.text('¡Listo! Quien escanee la chapita va a ver a Luna.'),
+      findsOneWidget,
+    );
+    expect(eventos.where((e) => e['name'] == 'tag_activate').single['props'], {
+      'origen': 'codigo',
+    });
+    await _ver(tester, find.text('H4PZ7KQ2'));
+
+    await tester.tap(find.text('Desvincular'));
+    await tester.pumpAndSettle();
+    expect(find.text('¿Desvincular la chapita?'), findsOneWidget);
+    await tester.tap(find.widgetWithText(FilledButton, 'Desvincular'));
+    await tester.pumpAndSettle();
+    expect(qr.vinculadas.single.activo, isFalse);
+    expect(find.text('H4PZ7KQ2'), findsNothing);
+    expect(eventos.map((e) => e['name']), contains('tag_unlink'));
+  });
+
+  testWidgets('el enlace de una chapita deja elegir la mascota y la activa', (
+    tester,
+  ) async {
+    _pantallaDeCelular(tester);
+    final qr = QrFalso();
+    const toto = Mascota(id: 'm2', nombre: 'Toto', especieId: 1);
+    const ajena = Mascota(
+      id: 'm3',
+      nombre: 'Coco',
+      especieId: 1,
+      duenoId: 'otra',
+    );
+    await tester.pumpWidget(
+      appDePrueba(
+        cuenta: ServicioCuentaFalso(conectado: _ana),
+        mascotas: MascotasFalsas([_luna, toto, ajena]),
+        qr: qr,
+      ),
+    );
+    await tester.pumpAndSettle();
+    GoRouter.of(
+      tester.element(find.byType(Scaffold).first),
+    ).go('/activar/w3rt8nm5');
+    await tester.pumpAndSettle();
+
+    expect(find.text('W3RT8NM5'), findsOneWidget);
+    expect(find.text('Coco'), findsNothing, reason: 'solo las propias');
+    final activar = find.widgetWithText(FilledButton, 'Activar');
+    expect(tester.widget<FilledButton>(activar).onPressed, isNull);
+
+    await tester.tap(find.text('Toto'));
+    await tester.pumpAndSettle();
+    await tester.tap(activar);
+    await tester.pumpAndSettle();
+
+    expect(qr.vinculadas.single.mascotaId, 'm2');
+    expect(find.widgetWithText(AppBar, 'Chapita QR'), findsOneWidget);
+    await _ver(tester, find.text('W3RT8NM5'));
+
+    // La misma chapita otra vez: ya está usada.
+    GoRouter.of(
+      tester.element(find.byType(Scaffold).first),
+    ).go('/activar/W3RT8NM5');
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Luna'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(FilledButton, 'Activar'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('ya está vinculada'), findsOneWidget);
+  });
+
+  testWidgets('sin mascotas, el enlace de la chapita invita a cargar una', (
+    tester,
+  ) async {
+    _pantallaDeCelular(tester);
+    await tester.pumpWidget(
+      appDePrueba(
+        cuenta: ServicioCuentaFalso(conectado: _ana),
+        mascotas: MascotasFalsas(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    GoRouter.of(
+      tester.element(find.byType(Scaffold).first),
+    ).go('/activar/W3RT8NM5');
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('Primero cargá a tu mascota'), findsOneWidget);
+    expect(find.text('Agregar mascota'), findsOneWidget);
+  });
+
+  testWidgets('un visitante tiene que ingresar para activar una chapita', (
+    tester,
+  ) async {
+    await tester.pumpWidget(appDePrueba());
+    await tester.pumpAndSettle();
+    GoRouter.of(
+      tester.element(find.byType(Scaffold).first),
+    ).go('/activar/W3RT8NM5');
+    await tester.pumpAndSettle();
+
+    expect(find.text('Activar chapita'), findsNothing);
+    expect(find.text('Ingresar'), findsWidgets);
   });
 }

@@ -18,6 +18,7 @@ import 'features/legal/legal_screen.dart';
 import 'features/libreta/libreta.dart';
 import 'features/mapa/mapa_screen.dart';
 import 'features/mapa/marcar_lugar.dart';
+import 'features/mascotas/activar_chapita_screen.dart';
 import 'features/mascotas/ficha_mascota_screen.dart';
 import 'features/mascotas/mascota_form_screen.dart';
 import 'features/mascotas/mascotas_screen.dart';
@@ -58,6 +59,7 @@ abstract final class Rutas {
   static const recordatorios = '/recordatorios';
   static const hogar = '/hogar';
   static const unirme = '/unirme';
+  static const activar = '/activar';
   static const perfil = '/perfil';
   static const chats = '/chats';
   static const negocio = '/negocio';
@@ -98,6 +100,7 @@ abstract final class Rutas {
     '$recordatorios/',
     hogar,
     '$unirme/',
+    '$activar/',
     perfil,
     chats,
     negocio,
@@ -420,6 +423,12 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '${Rutas.unirme}/:codigo',
         builder: (_, state) =>
             UnirmeScreen(codigo: state.pathParameters['codigo']!),
+      ),
+      // Enlace de la página de una chapita sin activar (1.8b.2, D95).
+      GoRoute(
+        path: '${Rutas.activar}/:codigo',
+        builder: (_, state) =>
+            ActivarChapitaScreen(codigo: state.pathParameters['codigo']!),
       ),
       GoRoute(
         path: Rutas.noDisponible,

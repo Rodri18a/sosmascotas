@@ -10,6 +10,7 @@ import '../../../l10n/l10n.dart';
 import '../../config/env_provider.dart';
 import '../../cuenta/servicio_cuenta.dart';
 import '../../mascotas/mascotas_repositorio.dart';
+import '../../metricas/metricas.dart';
 import '../../qr/cartel_qr.dart';
 import '../../qr/qr_repositorio.dart';
 import '../../utiles/descargar.dart';
@@ -222,6 +223,8 @@ class _ContenidoState extends ConsumerState<_Contenido> {
         Text(t.qrEscaneosTitulo, style: tema.textTheme.titleMedium),
         _Escaneos(mascotaId: widget.mascota.id),
         const Divider(height: 32),
+        _Chapitas(mascota: widget.mascota, esDueno: esDueno),
+        const Divider(height: 32),
         Text(t.qrConsejoChapita, style: tema.textTheme.bodySmall),
         // Cambiar el QR (deja inservible la chapita) es solo del dueño (D69).
         if (esDueno) ...[
@@ -280,3 +283,213 @@ class _Escaneos extends ConsumerWidget {
     );
   }
 }
+
+/// Chapitas físicas vinculadas (1.8b.2, D95): activar una escribiendo su
+/// código y desvincularla si se perdió. Las acciones son solo del dueño.
+class _Chapitas extends ConsumerWidget {
+  const _Chapitas({required this.mascota, required this.esDueno});
+
+  final Mascota mascota;
+  final bool esDueno;
+
+  Future<void> _activar(BuildContext context, WidgetRef ref) async {
+    final activada = await showDialog<bool>(
+      context: context,
+      builder: (_) => ActivarChapitaDialogo(mascota: mascota),
+    );
+    if ((activada ?? false) && context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(context.t.chapitaActivada(mascota.nombre))),
+      );
+    }
+  }
+
+  Future<void> _desvincular(
+    BuildContext context,
+    WidgetRef ref,
+    QrTag chapita,
+  ) async {
+    final t = context.t;
+    final mensajes = ScaffoldMessenger.of(context);
+    final confirmado = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(t.chapitaDesvincularTitulo),
+        content: Text(
+          t.chapitaDesvincularTexto(chapita.codigo, mascota.nombre),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text(t.cancelar),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: Text(t.chapitaDesvincular),
+          ),
+        ],
+      ),
+    );
+    if (!(confirmado ?? false)) return;
+    try {
+      await ref.read(qrRepositorioProvider).desvincularChapita(chapita.id);
+      ref.read(metricasProvider).track(Eventos.tagUnlink);
+      ref.invalidate(chapitasProvider(mascota.id));
+      mensajes.showSnackBar(SnackBar(content: Text(t.chapitaDesvinculada)));
+    } on Exception {
+      mensajes.showSnackBar(SnackBar(content: Text(t.errorSinConexion)));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = context.t;
+    final tema = Theme.of(context);
+    final chapitas = ref.watch(chapitasProvider(mascota.id)).value ?? const [];
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(t.chapitasTitulo, style: tema.textTheme.titleMedium),
+        if (esDueno) ...[
+          const SizedBox(height: 4),
+          Text(t.chapitasExplicacion(mascota.nombre)),
+        ],
+        if (chapitas.isEmpty)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Text(t.chapitasNinguna),
+          ),
+        for (final c in chapitas)
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.qr_code_2),
+            title: Text(c.codigo),
+            trailing: esDueno
+                ? TextButton(
+                    onPressed: () => _desvincular(context, ref, c),
+                    child: Text(t.chapitaDesvincular),
+                  )
+                : null,
+          ),
+        if (esDueno)
+          Align(
+            alignment: Alignment.centerLeft,
+            child: OutlinedButton.icon(
+              onPressed: () => _activar(context, ref),
+              icon: const Icon(Icons.add_link),
+              label: Text(t.chapitaActivar),
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+/// Escribir el código impreso en la chapita (o pegar su enlace).
+class ActivarChapitaDialogo extends ConsumerStatefulWidget {
+  const ActivarChapitaDialogo({required this.mascota, super.key});
+
+  final Mascota mascota;
+
+  @override
+  ConsumerState<ActivarChapitaDialogo> createState() =>
+      _ActivarChapitaDialogoState();
+}
+
+class _ActivarChapitaDialogoState extends ConsumerState<ActivarChapitaDialogo> {
+  final _codigo = TextEditingController();
+  String? _error;
+  bool _activando = false;
+
+  @override
+  void dispose() {
+    _codigo.dispose();
+    super.dispose();
+  }
+
+  Future<void> _activar() async {
+    final t = context.t;
+    final codigo = codigoChapita(_codigo.text);
+    if (codigo == null) {
+      setState(() => _error = t.chapitaCodigoInvalido);
+      return;
+    }
+    setState(() {
+      _activando = true;
+      _error = null;
+    });
+    final error = await activarChapita(
+      ref,
+      codigo: codigo,
+      mascotaId: widget.mascota.id,
+      origen: 'codigo',
+    );
+    if (!mounted) return;
+    if (error == null) {
+      Navigator.pop(context, true);
+    } else {
+      setState(() {
+        _activando = false;
+        _error = textoErrorChapita(context, error);
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final t = context.t;
+    return AlertDialog(
+      title: Text(t.chapitaActivar),
+      content: TextField(
+        controller: _codigo,
+        autofocus: true,
+        textCapitalization: TextCapitalization.characters,
+        decoration: InputDecoration(
+          labelText: t.chapitaCodigo,
+          helperText: t.chapitaCodigoAyuda,
+          errorText: _error,
+          errorMaxLines: 3,
+        ),
+        onSubmitted: (_) => _activando ? null : _activar(),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context, false),
+          child: Text(t.cancelar),
+        ),
+        FilledButton(
+          onPressed: _activando ? null : _activar,
+          child: Text(t.activarChapitaBoton),
+        ),
+      ],
+    );
+  }
+}
+
+/// Activa la chapita, registra la métrica y refresca la lista. Devuelve el
+/// motivo si no se pudo (`null` si salió bien).
+Future<ErrorChapita?> activarChapita(
+  WidgetRef ref, {
+  required String codigo,
+  required String mascotaId,
+  required String origen,
+}) async {
+  try {
+    await ref.read(qrRepositorioProvider).activarChapita(codigo, mascotaId);
+  } on ChapitaFallida catch (e) {
+    return e.motivo;
+  }
+  ref
+      .read(metricasProvider)
+      .track(Eventos.tagActivate, props: {'origen': origen});
+  ref.invalidate(chapitasProvider(mascotaId));
+  return null;
+}
+
+String textoErrorChapita(BuildContext context, ErrorChapita error) =>
+    switch (error) {
+      ErrorChapita.inexistente => context.t.chapitaInexistente,
+      ErrorChapita.usada => context.t.chapitaUsada,
+      ErrorChapita.limite => context.t.chapitaLimite,
+      ErrorChapita.sinConexion => context.t.errorSinConexion,
+    };

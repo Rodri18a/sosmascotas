@@ -37,3 +37,15 @@ const urlPublicaPorDefecto = 'https://sosmascotas.uy';
 /// Enlace que va dentro del QR: `<base>/m/<código>`.
 String urlPaginaQr(String codigo, {String base = urlPublicaPorDefecto}) =>
     '${base.replaceAll(RegExp(r'/+$'), '')}/m/$codigo';
+
+/// Código de una chapita a partir de lo que escribió o pegó el dueño: el
+/// código solo (con espacios, guiones o minúsculas) o el enlace completo
+/// `…/m/<código>`. `null` si no es un código válido (8 caracteres sin los que
+/// se confunden: 0/O, 1/I).
+String? codigoChapita(String texto) {
+  final enlace = RegExp(r'/m/([^/?#\s]+)').firstMatch(texto);
+  final limpio = (enlace?.group(1) ?? texto)
+      .replaceAll(RegExp(r'[\s-]'), '')
+      .toUpperCase();
+  return RegExp(r'^[2-9A-HJ-NP-Z]{8}$').hasMatch(limpio) ? limpio : null;
+}

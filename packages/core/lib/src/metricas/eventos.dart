@@ -61,6 +61,8 @@ abstract final class Eventos {
   static const newsReaction = 'news_reaction';
   static const menuOpen = 'menu_open';
   static const tabOpen = 'tab_open';
+  static const tagActivate = 'tag_activate';
+  static const tagUnlink = 'tag_unlink';
   static const petSelect = 'pet_select';
   static const catalogOpen = 'catalog_open';
   static const catalogAsk = 'catalog_ask';

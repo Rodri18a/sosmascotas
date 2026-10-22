@@ -952,6 +952,120 @@ abstract class AppLocalizations {
   /// **'Listo: el código nuevo ya está activo.'**
   String get qrRegenerado;
 
+  /// No description provided for @chapitasTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Chapitas físicas'**
+  String get chapitasTitulo;
+
+  /// No description provided for @chapitasExplicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Si tenés una chapita de SOS Mascota, vinculala con {nombre}: escaneala con la cámara del celular o escribí el código que tiene impreso.'**
+  String chapitasExplicacion(Object nombre);
+
+  /// No description provided for @chapitasNinguna.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no vinculaste ninguna chapita.'**
+  String get chapitasNinguna;
+
+  /// No description provided for @chapitaActivar.
+  ///
+  /// In es, this message translates to:
+  /// **'Activar una chapita'**
+  String get chapitaActivar;
+
+  /// No description provided for @chapitaCodigo.
+  ///
+  /// In es, this message translates to:
+  /// **'Código de la chapita'**
+  String get chapitaCodigo;
+
+  /// No description provided for @chapitaCodigoAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Son 8 letras y números, impresos en la chapita.'**
+  String get chapitaCodigoAyuda;
+
+  /// No description provided for @chapitaCodigoInvalido.
+  ///
+  /// In es, this message translates to:
+  /// **'Revisá el código: son 8 letras y números.'**
+  String get chapitaCodigoInvalido;
+
+  /// No description provided for @chapitaActivada.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Listo! Quien escanee la chapita va a ver a {nombre}.'**
+  String chapitaActivada(Object nombre);
+
+  /// No description provided for @chapitaInexistente.
+  ///
+  /// In es, this message translates to:
+  /// **'No encontramos una chapita con ese código. Revisá que esté bien escrito.'**
+  String get chapitaInexistente;
+
+  /// No description provided for @chapitaUsada.
+  ///
+  /// In es, this message translates to:
+  /// **'Esta chapita ya está vinculada o se dio de baja, y no se puede volver a usar.'**
+  String get chapitaUsada;
+
+  /// No description provided for @chapitaLimite.
+  ///
+  /// In es, this message translates to:
+  /// **'Activaste muchas chapitas hoy. Probá de nuevo mañana.'**
+  String get chapitaLimite;
+
+  /// No description provided for @chapitaDesvincular.
+  ///
+  /// In es, this message translates to:
+  /// **'Desvincular'**
+  String get chapitaDesvincular;
+
+  /// No description provided for @chapitaDesvincularTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Desvincular la chapita?'**
+  String get chapitaDesvincularTitulo;
+
+  /// No description provided for @chapitaDesvincularTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'La chapita {codigo} deja de mostrar a {nombre} y no se puede volver a usar. Hacelo si la perdiste o la vas a reemplazar.'**
+  String chapitaDesvincularTexto(Object codigo, Object nombre);
+
+  /// No description provided for @chapitaDesvinculada.
+  ///
+  /// In es, this message translates to:
+  /// **'Chapita desvinculada.'**
+  String get chapitaDesvinculada;
+
+  /// No description provided for @activarChapitaTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Activar chapita'**
+  String get activarChapitaTitulo;
+
+  /// No description provided for @activarChapitaTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegí qué mascota va a llevar esta chapita. Quien la escanee va a ver su foto y su nombre, y va a poder avisarte sin ver tu teléfono.'**
+  String get activarChapitaTexto;
+
+  /// No description provided for @activarChapitaSinMascotas.
+  ///
+  /// In es, this message translates to:
+  /// **'Primero cargá a tu mascota y después volvé a escanear la chapita.'**
+  String get activarChapitaSinMascotas;
+
+  /// No description provided for @activarChapitaBoton.
+  ///
+  /// In es, this message translates to:
+  /// **'Activar'**
+  String get activarChapitaBoton;
+
   /// No description provided for @avisosTitulo.
   ///
   /// In es, this message translates to:

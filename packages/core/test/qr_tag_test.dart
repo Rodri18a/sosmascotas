@@ -21,4 +21,18 @@ void main() {
       'http://localhost:3002/m/K7M2QX9P',
     );
   });
+
+  test('lee el código de una chapita escrito a mano o desde el enlace', () {
+    expect(codigoChapita('K7M2QX9P'), 'K7M2QX9P');
+    expect(codigoChapita(' k7m2-qx9p '), 'K7M2QX9P');
+    expect(codigoChapita('K7M2 QX9P'), 'K7M2QX9P');
+    expect(
+      codigoChapita('https://sosmascotas.uy/m/k7m2qx9p?x=1'),
+      'K7M2QX9P',
+    );
+    expect(codigoChapita('K7M2QX9'), isNull, reason: 'faltan caracteres');
+    expect(codigoChapita('K7M2QX9O'), isNull, reason: 'la O no se usa');
+    expect(codigoChapita('K7M2QX91'), isNull, reason: 'el 1 no se usa');
+    expect(codigoChapita(''), isNull);
+  });
 }

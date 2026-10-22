@@ -24,6 +24,15 @@ class Escaneo {
   bool get conUbicacion => lat != null && lng != null;
 }
 
+/// Por qué no se pudo activar una chapita (1.8b.2, D95).
+enum ErrorChapita { inexistente, usada, limite, sinConexion }
+
+class ChapitaFallida implements Exception {
+  const ChapitaFallida(this.motivo);
+
+  final ErrorChapita motivo;
+}
+
 /// QR de las mascotas propias. Se reemplaza en las pruebas.
 abstract interface class QrRepositorio {
   /// QR digital activo de la mascota (`null` si no tiene).
@@ -36,6 +45,15 @@ abstract interface class QrRepositorio {
 
   /// Últimos escaneos de los QR de la mascota (el más nuevo primero).
   Future<List<Escaneo>> escaneos(String mascotaId);
+
+  /// Chapitas físicas vinculadas a la mascota (1.8b.2, D95).
+  Future<List<QrTag>> chapitas(String mascotaId);
+
+  /// Vincula la chapita [codigo] a la mascota. Lanza [ChapitaFallida].
+  Future<void> activarChapita(String codigo, String mascotaId);
+
+  /// La deja inactiva para siempre.
+  Future<void> desvincularChapita(String tagId);
 }
 
 class SupabaseQrRepositorio implements QrRepositorio {
@@ -80,6 +98,40 @@ class SupabaseQrRepositorio implements QrRepositorio {
         .limit(20);
     return filas.map(Escaneo.fromJson).toList();
   }
+
+  @override
+  Future<List<QrTag>> chapitas(String mascotaId) async =>
+      (await _cliente
+              .from('qr_tags')
+              .select('id, code, active, pet_id, public_note')
+              .eq('pet_id', mascotaId)
+              .eq('kind', 'physical')
+              .eq('active', true)
+              .order('activated_at'))
+          .map(QrTag.fromJson)
+          .toList();
+
+  @override
+  Future<void> activarChapita(String codigo, String mascotaId) async {
+    try {
+      await _cliente.rpc<String>(
+        'activar_chapita',
+        params: {'p_code': codigo, 'p_pet_id': mascotaId},
+      );
+    } on PostgrestException catch (e) {
+      throw ChapitaFallida(switch (e.message) {
+        'chapita_usada' => ErrorChapita.usada,
+        'limite_chapitas' => ErrorChapita.limite,
+        _ => ErrorChapita.inexistente,
+      });
+    } on Exception {
+      throw const ChapitaFallida(ErrorChapita.sinConexion);
+    }
+  }
+
+  @override
+  Future<void> desvincularChapita(String tagId) =>
+      _cliente.rpc<void>('desvincular_chapita', params: {'p_tag': tagId});
 }
 
 class QrSinConfigurar implements QrRepositorio {
@@ -97,6 +149,16 @@ class QrSinConfigurar implements QrRepositorio {
 
   @override
   Future<List<Escaneo>> escaneos(String mascotaId) async => const [];
+
+  @override
+  Future<List<QrTag>> chapitas(String mascotaId) async => const [];
+
+  @override
+  Future<void> activarChapita(String codigo, String mascotaId) async =>
+      throw const ChapitaFallida(ErrorChapita.sinConexion);
+
+  @override
+  Future<void> desvincularChapita(String tagId) async {}
 }
 
 final qrRepositorioProvider = Provider<QrRepositorio>((ref) {
@@ -124,4 +186,8 @@ final qrActivoProvider = FutureProvider.family<QrTag?, String>((
 
 final escaneosProvider = FutureProvider.family<List<Escaneo>, String>(
   (ref, mascotaId) => ref.watch(qrRepositorioProvider).escaneos(mascotaId),
+);
+
+final chapitasProvider = FutureProvider.family<List<QrTag>, String>(
+  (ref, mascotaId) => ref.watch(qrRepositorioProvider).chapitas(mascotaId),
 );

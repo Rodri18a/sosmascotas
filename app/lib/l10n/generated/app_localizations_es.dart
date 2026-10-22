@@ -521,6 +521,76 @@ class AppLocalizationsEs extends AppLocalizations {
   String get qrRegenerado => 'Listo: el código nuevo ya está activo.';
 
   @override
+  String get chapitasTitulo => 'Chapitas físicas';
+
+  @override
+  String chapitasExplicacion(Object nombre) {
+    return 'Si tenés una chapita de SOS Mascota, vinculala con $nombre: escaneala con la cámara del celular o escribí el código que tiene impreso.';
+  }
+
+  @override
+  String get chapitasNinguna => 'Todavía no vinculaste ninguna chapita.';
+
+  @override
+  String get chapitaActivar => 'Activar una chapita';
+
+  @override
+  String get chapitaCodigo => 'Código de la chapita';
+
+  @override
+  String get chapitaCodigoAyuda =>
+      'Son 8 letras y números, impresos en la chapita.';
+
+  @override
+  String get chapitaCodigoInvalido =>
+      'Revisá el código: son 8 letras y números.';
+
+  @override
+  String chapitaActivada(Object nombre) {
+    return '¡Listo! Quien escanee la chapita va a ver a $nombre.';
+  }
+
+  @override
+  String get chapitaInexistente =>
+      'No encontramos una chapita con ese código. Revisá que esté bien escrito.';
+
+  @override
+  String get chapitaUsada =>
+      'Esta chapita ya está vinculada o se dio de baja, y no se puede volver a usar.';
+
+  @override
+  String get chapitaLimite =>
+      'Activaste muchas chapitas hoy. Probá de nuevo mañana.';
+
+  @override
+  String get chapitaDesvincular => 'Desvincular';
+
+  @override
+  String get chapitaDesvincularTitulo => '¿Desvincular la chapita?';
+
+  @override
+  String chapitaDesvincularTexto(Object codigo, Object nombre) {
+    return 'La chapita $codigo deja de mostrar a $nombre y no se puede volver a usar. Hacelo si la perdiste o la vas a reemplazar.';
+  }
+
+  @override
+  String get chapitaDesvinculada => 'Chapita desvinculada.';
+
+  @override
+  String get activarChapitaTitulo => 'Activar chapita';
+
+  @override
+  String get activarChapitaTexto =>
+      'Elegí qué mascota va a llevar esta chapita. Quien la escanee va a ver su foto y su nombre, y va a poder avisarte sin ver tu teléfono.';
+
+  @override
+  String get activarChapitaSinMascotas =>
+      'Primero cargá a tu mascota y después volvé a escanear la chapita.';
+
+  @override
+  String get activarChapitaBoton => 'Activar';
+
+  @override
   String get avisosTitulo => 'Avisos';
 
   @override

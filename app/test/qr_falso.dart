@@ -49,4 +49,44 @@ class QrFalso implements QrRepositorio {
 
   @override
   Future<List<Escaneo>> escaneos(String mascotaId) async => listaEscaneos;
+
+  /// Chapitas sin activar que "existen" en la base.
+  final libres = <String>{'H4PZ7KQ2', 'W3RT8NM5'};
+  final vinculadas = <QrTag>[];
+
+  @override
+  Future<List<QrTag>> chapitas(String mascotaId) async => [
+    for (final c in vinculadas)
+      if (c.mascotaId == mascotaId && c.activo) c,
+  ];
+
+  @override
+  Future<void> activarChapita(String codigo, String mascotaId) async {
+    if (vinculadas.any((c) => c.codigo == codigo)) {
+      throw const ChapitaFallida(ErrorChapita.usada);
+    }
+    if (!libres.remove(codigo)) {
+      throw const ChapitaFallida(ErrorChapita.inexistente);
+    }
+    vinculadas.add(
+      QrTag(
+        id: 'ch-$codigo',
+        codigo: codigo,
+        activo: true,
+        mascotaId: mascotaId,
+      ),
+    );
+  }
+
+  @override
+  Future<void> desvincularChapita(String tagId) async {
+    final i = vinculadas.indexWhere((c) => c.id == tagId);
+    final c = vinculadas[i];
+    vinculadas[i] = QrTag(
+      id: c.id,
+      codigo: c.codigo,
+      activo: false,
+      mascotaId: c.mascotaId,
+    );
+  }
 }
