@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../l10n/l10n.dart';
 import '../../legal/legal.dart';
+import '../../widgets/volver.dart';
 
 /// Muestra los términos o la política de privacidad (Markdown simple).
 class LegalScreen extends ConsumerWidget {
@@ -19,7 +20,7 @@ class LegalScreen extends ConsumerWidget {
       DocumentoLegal.compromisoAdopcion => t.adopcionCompromisoTitulo,
     };
     return Scaffold(
-      appBar: AppBar(title: Text(titulo)),
+      appBar: AppBar(leading: volverSiNoHayAtras(context), title: Text(titulo)),
       body: switch (ref.watch(textoLegalProvider(documento))) {
         AsyncData(:final value) => TextoMarkdown(value),
         AsyncError() => Center(child: Text(t.errorDesconocido)),

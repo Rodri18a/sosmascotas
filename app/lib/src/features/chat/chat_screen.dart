@@ -13,6 +13,7 @@ import '../../fotos/elegir_foto.dart';
 import '../../metricas/metricas.dart';
 import '../../router.dart';
 import '../../utiles/enlaces.dart';
+import '../../widgets/volver.dart';
 import '../recordatorios/recordatorios.dart';
 
 /// Cómo se llama al otro lado de la conversación (D73): a quien publicó un
@@ -45,7 +46,10 @@ class ConversacionesScreen extends ConsumerWidget {
     final ahora = ref.watch(relojProvider)();
     final conversaciones = ref.watch(conversacionesProvider);
     return Scaffold(
-      appBar: AppBar(title: Text(t.chatMensajes)),
+      appBar: AppBar(
+        leading: volverSiNoHayAtras(context),
+        title: Text(t.chatMensajes),
+      ),
       body: switch (conversaciones) {
         AsyncData(value: final lista) when lista.isEmpty => Padding(
           padding: const EdgeInsets.all(24),
@@ -280,6 +284,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     final bloqueada = conversacion?.bloqueada ?? false;
     return Scaffold(
       appBar: AppBar(
+        leading: volverSiNoHayAtras(context),
         title: Text(
           conversacion == null
               ? t.chatMensajes

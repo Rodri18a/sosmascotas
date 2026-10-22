@@ -11,6 +11,7 @@ import '../../metricas/metricas.dart';
 import '../../router.dart';
 import '../../theme/paleta.dart';
 import '../../utiles/enlaces.dart';
+import '../../widgets/volver.dart';
 
 IconData iconoRegistro(TipoRegistroSalud tipo) => switch (tipo) {
   TipoRegistroSalud.vaccine => Icons.vaccines_outlined,
@@ -266,7 +267,9 @@ class RegistroSaludScreen extends ConsumerWidget {
         body: Center(child: CircularProgressIndicator()),
       ),
       _ => Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          leading: volverSiNoHayAtras(context, Rutas.fichaMascota(mascotaId)),
+        ),
         body: Center(child: Text(t.errorDesconocido)),
       ),
     };
@@ -418,6 +421,10 @@ class _FormularioState extends ConsumerState<_Formulario> {
 
     return Scaffold(
       appBar: AppBar(
+        leading: volverSiNoHayAtras(
+          context,
+          Rutas.fichaMascota(widget.mascotaId),
+        ),
         title: Text(_esNuevo ? t.libretaNuevoTitulo : t.libretaEditarTitulo),
       ),
       body: SafeArea(

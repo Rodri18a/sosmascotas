@@ -9,6 +9,7 @@ import '../../avisos/avisos_repositorio.dart';
 import '../../mascotas/mascotas_repositorio.dart';
 import '../../metricas/metricas.dart';
 import '../../push/control_push.dart';
+import '../../widgets/volver.dart';
 
 /// Bandeja "Avisos": lo que dejaron quienes encontraron o vieron a tu mascota.
 /// Vos decidís si los contactás; tu teléfono nunca se les mostró.
@@ -47,7 +48,10 @@ class _AvisosScreenState extends ConsumerState<AvisosScreen> {
       WidgetsBinding.instance.addPostFrameCallback((_) => _marcarVistos(value));
     }
     return Scaffold(
-      appBar: AppBar(title: Text(t.avisosTitulo)),
+      appBar: AppBar(
+        leading: volverSiNoHayAtras(context),
+        title: Text(t.avisosTitulo),
+      ),
       body: RefreshIndicator(
         onRefresh: () => ref.refresh(avisosProvider.future),
         child: switch (avisos) {

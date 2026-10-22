@@ -13,6 +13,7 @@ import '../../metricas/metricas.dart';
 import '../../router.dart';
 import '../../sos/sos_repositorio.dart';
 import '../../utiles/enlaces.dart';
+import '../../widgets/volver.dart';
 
 /// Marcar un lugar que no está en el mapa (1.3.2): solo el rubro y el punto.
 class MarcarLugarScreen extends ConsumerStatefulWidget {
@@ -83,7 +84,10 @@ class _MarcarLugarScreenState extends ConsumerState<MarcarLugarScreen> {
     final t = context.t;
     final tema = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(t.marcarLugar)),
+      appBar: AppBar(
+        leading: volverSiNoHayAtras(context),
+        title: Text(t.marcarLugar),
+      ),
       // Todo construido de una vez (formulario corto): el botón siempre existe.
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),

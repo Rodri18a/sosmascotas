@@ -10,6 +10,7 @@ import '../../hogar/hogar_repositorio.dart';
 import '../../mascotas/mascotas_repositorio.dart';
 import '../../metricas/metricas.dart';
 import '../../router.dart';
+import '../../widgets/volver.dart';
 
 String nombreIntegrante(AppLocalizations t, Integrante i) =>
     i.nombre?.trim().isNotEmpty ?? false ? i.nombre!.trim() : t.hogarSinNombre;
@@ -25,7 +26,10 @@ class HogarScreen extends ConsumerWidget {
     final integrantes = ref.watch(integrantesProvider);
 
     return Scaffold(
-      appBar: AppBar(title: Text(t.hogarTitulo)),
+      appBar: AppBar(
+        leading: volverSiNoHayAtras(context),
+        title: Text(t.hogarTitulo),
+      ),
       body: switch (integrantes) {
         AsyncData(value: final lista) => _Contenido(lista: lista, yo: yo),
         AsyncLoading() => const Center(child: CircularProgressIndicator()),
@@ -356,9 +360,7 @@ class _UnirmeScreenState extends ConsumerState<UnirmeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(t.unirmeTitulo),
-        leading: context.canPop()
-            ? null
-            : BackButton(onPressed: () => context.go(Rutas.mapa)),
+        leading: volverSiNoHayAtras(context),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),

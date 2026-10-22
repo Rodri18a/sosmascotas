@@ -10,6 +10,7 @@ import '../../mapa/mapa_vista.dart';
 import '../../metricas/metricas.dart';
 import '../../sos/sos_repositorio.dart';
 import '../../utiles/enlaces.dart';
+import '../../widgets/volver.dart';
 import '../legal/legal_screen.dart';
 
 String textoTipoEvento(AppLocalizations t, TipoEvento e) => switch (e) {
@@ -241,7 +242,10 @@ class _EventoFormState extends ConsumerState<EventoFormScreen> {
     String f(DateTime d) =>
         '${l.formatMediumDate(d)} ${l.formatTimeOfDay(TimeOfDay.fromDateTime(d), alwaysUse24HourFormat: true)}';
     return Scaffold(
-      appBar: AppBar(title: Text(t.eventoPublicar)),
+      appBar: AppBar(
+        leading: volverSiNoHayAtras(context),
+        title: Text(t.eventoPublicar),
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -409,7 +413,10 @@ class _DenunciaState extends ConsumerState<DenunciaScreen> {
     final tema = Theme.of(context);
     final mias = ref.watch(misDenunciasProvider).value ?? const <Denuncia>[];
     return Scaffold(
-      appBar: AppBar(title: Text(t.denunciaTitulo)),
+      appBar: AppBar(
+        leading: volverSiNoHayAtras(context),
+        title: Text(t.denunciaTitulo),
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(

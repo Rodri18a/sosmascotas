@@ -14,6 +14,7 @@ import '../../metricas/metricas.dart';
 import '../../recordatorios/recordatorios_repositorio.dart';
 import '../../router.dart';
 import '../../utiles/enlaces.dart';
+import '../../widgets/volver.dart';
 import '../legal/legal_screen.dart';
 
 String textoEtapa(AppLocalizations t, EtapaAdopcion e) => switch (e) {
@@ -73,6 +74,7 @@ class AdopcionScreen extends ConsumerWidget {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
+          leading: volverSiNoHayAtras(context),
           title: Text(t.adopcionTitulo),
           actions: [
             IconButton(
@@ -286,7 +288,7 @@ class AnimalAdopcionScreen extends ConsumerWidget {
         .firstOrNull;
     if (a == null) {
       return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(leading: volverSiNoHayAtras(context)),
         body: Center(
           child: ref.watch(disponiblesProvider).isLoading
               ? const CircularProgressIndicator()
@@ -307,7 +309,10 @@ class AnimalAdopcionScreen extends ConsumerWidget {
       if (a.camada) t.adopcionCamada,
     ];
     return Scaffold(
-      appBar: AppBar(title: Text(a.nombre ?? t.adopcionTitulo)),
+      appBar: AppBar(
+        leading: volverSiNoHayAtras(context),
+        title: Text(a.nombre ?? t.adopcionTitulo),
+      ),
       body: ListView(
         children: [
           SizedBox(
@@ -719,7 +724,10 @@ class _CompromisoAdopcionScreenState
   Widget build(BuildContext context) {
     final t = context.t;
     return Scaffold(
-      appBar: AppBar(title: Text(t.adopcionCompromisoTitulo)),
+      appBar: AppBar(
+        leading: volverSiNoHayAtras(context),
+        title: Text(t.adopcionCompromisoTitulo),
+      ),
       body: Column(
         children: [
           Expanded(
@@ -803,7 +811,10 @@ class _PerfilAdoptanteScreenState extends ConsumerState<PerfilAdoptanteScreen> {
       casaDeAcuerdo: acuerdo ?? p.casaDeAcuerdo,
     );
     return Scaffold(
-      appBar: AppBar(title: Text(t.adopcionMiPerfil)),
+      appBar: AppBar(
+        leading: volverSiNoHayAtras(context),
+        title: Text(t.adopcionMiPerfil),
+      ),
       body: guardado.isLoading
           ? const Center(child: CircularProgressIndicator())
           : ListView(
@@ -919,7 +930,10 @@ class GuiaAdopcionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = context.t;
     return Scaffold(
-      appBar: AppBar(title: Text(t.guiaTitulo)),
+      appBar: AppBar(
+        leading: volverSiNoHayAtras(context),
+        title: Text(t.guiaTitulo),
+      ),
       body: TextoMarkdown(t.guiaTexto),
     );
   }
@@ -964,7 +978,10 @@ class _CalculadoraCostosState extends State<CalculadoraCostosScreen> {
         ItemCosto(clave: clave, monto: _montos[clave] ?? 0, anual: anual),
     ]);
     return Scaffold(
-      appBar: AppBar(title: Text(t.adopcionCalculadora)),
+      appBar: AppBar(
+        leading: volverSiNoHayAtras(context),
+        title: Text(t.adopcionCalculadora),
+      ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
@@ -1099,7 +1116,10 @@ class _PublicarAdopcionScreenState
     final tema = Theme.of(context);
     final especies = ref.watch(especiesProvider).value ?? const <Especie>[];
     return Scaffold(
-      appBar: AppBar(title: Text(t.publicarTitulo)),
+      appBar: AppBar(
+        leading: volverSiNoHayAtras(context),
+        title: Text(t.publicarTitulo),
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(

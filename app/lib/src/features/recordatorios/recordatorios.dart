@@ -11,6 +11,7 @@ import '../../recordatorios/avisador.dart';
 import '../../recordatorios/recordatorios_repositorio.dart';
 import '../../router.dart';
 import '../../utiles/enlaces.dart';
+import '../../widgets/volver.dart';
 
 /// "hoy a las 20:00", "mañana a las 8:00", "sáb., 24 oct. a las 9:30".
 String textoCuando(BuildContext context, DateTime cuando, DateTime ahora) {
@@ -379,7 +380,9 @@ class RecordatorioScreen extends ConsumerWidget {
         body: Center(child: CircularProgressIndicator()),
       ),
       _ => Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          leading: volverSiNoHayAtras(context, Rutas.fichaMascota(mascotaId)),
+        ),
         body: Center(child: Text(t.errorDesconocido)),
       ),
     };
@@ -655,6 +658,10 @@ class _FormularioState extends ConsumerState<_Formulario> {
 
     return Scaffold(
       appBar: AppBar(
+        leading: volverSiNoHayAtras(
+          context,
+          Rutas.fichaMascota(widget.mascotaId),
+        ),
         title: Text(
           _esNuevo ? t.recordatorioNuevoTitulo : t.recordatorioEditarTitulo,
         ),

@@ -7,6 +7,7 @@ import '../../comercios/negocios_repositorio.dart';
 import '../../metricas/metricas.dart';
 import '../../router.dart';
 import '../../tienda/tienda_repositorio.dart';
+import '../../widgets/volver.dart';
 import 'catalogo_screen.dart';
 
 /// Duración legible: "45 min", "1 h", "1 h 30 min".
@@ -114,7 +115,10 @@ class ServiciosNegocioScreen extends ConsumerWidget {
         .firstOrNull;
     final esPlus = negocio?.comercio.plan == PlanComercio.plus;
     return Scaffold(
-      appBar: AppBar(title: Text(t.serviciosTitulo)),
+      appBar: AppBar(
+        leading: volverSiNoHayAtras(context),
+        title: Text(t.serviciosTitulo),
+      ),
       floatingActionButton: esPlus
           ? FloatingActionButton.extended(
               onPressed: () => _editar(context, ref),

@@ -11,6 +11,7 @@ import '../../hogar/hogar_repositorio.dart';
 import '../../mascotas/mascotas_repositorio.dart';
 import '../../router.dart';
 import '../../widgets/foto_mascota.dart';
+import '../../widgets/volver.dart';
 import '../hogar/hogar_screen.dart';
 
 /// "Mi perfil" (D70): quién soy en la app, qué mascotas tengo a cargo y con
@@ -38,7 +39,10 @@ class PerfilScreen extends ConsumerWidget {
     final nombre = perfil?.nombre.trim() ?? '';
 
     return Scaffold(
-      appBar: AppBar(title: Text(t.perfilTitulo)),
+      appBar: AppBar(
+        leading: volverSiNoHayAtras(context),
+        title: Text(t.perfilTitulo),
+      ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [

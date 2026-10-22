@@ -16,6 +16,7 @@ import '../../router.dart';
 import '../../tienda/tienda_repositorio.dart';
 import '../../utiles/enlaces.dart';
 import '../../veterinarias/veterinarias_repositorio.dart';
+import '../../widgets/volver.dart';
 import '../resenas/resenas.dart';
 import '../tienda/pedidos.dart';
 import 'formulario_negocio.dart';
@@ -30,7 +31,10 @@ class AltaNegocioScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final t = context.t;
     return Scaffold(
-      appBar: AppBar(title: Text(t.negocioAltaTitulo)),
+      appBar: AppBar(
+        leading: volverSiNoHayAtras(context),
+        title: Text(t.negocioAltaTitulo),
+      ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
@@ -89,6 +93,7 @@ class _NegocioScreenState extends ConsumerState<NegocioScreen> {
             lista.where((n) => n.id == _elegido).firstOrNull ?? lista.first;
         return Scaffold(
           appBar: AppBar(
+            leading: volverSiNoHayAtras(context),
             title: Text(t.modoComercio),
             actions: [
               if (lista.length > 1)
@@ -161,7 +166,7 @@ class _NegocioScreenState extends ConsumerState<NegocioScreen> {
         body: Center(child: CircularProgressIndicator()),
       ),
       _ => Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(leading: volverSiNoHayAtras(context)),
         body: Center(child: Text(t.errorSinConexion)),
       ),
     };

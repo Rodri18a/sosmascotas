@@ -14,6 +14,7 @@ import '../../push/servicio_push.dart';
 import '../../router.dart';
 import '../../theme/tema_elegido.dart';
 import '../../ubicacion/control_ubicacion.dart';
+import '../../widgets/volver.dart';
 import '../ingresar/ingresar_screen.dart';
 import '../instalar/instalar.dart';
 import 'estado_conexion.dart';
@@ -30,10 +31,7 @@ class AjustesScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(t.ajustes),
-        // Si se entró por un enlace directo no hay a dónde volver: ir al mapa.
-        leading: context.canPop()
-            ? null
-            : BackButton(onPressed: () => context.go(Rutas.mapa)),
+        leading: volverSiNoHayAtras(context),
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(vertical: 8),

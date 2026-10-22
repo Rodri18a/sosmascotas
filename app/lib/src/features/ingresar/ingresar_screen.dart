@@ -9,6 +9,7 @@ import '../../config/supabase_providers.dart';
 import '../../cuenta/servicio_cuenta.dart';
 import '../../redireccion.dart';
 import '../../router.dart';
+import '../../widgets/volver.dart';
 
 /// Ingresar o crear cuenta con el correo (sin contraseñas).
 /// Al iniciar sesión vuelve a [volver] (o al mapa).
@@ -94,7 +95,10 @@ class _IngresarScreenState extends ConsumerState<IngresarScreen> {
     final emailEnviado = _emailEnviado;
 
     return Scaffold(
-      appBar: AppBar(title: Text(t.ingresarTitulo)),
+      appBar: AppBar(
+        leading: volverSiNoHayAtras(context),
+        title: Text(t.ingresarTitulo),
+      ),
       body: SafeArea(
         child: Center(
           child: ConstrainedBox(

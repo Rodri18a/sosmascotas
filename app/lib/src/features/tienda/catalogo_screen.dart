@@ -11,6 +11,7 @@ import '../../metricas/metricas.dart';
 import '../../router.dart';
 import '../../tienda/tienda_repositorio.dart';
 import '../../utiles/enlaces.dart';
+import '../../widgets/volver.dart';
 import '../chat/chat_screen.dart';
 import 'pedidos.dart';
 
@@ -31,7 +32,10 @@ class CatalogoScreen extends ConsumerWidget {
     final catalogo = ref.watch(catalogoDeProvider(negocioId));
     final productos = catalogo.value ?? const <Producto>[];
     return Scaffold(
-      appBar: AppBar(title: Text(comercio?.nombre ?? t.catalogoTitulo)),
+      appBar: AppBar(
+        leading: volverSiNoHayAtras(context),
+        title: Text(comercio?.nombre ?? t.catalogoTitulo),
+      ),
       body: switch (catalogo) {
         AsyncData(value: final lista) when lista.isEmpty => Center(
           child: Padding(
@@ -685,7 +689,10 @@ class MisPedidosScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final t = context.t;
     return Scaffold(
-      appBar: AppBar(title: Text(t.misPedidos)),
+      appBar: AppBar(
+        leading: volverSiNoHayAtras(context),
+        title: Text(t.misPedidos),
+      ),
       body: RefreshIndicator(
         onRefresh: () async {
           ref.invalidate(misPedidosProvider);
