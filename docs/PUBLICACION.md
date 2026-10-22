@@ -81,6 +81,6 @@ Pasos, en orden:
 5. Login: **antes** de correr `supabase/configurar_auth.py --aplicar` contra producción, cambiarle `APP_ONLINE` y `ADMIN_ONLINE` a las direcciones de producción y sacar `localhost` de `uri_allow_list`. Hoy tiene escritas las de dev.
 6. Datos reales: `cargar_comercios.py investigacion/veterinarias.csv --aplicar` y `cargar_ayuda.py investigacion/ayuda.csv --aplicar`. **Nunca** los seeds de `supabase/seeds/` (son solo para dev).
 7. Rol de administración: `update profiles set role = 'admin'` para la cuenta del dueño, desde la base.
-8. Configuración: `app/config/prod.json` (copiar de `prod.example.json`), `web-publica/config.js` con la clave publishable de producción y, para el portal, un `admin/config/prod.json` (no hay ejemplo todavía: copiar `dev.example.json` y cambiar la URL y la clave).
+8. Configuración: `app/config/prod.json` (copiar de `prod.example.json`), `web-publica/config.js` con la clave publishable de producción y `admin/config/prod.json` (copiar de `prod.example.json`).
 9. Respaldo: el plan gratis de Supabase no incluye respaldos. Hasta pagar Pro, `supabase db dump --linked` semanal guardado fuera del repo.
 10. `rls_test.py` crea dos cuentas temporales y las borra: se puede correr contra producción, pero mejor antes de abrirla al público.
