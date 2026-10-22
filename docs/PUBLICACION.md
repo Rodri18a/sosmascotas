@@ -67,3 +67,20 @@ Ya está casi todo preparado:
 ## Sumar a alguien (cuando esté online)
 
 En **Zero Trust → Access → Aplicaciones → sosmascotas → Política**, agregar su email.
+
+## Producción (paso 0.8.5) — lista para cuando se cree el proyecto
+
+Revisado el 22/10/2026: las 51 migraciones sirven tal cual para producción. No traen datos de ejemplo (eso va en `supabase/seeds/` y en los cargadores con `--ejemplo`), ni direcciones de dev, ni ids de usuarios. La única funcionalidad gradual que crean es `temas_pro` (en beta). Las demás (`comercios`, `eventos`, `catalogo`, `chat`, etc.) se crean con `funcionalidades.py`; mientras no existan, en producción quedan **apagadas**, que es lo que queremos para el lanzamiento.
+
+Pasos, en orden:
+
+1. **El dueño** crea el proyecto de Supabase de producción (región São Paulo, como dev) y guarda la contraseña de la base. Credenciales en un archivo aparte, por ejemplo `~/.config/sosmascotas/supabase-prod.env`, **nunca** en el repo.
+2. `supabase link --project-ref <ref de prod>` y `supabase db push --linked --dry-run`, revisar, y después sin `--dry-run`. Ojo: `link` cambia `supabase/.temp/project-ref`, que usan también los scripts de Python. **Volver a linkear dev al terminar.**
+3. Edge Functions: `supabase functions deploy <nombre> --use-api` para `delete-account`, `owner-alert`, `qr-scan-alert`, `sos-follow-alert` y `sos-zone-alert`.
+4. Secretos de las funciones: `FIREBASE_SERVICE_ACCOUNT` (del proyecto Firebase de **producción**; en Windows, con `--env-file`) y `TURNSTILE_SECRET` (clave de Turnstile para `sosmascotas.uy`). `SUPABASE_URL` y `SUPABASE_SERVICE_ROLE_KEY` los pone Supabase.
+5. Login: **antes** de correr `supabase/configurar_auth.py --aplicar` contra producción, cambiarle `APP_ONLINE` y `ADMIN_ONLINE` a las direcciones de producción y sacar `localhost` de `uri_allow_list`. Hoy tiene escritas las de dev.
+6. Datos reales: `cargar_comercios.py investigacion/veterinarias.csv --aplicar` y `cargar_ayuda.py investigacion/ayuda.csv --aplicar`. **Nunca** los seeds de `supabase/seeds/` (son solo para dev).
+7. Rol de administración: `update profiles set role = 'admin'` para la cuenta del dueño, desde la base.
+8. Configuración: `app/config/prod.json` (copiar de `prod.example.json`), `web-publica/config.js` con la clave publishable de producción y, para el portal, un `admin/config/prod.json` (no hay ejemplo todavía: copiar `dev.example.json` y cambiar la URL y la clave).
+9. Respaldo: Supabase gratis no tiene respaldos automáticos descargables. Hasta pagar Pro, `supabase db dump --linked` semanal guardado fuera del repo.
+10. `rls_test.py` crea dos cuentas temporales y las borra: se puede correr contra producción, pero mejor antes de abrirla al público.
