@@ -80,6 +80,22 @@ abstract interface class AdminRepositorio {
 
   /// Crea (sin `id`) o actualiza una entrada de la Ayuda.
   Future<void> guardarAyuda(Map<String, Object?> datos);
+
+  /// Lotes de chapitas físicas (1.8b.1, D95), el más nuevo primero, con
+  /// activadas y escaneos.
+  Future<List<Map<String, Object?>>> lotes();
+
+  /// Crea un lote de [cantidad] códigos (1 a 500). Devuelve su id.
+  Future<String> crearLote({
+    required int cantidad,
+    String? productor,
+    String? material,
+    num? costo,
+    String? nota,
+  });
+
+  /// Los códigos del lote, en orden, para el productor.
+  Future<List<String>> codigosLote(String loteId);
 }
 
 class SupabaseAdminRepositorio implements AdminRepositorio {
@@ -280,6 +296,39 @@ class SupabaseAdminRepositorio implements AdminRepositorio {
         ? _cliente.from('help_directory').insert({...fila, 'zone_id': null})
         : _cliente.from('help_directory').update(fila).eq('id', id);
   }
+
+  @override
+  Future<List<Map<String, Object?>>> lotes() async =>
+      _filas(await _cliente.rpc<List<dynamic>>('admin_lotes'));
+
+  @override
+  Future<String> crearLote({
+    required int cantidad,
+    String? productor,
+    String? material,
+    num? costo,
+    String? nota,
+  }) => _cliente.rpc<String>(
+    'admin_crear_lote',
+    params: {
+      'p_cantidad': cantidad,
+      'p_productor': productor,
+      'p_material': material,
+      'p_costo': costo,
+      'p_nota': nota,
+    },
+  );
+
+  @override
+  Future<List<String>> codigosLote(String loteId) async => [
+    for (final f in _filas(
+      await _cliente.rpc<List<dynamic>>(
+        'admin_codigos_lote',
+        params: {'p_lote': loteId},
+      ),
+    ))
+      f['code']! as String,
+  ];
 }
 
 /// Se sobrescribe en `main.dart` (y en las pruebas).
@@ -343,3 +392,11 @@ final novedadesProvider = FutureProvider<List<Map<String, Object?>>>(
 final ayudaProvider = FutureProvider<List<EntradaAyuda>>(
   (ref) => ref.watch(adminRepositorioProvider).ayuda(),
 );
+
+final lotesProvider = FutureProvider<List<Map<String, Object?>>>(
+  (ref) => ref.watch(adminRepositorioProvider).lotes(),
+);
+
+/// Dirección de la web pública: va dentro de cada chapita (`<base>/m/<código>`).
+/// Se sobrescribe en `main.dart` con `PUBLIC_BASE_URL`.
+final urlPublicaProvider = Provider<String>((ref) => 'https://sosmascotas.uy');

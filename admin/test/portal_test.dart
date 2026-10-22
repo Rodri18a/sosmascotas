@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sosmascota_admin/src/app.dart';
 import 'package:sosmascota_admin/src/modelos.dart';
+import 'package:sosmascota_admin/src/pantallas/chapitas.dart';
 import 'package:sosmascota_admin/src/repositorio.dart';
 import 'package:sosmascota_admin/src/sesion.dart';
 
@@ -239,16 +240,62 @@ class RepoFalso implements AdminRepositorio {
   @override
   Future<void> guardarAyuda(Map<String, Object?> datos) async =>
       ayudaGuardada.add(datos);
+
+  final lotesCreados = <Map<String, Object?>>[];
+
+  @override
+  Future<List<Map<String, Object?>>> lotes() async => [
+    for (final (i, l) in lotesCreados.indexed)
+      {
+        'id': 'l$i',
+        'quantity': l['cantidad'],
+        'producer': l['productor'],
+        'unit_cost': l['costo'],
+        'created_at': '2026-10-22T12:00:00Z',
+        'activadas': 0,
+        'escaneos': 0,
+      },
+  ];
+
+  @override
+  Future<String> crearLote({
+    required int cantidad,
+    String? productor,
+    String? material,
+    num? costo,
+    String? nota,
+  }) async {
+    lotesCreados.add({
+      'cantidad': cantidad,
+      'productor': productor,
+      'material': material,
+      'costo': costo,
+    });
+    return 'l${lotesCreados.length - 1}';
+  }
+
+  @override
+  Future<List<String>> codigosLote(String loteId) async => [
+    'ABCD2345',
+    'WXYZ6789',
+  ];
 }
 
-Widget _portal({required SesionFalsa sesion, required RepoFalso repo}) =>
-    ProviderScope(
-      overrides: [
-        sesionProvider.overrideWithValue(sesion),
-        adminRepositorioProvider.overrideWithValue(repo),
-      ],
-      child: const AdminApp(),
-    );
+Widget _portal({
+  required SesionFalsa sesion,
+  required RepoFalso repo,
+  List<(String, String)>? descargas,
+}) => ProviderScope(
+  overrides: [
+    sesionProvider.overrideWithValue(sesion),
+    adminRepositorioProvider.overrideWithValue(repo),
+    urlPublicaProvider.overrideWithValue('https://web.ejemplo.uy/'),
+    descargarTextoProvider.overrideWithValue(
+      (nombre, contenido) => descargas?.add((nombre, contenido)),
+    ),
+  ],
+  child: const AdminApp(),
+);
 
 void _pantallaGrande(WidgetTester tester) {
   tester.view
@@ -530,5 +577,59 @@ void main() {
     expect(find.text('Reencuentro: Lola'), findsOneWidget);
     await _tocar(tester, find.byType(Switch));
     expect(repo.novedadesCambiadas.single, ('c1', false));
+  });
+
+  test('el CSV de un lote lleva el código y el enlace de la página del QR', () {
+    expect(
+      csvDeLote(['ABCD2345'], 'https://sosmascotas.uy/'),
+      'codigo,enlace\nABCD2345,https://sosmascotas.uy/m/ABCD2345',
+    );
+  });
+
+  testWidgets('chapitas: crear un lote y descargar sus códigos', (
+    tester,
+  ) async {
+    _pantallaGrande(tester);
+    final repo = RepoFalso();
+    final descargas = <(String, String)>[];
+    await tester.pumpWidget(
+      _portal(
+        sesion: SesionFalsa('admin@sosmascotas.uy'),
+        repo: repo,
+        descargas: descargas,
+      ),
+    );
+    await _tocar(tester, find.text('Chapitas'));
+    expect(find.textContaining('Todavía no hay lotes'), findsOneWidget);
+
+    await _tocar(tester, find.text('Nuevo lote'));
+    final campos = find.descendant(
+      of: find.byType(AlertDialog),
+      matching: find.byType(TextField),
+    );
+    await tester.enterText(campos.at(0), '501');
+    await _tocar(tester, find.text('Crear'));
+    expect(repo.lotesCreados, isEmpty, reason: 'más de 500 no');
+
+    await tester.enterText(campos.at(0), '30');
+    await tester.enterText(campos.at(1), 'Impresiones 3D Pando');
+    await tester.enterText(campos.at(3), '45,5');
+    await _tocar(tester, find.text('Crear'));
+    expect(repo.lotesCreados.single, {
+      'cantidad': 30,
+      'productor': 'Impresiones 3D Pando',
+      'material': null,
+      'costo': 45.5,
+    });
+    expect(find.text('30 chapitas · 0 activadas · 0 escaneos'), findsOneWidget);
+
+    await _tocar(tester, find.text('Descargar CSV'));
+    expect(descargas.single.$1, 'chapitas-2026-10-22-2.csv');
+    expect(
+      descargas.single.$2,
+      'codigo,enlace\n'
+      'ABCD2345,https://web.ejemplo.uy/m/ABCD2345\n'
+      'WXYZ6789,https://web.ejemplo.uy/m/WXYZ6789',
+    );
   });
 }

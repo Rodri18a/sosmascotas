@@ -73,7 +73,7 @@ Noticias, promociones patrocinadas, eventos, directorio de Ayuda y textos de la 
 - **Comunidad (hecho, D86):** pestaña dentro de Noticias con las novedades que se generan solas (reencuentros compartidos, adopciones, lugares verificados, eventos); un interruptor las oculta o las vuelve a mostrar, con registro de la acción.
 
 ### 9. Chapitas QR — Fase 1 (básico) / Fase 2 (completo)
-- **Lotes:** generar códigos pre-codificados para fabricar (exportar la lista para el productor), con su material, costo y sponsor.
+- **Lotes:** generar códigos pre-codificados para fabricar (exportar la lista para el productor), con su material, costo y sponsor. ✅ 1.8b.1 (D95): sección **Chapitas** con "Nuevo lote" (1 a 500), activadas y escaneos por lote y "Descargar CSV" (`codigo,enlace`); el sponsor se suma en la Fase 2.
 - **Pedidos:** estado (pedido → pagado → impreso → enviado → entregado) y forma de entrega (retiro en veterinaria o envío).
 - **Puntos de retiro:** veterinarias adheridas, chapitas pendientes de retirar en cada una.
 - **Stock** en veterinarias.

@@ -1694,6 +1694,69 @@ def main():
                  rest('POST', 'rpc/pagina_comercio', {'p_id': str(uuid.uuid4())})[1] == {'status': 'not_found'})
             pedir('DELETE', f'{URL}/rest/v1/businesses?id=eq.{pelu}', headers=ADMIN)
 
+            print('chapitas físicas (lotes, activar, desvincular)')
+            caso('A no puede crear lotes', rest('POST', 'rpc/admin_crear_lote', {'p_cantidad': 3}, a)[0] >= 400)
+            caso('un visitante tampoco', rest('POST', 'rpc/admin_crear_lote', {'p_cantidad': 3})[0] >= 400)
+            caso('no más de 500 por lote', rest('POST', 'rpc/admin_crear_lote', {'p_cantidad': 501}, x)[0] >= 400)
+            s_lote, lote = rest('POST', 'rpc/admin_crear_lote', {
+                'p_cantidad': 3, 'p_productor': 'Prueba RLS', 'p_material': 'PLA', 'p_costo': 45.5}, x)
+            caso('X crea un lote de 3', s_lote == 200 and isinstance(lote, str))
+            codigos = rest('POST', 'rpc/admin_codigos_lote', {'p_lote': lote}, x)[1] or []
+            caso('X exporta sus 3 códigos', len(codigos) == 3 and all(len(c['code']) == 8 for c in codigos))
+            caso('A no exporta los códigos', rest('POST', 'rpc/admin_codigos_lote', {'p_lote': lote}, a)[0] >= 400)
+            caso('A no ve los lotes', rest('POST', 'rpc/admin_lotes', {}, a)[0] >= 400)
+            caso('nadie lee la tabla de lotes directo',
+                 bloqueado(rest('GET', 'qr_batches?select=id', quien=x)) and bloqueado(rest('GET', 'qr_batches?select=id')))
+            c1, c2, c3 = (c['code'] for c in codigos)
+            caso('un código sin activar dice unactivated en la página pública',
+                 rest('POST', 'rpc/public_pet_page', {'p_code': c1})[1].get('status') == 'unactivated')
+            caso('y no registra escaneos', rest('POST', 'rpc/registrar_escaneo', {'p_code': c1})[1] is None)
+            chapa_pet = filas(rest('POST', 'pets', {'name': 'Chapita RLS', 'species_id': 1}, a))[0]['id']
+            caso('un visitante no puede activar', rest('POST', 'rpc/activar_chapita', {'p_code': c1, 'p_pet_id': chapa_pet})[0] >= 400)
+            caso('B no puede activar una chapita en la mascota de A',
+                 rest('POST', 'rpc/activar_chapita', {'p_code': c1, 'p_pet_id': chapa_pet}, b)[0] in (401, 403))
+            s_inex, err_inex = rest('POST', 'rpc/activar_chapita', {'p_code': 'ZZZZZZZZ', 'p_pet_id': chapa_pet}, a)
+            caso('un código que no existe da chapita_inexistente',
+                 s_inex >= 400 and 'chapita_inexistente' in json.dumps(err_inex))
+            caso('el código de un QR digital no se puede activar como chapita',
+                 'chapita_inexistente' in json.dumps(rest('POST', 'rpc/activar_chapita', {'p_code': nuevo, 'p_pet_id': chapa_pet}, a)[1]))
+            s_act, tag_c1 = rest('POST', 'rpc/activar_chapita', {'p_code': f'{c1[:4].lower()}-{c1[4:]}', 'p_pet_id': chapa_pet}, a)
+            caso('A activa la chapita (sin importar mayúsculas ni guiones)', s_act == 200 and isinstance(tag_c1, str))
+            pag_c1 = rest('POST', 'rpc/public_pet_page', {'p_code': c1})[1]
+            caso('la página pública ya muestra la mascota',
+                 pag_c1.get('status') == 'active' and pag_c1['pet']['name'] == 'Chapita RLS')
+            caso('A la ve entre sus chapitas',
+                 any(t['id'] == tag_c1 for t in filas(rest('GET', f'qr_tags?select=id&pet_id=eq.{chapa_pet}&kind=eq.physical', quien=a))))
+            caso('B no la ve', filas(rest('GET', f'qr_tags?select=id&id=eq.{tag_c1}', quien=b)) == [])
+            s_usada, err_usada = rest('POST', 'rpc/activar_chapita', {'p_code': c1, 'p_pet_id': chapa_pet}, a)
+            caso('no se activa dos veces (chapita_usada)', s_usada >= 400 and 'chapita_usada' in json.dumps(err_usada))
+            esc = rest('POST', 'rpc/registrar_escaneo', {'p_code': c1})[1]
+            caso('un escaneo de la chapita le llega al dueño',
+                 isinstance(esc, str) and any(e['qr_id'] == tag_c1 for e in filas(rest('GET', f'qr_scans_app?select=qr_id&pet_id=eq.{chapa_pet}', quien=a))))
+            lotes = filas(rest('POST', 'rpc/admin_lotes', {}, x))
+            mio = next((l for l in lotes if l['id'] == lote), {})
+            caso('el lote cuenta 1 activada y 1 escaneo', mio.get('activadas') == 1 and mio.get('escaneos') == 1)
+            caso('B no puede desvincular la chapita de A',
+                 rest('POST', 'rpc/desvincular_chapita', {'p_tag': tag_c1}, b)[0] in (401, 403))
+            caso('A la desvincula', rest('POST', 'rpc/desvincular_chapita', {'p_tag': tag_c1}, a)[0] in (200, 204))
+            caso('desvinculada: la página dice inactive (no "sin activar")',
+                 rest('POST', 'rpc/public_pet_page', {'p_code': c1})[1] == {'status': 'inactive', 'kind': 'physical'})
+            caso('A no la puede reactivar a mano',
+                 rest('PATCH', f'qr_tags?id=eq.{tag_c1}', {'active': True}, a)[0] >= 400)
+            caso('ni volver a activarla', 'chapita_usada' in json.dumps(
+                rest('POST', 'rpc/activar_chapita', {'p_code': c1, 'p_pet_id': chapa_pet}, a)[1]))
+            rest('POST', 'rpc/activar_chapita', {'p_code': c2, 'p_pet_id': chapa_pet}, a)
+            otra_pet = filas(rest('POST', 'pets', {'name': 'Chapita RLS 2', 'species_id': 1}, a))[0]['id']
+            rest('DELETE', f'pets?id=eq.{chapa_pet}', quien=a)
+            caso('si se borra la mascota, su chapita no vuelve a quedar libre',
+                 rest('POST', 'rpc/public_pet_page', {'p_code': c2})[1].get('status') == 'inactive'
+                 and 'chapita_usada' in json.dumps(rest('POST', 'rpc/activar_chapita', {'p_code': c2, 'p_pet_id': otra_pet}, a)[1]))
+            rest('DELETE', f'pets?id=eq.{otra_pet}', quien=a)
+            caso('la tercera sigue sin activar', rest('POST', 'rpc/public_pet_page', {'p_code': c3})[1].get('status') == 'unactivated')
+            OBJETIVOS_DE_PRUEBA.append(tag_c1)
+            pedir('DELETE', f'{URL}/rest/v1/qr_tags?batch_id=eq.{lote}', headers=ADMIN)
+            pedir('DELETE', f'{URL}/rest/v1/qr_batches?id=eq.{lote}', headers=ADMIN)
+
             pedir('DELETE', f'{URL}/rest/v1/businesses?id=in.({negocio},{sin_duenio},{desde_marca})', headers=ADMIN)
             pedir('DELETE', f'{URL}/rest/v1/place_marks?user_id=in.({a_id},{b_id})', headers=ADMIN)
         finally:

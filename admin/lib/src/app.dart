@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'pantallas/ayuda.dart';
+import 'pantallas/chapitas.dart';
 import 'pantallas/comercios.dart';
 import 'pantallas/denuncias.dart';
 import 'pantallas/ingreso.dart';
@@ -122,6 +123,7 @@ class _PortalState extends ConsumerState<Portal> {
     (Icons.handshake_outlined, T.prospectos),
     (Icons.volunteer_activism_outlined, T.ayuda),
     (Icons.newspaper_outlined, T.noticias),
+    (Icons.qr_code_2, T.chapitas),
   ];
 
   @override
@@ -135,7 +137,8 @@ class _PortalState extends ConsumerState<Portal> {
       4 => const ComerciosScreen(),
       5 => const ProspectosScreen(),
       6 => const AyudaScreen(),
-      _ => const NoticiasScreen(),
+      7 => const NoticiasScreen(),
+      _ => const ChapitasScreen(),
     };
     return Scaffold(
       appBar: AppBar(

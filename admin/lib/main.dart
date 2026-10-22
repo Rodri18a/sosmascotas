@@ -26,6 +26,7 @@ Future<void> main() async {
           SupabaseAdminRepositorio(cliente),
         ),
         sesionProvider.overrideWithValue(SupabaseSesionAdmin(cliente.auth)),
+        urlPublicaProvider.overrideWithValue(env.urlPublica),
       ],
       child: const AdminApp(),
     ),

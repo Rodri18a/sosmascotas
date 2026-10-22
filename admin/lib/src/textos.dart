@@ -22,6 +22,7 @@ abstract final class T {
   static const lugares = 'Lugares';
   static const prospectos = 'Prospectos';
   static const ayuda = 'Ayuda';
+  static const chapitas = 'Chapitas';
 
   // Panel
   static const ultimos = 'Últimos';
@@ -233,4 +234,19 @@ abstract final class T {
     'pending': 'Pendiente',
     'verified': 'Verificado',
   };
+
+  // Chapitas (1.8b.1, D95)
+  static const nuevoLote = 'Nuevo lote';
+  static const sinLotes =
+      'Todavía no hay lotes. Cada lote genera códigos únicos para imprimir en las chapitas.';
+  static const cantidad = 'Cantidad (1 a 500)';
+  static const productor = 'Productor';
+  static const material = 'Material';
+  static const costoUnidad = r'Costo por unidad ($)';
+  static const crear = 'Crear';
+  static const descargarCsv = 'Descargar CSV';
+  static const avisoDireccion =
+      'Cada código lleva la dirección de la web pública de este entorno: los lotes que se imprimen de verdad se crean en producción, con el dominio definitivo.';
+  static String resumenLote(int cantidad, int activadas, int escaneos) =>
+      '$cantidad chapitas · $activadas activadas · $escaneos escaneos';
 }

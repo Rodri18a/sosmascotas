@@ -213,7 +213,7 @@ Regla de trabajo: **por cada etapa de desarrollo, avanzar al menos un paso de va
 - [x] 1.8.8 Directorio de Ayuda: enlaces a las adopciones de cada refugio (⏱️ 1 h) — 18/10/2026 (D76): sección Ayuda del portal (cargar, editar, ocultar, enlace a adopciones), con políticas que solo dejan escribir al rol `admin`
 
 ### Etapa 1.8b · Chapitas físicas
-- [ ] 1.8b.1 `qr_batches` + generación de lotes pre-codificados y exportación para el productor (⏱️ 3 h)
+- [x] 1.8b.1 `qr_batches` + generación de lotes pre-codificados y exportación para el productor (⏱️ 3 h) — 22/10/2026 (D95), adelantado para regalar chapitas en el lanzamiento (0.8.7): migración `chapitas` (`qr_batches` sin acceso directo, `admin_crear_lote()` de 1 a 500, `admin_lotes()`, `admin_codigos_lote()`, `activar_chapita()`, `desvincular_chapita()`, una chapita usada nunca vuelve a quedar libre) aplicada en dev; sección **Chapitas** en el portal con el CSV para el productor. `rls_test.py` OK (653), 16 pruebas del portal
 - [ ] 1.8b.2 "Activar chapita": escanear y vincular a una mascota; desvincular (⏱️ 3 h)
 - [ ] 1.8b.3 Página de código sin activar ("Activá esta chapita con la app") (⏱️ 1 h)
 - [ ] 1.8b.4 Pedido con retiro en la veterinaria asociada + marcar entregada desde el modo comercio (⏱️ 4 h)
