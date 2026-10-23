@@ -4145,4 +4145,63 @@ class AppLocalizationsEs extends AppLocalizations {
   String propuestaResultado(int enviadas, int vistas, int aceptadas) {
     return '$enviadas enviadas · $vistas vistas · $aceptadas aceptadas';
   }
+
+  @override
+  String get mascotaRenac => '¿Está registrada en el RENAC?';
+
+  @override
+  String get mascotaRenacAyuda =>
+      'Es el registro oficial de perros y gatos con microchip. Si no sabés, elegí \"No sé\".';
+
+  @override
+  String get renacTitulo => 'Registro RENAC';
+
+  @override
+  String get renacRegistrada => 'Registrada en el RENAC';
+
+  @override
+  String get renacNoRegistrada => 'No está registrada en el RENAC';
+
+  @override
+  String get renacNoSabe => 'No sabés si está registrada en el RENAC';
+
+  @override
+  String get renacSinResponder => '¿Está registrada en el RENAC?';
+
+  @override
+  String get renacDeclarado => 'Lo indicaste vos: la app no lo verifica.';
+
+  @override
+  String renacAviso(String nombre) {
+    return 'Registrar a $nombre con microchip es obligatorio por ley y ayuda a que vuelva a casa si se pierde.';
+  }
+
+  @override
+  String get renacCachorro => 'Se registra a partir de los 90 días de vida.';
+
+  @override
+  String get renacComoRegistrar => 'Cómo registrarla';
+
+  @override
+  String get renacVerificar => 'Verificar en el RENAC';
+
+  @override
+  String get renacYaLaRegistre => 'Ya la registré';
+
+  @override
+  String get renacGuardado => 'Listo, quedó como registrada.';
+
+  @override
+  String get renacGuiaTitulo => 'Cómo registrar a tu mascota';
+
+  @override
+  String get renacGuiaTexto =>
+      '## Qué es el RENAC\nEs el **Registro Nacional de Animales de Compañía** del MGAP (Ley 18.471). Los perros y gatos se identifican con un **microchip** y se registran a nombre de quien los tiene a cargo. Es obligatorio.\n## Cuándo\nA partir de los **90 días de vida**.\n## Cómo se hace\n- Andá a una veterinaria que sea **operador RENAC** (veterinarios acreditados por el INBA).\n- Te coloca el microchip, si no tiene, y carga los datos de tu mascota y los tuyos.\n- Te dan una **constancia** con esos datos. Guardala.\n- El costo lo fija cada veterinaria: preguntá antes.\n## Si se muda o cambia de dueño\nPedile a tu veterinaria que actualice los datos en el RENAC.\n## Si se pierde\nAdemás de publicar el SOS en la app, pedí que la marquen como **extraviada** en el RENAC.\n## Chip y chapita QR\nEl chip solo lo lee una veterinaria con un lector. La chapita QR la lee cualquier celular. **Se complementan.**\n> SOS Mascota no es parte del RENAC ni del MGAP. Esta guía es orientativa: ante cualquier duda, consultá con tu veterinaria o con el INBA.';
+
+  @override
+  String get renacVerVeterinarias => 'Ver veterinarias que colocan microchip';
+
+  @override
+  String get renacVerificarAyuda =>
+      'Para consultar necesitás el número de chip y tu documento. Se abre la página oficial.';
 }

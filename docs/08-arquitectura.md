@@ -160,6 +160,7 @@ Tabla `events` (append-only), escrita por el cliente con `ref.read(metricasProvi
 | `alert_zone_set` / `alert_zone_clear` | — (guardó o borró su zona para avisos; **sin coordenadas**) |
 | `signup` / `pet_create` | — |
 | `health_record_create` | tipo del registro de la libreta (`vaccine`, `deworming`, `checkup`, `allergy`, `other`; D66) |
+| `renac_status_set` / `renac_guide_open` / `renac_verify_click` | estado RENAC declarado (`registered`, `not_registered`, `unknown`), abrir la guía y tocar "Verificar en el RENAC", sin datos de la mascota (D96) |
 | `household_invite` / `household_join` / `household_leave` | — (sin datos de nadie; D69) |
 | `map_view` | vista elegida (`mapa`, `lista`, `sinLocal`; D75) |
 | `event_publish` / `event_open` / `abuse_report` | tipo de evento o target_id; la denuncia sin datos (D80) |

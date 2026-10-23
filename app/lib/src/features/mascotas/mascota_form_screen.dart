@@ -7,6 +7,7 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 import '../../../l10n/l10n.dart';
 import '../../cuenta/servicio_cuenta.dart';
 import '../../fotos/elegir_foto.dart';
+import '../../funcionalidades/funcionalidades_activas.dart';
 import '../../mascotas/catalogo.dart';
 import '../../mascotas/mascotas_repositorio.dart';
 import '../../metricas/metricas.dart';
@@ -75,6 +76,7 @@ class _FormularioState extends ConsumerState<_Formulario> {
   late Sexo _sexo = widget.original?.sexo ?? Sexo.unknown;
   late DateTime? _nacimiento = widget.original?.nacimiento;
   late bool? _castrada = widget.original?.castrada;
+  late EstadoRenac? _renac = widget.original?.renac;
 
   Uint8List? _fotoNueva;
   bool _procesandoFoto = false;
@@ -216,12 +218,18 @@ class _FormularioState extends ConsumerState<_Formulario> {
         fotoPath: fotoPath,
         microchip: normalizarMicrochip(_microchip.text),
         castrada: _castrada,
+        renac: _renac,
         notas: _notas.text,
       );
       final guardada = _esNueva
           ? await repo.crear(mascota)
           : await repo.actualizar(mascota);
       if (_esNueva) ref.read(metricasProvider).track(Eventos.petCreate);
+      if (_renac case final renac? when renac != widget.original?.renac) {
+        ref
+            .read(metricasProvider)
+            .track(Eventos.renacStatusSet, props: {'estado': renac.valor});
+      }
       ref.invalidate(misMascotasProvider);
       if (mounted) context.go(Rutas.fichaMascota(guardada.id));
     } on Exception {
@@ -494,6 +502,52 @@ class _FormularioState extends ConsumerState<_Formulario> {
                       _modificado = true;
                     }),
                   ),
+                  if (seRegistraEnRenac(
+                    especies.where((e) => e.id == especieId).firstOrNull?.slug,
+                  ))
+                    SiFuncionalidad(
+                      Funcionalidades.renac,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              t.mascotaRenac,
+                              style: tema.textTheme.titleSmall,
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              t.mascotaRenacAyuda,
+                              style: tema.textTheme.bodySmall,
+                            ),
+                            const SizedBox(height: 8),
+                            SegmentedButton<EstadoRenac?>(
+                              emptySelectionAllowed: true,
+                              segments: [
+                                ButtonSegment(
+                                  value: EstadoRenac.registered,
+                                  label: Text(t.si),
+                                ),
+                                ButtonSegment(
+                                  value: EstadoRenac.notRegistered,
+                                  label: Text(t.no),
+                                ),
+                                ButtonSegment(
+                                  value: EstadoRenac.unknown,
+                                  label: Text(t.noSe),
+                                ),
+                              ],
+                              selected: {?_renac},
+                              onSelectionChanged: (s) => setState(() {
+                                _renac = s.firstOrNull;
+                                _modificado = true;
+                              }),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   const SizedBox(height: 16),
                   TextFormField(
                     controller: _notas,

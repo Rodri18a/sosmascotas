@@ -28,6 +28,7 @@ import 'features/no_disponible/no_disponible_screen.dart';
 import 'features/noticias/noticias_screen.dart';
 import 'features/perfil/perfil_screen.dart';
 import 'features/recordatorios/recordatorios.dart';
+import 'features/renac/renac.dart';
 import 'features/shell/app_shell.dart';
 import 'features/sos/sos_detalle_screen.dart';
 import 'features/sos/sos_nuevo_screen.dart';
@@ -71,6 +72,10 @@ abstract final class Rutas {
   static const denuncia = '/denuncia';
   static const nuevoEvento = '/eventos/nuevo';
   static const marcarLugar = '/lugares/marcar';
+  static const guiaRenac = '/renac';
+
+  /// El mapa con el filtro "Coloca microchip" ya puesto (guía del RENAC).
+  static const mapaColocaMicrochip = '$mapa?filtro=microchip';
 
   /// Rutas detrás de una funcionalidad gradual (comienzo de la ruta → clave de
   /// `Funcionalidades`). Quien entra sin tenerla prendida ve "Todavía no está
@@ -89,6 +94,7 @@ abstract final class Rutas {
     denuncia: Funcionalidades.eventos,
     nuevoEvento: Funcionalidades.eventos,
     marcarLugar: Funcionalidades.comercios,
+    guiaRenac: Funcionalidades.renac,
   };
 
   /// Rutas que un visitante no puede ver: se le pide ingresar y después vuelve.
@@ -229,7 +235,15 @@ final routerProvider = Provider<GoRouter>((ref) {
             ],
           ),
           StatefulShellBranch(
-            routes: [_pestana(Rutas.mapa, (_, _) => const MapaScreen())],
+            routes: [
+              _pestana(
+                Rutas.mapa,
+                (_, state) => MapaScreen(
+                  colocaMicrochip:
+                      state.uri.queryParameters['filtro'] == 'microchip',
+                ),
+              ),
+            ],
           ),
           StatefulShellBranch(
             routes: [
@@ -377,6 +391,10 @@ final routerProvider = Provider<GoRouter>((ref) {
             ),
           ),
         ],
+      ),
+      GoRoute(
+        path: Rutas.guiaRenac,
+        builder: (_, _) => const GuiaRenacScreen(),
       ),
       GoRoute(path: Rutas.denuncia, builder: (_, _) => const DenunciaScreen()),
       GoRoute(

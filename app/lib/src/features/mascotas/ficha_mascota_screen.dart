@@ -16,6 +16,7 @@ import '../../widgets/foto_mascota.dart';
 import '../hogar/tareas.dart';
 import '../libreta/libreta.dart';
 import '../recordatorios/recordatorios.dart';
+import '../renac/renac.dart';
 import '../veterinarias/tarjeta_veterinaria.dart';
 
 /// Ficha de una mascota propia.
@@ -137,6 +138,17 @@ class _Ficha extends ConsumerWidget {
               ),
             ),
           ),
+          if (seRegistraEnRenac(especie?.slug))
+            SiFuncionalidad(
+              Funcionalidades.renac,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 12),
+                child: TarjetaRenac(
+                  mascota: mascota,
+                  slugEspecie: especie?.slug,
+                ),
+              ),
+            ),
           const SizedBox(height: 12),
           // Reportar un SOS es del dueño (D69): quien comparte lo ve en
           // la ficha pero no lo dispara.

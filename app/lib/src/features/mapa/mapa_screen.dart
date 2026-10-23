@@ -42,7 +42,10 @@ enum _Vista { mapa, lista, sinLocal }
 /// y no se vuelve a consultar mientras la vista quede dentro de lo ya cargado.
 /// Los filtros se aplican sobre lo traído, sin otra consulta.
 class MapaScreen extends ConsumerStatefulWidget {
-  const MapaScreen({super.key});
+  const MapaScreen({this.colocaMicrochip = false, super.key});
+
+  /// Llega con el filtro "Coloca microchip" puesto (desde la guía del RENAC).
+  final bool colocaMicrochip;
 
   @override
   ConsumerState<MapaScreen> createState() => _MapaScreenState();
@@ -66,7 +69,16 @@ class _MapaScreenState extends ConsumerState<MapaScreen> {
   Map<String, Comercio> _comercios = const {};
 
   var _vista = _Vista.mapa;
-  var _filtros = const FiltrosMapa();
+  late var _filtros = FiltrosMapa(colocaMicrochip: widget.colocaMicrochip);
+
+  @override
+  void didUpdateWidget(MapaScreen anterior) {
+    super.didUpdateWidget(anterior);
+    // La pestaña ya estaba abierta: el filtro se pone al volver con él.
+    if (widget.colocaMicrochip && !anterior.colocaMicrochip) {
+      _filtros = _filtros.copyWith(colocaMicrochip: true);
+    }
+  }
 
   Future<void> _alQuedarQuieto(Limites visible) async {
     setState(() => _visible = visible);

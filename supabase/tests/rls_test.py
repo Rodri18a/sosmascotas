@@ -182,6 +182,13 @@ def main():
              rest('POST', 'pets', {'name': 'X', 'species_id': 1, 'microchip': '12345'}, a)[0] == 400)
         caso('A puede editar su mascota',
              filas(rest('PATCH', f"pets?id=eq.{pet.get('id')}", {'color': 'Negro'}, a))[0]['color'] == 'Negro')
+        caso('A declara el estado RENAC de su mascota',
+             filas(rest('PATCH', f"pets?id=eq.{pet.get('id')}", {'renac_status': 'registered'}, a))[0]['renac_status']
+             == 'registered')
+        caso('un estado RENAC desconocido se rechaza',
+             rest('PATCH', f"pets?id=eq.{pet.get('id')}", {'renac_status': 'certificado'}, a)[0] == 400)
+        caso('B no puede cambiar el estado RENAC de la mascota de A',
+             bloqueado(rest('PATCH', f"pets?id=eq.{pet.get('id')}", {'renac_status': 'not_registered'}, b)))
 
         print('health_records (libreta sanitaria)')
         r_vac = rest('POST', 'health_records', {'pet_id': pet.get('id'), 'kind': 'vaccine', 'name': 'Antirrábica',

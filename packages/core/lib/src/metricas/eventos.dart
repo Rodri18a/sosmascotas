@@ -18,6 +18,9 @@ abstract final class Eventos {
   static const pwaPrompt = 'pwa_prompt';
   static const pwaInstalled = 'pwa_installed';
   static const healthRecordCreate = 'health_record_create';
+  static const renacStatusSet = 'renac_status_set';
+  static const renacGuideOpen = 'renac_guide_open';
+  static const renacVerifyClick = 'renac_verify_click';
   static const reminderCreate = 'reminder_create';
   static const reminderDone = 'reminder_done';
   static const householdInvite = 'household_invite';

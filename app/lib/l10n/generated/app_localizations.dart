@@ -7029,6 +7029,114 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'{enviadas} enviadas · {vistas} vistas · {aceptadas} aceptadas'**
   String propuestaResultado(int enviadas, int vistas, int aceptadas);
+
+  /// No description provided for @mascotaRenac.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Está registrada en el RENAC?'**
+  String get mascotaRenac;
+
+  /// No description provided for @mascotaRenacAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Es el registro oficial de perros y gatos con microchip. Si no sabés, elegí \"No sé\".'**
+  String get mascotaRenacAyuda;
+
+  /// No description provided for @renacTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Registro RENAC'**
+  String get renacTitulo;
+
+  /// No description provided for @renacRegistrada.
+  ///
+  /// In es, this message translates to:
+  /// **'Registrada en el RENAC'**
+  String get renacRegistrada;
+
+  /// No description provided for @renacNoRegistrada.
+  ///
+  /// In es, this message translates to:
+  /// **'No está registrada en el RENAC'**
+  String get renacNoRegistrada;
+
+  /// No description provided for @renacNoSabe.
+  ///
+  /// In es, this message translates to:
+  /// **'No sabés si está registrada en el RENAC'**
+  String get renacNoSabe;
+
+  /// No description provided for @renacSinResponder.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Está registrada en el RENAC?'**
+  String get renacSinResponder;
+
+  /// No description provided for @renacDeclarado.
+  ///
+  /// In es, this message translates to:
+  /// **'Lo indicaste vos: la app no lo verifica.'**
+  String get renacDeclarado;
+
+  /// No description provided for @renacAviso.
+  ///
+  /// In es, this message translates to:
+  /// **'Registrar a {nombre} con microchip es obligatorio por ley y ayuda a que vuelva a casa si se pierde.'**
+  String renacAviso(String nombre);
+
+  /// No description provided for @renacCachorro.
+  ///
+  /// In es, this message translates to:
+  /// **'Se registra a partir de los 90 días de vida.'**
+  String get renacCachorro;
+
+  /// No description provided for @renacComoRegistrar.
+  ///
+  /// In es, this message translates to:
+  /// **'Cómo registrarla'**
+  String get renacComoRegistrar;
+
+  /// No description provided for @renacVerificar.
+  ///
+  /// In es, this message translates to:
+  /// **'Verificar en el RENAC'**
+  String get renacVerificar;
+
+  /// No description provided for @renacYaLaRegistre.
+  ///
+  /// In es, this message translates to:
+  /// **'Ya la registré'**
+  String get renacYaLaRegistre;
+
+  /// No description provided for @renacGuardado.
+  ///
+  /// In es, this message translates to:
+  /// **'Listo, quedó como registrada.'**
+  String get renacGuardado;
+
+  /// No description provided for @renacGuiaTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Cómo registrar a tu mascota'**
+  String get renacGuiaTitulo;
+
+  /// No description provided for @renacGuiaTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'## Qué es el RENAC\nEs el **Registro Nacional de Animales de Compañía** del MGAP (Ley 18.471). Los perros y gatos se identifican con un **microchip** y se registran a nombre de quien los tiene a cargo. Es obligatorio.\n## Cuándo\nA partir de los **90 días de vida**.\n## Cómo se hace\n- Andá a una veterinaria que sea **operador RENAC** (veterinarios acreditados por el INBA).\n- Te coloca el microchip, si no tiene, y carga los datos de tu mascota y los tuyos.\n- Te dan una **constancia** con esos datos. Guardala.\n- El costo lo fija cada veterinaria: preguntá antes.\n## Si se muda o cambia de dueño\nPedile a tu veterinaria que actualice los datos en el RENAC.\n## Si se pierde\nAdemás de publicar el SOS en la app, pedí que la marquen como **extraviada** en el RENAC.\n## Chip y chapita QR\nEl chip solo lo lee una veterinaria con un lector. La chapita QR la lee cualquier celular. **Se complementan.**\n> SOS Mascota no es parte del RENAC ni del MGAP. Esta guía es orientativa: ante cualquier duda, consultá con tu veterinaria o con el INBA.'**
+  String get renacGuiaTexto;
+
+  /// No description provided for @renacVerVeterinarias.
+  ///
+  /// In es, this message translates to:
+  /// **'Ver veterinarias que colocan microchip'**
+  String get renacVerVeterinarias;
+
+  /// No description provided for @renacVerificarAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Para consultar necesitás el número de chip y tu documento. Se abre la página oficial.'**
+  String get renacVerificarAyuda;
 }
 
 class _AppLocalizationsDelegate

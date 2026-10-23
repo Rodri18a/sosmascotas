@@ -1,6 +1,28 @@
 /// Sexo de la mascota (valores iguales a la base: `pet_sex`).
 enum Sexo { male, female, unknown }
 
+/// Estado RENAC declarado por el dueño (`pets.renac_status`, D96). La app no
+/// lo certifica: sin respuesta queda en nulo.
+enum EstadoRenac {
+  registered,
+  notRegistered,
+  unknown;
+
+  /// Valor en la base.
+  String get valor => switch (this) {
+    registered => 'registered',
+    notRegistered => 'not_registered',
+    unknown => 'unknown',
+  };
+
+  static EstadoRenac? deValor(Object? valor) => switch (valor) {
+    'registered' => registered,
+    'not_registered' => notRegistered,
+    'unknown' => unknown,
+    _ => null,
+  };
+}
+
 /// Mascota de un dueño (tabla `pets`).
 class Mascota {
   const Mascota({
@@ -16,6 +38,7 @@ class Mascota {
     this.fotoPath,
     this.microchip,
     this.castrada,
+    this.renac,
     this.notas,
     this.duenoId,
   });
@@ -36,6 +59,7 @@ class Mascota {
     fotoPath: json['photo_path'] as String?,
     microchip: json['microchip'] as String?,
     castrada: json['neutered'] as bool?,
+    renac: EstadoRenac.deValor(json['renac_status']),
     notas: json['notes'] as String?,
     duenoId: json['owner_id'] as String?,
   );
@@ -52,6 +76,7 @@ class Mascota {
   final String? fotoPath;
   final String? microchip;
   final bool? castrada;
+  final EstadoRenac? renac;
   final String? notas;
 
   /// Quién la cargó (`owner_id`). Con el hogar compartido (D69) puede no ser
@@ -74,10 +99,11 @@ class Mascota {
     'photo_path': fotoPath,
     'microchip': _vacioANulo(microchip),
     'neutered': castrada,
+    'renac_status': renac?.valor,
     'notes': _vacioANulo(notas),
   };
 
-  Mascota copyWith({String? fotoPath}) => Mascota(
+  Mascota copyWith({String? fotoPath, EstadoRenac? renac}) => Mascota(
     id: id,
     nombre: nombre,
     especieId: especieId,
@@ -90,6 +116,7 @@ class Mascota {
     fotoPath: fotoPath ?? this.fotoPath,
     microchip: microchip,
     castrada: castrada,
+    renac: renac ?? this.renac,
     notas: notas,
     duenoId: duenoId,
   );
@@ -128,3 +155,31 @@ ValidacionMicrochip validarMicrochip(String? texto) {
 
 String normalizarMicrochip(String? texto) =>
     (texto ?? '').replaceAll(RegExp(r'[\s-]'), '');
+
+/// Especies que se registran en el RENAC (su consulta pública es para caninos
+/// y felinos), por `species.slug`.
+const especiesRenac = {'dog', 'cat'};
+
+/// Edad desde la que se registra en el RENAC (investigacion/renac.md: mayores
+/// de 90 días).
+const diasParaRenac = 90;
+
+/// ¿Corresponde mostrar el RENAC para una mascota de la especie [slugEspecie]?
+bool seRegistraEnRenac(String? slugEspecie) =>
+    especiesRenac.contains(slugEspecie);
+
+/// ¿Conviene recordarle al dueño el registro en el RENAC? Se avisa si no está
+/// registrada o no se sabe (también sin responder), salvo que sea de una
+/// especie sin RENAC o menor de [diasParaRenac] días. Sin fecha de nacimiento,
+/// se avisa.
+bool avisarRenac(
+  Mascota mascota, {
+  required String? slugEspecie,
+  required DateTime hoy,
+}) {
+  if (!seRegistraEnRenac(slugEspecie)) return false;
+  if (mascota.renac == EstadoRenac.registered) return false;
+  final nacimiento = mascota.nacimiento;
+  if (nacimiento == null) return true;
+  return hoy.difference(nacimiento).inDays >= diasParaRenac;
+}
