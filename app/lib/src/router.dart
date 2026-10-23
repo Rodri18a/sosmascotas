@@ -16,6 +16,7 @@ import 'features/hogar/hogar_screen.dart';
 import 'features/ingresar/ingresar_screen.dart';
 import 'features/legal/legal_screen.dart';
 import 'features/libreta/libreta.dart';
+import 'features/mapa/buscar_lugares.dart';
 import 'features/mapa/mapa_screen.dart';
 import 'features/mapa/marcar_lugar.dart';
 import 'features/mascotas/activar_chapita_screen.dart';
@@ -39,6 +40,7 @@ import 'features/veterinarias/socios_screen.dart';
 import 'funcionalidades/funcionalidades_activas.dart';
 import 'legal/legal.dart';
 import 'redireccion.dart';
+import 'sos/sos_repositorio.dart';
 
 /// Direcciones de la app. También son las direcciones web (enlaces compartibles).
 abstract final class Rutas {
@@ -73,6 +75,13 @@ abstract final class Rutas {
   static const nuevoEvento = '/eventos/nuevo';
   static const marcarLugar = '/lugares/marcar';
   static const guiaRenac = '/renac';
+  static const buscarLugares = '/buscar';
+
+  /// Búsqueda de lugares cerca de [desde] (el centro del mapa).
+  static String buscar(Punto desde) => Uri(
+    path: buscarLugares,
+    queryParameters: {'lat': '${desde.lat}', 'lng': '${desde.lng}'},
+  ).toString();
 
   /// El mapa con el filtro "Coloca microchip" ya puesto (guía del RENAC).
   static const mapaColocaMicrochip = '$mapa?filtro=microchip';
@@ -95,6 +104,7 @@ abstract final class Rutas {
     nuevoEvento: Funcionalidades.eventos,
     marcarLugar: Funcionalidades.comercios,
     guiaRenac: Funcionalidades.renac,
+    buscarLugares: Funcionalidades.busqueda,
   };
 
   /// Rutas que un visitante no puede ver: se le pide ingresar y después vuelve.
@@ -391,6 +401,18 @@ final routerProvider = Provider<GoRouter>((ref) {
             ),
           ),
         ],
+      ),
+      GoRoute(
+        path: Rutas.buscarLugares,
+        builder: (_, state) => BuscarLugaresScreen(
+          desde: switch ((
+            double.tryParse(state.uri.queryParameters['lat'] ?? ''),
+            double.tryParse(state.uri.queryParameters['lng'] ?? ''),
+          )) {
+            (final lat?, final lng?) => Punto(lat, lng),
+            _ => ref.read(miZonaProvider),
+          },
+        ),
       ),
       GoRoute(
         path: Rutas.guiaRenac,

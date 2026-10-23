@@ -25,7 +25,19 @@ abstract interface class ComerciosRepositorio {
 
   /// Enlace público de una foto de comercio.
   String urlFoto(String ruta);
+
+  /// Lugares por nombre o [rubro] cerca de [desde] (1.8.7, D97), con la zona
+  /// del punto para la métrica.
+  Future<ResultadoBusqueda> buscar(
+    String texto, {
+    required Punto desde,
+    Categoria? rubro,
+  });
 }
+
+/// Lo que devuelve una búsqueda: los lugares (los más cercanos primero) y la
+/// zona donde se buscó (`null` fuera de las zonas activas).
+typedef ResultadoBusqueda = ({int? zona, List<Comercio> lugares});
 
 /// Por qué no se pudo marcar o reclamar.
 enum ErrorLugar { yaMarcado, demasiados, invalido, sinConexion }
@@ -129,6 +141,30 @@ class SupabaseComerciosRepositorio implements ComerciosRepositorio {
   @override
   String urlFoto(String ruta) =>
       _cliente.storage.from('business-photos').getPublicUrl(ruta);
+
+  @override
+  Future<ResultadoBusqueda> buscar(
+    String texto, {
+    required Punto desde,
+    Categoria? rubro,
+  }) async {
+    final r = await _cliente.rpc<Map<String, dynamic>>(
+      'buscar_lugares',
+      params: {
+        'p_texto': texto,
+        'p_rubro': rubro?.valor,
+        'p_lat': desde.lat,
+        'p_lng': desde.lng,
+      },
+    );
+    return (
+      zona: (r['zona'] as num?)?.toInt(),
+      lugares: ((r['lugares'] as List?) ?? const [])
+          .cast<Map<String, dynamic>>()
+          .map(Comercio.fromJson)
+          .toList(),
+    );
+  }
 }
 
 /// Sin Supabase configurado no hay comercios.
@@ -161,6 +197,13 @@ class ComerciosSinConfigurar implements ComerciosRepositorio {
 
   @override
   String urlFoto(String ruta) => '';
+
+  @override
+  Future<ResultadoBusqueda> buscar(
+    String texto, {
+    required Punto desde,
+    Categoria? rubro,
+  }) async => (zona: null, lugares: const <Comercio>[]);
 }
 
 final comerciosRepositorioProvider = Provider<ComerciosRepositorio>((ref) {

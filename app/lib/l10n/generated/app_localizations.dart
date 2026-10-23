@@ -7137,6 +7137,54 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Para consultar necesitás el número de chip y tu documento. Se abre la página oficial.'**
   String get renacVerificarAyuda;
+
+  /// No description provided for @buscarLugares.
+  ///
+  /// In es, this message translates to:
+  /// **'Buscar lugares'**
+  String get buscarLugares;
+
+  /// No description provided for @buscarPista.
+  ///
+  /// In es, this message translates to:
+  /// **'Nombre o rubro…'**
+  String get buscarPista;
+
+  /// No description provided for @buscarBorrar.
+  ///
+  /// In es, this message translates to:
+  /// **'Borrar'**
+  String get buscarBorrar;
+
+  /// No description provided for @buscarAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Buscá por nombre o por rubro: veterinaria, peluquería, guardería, refugio…'**
+  String get buscarAyuda;
+
+  /// No description provided for @buscarIncluyeRubro.
+  ///
+  /// In es, this message translates to:
+  /// **'Incluye {rubro} cerca'**
+  String buscarIncluyeRubro(String rubro);
+
+  /// No description provided for @buscarSinRubro.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no hay {rubro} cerca en SOS Mascota.'**
+  String buscarSinRubro(String rubro);
+
+  /// No description provided for @buscarSinResultados.
+  ///
+  /// In es, this message translates to:
+  /// **'No encontramos lugares con «{texto}».'**
+  String buscarSinResultados(String texto);
+
+  /// No description provided for @buscarConocesUno.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Conocés uno? Marcalo en el mapa y lo sumamos.'**
+  String get buscarConocesUno;
 }
 
 class _AppLocalizationsDelegate

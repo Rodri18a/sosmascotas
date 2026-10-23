@@ -43,6 +43,19 @@ abstract final class T {
   static const comerciosPorRubro = 'Comercios por rubro';
   static const comerciosPorEstado = 'Comercios por estado';
   static const sinDatos = 'Sin datos todavía';
+  static const demandaSinCubrir = 'Demanda sin cubrir';
+  static const demandaExplicacion =
+      'Búsquedas en la app por rubro contra los lugares de ese rubro en el mapa.';
+  static String demandaRubro(
+    String rubro,
+    int busquedas,
+    int sinResultados,
+    int lugares,
+  ) =>
+      '$rubro: $busquedas búsquedas ($sinResultados sin resultados) · '
+      '$lugares en el mapa';
+  static const demandaTextos = 'Lo más buscado sin resultados (sin rubro)';
+  static String demandaTexto(String texto, int veces) => '«$texto»: $veces';
 
   // Moderación
   static const colaVacia = 'No hay nada para moderar.';

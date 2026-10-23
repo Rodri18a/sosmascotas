@@ -140,7 +140,7 @@ Tabla `events` (append-only), escrita por el cliente con `ref.read(metricasProvi
 |---|---|
 | `app_open` | plataforma, zona |
 | `map_view` | zona, capas activas |
-| `search` | rubro, especie, zona, **cantidad de resultados** |
+| `search` | rubro reconocido (`rubroDeBusqueda()`), zona (`zone_id`) y **cantidad de resultados**; el texto **solo** si no hubo resultados ni rubro, sin números ni `@` y cortado a 40 caracteres (D97). Uno por búsqueda terminada (1,5 s sin escribir), no por letra |
 | `place_impression` | business_id (aparición en el mapa o la lista) |
 | `help_click` | tipo (911, llamar, whatsapp, enlace) y kind de la entrada (pestaña Ayuda, sin datos de nadie) |
 | `theme_change` | tema elegido (`cielo`, `faro`, `vecinos`, `pop`; plan Pro, D63) |

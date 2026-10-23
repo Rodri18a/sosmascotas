@@ -58,9 +58,11 @@ Future<void> _mostrarChat(WidgetTester tester) async {
   await tester.pumpAndSettle();
 }
 
+/// Exposiciones de `chat` (las pantallas de fondo anotan las suyas).
 List<Object?> _exposiciones(List<Map<String, Object?>> eventos) => eventos
     .where((e) => e['name'] == 'feature_exposure')
     .map((e) => e['props'])
+    .where((p) => (p as Map?)?['key'] == 'chat')
     .toList();
 
 void main() {

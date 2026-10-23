@@ -254,7 +254,21 @@ class _MapaScreenState extends ConsumerState<MapaScreen> {
       drawer: const MenuPrincipal(),
       appBar: AppBar(
         title: Text(t.pestanaMapa),
-        actions: const [BotonMensajes(), BotonAvisos(), BotonAjustes()],
+        actions: [
+          SiFuncionalidad(
+            Funcionalidades.busqueda,
+            child: IconButton(
+              tooltip: t.buscarLugares,
+              icon: const Icon(Icons.search),
+              onPressed: () => context.push(
+                Rutas.buscar(_visible?.centro ?? ref.read(miZonaProvider)),
+              ),
+            ),
+          ),
+          const BotonMensajes(),
+          const BotonAvisos(),
+          const BotonAjustes(),
+        ],
       ),
       body: Column(
         children: [
@@ -607,8 +621,8 @@ class _HojaFiltrosState extends ConsumerState<_HojaFiltros> {
   }
 }
 
-class _FilaLugar extends ConsumerWidget {
-  const _FilaLugar({required this.comercio, this.desde});
+class FilaLugar extends ConsumerWidget {
+  const FilaLugar({required this.comercio, this.desde, super.key});
 
   final Comercio comercio;
   final Punto? desde;
@@ -663,7 +677,7 @@ class _Lista extends StatelessWidget {
           children: [
             for (final r in sos) TarjetaSos(reporte: r),
             if (sos.isNotEmpty) const SizedBox(height: 12),
-            for (final c in comercios) _FilaLugar(comercio: c, desde: desde),
+            for (final c in comercios) FilaLugar(comercio: c, desde: desde),
           ],
         );
 }
@@ -701,7 +715,7 @@ class _SinLocal extends ConsumerWidget {
                 ),
               )
             : ListView(
-                children: [for (final c in lista) _FilaLugar(comercio: c)],
+                children: [for (final c in lista) FilaLugar(comercio: c)],
               );
       }(),
       AsyncLoading() => const Center(child: CircularProgressIndicator()),

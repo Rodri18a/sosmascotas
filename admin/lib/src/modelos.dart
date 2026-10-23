@@ -17,6 +17,35 @@ class Panel {
   };
 }
 
+/// Demanda sin cubrir (`admin_demanda()`, 1.8.7, D97): búsquedas por rubro
+/// contra los lugares de ese rubro, y textos sin rubro que no encontraron nada.
+class Demanda {
+  const Demanda({this.porRubro = const [], this.textos = const []});
+
+  factory Demanda.fromJson(Map<String, Object?> json) => Demanda(
+    porRubro: [
+      for (final f in (json['por_rubro'] as List?) ?? const [])
+        (
+          rubro: (f as Map)['rubro'] as String,
+          busquedas: (f['busquedas'] as num).toInt(),
+          sinResultados: (f['sin_resultados'] as num).toInt(),
+          lugares: (f['lugares'] as num).toInt(),
+        ),
+    ],
+    textos: [
+      for (final f in (json['textos_sin_resultado'] as List?) ?? const [])
+        (
+          texto: (f as Map)['texto'] as String,
+          veces: (f['veces'] as num).toInt(),
+        ),
+    ],
+  );
+
+  final List<({String rubro, int busquedas, int sinResultados, int lugares})>
+  porRubro;
+  final List<({String texto, int veces})> textos;
+}
+
 /// Algo reportado para moderar (`admin_moderacion()`, 1.8.3).
 class ItemModeracion {
   const ItemModeracion({

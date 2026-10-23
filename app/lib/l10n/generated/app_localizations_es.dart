@@ -4204,4 +4204,36 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get renacVerificarAyuda =>
       'Para consultar necesitás el número de chip y tu documento. Se abre la página oficial.';
+
+  @override
+  String get buscarLugares => 'Buscar lugares';
+
+  @override
+  String get buscarPista => 'Nombre o rubro…';
+
+  @override
+  String get buscarBorrar => 'Borrar';
+
+  @override
+  String get buscarAyuda =>
+      'Buscá por nombre o por rubro: veterinaria, peluquería, guardería, refugio…';
+
+  @override
+  String buscarIncluyeRubro(String rubro) {
+    return 'Incluye $rubro cerca';
+  }
+
+  @override
+  String buscarSinRubro(String rubro) {
+    return 'Todavía no hay $rubro cerca en SOS Mascota.';
+  }
+
+  @override
+  String buscarSinResultados(String texto) {
+    return 'No encontramos lugares con «$texto».';
+  }
+
+  @override
+  String get buscarConocesUno =>
+      '¿Conocés uno? Marcalo en el mapa y lo sumamos.';
 }

@@ -12,6 +12,9 @@ abstract interface class AdminRepositorio {
 
   Future<Panel> panel({int dias = 30});
 
+  /// Demanda sin cubrir de los últimos [dias] (1.8.7).
+  Future<Demanda> demanda({int dias = 30});
+
   Future<List<ItemModeracion>> moderacion();
 
   /// [accion]: `aprobar` o `eliminar`.
@@ -118,6 +121,14 @@ class SupabaseAdminRepositorio implements AdminRepositorio {
       'admin_panel',
       params: {'p_dias': dias},
     ))).cast<String, Object?>(),
+  );
+
+  @override
+  Future<Demanda> demanda({int dias = 30}) async => Demanda.fromJson(
+    (await _cliente.rpc<Map<String, dynamic>>(
+      'admin_demanda',
+      params: {'p_dias': dias},
+    )).cast<String, Object?>(),
   );
 
   @override
@@ -353,6 +364,12 @@ final panelProvider = FutureProvider<Panel>(
   (ref) => ref
       .watch(adminRepositorioProvider)
       .panel(dias: ref.watch(diasPanelProvider)),
+);
+
+final demandaProvider = FutureProvider<Demanda>(
+  (ref) => ref
+      .watch(adminRepositorioProvider)
+      .demanda(dias: ref.watch(diasPanelProvider)),
 );
 
 final moderacionProvider = FutureProvider<List<ItemModeracion>>(

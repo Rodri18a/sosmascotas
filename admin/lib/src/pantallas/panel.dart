@@ -72,6 +72,8 @@ class PanelScreen extends ConsumerWidget {
             datos: p.conteos('comercios_por_estado'),
             nombres: T.estadosVerificacion,
           ),
+          const SizedBox(height: 16),
+          const _Demanda(),
         ],
       ),
       AsyncError() => Center(
@@ -137,4 +139,47 @@ class _Conteos extends StatelessWidget {
       ),
     ),
   );
+}
+
+/// Demanda sin cubrir (05, 1.8.7): lo que la gente busca y no encuentra.
+class _Demanda extends ConsumerWidget {
+  const _Demanda();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final tema = Theme.of(context);
+    final d = ref.watch(demandaProvider).value;
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(T.demandaSinCubrir, style: tema.textTheme.titleMedium),
+            Text(T.demandaExplicacion, style: tema.textTheme.bodySmall),
+            const SizedBox(height: 8),
+            if (d == null || (d.porRubro.isEmpty && d.textos.isEmpty))
+              const Text(T.sinDatos)
+            else ...[
+              for (final r in d.porRubro)
+                Text(
+                  T.demandaRubro(
+                    T.rubros[r.rubro] ?? r.rubro,
+                    r.busquedas,
+                    r.sinResultados,
+                    r.lugares,
+                  ),
+                ),
+              if (d.textos.isNotEmpty) ...[
+                const SizedBox(height: 8),
+                Text(T.demandaTextos, style: tema.textTheme.titleSmall),
+                for (final x in d.textos)
+                  Text(T.demandaTexto(x.texto, x.veces)),
+              ],
+            ],
+          ],
+        ),
+      ),
+    );
+  }
 }

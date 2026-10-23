@@ -73,6 +73,21 @@ class RepoFalso implements AdminRepositorio {
   });
 
   @override
+  Future<Demanda> demanda({int dias = 30}) async => Demanda.fromJson({
+    'por_rubro': [
+      {
+        'rubro': 'grooming',
+        'busquedas': 85,
+        'sin_resultados': 60,
+        'lugares': 1,
+      },
+    ],
+    'textos_sin_resultado': [
+      {'texto': 'fisioterapia', 'veces': 7},
+    ],
+  });
+
+  @override
   Future<List<ItemModeracion>> moderacion() async => cola;
 
   @override
@@ -353,6 +368,12 @@ void main() {
     expect(find.text('2,5'), findsOneWidget);
     expect(find.text('Veterinaria: 5'), findsOneWidget);
     expect(find.text('Verificado: 1'), findsOneWidget);
+    expect(find.text('Demanda sin cubrir'), findsOneWidget);
+    expect(
+      find.text('Peluquería: 85 búsquedas (60 sin resultados) · 1 en el mapa'),
+      findsOneWidget,
+    );
+    expect(find.text('«fisioterapia»: 7'), findsOneWidget);
   });
 
   testWidgets('moderación: eliminar el mensaje y bloquear al autor', (

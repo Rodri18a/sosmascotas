@@ -65,6 +65,27 @@ class ComerciosFalsos implements ComerciosRepositorio {
 
   @override
   String urlFoto(String ruta) => 'https://fotos.ejemplo.uy/$ruta';
+
+  final busquedas = <(String, Categoria?)>[];
+
+  /// Busca como la base: por nombre (sin tildes) o por rubro; zona 1.
+  @override
+  Future<ResultadoBusqueda> buscar(
+    String texto, {
+    required Punto desde,
+    Categoria? rubro,
+  }) async {
+    busquedas.add((texto, rubro));
+    final t = normalizarBusqueda(texto);
+    return (
+      zona: 1,
+      lugares: [
+        for (final c in comercios)
+          if (normalizarBusqueda(c.nombre).contains(t) || c.categoria == rubro)
+            c,
+      ],
+    );
+  }
 }
 
 /// Favoritos, "fui" y "mi veterinaria" en memoria.

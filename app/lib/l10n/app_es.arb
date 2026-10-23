@@ -1683,5 +1683,16 @@
   "renacGuiaTitulo": "Cómo registrar a tu mascota",
   "renacGuiaTexto": "## Qué es el RENAC\nEs el **Registro Nacional de Animales de Compañía** del MGAP (Ley 18.471). Los perros y gatos se identifican con un **microchip** y se registran a nombre de quien los tiene a cargo. Es obligatorio.\n## Cuándo\nA partir de los **90 días de vida**.\n## Cómo se hace\n- Andá a una veterinaria que sea **operador RENAC** (veterinarios acreditados por el INBA).\n- Te coloca el microchip, si no tiene, y carga los datos de tu mascota y los tuyos.\n- Te dan una **constancia** con esos datos. Guardala.\n- El costo lo fija cada veterinaria: preguntá antes.\n## Si se muda o cambia de dueño\nPedile a tu veterinaria que actualice los datos en el RENAC.\n## Si se pierde\nAdemás de publicar el SOS en la app, pedí que la marquen como **extraviada** en el RENAC.\n## Chip y chapita QR\nEl chip solo lo lee una veterinaria con un lector. La chapita QR la lee cualquier celular. **Se complementan.**\n> SOS Mascota no es parte del RENAC ni del MGAP. Esta guía es orientativa: ante cualquier duda, consultá con tu veterinaria o con el INBA.",
   "renacVerVeterinarias": "Ver veterinarias que colocan microchip",
-  "renacVerificarAyuda": "Para consultar necesitás el número de chip y tu documento. Se abre la página oficial."
+  "renacVerificarAyuda": "Para consultar necesitás el número de chip y tu documento. Se abre la página oficial.",
+  "buscarLugares": "Buscar lugares",
+  "buscarPista": "Nombre o rubro…",
+  "buscarBorrar": "Borrar",
+  "buscarAyuda": "Buscá por nombre o por rubro: veterinaria, peluquería, guardería, refugio…",
+  "buscarIncluyeRubro": "Incluye {rubro} cerca",
+  "@buscarIncluyeRubro": {"placeholders": {"rubro": {"type": "String"}}},
+  "buscarSinRubro": "Todavía no hay {rubro} cerca en SOS Mascota.",
+  "@buscarSinRubro": {"placeholders": {"rubro": {"type": "String"}}},
+  "buscarSinResultados": "No encontramos lugares con «{texto}».",
+  "@buscarSinResultados": {"placeholders": {"texto": {"type": "String"}}},
+  "buscarConocesUno": "¿Conocés uno? Marcalo en el mapa y lo sumamos."
 }

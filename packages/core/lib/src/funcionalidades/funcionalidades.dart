@@ -32,6 +32,9 @@ abstract final class Funcionalidades {
   /// (etapa 1.2, D75).
   static const mapaCompleto = 'mapa_completo';
 
+  /// Búsqueda de lugares por nombre o rubro (1.8.7, D97).
+  static const busqueda = 'busqueda';
+
   /// Comercios con cuenta: alta, reclamos, marcas y modo comercio (1.3, D77).
   static const comercios = 'comercios';
 

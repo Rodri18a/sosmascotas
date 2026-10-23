@@ -706,6 +706,21 @@ def main():
              len({l['business_type'] for l in lugares}) >= 2 and all(l['kind'] == 'local' for l in lugares))
         solo_vets = filas(rest('POST', 'rpc/lugares_en_zona', {**pando_rect, 'p_tipos': ['vet']}))
         caso('se puede pedir un rubro', solo_vets and all(l['business_type'] == 'vet' for l in solo_vets))
+        print('buscar_lugares (1.8.7)')
+        centro = {'p_lat': -34.717, 'p_lng': -55.958}
+        s_b, busq = rest('POST', 'rpc/buscar_lugares', {**centro, 'p_texto': 'xq', 'p_rubro': 'vet'})
+        caso('un visitante busca por rubro y recibe la zona',
+             s_b == 200 and busq['lugares'] and all(l['business_type'] == 'vet' for l in busq['lugares'])
+             and busq['zona'] is not None)
+        caso('la búsqueda no devuelve datos privados',
+             all('rut' not in l and 'owner_id' not in l for l in busq['lugares']))
+        un_nombre = solo_vets[0]['name'] if solo_vets else ''
+        _, por_nombre = rest('POST', 'rpc/buscar_lugares', {**centro, 'p_texto': un_nombre[:6].upper(), 'p_rubro': None}, a)
+        caso('busca por nombre sin importar mayúsculas', any(l['name'] == un_nombre for l in por_nombre['lugares']))
+        _, comodin = rest('POST', 'rpc/buscar_lugares', {**centro, 'p_texto': '%%', 'p_rubro': None})
+        caso('% no funciona como comodín', comodin['lugares'] == [])
+        caso('un texto de una letra no busca',
+             rest('POST', 'rpc/buscar_lugares', {**centro, 'p_texto': 'a', 'p_rubro': None})[1]['lugares'] == [])
         sin_local = filas(rest('POST', 'rpc/lugares_sin_local', {}))
         caso('"Sin local" trae los online y a domicilio', sin_local and all(l['kind'] != 'local' for l in sin_local))
         caso('un local sin ubicación se rechaza',
@@ -1095,6 +1110,10 @@ def main():
             caso('un visitante no ve el panel', rest('POST', 'rpc/admin_panel', {})[0] >= 400)
             s_p, panel = rest('POST', 'rpc/admin_panel', {'p_dias': 30}, x)
             caso('X ve el panel con los indicadores', s_p == 200 and {'usuarios', 'sos_activos', 'comercios_por_rubro'} <= set(panel))
+            caso('A no ve la demanda sin cubrir', rest('POST', 'rpc/admin_demanda', {}, a)[0] >= 400)
+            caso('un visitante no ve la demanda sin cubrir', rest('POST', 'rpc/admin_demanda', {})[0] >= 400)
+            s_d, demanda = rest('POST', 'rpc/admin_demanda', {'p_dias': 30}, x)
+            caso('X ve la demanda sin cubrir', s_d == 200 and {'por_rubro', 'textos_sin_resultado'} <= set(demanda))
             caso('A no ve la cola de moderación', rest('POST', 'rpc/admin_moderacion', {}, a)[0] >= 400)
             caso('X ve la cola de moderación', rest('POST', 'rpc/admin_moderacion', {}, x)[0] == 200)
             caso('A no puede moderar', rest('POST', 'rpc/admin_moderar', {'p_tipo': 'sos', 'p_id': str(uuid.uuid4()), 'p_accion': 'eliminar'}, a)[0] >= 400)
