@@ -7185,6 +7185,240 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'¿Conocés uno? Marcalo en el mapa y lo sumamos.'**
   String get buscarConocesUno;
+
+  /// No description provided for @pedidoChapitaPedir.
+  ///
+  /// In es, this message translates to:
+  /// **'Pedir una chapita'**
+  String get pedidoChapitaPedir;
+
+  /// No description provided for @pedidoChapitaTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Pedir una chapita'**
+  String get pedidoChapitaTitulo;
+
+  /// No description provided for @pedidoChapitaExplicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Te hacemos una chapita con el QR de {nombre} y la retirás en una veterinaria. Cuando te la den, queda vinculada sola.'**
+  String pedidoChapitaExplicacion(String nombre);
+
+  /// No description provided for @pedidoChapitaPrecio.
+  ///
+  /// In es, this message translates to:
+  /// **'Sin cargo durante el lanzamiento.'**
+  String get pedidoChapitaPrecio;
+
+  /// No description provided for @pedidoChapitaGrabado.
+  ///
+  /// In es, this message translates to:
+  /// **'Texto grabado'**
+  String get pedidoChapitaGrabado;
+
+  /// No description provided for @pedidoChapitaGrabadoAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Lo que va escrito en la chapita (hasta 20 letras).'**
+  String get pedidoChapitaGrabadoAyuda;
+
+  /// No description provided for @pedidoChapitaDonde.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Dónde la retirás?'**
+  String get pedidoChapitaDonde;
+
+  /// No description provided for @pedidoChapitaSinPuntos.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no hay veterinarias de retiro cerca. Probá más adelante.'**
+  String get pedidoChapitaSinPuntos;
+
+  /// No description provided for @pedidoChapitaTuVeterinaria.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu veterinaria'**
+  String get pedidoChapitaTuVeterinaria;
+
+  /// No description provided for @pedidoChapitaConfirmar.
+  ///
+  /// In es, this message translates to:
+  /// **'Pedirla'**
+  String get pedidoChapitaConfirmar;
+
+  /// No description provided for @pedidoChapitaPidiendo.
+  ///
+  /// In es, this message translates to:
+  /// **'Pidiendo…'**
+  String get pedidoChapitaPidiendo;
+
+  /// No description provided for @pedidoChapitaHecho.
+  ///
+  /// In es, this message translates to:
+  /// **'Listo, la pediste. Te avisamos acá cuando esté para retirar.'**
+  String get pedidoChapitaHecho;
+
+  /// No description provided for @pedidoChapitaNumero.
+  ///
+  /// In es, this message translates to:
+  /// **'Pedido N.º {numero} · {nombre}'**
+  String pedidoChapitaNumero(int numero, String nombre);
+
+  /// No description provided for @pedidoChapitaNuevo.
+  ///
+  /// In es, this message translates to:
+  /// **'Pedida: la estamos preparando.'**
+  String get pedidoChapitaNuevo;
+
+  /// No description provided for @pedidoChapitaEnviado.
+  ///
+  /// In es, this message translates to:
+  /// **'En camino a {veterinaria}.'**
+  String pedidoChapitaEnviado(String veterinaria);
+
+  /// No description provided for @pedidoChapitaListo.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Lista para retirar en {veterinaria}! Decí el pedido N.º {numero}.'**
+  String pedidoChapitaListo(String veterinaria, int numero);
+
+  /// No description provided for @pedidoChapitaEntregado.
+  ///
+  /// In es, this message translates to:
+  /// **'Entregada y vinculada.'**
+  String get pedidoChapitaEntregado;
+
+  /// No description provided for @pedidoChapitaCancelado.
+  ///
+  /// In es, this message translates to:
+  /// **'Pedido cancelado.'**
+  String get pedidoChapitaCancelado;
+
+  /// No description provided for @pedidoChapitaYaHayUno.
+  ///
+  /// In es, this message translates to:
+  /// **'Ya hay un pedido abierto para esta mascota.'**
+  String get pedidoChapitaYaHayUno;
+
+  /// No description provided for @pedidoChapitaDemasiados.
+  ///
+  /// In es, this message translates to:
+  /// **'Podés tener hasta {n} pedidos abiertos a la vez.'**
+  String pedidoChapitaDemasiados(int n);
+
+  /// No description provided for @pedidoChapitaNoEsPunto.
+  ///
+  /// In es, this message translates to:
+  /// **'Esa veterinaria ya no entrega chapitas. Elegí otra.'**
+  String get pedidoChapitaNoEsPunto;
+
+  /// No description provided for @retiroTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Chapitas: punto de retiro'**
+  String get retiroTitulo;
+
+  /// No description provided for @retiroTarjetaAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Entregá chapitas QR a tus clientes.'**
+  String get retiroTarjetaAyuda;
+
+  /// No description provided for @retiroSerPunto.
+  ///
+  /// In es, this message translates to:
+  /// **'Ser punto de retiro de chapitas'**
+  String get retiroSerPunto;
+
+  /// No description provided for @retiroSerPuntoAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Los dueños eligen tu veterinaria para retirar la chapita de su mascota. Te la mandamos nosotros.'**
+  String get retiroSerPuntoAyuda;
+
+  /// No description provided for @retiroSoloVerificadas.
+  ///
+  /// In es, this message translates to:
+  /// **'Solo para veterinarias verificadas.'**
+  String get retiroSoloVerificadas;
+
+  /// No description provided for @retiroPedidos.
+  ///
+  /// In es, this message translates to:
+  /// **'Pedidos'**
+  String get retiroPedidos;
+
+  /// No description provided for @retiroSinPedidos.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no hay pedidos.'**
+  String get retiroSinPedidos;
+
+  /// No description provided for @retiroPara.
+  ///
+  /// In es, this message translates to:
+  /// **'Para {nombre}'**
+  String retiroPara(String nombre);
+
+  /// No description provided for @retiroGrabado.
+  ///
+  /// In es, this message translates to:
+  /// **'Grabado: {texto}'**
+  String retiroGrabado(String texto);
+
+  /// No description provided for @retiroCodigo.
+  ///
+  /// In es, this message translates to:
+  /// **'Código {codigo}'**
+  String retiroCodigo(String codigo);
+
+  /// No description provided for @retiroEnPreparacion.
+  ///
+  /// In es, this message translates to:
+  /// **'La estamos preparando.'**
+  String get retiroEnPreparacion;
+
+  /// No description provided for @retiroEnCamino.
+  ///
+  /// In es, this message translates to:
+  /// **'En camino: marcá «Llegó» cuando la recibas.'**
+  String get retiroEnCamino;
+
+  /// No description provided for @retiroEsperando.
+  ///
+  /// In es, this message translates to:
+  /// **'Esperando que la retiren.'**
+  String get retiroEsperando;
+
+  /// No description provided for @retiroEntregadaYa.
+  ///
+  /// In es, this message translates to:
+  /// **'Entregada.'**
+  String get retiroEntregadaYa;
+
+  /// No description provided for @retiroLlego.
+  ///
+  /// In es, this message translates to:
+  /// **'Llegó'**
+  String get retiroLlego;
+
+  /// No description provided for @retiroEntregada.
+  ///
+  /// In es, this message translates to:
+  /// **'Entregada'**
+  String get retiroEntregada;
+
+  /// No description provided for @retiroEntregarTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'¿La entregaste?'**
+  String get retiroEntregarTitulo;
+
+  /// No description provided for @retiroEntregarTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Pedido N.º {numero}: la chapita queda vinculada a {nombre}.'**
+  String retiroEntregarTexto(int numero, String nombre);
 }
 
 class _AppLocalizationsDelegate

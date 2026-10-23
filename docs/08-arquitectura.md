@@ -169,6 +169,7 @@ Tabla `events` (append-only), escrita por el cliente con `ref.read(metricasProvi
 | `menu_open` / `pet_select` | se abre el menú ☰; se elige una mascota o "Todas" para filtrar (D88) |
 | `tab_open` | se cambia de pestaña en la barra inferior, con `tab` (`noticias`, `sos`, `mapa`, `mascotas`, `ayuda`; D94) |
 | `tag_activate` / `tag_unlink` | el dueño activa una chapita física (con `origen`: `enlace` o `codigo`) o la desvincula (D95) |
+| `tag_order_create` / `tag_order_cancel` / `tag_order_status` / `tag_pickup_toggle` | pedido de chapita con retiro: el dueño la pide o cancela; la veterinaria marca el estado nuevo (`ready`, `delivered`) o se hace punto de retiro (`prendido`), con `business_id` (D98) |
 | `news_reaction` | alguien reacciona a una noticia o novedad (D87; lo registra la base, con el tipo y si es noticia o comunidad) |
 | `community_share` / `community_unshare` | el autor de un SOS resuelto comparte o quita el reencuentro en Comunidad (D86; compartir lo registra la base) |
 | `catalog_open` / `catalog_ask` / `product_save` / `order_create` / `order_status` | catálogo y pedidos: abrir, consultar, cargar un producto, pedir (con las unidades) y cada cambio de estado; sin datos de quien pide (D85) |

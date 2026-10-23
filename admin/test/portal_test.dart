@@ -294,6 +294,41 @@ class RepoFalso implements AdminRepositorio {
     'ABCD2345',
     'WXYZ6789',
   ];
+
+  final pedidos = <Map<String, Object?>>[
+    {
+      'id': 'o1',
+      'number': 7,
+      'pet_name': 'Toby',
+      'engraving': 'Toby',
+      'business_name': 'Vete Pando',
+      'status': 'new',
+    },
+    {
+      'id': 'o2',
+      'number': 8,
+      'pet_name': 'Michi',
+      'engraving': 'Michi',
+      'business_name': 'Vete Pando',
+      'status': 'delivered',
+    },
+  ];
+  final enviados = <(String, String)>[];
+  final cancelados = <String>[];
+
+  @override
+  Future<List<Map<String, Object?>>> pedidosChapita() async => pedidos;
+
+  @override
+  Future<void> enviarPedidoChapita(String pedidoId, String codigo) async {
+    if (codigo != 'ABCD2345') throw Exception('chapita_no_disponible');
+    enviados.add((pedidoId, codigo));
+    pedidos[0] = {...pedidos[0], 'status': 'sent', 'code': codigo};
+  }
+
+  @override
+  Future<void> cancelarPedidoChapita(String pedidoId, {String? motivo}) async =>
+      cancelados.add(pedidoId);
 }
 
 Widget _portal({
@@ -652,5 +687,43 @@ void main() {
       'ABCD2345,https://web.ejemplo.uy/m/ABCD2345\n'
       'WXYZ6789,https://web.ejemplo.uy/m/WXYZ6789',
     );
+  });
+
+  testWidgets('chapitas: mandar un pedido con un código libre', (tester) async {
+    _pantallaGrande(tester);
+    final repo = RepoFalso();
+    await tester.pumpWidget(
+      _portal(sesion: SesionFalsa('admin@sosmascotas.uy'), repo: repo),
+    );
+    await _tocar(tester, find.text('Chapitas'));
+    expect(find.text('N.º 7 · Toby · grabado «Toby»'), findsOneWidget);
+    // Los entregados no se listan.
+    expect(find.textContaining('N.º 8'), findsNothing);
+
+    await _tocar(tester, find.widgetWithText(FilledButton, 'Enviar'));
+    final campo = find.descendant(
+      of: find.byType(AlertDialog),
+      matching: find.byType(TextField),
+    );
+    await tester.enterText(campo, 'ZZZZ2222');
+    await _tocar(
+      tester,
+      find.descendant(
+        of: find.byType(AlertDialog),
+        matching: find.widgetWithText(FilledButton, 'Enviar'),
+      ),
+    );
+    expect(find.textContaining('ya se usó'), findsOneWidget);
+
+    await tester.enterText(campo, 'ABCD2345');
+    await _tocar(
+      tester,
+      find.descendant(
+        of: find.byType(AlertDialog),
+        matching: find.widgetWithText(FilledButton, 'Enviar'),
+      ),
+    );
+    expect(repo.enviados.single, ('o1', 'ABCD2345'));
+    expect(find.textContaining('Enviado a la veterinaria'), findsOneWidget);
   });
 }

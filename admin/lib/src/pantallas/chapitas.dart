@@ -66,6 +66,9 @@ class ChapitasScreen extends ConsumerWidget {
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: 12),
+          const _Pedidos(),
+          const SizedBox(height: 16),
+          Text(T.lotes, style: Theme.of(context).textTheme.titleMedium),
           if (lista.isEmpty) const Text(T.sinLotes),
           for (final l in lista)
             Card(
@@ -217,6 +220,143 @@ class _FormularioState extends ConsumerState<_Formulario> {
       FilledButton(
         onPressed: _creando ? null : _crear,
         child: const Text(T.crear),
+      ),
+    ],
+  );
+}
+
+/// Pedidos abiertos: asignar un código y mandarlo, o cancelarlo.
+class _Pedidos extends ConsumerWidget {
+  const _Pedidos();
+
+  Future<void> _enviar(
+    BuildContext context,
+    WidgetRef ref,
+    Map<String, Object?> p,
+  ) async {
+    final enviado = await showDialog<bool>(
+      context: context,
+      builder: (_) => _Enviar(pedidoId: '${p['id']}'),
+    );
+    if (enviado ?? false) ref.invalidate(pedidosChapitaProvider);
+  }
+
+  Future<void> _cancelar(WidgetRef ref, Map<String, Object?> p) async {
+    await ref
+        .read(adminRepositorioProvider)
+        .cancelarPedidoChapita('${p['id']}');
+    ref.invalidate(pedidosChapitaProvider);
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final abiertos = [
+      for (final p
+          in ref.watch(pedidosChapitaProvider).value ??
+              const <Map<String, Object?>>[])
+        if (const {'new', 'sent', 'ready'}.contains(p['status'])) p,
+    ];
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(T.pedidosChapita, style: Theme.of(context).textTheme.titleMedium),
+        if (abiertos.isEmpty) const Text(T.sinPedidosChapita),
+        for (final p in abiertos)
+          Card(
+            child: ListTile(
+              title: Text(
+                T.pedidoChapita(
+                  (p['number'] as num?)?.toInt() ?? 0,
+                  '${p['pet_name']}',
+                  '${p['engraving']}',
+                ),
+              ),
+              subtitle: Text(
+                [
+                  T.estadosPedidoChapita[p['status']] ?? '${p['status']}',
+                  '${p['business_name']}',
+                  ?p['business_address'] as String?,
+                  ?p['code'] as String?,
+                ].join(' · '),
+              ),
+              trailing: Wrap(
+                spacing: 8,
+                children: [
+                  if (p['status'] == 'new')
+                    FilledButton(
+                      onPressed: () => _enviar(context, ref, p),
+                      child: const Text(T.enviar),
+                    ),
+                  TextButton(
+                    onPressed: () => _cancelar(ref, p),
+                    child: const Text(T.cancelarPedido),
+                  ),
+                ],
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+class _Enviar extends ConsumerStatefulWidget {
+  const _Enviar({required this.pedidoId});
+
+  final String pedidoId;
+
+  @override
+  ConsumerState<_Enviar> createState() => _EnviarState();
+}
+
+class _EnviarState extends ConsumerState<_Enviar> {
+  final _codigo = TextEditingController();
+  String? _error;
+  var _enviando = false;
+
+  @override
+  void dispose() {
+    _codigo.dispose();
+    super.dispose();
+  }
+
+  Future<void> _enviar() async {
+    setState(() {
+      _enviando = true;
+      _error = null;
+    });
+    try {
+      await ref
+          .read(adminRepositorioProvider)
+          .enviarPedidoChapita(widget.pedidoId, _codigo.text.trim());
+      if (mounted) Navigator.pop(context, true);
+    } on Exception {
+      if (mounted) setState(() => _error = T.chapitaNoDisponible);
+    } finally {
+      if (mounted) setState(() => _enviando = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) => AlertDialog(
+    title: const Text(T.enviarPedidoTitulo),
+    content: TextField(
+      controller: _codigo,
+      autofocus: true,
+      textCapitalization: TextCapitalization.characters,
+      decoration: InputDecoration(
+        labelText: T.codigoChapita,
+        errorText: _error,
+      ),
+    ),
+    actions: [
+      TextButton(
+        onPressed: () => Navigator.pop(context, false),
+        child: const Text(T.cancelarPedido),
+      ),
+      FilledButton(
+        onPressed: _enviando ? null : _enviar,
+        child: const Text(T.enviar),
       ),
     ],
   );

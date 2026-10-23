@@ -9,11 +9,13 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../l10n/l10n.dart';
 import '../../config/env_provider.dart';
 import '../../cuenta/servicio_cuenta.dart';
+import '../../funcionalidades/funcionalidades_activas.dart';
 import '../../mascotas/mascotas_repositorio.dart';
 import '../../metricas/metricas.dart';
 import '../../qr/cartel_qr.dart';
 import '../../qr/qr_repositorio.dart';
 import '../../utiles/descargar.dart';
+import '../chapitas/pedido_chapita.dart';
 
 /// QR de la mascota: verlo, descargarlo para imprimir, la nota pública y
 /// regenerarlo si hace falta.
@@ -371,7 +373,7 @@ class _Chapitas extends ConsumerWidget {
                   )
                 : null,
           ),
-        if (esDueno)
+        if (esDueno) ...[
           Align(
             alignment: Alignment.centerLeft,
             child: OutlinedButton.icon(
@@ -380,6 +382,14 @@ class _Chapitas extends ConsumerWidget {
               label: Text(t.chapitaActivar),
             ),
           ),
+          SiFuncionalidad(
+            Funcionalidades.pedidoChapitas,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: TarjetaPedidoChapita(mascota: mascota),
+            ),
+          ),
+        ],
       ],
     );
   }

@@ -99,6 +99,15 @@ abstract interface class AdminRepositorio {
 
   /// Los códigos del lote, en orden, para el productor.
   Future<List<String>> codigosLote(String loteId);
+
+  /// Pedidos de chapitas con retiro en la veterinaria (1.8b.4, D98): los
+  /// abiertos primero, los más viejos arriba.
+  Future<List<Map<String, Object?>>> pedidosChapita();
+
+  /// Le asigna a un pedido nuevo un código libre de un lote y lo manda.
+  Future<void> enviarPedidoChapita(String pedidoId, String codigo);
+
+  Future<void> cancelarPedidoChapita(String pedidoId, {String? motivo});
 }
 
 class SupabaseAdminRepositorio implements AdminRepositorio {
@@ -340,6 +349,24 @@ class SupabaseAdminRepositorio implements AdminRepositorio {
     ))
       f['code']! as String,
   ];
+
+  @override
+  Future<List<Map<String, Object?>>> pedidosChapita() async =>
+      _filas(await _cliente.rpc<List<dynamic>>('admin_pedidos_chapita'));
+
+  @override
+  Future<void> enviarPedidoChapita(String pedidoId, String codigo) =>
+      _cliente.rpc<void>(
+        'admin_enviar_pedido_chapita',
+        params: {'p_id': pedidoId, 'p_code': codigo},
+      );
+
+  @override
+  Future<void> cancelarPedidoChapita(String pedidoId, {String? motivo}) =>
+      _cliente.rpc<void>(
+        'admin_cancelar_pedido_chapita',
+        params: {'p_id': pedidoId, 'p_motivo': motivo},
+      );
 }
 
 /// Se sobrescribe en `main.dart` (y en las pruebas).
@@ -408,6 +435,10 @@ final novedadesProvider = FutureProvider<List<Map<String, Object?>>>(
 
 final ayudaProvider = FutureProvider<List<EntradaAyuda>>(
   (ref) => ref.watch(adminRepositorioProvider).ayuda(),
+);
+
+final pedidosChapitaProvider = FutureProvider<List<Map<String, Object?>>>(
+  (ref) => ref.watch(adminRepositorioProvider).pedidosChapita(),
 );
 
 final lotesProvider = FutureProvider<List<Map<String, Object?>>>(

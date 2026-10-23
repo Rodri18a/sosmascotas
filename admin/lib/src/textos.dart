@@ -262,4 +262,24 @@ abstract final class T {
       'Cada código lleva la dirección de la web pública de este entorno: los lotes que se imprimen de verdad se crean en producción, con el dominio definitivo.';
   static String resumenLote(int cantidad, int activadas, int escaneos) =>
       '$cantidad chapitas · $activadas activadas · $escaneos escaneos';
+
+  // Pedidos de chapitas (1.8b.4, D98)
+  static const pedidosChapita = 'Pedidos con retiro en veterinaria';
+  static const sinPedidosChapita = 'No hay pedidos abiertos.';
+  static const lotes = 'Lotes';
+  static String pedidoChapita(int numero, String mascota, String grabado) =>
+      'N.º $numero · $mascota · grabado «$grabado»';
+  static const estadosPedidoChapita = {
+    'new': 'Nuevo: falta mandarlo',
+    'sent': 'Enviado a la veterinaria',
+    'ready': 'En la veterinaria, para retirar',
+    'delivered': 'Entregado',
+    'cancelled': 'Cancelado',
+  };
+  static const enviar = 'Enviar';
+  static const cancelarPedido = 'Cancelar';
+  static const enviarPedidoTitulo = 'Mandar a la veterinaria';
+  static const codigoChapita = 'Código de la chapita (de un lote, sin usar)';
+  static const chapitaNoDisponible =
+      'Ese código no existe, ya se usó o está reservado para otro pedido.';
 }

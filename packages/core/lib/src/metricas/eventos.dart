@@ -67,6 +67,10 @@ abstract final class Eventos {
   static const tabOpen = 'tab_open';
   static const tagActivate = 'tag_activate';
   static const tagUnlink = 'tag_unlink';
+  static const tagOrderCreate = 'tag_order_create';
+  static const tagOrderCancel = 'tag_order_cancel';
+  static const tagOrderStatus = 'tag_order_status';
+  static const tagPickupToggle = 'tag_pickup_toggle';
   static const petSelect = 'pet_select';
   static const catalogOpen = 'catalog_open';
   static const catalogAsk = 'catalog_ask';

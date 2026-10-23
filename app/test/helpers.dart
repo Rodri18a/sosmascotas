@@ -31,6 +31,7 @@ import 'package:sosmascota/src/mascotas/mascotas_repositorio.dart';
 import 'package:sosmascota/src/metricas/metricas.dart';
 import 'package:sosmascota/src/noticias/noticias_repositorio.dart';
 import 'package:sosmascota/src/push/servicio_push.dart';
+import 'package:sosmascota/src/qr/pedidos_chapita_repositorio.dart';
 import 'package:sosmascota/src/qr/qr_repositorio.dart';
 import 'package:sosmascota/src/recordatorios/avisador.dart';
 import 'package:sosmascota/src/recordatorios/recordatorios_repositorio.dart';
@@ -58,6 +59,7 @@ import 'mapa_falso.dart';
 import 'mascota_elegida_falsa.dart';
 import 'mascotas_falsas.dart';
 import 'noticias_falsas.dart';
+import 'pedidos_chapita_falsos.dart';
 import 'perfil_falso.dart';
 import 'qr_falso.dart';
 import 'recordatorios_falsos.dart';
@@ -100,6 +102,7 @@ Widget appDePrueba({
   Posicion? posicion,
   SelectorFoto? selectorFoto,
   QrRepositorio? qr,
+  PedidosChapitaRepositorio? pedidosChapita,
   AvisosRepositorio? avisos,
   SosRepositorio? sos,
   ServicioPush? push,
@@ -153,6 +156,9 @@ Widget appDePrueba({
     constructorMapaProvider.overrideWithValue(MapaFalso.new),
     avisosRepositorioProvider.overrideWithValue(avisos ?? AvisosFalsos()),
     qrRepositorioProvider.overrideWithValue(qr ?? QrFalso()),
+    pedidosChapitaRepositorioProvider.overrideWithValue(
+      pedidosChapita ?? PedidosChapitaFalsos(),
+    ),
     catalogoRepositorioProvider.overrideWithValue(CatalogoFalso()),
     mascotasRepositorioProvider.overrideWithValue(mascotas ?? MascotasFalsas()),
     libretaRepositorioProvider.overrideWithValue(libreta ?? LibretaFalsa()),

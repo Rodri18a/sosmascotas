@@ -115,7 +115,7 @@ Un lugar, producto o noticia **coincide** con la mascota activa si la lista de e
 - El **QR digital es siempre gratis**. La **chapita física** es un producto: puede ser **patrocinada** (gratis para el dueño), **entregada por una veterinaria** o **vendida**.
 - Las chapitas se fabrican **pre-codificadas por lotes**. Cada código se activa **una sola vez** y queda vinculado a una mascota hasta que el dueño lo desvincula.
 - Un código sin activar muestra una página "Activá esta chapita con la app".
-- **Retiro en la veterinaria:** solo en veterinarias adheridas que aceptaron ser punto de retiro. La veterinaria marca la chapita como entregada en su panel.
+- **Retiro en la veterinaria:** solo en veterinarias adheridas que aceptaron ser punto de retiro. La veterinaria marca la chapita como entregada en su panel. ✅ 1.8b.4 (D98): solo veterinarias **verificadas**; un pedido abierto por mascota y hasta 3 por cuenta; texto grabado de hasta 20 letras; la administración asigna un código libre de un lote y la manda; la veterinaria marca «Llegó» y «Entregada», y al entregarla queda vinculada sola. La veterinaria ve solo el primer nombre de quien pidió. **Sin cargo** hasta definir el precio (P16) y formalizar (1.9.0).
 - **Sponsors:** el logo va en el reverso de la chapita y, en la página del QR, **chico y abajo** (la página es para una emergencia). El sponsor recibe resultados de su lote: activadas, escaneos y reencuentros.
 - Precios de venta y de patrocinio: a definir con el costo real por unidad del primer lote.
 

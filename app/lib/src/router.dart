@@ -9,6 +9,7 @@ import 'features/adopcion/adopcion_screen.dart';
 import 'features/ajustes/ajustes_screen.dart';
 import 'features/avisos/avisos_screen.dart';
 import 'features/ayuda/ayuda_screen.dart';
+import 'features/chapitas/pedido_chapita.dart';
 import 'features/chat/chat_screen.dart';
 import 'features/consentimiento/consentimiento_screen.dart';
 import 'features/eventos/eventos.dart';
@@ -76,6 +77,9 @@ abstract final class Rutas {
   static const marcarLugar = '/lugares/marcar';
   static const guiaRenac = '/renac';
   static const buscarLugares = '/buscar';
+  static const _chapitas = '/chapitas';
+  static String pedirChapita(String mascotaId) => '$_chapitas/pedir/$mascotaId';
+  static String chapitasNegocio(String id) => '$negocio/chapitas/$id';
 
   /// Búsqueda de lugares cerca de [desde] (el centro del mapa).
   static String buscar(Punto desde) => Uri(
@@ -98,6 +102,7 @@ abstract final class Rutas {
     // Antes que `negocio`: gana el primer comienzo que coincide.
     '$negocio/socios/': Funcionalidades.veterinarias,
     '$negocio/servicios/': Funcionalidades.catalogo,
+    '$negocio/chapitas/': Funcionalidades.pedidoChapitas,
     negocio: Funcionalidades.comercios,
     adopcion: Funcionalidades.adopcion,
     denuncia: Funcionalidades.eventos,
@@ -105,6 +110,7 @@ abstract final class Rutas {
     marcarLugar: Funcionalidades.comercios,
     guiaRenac: Funcionalidades.renac,
     buscarLugares: Funcionalidades.busqueda,
+    '$_chapitas/': Funcionalidades.pedidoChapitas,
   };
 
   /// Rutas que un visitante no puede ver: se le pide ingresar y después vuelve.
@@ -127,6 +133,7 @@ abstract final class Rutas {
     denuncia,
     nuevoEvento,
     misPedidos,
+    '$_chapitas/',
   ];
 
   static String fichaMascota(String id) => '$mascotas/$id';
@@ -352,6 +359,11 @@ final routerProvider = Provider<GoRouter>((ref) {
                 SociosScreen(negocioId: state.pathParameters['id']!),
           ),
           GoRoute(
+            path: 'chapitas/:id',
+            builder: (_, state) =>
+                ChapitasNegocioScreen(negocioId: state.pathParameters['id']!),
+          ),
+          GoRoute(
             path: 'servicios/:id',
             builder: (_, state) =>
                 ServiciosNegocioScreen(negocioId: state.pathParameters['id']!),
@@ -401,6 +413,11 @@ final routerProvider = Provider<GoRouter>((ref) {
             ),
           ),
         ],
+      ),
+      GoRoute(
+        path: '${Rutas._chapitas}/pedir/:mascota',
+        builder: (_, state) =>
+            PedirChapitaScreen(mascotaId: state.pathParameters['mascota']!),
       ),
       GoRoute(
         path: Rutas.buscarLugares,

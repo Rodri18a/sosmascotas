@@ -4236,4 +4236,145 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get buscarConocesUno =>
       '¿Conocés uno? Marcalo en el mapa y lo sumamos.';
+
+  @override
+  String get pedidoChapitaPedir => 'Pedir una chapita';
+
+  @override
+  String get pedidoChapitaTitulo => 'Pedir una chapita';
+
+  @override
+  String pedidoChapitaExplicacion(String nombre) {
+    return 'Te hacemos una chapita con el QR de $nombre y la retirás en una veterinaria. Cuando te la den, queda vinculada sola.';
+  }
+
+  @override
+  String get pedidoChapitaPrecio => 'Sin cargo durante el lanzamiento.';
+
+  @override
+  String get pedidoChapitaGrabado => 'Texto grabado';
+
+  @override
+  String get pedidoChapitaGrabadoAyuda =>
+      'Lo que va escrito en la chapita (hasta 20 letras).';
+
+  @override
+  String get pedidoChapitaDonde => '¿Dónde la retirás?';
+
+  @override
+  String get pedidoChapitaSinPuntos =>
+      'Todavía no hay veterinarias de retiro cerca. Probá más adelante.';
+
+  @override
+  String get pedidoChapitaTuVeterinaria => 'Tu veterinaria';
+
+  @override
+  String get pedidoChapitaConfirmar => 'Pedirla';
+
+  @override
+  String get pedidoChapitaPidiendo => 'Pidiendo…';
+
+  @override
+  String get pedidoChapitaHecho =>
+      'Listo, la pediste. Te avisamos acá cuando esté para retirar.';
+
+  @override
+  String pedidoChapitaNumero(int numero, String nombre) {
+    return 'Pedido N.º $numero · $nombre';
+  }
+
+  @override
+  String get pedidoChapitaNuevo => 'Pedida: la estamos preparando.';
+
+  @override
+  String pedidoChapitaEnviado(String veterinaria) {
+    return 'En camino a $veterinaria.';
+  }
+
+  @override
+  String pedidoChapitaListo(String veterinaria, int numero) {
+    return '¡Lista para retirar en $veterinaria! Decí el pedido N.º $numero.';
+  }
+
+  @override
+  String get pedidoChapitaEntregado => 'Entregada y vinculada.';
+
+  @override
+  String get pedidoChapitaCancelado => 'Pedido cancelado.';
+
+  @override
+  String get pedidoChapitaYaHayUno =>
+      'Ya hay un pedido abierto para esta mascota.';
+
+  @override
+  String pedidoChapitaDemasiados(int n) {
+    return 'Podés tener hasta $n pedidos abiertos a la vez.';
+  }
+
+  @override
+  String get pedidoChapitaNoEsPunto =>
+      'Esa veterinaria ya no entrega chapitas. Elegí otra.';
+
+  @override
+  String get retiroTitulo => 'Chapitas: punto de retiro';
+
+  @override
+  String get retiroTarjetaAyuda => 'Entregá chapitas QR a tus clientes.';
+
+  @override
+  String get retiroSerPunto => 'Ser punto de retiro de chapitas';
+
+  @override
+  String get retiroSerPuntoAyuda =>
+      'Los dueños eligen tu veterinaria para retirar la chapita de su mascota. Te la mandamos nosotros.';
+
+  @override
+  String get retiroSoloVerificadas => 'Solo para veterinarias verificadas.';
+
+  @override
+  String get retiroPedidos => 'Pedidos';
+
+  @override
+  String get retiroSinPedidos => 'Todavía no hay pedidos.';
+
+  @override
+  String retiroPara(String nombre) {
+    return 'Para $nombre';
+  }
+
+  @override
+  String retiroGrabado(String texto) {
+    return 'Grabado: $texto';
+  }
+
+  @override
+  String retiroCodigo(String codigo) {
+    return 'Código $codigo';
+  }
+
+  @override
+  String get retiroEnPreparacion => 'La estamos preparando.';
+
+  @override
+  String get retiroEnCamino => 'En camino: marcá «Llegó» cuando la recibas.';
+
+  @override
+  String get retiroEsperando => 'Esperando que la retiren.';
+
+  @override
+  String get retiroEntregadaYa => 'Entregada.';
+
+  @override
+  String get retiroLlego => 'Llegó';
+
+  @override
+  String get retiroEntregada => 'Entregada';
+
+  @override
+  String get retiroEntregarTitulo => '¿La entregaste?';
+
+  @override
+  String retiroEntregarTexto(int numero, String nombre) {
+    return 'Pedido N.º $numero: la chapita queda vinculada a $nombre.';
+  }
 }

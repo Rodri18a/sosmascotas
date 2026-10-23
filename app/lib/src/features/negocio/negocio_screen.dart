@@ -17,6 +17,7 @@ import '../../tienda/tienda_repositorio.dart';
 import '../../utiles/enlaces.dart';
 import '../../veterinarias/veterinarias_repositorio.dart';
 import '../../widgets/volver.dart';
+import '../chapitas/pedido_chapita.dart';
 import '../resenas/resenas.dart';
 import '../tienda/pedidos.dart';
 import 'formulario_negocio.dart';
@@ -288,6 +289,12 @@ class _Panel extends ConsumerWidget {
                 onTap: () => context.push(Rutas.sociosNegocio(negocio.id)),
               ),
             ),
+          // Punto de retiro de chapitas (1.8b.4, D98).
+          if (negocio.comercio.categoria == Categoria.vet &&
+              ref.watch(
+                funcionalidadActivaProvider(Funcionalidades.pedidoChapitas),
+              ))
+            TarjetaRetiroChapitas(negocio: negocio),
           // Reputación y respuestas (1.7): el comercio responde una vez.
           if (ref.watch(funcionalidadActivaProvider(Funcionalidades.resenas)))
             Card(

@@ -32,6 +32,9 @@ abstract final class Funcionalidades {
   /// (etapa 1.2, D75).
   static const mapaCompleto = 'mapa_completo';
 
+  /// Pedido de chapita con retiro en la veterinaria (1.8b.4, D98).
+  static const pedidoChapitas = 'pedido_chapitas';
+
   /// Búsqueda de lugares por nombre o rubro (1.8.7, D97).
   static const busqueda = 'busqueda';
 

@@ -1782,6 +1782,75 @@ def main():
                  and 'chapita_usada' in json.dumps(rest('POST', 'rpc/activar_chapita', {'p_code': c2, 'p_pet_id': otra_pet}, a)[1]))
             rest('DELETE', f'pets?id=eq.{otra_pet}', quien=a)
             caso('la tercera sigue sin activar', rest('POST', 'rpc/public_pet_page', {'p_code': c3})[1].get('status') == 'unactivated')
+
+            print('pedido de chapita con retiro en la veterinaria (1.8b.4)')
+            _, vete = pedir('POST', f'{URL}/rest/v1/businesses', {
+                'name': 'Prueba RLS retiro', 'business_type': 'vet', 'kind': 'local', 'owner_id': b_id,
+                'location': 'SRID=4326;POINT(-55.958 -34.717)', 'verification': 'unverified', 'is_sample': True},
+                {**ADMIN, 'Prefer': 'return=representation'})
+            vete = vete[0]['id']
+            ped_pet = filas(rest('POST', 'pets', {'name': 'Pedido RLS', 'species_id': 1}, a))[0]['id']
+            caso('nadie lee los pedidos directo',
+                 bloqueado(rest('GET', 'tag_orders?select=id', quien=a)) and bloqueado(rest('GET', 'tag_orders?select=id')))
+            caso('sin verificar no puede ser punto de retiro', 'solo_verificadas' in json.dumps(
+                rest('POST', 'rpc/prender_punto_retiro', {'p_business': vete, 'p_prender': True}, b)[1]))
+            pedir('PATCH', f'{URL}/rest/v1/businesses?id=eq.{vete}', {'verification': 'verified'}, ADMIN)
+            caso('A no puede hacer punto de retiro un negocio ajeno',
+                 rest('POST', 'rpc/prender_punto_retiro', {'p_business': vete, 'p_prender': True}, a)[0] in (401, 403))
+            caso('A no puede pedir donde no es punto de retiro', 'no_es_punto_de_retiro' in json.dumps(
+                rest('POST', 'rpc/pedir_chapita', {'p_pet': ped_pet, 'p_business': vete}, a)[1]))
+            caso('B (verificada) se hace punto de retiro',
+                 rest('POST', 'rpc/prender_punto_retiro', {'p_business': vete, 'p_prender': True}, b)[0] in (200, 204))
+            caso('un visitante ve los puntos de retiro',
+                 any(v['id'] == vete for v in filas(rest('POST', 'rpc/puntos_de_retiro', {'p_lat': -34.717, 'p_lng': -55.958}))))
+            caso('B no puede pedir una chapita para la mascota de A',
+                 rest('POST', 'rpc/pedir_chapita', {'p_pet': ped_pet, 'p_business': vete}, b)[0] in (401, 403))
+            caso('un visitante no puede pedir',
+                 rest('POST', 'rpc/pedir_chapita', {'p_pet': ped_pet, 'p_business': vete})[0] >= 400)
+            s_ped, pedido = rest('POST', 'rpc/pedir_chapita',
+                                 {'p_pet': ped_pet, 'p_business': vete, 'p_texto': '  Un texto larguísimo de verdad  '}, a)
+            caso('A pide la chapita', s_ped == 200 and isinstance(pedido, str))
+            caso('un solo pedido abierto por mascota',
+                 rest('POST', 'rpc/pedir_chapita', {'p_pet': ped_pet, 'p_business': vete}, a)[0] == 409)
+            mios = filas(rest('POST', 'rpc/mis_pedidos_chapita', {}, a))
+            caso('A ve su pedido con el texto cortado a 20 y sin código todavía',
+                 len(mios) == 1 and len(mios[0]['engraving']) == 20 and mios[0]['code'] is None)
+            caso('B no ve los pedidos de A como cliente', filas(rest('POST', 'rpc/mis_pedidos_chapita', {}, b)) == [])
+            del_negocio = rest('POST', 'rpc/pedidos_chapita_del_negocio', {'p_business': vete}, b)[1]
+            caso('la veterinaria ve el pedido sin datos de contacto',
+                 del_negocio['punto_retiro'] is True and len(del_negocio['pedidos']) == 1
+                 and not {'owner_id', 'email', 'phone', 'pet_id'} & set(del_negocio['pedidos'][0]))
+            caso('A no ve los pedidos del negocio',
+                 rest('POST', 'rpc/pedidos_chapita_del_negocio', {'p_business': vete}, a)[0] in (401, 403))
+            caso('la veterinaria no puede avanzar un pedido sin enviar', 'estado_invalido' in json.dumps(
+                rest('POST', 'rpc/negocio_avanzar_pedido_chapita', {'p_id': pedido}, b)[1]))
+            caso('A no puede enviar pedidos',
+                 rest('POST', 'rpc/admin_enviar_pedido_chapita', {'p_id': pedido, 'p_code': c3}, a)[0] >= 400)
+            caso('X no puede mandar una chapita usada', 'chapita_no_disponible' in json.dumps(
+                rest('POST', 'rpc/admin_enviar_pedido_chapita', {'p_id': pedido, 'p_code': c1}, x)[1]))
+            caso('X manda el pedido con un código libre',
+                 rest('POST', 'rpc/admin_enviar_pedido_chapita', {'p_id': pedido, 'p_code': c3}, x)[0] in (200, 204))
+            caso('A ya no lo puede cancelar', 'no_se_puede_cancelar' in json.dumps(
+                rest('POST', 'rpc/cancelar_pedido_chapita', {'p_id': pedido}, a)[1]))
+            caso('A no puede marcarlo como recibido',
+                 rest('POST', 'rpc/negocio_avanzar_pedido_chapita', {'p_id': pedido}, a)[0] in (401, 403))
+            caso('la veterinaria marca "Llegó"',
+                 rest('POST', 'rpc/negocio_avanzar_pedido_chapita', {'p_id': pedido}, b)[1] == 'ready')
+            caso('la veterinaria la entrega',
+                 rest('POST', 'rpc/negocio_avanzar_pedido_chapita', {'p_id': pedido}, b)[1] == 'delivered')
+            pag_c3 = rest('POST', 'rpc/public_pet_page', {'p_code': c3})[1]
+            caso('al entregarla, la chapita queda vinculada a la mascota de A',
+                 pag_c3.get('status') == 'active' and pag_c3['pet']['name'] == 'Pedido RLS')
+            caso('A ve el código de su chapita entregada',
+                 filas(rest('POST', 'rpc/mis_pedidos_chapita', {}, a))[0]['code'] == c3)
+            caso('A no ve los pedidos en el portal', rest('POST', 'rpc/admin_pedidos_chapita', {}, a)[0] >= 400)
+            caso('X ve los pedidos en el portal',
+                 any(o['id'] == pedido for o in filas(rest('POST', 'rpc/admin_pedidos_chapita', {}, x))))
+            s_p2, pedido2 = rest('POST', 'rpc/pedir_chapita', {'p_pet': ped_pet, 'p_business': vete}, a)
+            caso('entregado el anterior, puede pedir otra y cancelarla',
+                 s_p2 == 200 and rest('POST', 'rpc/cancelar_pedido_chapita', {'p_id': pedido2}, a)[0] in (200, 204))
+            rest('DELETE', f'pets?id=eq.{ped_pet}', quien=a)
+            pedir('DELETE', f'{URL}/rest/v1/businesses?id=eq.{vete}', headers=ADMIN)
             OBJETIVOS_DE_PRUEBA.append(tag_c1)
             pedir('DELETE', f'{URL}/rest/v1/qr_tags?batch_id=eq.{lote}', headers=ADMIN)
             pedir('DELETE', f'{URL}/rest/v1/qr_batches?id=eq.{lote}', headers=ADMIN)
