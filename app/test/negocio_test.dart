@@ -220,7 +220,8 @@ void main() {
           marcas: 2,
         ),
       ];
-    await _abrir(tester, comercios: comercios);
+    final eventos = <Map<String, Object?>>[];
+    await _abrir(tester, comercios: comercios, eventos: eventos);
     await tester.tap(find.byKey(const ValueKey('mapa-mover')));
     await tester.pumpAndSettle();
 
@@ -230,6 +231,9 @@ void main() {
     );
     expect(find.text('Adiestrador sin reclamar'), findsOneWidget);
     expect(find.text('Marcado por 2 personas'), findsOneWidget);
+    final apertura = eventos.where((e) => e['name'] == 'unclaimed_open').single;
+    expect(apertura['target_id'], '1');
+    expect(apertura['props'], {'tipo': 'trainer'});
     await _tocar(tester, find.text('¿Es tu negocio? Dalo de alta'));
     expect(find.widgetWithText(AppBar, 'Sumar mi negocio'), findsOneWidget);
     final chip = tester.widget<ChoiceChip>(

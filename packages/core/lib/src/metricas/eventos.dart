@@ -38,6 +38,7 @@ abstract final class Eventos {
   static const mapView = 'map_view';
   static const search = 'search';
   static const placeMark = 'place_mark';
+  static const unclaimedOpen = 'unclaimed_open';
   static const businessCreate = 'business_create';
   static const businessClaim = 'business_claim';
   static const verificationRequest = 'verification_request';

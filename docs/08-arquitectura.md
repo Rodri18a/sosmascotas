@@ -168,6 +168,7 @@ Tabla `events` (append-only), escrita por el cliente con `ref.read(metricasProvi
 | `news_open` / `news_link` | abrir una noticia y tocar "Leer más", con `patrocinada` (D83) |
 | `menu_open` / `pet_select` | se abre el menú ☰; se elige una mascota o "Todas" para filtrar (D88) |
 | `tab_open` | se cambia de pestaña en la barra inferior, con `tab` (`noticias`, `sos`, `mapa`, `mascotas`, `ayuda`; D94) |
+| `unclaimed_open` | se abre la hoja de un lugar sin reclamar; `target_id` = una marca del grupo, `tipo` = rubro (D99) |
 | `tag_activate` / `tag_unlink` | el dueño activa una chapita física (con `origen`: `enlace` o `codigo`) o la desvincula (D95) |
 | `tag_order_create` / `tag_order_cancel` / `tag_order_status` / `tag_pickup_toggle` | pedido de chapita con retiro: el dueño la pide o cancela; la veterinaria marca el estado nuevo (`ready`, `delivered`) o se hace punto de retiro (`prendido`), con `business_id` (D98) |
 | `news_reaction` | alguien reacciona a una noticia o novedad (D87; lo registra la base, con el tipo y si es noticia o comunidad) |

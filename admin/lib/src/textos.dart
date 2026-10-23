@@ -263,6 +263,16 @@ abstract final class T {
   static String resumenLote(int cantidad, int activadas, int escaneos) =>
       '$cantidad chapitas · $activadas activadas · $escaneos escaneos';
 
+  // Lugares sin reclamar (1.8.5, D99)
+  static String sinReclamarTitulo(int n) => 'Sin reclamar con tracción ($n)';
+  static const sinReclamarAyuda =
+      'Lugares que marcaron los usuarios y nadie dio de alta: buenos candidatos para ir a visitar.';
+  static const sinReclamarNinguno = 'Todavía no hay lugares marcados.';
+  static String sinReclamar(String rubro, int marcas, int aperturas) =>
+      '$rubro · marcado por $marcas ${marcas == 1 ? 'persona' : 'personas'} · '
+      '$aperturas aperturas (30 días)';
+  static const verEnGoogle = 'Ver en Google Maps';
+
   // Pedidos de chapitas (1.8b.4, D98)
   static const pedidosChapita = 'Pedidos con retiro en veterinaria';
   static const sinPedidosChapita = 'No hay pedidos abiertos.';

@@ -56,7 +56,7 @@ Por cada empresa:
 *Objetivo: llegar a un comercio con datos concretos, no con una promesa.*
 
 - **Demanda sin cubrir:** búsquedas por rubro y zona contra la oferta en el mapa. Ejemplo: *"En Pando, 85 personas buscaron 'peluquería' este mes y hay solo 1 en el mapa"*. Se basa en el evento `search` con resultados en cero. ✅ 1.8.7 (D97): sección del Panel con `admin_demanda()` (búsquedas y sin resultados por rubro contra los lugares activos, y los 20 textos sin rubro más buscados).
-- **Lugares sin reclamar con tracción:** cuántos usuarios lo marcaron y cuántas veces se abrió su ficha. Ejemplo: *"Marcado por 23 usuarios, 140 aperturas de ficha"*.
+- **Lugares sin reclamar con tracción:** cuántos usuarios lo marcaron y cuántas veces se abrió su ficha. Ejemplo: *"Marcado por 23 usuarios, 140 aperturas de ficha"*. ✅ 1.8.5 (D99): Lugares → «Sin reclamar con tracción», con `admin_sin_reclamar()` y «Ver en Google Maps».
 - **Audiencia por zona y especie:** usuarios y mascotas (*"1.200 perros, 400 gatos"*). Sirve para comercios y para **marcas** (noticias patrocinadas).
 - **Embudo de ventas (mini CRM):** prospecto → contactado → demo → Socio Fundador → pagando → renovó / perdido. Con notas, responsable y fecha del próximo contacto.
 - **Generador de propuesta:** PDF de una página con los datos de su zona y rubro, listo para mostrar en una visita.

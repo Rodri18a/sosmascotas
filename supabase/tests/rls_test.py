@@ -1231,6 +1231,18 @@ def main():
             caso('un visitante ve los grupos sin saber quién marcó',
                  all('user_id' not in g for g in filas(rest('POST', 'rpc/lugares_sin_reclamar_en_zona', pando_rect))))
             caso('B no ve las marcas de A', all(m.get('user_id') == b_id for m in filas(rest('GET', 'place_marks?select=user_id', quien=b))))
+            grupo_t = next((g for g in grupos if g['marcas'] == 2), {})
+            marca_t = grupo_t.get('grupo', ':').split(':', 1)[1]
+            rest('POST', 'events', {'name': 'unclaimed_open', 'anon_id': str(uuid.uuid4()), 'target_id': marca_t},
+                 prefer='return=minimal')
+            caso('A no ve la tracción de los sin reclamar', rest('POST', 'rpc/admin_sin_reclamar', {}, a)[0] >= 400)
+            caso('un visitante tampoco', rest('POST', 'rpc/admin_sin_reclamar', {})[0] >= 400)
+            traccion = filas(rest('POST', 'rpc/admin_sin_reclamar', {'p_dias': 30}, x))
+            mi_grupo = next((g for g in traccion if g['grupo'] == grupo_t.get('grupo')), {})
+            caso('X ve el grupo con 2 personas y la apertura, sin saber quién marcó',
+                 mi_grupo.get('marcas') == 2 and mi_grupo.get('aperturas') == 1
+                 and not {'user_id', 'ids'} & set(mi_grupo))
+            OBJETIVOS_DE_PRUEBA.append(marca_t)
             caso('un enlace que no es de Google Maps se rechaza',
                  rest('POST', 'rpc/marcar_lugar', {'p_rubro': 'vet', 'p_lat': -34.74, 'p_lng': -55.94, 'p_link': 'https://estafa.com/x'}, a)[0] >= 400)
             s_n3, desde_marca = rest('POST', 'rpc/alta_negocio', {'p': {

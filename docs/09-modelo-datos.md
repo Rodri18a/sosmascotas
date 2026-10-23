@@ -56,7 +56,7 @@ Propuesta inicial. Se ajusta al implementar cada fase. **RLS activado en todas l
 | `business_contacts_private` | business_id, phone, whatsapp, email (solo el dueño y la administración) (D77) |
 | `business_claims` | id, business_id, user_id, rut, note, kind (`claim`, `dispute`), status (`pending`, `approved`, `rejected`), resolved_at, resolved_by. Se crean con `reclamar_negocio()` y se resuelven en el portal (D77) | 1 |
 | `business_photos` | id, business_id, path, sort (bucket público `business-photos`, carpeta del negocio; 3 en Básico, 20 en planes pagos) (D77) | 1 |
-| `place_marks` | id, user_id, category, location, google_link (solo de Google Maps), business_id (cuando se da de alta el negocio). Se crean con `marcar_lugar()`; el mapa ve grupos de 30 m sin saber quién marcó (D77) | 1 |
+| `place_marks` | id, user_id, category, location, google_link (solo de Google Maps), business_id (cuando se da de alta el negocio). Se crean con `marcar_lugar()`; el mapa ve grupos de 30 m sin saber quién marcó (D77) | 1 Tracción en el portal: `admin_sin_reclamar()` (personas que marcaron y aperturas `unclaimed_open` por grupo; ✅ 1.8.5, D99) |
 | `claims` | id, business_id o place_mark_id, user_id, rut, evidence_path, status | 1 |
 | `business_modules` | business_id, module (`catalog`, `agenda`, `members`), enabled | 2 |
 | `user_places` | user_id, business_id, favorite, visited_at, is_my_vet (una por persona, solo veterinarias; trigger), updated_at. Privada (D75) | 1 |

@@ -8,3 +8,6 @@ import 'descargar_otro.dart'
 /// Devuelve `false` si la plataforma todavía no lo permite.
 bool descargarArchivo(Uint8List bytes, String nombre, String tipo) =>
     plataforma.descargarArchivo(bytes, nombre, tipo);
+
+/// Abre [url] en otra pestaña del navegador.
+void abrirEnlace(String url) => plataforma.abrirEnlace(url);

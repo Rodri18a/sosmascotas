@@ -6,6 +6,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../modelos.dart';
 import '../repositorio.dart';
 import '../textos.dart';
+import '../utiles/descargar.dart';
+
+/// Abre un enlace en otra pestaña. Se reemplaza en las pruebas.
+final abrirEnlaceProvider = Provider<void Function(String url)>(
+  (ref) => abrirEnlace,
+);
 
 /// Lugares (1.8.4 y 1.8.5): cargar, editar, verificar, marcar Operador RENAC
 /// y ocultar. Muestra las aperturas de ficha y los favoritos de cada uno.
@@ -53,6 +59,7 @@ class _LugaresScreenState extends ConsumerState<LugaresScreen> {
               AsyncData(value: final lista) => ListView(
                 padding: const EdgeInsets.only(bottom: 88),
                 children: [
+                  const _SinReclamar(),
                   for (final l in lista)
                     ListTile(
                       title: Text(l.comercio.nombre),
@@ -329,4 +336,49 @@ class _FormularioLugarState extends ConsumerState<FormularioLugar> {
       ),
     ],
   );
+}
+
+/// Lugares sin reclamar con su tracción (05): cuántas personas los marcaron y
+/// cuántas veces se abrió su hoja. Los más marcados primero.
+class _SinReclamar extends ConsumerWidget {
+  const _SinReclamar();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final lista =
+        ref.watch(sinReclamarProvider).value ?? const <Map<String, Object?>>[];
+    return ExpansionTile(
+      leading: const Icon(Icons.wrong_location_outlined),
+      title: Text(T.sinReclamarTitulo(lista.length)),
+      subtitle: const Text(T.sinReclamarAyuda),
+      children: [
+        if (lista.isEmpty) const ListTile(title: Text(T.sinReclamarNinguno)),
+        for (final g in lista)
+          ListTile(
+            title: Text(
+              T.sinReclamar(
+                T.rubros[g['category']] ?? '${g['category']}',
+                (g['marcas'] as num?)?.toInt() ?? 0,
+                (g['aperturas'] as num?)?.toInt() ?? 0,
+              ),
+            ),
+            subtitle: Text(
+              '${g['lat']}, ${g['lng']} · '
+              '${'${g['primera_marca']}'.split('T').first}',
+            ),
+            trailing: TextButton.icon(
+              onPressed: () => ref.read(abrirEnlaceProvider)(
+                (g['google_link'] as String?) ??
+                    Uri.https('www.google.com', '/maps/search/', {
+                      'api': '1',
+                      'query': '${g['lat']},${g['lng']}',
+                    }).toString(),
+              ),
+              icon: const Icon(Icons.map_outlined),
+              label: const Text(T.verEnGoogle),
+            ),
+          ),
+      ],
+    );
+  }
 }

@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:sosmascota_admin/src/app.dart';
 import 'package:sosmascota_admin/src/modelos.dart';
 import 'package:sosmascota_admin/src/pantallas/chapitas.dart';
+import 'package:sosmascota_admin/src/pantallas/lugares.dart';
 import 'package:sosmascota_admin/src/repositorio.dart';
 import 'package:sosmascota_admin/src/sesion.dart';
 
@@ -295,6 +296,20 @@ class RepoFalso implements AdminRepositorio {
     'WXYZ6789',
   ];
 
+  @override
+  Future<List<Map<String, Object?>>> sinReclamar({int dias = 30}) async => [
+    {
+      'grupo': 'grooming:m1',
+      'category': 'grooming',
+      'lat': -34.72,
+      'lng': -55.95,
+      'marcas': 23,
+      'aperturas': 140,
+      'primera_marca': '2026-10-20T12:00:00Z',
+      'google_link': null,
+    },
+  ];
+
   final pedidos = <Map<String, Object?>>[
     {
       'id': 'o1',
@@ -335,8 +350,10 @@ Widget _portal({
   required SesionFalsa sesion,
   required RepoFalso repo,
   List<(String, String)>? descargas,
+  List<String>? enlaces,
 }) => ProviderScope(
   overrides: [
+    abrirEnlaceProvider.overrideWithValue((url) => enlaces?.add(url)),
     sesionProvider.overrideWithValue(sesion),
     adminRepositorioProvider.overrideWithValue(repo),
     urlPublicaProvider.overrideWithValue('https://web.ejemplo.uy/'),
@@ -725,5 +742,27 @@ void main() {
     );
     expect(repo.enviados.single, ('o1', 'ABCD2345'));
     expect(find.textContaining('Enviado a la veterinaria'), findsOneWidget);
+  });
+
+  testWidgets('lugares: los sin reclamar con su tracción', (tester) async {
+    _pantallaGrande(tester);
+    final enlaces = <String>[];
+    await tester.pumpWidget(
+      _portal(
+        sesion: SesionFalsa('admin@x.uy'),
+        repo: RepoFalso(),
+        enlaces: enlaces,
+      ),
+    );
+    await _tocar(tester, find.text('Lugares'));
+    await _tocar(tester, find.text('Sin reclamar con tracción (1)'));
+    expect(
+      find.text(
+        'Peluquería · marcado por 23 personas · 140 aperturas (30 días)',
+      ),
+      findsOneWidget,
+    );
+    await _tocar(tester, find.text('Ver en Google Maps'));
+    expect(enlaces.single, contains('query=-34.72%2C-55.95'));
   });
 }

@@ -136,6 +136,10 @@ class LugarSinReclamar {
   final Categoria categoria;
   final Punto punto;
 
+  /// Una marca del grupo (el id es `rubro:marca`): va en la métrica
+  /// `unclaimed_open` para contar las aperturas por grupo (D99).
+  String get marcaId => id.substring(id.indexOf(':') + 1);
+
   /// "Marcado por N usuarios".
   final int marcas;
   final String? enlaceGoogle;

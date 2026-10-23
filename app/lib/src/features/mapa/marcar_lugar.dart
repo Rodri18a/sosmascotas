@@ -151,8 +151,24 @@ class _MarcarLugarScreenState extends ConsumerState<MarcarLugarScreen> {
   }
 }
 
-/// Hoja de un lugar marcado por usuarios que nadie reclamó todavía.
+/// Hoja de un lugar marcado por usuarios que nadie reclamó todavía. Cada
+/// apertura cuenta para su tracción en el portal (1.8.5, D99).
 Future<void> mostrarSinReclamar(
+  BuildContext context,
+  WidgetRef ref,
+  LugarSinReclamar lugar,
+) {
+  ref
+      .read(metricasProvider)
+      .track(
+        Eventos.unclaimedOpen,
+        targetId: lugar.marcaId,
+        props: {'tipo': lugar.categoria.valor},
+      );
+  return _hojaSinReclamar(context, ref, lugar);
+}
+
+Future<void> _hojaSinReclamar(
   BuildContext context,
   WidgetRef ref,
   LugarSinReclamar lugar,

@@ -34,6 +34,10 @@ abstract interface class AdminRepositorio {
 
   Future<List<LugarAdmin>> lugares({String? buscar});
 
+  /// Lugares sin reclamar agrupados como en el mapa, con cuántas personas
+  /// los marcaron y las aperturas de los últimos [dias] (1.8.5, D99).
+  Future<List<Map<String, Object?>>> sinReclamar({int dias = 30});
+
   /// Crea (sin `id`) o actualiza. Devuelve el id.
   Future<String> guardarLugar(Map<String, Object?> datos);
 
@@ -189,6 +193,15 @@ class SupabaseAdminRepositorio implements AdminRepositorio {
     'admin_levantar_sancion',
     params: {'p_sancion': sancionId},
   );
+
+  @override
+  Future<List<Map<String, Object?>>> sinReclamar({int dias = 30}) async =>
+      _filas(
+        await _cliente.rpc<List<dynamic>>(
+          'admin_sin_reclamar',
+          params: {'p_dias': dias},
+        ),
+      );
 
   @override
   Future<List<LugarAdmin>> lugares({String? buscar}) async => _filas(
@@ -439,6 +452,10 @@ final ayudaProvider = FutureProvider<List<EntradaAyuda>>(
 
 final pedidosChapitaProvider = FutureProvider<List<Map<String, Object?>>>(
   (ref) => ref.watch(adminRepositorioProvider).pedidosChapita(),
+);
+
+final sinReclamarProvider = FutureProvider<List<Map<String, Object?>>>(
+  (ref) => ref.watch(adminRepositorioProvider).sinReclamar(),
 );
 
 final lotesProvider = FutureProvider<List<Map<String, Object?>>>(

@@ -15,3 +15,5 @@ bool descargarArchivo(Uint8List bytes, String nombre, String tipo) {
   web.URL.revokeObjectURL(url);
   return true;
 }
+
+void abrirEnlace(String url) => web.window.open(url, '_blank', 'noopener');
