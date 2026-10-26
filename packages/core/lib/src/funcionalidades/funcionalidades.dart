@@ -65,6 +65,10 @@ abstract final class Funcionalidades {
   /// Planes pagos del comercio: «Tu plan», pagos y pedir un plan (2.2, D103).
   static const planes = 'planes';
 
+  /// Agenda de turnos: reservar, Mis turnos y la agenda del comercio (3.1,
+  /// D104).
+  static const agenda = 'agenda';
+
   /// Las que ya están en `todos`: la app las da por prendidas aunque no pueda
   /// preguntarle a la base (sin conexión y sin nada guardado). Las demás, en
   /// ese caso, quedan apagadas (lo seguro).

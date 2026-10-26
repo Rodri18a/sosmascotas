@@ -446,3 +446,8 @@ verify_jwt = false
 # clave compartida MONTHLY_REPORT_SECRET; no hay sesión de nadie.
 [functions.monthly-report]
 verify_jwt = false
+
+# Etapa 3.1 (D104): la llama la app después de reservar o cambiar un turno (valida
+# la sesión por su cuenta) y pg_cron a las 18:00 con CRON_SECRET (recordatorios).
+[functions.booking-alert]
+verify_jwt = false

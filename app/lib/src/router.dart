@@ -6,6 +6,7 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 import 'cuenta/perfil_repositorio.dart';
 import 'cuenta/servicio_cuenta.dart';
 import 'features/adopcion/adopcion_screen.dart';
+import 'features/agenda/reservar_turno.dart';
 import 'features/ajustes/ajustes_screen.dart';
 import 'features/avisos/avisos_screen.dart';
 import 'features/ayuda/ayuda_screen.dart';
@@ -72,6 +73,9 @@ abstract final class Rutas {
   static const adopcion = '/adopcion';
   static const noticias = '/noticias';
   static const misPedidos = '/pedidos';
+  static const misTurnos = '/turnos';
+  static String reservarTurno(String negocioId) =>
+      '$misTurnos/reservar/$negocioId';
   static const _tienda = '/tienda';
   static String tienda(String negocioId) => '$_tienda/$negocioId';
   static const denuncia = '/denuncia';
@@ -115,6 +119,7 @@ abstract final class Rutas {
     guiaRenac: Funcionalidades.renac,
     buscarLugares: Funcionalidades.busqueda,
     '$_chapitas/': Funcionalidades.pedidoChapitas,
+    misTurnos: Funcionalidades.agenda,
   };
 
   /// Rutas que un visitante no puede ver: se le pide ingresar y después vuelve.
@@ -138,6 +143,7 @@ abstract final class Rutas {
     nuevoEvento,
     misPedidos,
     '$_chapitas/',
+    misTurnos,
   ];
 
   static String fichaMascota(String id) => '$mascotas/$id';
@@ -459,6 +465,17 @@ final routerProvider = Provider<GoRouter>((ref) {
           negocioId: state.pathParameters['id']!,
           comercio: state.extra is Comercio ? state.extra! as Comercio : null,
         ),
+      ),
+      GoRoute(
+        path: Rutas.misTurnos,
+        builder: (_, _) => const MisTurnosScreen(),
+        routes: [
+          GoRoute(
+            path: 'reservar/:id',
+            builder: (_, state) =>
+                ReservarTurnoScreen(negocioId: state.pathParameters['id']!),
+          ),
+        ],
       ),
       GoRoute(
         path: Rutas.misPedidos,

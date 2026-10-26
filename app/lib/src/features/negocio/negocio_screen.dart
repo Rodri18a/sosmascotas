@@ -17,6 +17,7 @@ import '../../tienda/tienda_repositorio.dart';
 import '../../utiles/enlaces.dart';
 import '../../veterinarias/veterinarias_repositorio.dart';
 import '../../widgets/volver.dart';
+import '../agenda/agenda_negocio.dart';
 import '../chapitas/pedido_chapita.dart';
 import '../resenas/resenas.dart';
 import '../tienda/pedidos.dart';
@@ -138,10 +139,7 @@ class _NegocioScreenState extends ConsumerState<NegocioScreen> {
               Expanded(
                 child: switch (_seccion) {
                   _Seccion.panel => _Panel(negocio: negocio),
-                  _Seccion.agenda => _Modulo(
-                    negocio: negocio,
-                    modulo: Modulo.agenda,
-                  ),
+                  _Seccion.agenda => _Agenda(negocio: negocio),
                   _Seccion.catalogo => _Tienda(negocio: negocio),
                   _Seccion.pedidos => _Tienda(negocio: negocio, pedidos: true),
                   _Seccion.negocio => _Ficha(negocio: negocio),
@@ -384,6 +382,25 @@ class _Modulo extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+/// Agenda de turnos (3.1, D104), detrás de `agenda`: con plan Plus y si el
+/// tipo lo admite; si no, el aviso de [_Modulo].
+class _Agenda extends ConsumerWidget {
+  const _Agenda({required this.negocio});
+
+  final MiNegocio negocio;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final c = negocio.comercio;
+    if (!ref.watch(funcionalidadActivaProvider(Funcionalidades.agenda)) ||
+        c.plan != PlanComercio.plus ||
+        !moduloAdmitido(c.categoria, c.modalidad, Modulo.agenda)) {
+      return _Modulo(negocio: negocio, modulo: Modulo.agenda);
+    }
+    return AgendaNegocio(negocioId: negocio.id);
   }
 }
 

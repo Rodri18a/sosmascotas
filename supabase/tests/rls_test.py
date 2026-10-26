@@ -1809,6 +1809,109 @@ def main():
             pedir('DELETE', f'{URL}/rest/v1/payments?subscription_id=eq.{sub}', headers=ADMIN)
             pedir('DELETE', f'{URL}/rest/v1/subscriptions?id=eq.{sub}', headers=ADMIN)
             pedir('DELETE', f'{URL}/rest/v1/prospects?business_id=eq.{tienda}', headers=ADMIN)
+            print('agenda de turnos (3.1, D104)')
+            import datetime as _dt2
+            todo_el_dia = {d: [['00:00', '24:00']] for d in ('mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun')}
+            s_ag, agenda_neg = rest('POST', 'rpc/alta_negocio', {'p': {
+                'name': 'Peluquería Agenda RLS', 'business_type': 'grooming', 'kind': 'local',
+                'lat': -34.7215, 'lng': -55.9615, 'hours': todo_el_dia}}, a)
+            caso('A da de alta una peluquería', s_ag == 200)
+            caso('sin Plus no se configura la agenda',
+                 rest('POST', 'rpc/guardar_agenda', {'p_negocio': agenda_neg, 'p': {'slot_min': 30}}, a)[0] >= 400)
+            rest('POST', 'rpc/admin_plan_comercio', {'p_business': agenda_neg, 'p_plan': 'plus'}, x)
+            caso('B no configura la agenda de otro',
+                 rest('POST', 'rpc/guardar_agenda', {'p_negocio': agenda_neg, 'p': {'slot_min': 30}}, b)[0] >= 400)
+            caso('A la configura (30 min, 1 a la vez, 2 h de anticipación)',
+                 rest('POST', 'rpc/guardar_agenda', {'p_negocio': agenda_neg, 'p': {'slot_min': 30}}, a)[0] in (200, 204))
+            caso('B no ve la configuración de otro', rest('POST', 'rpc/mi_agenda', {'p_negocio': agenda_neg}, b)[0] >= 400)
+            hoy_uy = (_dt2.datetime.now(_dt2.timezone.utc) - _dt2.timedelta(hours=3)).date()
+            dia = (hoy_uy + _dt2.timedelta(days=1)).isoformat()
+            caso('con el módulo apagado no hay horarios',
+                 filas(rest('POST', 'rpc/horarios_libres', {'p_negocio': agenda_neg, 'p_dia': dia})) == []
+                 and rest('POST', 'rpc/condiciones_agenda', {'p_negocio': agenda_neg})[1] is None)
+            rest('POST', 'rpc/prender_modulo', {'p_business': agenda_neg, 'p_modulo': 'agenda', 'p_prendido': True}, a)
+            libres = filas(rest('POST', 'rpc/horarios_libres', {'p_negocio': agenda_neg, 'p_dia': dia}))
+            caso('prendido, un visitante ve los 48 horarios de mañana', len(libres) == 48)
+            caso('nadie lee turnos ni la agenda directamente',
+                 bloqueado(rest('GET', 'bookings?select=id', quien=a))
+                 and bloqueado(rest('GET', 'agenda_settings?select=business_id', quien=a))
+                 and bloqueado(rest('GET', 'agenda_blocks?select=day', quien=a))
+                 and bloqueado(rest('POST', 'bookings', {'business_id': agenda_neg, 'pet_id': pet['id'],
+                                                         'starts_at': libres[0]['inicio'], 'ends_at': libres[1]['inicio']}, a)))
+            mascota_b = filas(rest('POST', 'pets', {'name': 'Pelusa', 'species_id': 2}, b))[0]['id']
+            hora = libres[20]['inicio']
+            caso('un visitante no reserva', rest('POST', 'rpc/reservar_turno', {
+                'p_negocio': agenda_neg, 'p_mascota': mascota_b, 'p_inicio': hora})[0] >= 400)
+            caso('B no reserva con la mascota de A', rest('POST', 'rpc/reservar_turno', {
+                'p_negocio': agenda_neg, 'p_mascota': pet['id'], 'p_inicio': hora}, b)[0] >= 400)
+            caso('no se reserva un horario que no está en la agenda', rest('POST', 'rpc/reservar_turno', {
+                'p_negocio': agenda_neg, 'p_mascota': mascota_b, 'p_inicio': dia + 'T12:07:00Z'}, b)[0] >= 400)
+            s_tu, turno = rest('POST', 'rpc/reservar_turno', {
+                'p_negocio': agenda_neg, 'p_mascota': mascota_b, 'p_inicio': hora, 'p_nota': 'Es miedosa'}, b)
+            caso('B reserva con su mascota', s_tu == 200)
+            caso('ese horario ya no está libre ni se puede volver a reservar',
+                 all(h['inicio'] != hora for h in filas(rest('POST', 'rpc/horarios_libres',
+                                                             {'p_negocio': agenda_neg, 'p_dia': dia})))
+                 and rest('POST', 'rpc/reservar_turno', {'p_negocio': agenda_neg, 'p_mascota': pet['id'],
+                                                         'p_inicio': hora}, a)[0] >= 400)
+            mis = filas(rest('POST', 'rpc/mis_turnos', {}, b))
+            caso('B ve su turno pendiente', len(mis) == 1 and mis[0]['status'] == 'pending'
+                 and mis[0]['pet_name'] == 'Pelusa' and mis[0]['business_name'] == 'Peluquería Agenda RLS')
+            del_neg = filas(rest('POST', 'rpc/turnos_del_negocio', {'p_negocio': agenda_neg}, a))
+            caso('el comercio ve primer nombre, mascota y nota (sin id ni contacto)',
+                 len(del_neg) == 1 and del_neg[0]['cliente'] == 'Prueba' and del_neg[0]['pet_name'] == 'Pelusa'
+                 and del_neg[0]['note'] == 'Es miedosa' and 'user_id' not in del_neg[0] and 'phone' not in str(del_neg))
+            caso('B no ve los turnos del comercio',
+                 rest('POST', 'rpc/turnos_del_negocio', {'p_negocio': agenda_neg}, b)[0] >= 400)
+            caso('B no confirma su propio turno',
+                 rest('POST', 'rpc/cambiar_estado_turno', {'p_id': turno, 'p_estado': 'confirmed'}, b)[0] >= 400)
+            caso('el comercio no lo marca atendido antes de la hora',
+                 rest('POST', 'rpc/cambiar_estado_turno', {'p_id': turno, 'p_estado': 'done'}, a)[0] >= 400)
+
+            def avisar_t(id_, actor):
+                return filas(pedir('POST', f'{URL}/rest/v1/rpc/avisar_turno', {'p_turno': id_, 'p_actor': actor}, ADMIN))
+            caso('nadie con sesión pide a quién avisar de un turno',
+                 rest('POST', 'rpc/avisar_turno', {'p_turno': turno, 'p_actor': b_id}, b)[0] in (401, 403, 404))
+            av = avisar_t(turno, b_id)
+            caso('turno nuevo: se avisa al comercio una sola vez',
+                 len(av) == 1 and av[0]['destino'] == 'negocio' and av[0]['mascota'] == 'Pelusa'
+                 and avisar_t(turno, b_id) == [])
+            caso('A confirma el turno', rest('POST', 'rpc/cambiar_estado_turno',
+                                              {'p_id': turno, 'p_estado': 'confirmed'}, a)[0] in (200, 204))
+            av = avisar_t(turno, a_id)
+            caso('confirmado: se avisa a B', len(av) == 1 and av[0]['destino'] == 'cliente' and av[0]['estado'] == 'confirmed')
+            caso('A cuenta los pendientes', rest('POST', 'rpc/turnos_pendientes', {'p_negocio': agenda_neg}, a)[1] == 0)
+            caso('B cancela con más de 2 horas', rest('POST', 'rpc/cambiar_estado_turno',
+                                                       {'p_id': turno, 'p_estado': 'cancelled'}, b)[0] in (200, 204)
+                 and filas(rest('POST', 'rpc/mis_turnos', {}, b))[0]['cancelled_by'] == 'cliente')
+            caso('cancelado, el horario vuelve a estar libre',
+                 any(h['inicio'] == hora for h in filas(rest('POST', 'rpc/horarios_libres',
+                                                             {'p_negocio': agenda_neg, 'p_dia': dia}))))
+            # Sin anticipación: un turno dentro de las próximas 2 horas no se cancela.
+            rest('POST', 'rpc/guardar_agenda', {'p_negocio': agenda_neg, 'p': {'slot_min': 30, 'notice_min': 0}}, a)
+            pronto = filas(rest('POST', 'rpc/horarios_libres', {'p_negocio': agenda_neg, 'p_dia': hoy_uy.isoformat()}))
+            if pronto:
+                _, t2 = rest('POST', 'rpc/reservar_turno', {'p_negocio': agenda_neg, 'p_mascota': mascota_b,
+                                                            'p_inicio': pronto[0]['inicio']}, b)
+                caso('a menos de 2 horas, B ya no lo cancela',
+                     rest('POST', 'rpc/cambiar_estado_turno', {'p_id': t2, 'p_estado': 'cancelled'}, b)[0] >= 400)
+            caso('B no bloquea días de otro',
+                 rest('POST', 'rpc/bloquear_dia', {'p_negocio': agenda_neg, 'p_dia': dia}, b)[0] >= 400)
+            rest('POST', 'rpc/bloquear_dia', {'p_negocio': agenda_neg, 'p_dia': dia, 'p_nota': 'Feriado'}, a)
+            caso('un día bloqueado no tiene horarios',
+                 filas(rest('POST', 'rpc/horarios_libres', {'p_negocio': agenda_neg, 'p_dia': dia})) == []
+                 and dia in rest('POST', 'rpc/condiciones_agenda', {'p_negocio': agenda_neg})[1]['bloqueados'])
+
+            def escucha_t(canal, quien):
+                return rest('POST', 'rpc/puedo_escuchar_turnos', {'p_canal': canal}, quien)[1] is True
+            caso('cada uno escucha sus turnos en vivo y el comercio los suyos',
+                 escucha_t(f'turnos:cliente:{b_id}', b) and not escucha_t(f'turnos:cliente:{b_id}', a)
+                 and escucha_t(f'turnos:negocio:{agenda_neg}', a) and not escucha_t(f'turnos:negocio:{agenda_neg}', b))
+            caso('nadie pide los recordatorios desde la app',
+                 rest('POST', 'rpc/turnos_para_recordar', {}, x)[0] >= 400
+                 and rest('POST', 'rpc/pedir_recordatorios_turnos', {}, x)[0] >= 400)
+            pedir('DELETE', f'{URL}/rest/v1/businesses?id=eq.{agenda_neg}', headers=ADMIN)
+            pedir('DELETE', f'{URL}/rest/v1/pets?id=eq.{mascota_b}', headers=ADMIN)
             pedir('DELETE', f'{URL}/rest/v1/businesses?id=eq.{tienda}', headers=ADMIN)
 
             print('rubro Agropecuaria (2.8e)')

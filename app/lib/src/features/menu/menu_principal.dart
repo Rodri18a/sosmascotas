@@ -104,6 +104,12 @@ class _MenuPrincipalState extends ConsumerState<MenuPrincipal> {
                 t.misPedidos,
                 Rutas.misPedidos,
               ),
+              if (activa(Funcionalidades.agenda))
+                opcion(
+                  Icons.event_available_outlined,
+                  t.misTurnos,
+                  Rutas.misTurnos,
+                ),
               if (activa(Funcionalidades.comercios))
                 opcion(Icons.storefront_outlined, t.negocioMi, Rutas.negocio),
             ],

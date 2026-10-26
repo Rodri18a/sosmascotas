@@ -12,6 +12,7 @@ import '../../mascotas/catalogo.dart';
 import '../../metricas/metricas.dart';
 import '../../theme/paleta.dart';
 import '../../utiles/enlaces.dart';
+import '../agenda/reservar_turno.dart';
 import '../chat/chat_screen.dart';
 import '../resenas/resenas.dart';
 import '../tienda/catalogo_screen.dart';
@@ -282,6 +283,8 @@ class FichaComercio extends ConsumerWidget {
             BotonCatalogo(comercio: c),
             // Servicios (2.10a, D90): solo con plan Plus.
             SeccionServicios(comercio: c),
+            // Turnos (3.1, D104): solo si el comercio toma turnos.
+            BotonReservar(comercio: c),
             // Favorito, "fui" y "es mi veterinaria" (1.2.8), con sesión y
             // con el mapa completo.
             if (ref.watch(conectadoProvider) &&

@@ -2,6 +2,7 @@
 library;
 
 export 'src/adopcion/adopcion.dart';
+export 'src/agenda/turno.dart';
 export 'src/avisos/aviso.dart';
 export 'src/ayuda/ayuda.dart';
 export 'src/catalogo/catalogo.dart';

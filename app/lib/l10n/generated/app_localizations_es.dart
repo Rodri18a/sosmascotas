@@ -4565,4 +4565,190 @@ class AppLocalizationsEs extends AppLocalizations {
   ) {
     return 'En $dias días: $despues aperturas de tu ficha y $contactosDespues contactos. En los $dias días anteriores: $antes y $contactosAntes.';
   }
+
+  @override
+  String get turnoReservar => 'Reservar turno';
+
+  @override
+  String get turnoReservarTitulo => 'Reservar un turno';
+
+  @override
+  String get turnoServicio => '¿Qué servicio?';
+
+  @override
+  String get turnoSinServicio => 'Consulta general';
+
+  @override
+  String get turnoDia => '¿Qué día?';
+
+  @override
+  String get turnoHorario => '¿A qué hora?';
+
+  @override
+  String get turnoSinHorarios =>
+      'No quedan horarios libres ese día. Probá con otro.';
+
+  @override
+  String get turnoMascota => '¿Para qué mascota?';
+
+  @override
+  String get turnoSinMascotas =>
+      'Primero agregá a tu mascota en la pestaña Mascotas.';
+
+  @override
+  String get turnoNota => 'Algo que el comercio tenga que saber (opcional)';
+
+  @override
+  String get turnoConfirmar => 'Pedir el turno';
+
+  @override
+  String get turnoPedido => '¡Listo! El comercio te va a confirmar el turno.';
+
+  @override
+  String get turnoOcupado => 'Ese horario se acaba de ocupar. Elegí otro.';
+
+  @override
+  String get turnoLimite =>
+      'Llegaste al máximo de turnos por ahora (3 por comercio, 10 por día).';
+
+  @override
+  String get turnoNoSePuede => 'No se pudo hacer ese cambio.';
+
+  @override
+  String get turnoIngresar => 'Ingresá para reservar un turno';
+
+  @override
+  String turnoDuracion(int min) {
+    return '$min min';
+  }
+
+  @override
+  String get misTurnos => 'Mis turnos';
+
+  @override
+  String get misTurnosAyuda => 'Los turnos que pediste y su estado';
+
+  @override
+  String get misTurnosVacio =>
+      'Todavía no pediste turnos. Los comercios con agenda tienen «Reservar turno» en su ficha.';
+
+  @override
+  String get turnoCancelar => 'Cancelar el turno';
+
+  @override
+  String get turnoCancelarTexto =>
+      'Se avisa al comercio. Se puede cancelar hasta 2 horas antes.';
+
+  @override
+  String get turnoCancelado => 'Turno cancelado.';
+
+  @override
+  String get turnoNoCancelable =>
+      'Falta menos de 2 horas: si no podés ir, avisale al comercio por el chat.';
+
+  @override
+  String get turnoPendiente => 'Esperando confirmación';
+
+  @override
+  String get turnoConfirmado => 'Confirmado';
+
+  @override
+  String get turnoRechazado => 'No disponible';
+
+  @override
+  String get turnoCanceladoEstado => 'Cancelado';
+
+  @override
+  String get turnoAtendido => 'Atendido';
+
+  @override
+  String turnoCuando(String dia, String hora) {
+    return '$dia · $hora';
+  }
+
+  @override
+  String get agendaModulo => 'Tomar turnos desde la app';
+
+  @override
+  String get agendaModuloAyuda =>
+      'Aparece «Reservar turno» en tu ficha. Vos confirmás o rechazás cada pedido.';
+
+  @override
+  String get agendaConfigurar => 'Cómo das los turnos';
+
+  @override
+  String get agendaDuracion => 'Duración de cada turno';
+
+  @override
+  String get agendaALaVez => 'Turnos al mismo tiempo';
+
+  @override
+  String get agendaAnticipacion => 'Con cuánta anticipación';
+
+  @override
+  String get agendaDiasAdelante => 'Hasta cuántos días adelante';
+
+  @override
+  String agendaMinutos(int n) {
+    return '$n min';
+  }
+
+  @override
+  String agendaHoras(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n horas antes',
+      one: '1 hora antes',
+      zero: 'Sin anticipación',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String agendaDias(int n) {
+    return '$n días';
+  }
+
+  @override
+  String get agendaHorarioAyuda =>
+      'Se usan el horario de tu ficha y la duración de cada servicio (si la tiene).';
+
+  @override
+  String get agendaGuardar => 'Guardar';
+
+  @override
+  String get agendaGuardada => 'Agenda guardada.';
+
+  @override
+  String get agendaBloqueados => 'Días sin turnos';
+
+  @override
+  String get agendaBloquear => 'Agregar un día sin turnos';
+
+  @override
+  String get agendaSinBloqueados => 'Ninguno por ahora.';
+
+  @override
+  String get agendaTurnos => 'Turnos';
+
+  @override
+  String get agendaSinTurnos => 'Todavía no te pidieron turnos.';
+
+  @override
+  String get agendaConfirmar => 'Confirmar';
+
+  @override
+  String get agendaRechazar => 'Rechazar';
+
+  @override
+  String get agendaAtendido => 'Atendido';
+
+  @override
+  String get agendaCancelar => 'Cancelar';
+
+  @override
+  String agendaCliente(String nombre, String mascota) {
+    return '$nombre · $mascota';
+  }
 }

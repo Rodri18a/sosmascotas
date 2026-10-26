@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:sosmascota/src/adopcion/adopcion_repositorio.dart';
+import 'package:sosmascota/src/agenda/agenda_repositorio.dart';
 import 'package:sosmascota/src/app.dart';
 import 'package:sosmascota/src/avisos/avisos_repositorio.dart';
 import 'package:sosmascota/src/ayuda/ayuda_repositorio.dart';
@@ -45,6 +46,7 @@ import 'package:sosmascota/src/veterinarias/veterinarias_repositorio.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'adopcion_falsa.dart';
+import 'agenda_falsa.dart';
 import 'avisos_falsos.dart';
 import 'ayuda_falsa.dart';
 import 'chat_falso.dart';
@@ -99,6 +101,7 @@ Widget appDePrueba({
   VeterinariasRepositorio? veterinarias,
   NoticiasRepositorio? noticias,
   TiendaRepositorio? tienda,
+  AgendaRepositorio? agenda,
   Posicion? posicion,
   SelectorFoto? selectorFoto,
   QrRepositorio? qr,
@@ -179,6 +182,7 @@ Widget appDePrueba({
     ),
     noticiasRepositorioProvider.overrideWithValue(noticias ?? NoticiasFalsas()),
     tiendaRepositorioProvider.overrideWithValue(tienda ?? TiendaFalsa()),
+    agendaRepositorioProvider.overrideWithValue(agenda ?? AgendaFalsa()),
     misLugaresRepositorioProvider.overrideWithValue(
       misLugares ?? MisLugaresFalsos(),
     ),

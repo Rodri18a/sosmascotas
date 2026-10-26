@@ -7707,6 +7707,324 @@ abstract class AppLocalizations {
     int antes,
     int contactosAntes,
   );
+
+  /// No description provided for @turnoReservar.
+  ///
+  /// In es, this message translates to:
+  /// **'Reservar turno'**
+  String get turnoReservar;
+
+  /// No description provided for @turnoReservarTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Reservar un turno'**
+  String get turnoReservarTitulo;
+
+  /// No description provided for @turnoServicio.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Qué servicio?'**
+  String get turnoServicio;
+
+  /// No description provided for @turnoSinServicio.
+  ///
+  /// In es, this message translates to:
+  /// **'Consulta general'**
+  String get turnoSinServicio;
+
+  /// No description provided for @turnoDia.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Qué día?'**
+  String get turnoDia;
+
+  /// No description provided for @turnoHorario.
+  ///
+  /// In es, this message translates to:
+  /// **'¿A qué hora?'**
+  String get turnoHorario;
+
+  /// No description provided for @turnoSinHorarios.
+  ///
+  /// In es, this message translates to:
+  /// **'No quedan horarios libres ese día. Probá con otro.'**
+  String get turnoSinHorarios;
+
+  /// No description provided for @turnoMascota.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Para qué mascota?'**
+  String get turnoMascota;
+
+  /// No description provided for @turnoSinMascotas.
+  ///
+  /// In es, this message translates to:
+  /// **'Primero agregá a tu mascota en la pestaña Mascotas.'**
+  String get turnoSinMascotas;
+
+  /// No description provided for @turnoNota.
+  ///
+  /// In es, this message translates to:
+  /// **'Algo que el comercio tenga que saber (opcional)'**
+  String get turnoNota;
+
+  /// No description provided for @turnoConfirmar.
+  ///
+  /// In es, this message translates to:
+  /// **'Pedir el turno'**
+  String get turnoConfirmar;
+
+  /// No description provided for @turnoPedido.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Listo! El comercio te va a confirmar el turno.'**
+  String get turnoPedido;
+
+  /// No description provided for @turnoOcupado.
+  ///
+  /// In es, this message translates to:
+  /// **'Ese horario se acaba de ocupar. Elegí otro.'**
+  String get turnoOcupado;
+
+  /// No description provided for @turnoLimite.
+  ///
+  /// In es, this message translates to:
+  /// **'Llegaste al máximo de turnos por ahora (3 por comercio, 10 por día).'**
+  String get turnoLimite;
+
+  /// No description provided for @turnoNoSePuede.
+  ///
+  /// In es, this message translates to:
+  /// **'No se pudo hacer ese cambio.'**
+  String get turnoNoSePuede;
+
+  /// No description provided for @turnoIngresar.
+  ///
+  /// In es, this message translates to:
+  /// **'Ingresá para reservar un turno'**
+  String get turnoIngresar;
+
+  /// No description provided for @turnoDuracion.
+  ///
+  /// In es, this message translates to:
+  /// **'{min} min'**
+  String turnoDuracion(int min);
+
+  /// No description provided for @misTurnos.
+  ///
+  /// In es, this message translates to:
+  /// **'Mis turnos'**
+  String get misTurnos;
+
+  /// No description provided for @misTurnosAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Los turnos que pediste y su estado'**
+  String get misTurnosAyuda;
+
+  /// No description provided for @misTurnosVacio.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no pediste turnos. Los comercios con agenda tienen «Reservar turno» en su ficha.'**
+  String get misTurnosVacio;
+
+  /// No description provided for @turnoCancelar.
+  ///
+  /// In es, this message translates to:
+  /// **'Cancelar el turno'**
+  String get turnoCancelar;
+
+  /// No description provided for @turnoCancelarTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Se avisa al comercio. Se puede cancelar hasta 2 horas antes.'**
+  String get turnoCancelarTexto;
+
+  /// No description provided for @turnoCancelado.
+  ///
+  /// In es, this message translates to:
+  /// **'Turno cancelado.'**
+  String get turnoCancelado;
+
+  /// No description provided for @turnoNoCancelable.
+  ///
+  /// In es, this message translates to:
+  /// **'Falta menos de 2 horas: si no podés ir, avisale al comercio por el chat.'**
+  String get turnoNoCancelable;
+
+  /// No description provided for @turnoPendiente.
+  ///
+  /// In es, this message translates to:
+  /// **'Esperando confirmación'**
+  String get turnoPendiente;
+
+  /// No description provided for @turnoConfirmado.
+  ///
+  /// In es, this message translates to:
+  /// **'Confirmado'**
+  String get turnoConfirmado;
+
+  /// No description provided for @turnoRechazado.
+  ///
+  /// In es, this message translates to:
+  /// **'No disponible'**
+  String get turnoRechazado;
+
+  /// No description provided for @turnoCanceladoEstado.
+  ///
+  /// In es, this message translates to:
+  /// **'Cancelado'**
+  String get turnoCanceladoEstado;
+
+  /// No description provided for @turnoAtendido.
+  ///
+  /// In es, this message translates to:
+  /// **'Atendido'**
+  String get turnoAtendido;
+
+  /// No description provided for @turnoCuando.
+  ///
+  /// In es, this message translates to:
+  /// **'{dia} · {hora}'**
+  String turnoCuando(String dia, String hora);
+
+  /// No description provided for @agendaModulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Tomar turnos desde la app'**
+  String get agendaModulo;
+
+  /// No description provided for @agendaModuloAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Aparece «Reservar turno» en tu ficha. Vos confirmás o rechazás cada pedido.'**
+  String get agendaModuloAyuda;
+
+  /// No description provided for @agendaConfigurar.
+  ///
+  /// In es, this message translates to:
+  /// **'Cómo das los turnos'**
+  String get agendaConfigurar;
+
+  /// No description provided for @agendaDuracion.
+  ///
+  /// In es, this message translates to:
+  /// **'Duración de cada turno'**
+  String get agendaDuracion;
+
+  /// No description provided for @agendaALaVez.
+  ///
+  /// In es, this message translates to:
+  /// **'Turnos al mismo tiempo'**
+  String get agendaALaVez;
+
+  /// No description provided for @agendaAnticipacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Con cuánta anticipación'**
+  String get agendaAnticipacion;
+
+  /// No description provided for @agendaDiasAdelante.
+  ///
+  /// In es, this message translates to:
+  /// **'Hasta cuántos días adelante'**
+  String get agendaDiasAdelante;
+
+  /// No description provided for @agendaMinutos.
+  ///
+  /// In es, this message translates to:
+  /// **'{n} min'**
+  String agendaMinutos(int n);
+
+  /// No description provided for @agendaHoras.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =0{Sin anticipación} =1{1 hora antes} other{{n} horas antes}}'**
+  String agendaHoras(int n);
+
+  /// No description provided for @agendaDias.
+  ///
+  /// In es, this message translates to:
+  /// **'{n} días'**
+  String agendaDias(int n);
+
+  /// No description provided for @agendaHorarioAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Se usan el horario de tu ficha y la duración de cada servicio (si la tiene).'**
+  String get agendaHorarioAyuda;
+
+  /// No description provided for @agendaGuardar.
+  ///
+  /// In es, this message translates to:
+  /// **'Guardar'**
+  String get agendaGuardar;
+
+  /// No description provided for @agendaGuardada.
+  ///
+  /// In es, this message translates to:
+  /// **'Agenda guardada.'**
+  String get agendaGuardada;
+
+  /// No description provided for @agendaBloqueados.
+  ///
+  /// In es, this message translates to:
+  /// **'Días sin turnos'**
+  String get agendaBloqueados;
+
+  /// No description provided for @agendaBloquear.
+  ///
+  /// In es, this message translates to:
+  /// **'Agregar un día sin turnos'**
+  String get agendaBloquear;
+
+  /// No description provided for @agendaSinBloqueados.
+  ///
+  /// In es, this message translates to:
+  /// **'Ninguno por ahora.'**
+  String get agendaSinBloqueados;
+
+  /// No description provided for @agendaTurnos.
+  ///
+  /// In es, this message translates to:
+  /// **'Turnos'**
+  String get agendaTurnos;
+
+  /// No description provided for @agendaSinTurnos.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no te pidieron turnos.'**
+  String get agendaSinTurnos;
+
+  /// No description provided for @agendaConfirmar.
+  ///
+  /// In es, this message translates to:
+  /// **'Confirmar'**
+  String get agendaConfirmar;
+
+  /// No description provided for @agendaRechazar.
+  ///
+  /// In es, this message translates to:
+  /// **'Rechazar'**
+  String get agendaRechazar;
+
+  /// No description provided for @agendaAtendido.
+  ///
+  /// In es, this message translates to:
+  /// **'Atendido'**
+  String get agendaAtendido;
+
+  /// No description provided for @agendaCancelar.
+  ///
+  /// In es, this message translates to:
+  /// **'Cancelar'**
+  String get agendaCancelar;
+
+  /// No description provided for @agendaCliente.
+  ///
+  /// In es, this message translates to:
+  /// **'{nombre} · {mascota}'**
+  String agendaCliente(String nombre, String mascota);
 }
 
 class _AppLocalizationsDelegate
