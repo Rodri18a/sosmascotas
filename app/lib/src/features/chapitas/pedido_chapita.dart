@@ -19,6 +19,7 @@ String textoErrorPedido(AppLocalizations t, ErrorPedidoChapita e) =>
       ),
       ErrorPedidoChapita.noEsPunto => t.pedidoChapitaNoEsPunto,
       ErrorPedidoChapita.soloVerificadas => t.retiroSoloVerificadas,
+      ErrorPedidoChapita.noEstaEnStock => t.stockNoEsTuya,
       ErrorPedidoChapita.noSePuede => t.errorDesconocido,
       ErrorPedidoChapita.sinConexion => t.errorSinConexion,
     };
@@ -307,6 +308,22 @@ class _ChapitasNegocioState extends ConsumerState<ChapitasNegocioScreen> {
     });
   }
 
+  Future<void> _entregarDeStock(PedidoChapita p) async {
+    final codigo = await showDialog<String>(
+      context: context,
+      builder: (_) => _CodigoDeStock(pedido: p),
+    );
+    if (codigo == null || codigo.trim().isEmpty) return;
+    await _hacer(() async {
+      await ref
+          .read(pedidosChapitaRepositorioProvider)
+          .entregarDeStock(p.id, codigo.trim());
+      ref
+          .read(metricasProvider)
+          .track(Eventos.tagStockDeliver, businessId: widget.negocioId);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final t = context.t;
@@ -344,6 +361,16 @@ class _ChapitasNegocioState extends ConsumerState<ChapitasNegocioScreen> {
                           );
                     }),
             ),
+            if (d.stockDisponibles + d.stockActivadas > 0)
+              Card(
+                child: ListTile(
+                  leading: const Icon(Icons.inventory_2_outlined),
+                  title: Text(
+                    t.stockResumen(d.stockDisponibles, d.stockActivadas),
+                  ),
+                  subtitle: Text(t.stockAyuda),
+                ),
+              ),
             const Divider(height: 24),
             Text(t.retiroPedidos, style: tema.textTheme.titleMedium),
             if (d.pedidos.isEmpty)
@@ -384,11 +411,80 @@ class _ChapitasNegocioState extends ConsumerState<ChapitasNegocioScreen> {
                   },
                 ),
               ),
+            // Un pedido nuevo se puede entregar con una chapita del stock.
+            for (final p in d.pedidos)
+              if (p.estado == EstadoPedidoChapita.nuevo &&
+                  d.stockDisponibles > 0)
+                Align(
+                  alignment: AlignmentDirectional.centerEnd,
+                  child: FilledButton.tonalIcon(
+                    onPressed: _ocupado ? null : () => _entregarDeStock(p),
+                    icon: const Icon(Icons.inventory_2_outlined),
+                    label: Text(t.stockEntregarNumero(p.numero)),
+                  ),
+                ),
           ],
         ),
         AsyncLoading() => const Center(child: CircularProgressIndicator()),
         _ => Center(child: Text(t.errorSinConexion)),
       },
+    );
+  }
+}
+
+/// Pide el código de la chapita del stock que se entrega para el pedido.
+class _CodigoDeStock extends StatefulWidget {
+  const _CodigoDeStock({required this.pedido});
+
+  final PedidoChapita pedido;
+
+  @override
+  State<_CodigoDeStock> createState() => _CodigoDeStockState();
+}
+
+class _CodigoDeStockState extends State<_CodigoDeStock> {
+  final _codigo = TextEditingController();
+
+  @override
+  void dispose() {
+    _codigo.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final t = context.t;
+    return AlertDialog(
+      title: Text(t.stockEntregarTitulo),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            t.stockEntregarTexto(
+              widget.pedido.numero,
+              widget.pedido.nombreMascota,
+              widget.pedido.grabado,
+            ),
+          ),
+          TextField(
+            controller: _codigo,
+            autofocus: true,
+            textCapitalization: TextCapitalization.characters,
+            decoration: InputDecoration(labelText: t.stockCodigo),
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text(t.cancelar),
+        ),
+        FilledButton(
+          onPressed: () => Navigator.pop(context, _codigo.text),
+          child: Text(t.retiroEntregada),
+        ),
+      ],
     );
   }
 }

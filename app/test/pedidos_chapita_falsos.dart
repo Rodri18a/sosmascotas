@@ -8,12 +8,18 @@ class PedidosChapitaFalsos implements PedidosChapitaRepositorio {
     List<PedidoChapita>? pedidos,
     this.puedeSer = true,
     this.puntoRetiro = false,
-  }) : pedidos = [...?pedidos];
+    List<String>? stock,
+  }) : pedidos = [...?pedidos],
+       stock = [...?stock];
 
   final List<PuntoRetiro> puntos;
   final List<PedidoChapita> pedidos;
   final bool puedeSer;
   bool puntoRetiro;
+
+  /// Códigos sin usar del stock de la veterinaria.
+  final List<String> stock;
+  int _activadasDelStock = 0;
   int _numero = 100;
 
   /// Nombre de la mascota por id, para armar el pedido.
@@ -72,7 +78,13 @@ class PedidosChapitaFalsos implements PedidosChapitaRepositorio {
 
   @override
   Future<PedidosDelNegocio> delNegocio(String negocioId) async =>
-      (puntoRetiro: puntoRetiro, puedeSer: puedeSer, pedidos: List.of(pedidos));
+      (
+        puntoRetiro: puntoRetiro,
+        puedeSer: puedeSer,
+        pedidos: List.of(pedidos),
+        stockDisponibles: stock.length,
+        stockActivadas: _activadasDelStock,
+      );
 
   @override
   Future<void> prenderPuntoRetiro(
@@ -95,5 +107,18 @@ class PedidosChapitaFalsos implements PedidosChapitaRepositorio {
     };
     pedidos[i] = _con(pedidos[i], nuevo);
     return nuevo;
+  }
+
+  @override
+  Future<void> entregarDeStock(String pedidoId, String codigo) async {
+    final i = pedidos.indexWhere((p) => p.id == pedidoId);
+    if (pedidos[i].estado != EstadoPedidoChapita.nuevo) {
+      throw const PedidoChapitaException(ErrorPedidoChapita.noSePuede);
+    }
+    if (!stock.remove(codigo.toUpperCase())) {
+      throw const PedidoChapitaException(ErrorPedidoChapita.noEstaEnStock);
+    }
+    _activadasDelStock++;
+    pedidos[i] = _con(pedidos[i], EstadoPedidoChapita.entregado);
   }
 }

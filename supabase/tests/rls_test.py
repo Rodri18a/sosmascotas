@@ -21,6 +21,7 @@ import time
 import urllib.error
 import urllib.request
 import uuid
+from datetime import datetime, timezone
 
 RAIZ = pathlib.Path(__file__).resolve().parents[2]
 REF = (RAIZ / 'supabase/.temp/project-ref').read_text().strip()
@@ -2123,11 +2124,81 @@ def main():
             s_p2, pedido2 = rest('POST', 'rpc/pedir_chapita', {'p_pet': ped_pet, 'p_business': vete}, a)
             caso('entregado el anterior, puede pedir otra y cancelarla',
                  s_p2 == 200 and rest('POST', 'rpc/cancelar_pedido_chapita', {'p_id': pedido2}, a)[0] in (200, 204))
+
+            print('sponsors y stock de chapitas (2.9)')
+            caso('nadie lee los sponsors directo',
+                 bloqueado(rest('GET', 'sponsors?select=id', quien=x)) and bloqueado(rest('GET', 'sponsors?select=id')))
+            caso('A no puede crear sponsors',
+                 rest('POST', 'rpc/admin_guardar_sponsor', {'p': {'name': 'Marca RLS'}}, a)[0] >= 400)
+            caso('un logo con una ruta rara no se acepta', 'logo_invalido' in json.dumps(
+                rest('POST', 'rpc/admin_guardar_sponsor', {'p': {'name': 'Marca RLS', 'logo_path': '../x.svg'}}, x)[1]))
+            s_sp, sponsor = rest('POST', 'rpc/admin_guardar_sponsor', {'p': {
+                'name': 'Marca RLS', 'logo_path': 'marca-rls.png', 'notes': 'contacto privado'}}, x)
+            caso('X crea un sponsor', s_sp == 200 and isinstance(sponsor, str))
+            caso('A no sube logos', subir('sponsor-logos/marca-rls.png', JPEG_MINIMO, 'image/jpeg', a) != 200)
+            caso('A no le pone sponsor a un lote',
+                 rest('POST', 'rpc/admin_sponsor_lote', {'p_lote': lote, 'p_sponsor': sponsor}, a)[0] >= 400)
+            caso('X le pone el sponsor al lote',
+                 rest('POST', 'rpc/admin_sponsor_lote', {'p_lote': lote, 'p_sponsor': sponsor}, x)[0] in (200, 204))
+            pag_sp = rest('POST', 'rpc/public_pet_page', {'p_code': c3})[1]
+            caso('la página de la chapita muestra el sponsor, solo nombre y logo',
+                 pag_sp.get('sponsor') == {'name': 'Marca RLS', 'logo_path': 'marca-rls.png'}
+                 and 'contacto privado' not in json.dumps(pag_sp))
+            pedir('POST', f'{URL}/rest/v1/sos_reports', {
+                'kind': 'lost', 'user_id': a_id, 'pet_id': ped_pet, 'species_id': 1,
+                'exact_location': 'SRID=4326;POINT(-55.958 -34.717)',
+                'public_location': 'SRID=4326;POINT(-55.958 -34.717)',
+                'status': 'resolved', 'resolved_at': datetime.now(timezone.utc).isoformat()}, ADMIN)
+            caso('A no ve el reporte del sponsor',
+                 rest('POST', 'rpc/admin_reporte_sponsor', {'p_sponsor': sponsor}, a)[0] >= 400)
+            reporte_sp = rest('POST', 'rpc/admin_reporte_sponsor', {'p_sponsor': sponsor}, x)[1]
+            lote_sp = (reporte_sp.get('lotes') or [{}])[0]
+            caso('el reporte cuenta activadas, escaneos y el reencuentro',
+                 lote_sp.get('activadas') == 3 and lote_sp.get('escaneos') == 1 and lote_sp.get('reencuentros') == 1)
+            caso('y no trae nada de las familias ni las notas del sponsor',
+                 not {'pet_name', 'owner_id', 'code', 'notes'} & set(lote_sp) and 'Pedido RLS' not in json.dumps(reporte_sp))
+
+            s_l2, lote2 = rest('POST', 'rpc/admin_crear_lote', {'p_cantidad': 3, 'p_productor': 'Prueba RLS stock'}, x)
+            caso('A no puede pasar chapitas al stock',
+                 rest('POST', 'rpc/admin_asignar_stock', {'p_lote': lote2, 'p_business': vete, 'p_cantidad': 2}, a)[0] >= 400)
+            caso('no alcanzan: no pasa ninguna', 'no_alcanzan' in json.dumps(
+                rest('POST', 'rpc/admin_asignar_stock', {'p_lote': lote2, 'p_business': vete, 'p_cantidad': 4}, x)[1]))
+            s_st, en_stock = rest('POST', 'rpc/admin_asignar_stock', {'p_lote': lote2, 'p_business': vete, 'p_cantidad': 2}, x)
+            caso('X le pasa 2 chapitas a la veterinaria', s_st == 200 and len(en_stock or []) == 2)
+            s1, s2 = en_stock
+            libre = next(c['code'] for c in rest('POST', 'rpc/admin_codigos_lote', {'p_lote': lote2}, x)[1]
+                         if c['code'] not in en_stock)
+            caso('la veterinaria ve su stock', rest('POST', 'rpc/pedidos_chapita_del_negocio', {'p_business': vete}, b)[1]
+                 .get('stock') == {'disponibles': 2, 'activadas': 0})
+            caso('X ve el stock por veterinaria',
+                 any(v['business_id'] == vete and v['disponibles'] == 2 for v in rest('POST', 'rpc/admin_stock', {}, x)[1]))
+            caso('A no ve el stock', rest('POST', 'rpc/admin_stock', {}, a)[0] >= 400)
+            s_p3, pedido3 = rest('POST', 'rpc/pedir_chapita', {'p_pet': ped_pet, 'p_business': vete}, a)
+            caso('X no puede mandar por correo una chapita del stock', 'chapita_no_disponible' in json.dumps(
+                rest('POST', 'rpc/admin_enviar_pedido_chapita', {'p_id': pedido3, 'p_code': s1}, x)[1]))
+            caso('la veterinaria no entrega una chapita que no está en su stock', 'no_esta_en_tu_stock' in json.dumps(
+                rest('POST', 'rpc/negocio_entregar_de_stock', {'p_id': pedido3, 'p_code': libre}, b)[1]))
+            caso('A no entrega desde el stock de la veterinaria',
+                 rest('POST', 'rpc/negocio_entregar_de_stock', {'p_id': pedido3, 'p_code': s1}, a)[0] in (401, 403))
+            caso('la veterinaria entrega el pedido con una de su stock',
+                 rest('POST', 'rpc/negocio_entregar_de_stock', {'p_id': pedido3, 'p_code': s1}, b)[0] in (200, 204))
+            pag_s1 = rest('POST', 'rpc/public_pet_page', {'p_code': s1})[1]
+            caso('queda vinculada a la mascota y el pedido entregado',
+                 pag_s1.get('status') == 'active' and pag_s1['pet']['name'] == 'Pedido RLS'
+                 and next(p for p in filas(rest('POST', 'rpc/mis_pedidos_chapita', {}, a)) if p['id'] == pedido3)['status'] == 'delivered')
+            caso('el stock la cuenta como activada', rest('POST', 'rpc/pedidos_chapita_del_negocio', {'p_business': vete}, b)[1]
+                 .get('stock') == {'disponibles': 1, 'activadas': 1})
+            caso('A no puede quitar chapitas del stock', rest('POST', 'rpc/admin_quitar_stock', {'p_code': s2}, a)[0] >= 400)
+            caso('X saca la otra del stock y vuelve a quedar libre',
+                 rest('POST', 'rpc/admin_quitar_stock', {'p_code': s2}, x)[0] in (200, 204)
+                 and rest('POST', 'rpc/admin_quitar_stock', {'p_code': s2}, x)[0] >= 400)
+            pedir('DELETE', f'{URL}/rest/v1/sos_reports?pet_id=eq.{ped_pet}', headers=ADMIN)
             rest('DELETE', f'pets?id=eq.{ped_pet}', quien=a)
             pedir('DELETE', f'{URL}/rest/v1/businesses?id=eq.{vete}', headers=ADMIN)
             OBJETIVOS_DE_PRUEBA.append(tag_c1)
-            pedir('DELETE', f'{URL}/rest/v1/qr_tags?batch_id=eq.{lote}', headers=ADMIN)
-            pedir('DELETE', f'{URL}/rest/v1/qr_batches?id=eq.{lote}', headers=ADMIN)
+            pedir('DELETE', f'{URL}/rest/v1/qr_tags?batch_id=in.({lote},{lote2})', headers=ADMIN)
+            pedir('DELETE', f'{URL}/rest/v1/qr_batches?id=in.({lote},{lote2})', headers=ADMIN)
+            pedir('DELETE', f'{URL}/rest/v1/sponsors?id=eq.{sponsor}', headers=ADMIN)
 
             pedir('DELETE', f'{URL}/rest/v1/businesses?id=in.({negocio},{sin_duenio},{desde_marca})', headers=ADMIN)
             pedir('DELETE', f'{URL}/rest/v1/place_marks?user_id=in.({a_id},{b_id})', headers=ADMIN)

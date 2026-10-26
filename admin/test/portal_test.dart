@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,6 +9,7 @@ import 'package:sosmascota_admin/src/modelos.dart';
 import 'package:sosmascota_admin/src/pantallas/chapitas.dart';
 import 'package:sosmascota_admin/src/pantallas/lugares.dart';
 import 'package:sosmascota_admin/src/pantallas/propuestas.dart';
+import 'package:sosmascota_admin/src/pantallas/sponsors.dart';
 import 'package:sosmascota_admin/src/repositorio.dart';
 import 'package:sosmascota_admin/src/sesion.dart';
 import 'package:sosmascota_core/sosmascota_core.dart' show EstadisticasNegocio;
@@ -123,6 +125,7 @@ class RepoFalso implements AdminRepositorio {
 
   @override
   Future<List<LugarAdmin>> lugares({String? buscar}) async => [
+    ...lugaresExtra,
     LugarAdmin.fromJson({
       'id': 'b1',
       'business_type': 'vet',
@@ -477,6 +480,76 @@ class RepoFalso implements AdminRepositorio {
   @override
   Future<void> cancelarPedidoChapita(String pedidoId, {String? motivo}) async =>
       cancelados.add(pedidoId);
+
+  final lugaresExtra = <LugarAdmin>[];
+  final sponsorsGuardados = <Map<String, Object?>>[];
+  final logosSubidos = <(int, String)>[];
+  final sponsorsDeLote = <(String, String?)>[];
+  final stockAsignado = <(String, String, int)>[];
+  final stockQuitado = <String>[];
+
+  @override
+  Future<List<Map<String, Object?>>> sponsors() async => [
+    for (final (i, s) in sponsorsGuardados.indexed)
+      {'id': 's$i', 'lotes': 0, 'chapitas': 0, ...s},
+  ];
+
+  @override
+  Future<String> guardarSponsor(Map<String, Object?> datos) async {
+    sponsorsGuardados.add(datos);
+    return 's${sponsorsGuardados.length - 1}';
+  }
+
+  @override
+  Future<String> subirLogo(Uint8List bytes, String tipo) async {
+    logosSubidos.add((bytes.length, tipo));
+    return 'logo-1.png';
+  }
+
+  @override
+  Future<void> sponsorLote(String loteId, String? sponsorId) async =>
+      sponsorsDeLote.add((loteId, sponsorId));
+
+  @override
+  Future<Map<String, Object?>> reporteSponsor(String sponsorId) async => {
+    'name': 'Marca',
+    'lotes': [
+      {
+        'id': 'l0',
+        'created_at': '2026-10-22T12:00:00Z',
+        'quantity': 50,
+        'material': 'PLA',
+        'activadas': 31,
+        'escaneos': 12,
+        'reencuentros': 2,
+      },
+    ],
+  };
+
+  @override
+  Future<List<String>> asignarStock(
+    String loteId,
+    String negocioId,
+    int cantidad,
+  ) async {
+    stockAsignado.add((loteId, negocioId, cantidad));
+    return [for (var i = 0; i < cantidad; i++) 'STK0000$i'];
+  }
+
+  @override
+  Future<void> quitarStock(String codigo) async => stockQuitado.add(codigo);
+
+  @override
+  Future<List<Map<String, Object?>>> stock() async => [
+    for (final (_, negocio, cantidad) in stockAsignado)
+      {
+        'business_id': negocio,
+        'business_name': 'Vete Verificada',
+        'recibidas': cantidad,
+        'disponibles': cantidad,
+        'activadas': 0,
+      },
+  ];
 }
 
 Widget _portal({
@@ -492,6 +565,9 @@ Widget _portal({
     urlPublicaProvider.overrideWithValue('https://web.ejemplo.uy/'),
     descargarTextoProvider.overrideWithValue(
       (nombre, contenido) => descargas?.add((nombre, contenido)),
+    ),
+    elegirImagenProvider.overrideWithValue(
+      () async => (bytes: Uint8List(2048), tipo: 'image/png'),
     ),
     descargarHtmlProvider.overrideWithValue(
       (nombre, html) => descargas?.add((nombre, html)),
@@ -980,7 +1056,10 @@ void main() {
       'material': null,
       'costo': 45.5,
     });
-    expect(find.text('30 chapitas · 0 activadas · 0 escaneos'), findsOneWidget);
+    expect(
+      find.text('30 chapitas · 0 activadas · 0 escaneos · 0 reencuentros'),
+      findsOneWidget,
+    );
 
     await _tocar(tester, find.text('Descargar CSV'));
     expect(descargas.single.$1, 'chapitas-2026-10-22-2.csv');
@@ -1028,6 +1107,143 @@ void main() {
     );
     expect(repo.enviados.single, ('o1', 'ABCD2345'));
     expect(find.textContaining('Enviado a la veterinaria'), findsOneWidget);
+  });
+
+  test('el reporte del sponsor como planilla, una fila por lote', () {
+    expect(
+      csvReporteSponsor({
+        'lotes': [
+          {
+            'created_at': '2026-10-22T12:00:00Z',
+            'quantity': 50,
+            'material': 'PLA "mate"',
+            'activadas': 31,
+            'escaneos': 12,
+            'reencuentros': 2,
+          },
+        ],
+      }),
+      'lote,chapitas,material,activadas,escaneos,reencuentros\n'
+      '2026-10-22,50,"PLA ""mate""",31,12,2',
+    );
+  });
+
+  testWidgets('chapitas: sponsor con logo, ponerlo en un lote y su reporte', (
+    tester,
+  ) async {
+    _pantallaGrande(tester);
+    final repo = RepoFalso();
+    await repo.crearLote(cantidad: 50);
+    final descargas = <(String, String)>[];
+    await tester.pumpWidget(
+      _portal(
+        sesion: SesionFalsa('admin@sosmascotas.uy'),
+        repo: repo,
+        descargas: descargas,
+      ),
+    );
+    await _tocar(tester, find.text('Chapitas'));
+    expect(find.text('Todavía no hay sponsors.'), findsOneWidget);
+
+    await _tocar(tester, find.text('Nuevo sponsor'));
+    await _tocar(tester, find.text('Guardar'));
+    expect(find.text('Falta el nombre.'), findsOneWidget);
+    final campos = find.descendant(
+      of: find.byType(AlertDialog),
+      matching: find.byType(TextField),
+    );
+    await tester.enterText(campos.at(0), 'Marca');
+    await tester.enterText(campos.at(1), 'Contacto: Ana');
+    await _tocar(tester, find.text('Elegir logo'));
+    expect(find.text('Logo cargado'), findsOneWidget);
+    await _tocar(tester, find.text('Guardar'));
+    expect(repo.logosSubidos.single, (2048, 'image/png'));
+    expect(repo.sponsorsGuardados.single, {
+      'name': 'Marca',
+      'notes': 'Contacto: Ana',
+      'active': true,
+      'logo_path': 'logo-1.png',
+      'business_id': null,
+    });
+    expect(find.text('0 lotes · 0 chapitas'), findsOneWidget);
+
+    await _tocar(tester, find.byType(PopupMenuButton<String>));
+    await _tocar(tester, find.text('Sponsor del lote…'));
+    await _tocar(tester, find.widgetWithText(SimpleDialogOption, 'Marca'));
+    expect(repo.sponsorsDeLote.single, ('l0', 's0'));
+
+    await _tocar(tester, find.text('Reporte'));
+    expect(
+      find.text(
+        'Lote del 2026-10-22: 50 chapitas · 31 activadas · 12 escaneos · '
+        '2 reencuentros',
+      ),
+      findsOneWidget,
+    );
+    await _tocar(tester, find.text('Descargar CSV').last);
+    expect(descargas.single.$1, 'reporte-marca.csv');
+  });
+
+  testWidgets('chapitas: pasar al stock de una veterinaria verificada', (
+    tester,
+  ) async {
+    _pantallaGrande(tester);
+    final repo = RepoFalso()
+      ..lugaresExtra.add(
+        LugarAdmin.fromJson({
+          'id': 'v9',
+          'business_type': 'vet',
+          'kind': 'local',
+          'name': 'Vete Verificada',
+          'lat': -34.71,
+          'lng': -55.95,
+          'hours': <String, Object?>{},
+          'verification': 'verified',
+          'renac_operator': false,
+          'status': 'active',
+        }),
+      );
+    await repo.crearLote(cantidad: 50);
+    await tester.pumpWidget(
+      _portal(sesion: SesionFalsa('admin@sosmascotas.uy'), repo: repo),
+    );
+    await _tocar(tester, find.text('Chapitas'));
+    expect(
+      find.text('Ninguna veterinaria tiene chapitas todavía.'),
+      findsOneWidget,
+    );
+    await _tocar(tester, find.byType(PopupMenuButton<String>));
+    await _tocar(tester, find.text('Pasar a una veterinaria…'));
+    // La que no está verificada no aparece.
+    await _tocar(tester, find.byType(DropdownButtonFormField<String>));
+    expect(find.text('Veterinaria Centro'), findsNothing);
+    await _tocar(tester, find.text('Vete Verificada').last);
+    await tester.enterText(
+      find.descendant(
+        of: find.byType(AlertDialog),
+        matching: find.byType(TextField),
+      ),
+      '3',
+    );
+    await _tocar(tester, find.text('Pasar'));
+    expect(repo.stockAsignado.single, ('l0', 'v9', 3));
+    expect(find.textContaining('STK00002'), findsOneWidget);
+    await _tocar(tester, find.text('Cerrar'));
+    expect(
+      find.text('3 recibidas · 3 disponibles · 0 activadas'),
+      findsOneWidget,
+    );
+
+    await _tocar(tester, find.text('Quitar una'));
+    await tester.enterText(
+      find.descendant(
+        of: find.byType(AlertDialog),
+        matching: find.byType(TextField),
+      ),
+      'STK00001',
+    );
+    await _tocar(tester, find.text('Quitar'));
+    expect(repo.stockQuitado.single, 'STK00001');
   });
 
   testWidgets('lugares: los sin reclamar con su tracción', (tester) async {

@@ -26,12 +26,20 @@ abstract interface class PedidosChapitaRepositorio {
 
   /// "Llegó" o "Entregada": devuelve el estado nuevo.
   Future<EstadoPedidoChapita> avanzar(String pedidoId);
+
+  /// Entrega un pedido nuevo con una chapita del stock de la veterinaria
+  /// (2.9, D105): queda vinculada a la mascota en ese momento.
+  Future<void> entregarDeStock(String pedidoId, String codigo);
 }
 
+/// Lo del negocio: si es punto de retiro, sus pedidos y su stock de
+/// chapitas en blanco (disponibles y activadas).
 typedef PedidosDelNegocio = ({
   bool puntoRetiro,
   bool puedeSer,
   List<PedidoChapita> pedidos,
+  int stockDisponibles,
+  int stockActivadas,
 });
 
 /// Por qué no se pudo pedir o cambiar un pedido.
@@ -40,6 +48,7 @@ enum ErrorPedidoChapita {
   demasiados,
   noEsPunto,
   soloVerificadas,
+  noEstaEnStock,
   noSePuede,
   sinConexion,
 }
@@ -63,6 +72,7 @@ class SupabasePedidosChapita implements PedidosChapitaRepositorio {
         ('54000', _) => ErrorPedidoChapita.demasiados,
         (_, 'no_es_punto_de_retiro') => ErrorPedidoChapita.noEsPunto,
         (_, 'solo_verificadas') => ErrorPedidoChapita.soloVerificadas,
+        (_, 'no_esta_en_tu_stock') => ErrorPedidoChapita.noEstaEnStock,
         _ => ErrorPedidoChapita.noSePuede,
       });
     } on Exception {
@@ -118,10 +128,13 @@ class SupabasePedidosChapita implements PedidosChapitaRepositorio {
       'pedidos_chapita_del_negocio',
       params: {'p_business': negocioId},
     );
+    final stock = (r['stock'] as Map?) ?? const {};
     return (
       puntoRetiro: r['punto_retiro'] == true,
       puedeSer: r['puede_ser'] == true,
       pedidos: _pedidos(r['pedidos']),
+      stockDisponibles: (stock['disponibles'] as num?)?.toInt() ?? 0,
+      stockActivadas: (stock['activadas'] as num?)?.toInt() ?? 0,
     );
   }
 
@@ -141,6 +154,14 @@ class SupabasePedidosChapita implements PedidosChapitaRepositorio {
         'negocio_avanzar_pedido_chapita',
         params: {'p_id': pedidoId},
       ),
+    ),
+  );
+
+  @override
+  Future<void> entregarDeStock(String pedidoId, String codigo) => _traducir(
+    () => _cliente.rpc<void>(
+      'negocio_entregar_de_stock',
+      params: {'p_id': pedidoId, 'p_code': codigo},
     ),
   );
 }
@@ -166,7 +187,13 @@ class PedidosChapitaSinConfigurar implements PedidosChapitaRepositorio {
 
   @override
   Future<PedidosDelNegocio> delNegocio(String negocioId) async =>
-      (puntoRetiro: false, puedeSer: false, pedidos: const <PedidoChapita>[]);
+      (
+        puntoRetiro: false,
+        puedeSer: false,
+        pedidos: const <PedidoChapita>[],
+        stockDisponibles: 0,
+        stockActivadas: 0,
+      );
 
   @override
   Future<void> prenderPuntoRetiro(String negocioId, {required bool prender}) =>
@@ -174,6 +201,9 @@ class PedidosChapitaSinConfigurar implements PedidosChapitaRepositorio {
 
   @override
   Future<EstadoPedidoChapita> avanzar(String pedidoId) => throw _error;
+
+  @override
+  Future<void> entregarDeStock(String pedidoId, String codigo) => throw _error;
 }
 
 final pedidosChapitaRepositorioProvider = Provider<PedidosChapitaRepositorio>((

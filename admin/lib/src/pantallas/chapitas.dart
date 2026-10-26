@@ -7,6 +7,7 @@ import 'package:sosmascota_core/sosmascota_core.dart' show urlPaginaQr;
 import '../repositorio.dart';
 import '../textos.dart';
 import '../utiles/descargar.dart';
+import 'sponsors.dart';
 
 /// Planilla para el productor: un código por fila con el enlace que va en el
 /// QR de la chapita (el código también se imprime, para activarla a mano).
@@ -27,7 +28,8 @@ final descargarTextoProvider =
     );
 
 /// Chapitas físicas (1.8b.1, D95): lotes de códigos pre-codificados para
-/// fabricar, con cuántas se activaron y cuántas veces se escanearon.
+/// fabricar, con cuántas se activaron y cuántas veces se escanearon; sus
+/// sponsors y el stock en las veterinarias (2.9, D105).
 class ChapitasScreen extends ConsumerWidget {
   const ChapitasScreen({super.key});
 
@@ -50,6 +52,30 @@ class ChapitasScreen extends ConsumerWidget {
     );
   }
 
+  Future<void> _sponsor(
+    BuildContext context,
+    WidgetRef ref,
+    Map<String, Object?> lote,
+  ) async {
+    final elegido = await elegirSponsor(context, ref);
+    if (elegido == null) return;
+    await ref
+        .read(adminRepositorioProvider)
+        .sponsorLote('${lote['id']}', elegido.isEmpty ? null : elegido);
+    ref
+      ..invalidate(lotesProvider)
+      ..invalidate(sponsorsProvider);
+  }
+
+  Future<void> _stock(
+    BuildContext context,
+    WidgetRef ref,
+    Map<String, Object?> lote,
+  ) => showDialog<void>(
+    context: context,
+    builder: (_) => AsignarStock(loteId: '${lote['id']}'),
+  );
+
   @override
   Widget build(BuildContext context, WidgetRef ref) => Scaffold(
     floatingActionButton: FloatingActionButton.extended(
@@ -68,6 +94,10 @@ class ChapitasScreen extends ConsumerWidget {
           const SizedBox(height: 12),
           const _Pedidos(),
           const SizedBox(height: 16),
+          const SponsorsSeccion(),
+          const SizedBox(height: 16),
+          const StockSeccion(),
+          const SizedBox(height: 16),
           Text(T.lotes, style: Theme.of(context).textTheme.titleMedium),
           if (lista.isEmpty) const Text(T.sinLotes),
           for (final l in lista)
@@ -78,21 +108,45 @@ class ChapitasScreen extends ConsumerWidget {
                     (l['quantity'] as num?)?.toInt() ?? 0,
                     (l['activadas'] as num?)?.toInt() ?? 0,
                     (l['escaneos'] as num?)?.toInt() ?? 0,
+                    (l['reencuentros'] as num?)?.toInt() ?? 0,
                   ),
                 ),
                 subtitle: Text(
                   [
                     '${l['created_at']}'.split('T').first,
+                    if (l['sponsor_name'] case final String s) T.sponsorDe(s),
+                    if (l['en_stock'] case final num n when n > 0)
+                      T.enStock(n.toInt()),
                     ?l['producer'] as String?,
                     ?l['material'] as String?,
                     if (l['unit_cost'] case final num c) '\$ $c',
                     ?l['note'] as String?,
                   ].join(' · '),
                 ),
-                trailing: OutlinedButton.icon(
-                  onPressed: () => _descargar(ref, l),
-                  icon: const Icon(Icons.download),
-                  label: const Text(T.descargarCsv),
+                trailing: Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    OutlinedButton.icon(
+                      onPressed: () => _descargar(ref, l),
+                      icon: const Icon(Icons.download),
+                      label: const Text(T.descargarCsv),
+                    ),
+                    PopupMenuButton<String>(
+                      onSelected: (accion) => accion == 'sponsor'
+                          ? _sponsor(context, ref, l)
+                          : _stock(context, ref, l),
+                      itemBuilder: (_) => const [
+                        PopupMenuItem(
+                          value: 'sponsor',
+                          child: Text(T.ponerSponsor),
+                        ),
+                        PopupMenuItem(
+                          value: 'stock',
+                          child: Text(T.pasarAStock),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),

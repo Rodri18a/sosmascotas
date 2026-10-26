@@ -77,8 +77,8 @@ Noticias, promociones patrocinadas, eventos, directorio de Ayuda y textos de la 
 - **Lotes:** generar códigos pre-codificados para fabricar (exportar la lista para el productor), con su material, costo y sponsor. ✅ 1.8b.1 (D95): sección **Chapitas** con "Nuevo lote" (1 a 500), activadas y escaneos por lote y "Descargar CSV" (`codigo,enlace`); el sponsor se suma en la Fase 2.
 - **Pedidos:** estado (pedido → pagado → impreso → enviado → entregado) y forma de entrega (retiro en veterinaria o envío).
 - **Puntos de retiro:** veterinarias adheridas, chapitas pendientes de retirar en cada una.
-- **Stock** en veterinarias.
-- **Sponsors:** resultados por lote (activadas, escaneos, reencuentros) para el reporte al sponsor.
+- **Stock** en veterinarias. ✅ 2.9 (D105): en cada lote, "Pasar a una veterinaria…" (solo verificadas, 1 a 200; muestra los códigos a entregar) y la sección "Stock en veterinarias" (recibidas, disponibles, activadas; "Quitar una").
+- **Sponsors:** resultados por lote (activadas, escaneos, reencuentros) para el reporte al sponsor. ✅ 2.9 (D105): sección "Sponsors" (alta con logo y notas privadas, activo), "Sponsor del lote…" en cada lote y "Reporte" con descarga en CSV.
 
 ### 9b. Reportes para instituciones — Fase 2
 Informes **agregados y anónimos** por zona para organismos con convenio (Zoonosis de Canelones, INBA): mapa de calor de perdidos y encontrados, reencuentros, adopciones, mascotas sin castrar o sin RENAC declarado, y asistencia a jornadas. Ver "Línea institucional" en `11-roadmap.md`.

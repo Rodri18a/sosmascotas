@@ -7420,6 +7420,48 @@ abstract class AppLocalizations {
   /// **'Pedido N.º {numero}: la chapita queda vinculada a {nombre}.'**
   String retiroEntregarTexto(int numero, String nombre);
 
+  /// No description provided for @stockResumen.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu stock: {disponibles} {disponibles, plural, =1{chapita} other{chapitas}} sin usar · {activadas} {activadas, plural, =1{activada} other{activadas}}'**
+  String stockResumen(int disponibles, int activadas);
+
+  /// No description provided for @stockAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Chapitas en blanco para tus clientes: la activan con la app escaneándola, o se la das a quien la pidió para retirar acá.'**
+  String get stockAyuda;
+
+  /// No description provided for @stockEntregarNumero.
+  ///
+  /// In es, this message translates to:
+  /// **'Entregar el N.º {numero} de mi stock'**
+  String stockEntregarNumero(int numero);
+
+  /// No description provided for @stockEntregarTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Entregar una chapita de tu stock'**
+  String get stockEntregarTitulo;
+
+  /// No description provided for @stockEntregarTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Pedido N.º {numero} para {nombre} (grabado «{grabado}»). Escribí el código que viene en la chapita: queda vinculada a {nombre} al tocar Entregada.'**
+  String stockEntregarTexto(int numero, String nombre, String grabado);
+
+  /// No description provided for @stockCodigo.
+  ///
+  /// In es, this message translates to:
+  /// **'Código de la chapita'**
+  String get stockCodigo;
+
+  /// No description provided for @stockNoEsTuya.
+  ///
+  /// In es, this message translates to:
+  /// **'Ese código no está entre las chapitas sin usar de tu stock.'**
+  String get stockNoEsTuya;
+
   /// No description provided for @estadisticasTitulo.
   ///
   /// In es, this message translates to:

@@ -4379,6 +4379,47 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String stockResumen(int disponibles, int activadas) {
+    String _temp0 = intl.Intl.pluralLogic(
+      disponibles,
+      locale: localeName,
+      other: 'chapitas',
+      one: 'chapita',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      activadas,
+      locale: localeName,
+      other: 'activadas',
+      one: 'activada',
+    );
+    return 'Tu stock: $disponibles $_temp0 sin usar · $activadas $_temp1';
+  }
+
+  @override
+  String get stockAyuda =>
+      'Chapitas en blanco para tus clientes: la activan con la app escaneándola, o se la das a quien la pidió para retirar acá.';
+
+  @override
+  String stockEntregarNumero(int numero) {
+    return 'Entregar el N.º $numero de mi stock';
+  }
+
+  @override
+  String get stockEntregarTitulo => 'Entregar una chapita de tu stock';
+
+  @override
+  String stockEntregarTexto(int numero, String nombre, String grabado) {
+    return 'Pedido N.º $numero para $nombre (grabado «$grabado»). Escribí el código que viene en la chapita: queda vinculada a $nombre al tocar Entregada.';
+  }
+
+  @override
+  String get stockCodigo => 'Código de la chapita';
+
+  @override
+  String get stockNoEsTuya =>
+      'Ese código no está entre las chapitas sin usar de tu stock.';
+
+  @override
   String get estadisticasTitulo => 'Estadísticas';
 
   @override

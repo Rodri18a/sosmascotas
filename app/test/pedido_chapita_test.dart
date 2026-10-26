@@ -258,6 +258,57 @@ void main() {
     );
   });
 
+  testWidgets('la veterinaria entrega un pedido nuevo con una de su stock', (
+    tester,
+  ) async {
+    final pedidos = PedidosChapitaFalsos(
+      pedidos: [_pedido(EstadoPedidoChapita.nuevo)],
+      stock: ['STK12345', 'STK67890'],
+      puntoRetiro: true,
+    );
+    final eventos = <Map<String, Object?>>[];
+    await _abrirRetiro(
+      tester,
+      pedidos: pedidos,
+      negocio: _vete(),
+      eventos: eventos,
+    );
+    expect(
+      find.text('Tu stock: 2 chapitas sin usar · 0 activadas'),
+      findsOneWidget,
+    );
+
+    await _tocar(tester, find.text('Entregar el N.º 7 de mi stock'));
+    final campo = find.descendant(
+      of: find.byType(AlertDialog),
+      matching: find.byType(TextField),
+    );
+    await tester.enterText(campo, 'ZZZ99999');
+    await _tocar(tester, find.widgetWithText(FilledButton, 'Entregada'));
+    expect(
+      find.text('Ese código no está entre las chapitas sin usar de tu stock.'),
+      findsOneWidget,
+    );
+    expect(pedidos.pedidos.single.estado, EstadoPedidoChapita.nuevo);
+
+    await tester.pumpAndSettle(const Duration(seconds: 5));
+    await _tocar(tester, find.text('Entregar el N.º 7 de mi stock'));
+    await tester.enterText(campo, 'stk12345');
+    await _tocar(tester, find.widgetWithText(FilledButton, 'Entregada'));
+    expect(pedidos.pedidos.single.estado, EstadoPedidoChapita.entregado);
+    expect(
+      find.text('Tu stock: 1 chapita sin usar · 1 activada'),
+      findsOneWidget,
+    );
+    expect(
+      [
+        for (final e in eventos)
+          if (e['name'] == 'tag_stock_deliver') e['name'],
+      ],
+      ['tag_stock_deliver'],
+    );
+  });
+
   testWidgets('sin verificar no puede ser punto de retiro', (tester) async {
     await _abrirRetiro(
       tester,

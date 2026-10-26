@@ -94,3 +94,5 @@ h2 { font-family: "Sora", sans-serif; font-weight: 700; font-size: 20px; margin:
 .horario { width: 100%; border-collapse: collapse; }
 .horario th { text-align: left; font-weight: 600; padding: 4px 8px 4px 0; }
 .horario td { text-align: right; padding: 4px 0; }
+.sponsor { display: flex; align-items: center; justify-content: center; gap: 8px; color: var(--suave); font-size: 13px; margin: 8px 0 0; }
+.sponsor-logo { max-height: 28px; max-width: 120px; object-fit: contain; }

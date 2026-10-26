@@ -61,6 +61,23 @@ function mostrarMascota(datos) {
   document.getElementById('mascota').hidden = false;
 }
 
+// Sponsor del lote de la chapita (2.9, D105): chico y abajo, la página es para una emergencia.
+function mostrarSponsor(sponsor) {
+  if (!sponsor || !sponsor.name) return;
+  const pie = document.getElementById('sponsor');
+  pie.append(el('span', 'Chapita donada por '));
+  const url = urlFoto('sponsor-logos', sponsor.logo_path);
+  if (url) {
+    const logo = el('img', null, 'sponsor-logo');
+    logo.src = url;
+    logo.alt = sponsor.name;
+    pie.append(logo);
+  } else {
+    pie.append(el('strong', sponsor.name));
+  }
+  pie.hidden = false;
+}
+
 async function iniciar() {
   const codigo = codigoDeLaDireccion();
   try {
@@ -68,8 +85,10 @@ async function iniciar() {
     if (datos.status === 'active') {
       mostrarMascota(datos);
       window.dispatchEvent(new CustomEvent('sos:mascota', { detail: { codigo, datos } }));
+      mostrarSponsor(datos.sponsor);
     } else if (datos.status === 'unactivated') {
       mostrarSinActivar(datos.code || codigo);
+      mostrarSponsor(datos.sponsor);
     } else {
       mostrarEstado(datos.status === 'inactive' && datos.kind === 'physical' ? 'inactive_physical' : datos.status);
     }

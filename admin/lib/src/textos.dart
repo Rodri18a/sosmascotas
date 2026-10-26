@@ -362,8 +362,14 @@ abstract final class T {
   static const descargarCsv = 'Descargar CSV';
   static const avisoDireccion =
       'Cada código lleva la dirección de la web pública de este entorno: los lotes que se imprimen de verdad se crean en producción, con el dominio definitivo.';
-  static String resumenLote(int cantidad, int activadas, int escaneos) =>
-      '$cantidad chapitas · $activadas activadas · $escaneos escaneos';
+  static String resumenLote(
+    int cantidad,
+    int activadas,
+    int escaneos,
+    int reencuentros,
+  ) =>
+      '$cantidad chapitas · $activadas activadas · $escaneos escaneos · '
+      '$reencuentros ${reencuentros == 1 ? 'reencuentro' : 'reencuentros'}';
 
   // Lugares sin reclamar (1.8.5, D99)
   static String sinReclamarTitulo(int n) => 'Sin reclamar con tracción ($n)';
@@ -394,4 +400,62 @@ abstract final class T {
   static const codigoChapita = 'Código de la chapita (de un lote, sin usar)';
   static const chapitaNoDisponible =
       'Ese código no existe, ya se usó o está reservado para otro pedido.';
+
+  // Sponsors y stock de chapitas (2.9, D105)
+  static const sponsors = 'Sponsors';
+  static const sponsorsAyuda =
+      'Marcas o comercios que pagan un lote. Su logo va en el reverso de la chapita y, chico y abajo, en la página del QR.';
+  static const nuevoSponsor = 'Nuevo sponsor';
+  static const sinSponsors = 'Todavía no hay sponsors.';
+  static const editarSponsor = 'Editar sponsor';
+  static const nombreSponsor = 'Nombre (se ve en la página del QR)';
+  static const notasSponsor = 'Notas privadas (contacto, acuerdo)';
+  static const sponsorActivo = 'Activo (se muestra en las chapitas de sus lotes)';
+  static const elegirLogo = 'Elegir logo';
+  static const cambiarLogo = 'Cambiar logo';
+  static const logoListo = 'Logo cargado';
+  static const sinLogo = 'Sin logo: se muestra el nombre';
+  static const logoGrande = 'El logo tiene que ser PNG, JPEG o WebP de hasta 500 KB.';
+  static const faltaNombre = 'Falta el nombre.';
+  static const inactivo = 'inactivo';
+  static String resumenSponsor(int lotes, int chapitas) =>
+      '$lotes ${lotes == 1 ? 'lote' : 'lotes'} · $chapitas chapitas';
+  static const reporte = 'Reporte';
+  static String reporteTitulo(String sponsor) => 'Reporte para $sponsor';
+  static const reporteAyuda =
+      'Solo números: ningún dato de las familias. Reencuentro = un «se perdió» de una mascota con una chapita del lote, marcado «¡Apareció!».';
+  static const sinLotesSponsor = 'Este sponsor todavía no tiene lotes.';
+  static String lineaReporte(
+    String fecha,
+    int cantidad,
+    int activadas,
+    int escaneos,
+    int reencuentros,
+  ) =>
+      'Lote del $fecha: $cantidad chapitas · $activadas activadas · '
+      '$escaneos escaneos · $reencuentros reencuentros';
+  static const ponerSponsor = 'Sponsor del lote…';
+  static const sinSponsor = 'Sin sponsor';
+  static String sponsorDe(String nombre) => 'Sponsor: $nombre';
+  static const pasarAStock = 'Pasar a una veterinaria…';
+  static const stockTitulo = 'Stock en veterinarias';
+  static const stockAyuda =
+      'Chapitas en blanco que tiene cada veterinaria: el dueño la activa en el local, o la veterinaria la entrega para un pedido.';
+  static const sinStock = 'Ninguna veterinaria tiene chapitas todavía.';
+  static String resumenStock(int recibidas, int disponibles, int activadas) =>
+      '$recibidas recibidas · $disponibles disponibles · $activadas activadas';
+  static String enStock(int n) => '$n en stock';
+  static const veterinaria = 'Veterinaria verificada';
+  static const sinVeterinarias =
+      'No hay veterinarias verificadas: el stock es solo para ellas.';
+  static const cantidadStock = 'Cantidad (1 a 200)';
+  static const asignar = 'Pasar';
+  static const noAlcanzan =
+      'No alcanzan: el lote no tiene tantas chapitas libres.';
+  static String codigosParaEntregar(int n) =>
+      'Entregale estas $n chapitas (y solo estas):';
+  static const quitarUna = 'Quitar una';
+  static const quitarStockTitulo = 'Sacar una chapita del stock';
+  static const codigoStock = 'Código (sin activar, del stock)';
+  static const quitar = 'Quitar';
 }

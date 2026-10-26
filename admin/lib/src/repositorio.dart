@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sosmascota_core/sosmascota_core.dart'
     show EstadisticasNegocio, fechaIso;
@@ -153,6 +155,35 @@ abstract interface class AdminRepositorio {
   Future<void> enviarPedidoChapita(String pedidoId, String codigo);
 
   Future<void> cancelarPedidoChapita(String pedidoId, {String? motivo});
+
+  /// Sponsors de lotes de chapitas (2.9, D105), con cuántos lotes y chapitas.
+  Future<List<Map<String, Object?>>> sponsors();
+
+  /// Crea (sin `id`) o actualiza un sponsor. Devuelve su id.
+  Future<String> guardarSponsor(Map<String, Object?> datos);
+
+  /// Sube el logo al bucket público y devuelve la ruta para el sponsor.
+  Future<String> subirLogo(Uint8List bytes, String tipo);
+
+  /// Le pone (o le quita, con null) el sponsor a un lote.
+  Future<void> sponsorLote(String loteId, String? sponsorId);
+
+  /// Sus lotes con activadas, escaneos y reencuentros, para mandarle.
+  Future<Map<String, Object?>> reporteSponsor(String sponsorId);
+
+  /// Pasa [cantidad] chapitas libres del lote a una veterinaria verificada.
+  /// Devuelve los códigos que hay que entregarle.
+  Future<List<String>> asignarStock(
+    String loteId,
+    String negocioId,
+    int cantidad,
+  );
+
+  /// Una chapita del stock que no se usó vuelve a quedar libre.
+  Future<void> quitarStock(String codigo);
+
+  /// Stock por veterinaria: recibidas, disponibles y activadas.
+  Future<List<Map<String, Object?>>> stock();
 }
 
 class SupabaseAdminRepositorio implements AdminRepositorio {
@@ -518,6 +549,68 @@ class SupabaseAdminRepositorio implements AdminRepositorio {
         'admin_cancelar_pedido_chapita',
         params: {'p_id': pedidoId, 'p_motivo': motivo},
       );
+
+  @override
+  Future<List<Map<String, Object?>>> sponsors() async =>
+      _filas(await _cliente.rpc<List<dynamic>>('admin_sponsors'));
+
+  @override
+  Future<String> guardarSponsor(Map<String, Object?> datos) =>
+      _cliente.rpc<String>('admin_guardar_sponsor', params: {'p': datos});
+
+  @override
+  Future<String> subirLogo(Uint8List bytes, String tipo) async {
+    final ruta =
+        'logo-${DateTime.now().millisecondsSinceEpoch}.'
+        '${switch (tipo) {
+          'image/png' => 'png',
+          'image/webp' => 'webp',
+          _ => 'jpg',
+        }}';
+    await _cliente.storage
+        .from('sponsor-logos')
+        .uploadBinary(ruta, bytes, fileOptions: FileOptions(contentType: tipo));
+    return ruta;
+  }
+
+  @override
+  Future<void> sponsorLote(String loteId, String? sponsorId) =>
+      _cliente.rpc<void>(
+        'admin_sponsor_lote',
+        params: {'p_lote': loteId, 'p_sponsor': sponsorId},
+      );
+
+  @override
+  Future<Map<String, Object?>> reporteSponsor(String sponsorId) async =>
+      (await _cliente.rpc<Map<String, dynamic>>(
+        'admin_reporte_sponsor',
+        params: {'p_sponsor': sponsorId},
+      )).cast<String, Object?>();
+
+  @override
+  Future<List<String>> asignarStock(
+    String loteId,
+    String negocioId,
+    int cantidad,
+  ) async => [
+    for (final c in await _cliente.rpc<List<dynamic>>(
+      'admin_asignar_stock',
+      params: {
+        'p_lote': loteId,
+        'p_business': negocioId,
+        'p_cantidad': cantidad,
+      },
+    ))
+      c as String,
+  ];
+
+  @override
+  Future<void> quitarStock(String codigo) =>
+      _cliente.rpc<void>('admin_quitar_stock', params: {'p_code': codigo});
+
+  @override
+  Future<List<Map<String, Object?>>> stock() async =>
+      _filas(await _cliente.rpc<List<dynamic>>('admin_stock'));
 }
 
 /// Se sobrescribe en `main.dart` (y en las pruebas).
@@ -610,6 +703,14 @@ final sinReclamarProvider = FutureProvider<List<Map<String, Object?>>>(
 
 final lotesProvider = FutureProvider<List<Map<String, Object?>>>(
   (ref) => ref.watch(adminRepositorioProvider).lotes(),
+);
+
+final sponsorsProvider = FutureProvider<List<Map<String, Object?>>>(
+  (ref) => ref.watch(adminRepositorioProvider).sponsors(),
+);
+
+final stockProvider = FutureProvider<List<Map<String, Object?>>>(
+  (ref) => ref.watch(adminRepositorioProvider).stock(),
 );
 
 /// Dirección de la web pública: va dentro de cada chapita (`<base>/m/<código>`).
