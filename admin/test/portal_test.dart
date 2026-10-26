@@ -244,6 +244,70 @@ class RepoFalso implements AdminRepositorio {
   @override
   Future<void> borrarCaso(String id) async {}
 
+  final planesCreados = <Map<String, Object?>>[];
+  final pagos = <(String, double, String, int)>[];
+  final bajas = <String>[];
+  List<Suscripcion> suscripcionesFijas = [
+    Suscripcion.fromJson({
+      'id': 's1',
+      'business_id': 'b1',
+      'comercio': 'Veterinaria Centro',
+      'rubro': 'vet',
+      'plan': 'featured',
+      'status': 'past_due',
+      'period_end': '2026-10-20',
+      'founder': false,
+      'price': '600.00',
+      'pagado': '600.00',
+    }),
+  ];
+
+  @override
+  Future<List<Suscripcion>> suscripciones() async => suscripcionesFijas;
+
+  @override
+  Future<Ingresos> ingresos() async => Ingresos.fromJson({
+    'por_mes': [
+      {'mes': '2026-09-01', 'plan': 'featured', 'total': 600, 'pagos': 1},
+    ],
+    'vigentes': {'featured': 1},
+    'por_mes_esperado': 600,
+  });
+
+  @override
+  Future<void> crearSuscripcion({
+    required String negocioId,
+    required String plan,
+    required double precio,
+    required DateTime hasta,
+    bool fundador = false,
+    String? notas,
+  }) async => planesCreados.add({
+    'negocio': negocioId,
+    'plan': plan,
+    'precio': precio,
+    'hasta': hasta,
+    'fundador': fundador,
+  });
+
+  @override
+  Future<DateTime> registrarPago(
+    String suscripcionId, {
+    required double monto,
+    required String metodo,
+    String? referencia,
+    int meses = 1,
+  }) async {
+    pagos.add((suscripcionId, monto, metodo, meses));
+    return DateTime(2026, 11, 26);
+  }
+
+  @override
+  Future<void> cancelarSuscripcion(
+    String suscripcionId, {
+    String? motivo,
+  }) async => bajas.add(suscripcionId);
+
   @override
   Future<EstadisticasNegocio> resultadosComercio(String negocioId) async =>
       EstadisticasNegocio.fromJson({
@@ -649,6 +713,67 @@ void main() {
     expect(caso.rubro, 'petshop');
     expect(caso.permiso, isFalse);
     expect(caso.publicado, isFalse);
+  });
+
+  testWidgets('planes: ingresos, registrar un pago y dar de baja (2.2)', (
+    tester,
+  ) async {
+    _pantallaGrande(tester);
+    final repo = RepoFalso();
+    await tester.pumpWidget(
+      _portal(sesion: SesionFalsa('admin@x.uy'), repo: repo),
+    );
+    await tester.pumpAndSettle();
+    await _tocar(tester, find.text('Planes'));
+    expect(
+      find.textContaining('Vigentes: Destacado 1 · Plus 0'),
+      findsOneWidget,
+    );
+    expect(
+      find.textContaining('9/2026 · Destacado: \$ 600 (1)'),
+      findsOneWidget,
+    );
+    expect(find.textContaining('Destacado · Con atraso'), findsOneWidget);
+
+    await _tocar(tester, find.text('Registrar pago').first);
+    await _tocar(tester, find.text('Meses que paga'));
+    await _tocar(tester, find.text('3').last);
+    await _tocar(
+      tester,
+      find.descendant(
+        of: find.byType(AlertDialog),
+        matching: find.widgetWithText(FilledButton, 'Registrar pago'),
+      ),
+    );
+    expect(repo.pagos.single, ('s1', 600.0, 'transfer', 3));
+    expect(
+      find.textContaining('queda pago hasta el 26/11/2026'),
+      findsOneWidget,
+    );
+
+    await _tocar(tester, find.text('Dar de baja'));
+    await _tocar(
+      tester,
+      find.descendant(
+        of: find.byType(AlertDialog),
+        matching: find.widgetWithText(FilledButton, 'Dar de baja'),
+      ),
+    );
+    expect(repo.bajas.single, 's1');
+  });
+
+  testWidgets('planes: un plan nuevo pide comercio y fecha', (tester) async {
+    _pantallaGrande(tester);
+    final repo = RepoFalso();
+    await tester.pumpWidget(
+      _portal(sesion: SesionFalsa('admin@x.uy'), repo: repo),
+    );
+    await tester.pumpAndSettle();
+    await _tocar(tester, find.text('Planes'));
+    await _tocar(tester, find.text('Nuevo plan pago'));
+    await _tocar(tester, find.text('Guardar'));
+    expect(find.text('Elegí el comercio, el plan y la fecha.'), findsOneWidget);
+    expect(repo.planesCreados, isEmpty);
   });
 
   testWidgets('lugares: sin coordenadas no se guarda un local', (tester) async {

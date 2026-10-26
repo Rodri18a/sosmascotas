@@ -200,6 +200,18 @@ class NegociosFalsos implements NegociosRepositorio {
   Future<EstadisticasNegocio> estadisticas(String id) async =>
       estadisticasFijas;
 
+  MiPlan planFijo = const MiPlan(plan: PlanComercio.basic);
+  final planesPedidos = <(String, PlanComercio)>[];
+
+  @override
+  Future<MiPlan> miPlan(String id) async => planFijo;
+
+  @override
+  Future<void> pedirPlan(String id, PlanComercio plan) async {
+    planesPedidos.add((id, plan));
+    planFijo = MiPlan.fromJson({'plan': 'basic', 'pedido_abierto': true});
+  }
+
   @override
   Future<void> subirFoto(String id, Uint8List jpeg) async =>
       fotosSubidas.add(id);

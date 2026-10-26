@@ -35,9 +35,9 @@ class PropuestasScreen extends ConsumerWidget {
   );
 }
 
-/// Elegir un comercio del mapa (opcional) por nombre.
-class _ElegirLugar extends ConsumerWidget {
-  const _ElegirLugar({required this.onElegido});
+/// Elegir un comercio del mapa por nombre (también en Planes).
+class ElegirLugar extends ConsumerWidget {
+  const ElegirLugar({required this.onElegido, super.key});
 
   final void Function(LugarAdmin? lugar) onElegido;
 
@@ -162,7 +162,7 @@ class _GeneradorState extends ConsumerState<_Generador> {
                 _propuesta = null;
               }),
             ),
-            _ElegirLugar(
+            ElegirLugar(
               onElegido: (l) {
                 if (l?.id == _lugar?.id) return;
                 setState(() {
@@ -377,7 +377,7 @@ class _FormularioCasoState extends ConsumerState<_FormularioCaso> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _ElegirLugar(
+            ElegirLugar(
               onElegido: (l) {
                 if (l == null) return;
                 setState(() {

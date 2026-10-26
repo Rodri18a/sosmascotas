@@ -4471,4 +4471,98 @@ class AppLocalizationsEs extends AppLocalizations {
   String estadisticasSemanaDe(String fecha) {
     return 'Semana del $fecha';
   }
+
+  @override
+  String get planTitulo => 'Tu plan';
+
+  @override
+  String get planAbrirAyuda => 'Qué incluye, cuándo vence y tus pagos';
+
+  @override
+  String planActual(String plan) {
+    return 'Plan $plan';
+  }
+
+  @override
+  String planVence(String fecha) {
+    return 'Vence el $fecha';
+  }
+
+  @override
+  String planVencido(String fecha) {
+    return 'Venció el $fecha. Tenés 7 días para pagarlo antes de volver a Básico.';
+  }
+
+  @override
+  String planCancelado(String fecha) {
+    return 'Diste de baja el plan: sigue hasta el $fecha.';
+  }
+
+  @override
+  String planFundador(String fecha) {
+    return 'Socio Fundador hasta el $fecha: sin costo hasta esa fecha.';
+  }
+
+  @override
+  String planPrecio(String precio) {
+    return 'Precio: \$ $precio por mes';
+  }
+
+  @override
+  String get planIncluyeBasico =>
+      'Tu ficha en el mapa, hasta 3 fotos, responder reseñas y un resumen de tus estadísticas.';
+
+  @override
+  String get planIncluyeDestacado =>
+      'Pin naranja y prioridad en el mapa y las búsquedas, galería de fotos, promoción, web, Instagram y WhatsApp, estadísticas completas y reporte mensual.';
+
+  @override
+  String get planIncluyePlus =>
+      'Todo lo de Destacado, más catálogo y pedidos, agenda, socios, servicios publicados y tu página propia.';
+
+  @override
+  String get planMejorar => 'Mejorá tu plan';
+
+  @override
+  String planQuiero(String plan) {
+    return 'Quiero $plan';
+  }
+
+  @override
+  String get planPedido => '¡Listo! Te vamos a contactar para activarlo.';
+
+  @override
+  String get planPedidoAbierto => 'Ya pediste un plan: te vamos a contactar.';
+
+  @override
+  String get planComoSePaga =>
+      'Por ahora se paga por transferencia o link de pago, de mes a mes. Te mandamos los datos cuando te contactemos.';
+
+  @override
+  String get planPagos => 'Tus pagos';
+
+  @override
+  String planPago(String fecha, String monto, int meses) {
+    String _temp0 = intl.Intl.pluralLogic(
+      meses,
+      locale: localeName,
+      other: '$meses meses',
+      one: '1 mes',
+    );
+    return '$fecha · \$ $monto · $_temp0';
+  }
+
+  @override
+  String get planAntesDespues => 'Desde que pasaste al plan pago';
+
+  @override
+  String planAntesDespuesTexto(
+    int dias,
+    int despues,
+    int contactosDespues,
+    int antes,
+    int contactosAntes,
+  ) {
+    return 'En $dias días: $despues aperturas de tu ficha y $contactosDespues contactos. En los $dias días anteriores: $antes y $contactosAntes.';
+  }
 }

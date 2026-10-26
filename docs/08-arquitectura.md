@@ -178,6 +178,7 @@ Tabla `events` (append-only), escrita por el cliente con `ref.read(metricasProvi
 | `catalog_open` / `catalog_ask` / `product_save` / `order_create` / `order_status` | catálogo y pedidos: abrir, consultar, cargar un producto, pedir (con las unidades) y cada cambio de estado; sin datos de quien pide (D85) |
 | `order_push` | target_id del pedido, destino (`cliente`/`negocio`), estado y dispositivos avisados (lo registra `order-status-alert`; D100) |
 | `service_ask` / `service_save` | servicios del comercio: consultar por uno desde la ficha y cargarlo o editarlo (D90) |
+| `plan_request` | business_id, plan: el comercio pidió un plan pago desde «Tu plan» (D103) |
 | `business_page_share` / `business_page_open` | página pública del comercio: el comercio copia su enlace (app) y alguien la abre (web pública, sin cuenta) (D90) |
 | `adoption_publish` / `adoption_interest` / `adoption_stage` / `adoption_commit` / `adoption_followup` | cantidad de animales, etapa o día del seguimiento; sin datos de nadie (D79) |
 | `review_create` / `review_reply` | business_id; `review_create` con las estrellas (D78) |
@@ -192,7 +193,7 @@ Tabla `events` (append-only), escrita por el cliente con `ref.read(metricasProvi
 - Se guarda `user_id` solo para métricas internas (retención). A las empresas se les muestran **agregados**.
 - Riesgo aceptado en la Fase 0: con la clave pública se pueden cargar eventos falsos (solo ensucia métricas). Si pasa: tope por instalación o registro vía Edge Function.
 - Para no inflar costos: agrupar eventos de impresión en lotes y resumir por día en `daily_stats` (✅ 2.3, D101: pg_cron a las 03:15 de Uruguay; el día de hoy se cuenta en el momento).
-- **Tareas programadas (D101):** pg_cron en la base (`cron.job`): `resumir-estadisticas` todas las noches y `reporte-mensual` el día 1 a las 10:00, que llama a la Edge Function `monthly-report` con pg_net. La dirección del proyecto y la clave compartida van en **Vault** (`project_url`, `monthly_report_secret`) y la misma clave en el secreto `MONTHLY_REPORT_SECRET` de la función; nunca en el repositorio.
+- **Tareas programadas (D101):** pg_cron en la base (`cron.job`): `resumir-estadisticas` todas las noches, `vencer-planes` todos los días a las 03:30 (D103) y `reporte-mensual` el día 1 a las 10:00, que llama a la Edge Function `monthly-report` con pg_net. La dirección del proyecto y la clave compartida van en **Vault** (`project_url`, `monthly_report_secret`) y la misma clave en el secreto `MONTHLY_REPORT_SECRET` de la función; nunca en el repositorio.
 
 ## Entornos
 

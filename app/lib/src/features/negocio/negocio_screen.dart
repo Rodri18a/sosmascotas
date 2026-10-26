@@ -243,6 +243,19 @@ class _Panel extends ConsumerWidget {
       AsyncData(value: final p) => ListView(
         padding: const EdgeInsets.all(16),
         children: [
+          // Plan, vencimiento y pagos (2.2, D103).
+          if (ref.watch(funcionalidadActivaProvider(Funcionalidades.planes)))
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.workspace_premium_outlined),
+                title: Text(
+                  '${t.planTitulo}: ${textoPlan(t, negocio.comercio.plan)}',
+                ),
+                subtitle: Text(t.planAbrirAyuda),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => context.push(Rutas.planNegocio(negocio.id)),
+              ),
+            ),
           // Estadísticas mes a mes y reporte mensual (2.3, D101).
           if (ref.watch(
             funcionalidadActivaProvider(Funcionalidades.estadisticas),

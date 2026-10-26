@@ -62,6 +62,9 @@ abstract final class Funcionalidades {
   /// Estadísticas del comercio y reporte mensual (2.3, D101).
   static const estadisticas = 'estadisticas';
 
+  /// Planes pagos del comercio: «Tu plan», pagos y pedir un plan (2.2, D103).
+  static const planes = 'planes';
+
   /// Las que ya están en `todos`: la app las da por prendidas aunque no pueda
   /// preguntarle a la base (sin conexión y sin nada guardado). Las demás, en
   /// ese caso, quedan apagadas (lo seguro).

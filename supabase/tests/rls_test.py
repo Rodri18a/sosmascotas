@@ -1747,6 +1747,68 @@ def main():
             caso('la administración lo borra',
                  rest('POST', 'rpc/admin_borrar_caso', {'p_id': caso_id}, x)[0] in (200, 204)
                  and not any(c['id'] == caso_id for c in filas(rest('POST', 'rpc/admin_casos', {}, x))))
+            print('planes y cobros manuales (2.2, D103)')
+            import datetime as _dt
+            hoy = _dt.date.today()
+            en30 = (hoy + _dt.timedelta(days=30)).isoformat()
+            caso('A no crea planes, ni registra pagos, ni ve la lista ni los ingresos',
+                 rest('POST', 'rpc/admin_crear_suscripcion', {'p_business': tienda, 'p_plan': 'plus',
+                                                               'p_precio': 0, 'p_hasta': en30}, a)[0] >= 400
+                 and rest('POST', 'rpc/admin_suscripciones', {}, a)[0] >= 400
+                 and rest('POST', 'rpc/admin_ingresos', {}, a)[0] >= 400)
+            caso('nadie lee planes, pagos ni el historial directamente',
+                 bloqueado(rest('GET', 'subscriptions?select=id', quien=x))
+                 and bloqueado(rest('GET', 'payments?select=id', quien=x))
+                 and bloqueado(rest('GET', 'plan_changes?select=id', quien=a)))
+            caso('no se crea un plan que ya venció',
+                 rest('POST', 'rpc/admin_crear_suscripcion', {'p_business': tienda, 'p_plan': 'featured',
+                                                               'p_precio': 600, 'p_hasta': '2020-01-01'}, x)[0] >= 400)
+            s_su, sub = rest('POST', 'rpc/admin_crear_suscripcion', {
+                'p_business': tienda, 'p_plan': 'featured', 'p_precio': 600, 'p_hasta': en30}, x)
+            mio = rest('POST', 'rpc/mi_plan', {'p_business': tienda}, a)[1]
+            caso('la administración crea el plan: el comercio pasa a Destacado y lo ve con su vencimiento',
+                 s_su == 200 and mio['plan'] == 'featured' and mio['estado'] == 'active' and mio['vence'] == en30
+                 and float(mio['precio']) == 600 and mio['pagos'] == [])
+            caso('el cambio de plan queda en el historial',
+                 any(f['plan_after'] == 'featured' for f in filas(pedir(
+                     'GET', f'{URL}/rest/v1/plan_changes?business_id=eq.{tienda}&select=plan_after', headers=ADMIN))))
+            caso('B no ve el plan de otro comercio', rest('POST', 'rpc/mi_plan', {'p_business': tienda}, b)[0] >= 400)
+            caso('un pago de 0 no se registra',
+                 rest('POST', 'rpc/admin_registrar_pago', {'p_sub': sub, 'p_monto': 0, 'p_metodo': 'transfer'}, x)[0] >= 400)
+            caso('A no registra pagos',
+                 rest('POST', 'rpc/admin_registrar_pago', {'p_sub': sub, 'p_monto': 600, 'p_metodo': 'transfer'}, a)[0] >= 400)
+            s_pg, fin = rest('POST', 'rpc/admin_registrar_pago', {'p_sub': sub, 'p_monto': 1200, 'p_metodo': 'transfer',
+                                                                  'p_referencia': 'TRF-RLS', 'p_meses': 2}, x)
+            mio = rest('POST', 'rpc/mi_plan', {'p_business': tienda}, a)[1]
+            caso('el pago extiende el período 2 meses y el comercio lo ve (sin la referencia)',
+                 s_pg == 200 and fin > en30 and mio['vence'] == fin and len(mio['pagos']) == 1
+                 and float(mio['pagos'][0]['monto']) == 1200 and 'TRF-RLS' not in str(mio))
+            caso('los ingresos cuentan el pago',
+                 any(f['plan'] == 'featured' and float(f['total']) >= 1200
+                     for f in rest('POST', 'rpc/admin_ingresos', {}, x)[1]['por_mes']))
+            caso('B no pide un plan para un comercio ajeno',
+                 rest('POST', 'rpc/pedir_plan', {'p_business': tienda, 'p_plan': 'plus'}, b)[0] >= 400)
+            caso('A pide Plus una vez (queda en el mini CRM) y no dos',
+                 rest('POST', 'rpc/pedir_plan', {'p_business': tienda, 'p_plan': 'plus'}, a)[0] in (200, 204)
+                 and rest('POST', 'rpc/mi_plan', {'p_business': tienda}, a)[1]['pedido_abierto'] is True
+                 and rest('POST', 'rpc/pedir_plan', {'p_business': tienda, 'p_plan': 'plus'}, a)[0] >= 400)
+            caso('A no corre los vencimientos', rest('POST', 'rpc/vencer_planes', {}, a)[0] >= 400)
+            hace3 = (hoy - _dt.timedelta(days=3)).isoformat()
+            hace10 = (hoy - _dt.timedelta(days=10)).isoformat()
+            pedir('PATCH', f'{URL}/rest/v1/subscriptions?id=eq.{sub}', {'period_start': hace10, 'period_end': hace3},
+                  {**ADMIN, 'Prefer': 'return=minimal'})
+            pedir('POST', f'{URL}/rest/v1/rpc/vencer_planes', {}, ADMIN)
+            mio = rest('POST', 'rpc/mi_plan', {'p_business': tienda}, a)[1]
+            caso('vencido hace 3 días: con atraso, pero sigue en Destacado',
+                 mio['estado'] == 'past_due' and mio['plan'] == 'featured')
+            pedir('PATCH', f'{URL}/rest/v1/subscriptions?id=eq.{sub}', {'period_end': (hoy - _dt.timedelta(days=8)).isoformat()},
+                  {**ADMIN, 'Prefer': 'return=minimal'})
+            pedir('POST', f'{URL}/rest/v1/rpc/vencer_planes', {}, ADMIN)
+            caso('con más de 7 días de atraso vuelve a Básico',
+                 rest('POST', 'rpc/mi_plan', {'p_business': tienda}, a)[1]['plan'] == 'basic')
+            pedir('DELETE', f'{URL}/rest/v1/payments?subscription_id=eq.{sub}', headers=ADMIN)
+            pedir('DELETE', f'{URL}/rest/v1/subscriptions?id=eq.{sub}', headers=ADMIN)
+            pedir('DELETE', f'{URL}/rest/v1/prospects?business_id=eq.{tienda}', headers=ADMIN)
             pedir('DELETE', f'{URL}/rest/v1/businesses?id=eq.{tienda}', headers=ADMIN)
 
             print('rubro Agropecuaria (2.8e)')

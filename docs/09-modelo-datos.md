@@ -123,8 +123,9 @@ Trigger: con 3 `flags` de usuarios distintos, el contenido pasa a `hidden`.
 
 | Tabla | Campos clave | Fase |
 |---|---|---|
-| `subscriptions` | id, owner_type (`user`, `household`, `business`), owner_id, plan, status, period_start, period_end, provider (`manual`, `google_play`, `app_store`, `mercadopago`), founder | 2 |
-| `payments` | id, subscription_id, amount, currency, method, reference, paid_at | 2 |
+| `subscriptions` | id, owner_type (`user`, `household`, `business`), owner_id, plan, status (`active`, `past_due`, `cancelled`, `expired`), period_start, period_end, provider (`manual`, `google_play`, `app_store`, `mercadopago`), founder, price, currency, notes — ✅ creada en 2.2 (D103) para comercios; una vigente por dueño; sin acceso directo (`admin_*`, `mi_plan()`) | 2 |
+| `payments` | id, subscription_id, amount, currency, method (`transfer`, `payment_link`, `cash`, `other`), reference, months, paid_at, recorded_by — ✅ creada en 2.2 (D103): solo con `admin_registrar_pago()`; se conserva aunque se borre el comercio | 2 |
+| `plan_changes` | business_id, plan_before, plan_after, changed_by, changed_at — ✅ creada en 2.2 (D103): la escribe un trigger en cada cambio de plan; da el antes/después de las estadísticas | 2 |
 | `qr_orders` | id, user_id, pet_id, design (genérica, personalizada), paid_by (`user`, `sponsor`, `vet`), status (`ordered`, `paid`, `printed`, `sent`, `delivered`), delivery (`vet_pickup`, `shipping`), pickup_business_id, address | 1 (retiro) / 2 (venta) |
 
 ## Métricas y ventas

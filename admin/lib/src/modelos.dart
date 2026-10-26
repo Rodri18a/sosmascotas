@@ -371,3 +371,90 @@ class CasoExito {
     'status': publicado ? 'published' : 'draft',
   };
 }
+
+/// Plan pago de un comercio (`admin_suscripciones()`, 2.2, D103).
+class Suscripcion {
+  const Suscripcion({
+    required this.id,
+    required this.negocioId,
+    required this.comercio,
+    required this.plan,
+    required this.estado,
+    required this.vence,
+    this.rubro,
+    this.fundador = false,
+    this.precio = 0,
+    this.pagado = 0,
+    this.ultimoPago,
+  });
+
+  factory Suscripcion.fromJson(Map<String, Object?> json) => Suscripcion(
+    id: json['id']! as String,
+    negocioId: json['business_id']! as String,
+    comercio: json['comercio'] as String? ?? '—',
+    rubro: json['rubro'] as String?,
+    plan: json['plan']! as String,
+    estado: json['status']! as String,
+    vence: DateTime.parse(json['period_end']! as String),
+    fundador: json['founder'] as bool? ?? false,
+    precio: double.tryParse('${json['price']}') ?? 0,
+    pagado: double.tryParse('${json['pagado']}') ?? 0,
+    ultimoPago: switch (json['ultimo_pago']) {
+      final String f => DateTime.parse(f),
+      _ => null,
+    },
+  );
+
+  final String id;
+  final String negocioId;
+  final String comercio;
+  final String? rubro;
+
+  /// `featured` o `plus`.
+  final String plan;
+
+  /// `active`, `past_due`, `cancelled` o `expired`.
+  final String estado;
+  final DateTime vence;
+  final bool fundador;
+
+  /// Por mes.
+  final double precio;
+  final double pagado;
+  final DateTime? ultimoPago;
+
+  bool get vigente => estado == 'active' || estado == 'past_due';
+}
+
+/// Ingresos por mes y por plan (`admin_ingresos()`, 2.2, D103).
+class Ingresos {
+  const Ingresos({
+    this.porMes = const [],
+    this.vigentes = const {},
+    this.esperadoPorMes = 0,
+  });
+
+  factory Ingresos.fromJson(Map<String, Object?> json) => Ingresos(
+    porMes: [
+      for (final f in (json['por_mes'] as List?) ?? const [])
+        (
+          mes: DateTime.parse((f as Map)['mes'] as String),
+          plan: f['plan'] as String,
+          total: (f['total'] as num).toDouble(),
+          pagos: (f['pagos'] as num).toInt(),
+        ),
+    ],
+    vigentes: {
+      for (final MapEntry(:key, :value)
+          in ((json['vigentes'] as Map?) ?? const {}).entries)
+        key as String: (value as num).toInt(),
+    },
+    esperadoPorMes: (json['por_mes_esperado'] as num?)?.toDouble() ?? 0,
+  );
+
+  final List<({DateTime mes, String plan, double total, int pagos})> porMes;
+  final Map<String, int> vigentes;
+
+  /// Lo que deberían pagar por mes las vigentes que no son Socios Fundadores.
+  final double esperadoPorMes;
+}

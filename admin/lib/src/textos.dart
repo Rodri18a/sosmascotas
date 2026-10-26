@@ -131,6 +131,55 @@ abstract final class T {
   static const plan = 'Plan…';
   static const resultados = 'Resultados';
 
+  // Planes y cobros (2.2, D103).
+  static const planesCobros = 'Planes';
+  static const planesAyuda =
+      'Cobro manual (transferencia o link de pago) hasta que haya pagos en la '
+      'app. Vencido el período, el plan sigue 7 días «con atraso» y después '
+      'vuelve a Básico solo. No se cobra antes de formalizar (0.0.9d).';
+  static const nuevoPlan = 'Nuevo plan pago';
+  static const sinSuscripciones = 'Todavía no hay planes pagos.';
+  static const precioMes = r'Precio por mes ($)';
+  static const venceEl = 'Vence el…';
+  static const esFundador = 'Socio Fundador (precio congelado)';
+  static const notas = 'Notas';
+  static const registrarPago = 'Registrar pago';
+  static const monto = r'Monto ($)';
+  static const metodo = 'Forma de pago';
+  static const metodos = {
+    'transfer': 'Transferencia',
+    'payment_link': 'Link de pago',
+    'cash': 'Efectivo',
+    'other': 'Otro',
+  };
+  static const referencia = 'Referencia (n.º de transferencia…)';
+  static const mesesPagados = 'Meses que paga';
+  static const darDeBaja = 'Dar de baja';
+  static const estadosPlan = {
+    'active': 'Al día',
+    'past_due': 'Con atraso',
+    'cancelled': 'De baja (sigue hasta el fin)',
+    'expired': 'Vencido',
+  };
+  static const faltanDatosPlan = 'Elegí el comercio, el plan y la fecha.';
+  static const montoInvalido = 'Poné un monto mayor que 0.';
+  static String pagoRegistrado(DateTime hasta) =>
+      'Pago registrado: queda pago hasta el '
+      '${hasta.day}/${hasta.month}/${hasta.year}.';
+  static String resumenIngresos(Ingresos i) => [
+    'Vigentes: Destacado ${i.vigentes['featured'] ?? 0} · '
+        'Plus ${i.vigentes['plus'] ?? 0}',
+    'Esperado por mes (sin Socios Fundadores): '
+        '\$ ${i.esperadoPorMes.toStringAsFixed(0)}',
+  ].join('\n');
+  static String suscripcionDetalle(Suscripcion s) => [
+    '${planes[s.plan] ?? s.plan} · ${estadosPlan[s.estado] ?? s.estado}',
+    'Vence el ${s.vence.day}/${s.vence.month}/${s.vence.year}'
+        '${s.fundador ? ' · Socio Fundador' : ''}',
+    '\$ ${s.precio.toStringAsFixed(0)} por mes · cobrado '
+        '\$ ${s.pagado.toStringAsFixed(0)}',
+  ].join('\n');
+
   // Propuestas y casos de éxito (2.4, D102).
   static const propuestas = 'Propuestas';
   static const armarPropuesta = 'Armar una propuesta';
@@ -253,7 +302,6 @@ abstract final class T {
   static const etapa = 'Etapa';
   static const proximoContacto = 'Próximo contacto';
   static const sinFecha = 'Sin fecha';
-  static const notas = 'Notas';
   static const embudoVacio = 'Todavía no hay prospectos.';
   static const etapas = {
     'prospect': 'Prospecto',

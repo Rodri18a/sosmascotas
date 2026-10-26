@@ -7581,6 +7581,132 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Semana del {fecha}'**
   String estadisticasSemanaDe(String fecha);
+
+  /// No description provided for @planTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu plan'**
+  String get planTitulo;
+
+  /// No description provided for @planAbrirAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Qué incluye, cuándo vence y tus pagos'**
+  String get planAbrirAyuda;
+
+  /// No description provided for @planActual.
+  ///
+  /// In es, this message translates to:
+  /// **'Plan {plan}'**
+  String planActual(String plan);
+
+  /// No description provided for @planVence.
+  ///
+  /// In es, this message translates to:
+  /// **'Vence el {fecha}'**
+  String planVence(String fecha);
+
+  /// No description provided for @planVencido.
+  ///
+  /// In es, this message translates to:
+  /// **'Venció el {fecha}. Tenés 7 días para pagarlo antes de volver a Básico.'**
+  String planVencido(String fecha);
+
+  /// No description provided for @planCancelado.
+  ///
+  /// In es, this message translates to:
+  /// **'Diste de baja el plan: sigue hasta el {fecha}.'**
+  String planCancelado(String fecha);
+
+  /// No description provided for @planFundador.
+  ///
+  /// In es, this message translates to:
+  /// **'Socio Fundador hasta el {fecha}: sin costo hasta esa fecha.'**
+  String planFundador(String fecha);
+
+  /// No description provided for @planPrecio.
+  ///
+  /// In es, this message translates to:
+  /// **'Precio: \$ {precio} por mes'**
+  String planPrecio(String precio);
+
+  /// No description provided for @planIncluyeBasico.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu ficha en el mapa, hasta 3 fotos, responder reseñas y un resumen de tus estadísticas.'**
+  String get planIncluyeBasico;
+
+  /// No description provided for @planIncluyeDestacado.
+  ///
+  /// In es, this message translates to:
+  /// **'Pin naranja y prioridad en el mapa y las búsquedas, galería de fotos, promoción, web, Instagram y WhatsApp, estadísticas completas y reporte mensual.'**
+  String get planIncluyeDestacado;
+
+  /// No description provided for @planIncluyePlus.
+  ///
+  /// In es, this message translates to:
+  /// **'Todo lo de Destacado, más catálogo y pedidos, agenda, socios, servicios publicados y tu página propia.'**
+  String get planIncluyePlus;
+
+  /// No description provided for @planMejorar.
+  ///
+  /// In es, this message translates to:
+  /// **'Mejorá tu plan'**
+  String get planMejorar;
+
+  /// No description provided for @planQuiero.
+  ///
+  /// In es, this message translates to:
+  /// **'Quiero {plan}'**
+  String planQuiero(String plan);
+
+  /// No description provided for @planPedido.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Listo! Te vamos a contactar para activarlo.'**
+  String get planPedido;
+
+  /// No description provided for @planPedidoAbierto.
+  ///
+  /// In es, this message translates to:
+  /// **'Ya pediste un plan: te vamos a contactar.'**
+  String get planPedidoAbierto;
+
+  /// No description provided for @planComoSePaga.
+  ///
+  /// In es, this message translates to:
+  /// **'Por ahora se paga por transferencia o link de pago, de mes a mes. Te mandamos los datos cuando te contactemos.'**
+  String get planComoSePaga;
+
+  /// No description provided for @planPagos.
+  ///
+  /// In es, this message translates to:
+  /// **'Tus pagos'**
+  String get planPagos;
+
+  /// No description provided for @planPago.
+  ///
+  /// In es, this message translates to:
+  /// **'{fecha} · \$ {monto} · {meses, plural, =1{1 mes} other{{meses} meses}}'**
+  String planPago(String fecha, String monto, int meses);
+
+  /// No description provided for @planAntesDespues.
+  ///
+  /// In es, this message translates to:
+  /// **'Desde que pasaste al plan pago'**
+  String get planAntesDespues;
+
+  /// No description provided for @planAntesDespuesTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'En {dias} días: {despues} aperturas de tu ficha y {contactosDespues} contactos. En los {dias} días anteriores: {antes} y {contactosAntes}.'**
+  String planAntesDespuesTexto(
+    int dias,
+    int despues,
+    int contactosDespues,
+    int antes,
+    int contactosAntes,
+  );
 }
 
 class _AppLocalizationsDelegate

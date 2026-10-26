@@ -41,6 +41,7 @@
 
 - **Suscripción mensual** con cobro manual al inicio (transferencia o link de pago). **Comisión** por ventas y reservas recién cuando haya pagos dentro de la app (Fase 4, 8–15%).
 - **Socios Fundadores:** las primeras 20–30 empresas de Pando reciben Destacado (o Plus) gratis por 6 meses y un precio congelado después.
+- **Vencimiento (D103):** cada pago cubre uno o más meses. Vencido el período sin pago, el plan sigue **7 días «con atraso»** y después vuelve a Básico solo. Una baja sigue hasta el fin de lo pagado. Un Socio Fundador sin plan cargado vuelve a Básico al terminar su fecha. **No se cobra antes de formalizar la actividad** (1.9.0).
 
 ### Módulos según el tipo de negocio
 

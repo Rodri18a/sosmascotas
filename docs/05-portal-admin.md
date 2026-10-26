@@ -62,6 +62,7 @@ Por cada empresa:
 - **Generador de propuesta:** PDF de una página con los datos de su zona y rubro, listo para mostrar en una visita. ✅ 2.4 (D102): portal → Propuestas, con `admin_propuesta()`; se descarga una página para imprimir o guardar como PDF.
 
 ### 7. Planes y cobros — Fase 2
+✅ 2.2 (D103): portal → **Planes** (crear un plan pago, registrar pagos, dar de baja, ingresos por mes y por plan, lo esperado por mes); los vencimientos corren solos todas las noches. Las suscripciones de usuarios (Pro, Familia) llegan con 2.1.
 - Quién paga qué plan, vencimientos y renovaciones.
 - **Cobro manual al inicio** (transferencia o link de pago): registrar el pago y activar el plan.
 - Suscripciones de usuarios (Pro, Familia) cobradas por las tiendas: estado sincronizado.

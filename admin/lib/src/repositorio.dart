@@ -79,6 +79,31 @@ abstract interface class AdminRepositorio {
 
   Future<void> borrarCaso(String id);
 
+  /// Planes pagos con cobro manual (2.2, D103).
+  Future<List<Suscripcion>> suscripciones();
+
+  Future<Ingresos> ingresos();
+
+  Future<void> crearSuscripcion({
+    required String negocioId,
+    required String plan,
+    required double precio,
+    required DateTime hasta,
+    bool fundador = false,
+    String? notas,
+  });
+
+  /// Devuelve hasta cuándo queda pago.
+  Future<DateTime> registrarPago(
+    String suscripcionId, {
+    required double monto,
+    required String metodo,
+    String? referencia,
+    int meses = 1,
+  });
+
+  Future<void> cancelarSuscripcion(String suscripcionId, {String? motivo});
+
   /// Publicaciones de adopción en revisión (2 camadas en 12 meses, 06).
   Future<List<Map<String, Object?>>> adopcionesEnRevision();
 
@@ -325,6 +350,65 @@ class SupabaseAdminRepositorio implements AdminRepositorio {
       _cliente.rpc<void>('admin_borrar_caso', params: {'p_id': id});
 
   @override
+  Future<List<Suscripcion>> suscripciones() async => _filas(
+    await _cliente.rpc<List<dynamic>>('admin_suscripciones'),
+  ).map(Suscripcion.fromJson).toList();
+
+  @override
+  Future<Ingresos> ingresos() async => Ingresos.fromJson(
+    (await _cliente.rpc<Map<String, dynamic>>(
+      'admin_ingresos',
+    )).cast<String, Object?>(),
+  );
+
+  @override
+  Future<void> crearSuscripcion({
+    required String negocioId,
+    required String plan,
+    required double precio,
+    required DateTime hasta,
+    bool fundador = false,
+    String? notas,
+  }) => _cliente.rpc<void>(
+    'admin_crear_suscripcion',
+    params: {
+      'p_business': negocioId,
+      'p_plan': plan,
+      'p_precio': precio,
+      'p_hasta': fechaIso(hasta),
+      'p_founder': fundador,
+      'p_notas': notas,
+    },
+  );
+
+  @override
+  Future<DateTime> registrarPago(
+    String suscripcionId, {
+    required double monto,
+    required String metodo,
+    String? referencia,
+    int meses = 1,
+  }) async => DateTime.parse(
+    await _cliente.rpc<String>(
+      'admin_registrar_pago',
+      params: {
+        'p_sub': suscripcionId,
+        'p_monto': monto,
+        'p_metodo': metodo,
+        'p_referencia': referencia,
+        'p_meses': meses,
+      },
+    ),
+  );
+
+  @override
+  Future<void> cancelarSuscripcion(String suscripcionId, {String? motivo}) =>
+      _cliente.rpc<void>(
+        'admin_cancelar_suscripcion',
+        params: {'p_sub': suscripcionId, 'p_motivo': motivo},
+      );
+
+  @override
   Future<List<Map<String, Object?>>> adopcionesEnRevision() async =>
       _filas(await _cliente.rpc<List<dynamic>>('admin_adopciones_en_revision'));
 
@@ -474,6 +558,14 @@ final lugaresProvider = FutureProvider.family<List<LugarAdmin>, String>(
   (ref, buscar) => ref
       .watch(adminRepositorioProvider)
       .lugares(buscar: buscar.trim().isEmpty ? null : buscar.trim()),
+);
+
+final suscripcionesProvider = FutureProvider<List<Suscripcion>>(
+  (ref) => ref.watch(adminRepositorioProvider).suscripciones(),
+);
+
+final ingresosProvider = FutureProvider<Ingresos>(
+  (ref) => ref.watch(adminRepositorioProvider).ingresos(),
 );
 
 final casosProvider = FutureProvider<List<CasoExito>>(

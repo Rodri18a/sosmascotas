@@ -10,6 +10,7 @@ export 'src/chat/chat.dart';
 export 'src/comercios/busqueda.dart';
 export 'src/comercios/comercio.dart';
 export 'src/comercios/filtros.dart';
+export 'src/comercios/mi_plan.dart';
 export 'src/config/app_env.dart';
 export 'src/config/config_firebase.dart';
 export 'src/cuenta/hogar.dart';
