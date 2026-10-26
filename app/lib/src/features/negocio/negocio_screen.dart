@@ -17,6 +17,7 @@ import '../../tienda/tienda_repositorio.dart';
 import '../../utiles/enlaces.dart';
 import '../../veterinarias/veterinarias_repositorio.dart';
 import '../../widgets/volver.dart';
+import '../adopcion/pack_screen.dart';
 import '../adopcion/transito_screen.dart';
 import '../agenda/agenda_negocio.dart';
 import '../chapitas/pedido_chapita.dart';
@@ -341,6 +342,16 @@ class _Panel extends ConsumerWidget {
               negocio.verificacion == Verificacion.verified &&
               ref.watch(funcionalidadActivaProvider(Funcionalidades.adopcion)))
             TarjetaTransitoRefugio(negocioId: negocio.id),
+          // Pack adopción (3.4b, D107): gratis, para rubros verificados.
+          if (const {
+                Categoria.vet,
+                Categoria.petshop,
+                Categoria.agro,
+                Categoria.grooming,
+              }.contains(negocio.comercio.categoria) &&
+              negocio.verificacion == Verificacion.verified &&
+              ref.watch(funcionalidadActivaProvider(Funcionalidades.adopcion)))
+            TarjetaPackNegocio(negocioId: negocio.id),
           // Reputación y respuestas (1.7): el comercio responde una vez.
           if (ref.watch(funcionalidadActivaProvider(Funcionalidades.resenas)))
             Card(

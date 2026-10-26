@@ -16,6 +16,7 @@ import '../../router.dart';
 import '../../utiles/enlaces.dart';
 import '../../widgets/volver.dart';
 import '../legal/legal_screen.dart';
+import 'pack_screen.dart';
 
 String textoEtapa(AppLocalizations t, EtapaAdopcion e) => switch (e) {
   EtapaAdopcion.interest => t.etapaInterest,
@@ -444,6 +445,8 @@ class _MisSolicitudes extends ConsumerWidget {
                 onTap: () => _responderSeguimiento(context, ref, s),
               ),
             ),
+          if (lista.any((s) => s.etapa == EtapaAdopcion.adopted))
+            const TarjetaPackAdopcion(),
           for (final s in lista)
             Card(
               child: Padding(

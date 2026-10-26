@@ -6,6 +6,7 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 import 'cuenta/perfil_repositorio.dart';
 import 'cuenta/servicio_cuenta.dart';
 import 'features/adopcion/adopcion_screen.dart';
+import 'features/adopcion/pack_screen.dart';
 import 'features/adopcion/transito_screen.dart';
 import 'features/agenda/reservar_turno.dart';
 import 'features/ajustes/ajustes_screen.dart';
@@ -88,6 +89,8 @@ abstract final class Rutas {
   static String pedirChapita(String mascotaId) => '$_chapitas/pedir/$mascotaId';
   static String chapitasNegocio(String id) => '$negocio/chapitas/$id';
   static const hogarTransito = '$adopcion/transito';
+  static const packAdopcion = '$adopcion/pack';
+  static String packNegocio(String id) => '$negocio/pack/$id';
   static String transitoRefugio(String id) => '$negocio/transito/$id';
 
   /// Búsqueda de lugares cerca de [desde] (el centro del mapa).
@@ -113,6 +116,7 @@ abstract final class Rutas {
     '$negocio/servicios/': Funcionalidades.catalogo,
     '$negocio/chapitas/': Funcionalidades.pedidoChapitas,
     '$negocio/transito/': Funcionalidades.adopcion,
+    '$negocio/pack/': Funcionalidades.adopcion,
     '$negocio/estadisticas/': Funcionalidades.estadisticas,
     '$negocio/plan/': Funcionalidades.planes,
     negocio: Funcionalidades.comercios,
@@ -144,6 +148,7 @@ abstract final class Rutas {
     '$adopcion/publicar',
     '$adopcion/compromiso',
     hogarTransito,
+    packAdopcion,
     denuncia,
     nuevoEvento,
     misPedidos,
@@ -397,6 +402,11 @@ final routerProvider = Provider<GoRouter>((ref) {
                 TransitoRefugioScreen(negocioId: state.pathParameters['id']!),
           ),
           GoRoute(
+            path: 'pack/:id',
+            builder: (_, state) =>
+                PackNegocioScreen(negocioId: state.pathParameters['id']!),
+          ),
+          GoRoute(
             path: 'servicios/:id',
             builder: (_, state) =>
                 ServiciosNegocioScreen(negocioId: state.pathParameters['id']!),
@@ -435,6 +445,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             path: 'transito',
             builder: (_, _) => const HogarTransitoScreen(),
           ),
+          GoRoute(path: 'pack', builder: (_, _) => const PackAdopcionScreen()),
           GoRoute(
             path: 'calculadora',
             builder: (_, _) => const CalculadoraCostosScreen(),

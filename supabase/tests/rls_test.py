@@ -2269,6 +2269,60 @@ def main():
             caso('las adopciones dicen si el animal está en tránsito, sin decir dónde',
                  all('in_foster' in f and not {'home_id', 'barrio'} & set(f)
                      for f in filas(rest('POST', 'rpc/adopciones_disponibles', {}))))
+            print('pack adopción (3.4b)')
+            caso('nadie lee los beneficios ni los códigos directo',
+                 bloqueado(rest('GET', 'adoption_perks?select=id', quien=b))
+                 and bloqueado(rest('GET', 'adoption_perk_claims?select=id', quien=a)))
+            caso('A no carga beneficios en un negocio ajeno', rest('POST', 'rpc/guardar_beneficio_adopcion', {
+                'p_business': vete, 'p': {'title': 'Primera consulta gratis'}}, a)[0] in (401, 403))
+            caso('un refugio no carga beneficios (solo vete, pet shop, agro y peluquería)',
+                 rest('POST', 'rpc/guardar_beneficio_adopcion', {
+                     'p_business': refugio, 'p': {'title': 'X'}}, b)[0] in (401, 403))
+            s_ben, beneficio = rest('POST', 'rpc/guardar_beneficio_adopcion', {
+                'p_business': vete, 'p': {'title': 'Primera consulta con 20 % menos',
+                                          'description': 'Para animales adoptados por la app'}}, b)
+            caso('la veterinaria verificada carga un beneficio', s_ben == 200 and isinstance(beneficio, str))
+            caso('quien no adoptó por la app no ve los beneficios',
+                 rest('POST', 'rpc/beneficios_adopcion', {}, a)[1] == {'puede': False, 'beneficios': []})
+            caso('ni puede pedir un código', 'sin_adopcion' in json.dumps(
+                rest('POST', 'rpc/pedir_beneficio_adopcion', {'p_perk': beneficio}, a)[1]))
+            _, ad_pack = pedir('POST', f'{URL}/rest/v1/adoptions', {
+                'publisher_id': b_id, 'publisher_kind': 'individual', 'status': 'active'},
+                {**ADMIN, 'Prefer': 'return=representation'})
+            ad_pack = ad_pack[0]['id']
+            _, an_pack = pedir('POST', f'{URL}/rest/v1/adoption_animals', {
+                'adoption_id': ad_pack, 'name': 'Toto', 'species_id': 1, 'photos': ['x.jpg']},
+                {**ADMIN, 'Prefer': 'return=representation'})
+            pedir('POST', f'{URL}/rest/v1/adoption_requests', {
+                'adoption_animal_id': an_pack[0]['id'], 'adopter_id': a_id, 'stage': 'adopted'}, ADMIN)
+            ben_a = rest('POST', 'rpc/beneficios_adopcion', {}, a)[1]
+            mio_b = next((x for x in ben_a.get('beneficios', []) if x['id'] == beneficio), {})
+            caso('quien adoptó ve el beneficio con el nombre del comercio',
+                 ben_a.get('puede') is True and mio_b.get('business_name') == 'Prueba RLS retiro'
+                 and mio_b.get('code') is None)
+            s_cod, codigo_b = rest('POST', 'rpc/pedir_beneficio_adopcion', {'p_perk': beneficio}, a)
+            caso('pide un código de 6', s_cod == 200 and isinstance(codigo_b, str) and len(codigo_b) == 6)
+            caso('pedirlo de nuevo da el mismo código',
+                 rest('POST', 'rpc/pedir_beneficio_adopcion', {'p_perk': beneficio}, a)[1] == codigo_b)
+            caso('B (que no adoptó) no puede pedir', 'sin_adopcion' in json.dumps(
+                rest('POST', 'rpc/pedir_beneficio_adopcion', {'p_perk': beneficio}, b)[1]))
+            caso('A no puede canjear en el negocio ajeno', rest('POST', 'rpc/canjear_beneficio_adopcion', {
+                'p_business': vete, 'p_code': codigo_b}, a)[0] in (401, 403))
+            caso('un código que no existe no se canjea', 'codigo_inexistente' in json.dumps(rest(
+                'POST', 'rpc/canjear_beneficio_adopcion', {'p_business': vete, 'p_code': 'ZZZZZZ'}, b)[1]))
+            canje = rest('POST', 'rpc/canjear_beneficio_adopcion', {'p_business': vete, 'p_code': codigo_b.lower()}, b)[1]
+            caso('la veterinaria lo canjea y ve solo el primer nombre y el animal',
+                 canje.get('title') == 'Primera consulta con 20 % menos' and canje.get('animal') == 'Toto'
+                 and not {'email', 'phone', 'user_id'} & set(canje))
+            caso('no se canjea dos veces', 'codigo_usado' in json.dumps(rest(
+                'POST', 'rpc/canjear_beneficio_adopcion', {'p_business': vete, 'p_code': codigo_b}, b)[1]))
+            mis_ben = rest('POST', 'rpc/mis_beneficios_adopcion', {'p_business': vete}, b)[1]
+            caso('el comercio ve cuántos lo pidieron y lo usaron',
+                 mis_ben['beneficios'][0]['pedidos'] == 1 and mis_ben['beneficios'][0]['usados'] == 1)
+            caso('A no ve los beneficios del comercio',
+                 rest('POST', 'rpc/mis_beneficios_adopcion', {'p_business': vete}, a)[0] in (401, 403))
+            pedir('DELETE', f'{URL}/rest/v1/adoptions?id=eq.{ad_pack}', headers=ADMIN)
+
             pedir('DELETE', f'{URL}/rest/v1/conversations?id=eq.{conv_tr}', headers=ADMIN)
             pedir('DELETE', f'{URL}/rest/v1/foster_homes?user_id=eq.{a_id}', headers=ADMIN)
             pedir('DELETE', f'{URL}/rest/v1/businesses?id=eq.{refugio}', headers=ADMIN)

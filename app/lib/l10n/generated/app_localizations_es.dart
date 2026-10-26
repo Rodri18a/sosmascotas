@@ -4633,6 +4633,114 @@ class AppLocalizationsEs extends AppLocalizations {
   String get transitoLimite => 'Llegaste al máximo de pedidos por hoy.';
 
   @override
+  String get listo => 'Listo';
+
+  @override
+  String get packTitulo => 'Pack adopción';
+
+  @override
+  String get packTarjeta =>
+      'Beneficios de comercios de tu zona por haber adoptado.';
+
+  @override
+  String get packTarjetaNegocio =>
+      'Un beneficio para quien adopta por la app. Es gratis.';
+
+  @override
+  String get packIntro =>
+      'Por haber adoptado por la app, estos comercios te dan un beneficio. Pedí el código y mostralo en el local.';
+
+  @override
+  String get packSinAdopcion =>
+      'El pack adopción es para quien adoptó por la app en los últimos 6 meses.';
+
+  @override
+  String get packSinBeneficios => 'Todavía no hay beneficios en tu zona.';
+
+  @override
+  String get packQuiero => 'Quiero este beneficio';
+
+  @override
+  String get packTuCodigo => 'Tu código:';
+
+  @override
+  String get packMostralo => 'Mostralo en el local. Se usa una sola vez.';
+
+  @override
+  String packUsado(String codigo) {
+    return 'Ya lo usaste (código $codigo).';
+  }
+
+  @override
+  String get packNegocioAyuda =>
+      'Quien adoptó por la app pide el código y lo trae. Al canjearlo ves solo su primer nombre y el animal que adoptó.';
+
+  @override
+  String get packCanjear => 'Canjear un código';
+
+  @override
+  String get packCodigo => 'Código de 6 letras y números';
+
+  @override
+  String get packCanjearBoton => 'Canjear';
+
+  @override
+  String get packCanjeado => '¡Código canjeado!';
+
+  @override
+  String packPara(String nombre) {
+    return 'Para $nombre';
+  }
+
+  @override
+  String packAnimal(String nombre) {
+    return 'Adoptó a $nombre';
+  }
+
+  @override
+  String get packTusBeneficios => 'Tus beneficios';
+
+  @override
+  String get packNuevo => 'Nuevo beneficio';
+
+  @override
+  String get packEditar => 'Editar beneficio';
+
+  @override
+  String get packSinPropios => 'Todavía no cargaste ninguno.';
+
+  @override
+  String packResumen(int pedidos, int usados) {
+    return '$pedidos lo pidieron · $usados lo usaron';
+  }
+
+  @override
+  String get packTituloCampo => 'Qué le das';
+
+  @override
+  String get packTituloEjemplo => 'Primera consulta con 20 % de descuento';
+
+  @override
+  String get packDescripcion => 'Condiciones (opcional)';
+
+  @override
+  String get packSoloVerificados =>
+      'Solo para veterinarias, pet shops, agroveterinarias y peluquerías verificadas.';
+
+  @override
+  String get packDemasiados => 'Podés tener hasta 5 beneficios activos.';
+
+  @override
+  String get packNoDisponible => 'Ese beneficio ya no está disponible.';
+
+  @override
+  String get packCodigoInexistente =>
+      'Ese código no es de un beneficio de tu comercio.';
+
+  @override
+  String get packCodigoUsado => 'Ese código ya se usó.';
+
+  @override
   String get stockNoEsTuya =>
       'Ese código no está entre las chapitas sin usar de tu stock.';
 

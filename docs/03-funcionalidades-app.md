@@ -149,7 +149,7 @@ El objetivo no es solo publicar animales: es que **la adopción salga bien y el 
    - **Seguimiento a los 7, 30 y 90 días**: foto y "¿cómo va?". Quien la dio en adopción ve las respuestas.
 
 **Fase 3:**
-- **"Pack adopción"**: veterinarias (primera consulta o castración con descuento) y petshops (kit de bienvenida) para animales adoptados por la app.
+- **"Pack adopción"**: veterinarias (primera consulta o castración con descuento) y petshops (kit de bienvenida) para animales adoptados por la app. ✅ 3.4b (D107): gratis para comercios verificados; quien adoptó pide el código en Adopción → Mis solicitudes → Pack adopción y el comercio lo canjea en el modo comercio.
 - **Apadrinamiento** de refugios y ferias de adopción por empresas.
 - **Hogares de tránsito**: personas que cuidan temporalmente a un animal hasta que se adopte. ✅ 3.4b (D106): Adopción → Hogar de tránsito (me anoto con mi barrio, pauso, respondo pedidos); modo comercio de un refugio verificado → Hogares de tránsito (los de su zona, pedir, cancelar o terminar); al aceptar se abre el chat.
 

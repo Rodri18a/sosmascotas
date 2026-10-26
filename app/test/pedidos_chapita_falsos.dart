@@ -77,14 +77,13 @@ class PedidosChapitaFalsos implements PedidosChapitaRepositorio {
   }
 
   @override
-  Future<PedidosDelNegocio> delNegocio(String negocioId) async =>
-      (
-        puntoRetiro: puntoRetiro,
-        puedeSer: puedeSer,
-        pedidos: List.of(pedidos),
-        stockDisponibles: stock.length,
-        stockActivadas: _activadasDelStock,
-      );
+  Future<PedidosDelNegocio> delNegocio(String negocioId) async => (
+    puntoRetiro: puntoRetiro,
+    puedeSer: puedeSer,
+    pedidos: List.of(pedidos),
+    stockDisponibles: stock.length,
+    stockActivadas: _activadasDelStock,
+  );
 
   @override
   Future<void> prenderPuntoRetiro(

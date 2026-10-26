@@ -186,14 +186,13 @@ class PedidosChapitaSinConfigurar implements PedidosChapitaRepositorio {
   Future<void> cancelar(String pedidoId) => throw _error;
 
   @override
-  Future<PedidosDelNegocio> delNegocio(String negocioId) async =>
-      (
-        puntoRetiro: false,
-        puedeSer: false,
-        pedidos: const <PedidoChapita>[],
-        stockDisponibles: 0,
-        stockActivadas: 0,
-      );
+  Future<PedidosDelNegocio> delNegocio(String negocioId) async => (
+    puntoRetiro: false,
+    puedeSer: false,
+    pedidos: const <PedidoChapita>[],
+    stockDisponibles: 0,
+    stockActivadas: 0,
+  );
 
   @override
   Future<void> prenderPuntoRetiro(String negocioId, {required bool prender}) =>

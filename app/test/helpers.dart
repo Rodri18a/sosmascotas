@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:sosmascota/src/adopcion/adopcion_repositorio.dart';
+import 'package:sosmascota/src/adopcion/pack_repositorio.dart';
 import 'package:sosmascota/src/adopcion/transito_repositorio.dart';
 import 'package:sosmascota/src/agenda/agenda_repositorio.dart';
 import 'package:sosmascota/src/app.dart';
@@ -62,6 +63,7 @@ import 'mapa_falso.dart';
 import 'mascota_elegida_falsa.dart';
 import 'mascotas_falsas.dart';
 import 'noticias_falsas.dart';
+import 'pack_falso.dart';
 import 'pedidos_chapita_falsos.dart';
 import 'perfil_falso.dart';
 import 'qr_falso.dart';
@@ -100,6 +102,7 @@ Widget appDePrueba({
   ResenasRepositorio? resenas,
   AdopcionRepositorio? adopcion,
   TransitoRepositorio? transito,
+  PackAdopcionRepositorio? pack,
   EventosRepositorio? eventosRepo,
   VeterinariasRepositorio? veterinarias,
   NoticiasRepositorio? noticias,
@@ -178,6 +181,7 @@ Widget appDePrueba({
     resenasRepositorioProvider.overrideWithValue(resenas ?? ResenasFalsas()),
     adopcionRepositorioProvider.overrideWithValue(adopcion ?? AdopcionFalsa()),
     transitoRepositorioProvider.overrideWithValue(transito ?? TransitoFalso()),
+    packAdopcionRepositorioProvider.overrideWithValue(pack ?? PackFalso()),
     eventosRepositorioProvider.overrideWithValue(
       eventosRepo ?? EventosFalsos(),
     ),

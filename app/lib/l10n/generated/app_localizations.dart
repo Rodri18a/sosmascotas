@@ -7822,6 +7822,192 @@ abstract class AppLocalizations {
   /// **'Llegaste al máximo de pedidos por hoy.'**
   String get transitoLimite;
 
+  /// No description provided for @listo.
+  ///
+  /// In es, this message translates to:
+  /// **'Listo'**
+  String get listo;
+
+  /// No description provided for @packTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Pack adopción'**
+  String get packTitulo;
+
+  /// No description provided for @packTarjeta.
+  ///
+  /// In es, this message translates to:
+  /// **'Beneficios de comercios de tu zona por haber adoptado.'**
+  String get packTarjeta;
+
+  /// No description provided for @packTarjetaNegocio.
+  ///
+  /// In es, this message translates to:
+  /// **'Un beneficio para quien adopta por la app. Es gratis.'**
+  String get packTarjetaNegocio;
+
+  /// No description provided for @packIntro.
+  ///
+  /// In es, this message translates to:
+  /// **'Por haber adoptado por la app, estos comercios te dan un beneficio. Pedí el código y mostralo en el local.'**
+  String get packIntro;
+
+  /// No description provided for @packSinAdopcion.
+  ///
+  /// In es, this message translates to:
+  /// **'El pack adopción es para quien adoptó por la app en los últimos 6 meses.'**
+  String get packSinAdopcion;
+
+  /// No description provided for @packSinBeneficios.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no hay beneficios en tu zona.'**
+  String get packSinBeneficios;
+
+  /// No description provided for @packQuiero.
+  ///
+  /// In es, this message translates to:
+  /// **'Quiero este beneficio'**
+  String get packQuiero;
+
+  /// No description provided for @packTuCodigo.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu código:'**
+  String get packTuCodigo;
+
+  /// No description provided for @packMostralo.
+  ///
+  /// In es, this message translates to:
+  /// **'Mostralo en el local. Se usa una sola vez.'**
+  String get packMostralo;
+
+  /// No description provided for @packUsado.
+  ///
+  /// In es, this message translates to:
+  /// **'Ya lo usaste (código {codigo}).'**
+  String packUsado(String codigo);
+
+  /// No description provided for @packNegocioAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Quien adoptó por la app pide el código y lo trae. Al canjearlo ves solo su primer nombre y el animal que adoptó.'**
+  String get packNegocioAyuda;
+
+  /// No description provided for @packCanjear.
+  ///
+  /// In es, this message translates to:
+  /// **'Canjear un código'**
+  String get packCanjear;
+
+  /// No description provided for @packCodigo.
+  ///
+  /// In es, this message translates to:
+  /// **'Código de 6 letras y números'**
+  String get packCodigo;
+
+  /// No description provided for @packCanjearBoton.
+  ///
+  /// In es, this message translates to:
+  /// **'Canjear'**
+  String get packCanjearBoton;
+
+  /// No description provided for @packCanjeado.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Código canjeado!'**
+  String get packCanjeado;
+
+  /// No description provided for @packPara.
+  ///
+  /// In es, this message translates to:
+  /// **'Para {nombre}'**
+  String packPara(String nombre);
+
+  /// No description provided for @packAnimal.
+  ///
+  /// In es, this message translates to:
+  /// **'Adoptó a {nombre}'**
+  String packAnimal(String nombre);
+
+  /// No description provided for @packTusBeneficios.
+  ///
+  /// In es, this message translates to:
+  /// **'Tus beneficios'**
+  String get packTusBeneficios;
+
+  /// No description provided for @packNuevo.
+  ///
+  /// In es, this message translates to:
+  /// **'Nuevo beneficio'**
+  String get packNuevo;
+
+  /// No description provided for @packEditar.
+  ///
+  /// In es, this message translates to:
+  /// **'Editar beneficio'**
+  String get packEditar;
+
+  /// No description provided for @packSinPropios.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no cargaste ninguno.'**
+  String get packSinPropios;
+
+  /// No description provided for @packResumen.
+  ///
+  /// In es, this message translates to:
+  /// **'{pedidos} lo pidieron · {usados} lo usaron'**
+  String packResumen(int pedidos, int usados);
+
+  /// No description provided for @packTituloCampo.
+  ///
+  /// In es, this message translates to:
+  /// **'Qué le das'**
+  String get packTituloCampo;
+
+  /// No description provided for @packTituloEjemplo.
+  ///
+  /// In es, this message translates to:
+  /// **'Primera consulta con 20 % de descuento'**
+  String get packTituloEjemplo;
+
+  /// No description provided for @packDescripcion.
+  ///
+  /// In es, this message translates to:
+  /// **'Condiciones (opcional)'**
+  String get packDescripcion;
+
+  /// No description provided for @packSoloVerificados.
+  ///
+  /// In es, this message translates to:
+  /// **'Solo para veterinarias, pet shops, agroveterinarias y peluquerías verificadas.'**
+  String get packSoloVerificados;
+
+  /// No description provided for @packDemasiados.
+  ///
+  /// In es, this message translates to:
+  /// **'Podés tener hasta 5 beneficios activos.'**
+  String get packDemasiados;
+
+  /// No description provided for @packNoDisponible.
+  ///
+  /// In es, this message translates to:
+  /// **'Ese beneficio ya no está disponible.'**
+  String get packNoDisponible;
+
+  /// No description provided for @packCodigoInexistente.
+  ///
+  /// In es, this message translates to:
+  /// **'Ese código no es de un beneficio de tu comercio.'**
+  String get packCodigoInexistente;
+
+  /// No description provided for @packCodigoUsado.
+  ///
+  /// In es, this message translates to:
+  /// **'Ese código ya se usó.'**
+  String get packCodigoUsado;
+
   /// No description provided for @stockNoEsTuya.
   ///
   /// In es, this message translates to:

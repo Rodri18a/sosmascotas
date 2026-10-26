@@ -75,4 +75,20 @@ void main() {
     });
     expect(a.enTransito, isTrue);
   });
+
+  test('un beneficio del pack con el código de quien adoptó', () {
+    final b = BeneficioAdopcion.fromJson({
+      'id': 'b1',
+      'title': 'Kit de bienvenida',
+      'business_name': 'Pet Shop Pando',
+      'valid_until': '2026-12-31',
+      'code': 'K7M2QX',
+      'used': false,
+    });
+    expect(b.negocio, 'Pet Shop Pando');
+    expect(b.vigenteHasta, DateTime(2026, 12, 31));
+    expect(b.codigo, 'K7M2QX');
+    expect(b.usado, isFalse);
+    expect(b.activo, isTrue);
+  });
 }

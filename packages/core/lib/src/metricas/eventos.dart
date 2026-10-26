@@ -77,6 +77,9 @@ abstract final class Eventos {
   static const fosterRequestCreate = 'foster_request_create';
   static const fosterRequestAnswer = 'foster_request_answer';
   static const fosterRequestClose = 'foster_request_close';
+  static const perkSave = 'perk_save';
+  static const perkClaim = 'perk_claim';
+  static const perkRedeem = 'perk_redeem';
   static const petSelect = 'pet_select';
   static const catalogOpen = 'catalog_open';
   static const catalogAsk = 'catalog_ask';
