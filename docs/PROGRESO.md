@@ -7,15 +7,47 @@
 
 ## Resumen
 
-| Fase | Estado | Horas estimadas | Horas hechas |
-|---|---|---|---|
-| 0 · SOS | 🔄 En curso | ~145 h (≈ 45 sin código + ≈ 100 de desarrollo) | ≈ 10,5 h (pasos que se estimaron en 35,5 h) |
-| 1 · MVP | ⏳ | ~160 h | 0 |
-| 2 · Monetización | ⏳ | a detallar | 0 |
-| 3 · Servicios | ⏳ | a detallar | 0 |
-| 4 · Escala | ⏳ | a detallar | 0 |
+Actualizado el 26/10/2026. Avance = pasos tildados `[x]` sobre el total; las horas son las **estimadas** de esos pasos (las reales son ≈ 4–5 veces menos en el desarrollo, ver la calibración).
 
-**Paso actual:** 0.8.3 (prueba con conocidos) · pendiente del dueño: 0.4.4b (proveedor de correo) · validación pendiente desde 0.0.2
+| Fase | Estado | Pasos hechos | Avance | Horas estimadas (hechas / total) |
+|---|---|---|---|---|
+| 0 · SOS | 🔄 En curso | 46 / 72 | ▓▓▓▓▓▓░░░░ 64 % | ≈ 105 / 160 h |
+| 1 · MVP | 🔄 Adelantada (código casi completo) | 43 / 55 | ▓▓▓▓▓▓▓▓░░ 78 % | ≈ 125 / 160 h |
+| 2 · Monetización | 🔄 Adelantada | 17 / 21 | ▓▓▓▓▓▓▓▓░░ 81 % | a detallar |
+| 3 · Servicios | 🔄 Empezada | 1 / 8 (3.2 hecho en parte) | ▓░░░░░░░░░ 13 % | a detallar |
+| 4 · Escala | ⏳ | 0 / 3 | ░░░░░░░░░░ 0 % | a detallar |
+
+<details>
+<summary>Detalle por etapa (fases 0 y 1)</summary>
+
+| Etapa | Pasos hechos | Horas estimadas (hechas / total) | Qué falta |
+|---|---|---|---|
+| 0.0 · Documentación y validación | 2 / 16 | 2 / 34 h | Casi toda la validación sin código (competencia, entrevistas, logo, legal, contador, chapita) |
+| 0.1 · Base técnica | 7 / 7 ✅ | 11 / 11 h | — |
+| 0.2 · Cuentas | 6 / 6 ✅ | 13 / 13 h | — |
+| 0.3 · Mascotas | 4 / 4 ✅ | 10 / 10 h | — |
+| 0.4 · Chapita QR | 5 / 6 | 12 / 13 h | 0.4.4b proveedor de correo |
+| 0.5 · SOS | 7 / 7 ✅ | 22 / 22 h | — |
+| 0.6 · Avisos | 4 / 4 ✅ | 9 / 9 h | — |
+| 0.7 · Veterinarias de urgencia y Ayuda | 3 / 3 ✅ | 6 / 6 h | — |
+| 0.8 · Lanzamiento | 8 / 16 | 20 / 37 h | 0.8.3 a 0.8.9 (prueba con conocidos, legal, producción, dominio, soporte, difusión, lanzamiento) |
+| 0.9 · Después del lanzamiento | 0 / 3 | 0 / 5 h | Todo (después de lanzar) |
+| 1.1 · Apps nativas | 0 / 4 | 0 / 12 h | Android, Google Play, Apple, App Store |
+| 1.2 · Mapa integral | 8 / 10 | 20 / 24 h | 1.2.1 Google Cloud, 1.2.2 Google Maps nativo |
+| 1.3 · Empresas en la app | 6 / 6 ✅ | 19 / 19 h | — |
+| 1.4 · Chat híbrido y seguimiento | 5 / 5 ✅ | 15 / 15 h | — |
+| 1.5 · Libreta y recordatorios | 6 / 7 | 15 / 18 h | 1.5.6 probar en modo avión |
+| 1.6 · Hogar compartido | 4 / 4 ✅ | 13 / 13 h | — |
+| 1.7 · Reseñas | 2 / 2 ✅ | 5 / 5 h | — |
+| 1.8 · Portal de administración v1 | 8 / 8 ✅ | 27 / 27 h | — |
+| 1.8b · Chapitas físicas | 4 / 4 ✅ | 11 / 11 h | — |
+| 1.9 · Socios Fundadores y cierre | 0 / 5 | 0 / 16,5 h | Todo (formalizar, Socios Fundadores, pruebas, cierre) |
+
+Fase 2, lo que falta: 2.1 (planes Pro y Familia), 2.9 (sponsors de chapitas), 2.10 (portal de empresas v1), 2.11. Fase 3: hecho 3.1 (agenda); 3.2 (pedidos) hecho en código, falta probarlo con dos cuentas.
+
+</details>
+
+**Paso actual:** 0.8.3 (prueba con conocidos) · pendiente del dueño: 0.4.4b (proveedor de correo) · validación pendiente desde 0.0.2 · el código va adelantado (fases 1–3): falta probar online 3.2 y 1.5.6
 
 > ▶️ Retomado el 16/10/2026 (se había pausado el 15/10). La lista de abajo sigue siendo el orden sugerido.
 
