@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:sosmascota/src/tienda/tienda_repositorio.dart';
@@ -18,6 +19,9 @@ class TiendaFalsa implements TiendaRepositorio {
   final List<Servicio> servicios;
   final serviciosGuardados = <Servicio>[];
   final List<Pedido> pedidos;
+
+  /// Lo que llega en vivo (D100); la clave es el comercio (`null` = los míos).
+  final enVivoCanales = <String?, StreamController<void>>{};
   CondicionesPedido? condiciones;
   final hechos = <(String, Map<String, int>, String?)>[];
   final pagosYEntregas = <(FormaPago?, Entrega?)>[];
@@ -117,6 +121,13 @@ class TiendaFalsa implements TiendaRepositorio {
 
   @override
   Future<List<Pedido>> pedidosDelNegocio(String negocioId) async => pedidos;
+
+  @override
+  Stream<void> enVivo({String? negocioId}) =>
+      (enVivoCanales[negocioId] ??= StreamController<void>.broadcast()).stream;
+
+  /// Simula un cambio que hizo la otra parte.
+  void cambioDeAfuera(String? negocioId) => enVivoCanales[negocioId]?.add(null);
 
   @override
   Future<void> cambiarEstado(String pedidoId, EstadoPedido estado) async {

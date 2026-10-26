@@ -73,15 +73,30 @@ enum _Seccion { panel, agenda, catalogo, pedidos, negocio }
 /// Modo comercio (1.3.5): barra Panel · Agenda · Catálogo · Pedidos · Negocio,
 /// cabecera con nombre, tipo, plan e insignia, y vuelta al modo dueño.
 class NegocioScreen extends ConsumerStatefulWidget {
-  const NegocioScreen({super.key});
+  const NegocioScreen({this.seccion, super.key});
+
+  /// Sección con la que abre (`pedidos` desde la push de un pedido, D100).
+  final String? seccion;
 
   @override
   ConsumerState<NegocioScreen> createState() => _NegocioScreenState();
 }
 
 class _NegocioScreenState extends ConsumerState<NegocioScreen> {
-  var _seccion = _Seccion.panel;
+  late var _seccion = _leer(widget.seccion) ?? _Seccion.panel;
   String? _elegido;
+
+  static _Seccion? _leer(String? seccion) =>
+      _Seccion.values.asNameMap()[seccion];
+
+  @override
+  void didUpdateWidget(NegocioScreen anterior) {
+    super.didUpdateWidget(anterior);
+    // Otra push con la pantalla ya abierta.
+    if (widget.seccion != anterior.seccion) {
+      _seccion = _leer(widget.seccion) ?? _seccion;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

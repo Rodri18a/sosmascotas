@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -59,6 +60,11 @@ abstract interface class TiendaRepositorio {
   Future<List<Pedido>> pedidosDelNegocio(String negocioId);
 
   Future<void> cambiarEstado(String pedidoId, EstadoPedido estado);
+
+  /// Avisa cada vez que cambia un pedido (3.2, D100): sin [negocioId], los
+  /// míos; con él, los del comercio. Solo trae el aviso: la lista se vuelve a
+  /// pedir.
+  Stream<void> enVivo({String? negocioId});
 
   /// Servicios (2.10a, D90): lo disponible, si el comercio tiene plan Plus
   /// (también visitantes).
@@ -182,18 +188,22 @@ class SupabaseTiendaRepositorio implements TiendaRepositorio {
     String? nota,
     FormaPago? pago,
     Entrega? entrega,
-  }) => _traducir(
-    () => _cliente.rpc<String>(
-      'hacer_pedido',
-      params: {
-        'p_negocio': negocioId,
-        'p_items': carrito.paraPedir(),
-        'p_nota': nota,
-        'p_pago': pago?.base,
-        'p_entrega': entrega?.base,
-      },
-    ),
-  );
+  }) async {
+    final id = await _traducir(
+      () => _cliente.rpc<String>(
+        'hacer_pedido',
+        params: {
+          'p_negocio': negocioId,
+          'p_items': carrito.paraPedir(),
+          'p_nota': nota,
+          'p_pago': pago?.base,
+          'p_entrega': entrega?.base,
+        },
+      ),
+    );
+    unawaited(_avisar(id));
+    return id;
+  }
 
   @override
   Future<List<Pedido>> misPedidos() async =>
@@ -208,12 +218,48 @@ class SupabaseTiendaRepositorio implements TiendaRepositorio {
   );
 
   @override
-  Future<void> cambiarEstado(String pedidoId, EstadoPedido estado) => _traducir(
-    () => _cliente.rpc<void>(
-      'cambiar_estado_pedido',
-      params: {'p_id': pedidoId, 'p_estado': estado.base},
-    ),
-  );
+  Future<void> cambiarEstado(String pedidoId, EstadoPedido estado) async {
+    await _traducir(
+      () => _cliente.rpc<void>(
+        'cambiar_estado_pedido',
+        params: {'p_id': pedidoId, 'p_estado': estado.base},
+      ),
+    );
+    unawaited(_avisar(pedidoId));
+  }
+
+  /// Push a la otra parte (D100). La base decide a quién y no repite; si
+  /// falla, el pedido ya quedó guardado.
+  Future<void> _avisar(String pedidoId) async {
+    try {
+      await _cliente.functions.invoke(
+        'order-status-alert',
+        body: {'order_id': pedidoId},
+      );
+    } on Exception {
+      // Sin push: se ve igual en la lista.
+    }
+  }
+
+  @override
+  Stream<void> enVivo({String? negocioId}) {
+    final yo = _cliente.auth.currentUser?.id;
+    if (yo == null && negocioId == null) return const Stream.empty();
+    late final RealtimeChannel canal;
+    final salida = StreamController<void>(
+      onCancel: () => _cliente.removeChannel(canal),
+    );
+    canal = _cliente
+        .channel(
+          negocioId == null
+              ? 'pedidos:cliente:$yo'
+              : 'pedidos:negocio:$negocioId',
+          opts: const RealtimeChannelConfig(private: true),
+        )
+        .onBroadcast(event: 'pedido', callback: (_) => salida.add(null))
+        .subscribe();
+    return salida.stream;
+  }
 
   @override
   Future<List<Servicio>> serviciosDe(String negocioId) async => _servicios(
@@ -297,6 +343,9 @@ class TiendaSinConfigurar implements TiendaRepositorio {
   Future<void> cambiarEstado(String pedidoId, EstadoPedido estado) async {}
 
   @override
+  Stream<void> enVivo({String? negocioId}) => const Stream.empty();
+
+  @override
   Future<List<Servicio>> serviciosDe(String negocioId) async => const [];
 
   @override
@@ -351,6 +400,13 @@ final misPedidosProvider = FutureProvider<List<Pedido>>((ref) {
 final pedidosDelNegocioProvider = FutureProvider.family<List<Pedido>, String>(
   (ref, negocioId) =>
       ref.watch(tiendaRepositorioProvider).pedidosDelNegocio(negocioId),
+);
+
+/// Cambios en vivo mientras la pantalla está abierta (D100): `null` = Mis
+/// pedidos; si no, los del comercio.
+final pedidosEnVivoProvider = StreamProvider.autoDispose.family<void, String?>(
+  (ref, negocioId) =>
+      ref.watch(tiendaRepositorioProvider).enVivo(negocioId: negocioId),
 );
 
 /// Carrito de cada comercio, mientras dura la sesión de la app.

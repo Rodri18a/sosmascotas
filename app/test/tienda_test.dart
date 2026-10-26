@@ -471,4 +471,47 @@ void main() {
     ]);
     expect(find.text('Cancelar pedido'), findsNothing);
   });
+
+  Pedido pedido(String id, int numero, EstadoPedido estado) => Pedido(
+    id: id,
+    numero: numero,
+    estado: estado,
+    total: 890,
+    creado: DateTime(2026, 10, 26, 9),
+    actualizado: DateTime(2026, 10, 26, 9),
+    cliente: 'Beto',
+    negocio: 'Pet Shop Ejemplo',
+    renglones: const [
+      RenglonPedido(nombre: 'Alimento', precio: 890, cantidad: 1),
+    ],
+  );
+
+  testWidgets('"Mis pedidos" muestra el estado en vivo (D100)', (tester) async {
+    final tienda = TiendaFalsa(pedidos: [pedido('o1', 1, EstadoPedido.nuevo)]);
+    await _abrir(tester, tienda: tienda);
+    await _ir(tester, '/pedidos');
+    expect(find.text('Nuevo'), findsOneWidget);
+    // El comercio lo pasa a "Listo" desde su celular.
+    tienda.pedidos[0] = pedido('o1', 1, EstadoPedido.listo);
+    tienda.cambioDeAfuera(null);
+    await tester.pumpAndSettle();
+    expect(find.text('Nuevo'), findsNothing);
+    expect(find.text('Listo para retirar'), findsOneWidget);
+  });
+
+  testWidgets('la push de un pedido abre Pedidos y los nuevos aparecen solos '
+      '(D100)', (tester) async {
+    final tienda = TiendaFalsa();
+    await _abrir(
+      tester,
+      tienda: tienda,
+      negocios: NegociosFalsos([_miPetshop()]),
+    );
+    await _ir(tester, '/negocio?seccion=pedidos');
+    expect(find.text('Pedido #4 · Beto'), findsNothing);
+    tienda.pedidos.add(pedido('o4', 4, EstadoPedido.nuevo));
+    tienda.cambioDeAfuera('ps');
+    await tester.pumpAndSettle();
+    expect(find.text('Pedido #4 · Beto'), findsOneWidget);
+  });
 }

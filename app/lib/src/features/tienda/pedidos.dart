@@ -657,7 +657,8 @@ class _FormularioCondicionesState extends ConsumerState<FormularioCondiciones> {
   }
 }
 
-/// Modo comercio → Pedidos: los abiertos primero, de a un paso.
+/// Modo comercio → Pedidos: los abiertos primero, de a un paso. Los nuevos y
+/// las cancelaciones aparecen solos (D100).
 class PedidosNegocio extends ConsumerWidget {
   const PedidosNegocio({required this.negocioId, super.key});
 
@@ -667,6 +668,7 @@ class PedidosNegocio extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final t = context.t;
     void recargar() => ref.invalidate(pedidosDelNegocioProvider(negocioId));
+    ref.listen(pedidosEnVivoProvider(negocioId), (_, _) => recargar());
     return RefreshIndicator(
       onRefresh: () async {
         recargar();

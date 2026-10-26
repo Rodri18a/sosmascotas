@@ -681,13 +681,17 @@ String textoEstadoPedido(AppLocalizations t, EstadoPedido e) => switch (e) {
   EstadoPedido.cancelado => t.pedidoCancelado,
 };
 
-/// Mis pedidos, con el estado (se actualiza al volver o tirando hacia abajo).
+/// Mis pedidos, con el estado en vivo (D100; también tirando hacia abajo).
 class MisPedidosScreen extends ConsumerWidget {
   const MisPedidosScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final t = context.t;
+    ref.listen(
+      pedidosEnVivoProvider(null),
+      (_, _) => ref.invalidate(misPedidosProvider),
+    );
     return Scaffold(
       appBar: AppBar(
         leading: volverSiNoHayAtras(context),

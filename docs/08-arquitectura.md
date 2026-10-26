@@ -97,6 +97,7 @@ Páginas livianas en **HTML + JavaScript sin frameworks** (cargan rápido en cua
 | `delete-account` | Borrar mi cuenta (valida la sesión y borra solo esa cuenta) | 0.2.6 ✅ |
 | `sos-zone-alert` | ✅ Al publicar un SOS, la app la llama y se avisa por push a quienes están cerca (`difundir_sos()`: hasta el radio de cada persona, máx. 3 avisos por día, una sola vez por SOS). Valida la sesión y que el SOS sea de quien llama. Envía por FCM HTTP v1 (`_shared/fcm.ts`, secreto `FIREBASE_SERVICE_ACCOUNT`) y borra los tokens vencidos. Sin el secreto responde 503 sin marcar nada (la app reintenta al abrir) | 0.6.3 |
 | `qr-scan-alert` | La llama la página pública del QR después de `registrar_escaneo()`: push al dueño "📍 Escanearon el QR de…" (abre `/mascotas/<id>/qr`). Sin sesión; solo acepta el id de un escaneo de menos de 5 min, una push por escaneo y como mucho una por QR cada 10 min (`aviso_escaneo()`). Responde siempre igual | 0.6.4 ✅ |
+| `order-status-alert` | Pedidos (3.2, D100): la app la llama después de pedir o de cambiar el estado; push a la otra parte según `avisar_pedido()` (una por pedido y estado). Valida la sesión. Registra `order_push` | 3.2 |
 | `owner-alert` | Contacto inverso: aviso al dueño desde el QR o un SOS, con push "💬 …te dejó un mensaje" (abre `/avisos`; si la push no sale, el aviso queda igual en la bandeja). Con sesión (desde la app) no pide anti-bots; sin sesión, Turnstile (secreto `TURNSTILE_SECRET`; en dev, la clave de prueba de Cloudflare), límites 5/h por dispositivo y 10/h por destino, remitentes bloqueados | 0.4.4 ✅ |
 
 ### Comercios cargados a mano (Fase 0)
@@ -114,7 +115,8 @@ Se despliegan con `supabase functions deploy <nombre> --use-api` y se prueban en
 | Avisos de SOS por zona | Edge Function + PostGIS + FCM | "Se perdió un perro a 1,2 km tuyo" |
 | Escaneo de QR | Edge Function + FCM | "Escanearon el QR de Toby cerca de…" |
 | Novedades de búsquedas que sigo | Edge Function `sos-follow-alert` + FCM (D74) | "¡Luna volvió a casa!" |
-| Chat, turnos, pedidos | Realtime + FCM | |
+| Chat, turnos | Realtime + FCM | |
+| Pedidos (D100) | Edge Function `order-status-alert` + FCM; estado en vivo con Broadcast desde la base (canales privados) | "✅ ¡Tu pedido #7 está listo!" / "🛍️ Pedido nuevo #12" |
 | Recordatorios de medicación, comida y vacunas | **Locales** (sin servidor). En la web, solo con la app abierta (D67) | "Antibiótico para Toby" |
 | Recordatorios del hogar compartido | Locales + sincronización por Realtime / FCM | "Ana ya le dio la pastilla" |
 
@@ -174,6 +176,7 @@ Tabla `events` (append-only), escrita por el cliente con `ref.read(metricasProvi
 | `news_reaction` | alguien reacciona a una noticia o novedad (D87; lo registra la base, con el tipo y si es noticia o comunidad) |
 | `community_share` / `community_unshare` | el autor de un SOS resuelto comparte o quita el reencuentro en Comunidad (D86; compartir lo registra la base) |
 | `catalog_open` / `catalog_ask` / `product_save` / `order_create` / `order_status` | catálogo y pedidos: abrir, consultar, cargar un producto, pedir (con las unidades) y cada cambio de estado; sin datos de quien pide (D85) |
+| `order_push` | target_id del pedido, destino (`cliente`/`negocio`), estado y dispositivos avisados (lo registra `order-status-alert`; D100) |
 | `service_ask` / `service_save` | servicios del comercio: consultar por uno desde la ficha y cargarlo o editarlo (D90) |
 | `business_page_share` / `business_page_open` | página pública del comercio: el comercio copia su enlace (app) y alguien la abre (web pública, sin cuenta) (D90) |
 | `adoption_publish` / `adoption_interest` / `adoption_stage` / `adoption_commit` / `adoption_followup` | cantidad de animales, etapa o día del seguimiento; sin datos de nadie (D79) |

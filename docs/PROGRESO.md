@@ -252,7 +252,7 @@ Regla de trabajo: **por cada etapa de desarrollo, avanzar al menos un paso de va
 
 ## FASE 3 · Servicios — fin de 2027 (etapas)
 - [ ] 3.1 Agenda de turnos
-- [ ] 3.2 Pedidos — 20/10/2026 (D85) **hecho en parte**, detrás de `catalogo`: carrito con cantidades y total, nota, "Hacer pedido" (precios y total en la base), "Mis pedidos" en Ajustes (cancelar mientras es nuevo), modo comercio → Pedidos (de a un paso: preparando, listo, entregado, o cancelar; solo el primer nombre de quien pide). **Falta:** aviso push en cada cambio de estado y estado en vivo (Realtime)
+- [ ] 3.2 Pedidos — 20/10/2026 (D85) **hecho en parte**, detrás de `catalogo`: carrito con cantidades y total, nota, "Hacer pedido" (precios y total en la base), "Mis pedidos" en Ajustes (cancelar mientras es nuevo), modo comercio → Pedidos (de a un paso: preparando, listo, entregado, o cancelar; solo el primer nombre de quien pide). 26/10/2026 (D100) **hecho en código**: migración `pedidos_avisos` (aplicada en dev: `cancelled_by`, `order_notifications`, `avisar_pedido()` solo `service_role`, Broadcast desde la base a canales privados con `puedo_escuchar_pedidos()`), Edge Function `order-status-alert` (push a la otra parte, una por pedido y estado; abre `/pedidos` o `/negocio?seccion=pedidos`), «Mis pedidos» y Pedidos del comercio en vivo. Pruebas OK (333 app, 167 núcleo, Deno). **Falta:** desplegar `order-status-alert`, correr `rls_test.py` (casos nuevos ya escritos; el token de Supabase venció) y probarlo con dos cuentas
 - [ ] 3.3 Contratación de paseadores, hoteles y cuidadores
 - [ ] 3.4 Comunidad por raza y especie (grupos, publicaciones, saludo previo al chat)
 - [ ] 3.4b Adopción: pack adopción de empresas, apadrinamiento y hogares de tránsito

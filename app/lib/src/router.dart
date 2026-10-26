@@ -351,7 +351,8 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: Rutas.perfil, builder: (_, _) => const PerfilScreen()),
       GoRoute(
         path: Rutas.negocio,
-        builder: (_, _) => const NegocioScreen(),
+        builder: (_, state) =>
+            NegocioScreen(seccion: state.uri.queryParameters['seccion']),
         routes: [
           GoRoute(
             path: 'socios/:id',

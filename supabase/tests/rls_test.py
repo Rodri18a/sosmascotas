@@ -1602,6 +1602,33 @@ def main():
             caso('B cancela un pedido nuevo', rest('POST', 'rpc/cambiar_estado_pedido', {'p_id': otro, 'p_estado': 'cancelled'}, b)[0] in (200, 204))
             caso('quien no es el comercio ni quien pidió no lo toca',
                  rest('POST', 'rpc/cambiar_estado_pedido', {'p_id': pedido, 'p_estado': 'cancelled'}, x)[0] >= 400)
+            print('avisos y estado en vivo de los pedidos (3.2, D100)')
+
+            def avisar(id_, actor):
+                return filas(pedir('POST', f'{URL}/rest/v1/rpc/avisar_pedido', {'p_pedido': id_, 'p_actor': actor}, ADMIN))
+            caso('nadie con sesión pide a quién avisar',
+                 rest('POST', 'rpc/avisar_pedido', {'p_pedido': otro, 'p_actor': b_id}, b)[0] in (401, 403, 404))
+            caso('nadie lee los avisos ya mandados', bloqueado(rest('GET', 'order_notifications?select=order_id', quien=a)))
+            av = avisar(otro, b_id)
+            caso('B canceló: se avisa al comercio, una sola vez',
+                 len(av) == 1 and av[0]['destino'] == 'negocio' and av[0]['estado'] == 'cancelled'
+                 and avisar(otro, b_id) == [])
+            caso('el comercio no se atribuye la cancelación de B', avisar(otro, a_id) == [])
+            caso('B no dispara el aviso de "entregado"', avisar(pedido, b_id) == [])
+            av = avisar(pedido, a_id)
+            caso('el comercio entregó: se avisa a B con el nombre del comercio',
+                 len(av) == 1 and av[0]['destino'] == 'cliente' and av[0]['estado'] == 'delivered'
+                 and av[0]['negocio'] == 'Pet Shop Catálogo RLS')
+
+            def escucha(canal, quien):
+                return rest('POST', 'rpc/puedo_escuchar_pedidos', {'p_canal': canal}, quien)[1] is True
+            caso('cada uno escucha sus pedidos en vivo y no los de otro',
+                 escucha(f'pedidos:cliente:{b_id}', b) and not escucha(f'pedidos:cliente:{b_id}', a))
+            caso('solo el dueño escucha los del comercio',
+                 escucha(f'pedidos:negocio:{tienda}', a) and not escucha(f'pedidos:negocio:{tienda}', b)
+                 and not escucha('pedidos:negocio:nada', a))
+            caso('un visitante no escucha nada',
+                 rest('POST', 'rpc/puedo_escuchar_pedidos', {'p_canal': f'pedidos:cliente:{b_id}'})[0] in (401, 403, 404))
             print('pago y entrega del pedido (2.10c)')
             caso('sin configurar, no hay condiciones',
                  rest('POST', 'rpc/condiciones_pedido', {'p_negocio': tienda})[1] is None)

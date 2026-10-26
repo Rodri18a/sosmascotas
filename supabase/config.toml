@@ -436,3 +436,8 @@ verify_jwt = false
 # cuenta y solo avisa si el SOS es de quien llama y ya está resuelto.
 [functions.sos-follow-alert]
 verify_jwt = false
+
+# Etapa 3.2 (D100): la llama la app después de pedir o de cambiar el estado de un
+# pedido. Valida la sesión por su cuenta; la base decide a quién avisar y no repite.
+[functions.order-status-alert]
+verify_jwt = false
