@@ -17,6 +17,7 @@ import '../../tienda/tienda_repositorio.dart';
 import '../../utiles/enlaces.dart';
 import '../../veterinarias/veterinarias_repositorio.dart';
 import '../../widgets/volver.dart';
+import '../adopcion/transito_screen.dart';
 import '../agenda/agenda_negocio.dart';
 import '../chapitas/pedido_chapita.dart';
 import '../resenas/resenas.dart';
@@ -335,6 +336,11 @@ class _Panel extends ConsumerWidget {
                 funcionalidadActivaProvider(Funcionalidades.pedidoChapitas),
               ))
             TarjetaRetiroChapitas(negocio: negocio),
+          // Hogares de tránsito (3.4b, D106): solo refugios verificados.
+          if (negocio.comercio.categoria == Categoria.shelter &&
+              negocio.verificacion == Verificacion.verified &&
+              ref.watch(funcionalidadActivaProvider(Funcionalidades.adopcion)))
+            TarjetaTransitoRefugio(negocioId: negocio.id),
           // Reputación y respuestas (1.7): el comercio responde una vez.
           if (ref.watch(funcionalidadActivaProvider(Funcionalidades.resenas)))
             Card(

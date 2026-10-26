@@ -7456,6 +7456,372 @@ abstract class AppLocalizations {
   /// **'Código de la chapita'**
   String get stockCodigo;
 
+  /// No description provided for @transitoTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Hogar de tránsito'**
+  String get transitoTitulo;
+
+  /// No description provided for @transitoIntro.
+  ///
+  /// In es, this message translates to:
+  /// **'Cuidá por un tiempo a un animal de un refugio hasta que encuentre familia. Vos decidís qué animales recibís, por cuánto tiempo y a qué pedido decís que sí.'**
+  String get transitoIntro;
+
+  /// No description provided for @transitoPrivacidad.
+  ///
+  /// In es, this message translates to:
+  /// **'Solo los refugios y protectoras verificados de tu zona ven tu primer nombre, tu barrio y lo que recibís. Nunca tu dirección ni tu teléfono: si aceptás un pedido, se abre un chat con el refugio.'**
+  String get transitoPrivacidad;
+
+  /// No description provided for @transitoPedidos.
+  ///
+  /// In es, this message translates to:
+  /// **'Pedidos que te llegaron'**
+  String get transitoPedidos;
+
+  /// No description provided for @transitoActivo.
+  ///
+  /// In es, this message translates to:
+  /// **'Puedo recibir animales ahora'**
+  String get transitoActivo;
+
+  /// No description provided for @transitoActivoAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Apagado, los refugios no te ven.'**
+  String get transitoActivoAyuda;
+
+  /// No description provided for @transitoEspecies.
+  ///
+  /// In es, this message translates to:
+  /// **'Qué animales recibís'**
+  String get transitoEspecies;
+
+  /// No description provided for @transitoTamanos.
+  ///
+  /// In es, this message translates to:
+  /// **'De qué tamaño'**
+  String get transitoTamanos;
+
+  /// No description provided for @transitoMaxDias.
+  ///
+  /// In es, this message translates to:
+  /// **'Por cuántos días como máximo (1 a 365)'**
+  String get transitoMaxDias;
+
+  /// No description provided for @transitoPatio.
+  ///
+  /// In es, this message translates to:
+  /// **'Tengo patio'**
+  String get transitoPatio;
+
+  /// No description provided for @transitoOtros.
+  ///
+  /// In es, this message translates to:
+  /// **'Hay otros animales en casa'**
+  String get transitoOtros;
+
+  /// No description provided for @transitoBarrio.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu barrio'**
+  String get transitoBarrio;
+
+  /// No description provided for @transitoBarrioAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Solo el barrio, sin calle ni número.'**
+  String get transitoBarrioAyuda;
+
+  /// No description provided for @transitoNotas.
+  ///
+  /// In es, this message translates to:
+  /// **'Algo más que quieras contar (opcional)'**
+  String get transitoNotas;
+
+  /// No description provided for @transitoAnotarme.
+  ///
+  /// In es, this message translates to:
+  /// **'Anotarme como hogar de tránsito'**
+  String get transitoAnotarme;
+
+  /// No description provided for @transitoGuardado.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Listo! Ya figurás para los refugios de tu zona.'**
+  String get transitoGuardado;
+
+  /// No description provided for @transitoFaltanDatos.
+  ///
+  /// In es, this message translates to:
+  /// **'Completá qué animales recibís, el tamaño, los días y tu barrio.'**
+  String get transitoFaltanDatos;
+
+  /// No description provided for @transitoBorrar.
+  ///
+  /// In es, this message translates to:
+  /// **'Dejar de ser hogar de tránsito'**
+  String get transitoBorrar;
+
+  /// No description provided for @transitoBorrarTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Dejás de ser hogar de tránsito?'**
+  String get transitoBorrarTitulo;
+
+  /// No description provided for @transitoBorrarTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Se borran tus datos y los pedidos que te llegaron. Los chats con los refugios quedan.'**
+  String get transitoBorrarTexto;
+
+  /// No description provided for @transitoPedidoDe.
+  ///
+  /// In es, this message translates to:
+  /// **'{refugio} te pide recibir a {nombre}'**
+  String transitoPedidoDe(String refugio, String nombre);
+
+  /// No description provided for @transitoDias.
+  ///
+  /// In es, this message translates to:
+  /// **'{dias, plural, =1{1 día} other{{dias} días}}'**
+  String transitoDias(int dias);
+
+  /// No description provided for @transitoAceptar.
+  ///
+  /// In es, this message translates to:
+  /// **'Puedo recibirlo'**
+  String get transitoAceptar;
+
+  /// No description provided for @transitoRechazar.
+  ///
+  /// In es, this message translates to:
+  /// **'Ahora no'**
+  String get transitoRechazar;
+
+  /// No description provided for @transitoAceptado.
+  ///
+  /// In es, this message translates to:
+  /// **'Aceptado'**
+  String get transitoAceptado;
+
+  /// No description provided for @transitoAbrirChat.
+  ///
+  /// In es, this message translates to:
+  /// **'Abrir el chat'**
+  String get transitoAbrirChat;
+
+  /// No description provided for @transitoRechazado.
+  ///
+  /// In es, this message translates to:
+  /// **'Dijiste que ahora no.'**
+  String get transitoRechazado;
+
+  /// No description provided for @transitoCancelado.
+  ///
+  /// In es, this message translates to:
+  /// **'Cancelado'**
+  String get transitoCancelado;
+
+  /// No description provided for @transitoTerminado.
+  ///
+  /// In es, this message translates to:
+  /// **'Terminó el tránsito. ¡Gracias!'**
+  String get transitoTerminado;
+
+  /// No description provided for @transitoEnUno.
+  ///
+  /// In es, this message translates to:
+  /// **'En un hogar de tránsito'**
+  String get transitoEnUno;
+
+  /// No description provided for @transitoRefugioTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Hogares de tránsito'**
+  String get transitoRefugioTitulo;
+
+  /// No description provided for @transitoRefugioTarjeta.
+  ///
+  /// In es, this message translates to:
+  /// **'Personas de tu zona que cuidan animales hasta que se adopten.'**
+  String get transitoRefugioTarjeta;
+
+  /// No description provided for @transitoRefugioAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Ves solo el primer nombre y el barrio. Si el hogar acepta, se abre un chat para coordinar.'**
+  String get transitoRefugioAyuda;
+
+  /// No description provided for @transitoTusPedidos.
+  ///
+  /// In es, this message translates to:
+  /// **'Tus pedidos'**
+  String get transitoTusPedidos;
+
+  /// No description provided for @transitoPedidoA.
+  ///
+  /// In es, this message translates to:
+  /// **'{nombre} → {hogar}'**
+  String transitoPedidoA(String nombre, String hogar);
+
+  /// No description provided for @transitoEsperando.
+  ///
+  /// In es, this message translates to:
+  /// **'Esperando respuesta'**
+  String get transitoEsperando;
+
+  /// No description provided for @transitoChatCon.
+  ///
+  /// In es, this message translates to:
+  /// **'Chat con {nombre}'**
+  String transitoChatCon(String nombre);
+
+  /// No description provided for @transitoCancelarPedido.
+  ///
+  /// In es, this message translates to:
+  /// **'Cancelar el de {nombre}'**
+  String transitoCancelarPedido(String nombre);
+
+  /// No description provided for @transitoTerminar.
+  ///
+  /// In es, this message translates to:
+  /// **'Terminó el de {nombre}'**
+  String transitoTerminar(String nombre);
+
+  /// No description provided for @transitoHogares.
+  ///
+  /// In es, this message translates to:
+  /// **'Hogares de tu zona'**
+  String get transitoHogares;
+
+  /// No description provided for @transitoSinHogares.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no hay hogares de tránsito en tu zona.'**
+  String get transitoSinHogares;
+
+  /// No description provided for @transitoHasta.
+  ///
+  /// In es, this message translates to:
+  /// **'hasta {dias} días'**
+  String transitoHasta(int dias);
+
+  /// No description provided for @transitoConPatio.
+  ///
+  /// In es, this message translates to:
+  /// **'con patio'**
+  String get transitoConPatio;
+
+  /// No description provided for @transitoConOtros.
+  ///
+  /// In es, this message translates to:
+  /// **'con otros animales'**
+  String get transitoConOtros;
+
+  /// No description provided for @transitoConAnimal.
+  ///
+  /// In es, this message translates to:
+  /// **'Ahora tiene un animal en tránsito.'**
+  String get transitoConAnimal;
+
+  /// No description provided for @transitoYaPediste.
+  ///
+  /// In es, this message translates to:
+  /// **'Ya le pediste'**
+  String get transitoYaPediste;
+
+  /// No description provided for @transitoPedir.
+  ///
+  /// In es, this message translates to:
+  /// **'Pedir'**
+  String get transitoPedir;
+
+  /// No description provided for @transitoPedirA.
+  ///
+  /// In es, this message translates to:
+  /// **'Pedirle a {nombre}'**
+  String transitoPedirA(String nombre);
+
+  /// No description provided for @transitoNombreAnimal.
+  ///
+  /// In es, this message translates to:
+  /// **'Nombre del animal'**
+  String get transitoNombreAnimal;
+
+  /// No description provided for @transitoEspecie.
+  ///
+  /// In es, this message translates to:
+  /// **'Especie'**
+  String get transitoEspecie;
+
+  /// No description provided for @transitoTamano.
+  ///
+  /// In es, this message translates to:
+  /// **'Tamaño'**
+  String get transitoTamano;
+
+  /// No description provided for @transitoTamanoSinDecir.
+  ///
+  /// In es, this message translates to:
+  /// **'Sin decir'**
+  String get transitoTamanoSinDecir;
+
+  /// No description provided for @transitoCuantosDias.
+  ///
+  /// In es, this message translates to:
+  /// **'Cuántos días (hasta {dias})'**
+  String transitoCuantosDias(int dias);
+
+  /// No description provided for @transitoMensaje.
+  ///
+  /// In es, this message translates to:
+  /// **'Mensaje (opcional)'**
+  String get transitoMensaje;
+
+  /// No description provided for @transitoPedidoEnviado.
+  ///
+  /// In es, this message translates to:
+  /// **'Pedido enviado. Te avisamos acá cuando responda.'**
+  String get transitoPedidoEnviado;
+
+  /// No description provided for @transitoSoloRefugios.
+  ///
+  /// In es, this message translates to:
+  /// **'Solo para refugios y protectoras verificados.'**
+  String get transitoSoloRefugios;
+
+  /// No description provided for @transitoNoDisponible.
+  ///
+  /// In es, this message translates to:
+  /// **'Ese hogar ya no está disponible.'**
+  String get transitoNoDisponible;
+
+  /// No description provided for @transitoNoRecibe.
+  ///
+  /// In es, this message translates to:
+  /// **'Ese hogar no recibe ese animal.'**
+  String get transitoNoRecibe;
+
+  /// No description provided for @transitoMasDias.
+  ///
+  /// In es, this message translates to:
+  /// **'Son más días de los que puede ese hogar.'**
+  String get transitoMasDias;
+
+  /// No description provided for @transitoYaHayUno.
+  ///
+  /// In es, this message translates to:
+  /// **'Ya le pediste algo que todavía no respondió.'**
+  String get transitoYaHayUno;
+
+  /// No description provided for @transitoLimite.
+  ///
+  /// In es, this message translates to:
+  /// **'Llegaste al máximo de pedidos por hoy.'**
+  String get transitoLimite;
+
   /// No description provided for @stockNoEsTuya.
   ///
   /// In es, this message translates to:

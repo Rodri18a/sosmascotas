@@ -4416,6 +4416,223 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stockCodigo => 'Código de la chapita';
 
   @override
+  String get transitoTitulo => 'Hogar de tránsito';
+
+  @override
+  String get transitoIntro =>
+      'Cuidá por un tiempo a un animal de un refugio hasta que encuentre familia. Vos decidís qué animales recibís, por cuánto tiempo y a qué pedido decís que sí.';
+
+  @override
+  String get transitoPrivacidad =>
+      'Solo los refugios y protectoras verificados de tu zona ven tu primer nombre, tu barrio y lo que recibís. Nunca tu dirección ni tu teléfono: si aceptás un pedido, se abre un chat con el refugio.';
+
+  @override
+  String get transitoPedidos => 'Pedidos que te llegaron';
+
+  @override
+  String get transitoActivo => 'Puedo recibir animales ahora';
+
+  @override
+  String get transitoActivoAyuda => 'Apagado, los refugios no te ven.';
+
+  @override
+  String get transitoEspecies => 'Qué animales recibís';
+
+  @override
+  String get transitoTamanos => 'De qué tamaño';
+
+  @override
+  String get transitoMaxDias => 'Por cuántos días como máximo (1 a 365)';
+
+  @override
+  String get transitoPatio => 'Tengo patio';
+
+  @override
+  String get transitoOtros => 'Hay otros animales en casa';
+
+  @override
+  String get transitoBarrio => 'Tu barrio';
+
+  @override
+  String get transitoBarrioAyuda => 'Solo el barrio, sin calle ni número.';
+
+  @override
+  String get transitoNotas => 'Algo más que quieras contar (opcional)';
+
+  @override
+  String get transitoAnotarme => 'Anotarme como hogar de tránsito';
+
+  @override
+  String get transitoGuardado =>
+      '¡Listo! Ya figurás para los refugios de tu zona.';
+
+  @override
+  String get transitoFaltanDatos =>
+      'Completá qué animales recibís, el tamaño, los días y tu barrio.';
+
+  @override
+  String get transitoBorrar => 'Dejar de ser hogar de tránsito';
+
+  @override
+  String get transitoBorrarTitulo => '¿Dejás de ser hogar de tránsito?';
+
+  @override
+  String get transitoBorrarTexto =>
+      'Se borran tus datos y los pedidos que te llegaron. Los chats con los refugios quedan.';
+
+  @override
+  String transitoPedidoDe(String refugio, String nombre) {
+    return '$refugio te pide recibir a $nombre';
+  }
+
+  @override
+  String transitoDias(int dias) {
+    String _temp0 = intl.Intl.pluralLogic(
+      dias,
+      locale: localeName,
+      other: '$dias días',
+      one: '1 día',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get transitoAceptar => 'Puedo recibirlo';
+
+  @override
+  String get transitoRechazar => 'Ahora no';
+
+  @override
+  String get transitoAceptado => 'Aceptado';
+
+  @override
+  String get transitoAbrirChat => 'Abrir el chat';
+
+  @override
+  String get transitoRechazado => 'Dijiste que ahora no.';
+
+  @override
+  String get transitoCancelado => 'Cancelado';
+
+  @override
+  String get transitoTerminado => 'Terminó el tránsito. ¡Gracias!';
+
+  @override
+  String get transitoEnUno => 'En un hogar de tránsito';
+
+  @override
+  String get transitoRefugioTitulo => 'Hogares de tránsito';
+
+  @override
+  String get transitoRefugioTarjeta =>
+      'Personas de tu zona que cuidan animales hasta que se adopten.';
+
+  @override
+  String get transitoRefugioAyuda =>
+      'Ves solo el primer nombre y el barrio. Si el hogar acepta, se abre un chat para coordinar.';
+
+  @override
+  String get transitoTusPedidos => 'Tus pedidos';
+
+  @override
+  String transitoPedidoA(String nombre, String hogar) {
+    return '$nombre → $hogar';
+  }
+
+  @override
+  String get transitoEsperando => 'Esperando respuesta';
+
+  @override
+  String transitoChatCon(String nombre) {
+    return 'Chat con $nombre';
+  }
+
+  @override
+  String transitoCancelarPedido(String nombre) {
+    return 'Cancelar el de $nombre';
+  }
+
+  @override
+  String transitoTerminar(String nombre) {
+    return 'Terminó el de $nombre';
+  }
+
+  @override
+  String get transitoHogares => 'Hogares de tu zona';
+
+  @override
+  String get transitoSinHogares =>
+      'Todavía no hay hogares de tránsito en tu zona.';
+
+  @override
+  String transitoHasta(int dias) {
+    return 'hasta $dias días';
+  }
+
+  @override
+  String get transitoConPatio => 'con patio';
+
+  @override
+  String get transitoConOtros => 'con otros animales';
+
+  @override
+  String get transitoConAnimal => 'Ahora tiene un animal en tránsito.';
+
+  @override
+  String get transitoYaPediste => 'Ya le pediste';
+
+  @override
+  String get transitoPedir => 'Pedir';
+
+  @override
+  String transitoPedirA(String nombre) {
+    return 'Pedirle a $nombre';
+  }
+
+  @override
+  String get transitoNombreAnimal => 'Nombre del animal';
+
+  @override
+  String get transitoEspecie => 'Especie';
+
+  @override
+  String get transitoTamano => 'Tamaño';
+
+  @override
+  String get transitoTamanoSinDecir => 'Sin decir';
+
+  @override
+  String transitoCuantosDias(int dias) {
+    return 'Cuántos días (hasta $dias)';
+  }
+
+  @override
+  String get transitoMensaje => 'Mensaje (opcional)';
+
+  @override
+  String get transitoPedidoEnviado =>
+      'Pedido enviado. Te avisamos acá cuando responda.';
+
+  @override
+  String get transitoSoloRefugios =>
+      'Solo para refugios y protectoras verificados.';
+
+  @override
+  String get transitoNoDisponible => 'Ese hogar ya no está disponible.';
+
+  @override
+  String get transitoNoRecibe => 'Ese hogar no recibe ese animal.';
+
+  @override
+  String get transitoMasDias => 'Son más días de los que puede ese hogar.';
+
+  @override
+  String get transitoYaHayUno => 'Ya le pediste algo que todavía no respondió.';
+
+  @override
+  String get transitoLimite => 'Llegaste al máximo de pedidos por hoy.';
+
+  @override
   String get stockNoEsTuya =>
       'Ese código no está entre las chapitas sin usar de tu stock.';
 

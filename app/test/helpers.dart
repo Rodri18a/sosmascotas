@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:sosmascota/src/adopcion/adopcion_repositorio.dart';
+import 'package:sosmascota/src/adopcion/transito_repositorio.dart';
 import 'package:sosmascota/src/agenda/agenda_repositorio.dart';
 import 'package:sosmascota/src/app.dart';
 import 'package:sosmascota/src/avisos/avisos_repositorio.dart';
@@ -71,6 +72,7 @@ import 'sos_falso.dart';
 import 'tareas_falsas.dart';
 import 'tema_falso.dart';
 import 'tienda_falsa.dart';
+import 'transito_falso.dart';
 import 'veterinarias_falsas.dart';
 
 const urlPrueba = 'https://abc.supabase.co';
@@ -97,6 +99,7 @@ Widget appDePrueba({
   NegociosRepositorio? negocios,
   ResenasRepositorio? resenas,
   AdopcionRepositorio? adopcion,
+  TransitoRepositorio? transito,
   EventosRepositorio? eventosRepo,
   VeterinariasRepositorio? veterinarias,
   NoticiasRepositorio? noticias,
@@ -174,6 +177,7 @@ Widget appDePrueba({
     negociosRepositorioProvider.overrideWithValue(negocios ?? NegociosFalsos()),
     resenasRepositorioProvider.overrideWithValue(resenas ?? ResenasFalsas()),
     adopcionRepositorioProvider.overrideWithValue(adopcion ?? AdopcionFalsa()),
+    transitoRepositorioProvider.overrideWithValue(transito ?? TransitoFalso()),
     eventosRepositorioProvider.overrideWithValue(
       eventosRepo ?? EventosFalsos(),
     ),

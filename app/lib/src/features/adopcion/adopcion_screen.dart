@@ -89,6 +89,12 @@ class AdopcionScreen extends ConsumerWidget {
             ),
             if (conectado)
               IconButton(
+                tooltip: t.transitoTitulo,
+                onPressed: () => context.push(Rutas.hogarTransito),
+                icon: const Icon(Icons.house_outlined),
+              ),
+            if (conectado)
+              IconButton(
                 tooltip: t.adopcionMiPerfil,
                 onPressed: () => context.push('${Rutas.adopcion}/perfil'),
                 icon: const Icon(Icons.badge_outlined),
@@ -194,6 +200,7 @@ class _Disponibles extends ConsumerWidget {
                                   textoEdadAdopcion(t, m),
                                 _textoTamano(t, a.tamano),
                                 if (a.deRefugio) a.refugio,
+                                if (a.enTransito) t.transitoEnUno,
                               ].nonNulls.join(' · '),
                             ),
                           ),

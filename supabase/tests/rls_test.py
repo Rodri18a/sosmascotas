@@ -2192,6 +2192,87 @@ def main():
             caso('X saca la otra del stock y vuelve a quedar libre',
                  rest('POST', 'rpc/admin_quitar_stock', {'p_code': s2}, x)[0] in (200, 204)
                  and rest('POST', 'rpc/admin_quitar_stock', {'p_code': s2}, x)[0] >= 400)
+            print('hogares de tránsito (3.4b)')
+            _, refugio = pedir('POST', f'{URL}/rest/v1/businesses', {
+                'name': 'Refugio RLS tránsito', 'business_type': 'shelter', 'kind': 'local', 'owner_id': b_id,
+                'location': 'SRID=4326;POINT(-55.958 -34.717)', 'verification': 'unverified', 'is_sample': True},
+                {**ADMIN, 'Prefer': 'return=representation'})
+            refugio = refugio[0]['id']
+            caso('A se anota como hogar de tránsito', rest('POST', 'foster_homes', {
+                'species_ids': [1], 'sizes': ['chico', 'mediano'], 'max_days': 30,
+                'neighborhood': 'Centro', 'has_yard': True}, a)[0] in (200, 201))
+            caso('B no ve el hogar de A directo', filas(rest('GET', 'foster_homes?select=user_id', quien=b)) == [])
+            caso('un visitante tampoco', bloqueado(rest('GET', 'foster_homes?select=user_id')))
+            caso('B no puede anotar a A', rest('POST', 'foster_homes', {'user_id': a_id, 'species_ids': [1]}, b)[0] >= 400)
+            caso('nadie lee los pedidos directo', bloqueado(rest('GET', 'foster_requests?select=id', quien=a)))
+            caso('un refugio sin verificar no ve los hogares', 'solo_refugios_verificados' in json.dumps(
+                rest('POST', 'rpc/hogares_de_transito', {'p_business': refugio}, b)[1]))
+            pedir('PATCH', f'{URL}/rest/v1/businesses?id=eq.{refugio}', {'verification': 'verified'}, ADMIN)
+            caso('un particular no ve los hogares', rest('POST', 'rpc/hogares_de_transito', {'p_business': refugio}, a)[0] in (401, 403))
+            caso('una veterinaria verificada tampoco (solo refugios)',
+                 rest('POST', 'rpc/hogares_de_transito', {'p_business': vete}, b)[0] in (401, 403))
+            hogares = rest('POST', 'rpc/hogares_de_transito', {'p_business': refugio}, b)[1]
+            mio_h = next((h for h in hogares if h['id'] == a_id), {})
+            caso('el refugio verificado ve el hogar con el barrio y lo que recibe',
+                 mio_h.get('barrio') == 'Centro' and mio_h.get('max_days') == 30 and mio_h.get('has_yard') is True)
+            caso('sin correo, teléfono ni ubicación',
+                 not {'email', 'phone', 'location', 'lat', 'lng', 'zone_id'} & set(mio_h))
+            caso('filtra por especie', all(h['id'] != a_id for h in
+                 rest('POST', 'rpc/hogares_de_transito', {'p_business': refugio, 'p_especie': 2}, b)[1]))
+            caso('no le pide más días que el máximo', 'mas_dias_que_el_maximo' in json.dumps(rest(
+                'POST', 'rpc/pedir_transito', {'p_business': refugio, 'p_hogar': a_id, 'p_dias': 60,
+                                               'p_nombre': 'Luna', 'p_especie': 1}, b)[1]))
+            caso('ni un tamaño que no recibe', 'no_recibe_ese_animal' in json.dumps(rest(
+                'POST', 'rpc/pedir_transito', {'p_business': refugio, 'p_hogar': a_id, 'p_dias': 15,
+                                               'p_nombre': 'Luna', 'p_especie': 1, 'p_tamano': 'grande'}, b)[1]))
+            caso('ni un animal que no es de su refugio', rest(
+                'POST', 'rpc/pedir_transito', {'p_business': refugio, 'p_hogar': a_id, 'p_dias': 15,
+                                               'p_animal': str(uuid.uuid4())}, b)[0] in (401, 403))
+            caso('A no puede pedir en nombre del refugio', rest(
+                'POST', 'rpc/pedir_transito', {'p_business': refugio, 'p_hogar': a_id, 'p_dias': 15,
+                                               'p_nombre': 'Luna', 'p_especie': 1}, a)[0] in (401, 403))
+            s_tr, transito = rest('POST', 'rpc/pedir_transito', {
+                'p_business': refugio, 'p_hogar': a_id, 'p_dias': 15, 'p_nombre': 'Luna',
+                'p_especie': 1, 'p_tamano': 'chico', 'p_mensaje': '¿La podés tener dos semanas?'}, b)
+            caso('el refugio le pide a A que reciba a Luna', s_tr == 200 and isinstance(transito, str))
+            caso('un solo pedido sin responder por hogar', rest('POST', 'rpc/pedir_transito', {
+                'p_business': refugio, 'p_hogar': a_id, 'p_dias': 15, 'p_nombre': 'Otro', 'p_especie': 1}, b)[0] == 409)
+            llegados = rest('POST', 'rpc/mis_pedidos_transito', {}, a)[1]
+            caso('A ve el pedido con el nombre del refugio',
+                 len(llegados) == 1 and llegados[0]['shelter_name'] == 'Refugio RLS tránsito'
+                 and llegados[0]['conversation_id'] is None)
+            caso('B no lo ve como hogar', rest('POST', 'rpc/mis_pedidos_transito', {}, b)[1] == [])
+            caso('B no puede responder por A',
+                 rest('POST', 'rpc/responder_transito', {'p_id': transito, 'p_aceptar': True}, b)[0] in (401, 403))
+            s_acc, conv_tr = rest('POST', 'rpc/responder_transito', {'p_id': transito, 'p_aceptar': True}, a)
+            caso('A acepta y se abre el chat con el refugio', s_acc == 200 and isinstance(conv_tr, str))
+            caso('B ve el chat (sin el teléfono de A)',
+                 any(c['id'] == conv_tr for c in filas(rest('POST', 'rpc/mis_conversaciones', {}, b))))
+            del_refugio = rest('POST', 'rpc/pedidos_transito_del_refugio', {'p_business': refugio}, b)[1]
+            caso('el refugio ve el pedido aceptado con el chat',
+                 del_refugio[0]['status'] == 'accepted' and del_refugio[0]['conversation_id'] == conv_tr)
+            caso('A no ve los pedidos del refugio',
+                 rest('POST', 'rpc/pedidos_transito_del_refugio', {'p_business': refugio}, a)[0] in (401, 403))
+            caso('ya no se puede volver a responder', 'estado_invalido' in json.dumps(
+                rest('POST', 'rpc/responder_transito', {'p_id': transito, 'p_aceptar': False}, a)[1]))
+            caso('el hogar figura con un animal',
+                 next(h for h in rest('POST', 'rpc/hogares_de_transito', {'p_business': refugio}, b)[1]
+                      if h['id'] == a_id)['con_animal'] is True)
+            caso('A no puede cerrar el tránsito', rest('POST', 'rpc/cerrar_transito', {'p_id': transito}, a)[0] in (401, 403))
+            caso('el refugio lo da por terminado',
+                 rest('POST', 'rpc/cerrar_transito', {'p_id': transito}, b)[1] == 'finished')
+            rest('PATCH', f'foster_homes?user_id=eq.{a_id}', {'active': False}, a)
+            caso('pausado, el hogar ya no aparece',
+                 all(h['id'] != a_id for h in rest('POST', 'rpc/hogares_de_transito', {'p_business': refugio}, b)[1]))
+            caso('ni se le puede pedir', 'hogar_no_disponible' in json.dumps(rest('POST', 'rpc/pedir_transito', {
+                'p_business': refugio, 'p_hogar': a_id, 'p_dias': 5, 'p_nombre': 'Otro', 'p_especie': 1}, b)[1]))
+            caso('las adopciones dicen si el animal está en tránsito, sin decir dónde',
+                 all('in_foster' in f and not {'home_id', 'barrio'} & set(f)
+                     for f in filas(rest('POST', 'rpc/adopciones_disponibles', {}))))
+            pedir('DELETE', f'{URL}/rest/v1/conversations?id=eq.{conv_tr}', headers=ADMIN)
+            pedir('DELETE', f'{URL}/rest/v1/foster_homes?user_id=eq.{a_id}', headers=ADMIN)
+            pedir('DELETE', f'{URL}/rest/v1/businesses?id=eq.{refugio}', headers=ADMIN)
+
             pedir('DELETE', f'{URL}/rest/v1/sos_reports?pet_id=eq.{ped_pet}', headers=ADMIN)
             rest('DELETE', f'pets?id=eq.{ped_pet}', quien=a)
             pedir('DELETE', f'{URL}/rest/v1/businesses?id=eq.{vete}', headers=ADMIN)

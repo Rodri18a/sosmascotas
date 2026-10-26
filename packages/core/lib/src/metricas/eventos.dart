@@ -73,6 +73,10 @@ abstract final class Eventos {
   static const tagOrderStatus = 'tag_order_status';
   static const tagPickupToggle = 'tag_pickup_toggle';
   static const tagStockDeliver = 'tag_stock_deliver';
+  static const fosterHomeSave = 'foster_home_save';
+  static const fosterRequestCreate = 'foster_request_create';
+  static const fosterRequestAnswer = 'foster_request_answer';
+  static const fosterRequestClose = 'foster_request_close';
   static const petSelect = 'pet_select';
   static const catalogOpen = 'catalog_open';
   static const catalogAsk = 'catalog_ask';

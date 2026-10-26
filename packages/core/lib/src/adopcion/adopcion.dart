@@ -105,6 +105,7 @@ class AnimalAdopcion {
     this.refugio,
     this.camada = false,
     this.mio = false,
+    this.enTransito = false,
   });
 
   factory AnimalAdopcion.fromJson(Map<String, Object?> json) => AnimalAdopcion(
@@ -136,6 +137,7 @@ class AnimalAdopcion {
     refugio: json['shelter_name'] as String?,
     camada: json['is_litter'] == true,
     mio: json['mine'] == true,
+    enTransito: json['in_foster'] == true,
   );
 
   final String id;
@@ -169,6 +171,9 @@ class AnimalAdopcion {
   final String? refugio;
   final bool camada;
   final bool mio;
+
+  /// Está en un hogar de tránsito (3.4b): no se dice dónde.
+  final bool enTransito;
 }
 
 /// Lo que la compatibilidad señala (orienta, no bloquea: 03 §11).
