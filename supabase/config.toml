@@ -441,3 +441,8 @@ verify_jwt = false
 # pedido. Valida la sesión por su cuenta; la base decide a quién avisar y no repite.
 [functions.order-status-alert]
 verify_jwt = false
+
+# Etapa 2.3 (D101): la llama pg_cron el día 1 (pedir_reporte_mensual()) con la
+# clave compartida MONTHLY_REPORT_SECRET; no hay sesión de nadie.
+[functions.monthly-report]
+verify_jwt = false

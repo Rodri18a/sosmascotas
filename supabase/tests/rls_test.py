@@ -1677,6 +1677,44 @@ def main():
             caso('A borra un producto y el pedido conserva su renglón',
                  rest('POST', 'rpc/borrar_producto', {'p_id': p1}, a)[0] in (200, 204)
                  and filas(rest('POST', 'rpc/mis_pedidos', {}, b))[-1]['items'][0]['name'] == 'Alimento perro adulto 3 kg')
+            print('estadisticas del comercio y reporte mensual (2.3, D101)')
+            for nombre, props in (('place_open', {}), ('place_open', {}), ('place_click', {'tipo': 'whatsapp'})):
+                rest('POST', 'events', {'name': nombre, 'anon_id': str(uuid.uuid4()), 'business_id': tienda,
+                                        'props': props}, prefer='return=minimal')
+            s_es, est = rest('POST', 'rpc/estadisticas_negocio', {'p_id': tienda}, a)
+            caso('el dueño ve sus estadísticas de hoy (Plus: completas, 6 meses y 12 semanas)',
+                 s_es == 200 and est['completo'] is True and len(est['meses']) == 6 and len(est['semanas']) == 12
+                 and est['meses'][-1]['metricas'].get('place_open', 0) >= 2
+                 and est['meses'][-1]['metricas'].get('place_open_people', 0) >= 2
+                 and est['meses'][-1]['metricas'].get('place_click:whatsapp', 0) >= 1
+                 and est['meses'][-1]['metricas'].get('contactos', 0) >= 1)
+            caso('solo cantidades: sin ids de personas', 'anon_id' not in str(est) and 'user_id' not in str(est))
+            caso('B no ve las estadísticas de otro comercio',
+                 rest('POST', 'rpc/estadisticas_negocio', {'p_id': tienda}, b)[0] >= 400)
+            caso('un visitante tampoco',
+                 rest('POST', 'rpc/estadisticas_negocio', {'p_id': tienda})[0] >= 400)
+            caso('la administración sí (Resultados del portal)',
+                 rest('POST', 'rpc/estadisticas_negocio', {'p_id': tienda}, x)[0] == 200)
+            rest('POST', 'rpc/admin_plan_comercio', {'p_business': tienda, 'p_plan': 'basic'}, x)
+            basico = rest('POST', 'rpc/estadisticas_negocio', {'p_id': tienda}, a)[1]
+            caso('con el plan Básico, solo el resumen (aperturas y contactos, 2 meses)',
+                 basico['completo'] is False and len(basico['meses']) == 2 and basico['semanas'] == []
+                 and set(basico['meses'][-1]['metricas']) <= {'place_open', 'contactos'})
+            caso('nadie lee el resumen diario ni los reportes directamente',
+                 bloqueado(rest('GET', 'daily_stats?select=metric', quien=a))
+                 and bloqueado(rest('GET', 'monthly_reports?select=month', quien=a))
+                 and bloqueado(rest('POST', 'daily_stats', {'day': '2026-10-01', 'business_id': tienda,
+                                                            'metric': 'place_open', 'value': 999}, a)))
+            caso('nadie con sesión resume, cuenta ni arma reportes',
+                 rest('POST', 'rpc/resumir_estadisticas', {'p_dia': '2026-10-01'}, a)[0] >= 400
+                 and rest('POST', 'rpc/contar_eventos_comercio', {'p_desde': '2026-10-01T00:00:00Z',
+                                                                 'p_hasta': '2026-10-02T00:00:00Z'}, a)[0] >= 400
+                 and rest('POST', 'rpc/reporte_mensual_pendiente', {'p_mes': '2026-09-01'}, x)[0] >= 400
+                 and rest('POST', 'rpc/estadisticas_para', {'p_usuario': a_id}, a)[0] >= 400
+                 and rest('POST', 'rpc/pedir_reporte_mensual', {}, x)[0] >= 400)
+            caso('el reporte del mes en curso no se arma',
+                 pedir('POST', f'{URL}/rest/v1/rpc/reporte_mensual_pendiente',
+                       {'p_mes': est['hoy'][:8] + '01'}, ADMIN)[0] >= 400)
             pedir('DELETE', f'{URL}/rest/v1/businesses?id=eq.{tienda}', headers=ADMIN)
 
             print('rubro Agropecuaria (2.8e)')

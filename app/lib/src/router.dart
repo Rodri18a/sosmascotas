@@ -25,6 +25,7 @@ import 'features/mascotas/ficha_mascota_screen.dart';
 import 'features/mascotas/mascota_form_screen.dart';
 import 'features/mascotas/mascotas_screen.dart';
 import 'features/mascotas/qr_mascota_screen.dart';
+import 'features/negocio/estadisticas_screen.dart';
 import 'features/negocio/negocio_screen.dart';
 import 'features/no_disponible/no_disponible_screen.dart';
 import 'features/noticias/noticias_screen.dart';
@@ -103,6 +104,7 @@ abstract final class Rutas {
     '$negocio/socios/': Funcionalidades.veterinarias,
     '$negocio/servicios/': Funcionalidades.catalogo,
     '$negocio/chapitas/': Funcionalidades.pedidoChapitas,
+    '$negocio/estadisticas/': Funcionalidades.estadisticas,
     negocio: Funcionalidades.comercios,
     adopcion: Funcionalidades.adopcion,
     denuncia: Funcionalidades.eventos,
@@ -151,6 +153,7 @@ abstract final class Rutas {
   static String chat(String id) => '$chats/$id';
   static String sociosNegocio(String id) => '$negocio/socios/$id';
   static String serviciosNegocio(String id) => '$negocio/servicios/$id';
+  static String estadisticasNegocio(String id) => '$negocio/estadisticas/$id';
   static String altaNegocio({Categoria? rubro, Punto? punto}) => Uri(
     path: '$negocio/alta',
     queryParameters: {
@@ -358,6 +361,11 @@ final routerProvider = Provider<GoRouter>((ref) {
             path: 'socios/:id',
             builder: (_, state) =>
                 SociosScreen(negocioId: state.pathParameters['id']!),
+          ),
+          GoRoute(
+            path: 'estadisticas/:id',
+            builder: (_, state) =>
+                EstadisticasScreen(negocioId: state.pathParameters['id']!),
           ),
           GoRoute(
             path: 'chapitas/:id',

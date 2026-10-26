@@ -4377,4 +4377,98 @@ class AppLocalizationsEs extends AppLocalizations {
   String retiroEntregarTexto(int numero, String nombre) {
     return 'Pedido N.º $numero: la chapita queda vinculada a $nombre.';
   }
+
+  @override
+  String get estadisticasTitulo => 'Estadísticas';
+
+  @override
+  String get estadisticasAbrir => 'Ver estadísticas';
+
+  @override
+  String get estadisticasAbrirAyuda =>
+      'Cuántas personas te ven y te contactan, mes a mes';
+
+  @override
+  String get estadisticasEsteMes => 'Este mes';
+
+  @override
+  String get estadisticasSinDatos =>
+      'Todavía no hay movimiento para mostrar. Cuando la gente abra tu ficha, lo vas a ver acá.';
+
+  @override
+  String get estadisticasAperturas => 'Vieron tu ficha';
+
+  @override
+  String get estadisticasPersonas => 'Personas distintas';
+
+  @override
+  String get estadisticasContactos => 'Te contactaron';
+
+  @override
+  String get estadisticasContactosAyuda =>
+      'WhatsApp, llamadas, cómo llegar, web, Instagram, chats, consultas y pedidos';
+
+  @override
+  String get estadisticasFavoritos => 'Te guardaron en favoritos';
+
+  @override
+  String get estadisticasVisitas => 'Dijeron «Fui»';
+
+  @override
+  String get estadisticasChats => 'Chats nuevos';
+
+  @override
+  String get estadisticasCatalogo => 'Abrieron tu catálogo';
+
+  @override
+  String get estadisticasConsultas => 'Consultas de productos y servicios';
+
+  @override
+  String get estadisticasPedidos => 'Pedidos';
+
+  @override
+  String get estadisticasPagina => 'Visitas a tu página';
+
+  @override
+  String get estadisticasResenas => 'Reseñas nuevas';
+
+  @override
+  String estadisticasMasQue(int p) {
+    return '$p % más que el mes anterior';
+  }
+
+  @override
+  String estadisticasMenosQue(int p) {
+    return '$p % menos que el mes anterior';
+  }
+
+  @override
+  String get estadisticasIgual => 'Igual que el mes anterior';
+
+  @override
+  String estadisticasNuevo(int n) {
+    return 'El mes anterior: $n';
+  }
+
+  @override
+  String get estadisticasPorSemana => 'Últimas 12 semanas';
+
+  @override
+  String get estadisticasPorMes => 'Mes a mes';
+
+  @override
+  String get estadisticasClics => 'Qué tocaron en tu ficha';
+
+  @override
+  String get estadisticasSoloResumen =>
+      'Con el plan Básico ves este resumen. Con Destacado o Plus ves todas las métricas, 6 meses y la evolución semana a semana.';
+
+  @override
+  String get estadisticasPrivacidad =>
+      'Son cantidades: nunca se muestra quién fue.';
+
+  @override
+  String estadisticasSemanaDe(String fecha) {
+    return 'Semana del $fecha';
+  }
 }

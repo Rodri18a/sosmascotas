@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sosmascota_core/sosmascota_core.dart' show fechaIso;
+import 'package:sosmascota_core/sosmascota_core.dart'
+    show EstadisticasNegocio, fechaIso;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'modelos.dart';
@@ -62,6 +63,9 @@ abstract interface class AdminRepositorio {
 
   /// Plan del comercio (`basic`, `featured`, `plus`) hasta que haya cobros (2.2).
   Future<void> planComercio(String negocioId, String plan);
+
+  /// Resultados del comercio, los mismos que ve su dueño (2.3, D101).
+  Future<EstadisticasNegocio> resultadosComercio(String negocioId);
 
   /// Publicaciones de adopción en revisión (2 camadas en 12 meses, 06).
   Future<List<Map<String, Object?>>> adopcionesEnRevision();
@@ -268,6 +272,15 @@ class SupabaseAdminRepositorio implements AdminRepositorio {
       _cliente.rpc<void>(
         'admin_plan_comercio',
         params: {'p_business': negocioId, 'p_plan': plan},
+      );
+
+  @override
+  Future<EstadisticasNegocio> resultadosComercio(String negocioId) async =>
+      EstadisticasNegocio.fromJson(
+        (await _cliente.rpc<Map<String, dynamic>>(
+          'estadisticas_negocio',
+          params: {'p_id': negocioId},
+        )).cast<String, Object?>(),
       );
 
   @override

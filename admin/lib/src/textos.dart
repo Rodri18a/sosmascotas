@@ -127,6 +127,13 @@ abstract final class T {
   static const rut = 'RUT';
   static const socioFundador = 'Socio Fundador hasta…';
   static const plan = 'Plan…';
+  static const resultados = 'Resultados';
+  static const resultadosSinDatos = 'Sin movimiento en estos meses.';
+  static const resultadosAperturas = 'Aperturas de la ficha';
+  static const resultadosPersonas = 'Personas distintas';
+  static const resultadosContactos = 'Contactos';
+  static const resultadosAyuda =
+      'Mes a mes (el último es el mes en curso). Son cantidades: nunca quién fue.';
   static const planes = {
     'basic': 'Básico',
     'featured': 'Destacado',

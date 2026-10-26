@@ -172,6 +172,34 @@ class NegociosFalsos implements NegociosRepositorio {
   @override
   Future<PanelNegocio> panel(String id, {int dias = 30}) async => panelFijo;
 
+  EstadisticasNegocio estadisticasFijas = EstadisticasNegocio.fromJson({
+    'completo': true,
+    'meses': [
+      {
+        'mes': '2026-09-01',
+        'metricas': {'place_open': 200, 'contactos': 40},
+      },
+      {
+        'mes': '2026-10-01',
+        'metricas': {
+          'place_open': 340,
+          'place_open_people': 280,
+          'contactos': 30,
+          'place_click:whatsapp': 20,
+          'chat_start': 4,
+        },
+      },
+    ],
+    'semanas': [
+      {'semana': '2026-10-12', 'aperturas': 80, 'contactos': 9},
+      {'semana': '2026-10-19', 'aperturas': 120, 'contactos': 12},
+    ],
+  });
+
+  @override
+  Future<EstadisticasNegocio> estadisticas(String id) async =>
+      estadisticasFijas;
+
   @override
   Future<void> subirFoto(String id, Uint8List jpeg) async =>
       fotosSubidas.add(id);

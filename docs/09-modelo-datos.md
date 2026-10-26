@@ -132,7 +132,8 @@ Trigger: con 3 `flags` de usuarios distintos, el contenido pasa a `hidden`.
 | Tabla | Campos clave | Fase |
 |---|---|---|
 | `events` | id, name, user_id (nullable), anon_id, zone_id, business_id, target_id, platform, props (json, ≤ 2 KB), created_at — ✅ creada en 0.1.7. La app solo inserta; nadie lee desde la app | **0** |
-| `daily_stats` | date, zone_id, business_id, metric, value | 2 |
+| `daily_stats` | day, business_id, zone_id, metric, value — ✅ creada en 2.3 (D101): resumen diario (hora de Uruguay) de los eventos de cada comercio, lo escribe `resumir_estadisticas()` con pg_cron; sin acceso desde la app, se lee con `estadisticas_negocio()` | 2 |
+| `monthly_reports` | business_id, month, totals, devices, created_at — ✅ creada en 2.3 (D101): un reporte mensual por comercio y mes (no se repite); solo `service_role` | 2 |
 | `prospects` | id, name, business_type, zone_id, location, contact, stage (`prospect`, `contacted`, `demo`, `founder`, `paying`, `renewed`, `lost`), business_id, next_contact_at, owner_admin_id | 1 |
 | `prospect_notes` | id, prospect_id, admin_id, note, created_at | 1 |
 | `admin_audit_log` | id, admin_id, action, target, data, created_at | 3 |

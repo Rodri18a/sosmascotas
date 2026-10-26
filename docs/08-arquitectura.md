@@ -191,7 +191,8 @@ Tabla `events` (append-only), escrita por el cliente con `ref.read(metricasProvi
 
 - Se guarda `user_id` solo para métricas internas (retención). A las empresas se les muestran **agregados**.
 - Riesgo aceptado en la Fase 0: con la clave pública se pueden cargar eventos falsos (solo ensucia métricas). Si pasa: tope por instalación o registro vía Edge Function.
-- Para no inflar costos: agrupar eventos de impresión en lotes y, más adelante, resumir por día en una tabla `daily_stats`.
+- Para no inflar costos: agrupar eventos de impresión en lotes y resumir por día en `daily_stats` (✅ 2.3, D101: pg_cron a las 03:15 de Uruguay; el día de hoy se cuenta en el momento).
+- **Tareas programadas (D101):** pg_cron en la base (`cron.job`): `resumir-estadisticas` todas las noches y `reporte-mensual` el día 1 a las 10:00, que llama a la Edge Function `monthly-report` con pg_net. La dirección del proyecto y la clave compartida van en **Vault** (`project_url`, `monthly_report_secret`) y la misma clave en el secreto `MONTHLY_REPORT_SECRET` de la función; nunca en el repositorio.
 
 ## Entornos
 

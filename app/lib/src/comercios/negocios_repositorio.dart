@@ -38,6 +38,9 @@ abstract interface class NegociosRepositorio {
 
   Future<PanelNegocio> panel(String id, {int dias = 30});
 
+  /// Estadísticas por mes y semana (2.3, D101).
+  Future<EstadisticasNegocio> estadisticas(String id);
+
   /// Foto ya preparada (sin EXIF). Lanza si se pasó del tope del plan.
   Future<void> subirFoto(String id, Uint8List jpeg);
 
@@ -101,6 +104,15 @@ class SupabaseNegociosRepositorio implements NegociosRepositorio {
   );
 
   @override
+  Future<EstadisticasNegocio> estadisticas(String id) async =>
+      EstadisticasNegocio.fromJson(
+        (await _cliente.rpc<Map<String, dynamic>>(
+          'estadisticas_negocio',
+          params: {'p_id': id},
+        )).cast<String, Object?>(),
+      );
+
+  @override
   Future<void> subirFoto(String id, Uint8List jpeg) async {
     final ruta = '$id/${generarAnonId()}.jpg';
     await _cliente.storage
@@ -157,6 +169,10 @@ class NegociosSinConfigurar implements NegociosRepositorio {
       const PanelNegocio({});
 
   @override
+  Future<EstadisticasNegocio> estadisticas(String id) async =>
+      const EstadisticasNegocio(completo: false);
+
+  @override
   Future<void> subirFoto(String id, Uint8List jpeg) async {}
 
   @override
@@ -178,3 +194,8 @@ final misNegociosProvider = FutureProvider<List<MiNegocio>>((ref) async {
 final panelNegocioProvider = FutureProvider.family<PanelNegocio, String>(
   (ref, id) => ref.watch(negociosRepositorioProvider).panel(id),
 );
+
+final estadisticasNegocioProvider =
+    FutureProvider.family<EstadisticasNegocio, String>(
+      (ref, id) => ref.watch(negociosRepositorioProvider).estadisticas(id),
+    );

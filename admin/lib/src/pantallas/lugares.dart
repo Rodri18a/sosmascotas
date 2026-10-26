@@ -3,6 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:sosmascota_core/sosmascota_core.dart'
+    show EstadisticasNegocio, MetricasComercio, fechaIso;
+
 import '../modelos.dart';
 import '../repositorio.dart';
 import '../textos.dart';
@@ -295,6 +298,15 @@ class _FormularioLugarState extends ConsumerState<FormularioLugar> {
     actions: [
       if (widget.lugar case final l?)
         TextButton(
+          onPressed: () => showDialog<void>(
+            context: context,
+            builder: (_) =>
+                _Resultados(negocioId: l.id, nombre: l.comercio.nombre),
+          ),
+          child: const Text(T.resultados),
+        ),
+      if (widget.lugar case final l?)
+        TextButton(
           onPressed: () async {
             final hoy = DateTime.now();
             final hasta = await showDatePicker(
@@ -381,4 +393,81 @@ class _SinReclamar extends ConsumerWidget {
       ],
     );
   }
+}
+
+/// Resultados de un comercio (2.3, D101): los mismos números que ve su dueño
+/// en Estadísticas, para preparar una propuesta o una visita.
+class _Resultados extends ConsumerWidget {
+  const _Resultados({required this.negocioId, required this.nombre});
+
+  final String negocioId;
+  final String nombre;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) => AlertDialog(
+    title: Text('${T.resultados} · $nombre'),
+    content: SizedBox(
+      width: 520,
+      child: FutureBuilder<EstadisticasNegocio>(
+        future: ref
+            .read(adminRepositorioProvider)
+            .resultadosComercio(negocioId),
+        builder: (context, datos) => switch (datos) {
+          AsyncSnapshot(hasError: true) => const Text(T.errorConexion),
+          AsyncSnapshot(data: final e?) when e.sinDatos => const Text(
+            T.resultadosSinDatos,
+          ),
+          AsyncSnapshot(data: final e?) => SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(T.resultadosAyuda),
+                const SizedBox(height: 8),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: DataTable(
+                    columnSpacing: 16,
+                    columns: const [
+                      DataColumn(label: Text('')),
+                      DataColumn(
+                        label: Text(T.resultadosAperturas),
+                        numeric: true,
+                      ),
+                      DataColumn(
+                        label: Text(T.resultadosPersonas),
+                        numeric: true,
+                      ),
+                      DataColumn(
+                        label: Text(T.resultadosContactos),
+                        numeric: true,
+                      ),
+                    ],
+                    rows: [
+                      for (final m in e.meses.reversed)
+                        DataRow(
+                          cells: [
+                            DataCell(Text(fechaIso(m.mes).substring(0, 7))),
+                            DataCell(Text('${m[MetricasComercio.aperturas]}')),
+                            DataCell(Text('${m[MetricasComercio.personas]}')),
+                            DataCell(Text('${m[MetricasComercio.contactos]}')),
+                          ],
+                        ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          _ => const Center(child: CircularProgressIndicator()),
+        },
+      ),
+    ),
+    actions: [
+      TextButton(
+        onPressed: () => Navigator.pop(context),
+        child: const Text(T.cerrar),
+      ),
+    ],
+  );
 }

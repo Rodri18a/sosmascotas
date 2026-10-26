@@ -9,6 +9,7 @@ import 'package:sosmascota_admin/src/pantallas/chapitas.dart';
 import 'package:sosmascota_admin/src/pantallas/lugares.dart';
 import 'package:sosmascota_admin/src/repositorio.dart';
 import 'package:sosmascota_admin/src/sesion.dart';
+import 'package:sosmascota_core/sosmascota_core.dart' show EstadisticasNegocio;
 
 class SesionFalsa implements SesionAdmin {
   SesionFalsa([this.correo]);
@@ -190,6 +191,22 @@ class RepoFalso implements AdminRepositorio {
   @override
   Future<void> planComercio(String negocioId, String plan) async =>
       planes.add((negocioId, plan));
+
+  @override
+  Future<EstadisticasNegocio> resultadosComercio(String negocioId) async =>
+      EstadisticasNegocio.fromJson({
+        'completo': true,
+        'meses': [
+          {
+            'mes': '2026-10-01',
+            'metricas': {
+              'place_open': 340,
+              'place_open_people': 280,
+              'contactos': 52,
+            },
+          },
+        ],
+      });
 
   @override
   Future<List<Map<String, Object?>>> adopcionesEnRevision() async => const [];
@@ -488,6 +505,21 @@ void main() {
     await _tocar(tester, find.text('Plan…'));
     await _tocar(tester, find.text('Plus (módulos, como Socios)'));
     expect(repo.planes.single, ('b1', 'plus'));
+  });
+
+  testWidgets('lugares: resultados del comercio (2.3)', (tester) async {
+    _pantallaGrande(tester);
+    await tester.pumpWidget(
+      _portal(sesion: SesionFalsa('admin@x.uy'), repo: RepoFalso()),
+    );
+    await tester.pumpAndSettle();
+    await _tocar(tester, find.text('Lugares'));
+    await _tocar(tester, find.text('Veterinaria Centro'));
+    await _tocar(tester, find.text('Resultados'));
+    expect(find.text('Resultados · Veterinaria Centro'), findsOneWidget);
+    expect(find.text('2026-10'), findsOneWidget);
+    expect(find.text('340'), findsOneWidget);
+    expect(find.text('52'), findsOneWidget);
   });
 
   testWidgets('lugares: sin coordenadas no se guarda un local', (tester) async {

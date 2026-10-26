@@ -7419,6 +7419,168 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Pedido N.º {numero}: la chapita queda vinculada a {nombre}.'**
   String retiroEntregarTexto(int numero, String nombre);
+
+  /// No description provided for @estadisticasTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Estadísticas'**
+  String get estadisticasTitulo;
+
+  /// No description provided for @estadisticasAbrir.
+  ///
+  /// In es, this message translates to:
+  /// **'Ver estadísticas'**
+  String get estadisticasAbrir;
+
+  /// No description provided for @estadisticasAbrirAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Cuántas personas te ven y te contactan, mes a mes'**
+  String get estadisticasAbrirAyuda;
+
+  /// No description provided for @estadisticasEsteMes.
+  ///
+  /// In es, this message translates to:
+  /// **'Este mes'**
+  String get estadisticasEsteMes;
+
+  /// No description provided for @estadisticasSinDatos.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no hay movimiento para mostrar. Cuando la gente abra tu ficha, lo vas a ver acá.'**
+  String get estadisticasSinDatos;
+
+  /// No description provided for @estadisticasAperturas.
+  ///
+  /// In es, this message translates to:
+  /// **'Vieron tu ficha'**
+  String get estadisticasAperturas;
+
+  /// No description provided for @estadisticasPersonas.
+  ///
+  /// In es, this message translates to:
+  /// **'Personas distintas'**
+  String get estadisticasPersonas;
+
+  /// No description provided for @estadisticasContactos.
+  ///
+  /// In es, this message translates to:
+  /// **'Te contactaron'**
+  String get estadisticasContactos;
+
+  /// No description provided for @estadisticasContactosAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'WhatsApp, llamadas, cómo llegar, web, Instagram, chats, consultas y pedidos'**
+  String get estadisticasContactosAyuda;
+
+  /// No description provided for @estadisticasFavoritos.
+  ///
+  /// In es, this message translates to:
+  /// **'Te guardaron en favoritos'**
+  String get estadisticasFavoritos;
+
+  /// No description provided for @estadisticasVisitas.
+  ///
+  /// In es, this message translates to:
+  /// **'Dijeron «Fui»'**
+  String get estadisticasVisitas;
+
+  /// No description provided for @estadisticasChats.
+  ///
+  /// In es, this message translates to:
+  /// **'Chats nuevos'**
+  String get estadisticasChats;
+
+  /// No description provided for @estadisticasCatalogo.
+  ///
+  /// In es, this message translates to:
+  /// **'Abrieron tu catálogo'**
+  String get estadisticasCatalogo;
+
+  /// No description provided for @estadisticasConsultas.
+  ///
+  /// In es, this message translates to:
+  /// **'Consultas de productos y servicios'**
+  String get estadisticasConsultas;
+
+  /// No description provided for @estadisticasPedidos.
+  ///
+  /// In es, this message translates to:
+  /// **'Pedidos'**
+  String get estadisticasPedidos;
+
+  /// No description provided for @estadisticasPagina.
+  ///
+  /// In es, this message translates to:
+  /// **'Visitas a tu página'**
+  String get estadisticasPagina;
+
+  /// No description provided for @estadisticasResenas.
+  ///
+  /// In es, this message translates to:
+  /// **'Reseñas nuevas'**
+  String get estadisticasResenas;
+
+  /// No description provided for @estadisticasMasQue.
+  ///
+  /// In es, this message translates to:
+  /// **'{p} % más que el mes anterior'**
+  String estadisticasMasQue(int p);
+
+  /// No description provided for @estadisticasMenosQue.
+  ///
+  /// In es, this message translates to:
+  /// **'{p} % menos que el mes anterior'**
+  String estadisticasMenosQue(int p);
+
+  /// No description provided for @estadisticasIgual.
+  ///
+  /// In es, this message translates to:
+  /// **'Igual que el mes anterior'**
+  String get estadisticasIgual;
+
+  /// No description provided for @estadisticasNuevo.
+  ///
+  /// In es, this message translates to:
+  /// **'El mes anterior: {n}'**
+  String estadisticasNuevo(int n);
+
+  /// No description provided for @estadisticasPorSemana.
+  ///
+  /// In es, this message translates to:
+  /// **'Últimas 12 semanas'**
+  String get estadisticasPorSemana;
+
+  /// No description provided for @estadisticasPorMes.
+  ///
+  /// In es, this message translates to:
+  /// **'Mes a mes'**
+  String get estadisticasPorMes;
+
+  /// No description provided for @estadisticasClics.
+  ///
+  /// In es, this message translates to:
+  /// **'Qué tocaron en tu ficha'**
+  String get estadisticasClics;
+
+  /// No description provided for @estadisticasSoloResumen.
+  ///
+  /// In es, this message translates to:
+  /// **'Con el plan Básico ves este resumen. Con Destacado o Plus ves todas las métricas, 6 meses y la evolución semana a semana.'**
+  String get estadisticasSoloResumen;
+
+  /// No description provided for @estadisticasPrivacidad.
+  ///
+  /// In es, this message translates to:
+  /// **'Son cantidades: nunca se muestra quién fue.'**
+  String get estadisticasPrivacidad;
+
+  /// No description provided for @estadisticasSemanaDe.
+  ///
+  /// In es, this message translates to:
+  /// **'Semana del {fecha}'**
+  String estadisticasSemanaDe(String fecha);
 }
 
 class _AppLocalizationsDelegate

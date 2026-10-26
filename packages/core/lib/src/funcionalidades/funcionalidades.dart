@@ -59,6 +59,9 @@ abstract final class Funcionalidades {
   /// Catálogo con "Consultar" y pedidos (2.5 y 3.2, D85).
   static const catalogo = 'catalogo';
 
+  /// Estadísticas del comercio y reporte mensual (2.3, D101).
+  static const estadisticas = 'estadisticas';
+
   /// Las que ya están en `todos`: la app las da por prendidas aunque no pueda
   /// preguntarle a la base (sin conexión y sin nada guardado). Las demás, en
   /// ese caso, quedan apagadas (lo seguro).

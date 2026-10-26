@@ -243,6 +243,20 @@ class _Panel extends ConsumerWidget {
       AsyncData(value: final p) => ListView(
         padding: const EdgeInsets.all(16),
         children: [
+          // Estadísticas mes a mes y reporte mensual (2.3, D101).
+          if (ref.watch(
+            funcionalidadActivaProvider(Funcionalidades.estadisticas),
+          ))
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.bar_chart),
+                title: Text(t.estadisticasAbrir),
+                subtitle: Text(t.estadisticasAbrirAyuda),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () =>
+                    context.push(Rutas.estadisticasNegocio(negocio.id)),
+              ),
+            ),
           Text(t.panelUltimos30, style: tema.textTheme.titleMedium),
           const SizedBox(height: 8),
           Card(
