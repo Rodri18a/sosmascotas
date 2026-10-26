@@ -33,7 +33,7 @@ Acceso: solo usuarios con rol `admin`, verificado en el servidor (RLS y claims),
 - Solicitudes de **verificación** (RUT y comprobante) → otorgar o quitar la insignia ✔️.
 - **Reclamos** de lugares sin reclamar: aprobar o rechazar.
 - Marcar **Socios Fundadores** (fecha de inicio y fin del beneficio, precio congelado).
-- Editar fichas y fusionar duplicados.
+- Editar fichas y fusionar duplicados. *(26/10/2026: editar fichas ✅ en Lugares, `admin_guardar_lugar()`; fusionar duplicados queda sin hacer y sin paso asignado: hoy se oculta el repetido.)*
 
 ### 4. Lugares — Fase 0 (vía Supabase) / Fase 1 (portal)
 - Carga manual de comercios y lugares que aceptan mascotas.
