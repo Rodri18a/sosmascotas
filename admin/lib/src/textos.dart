@@ -410,12 +410,14 @@ abstract final class T {
   static const editarSponsor = 'Editar sponsor';
   static const nombreSponsor = 'Nombre (se ve en la página del QR)';
   static const notasSponsor = 'Notas privadas (contacto, acuerdo)';
-  static const sponsorActivo = 'Activo (se muestra en las chapitas de sus lotes)';
+  static const sponsorActivo =
+      'Activo (se muestra en las chapitas de sus lotes)';
   static const elegirLogo = 'Elegir logo';
   static const cambiarLogo = 'Cambiar logo';
   static const logoListo = 'Logo cargado';
   static const sinLogo = 'Sin logo: se muestra el nombre';
-  static const logoGrande = 'El logo tiene que ser PNG, JPEG o WebP de hasta 500 KB.';
+  static const logoGrande =
+      'El logo tiene que ser PNG, JPEG o WebP de hasta 500 KB.';
   static const faltaNombre = 'Falta el nombre.';
   static const inactivo = 'inactivo';
   static String resumenSponsor(int lotes, int chapitas) =>
@@ -458,4 +460,49 @@ abstract final class T {
   static const quitarStockTitulo = 'Sacar una chapita del stock';
   static const codigoStock = 'Código (sin activar, del stock)';
   static const quitar = 'Quitar';
+
+  // Equipo, zonas y auditoría (3.6, D109)
+  static const equipo = 'Equipo';
+  static const zonas = 'Zonas';
+  static const auditoria = 'Auditoría';
+  static const rolesEquipo = {
+    'admin': 'Administración (todo)',
+    'moderator': 'Moderación (moderación y denuncias)',
+    'sales': 'Ventas (lugares, prospectos y propuestas)',
+  };
+  static const equipoAyuda =
+      'El rol se da a una cuenta que ya existe en la app, por su correo. Nadie se cambia el suyo y siempre queda al menos una persona con administración.';
+  static const sumarAlEquipo = 'Sumar o cambiar rol';
+  static const correoCuenta = 'Correo de la cuenta';
+  static const rol = 'Rol';
+  static const sacarDelEquipo = 'Sacar del equipo';
+  static const vos = 'vos';
+  static String ultimaAccion(String fecha) => 'Última acción: $fecha';
+  static const sinAcciones = 'Sin acciones todavía';
+  static const errorRol = {
+    'sin_cuenta':
+        'No hay una cuenta con ese correo: primero tiene que registrarse en la app.',
+    'no_tu_propio_rol': 'No podés cambiar tu propio rol.',
+    'ultimo_admin': 'Tiene que quedar al menos una persona con administración.',
+  };
+  static const zonasAyuda =
+      'El área es un rectángulo (latitud y longitud de las esquinas): se copia de un mapa, sin geocodificar. Una zona nueva arranca apagada.';
+  static const nuevaZona = 'Nueva zona';
+  static const editarZona = 'Editar zona';
+  static const slugZona = 'Identificador (minúsculas y guiones)';
+  static const nombreZona = 'Nombre';
+  static const latMin = 'Latitud sur (mínima)';
+  static const latMax = 'Latitud norte (máxima)';
+  static const lngMin = 'Longitud oeste (mínima)';
+  static const lngMax = 'Longitud este (máxima)';
+  static const zonaActiva = 'Prendida (visible en la app)';
+  static const areaInvalida =
+      'El rectángulo no es válido: el sur tiene que ser menor que el norte, el oeste menor que el este, y cada lado de hasta 5 grados.';
+  static String resumenZona(int usuarios, int mascotas, int lugares, int sos) =>
+      '$usuarios usuarios · $mascotas mascotas · $lugares lugares · $sos SOS activos';
+  static const apagada = 'apagada';
+  static const auditoriaAyuda =
+      'Cada acción del equipo queda registrada: quién, qué y cuándo. Se ven las últimas 500.';
+  static const todasLasAcciones = 'Todas las acciones';
+  static const sinRegistro = 'No hay acciones en este período.';
 }

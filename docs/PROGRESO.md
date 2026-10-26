@@ -14,7 +14,7 @@ Actualizado el 26/10/2026. Avance = pasos tildados `[x]` sobre el total; las hor
 | 0 · SOS | 🔄 En curso | 46 / 72 | ▓▓▓▓▓▓░░░░ 64 % | ≈ 105 / 160 h |
 | 1 · MVP | 🔄 Adelantada (código casi completo) | 43 / 55 | ▓▓▓▓▓▓▓▓░░ 78 % | ≈ 125 / 160 h |
 | 2 · Monetización | 🔄 Adelantada | 17 / 21 | ▓▓▓▓▓▓▓▓░░ 81 % | a detallar |
-| 3 · Servicios | 🔄 Empezada | 2 / 8 (3.2 hecho en parte) | ▓▓▓░░░░░░░ 25 % | a detallar |
+| 3 · Servicios | 🔄 Empezada | 3 / 8 (3.2 hecho en parte) | ▓▓▓▓░░░░░░ 38 % | a detallar |
 | 4 · Escala | ⏳ | 0 / 3 | ░░░░░░░░░░ 0 % | a detallar |
 
 <details>
@@ -43,7 +43,7 @@ Actualizado el 26/10/2026. Avance = pasos tildados `[x]` sobre el total; las hor
 | 1.8b · Chapitas físicas | 4 / 4 ✅ | 11 / 11 h | — |
 | 1.9 · Socios Fundadores y cierre | 0 / 5 | 0 / 16,5 h | Todo (formalizar, Socios Fundadores, pruebas, cierre) |
 
-Fase 2, lo que falta: 2.1 (planes Pro y Familia), 2.9 (sponsors de chapitas), 2.10 (portal de empresas v1), 2.11. Fase 3: hecho 3.1 (agenda) y 3.4b (tránsito, pack adopción, apadrinamiento); 3.2 (pedidos) hecho en código, falta probarlo con dos cuentas.
+Fase 2, lo que falta: 2.1 (planes Pro y Familia), 2.9 (solo la venta de diseños), 2.10 (portal de empresas v1), 2.11. Fase 3: hecho 3.1 (agenda), 3.4b (tránsito, pack adopción, apadrinamiento) y 3.6 (equipo, zonas y auditoría); 3.2 (pedidos) hecho en código, falta probarlo con dos cuentas.
 
 </details>
 
@@ -289,7 +289,7 @@ Regla de trabajo: **por cada etapa de desarrollo, avanzar al menos un paso de va
 - [ ] 3.4 Comunidad por raza y especie (grupos, publicaciones, saludo previo al chat)
 - [x] 3.4b Adopción: pack adopción de empresas, apadrinamiento y hogares de tránsito — 26/10/2026, **parte 1 hecha** (D106), detrás de `adopcion`: migración `hogares_de_transito` aplicada en dev (`foster_homes` con política de dueño, `foster_requests` sin acceso directo; solo refugios verificados de la zona ven primer nombre y barrio; aceptar abre el chat; la adopción dice "En un hogar de tránsito"), Adopción → Hogar de tránsito y modo comercio → Hogares de tránsito. Pruebas OK (349 app, 180 núcleo, `rls_test.py` OK). **Parte 2 hecha** (D107): migración `pack_adopcion` aplicada en dev (beneficios gratis de comercios verificados, código de 6 para quien adoptó por la app en 180 días, canje una vez con primer nombre y animal), Adopción → Mis solicitudes → Pack adopción y modo comercio → Pack adopción. Pruebas OK (353 app, 181 núcleo, `rls_test.py` OK). **Parte 3 hecha** (D108): migración `apadrinamiento` aplicada en dev (comercio verificado ofrece apadrinar a un refugio verificado o a su feria, el refugio acepta, "Apadrinado por" en la ficha del refugio y en el evento), modo comercio → Apadrinar un refugio / Padrinos del refugio. Pruebas OK (356 app, 182 núcleo, `rls_test.py` OK). ✅ **Terminado en código** el 26/10/2026. **Falta:** aviso push al hogar de tránsito cuando le llega un pedido; verlo online (compilación nueva)
 - [ ] 3.5 Portal de empresas completo (agenda, pedidos, socios, equipo)
-- [ ] 3.6 Zonas, roles y auditoría en el portal de administración
+- [x] 3.6 Zonas, roles y auditoría en el portal de administración — 26/10/2026 (D109): migraciones `equipo_zonas_auditoria` y `es_equipo_permiso` aplicadas en dev (roles `moderator` y `sales`, funciones de cada área con `exigir_equipo()`, prospectos para ventas, `admin_equipo()` / `admin_poner_rol()`, `admin_zonas()` / `admin_guardar_zona()` con rectángulo, `admin_auditoria()`), portal con el menú según el rol y las secciones Equipo, Zonas y Auditoría. Pruebas OK (31 portal, `rls_test.py` OK). **Falta:** limitar a un integrante del equipo a su zona; verlo online (compilación nueva del portal)
 - [ ] 3.7 🎆 Campaña de fin de año 2027
 
 ## FASE 4 · Escala — 2028 (etapas)

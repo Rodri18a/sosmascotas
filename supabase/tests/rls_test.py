@@ -2390,6 +2390,82 @@ def main():
             pedir('DELETE', f'{URL}/rest/v1/qr_batches?id=in.({lote},{lote2})', headers=ADMIN)
             pedir('DELETE', f'{URL}/rest/v1/sponsors?id=eq.{sponsor}', headers=ADMIN)
 
+            print('equipo, zonas y auditoría (3.6)')
+            m_id, m = crear_usuario('moderador')
+            v_id, v = crear_usuario('ventas')
+            try:
+                def correo(uid):
+                    return pedir('GET', f'{URL}/auth/v1/admin/users/{uid}', headers=ADMIN)[1]['email']
+                caso('A no es del equipo', rest('POST', 'rpc/mi_rol_equipo', {}, a)[1] is None)
+                caso('X es admin', rest('POST', 'rpc/mi_rol_equipo', {}, x)[1] == 'admin')
+                caso('A no ve el equipo', rest('POST', 'rpc/admin_equipo', {}, a)[0] >= 400)
+                caso('A no da roles', rest('POST', 'rpc/admin_poner_rol', {
+                    'p_email': correo(a_id), 'p_rol': 'admin'}, a)[0] >= 400)
+                caso('X no se cambia su propio rol', 'no_tu_propio_rol' in json.dumps(rest(
+                    'POST', 'rpc/admin_poner_rol', {'p_email': correo(x_id), 'p_rol': 'user'}, x)[1]))
+                caso('un correo sin cuenta no se puede', 'sin_cuenta' in json.dumps(rest(
+                    'POST', 'rpc/admin_poner_rol', {'p_email': 'nadie-rls@example.com', 'p_rol': 'sales'}, x)[1]))
+                caso('X hace moderadora a M', rest('POST', 'rpc/admin_poner_rol', {
+                    'p_email': correo(m_id).upper(), 'p_rol': 'moderator'}, x)[0] in (200, 204))
+                caso('X hace de ventas a V', rest('POST', 'rpc/admin_poner_rol', {
+                    'p_email': correo(v_id), 'p_rol': 'sales'}, x)[0] in (200, 204))
+                equipo = rest('POST', 'rpc/admin_equipo', {}, x)[1]
+                caso('el equipo lista a los tres con su rol', {(e['user_id'], e['rol']) for e in equipo}
+                     >= {(x_id, 'admin'), (m_id, 'moderator'), (v_id, 'sales')})
+                caso('M (moderadora) ve la moderación y las denuncias',
+                     rest('POST', 'rpc/admin_moderacion', {}, m)[0] == 200
+                     and rest('POST', 'rpc/admin_denuncias', {}, m)[0] == 200)
+                caso('M no ve el panel, los lugares ni el equipo',
+                     rest('POST', 'rpc/admin_panel', {'p_dias': 30}, m)[0] >= 400
+                     and rest('POST', 'rpc/admin_lugares', {}, m)[0] >= 400
+                     and rest('POST', 'rpc/admin_equipo', {}, m)[0] >= 400)
+                caso('M no es admin para el resto de la base', rest('POST', 'rpc/es_admin', {}, m)[1] is False)
+                caso('V (ventas) ve los lugares', rest('POST', 'rpc/admin_lugares', {}, v)[0] == 200)
+                caso('y los sin reclamar', rest('POST', 'rpc/admin_sin_reclamar', {}, v)[0] == 200)
+                caso('y carga prospectos', rest('POST', 'prospects', {'name': 'Prospecto RLS ventas'}, v,
+                                                 'return=minimal')[0] == 201)
+                pedir('DELETE', f'{URL}/rest/v1/prospects?name=eq.Prospecto%20RLS%20ventas', headers=ADMIN)
+                caso('V no modera ni ve los cobros',
+                     rest('POST', 'rpc/admin_moderacion', {}, v)[0] >= 400
+                     and rest('POST', 'rpc/admin_ingresos', {}, v)[0] >= 400)
+                caso('A sigue sin ver los prospectos', filas(rest('GET', 'prospects?select=id', quien=a)) == [])
+                caso('V no puede hacerse admin', rest('POST', 'rpc/admin_poner_rol', {
+                    'p_email': correo(v_id), 'p_rol': 'admin'}, v)[0] >= 400)
+                caso('la auditoría registra quién dio cada rol',
+                     any(r['action'] == 'poner_rol' and r['target_id'] == m_id and r['admin_id'] == x_id
+                         for r in rest('POST', 'rpc/admin_auditoria', {'p_dias': 1}, x)[1]))
+                caso('filtra por acción', all(r['action'] == 'poner_rol' for r in rest(
+                    'POST', 'rpc/admin_auditoria', {'p_dias': 1, 'p_accion': 'poner_rol'}, x)[1]))
+                caso('A ni M ven la auditoría', rest('POST', 'rpc/admin_auditoria', {}, a)[0] >= 400
+                     and rest('POST', 'rpc/admin_auditoria', {}, m)[0] >= 400)
+                caso('M deja de ser del equipo', rest('POST', 'rpc/admin_poner_rol', {
+                    'p_email': correo(m_id), 'p_rol': 'user'}, x)[0] in (200, 204)
+                     and rest('POST', 'rpc/admin_moderacion', {}, m)[0] >= 400)
+
+                caso('A no crea zonas', rest('POST', 'rpc/admin_guardar_zona', {'p': {
+                    'slug': 'prueba-rls', 'name': 'Prueba', 'lat_min': -34.8, 'lat_max': -34.7,
+                    'lng_min': -56.1, 'lng_max': -56.0}}, a)[0] >= 400)
+                caso('un rectángulo al revés no sirve', 'area_invalida' in json.dumps(rest(
+                    'POST', 'rpc/admin_guardar_zona', {'p': {'slug': 'prueba-rls', 'name': 'Prueba', 'lat_min': -34.7,
+                                                             'lat_max': -34.8, 'lng_min': -56.1, 'lng_max': -56.0}}, x)[1]))
+                s_z, zona = rest('POST', 'rpc/admin_guardar_zona', {'p': {
+                    'slug': 'prueba-rls', 'name': 'Prueba RLS', 'lat_min': -34.8, 'lat_max': -34.7,
+                    'lng_min': -56.1, 'lng_max': -56.0}}, x)
+                caso('X crea una zona (apagada)', s_z == 200 and isinstance(zona, int))
+                mia_z = next((z for z in rest('POST', 'rpc/admin_zonas', {}, x)[1] if z['id'] == zona), {})
+                caso('la ve con su rectángulo y sin usuarios',
+                     mia_z.get('active') is False and abs(mia_z.get('lat_min', 0) + 34.8) < 1e-6
+                     and mia_z.get('usuarios') == 0)
+                caso('apagada, un visitante no la ve', filas(rest('GET', f'zones?select=id&id=eq.{zona}')) == [])
+                rest('POST', 'rpc/admin_guardar_zona', {'p': {'id': zona, 'active': True}}, x)
+                caso('prendida, sí', len(filas(rest('GET', f'zones?select=id&id=eq.{zona}'))) == 1)
+                caso('V no ve las zonas', rest('POST', 'rpc/admin_zonas', {}, v)[0] >= 400)
+                pedir('DELETE', f'{URL}/rest/v1/zones?id=eq.{zona}', headers=ADMIN)
+            finally:
+                for uid in (m_id, v_id):
+                    pedir('DELETE', f'{URL}/rest/v1/admin_actions?admin_id=eq.{uid}', headers=ADMIN)
+                    pedir('DELETE', f'{URL}/auth/v1/admin/users/{uid}', headers=ADMIN)
+
             pedir('DELETE', f'{URL}/rest/v1/businesses?id=in.({negocio},{sin_duenio},{desde_marca})', headers=ADMIN)
             pedir('DELETE', f'{URL}/rest/v1/place_marks?user_id=in.({a_id},{b_id})', headers=ADMIN)
         finally:

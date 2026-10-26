@@ -6,6 +6,7 @@ import 'pantallas/ayuda.dart';
 import 'pantallas/chapitas.dart';
 import 'pantallas/comercios.dart';
 import 'pantallas/denuncias.dart';
+import 'pantallas/equipo.dart';
 import 'pantallas/ingreso.dart';
 import 'pantallas/lugares.dart';
 import 'pantallas/moderacion.dart';
@@ -36,8 +37,8 @@ class AdminApp extends StatelessWidget {
   );
 }
 
-/// Sin sesión: ingresar. Con sesión pero sin rol admin: no hay nada que ver
-/// (y la base igual rechazaría cada consulta).
+/// Sin sesión: ingresar. Con sesión pero sin rol del equipo: no hay nada que
+/// ver (y la base igual rechazaría cada consulta).
 class _Puerta extends ConsumerWidget {
   const _Puerta();
 
@@ -46,11 +47,11 @@ class _Puerta extends ConsumerWidget {
     final correo = ref.watch(correoProvider);
     return switch (correo) {
       AsyncData(value: null) => const IngresoScreen(),
-      AsyncData() => switch (ref.watch(esAdminProvider)) {
-        AsyncData(value: true) => const Portal(),
-        AsyncData(value: false) => const _SinPermiso(),
+      AsyncData() => switch (ref.watch(rolEquipoProvider)) {
+        AsyncData(value: final String rol) => Portal(rol: rol),
+        AsyncData() => const _SinPermiso(),
         AsyncError() => _Error(
-          onReintentar: () => ref.invalidate(esAdminProvider),
+          onReintentar: () => ref.invalidate(rolEquipoProvider),
         ),
         _ => const Scaffold(body: Center(child: CircularProgressIndicator())),
       },
@@ -105,9 +106,13 @@ class _Error extends StatelessWidget {
   );
 }
 
-/// Las secciones del portal v1 (05-portal-admin.md).
+/// Las secciones del portal (05-portal-admin.md). Cada rol ve las suyas
+/// (3.6, D109): moderación y denuncias, o lugares, prospectos y propuestas;
+/// la administración, todas.
 class Portal extends ConsumerStatefulWidget {
-  const Portal({super.key});
+  const Portal({this.rol = 'admin', super.key});
+
+  final String rol;
 
   @override
   ConsumerState<Portal> createState() => _PortalState();
@@ -116,36 +121,34 @@ class Portal extends ConsumerStatefulWidget {
 class _PortalState extends ConsumerState<Portal> {
   var _seccion = 0;
 
-  static const _secciones = [
-    (Icons.dashboard_outlined, T.panel),
-    (Icons.shield_outlined, T.moderacion),
-    (Icons.report_outlined, T.denuncias),
-    (Icons.storefront_outlined, T.lugares),
-    (Icons.verified_outlined, T.comercios),
-    (Icons.handshake_outlined, T.prospectos),
-    (Icons.description_outlined, T.propuestas),
-    (Icons.payments_outlined, T.planesCobros),
-    (Icons.volunteer_activism_outlined, T.ayuda),
-    (Icons.newspaper_outlined, T.noticias),
-    (Icons.qr_code_2, T.chapitas),
+  /// (ícono, título, pantalla, roles además de `admin`).
+  static const _todas = <(IconData, String, Widget, Set<String>)>[
+    (Icons.dashboard_outlined, T.panel, PanelScreen(), {}),
+    (Icons.shield_outlined, T.moderacion, ModeracionScreen(), {'moderator'}),
+    (Icons.report_outlined, T.denuncias, DenunciasScreen(), {'moderator'}),
+    (Icons.storefront_outlined, T.lugares, LugaresScreen(), {'sales'}),
+    (Icons.verified_outlined, T.comercios, ComerciosScreen(), {}),
+    (Icons.handshake_outlined, T.prospectos, ProspectosScreen(), {'sales'}),
+    (Icons.description_outlined, T.propuestas, PropuestasScreen(), {'sales'}),
+    (Icons.payments_outlined, T.planesCobros, PlanesScreen(), {}),
+    (Icons.volunteer_activism_outlined, T.ayuda, AyudaScreen(), {}),
+    (Icons.newspaper_outlined, T.noticias, NoticiasScreen(), {}),
+    (Icons.qr_code_2, T.chapitas, ChapitasScreen(), {}),
+    (Icons.groups_outlined, T.equipo, EquipoScreen(), {}),
+    (Icons.map_outlined, T.zonas, ZonasScreen(), {}),
+    (Icons.history, T.auditoria, AuditoriaScreen(), {}),
+  ];
+
+  late final _secciones = [
+    for (final s in _todas)
+      if (widget.rol == 'admin' || s.$4.contains(widget.rol))
+        (s.$1, s.$2, s.$3),
   ];
 
   @override
   Widget build(BuildContext context) {
     final ancho = MediaQuery.sizeOf(context).width >= 800;
-    final contenido = switch (_seccion) {
-      0 => const PanelScreen(),
-      1 => const ModeracionScreen(),
-      2 => const DenunciasScreen(),
-      3 => const LugaresScreen(),
-      4 => const ComerciosScreen(),
-      5 => const ProspectosScreen(),
-      6 => const PropuestasScreen(),
-      7 => const PlanesScreen(),
-      8 => const AyudaScreen(),
-      9 => const NoticiasScreen(),
-      _ => const ChapitasScreen(),
-    };
+    final contenido = _secciones[_seccion].$3;
     return Scaffold(
       appBar: AppBar(
         title: Text(_secciones[_seccion].$2),
@@ -169,7 +172,7 @@ class _PortalState extends ConsumerState<Portal> {
                   labelType: NavigationRailLabelType.all,
                   onDestinationSelected: (i) => setState(() => _seccion = i),
                   destinations: [
-                    for (final (icono, texto) in _secciones)
+                    for (final (icono, texto, _) in _secciones)
                       NavigationRailDestination(
                         icon: Icon(icono),
                         label: Text(texto),
@@ -187,7 +190,7 @@ class _PortalState extends ConsumerState<Portal> {
               selectedIndex: _seccion,
               onDestinationSelected: (i) => setState(() => _seccion = i),
               destinations: [
-                for (final (icono, texto) in _secciones)
+                for (final (icono, texto, _) in _secciones)
                   NavigationDestination(icon: Icon(icono), label: texto),
               ],
             ),

@@ -91,10 +91,8 @@ class SponsorsSeccion extends ConsumerWidget {
               trailing: TextButton(
                 onPressed: () => showDialog<void>(
                   context: context,
-                  builder: (_) => _Reporte(
-                    sponsorId: '${s['id']}',
-                    nombre: '${s['name']}',
-                  ),
+                  builder: (_) =>
+                      _Reporte(sponsorId: '${s['id']}', nombre: '${s['name']}'),
                 ),
                 child: const Text(T.reporte),
               ),
@@ -380,7 +378,10 @@ class _AsignarStockState extends ConsumerState<AsignarStock> {
 
   Future<void> _pasar() async {
     final cantidad = int.tryParse(_cantidad.text.trim());
-    if (_negocio == null || cantidad == null || cantidad < 1 || cantidad > 200) {
+    if (_negocio == null ||
+        cantidad == null ||
+        cantidad < 1 ||
+        cantidad > 200) {
       setState(() => _error = T.datosInvalidos);
       return;
     }
@@ -412,7 +413,8 @@ class _AsignarStockState extends ConsumerState<AsignarStock> {
   @override
   Widget build(BuildContext context) {
     final vetes = [
-      for (final l in ref.watch(lugaresProvider('')).value ?? const <LugarAdmin>[])
+      for (final l
+          in ref.watch(lugaresProvider('')).value ?? const <LugarAdmin>[])
         if (l.datos['business_type'] == 'vet' &&
             l.verificacion == 'verified' &&
             l.estado == 'active')

@@ -43,9 +43,12 @@ class SesionFalsa implements SesionAdmin {
 }
 
 class RepoFalso implements AdminRepositorio {
-  RepoFalso({this.admin = true});
+  RepoFalso({this.admin = true, this.rol});
 
   bool admin;
+
+  /// Si no se dice, `admin` o nadie según [admin].
+  String? rol;
   final moderados = <(String, String, String)>[];
   final sanciones = <(String, String, int?)>[];
   final lugaresGuardados = <Map<String, Object?>>[];
@@ -65,7 +68,7 @@ class RepoFalso implements AdminRepositorio {
   ];
 
   @override
-  Future<bool> esAdmin() async => admin;
+  Future<String?> rolEquipo() async => rol ?? (admin ? 'admin' : null);
 
   @override
   Future<Panel> panel({int dias = 30}) async => const Panel({
@@ -538,6 +541,75 @@ class RepoFalso implements AdminRepositorio {
 
   @override
   Future<void> quitarStock(String codigo) async => stockQuitado.add(codigo);
+
+  final rolesPuestos = <(String, String)>[];
+  final zonasGuardadas = <Map<String, Object?>>[];
+
+  @override
+  Future<List<Map<String, Object?>>> equipo() async => [
+    {
+      'user_id': 'u0',
+      'email': 'admin@sosmascotas.uy',
+      'rol': 'admin',
+      'yo': true,
+      'ultima_accion': '2026-10-26T12:00:00Z',
+    },
+    for (final (correo, rol) in rolesPuestos)
+      if (rol != 'user') {'user_id': correo, 'email': correo, 'rol': rol},
+  ];
+
+  @override
+  Future<void> ponerRol(String correo, String rol) async {
+    if (correo == 'nadie@x.uy') throw Exception('sin_cuenta');
+    rolesPuestos.add((correo, rol));
+  }
+
+  @override
+  Future<List<Map<String, Object?>>> zonas() async => [
+    {
+      'id': 1,
+      'slug': 'pando',
+      'name': 'Pando',
+      'active': true,
+      'usuarios': 120,
+      'mascotas': 150,
+      'lugares': 30,
+      'sos_activos': 2,
+    },
+  ];
+
+  @override
+  Future<void> guardarZona(Map<String, Object?> datos) async {
+    if ((datos['lat_min'] as num? ?? 0) >= (datos['lat_max'] as num? ?? 1)) {
+      throw Exception('area_invalida');
+    }
+    zonasGuardadas.add(datos);
+  }
+
+  @override
+  Future<List<Map<String, Object?>>> auditoria({
+    int dias = 30,
+    String? accion,
+  }) async => [
+    for (final a in [
+      {
+        'id': 1,
+        'created_at': '2026-10-26T12:00:00Z',
+        'action': 'poner_rol',
+        'target_type': 'user',
+        'target_id': 'u9',
+        'detail': {'ahora': 'sales'},
+        'quien': 'admin@sosmascotas.uy',
+      },
+      {
+        'id': 2,
+        'created_at': '2026-10-26T11:00:00Z',
+        'action': 'moderar_aprobar',
+        'quien': 'mod@sosmascotas.uy',
+      },
+    ])
+      if (accion == null || a['action'] == accion) a,
+  ];
 
   @override
   Future<List<Map<String, Object?>>> stock() async => [
@@ -1244,6 +1316,112 @@ void main() {
     );
     await _tocar(tester, find.text('Quitar'));
     expect(repo.stockQuitado.single, 'STK00001');
+  });
+
+  testWidgets('cada rol ve solo sus secciones', (tester) async {
+    _pantallaGrande(tester);
+    await tester.pumpWidget(
+      _portal(
+        sesion: SesionFalsa('mod@x.uy'),
+        repo: RepoFalso(rol: 'moderator'),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('Moderación'), findsWidgets);
+    expect(find.text('Denuncias'), findsOneWidget);
+    expect(find.text('Panel'), findsNothing);
+    expect(find.text('Lugares'), findsNothing);
+    expect(find.text('Equipo'), findsNothing);
+
+    await tester.pumpWidget(
+      _portal(
+        sesion: SesionFalsa('ventas@x.uy'),
+        repo: RepoFalso(rol: 'sales'),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('Lugares'), findsWidgets);
+    expect(find.text('Prospectos'), findsOneWidget);
+    expect(find.text('Propuestas'), findsOneWidget);
+    expect(find.text('Moderación'), findsNothing);
+    expect(find.text('Planes'), findsNothing);
+  });
+
+  testWidgets('equipo: dar un rol por correo', (tester) async {
+    _pantallaGrande(tester);
+    final repo = RepoFalso();
+    await tester.pumpWidget(
+      _portal(sesion: SesionFalsa('admin@sosmascotas.uy'), repo: repo),
+    );
+    await _tocar(tester, find.text('Equipo'));
+    expect(find.text('admin@sosmascotas.uy (vos)'), findsOneWidget);
+
+    await _tocar(tester, find.text('Sumar o cambiar rol'));
+    final correo = find.descendant(
+      of: find.byType(AlertDialog),
+      matching: find.byType(TextField),
+    );
+    await tester.enterText(correo, 'nadie@x.uy');
+    await _tocar(tester, find.widgetWithText(FilledButton, 'Guardar'));
+    expect(
+      find.textContaining('primero tiene que registrarse'),
+      findsOneWidget,
+    );
+
+    await tester.enterText(correo, 'ana@x.uy');
+    await _tocar(tester, find.byType(DropdownButtonFormField<String>));
+    await _tocar(
+      tester,
+      find.text('Ventas (lugares, prospectos y propuestas)').last,
+    );
+    await _tocar(tester, find.widgetWithText(FilledButton, 'Guardar'));
+    expect(repo.rolesPuestos.single, ('ana@x.uy', 'sales'));
+    expect(find.text('ana@x.uy'), findsOneWidget);
+  });
+
+  testWidgets('zonas: crear una con su rectángulo y la auditoría', (
+    tester,
+  ) async {
+    _pantallaGrande(tester);
+    final repo = RepoFalso();
+    await tester.pumpWidget(
+      _portal(sesion: SesionFalsa('admin@sosmascotas.uy'), repo: repo),
+    );
+    await _tocar(tester, find.text('Zonas'));
+    expect(
+      find.text('120 usuarios · 150 mascotas · 30 lugares · 2 SOS activos'),
+      findsOneWidget,
+    );
+
+    await _tocar(tester, find.text('Nueva zona'));
+    final campos = find.descendant(
+      of: find.byType(AlertDialog),
+      matching: find.byType(TextField),
+    );
+    await tester.enterText(campos.at(0), 'las-piedras');
+    await tester.enterText(campos.at(1), 'Las Piedras');
+    await tester.enterText(campos.at(2), '-34,70');
+    await tester.enterText(campos.at(3), '-34,75');
+    await tester.enterText(campos.at(4), '-56,25');
+    await tester.enterText(campos.at(5), '-56,18');
+    await _tocar(tester, find.widgetWithText(FilledButton, 'Guardar'));
+    expect(find.textContaining('El rectángulo no es válido'), findsOneWidget);
+
+    await tester.enterText(campos.at(2), '-34,75');
+    await tester.enterText(campos.at(3), '-34,70');
+    await _tocar(tester, find.widgetWithText(FilledButton, 'Guardar'));
+    expect(repo.zonasGuardadas.single, {
+      'slug': 'las-piedras',
+      'name': 'Las Piedras',
+      'lat_min': -34.75,
+      'lat_max': -34.70,
+      'lng_min': -56.25,
+      'lng_max': -56.18,
+    });
+
+    await _tocar(tester, find.text('Auditoría'));
+    expect(find.text('poner_rol · admin@sosmascotas.uy'), findsOneWidget);
+    expect(find.text('moderar_aprobar · mod@sosmascotas.uy'), findsOneWidget);
   });
 
   testWidgets('lugares: los sin reclamar con su tracción', (tester) async {

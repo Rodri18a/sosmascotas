@@ -20,6 +20,8 @@
 | **Empresa sin local** | Tienda online o servicio a domicilio (paseador, peluquería móvil) con zona de cobertura | App (modo comercio) → luego portal web |
 | **Refugio / ONG / rescatista** | Publica adopciones y perdidos y aparece en el directorio de Ayuda | App |
 | **Administrador** | Modera, verifica empresas, carga lugares, ve indicadores y gestiona ventas | Portal de administración |
+| **Equipo: moderación** | Modera contenido y denuncias (3.6, D109) | Portal: Moderación y Denuncias |
+| **Equipo: ventas** | Carga lugares, sigue prospectos y arma propuestas (3.6, D109) | Portal: Lugares, Prospectos y Propuestas |
 
 Una misma cuenta puede ser **dueño y comercio a la vez** y cambiar de modo dentro de la app, como en el prototipo.
 

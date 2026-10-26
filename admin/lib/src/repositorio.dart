@@ -11,7 +11,8 @@ import 'modelos.dart';
 /// a verificar el rol `admin` (D76): esta capa no decide permisos. Se
 /// reemplaza en las pruebas.
 abstract interface class AdminRepositorio {
-  Future<bool> esAdmin();
+  /// `admin`, `moderator`, `sales` o null si no es del equipo (3.6, D109).
+  Future<String?> rolEquipo();
 
   Future<Panel> panel({int dias = 30});
 
@@ -184,6 +185,21 @@ abstract interface class AdminRepositorio {
 
   /// Stock por veterinaria: recibidas, disponibles y activadas.
   Future<List<Map<String, Object?>>> stock();
+
+  /// El equipo del portal con su rol (3.6, D109).
+  Future<List<Map<String, Object?>>> equipo();
+
+  /// [rol]: `admin`, `moderator`, `sales` o `user` (sacarlo del equipo).
+  Future<void> ponerRol(String correo, String rol);
+
+  /// Zonas con usuarios, mascotas, lugares y SOS activos.
+  Future<List<Map<String, Object?>>> zonas();
+
+  /// Crea (sin `id`) o actualiza una zona; el área es un rectángulo.
+  Future<void> guardarZona(Map<String, Object?> datos);
+
+  /// Lo que hizo el equipo en los últimos [dias] (hasta 500 acciones).
+  Future<List<Map<String, Object?>>> auditoria({int dias = 30, String? accion});
 }
 
 class SupabaseAdminRepositorio implements AdminRepositorio {
@@ -197,8 +213,7 @@ class SupabaseAdminRepositorio implements AdminRepositorio {
   ];
 
   @override
-  Future<bool> esAdmin() async =>
-      (await _cliente.rpc<bool?>('es_admin')) ?? false;
+  Future<String?> rolEquipo() => _cliente.rpc<String?>('mi_rol_equipo');
 
   @override
   Future<Panel> panel({int dias = 30}) async => Panel(
@@ -611,6 +626,35 @@ class SupabaseAdminRepositorio implements AdminRepositorio {
   @override
   Future<List<Map<String, Object?>>> stock() async =>
       _filas(await _cliente.rpc<List<dynamic>>('admin_stock'));
+
+  @override
+  Future<List<Map<String, Object?>>> equipo() async =>
+      _filas(await _cliente.rpc<List<dynamic>>('admin_equipo'));
+
+  @override
+  Future<void> ponerRol(String correo, String rol) => _cliente.rpc<void>(
+    'admin_poner_rol',
+    params: {'p_email': correo, 'p_rol': rol},
+  );
+
+  @override
+  Future<List<Map<String, Object?>>> zonas() async =>
+      _filas(await _cliente.rpc<List<dynamic>>('admin_zonas'));
+
+  @override
+  Future<void> guardarZona(Map<String, Object?> datos) =>
+      _cliente.rpc<int>('admin_guardar_zona', params: {'p': datos});
+
+  @override
+  Future<List<Map<String, Object?>>> auditoria({
+    int dias = 30,
+    String? accion,
+  }) async => _filas(
+    await _cliente.rpc<List<dynamic>>(
+      'admin_auditoria',
+      params: {'p_dias': dias, 'p_accion': accion},
+    ),
+  );
 }
 
 /// Se sobrescribe en `main.dart` (y en las pruebas).
@@ -618,8 +662,16 @@ final adminRepositorioProvider = Provider<AdminRepositorio>(
   (ref) => throw UnimplementedError('Falta configurar el repositorio'),
 );
 
-final esAdminProvider = FutureProvider<bool>(
-  (ref) => ref.watch(adminRepositorioProvider).esAdmin(),
+final rolEquipoProvider = FutureProvider<String?>(
+  (ref) => ref.watch(adminRepositorioProvider).rolEquipo(),
+);
+
+final equipoProvider = FutureProvider<List<Map<String, Object?>>>(
+  (ref) => ref.watch(adminRepositorioProvider).equipo(),
+);
+
+final zonasProvider = FutureProvider<List<Map<String, Object?>>>(
+  (ref) => ref.watch(adminRepositorioProvider).zonas(),
 );
 
 final diasPanelProvider = NotifierProvider<DiasPanel, int>(DiasPanel.new);
