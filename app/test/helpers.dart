@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:sosmascota/src/adopcion/adopcion_repositorio.dart';
+import 'package:sosmascota/src/adopcion/apadrinamiento_repositorio.dart';
 import 'package:sosmascota/src/adopcion/pack_repositorio.dart';
 import 'package:sosmascota/src/adopcion/transito_repositorio.dart';
 import 'package:sosmascota/src/agenda/agenda_repositorio.dart';
@@ -49,6 +50,7 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'adopcion_falsa.dart';
 import 'agenda_falsa.dart';
+import 'apadrinamiento_falso.dart';
 import 'avisos_falsos.dart';
 import 'ayuda_falsa.dart';
 import 'chat_falso.dart';
@@ -103,6 +105,7 @@ Widget appDePrueba({
   AdopcionRepositorio? adopcion,
   TransitoRepositorio? transito,
   PackAdopcionRepositorio? pack,
+  ApadrinamientoRepositorio? apadrinamiento,
   EventosRepositorio? eventosRepo,
   VeterinariasRepositorio? veterinarias,
   NoticiasRepositorio? noticias,
@@ -182,6 +185,9 @@ Widget appDePrueba({
     adopcionRepositorioProvider.overrideWithValue(adopcion ?? AdopcionFalsa()),
     transitoRepositorioProvider.overrideWithValue(transito ?? TransitoFalso()),
     packAdopcionRepositorioProvider.overrideWithValue(pack ?? PackFalso()),
+    apadrinamientoRepositorioProvider.overrideWithValue(
+      apadrinamiento ?? ApadrinamientoFalso(),
+    ),
     eventosRepositorioProvider.overrideWithValue(
       eventosRepo ?? EventosFalsos(),
     ),

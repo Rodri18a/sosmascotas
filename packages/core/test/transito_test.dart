@@ -28,22 +28,25 @@ void main() {
     expect(vuelta.activo, isTrue);
   });
 
-  test('el refugio ve el hogar con el primer nombre y si ya tiene un animal', () {
-    final h = HogarDisponible.fromJson({
-      'id': 'u1',
-      'nombre': 'Ana',
-      'barrio': 'Centro',
-      'species_ids': [1],
-      'sizes': ['chico', 'mediano'],
-      'max_days': 30,
-      'has_yard': true,
-      'con_animal': true,
-    });
-    expect(h.nombre, 'Ana');
-    expect(h.tamanos, ['chico', 'mediano']);
-    expect(h.conAnimal, isTrue);
-    expect(h.pedidoAbierto, isFalse);
-  });
+  test(
+    'el refugio ve el hogar con el primer nombre y si ya tiene un animal',
+    () {
+      final h = HogarDisponible.fromJson({
+        'id': 'u1',
+        'nombre': 'Ana',
+        'barrio': 'Centro',
+        'species_ids': [1],
+        'sizes': ['chico', 'mediano'],
+        'max_days': 30,
+        'has_yard': true,
+        'con_animal': true,
+      });
+      expect(h.nombre, 'Ana');
+      expect(h.tamanos, ['chico', 'mediano']);
+      expect(h.conAnimal, isTrue);
+      expect(h.pedidoAbierto, isFalse);
+    },
+  );
 
   test('un pedido de tránsito, con estado y chat', () {
     final p = PedidoTransito.fromJson({
@@ -90,5 +93,39 @@ void main() {
     expect(b.codigo, 'K7M2QX');
     expect(b.usado, isFalse);
     expect(b.activo, isTrue);
+  });
+
+  test('apadrinamiento: lo del negocio con refugios, eventos y padrinos', () {
+    final d = DatosApadrinamiento.fromJson({
+      'es_refugio': false,
+      'puede_ofrecer': true,
+      'ofrecidos': [
+        {
+          'id': 'a1',
+          'status': 'active',
+          'contribution': 'Alimento',
+          'otro': 'Refugio Pando',
+          'evento': 'Feria',
+        },
+      ],
+      'refugios': [
+        {
+          'id': 'r1',
+          'name': 'Refugio Pando',
+          'eventos': [
+            {'id': 'e1', 'title': 'Feria', 'starts_at': '2026-11-08T13:00:00Z'},
+          ],
+        },
+      ],
+    });
+    expect(d.puedeOfrecer, isTrue);
+    expect(d.ofrecidos.single.estado, EstadoApadrinamiento.activo);
+    expect(d.ofrecidos.single.evento, 'Feria');
+    expect(d.refugios.single.eventos.single.titulo, 'Feria');
+    expect(
+      Padrino.fromJson({'name': 'Pet Shop', 'contribution': 'Kit'}).aporte,
+      'Kit',
+    );
+    expect(EstadoApadrinamiento.leer('raro'), EstadoApadrinamiento.terminado);
   });
 }

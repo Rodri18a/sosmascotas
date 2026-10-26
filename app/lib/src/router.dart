@@ -6,6 +6,7 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 import 'cuenta/perfil_repositorio.dart';
 import 'cuenta/servicio_cuenta.dart';
 import 'features/adopcion/adopcion_screen.dart';
+import 'features/adopcion/apadrinamiento_screen.dart';
 import 'features/adopcion/pack_screen.dart';
 import 'features/adopcion/transito_screen.dart';
 import 'features/agenda/reservar_turno.dart';
@@ -91,6 +92,7 @@ abstract final class Rutas {
   static const hogarTransito = '$adopcion/transito';
   static const packAdopcion = '$adopcion/pack';
   static String packNegocio(String id) => '$negocio/pack/$id';
+  static String apadrinar(String id) => '$negocio/apadrinar/$id';
   static String transitoRefugio(String id) => '$negocio/transito/$id';
 
   /// Búsqueda de lugares cerca de [desde] (el centro del mapa).
@@ -117,6 +119,7 @@ abstract final class Rutas {
     '$negocio/chapitas/': Funcionalidades.pedidoChapitas,
     '$negocio/transito/': Funcionalidades.adopcion,
     '$negocio/pack/': Funcionalidades.adopcion,
+    '$negocio/apadrinar/': Funcionalidades.adopcion,
     '$negocio/estadisticas/': Funcionalidades.estadisticas,
     '$negocio/plan/': Funcionalidades.planes,
     negocio: Funcionalidades.comercios,
@@ -405,6 +408,11 @@ final routerProvider = Provider<GoRouter>((ref) {
             path: 'pack/:id',
             builder: (_, state) =>
                 PackNegocioScreen(negocioId: state.pathParameters['id']!),
+          ),
+          GoRoute(
+            path: 'apadrinar/:id',
+            builder: (_, state) =>
+                ApadrinamientoScreen(negocioId: state.pathParameters['id']!),
           ),
           GoRoute(
             path: 'servicios/:id',

@@ -11,6 +11,7 @@ import '../../metricas/metricas.dart';
 import '../../sos/sos_repositorio.dart';
 import '../../utiles/enlaces.dart';
 import '../../widgets/volver.dart';
+import '../adopcion/apadrinamiento_screen.dart';
 import '../legal/legal_screen.dart';
 
 String textoTipoEvento(AppLocalizations t, TipoEvento e) => switch (e) {
@@ -54,6 +55,7 @@ Future<void> mostrarEvento(BuildContext context, WidgetRef ref, Evento e) {
                   style: TextStyle(color: tema.colorScheme.primary),
                 ),
               if (e.organizador case final o?) Text(t.eventoOrganiza(o)),
+              LineaPadrinos(eventoId: e.id),
               if (e.direccion case final d?) Text(d),
               if (e.descripcion case final d?) ...[
                 const SizedBox(height: 8),

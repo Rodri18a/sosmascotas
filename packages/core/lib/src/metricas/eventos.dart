@@ -80,6 +80,7 @@ abstract final class Eventos {
   static const perkSave = 'perk_save';
   static const perkClaim = 'perk_claim';
   static const perkRedeem = 'perk_redeem';
+  static const sponsorshipStatus = 'sponsorship_status';
   static const petSelect = 'pet_select';
   static const catalogOpen = 'catalog_open';
   static const catalogAsk = 'catalog_ask';

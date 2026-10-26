@@ -150,7 +150,7 @@ El objetivo no es solo publicar animales: es que **la adopción salga bien y el 
 
 **Fase 3:**
 - **"Pack adopción"**: veterinarias (primera consulta o castración con descuento) y petshops (kit de bienvenida) para animales adoptados por la app. ✅ 3.4b (D107): gratis para comercios verificados; quien adoptó pide el código en Adopción → Mis solicitudes → Pack adopción y el comercio lo canjea en el modo comercio.
-- **Apadrinamiento** de refugios y ferias de adopción por empresas.
+- **Apadrinamiento** de refugios y ferias de adopción por empresas. ✅ 3.4b (D108): modo comercio → Apadrinar un refugio (comercio verificado) o Padrinos del refugio (refugio); al aceptar, la ficha del refugio o el evento muestra "Apadrinado por".
 - **Hogares de tránsito**: personas que cuidan temporalmente a un animal hasta que se adopte. ✅ 3.4b (D106): Adopción → Hogar de tránsito (me anoto con mi barrio, pauso, respondo pedidos); modo comercio de un refugio verificado → Hogares de tránsito (los de su zona, pedir, cancelar o terminar); al aceptar se abre el chat.
 
 ## 11b. Eventos y denuncias — Fase 2

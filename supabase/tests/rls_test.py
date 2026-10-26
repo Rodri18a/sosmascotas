@@ -2323,6 +2323,61 @@ def main():
                  rest('POST', 'rpc/mis_beneficios_adopcion', {'p_business': vete}, a)[0] in (401, 403))
             pedir('DELETE', f'{URL}/rest/v1/adoptions?id=eq.{ad_pack}', headers=ADMIN)
 
+            print('apadrinamiento (3.4b)')
+            _, refugio_a = pedir('POST', f'{URL}/rest/v1/businesses', {
+                'name': 'Refugio RLS de A', 'business_type': 'shelter', 'kind': 'local', 'owner_id': a_id,
+                'location': 'SRID=4326;POINT(-55.958 -34.717)', 'verification': 'verified', 'is_sample': True},
+                {**ADMIN, 'Prefer': 'return=representation'})
+            refugio_a = refugio_a[0]['id']
+            _, feria = pedir('POST', f'{URL}/rest/v1/events_calendar', {
+                'business_id': refugio_a, 'kind': 'adopcion', 'title': 'Feria RLS',
+                'starts_at': '2030-01-01T10:00:00Z', 'ends_at': '2030-01-01T18:00:00Z',
+                'location': 'SRID=4326;POINT(-55.958 -34.717)'}, {**ADMIN, 'Prefer': 'return=representation'})
+            feria = feria[0]['id']
+            caso('nadie lee los apadrinamientos directo',
+                 bloqueado(rest('GET', 'shelter_sponsorships?select=id', quien=b)))
+            ap_b = rest('POST', 'rpc/apadrinamientos_del_negocio', {'p_business': vete}, b)[1]
+            caso('la veterinaria verificada ve el refugio de su zona con su feria',
+                 ap_b['puede_ofrecer'] is True and any(
+                     r['id'] == refugio_a and [e['title'] for e in r['eventos']] == ['Feria RLS']
+                     for r in ap_b['refugios']))
+            caso('A no ve lo del negocio de B',
+                 rest('POST', 'rpc/apadrinamientos_del_negocio', {'p_business': vete}, a)[0] in (401, 403))
+            caso('un refugio no puede apadrinar', 'solo_comercios_verificados' in json.dumps(rest(
+                'POST', 'rpc/ofrecer_apadrinamiento', {'p_business': refugio, 'p_refugio': refugio_a,
+                                                       'p_aporte': 'Alimento'}, b)[1]))
+            caso('ni con una feria de otro refugio', 'evento_no_disponible' in json.dumps(rest(
+                'POST', 'rpc/ofrecer_apadrinamiento', {'p_business': vete, 'p_refugio': refugio,
+                                                       'p_aporte': 'Alimento', 'p_evento': feria}, b)[1]))
+            s_ap, apadrina = rest('POST', 'rpc/ofrecer_apadrinamiento', {
+                'p_business': vete, 'p_refugio': refugio_a, 'p_aporte': 'Alimento para 20 perros por mes'}, b)
+            caso('la veterinaria ofrece apadrinar al refugio de A', s_ap == 200 and isinstance(apadrina, str))
+            caso('uno abierto por refugio', rest('POST', 'rpc/ofrecer_apadrinamiento', {
+                'p_business': vete, 'p_refugio': refugio_a, 'p_aporte': 'Otra cosa'}, b)[0] == 409)
+            s_fe, ap_feria = rest('POST', 'rpc/ofrecer_apadrinamiento', {
+                'p_business': vete, 'p_refugio': refugio_a, 'p_aporte': 'Castraciones gratis', 'p_evento': feria}, b)
+            caso('y aparte la feria', s_fe == 200)
+            caso('sin aceptar, no se ve en la ficha',
+                 rest('POST', 'rpc/padrinos', {'p_business': refugio_a})[1] == [])
+            caso('B no puede aceptarlo por el refugio', rest('POST', 'rpc/responder_apadrinamiento', {
+                'p_id': apadrina, 'p_aceptar': True}, b)[0] in (401, 403))
+            recibidos = rest('POST', 'rpc/apadrinamientos_del_negocio', {'p_business': refugio_a}, a)[1]['recibidos']
+            caso('el refugio ve los dos ofrecimientos con el nombre del comercio',
+                 len(recibidos) == 2 and {r['otro'] for r in recibidos} == {'Prueba RLS retiro'})
+            caso('el refugio acepta',
+                 rest('POST', 'rpc/responder_apadrinamiento', {'p_id': apadrina, 'p_aceptar': True}, a)[0] in (200, 204)
+                 and rest('POST', 'rpc/responder_apadrinamiento', {'p_id': ap_feria, 'p_aceptar': True}, a)[0] in (200, 204))
+            caso('un visitante ve "Apadrinado por" en la ficha del refugio',
+                 [p['name'] for p in rest('POST', 'rpc/padrinos', {'p_business': refugio_a})[1]] == ['Prueba RLS retiro'])
+            caso('y en la feria', [p['contribution'] for p in rest('POST', 'rpc/padrinos', {'p_evento': feria})[1]]
+                 == ['Castraciones gratis'])
+            caso('A no puede terminar lo de otro', rest('POST', 'rpc/terminar_apadrinamiento', {
+                'p_id': str(uuid.uuid4())}, a)[0] in (401, 403))
+            caso('la veterinaria lo termina y deja de verse',
+                 rest('POST', 'rpc/terminar_apadrinamiento', {'p_id': apadrina}, b)[0] in (200, 204)
+                 and rest('POST', 'rpc/padrinos', {'p_business': refugio_a})[1] == [])
+            pedir('DELETE', f'{URL}/rest/v1/businesses?id=eq.{refugio_a}', headers=ADMIN)
+
             pedir('DELETE', f'{URL}/rest/v1/conversations?id=eq.{conv_tr}', headers=ADMIN)
             pedir('DELETE', f'{URL}/rest/v1/foster_homes?user_id=eq.{a_id}', headers=ADMIN)
             pedir('DELETE', f'{URL}/rest/v1/businesses?id=eq.{refugio}', headers=ADMIN)

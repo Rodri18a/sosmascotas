@@ -17,6 +17,7 @@ import '../../tienda/tienda_repositorio.dart';
 import '../../utiles/enlaces.dart';
 import '../../veterinarias/veterinarias_repositorio.dart';
 import '../../widgets/volver.dart';
+import '../adopcion/apadrinamiento_screen.dart';
 import '../adopcion/pack_screen.dart';
 import '../adopcion/transito_screen.dart';
 import '../agenda/agenda_negocio.dart';
@@ -352,6 +353,13 @@ class _Panel extends ConsumerWidget {
               negocio.verificacion == Verificacion.verified &&
               ref.watch(funcionalidadActivaProvider(Funcionalidades.adopcion)))
             TarjetaPackNegocio(negocioId: negocio.id),
+          // Apadrinamiento (3.4b, D108): comercios y refugios verificados.
+          if (negocio.verificacion == Verificacion.verified &&
+              ref.watch(funcionalidadActivaProvider(Funcionalidades.adopcion)))
+            TarjetaApadrinar(
+              negocioId: negocio.id,
+              esRefugio: negocio.comercio.categoria == Categoria.shelter,
+            ),
           // Reputación y respuestas (1.7): el comercio responde una vez.
           if (ref.watch(funcionalidadActivaProvider(Funcionalidades.resenas)))
             Card(

@@ -12,6 +12,7 @@ import '../../mascotas/catalogo.dart';
 import '../../metricas/metricas.dart';
 import '../../theme/paleta.dart';
 import '../../utiles/enlaces.dart';
+import '../adopcion/apadrinamiento_screen.dart';
 import '../agenda/reservar_turno.dart';
 import '../chat/chat_screen.dart';
 import '../resenas/resenas.dart';
@@ -279,6 +280,9 @@ class FichaComercio extends ConsumerWidget {
                   ),
               ],
             ),
+            // Quién apadrina al refugio (3.4b, D108).
+            if (c.categoria == Categoria.shelter)
+              LineaPadrinos(negocioId: c.id),
             // Catálogo (2.5, D85): solo si el comercio lo tiene prendido.
             BotonCatalogo(comercio: c),
             // Servicios (2.10a, D90): solo con plan Plus.

@@ -4741,6 +4741,118 @@ class AppLocalizationsEs extends AppLocalizations {
   String get packCodigoUsado => 'Ese código ya se usó.';
 
   @override
+  String get apadrinarTitulo => 'Apadrinar un refugio';
+
+  @override
+  String get apadrinarPadrinos => 'Padrinos del refugio';
+
+  @override
+  String get apadrinarTarjeta =>
+      'Ayudá a un refugio de tu zona y que se vea en su ficha.';
+
+  @override
+  String get apadrinarTarjetaRefugio =>
+      'Comercios que se ofrecen a apadrinarte.';
+
+  @override
+  String get apadrinarAyuda =>
+      'Elegí un refugio verificado de tu zona (o una feria suya) y contá qué aportás. Si el refugio acepta, su ficha muestra «Apadrinado por» con tu nombre.';
+
+  @override
+  String get apadrinarRefugioAyuda =>
+      'Si aceptás, tu ficha (o la del evento) muestra «Apadrinado por» con el nombre del comercio y lo que aporta. Lo podés terminar cuando quieras.';
+
+  @override
+  String get apadrinarSinRecibidos => 'Todavía no recibiste ofrecimientos.';
+
+  @override
+  String get apadrinarTuyos => 'Lo que ofreciste';
+
+  @override
+  String get apadrinarRefugios => 'Refugios de tu zona';
+
+  @override
+  String get apadrinarSinRefugios =>
+      'Todavía no hay refugios verificados en tu zona.';
+
+  @override
+  String apadrinarEventos(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n eventos próximos',
+      one: '1 evento próximo',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get apadrinarOfrecer => 'Ofrecer';
+
+  @override
+  String apadrinarA(String nombre) {
+    return 'Apadrinar a $nombre';
+  }
+
+  @override
+  String get apadrinarQue => 'Qué apadrinás';
+
+  @override
+  String get apadrinarAlRefugio => 'Al refugio';
+
+  @override
+  String get apadrinarAporte => 'Qué aportás';
+
+  @override
+  String get apadrinarAporteEjemplo => 'Alimento para 20 perros por mes';
+
+  @override
+  String get apadrinarFaltaAporte => 'Contá qué aportás.';
+
+  @override
+  String get apadrinarAceptar => 'Aceptar';
+
+  @override
+  String get apadrinarRechazar => 'No, gracias';
+
+  @override
+  String get apadrinarTerminar => 'Terminar';
+
+  @override
+  String get apadrinarRetirar => 'Retirar';
+
+  @override
+  String get apadrinarPendiente => 'Esperando que el refugio responda';
+
+  @override
+  String get apadrinarActivo => 'Activo: se ve en la ficha';
+
+  @override
+  String get apadrinarRechazado => 'El refugio dijo que no';
+
+  @override
+  String get apadrinarTerminado => 'Terminado';
+
+  @override
+  String apadrinadoPor(String nombres) {
+    return 'Apadrinado por $nombres';
+  }
+
+  @override
+  String get apadrinarSoloVerificados =>
+      'Solo los comercios verificados pueden apadrinar.';
+
+  @override
+  String get apadrinarNoDisponible =>
+      'Ese refugio o evento ya no está disponible.';
+
+  @override
+  String get apadrinarYaHayUno => 'Ya ofreciste apadrinar eso.';
+
+  @override
+  String get apadrinarLimite => 'Llegaste al máximo de ofrecimientos por hoy.';
+
+  @override
   String get stockNoEsTuya =>
       'Ese código no está entre las chapitas sin usar de tu stock.';
 

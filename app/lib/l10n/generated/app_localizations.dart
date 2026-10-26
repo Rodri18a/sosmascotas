@@ -8008,6 +8008,192 @@ abstract class AppLocalizations {
   /// **'Ese código ya se usó.'**
   String get packCodigoUsado;
 
+  /// No description provided for @apadrinarTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Apadrinar un refugio'**
+  String get apadrinarTitulo;
+
+  /// No description provided for @apadrinarPadrinos.
+  ///
+  /// In es, this message translates to:
+  /// **'Padrinos del refugio'**
+  String get apadrinarPadrinos;
+
+  /// No description provided for @apadrinarTarjeta.
+  ///
+  /// In es, this message translates to:
+  /// **'Ayudá a un refugio de tu zona y que se vea en su ficha.'**
+  String get apadrinarTarjeta;
+
+  /// No description provided for @apadrinarTarjetaRefugio.
+  ///
+  /// In es, this message translates to:
+  /// **'Comercios que se ofrecen a apadrinarte.'**
+  String get apadrinarTarjetaRefugio;
+
+  /// No description provided for @apadrinarAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegí un refugio verificado de tu zona (o una feria suya) y contá qué aportás. Si el refugio acepta, su ficha muestra «Apadrinado por» con tu nombre.'**
+  String get apadrinarAyuda;
+
+  /// No description provided for @apadrinarRefugioAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Si aceptás, tu ficha (o la del evento) muestra «Apadrinado por» con el nombre del comercio y lo que aporta. Lo podés terminar cuando quieras.'**
+  String get apadrinarRefugioAyuda;
+
+  /// No description provided for @apadrinarSinRecibidos.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no recibiste ofrecimientos.'**
+  String get apadrinarSinRecibidos;
+
+  /// No description provided for @apadrinarTuyos.
+  ///
+  /// In es, this message translates to:
+  /// **'Lo que ofreciste'**
+  String get apadrinarTuyos;
+
+  /// No description provided for @apadrinarRefugios.
+  ///
+  /// In es, this message translates to:
+  /// **'Refugios de tu zona'**
+  String get apadrinarRefugios;
+
+  /// No description provided for @apadrinarSinRefugios.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no hay refugios verificados en tu zona.'**
+  String get apadrinarSinRefugios;
+
+  /// No description provided for @apadrinarEventos.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =1{1 evento próximo} other{{n} eventos próximos}}'**
+  String apadrinarEventos(int n);
+
+  /// No description provided for @apadrinarOfrecer.
+  ///
+  /// In es, this message translates to:
+  /// **'Ofrecer'**
+  String get apadrinarOfrecer;
+
+  /// No description provided for @apadrinarA.
+  ///
+  /// In es, this message translates to:
+  /// **'Apadrinar a {nombre}'**
+  String apadrinarA(String nombre);
+
+  /// No description provided for @apadrinarQue.
+  ///
+  /// In es, this message translates to:
+  /// **'Qué apadrinás'**
+  String get apadrinarQue;
+
+  /// No description provided for @apadrinarAlRefugio.
+  ///
+  /// In es, this message translates to:
+  /// **'Al refugio'**
+  String get apadrinarAlRefugio;
+
+  /// No description provided for @apadrinarAporte.
+  ///
+  /// In es, this message translates to:
+  /// **'Qué aportás'**
+  String get apadrinarAporte;
+
+  /// No description provided for @apadrinarAporteEjemplo.
+  ///
+  /// In es, this message translates to:
+  /// **'Alimento para 20 perros por mes'**
+  String get apadrinarAporteEjemplo;
+
+  /// No description provided for @apadrinarFaltaAporte.
+  ///
+  /// In es, this message translates to:
+  /// **'Contá qué aportás.'**
+  String get apadrinarFaltaAporte;
+
+  /// No description provided for @apadrinarAceptar.
+  ///
+  /// In es, this message translates to:
+  /// **'Aceptar'**
+  String get apadrinarAceptar;
+
+  /// No description provided for @apadrinarRechazar.
+  ///
+  /// In es, this message translates to:
+  /// **'No, gracias'**
+  String get apadrinarRechazar;
+
+  /// No description provided for @apadrinarTerminar.
+  ///
+  /// In es, this message translates to:
+  /// **'Terminar'**
+  String get apadrinarTerminar;
+
+  /// No description provided for @apadrinarRetirar.
+  ///
+  /// In es, this message translates to:
+  /// **'Retirar'**
+  String get apadrinarRetirar;
+
+  /// No description provided for @apadrinarPendiente.
+  ///
+  /// In es, this message translates to:
+  /// **'Esperando que el refugio responda'**
+  String get apadrinarPendiente;
+
+  /// No description provided for @apadrinarActivo.
+  ///
+  /// In es, this message translates to:
+  /// **'Activo: se ve en la ficha'**
+  String get apadrinarActivo;
+
+  /// No description provided for @apadrinarRechazado.
+  ///
+  /// In es, this message translates to:
+  /// **'El refugio dijo que no'**
+  String get apadrinarRechazado;
+
+  /// No description provided for @apadrinarTerminado.
+  ///
+  /// In es, this message translates to:
+  /// **'Terminado'**
+  String get apadrinarTerminado;
+
+  /// No description provided for @apadrinadoPor.
+  ///
+  /// In es, this message translates to:
+  /// **'Apadrinado por {nombres}'**
+  String apadrinadoPor(String nombres);
+
+  /// No description provided for @apadrinarSoloVerificados.
+  ///
+  /// In es, this message translates to:
+  /// **'Solo los comercios verificados pueden apadrinar.'**
+  String get apadrinarSoloVerificados;
+
+  /// No description provided for @apadrinarNoDisponible.
+  ///
+  /// In es, this message translates to:
+  /// **'Ese refugio o evento ya no está disponible.'**
+  String get apadrinarNoDisponible;
+
+  /// No description provided for @apadrinarYaHayUno.
+  ///
+  /// In es, this message translates to:
+  /// **'Ya ofreciste apadrinar eso.'**
+  String get apadrinarYaHayUno;
+
+  /// No description provided for @apadrinarLimite.
+  ///
+  /// In es, this message translates to:
+  /// **'Llegaste al máximo de ofrecimientos por hoy.'**
+  String get apadrinarLimite;
+
   /// No description provided for @stockNoEsTuya.
   ///
   /// In es, this message translates to:

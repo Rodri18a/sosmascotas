@@ -176,6 +176,7 @@ Tabla `events` (append-only), escrita por el cliente con `ref.read(metricasProvi
 | `tag_stock_deliver` | la veterinaria entrega un pedido con una chapita de su stock, con `business_id` (2.9, D105) |
 | `foster_home_save` / `foster_request_create` / `foster_request_answer` / `foster_request_close` | hogares de tránsito: la persona se anota (`activo`); el refugio pide o cierra (`estado`), con `business_id`; el hogar responde (`acepta`) (3.4b, D106) |
 | `perk_save` / `perk_claim` / `perk_redeem` | pack adopción: el comercio carga un beneficio (`activo`), quien adoptó pide el código, el comercio lo canjea; con `business_id` (3.4b, D107) |
+| `sponsorship_status` | apadrinamiento: el comercio ofrece (`pending`) o retira, el refugio acepta (`active`) o no (`declined`), cualquiera termina (`ended`); con `business_id` (3.4b, D108) |
 | `news_reaction` | alguien reacciona a una noticia o novedad (D87; lo registra la base, con el tipo y si es noticia o comunidad) |
 | `community_share` / `community_unshare` | el autor de un SOS resuelto comparte o quita el reencuentro en Comunidad (D86; compartir lo registra la base) |
 | `catalog_open` / `catalog_ask` / `product_save` / `order_create` / `order_status` | catálogo y pedidos: abrir, consultar, cargar un producto, pedir (con las unidades) y cada cambio de estado; sin datos de quien pide (D85) |
