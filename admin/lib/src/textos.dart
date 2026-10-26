@@ -1,3 +1,5 @@
+import 'modelos.dart';
+
 /// Textos del portal de administración (en voseo, como la app). El portal es
 /// una herramienta interna: los textos están acá y no en un .arb (D76).
 abstract final class T {
@@ -128,6 +130,51 @@ abstract final class T {
   static const socioFundador = 'Socio Fundador hasta…';
   static const plan = 'Plan…';
   static const resultados = 'Resultados';
+
+  // Propuestas y casos de éxito (2.4, D102).
+  static const propuestas = 'Propuestas';
+  static const armarPropuesta = 'Armar una propuesta';
+  static const propuestaAyuda =
+      'Elegí un rubro, o un comercio del mapa para sumar sus propios números. '
+      'Se descarga una página lista para imprimir o guardar como PDF.';
+  static const comercioOpcional = 'Comercio del mapa (opcional)';
+  static const verDatos = 'Ver datos';
+  static const descargarPropuesta = 'Descargar para imprimir';
+  static const propuestaDescargada =
+      'Listo. Abrila y usá «Imprimir» → «Guardar como PDF».';
+  static const faltaRubro = 'Elegí un rubro o un comercio.';
+  static const casosExito = 'Casos de éxito';
+  static const casosAyuda =
+      'Testimonios con números para usar en ventas. Solo se muestran en las '
+      'propuestas los publicados, y para publicar hace falta el permiso de la empresa.';
+  static const nuevoCaso = 'Nuevo caso';
+  static const editarCaso = 'Editar caso';
+  static const sinCasos = 'Todavía no hay casos de éxito.';
+  static const cita = 'Lo que dijo';
+  static const autorCita = 'Quién lo dijo (ej.: Laura, dueña)';
+  static const numerosCaso = 'Números (ej.: de 40 a 140 aperturas por mes)';
+  static const traerNumeros = 'Traer sus números';
+  static const permisoCaso = 'La empresa autorizó usar su nombre y sus números';
+  static const publicadoCaso = 'Publicado (se usa en las propuestas)';
+  static const borrador = 'Borrador';
+  static const publicado = 'Publicado';
+  static const borrar = 'Borrar';
+  static const casoIncompleto =
+      'Faltan el comercio, el rubro o lo que dijo (10 caracteres o más).';
+  static String numerosDeAperturas(int desde, int hasta) =>
+      'De $desde a $hasta aperturas de la ficha por mes';
+  static String propuestaResumen(Propuesta p) => [
+    'Zona: ${p.zona ?? 'todas'}',
+    'Búsquedas del rubro (${p.dias} días): ${p.busquedas}'
+        '${p.sinResultados > 0 ? ' (${p.sinResultados} sin resultados)' : ''}',
+    'Lugares del rubro en el mapa: ${p.lugares} (${p.verificados} verificados)',
+    'Personas con cuenta: ${p.usuarios ?? 'menos de 5'}',
+    if (p.negocio != null)
+      'El comercio: ${p.numeroDelNegocio('aperturas')} aperturas, '
+          '${p.numeroDelNegocio('contactos')} contactos, '
+          '${p.numeroDelNegocio('favoritos')} favoritos',
+    'Casos de éxito del rubro: ${p.casos.length}',
+  ].join('\n');
   static const resultadosSinDatos = 'Sin movimiento en estos meses.';
   static const resultadosAperturas = 'Aperturas de la ficha';
   static const resultadosPersonas = 'Personas distintas';

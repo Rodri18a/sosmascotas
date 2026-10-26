@@ -7,6 +7,7 @@ import 'package:sosmascota_admin/src/app.dart';
 import 'package:sosmascota_admin/src/modelos.dart';
 import 'package:sosmascota_admin/src/pantallas/chapitas.dart';
 import 'package:sosmascota_admin/src/pantallas/lugares.dart';
+import 'package:sosmascota_admin/src/pantallas/propuestas.dart';
 import 'package:sosmascota_admin/src/repositorio.dart';
 import 'package:sosmascota_admin/src/sesion.dart';
 import 'package:sosmascota_core/sosmascota_core.dart' show EstadisticasNegocio;
@@ -191,6 +192,57 @@ class RepoFalso implements AdminRepositorio {
   @override
   Future<void> planComercio(String negocioId, String plan) async =>
       planes.add((negocioId, plan));
+
+  final propuestasRegistradas = <(String, String?)>[];
+  final casosGuardados = <CasoExito>[];
+  List<CasoExito> casosFijos = const [];
+
+  @override
+  Future<Propuesta> propuesta({String? rubro, String? negocioId}) async =>
+      Propuesta({
+        'rubro': rubro,
+        'dias': 30,
+        'zona': 'Pando y alrededores',
+        'audiencia': {
+          'usuarios': 120,
+          'activos': null,
+          'mascotas': [
+            {'especie': 'Perro', 'cantidad': 80},
+            {'especie': 'Gato', 'cantidad': null},
+          ],
+        },
+        'demanda': {'busquedas': 85, 'sin_resultados': 40},
+        'oferta': {'lugares': 1, 'verificados': 0, 'pagos': 0},
+        'rubro_aperturas': 300,
+        'negocio': negocioId == null
+            ? null
+            : {
+                'nombre': 'Veterinaria Centro',
+                'aperturas': 14,
+                'contactos': 3,
+                'favoritos': 2,
+              },
+        'casos': [
+          {
+            'comercio': 'Pet Shop Luna',
+            'cita': 'Nos llaman más desde la app.',
+            'numeros': 'De 40 a 140 aperturas por mes',
+          },
+        ],
+      });
+
+  @override
+  Future<void> registrarPropuesta(String rubro, {String? negocioId}) async =>
+      propuestasRegistradas.add((rubro, negocioId));
+
+  @override
+  Future<List<CasoExito>> casos() async => casosFijos;
+
+  @override
+  Future<void> guardarCaso(CasoExito caso) async => casosGuardados.add(caso);
+
+  @override
+  Future<void> borrarCaso(String id) async {}
 
   @override
   Future<EstadisticasNegocio> resultadosComercio(String negocioId) async =>
@@ -377,6 +429,10 @@ Widget _portal({
     descargarTextoProvider.overrideWithValue(
       (nombre, contenido) => descargas?.add((nombre, contenido)),
     ),
+    descargarHtmlProvider.overrideWithValue(
+      (nombre, html) => descargas?.add((nombre, html)),
+    ),
+    hoyProvider.overrideWithValue(() => DateTime(2026, 10, 26)),
   ],
   child: const AdminApp(),
 );
@@ -520,6 +576,79 @@ void main() {
     expect(find.text('2026-10'), findsOneWidget);
     expect(find.text('340'), findsOneWidget);
     expect(find.text('52'), findsOneWidget);
+  });
+
+  testWidgets('propuestas: por rubro, se ve el resumen y se descarga (2.4)', (
+    tester,
+  ) async {
+    _pantallaGrande(tester);
+    final repo = RepoFalso();
+    final descargas = <(String, String)>[];
+    await tester.pumpWidget(
+      _portal(
+        sesion: SesionFalsa('admin@x.uy'),
+        repo: repo,
+        descargas: descargas,
+      ),
+    );
+    await tester.pumpAndSettle();
+    await _tocar(tester, find.text('Propuestas'));
+    await _tocar(tester, find.text('Ver datos'));
+    expect(find.text('Elegí un rubro o un comercio.'), findsOneWidget);
+
+    await _tocar(tester, find.byType(DropdownButtonFormField<String>).first);
+    await _tocar(tester, find.text('Peluquería').last);
+    await _tocar(tester, find.text('Ver datos'));
+    expect(
+      find.textContaining(
+        'Búsquedas del rubro (30 días): 85 (40 sin resultados)',
+      ),
+      findsOneWidget,
+    );
+    expect(find.textContaining('Casos de éxito del rubro: 1'), findsOneWidget);
+
+    await _tocar(tester, find.text('Descargar para imprimir'));
+    final (nombre, html) = descargas.single;
+    expect(nombre, 'propuesta-peluqueria-2026-10-26.html');
+    expect(html, contains('SOS Mascota para Peluquería'));
+    expect(html, contains('85</b>búsquedas'));
+    expect(repo.propuestasRegistradas.single, ('grooming', null));
+  });
+
+  testWidgets('casos de éxito: sin permiso no se publica', (tester) async {
+    _pantallaGrande(tester);
+    final repo = RepoFalso();
+    await tester.pumpWidget(
+      _portal(sesion: SesionFalsa('admin@x.uy'), repo: repo),
+    );
+    await tester.pumpAndSettle();
+    await _tocar(tester, find.text('Propuestas'));
+    await _tocar(tester, find.text('Nuevo caso'));
+    await _tocar(tester, find.text('Guardar'));
+    expect(find.textContaining('Faltan el comercio'), findsOneWidget);
+
+    await tester.enterText(
+      find.widgetWithText(TextField, 'Nombre'),
+      'Pet Shop Luna',
+    );
+    await _tocar(tester, find.byType(DropdownButtonFormField<String>).last);
+    await _tocar(tester, find.text('Petshop').last);
+    await tester.enterText(
+      find.widgetWithText(TextField, 'Lo que dijo'),
+      'Desde que estamos en la app nos llaman más.',
+    );
+    // El interruptor de publicar está apagado hasta tener el permiso.
+    final publicar = find.widgetWithText(
+      SwitchListTile,
+      'Publicado (se usa en las propuestas)',
+    );
+    expect(tester.widget<SwitchListTile>(publicar).onChanged, isNull);
+    await _tocar(tester, find.text('Guardar'));
+    final caso = repo.casosGuardados.single;
+    expect(caso.comercio, 'Pet Shop Luna');
+    expect(caso.rubro, 'petshop');
+    expect(caso.permiso, isFalse);
+    expect(caso.publicado, isFalse);
   });
 
   testWidgets('lugares: sin coordenadas no se guarda un local', (tester) async {

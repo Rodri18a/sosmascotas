@@ -67,6 +67,18 @@ abstract interface class AdminRepositorio {
   /// Resultados del comercio, los mismos que ve su dueño (2.3, D101).
   Future<EstadisticasNegocio> resultadosComercio(String negocioId);
 
+  /// Datos para una propuesta (2.4, D102): por rubro, o para un comercio.
+  Future<Propuesta> propuesta({String? rubro, String? negocioId});
+
+  /// Deja anotado en `admin_actions` que se armó una propuesta.
+  Future<void> registrarPropuesta(String rubro, {String? negocioId});
+
+  Future<List<CasoExito>> casos();
+
+  Future<void> guardarCaso(CasoExito caso);
+
+  Future<void> borrarCaso(String id);
+
   /// Publicaciones de adopción en revisión (2 camadas en 12 meses, 06).
   Future<List<Map<String, Object?>>> adopcionesEnRevision();
 
@@ -284,6 +296,35 @@ class SupabaseAdminRepositorio implements AdminRepositorio {
       );
 
   @override
+  Future<Propuesta> propuesta({String? rubro, String? negocioId}) async =>
+      Propuesta(
+        (await _cliente.rpc<Map<String, dynamic>>(
+          'admin_propuesta',
+          params: {'p_rubro': ?rubro, 'p_negocio': ?negocioId},
+        )).cast<String, Object?>(),
+      );
+
+  @override
+  Future<void> registrarPropuesta(String rubro, {String? negocioId}) =>
+      _cliente.rpc<void>(
+        'admin_registrar_propuesta',
+        params: {'p_rubro': rubro, 'p_negocio': negocioId},
+      );
+
+  @override
+  Future<List<CasoExito>> casos() async => _filas(
+    await _cliente.rpc<List<dynamic>>('admin_casos'),
+  ).map(CasoExito.fromJson).toList();
+
+  @override
+  Future<void> guardarCaso(CasoExito caso) =>
+      _cliente.rpc<void>('admin_guardar_caso', params: {'p': caso.toJson()});
+
+  @override
+  Future<void> borrarCaso(String id) =>
+      _cliente.rpc<void>('admin_borrar_caso', params: {'p_id': id});
+
+  @override
   Future<List<Map<String, Object?>>> adopcionesEnRevision() async =>
       _filas(await _cliente.rpc<List<dynamic>>('admin_adopciones_en_revision'));
 
@@ -433,6 +474,10 @@ final lugaresProvider = FutureProvider.family<List<LugarAdmin>, String>(
   (ref, buscar) => ref
       .watch(adminRepositorioProvider)
       .lugares(buscar: buscar.trim().isEmpty ? null : buscar.trim()),
+);
+
+final casosProvider = FutureProvider<List<CasoExito>>(
+  (ref) => ref.watch(adminRepositorioProvider).casos(),
 );
 
 final prospectosProvider = FutureProvider<List<Prospecto>>(

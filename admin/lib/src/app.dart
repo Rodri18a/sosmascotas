@@ -11,6 +11,7 @@ import 'pantallas/lugares.dart';
 import 'pantallas/moderacion.dart';
 import 'pantallas/noticias.dart';
 import 'pantallas/panel.dart';
+import 'pantallas/propuestas.dart';
 import 'pantallas/prospectos.dart';
 import 'repositorio.dart';
 import 'sesion.dart';
@@ -121,6 +122,7 @@ class _PortalState extends ConsumerState<Portal> {
     (Icons.storefront_outlined, T.lugares),
     (Icons.verified_outlined, T.comercios),
     (Icons.handshake_outlined, T.prospectos),
+    (Icons.description_outlined, T.propuestas),
     (Icons.volunteer_activism_outlined, T.ayuda),
     (Icons.newspaper_outlined, T.noticias),
     (Icons.qr_code_2, T.chapitas),
@@ -136,8 +138,9 @@ class _PortalState extends ConsumerState<Portal> {
       3 => const LugaresScreen(),
       4 => const ComerciosScreen(),
       5 => const ProspectosScreen(),
-      6 => const AyudaScreen(),
-      7 => const NoticiasScreen(),
+      6 => const PropuestasScreen(),
+      7 => const AyudaScreen(),
+      8 => const NoticiasScreen(),
       _ => const ChapitasScreen(),
     };
     return Scaffold(

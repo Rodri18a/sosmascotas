@@ -1715,6 +1715,38 @@ def main():
             caso('el reporte del mes en curso no se arma',
                  pedir('POST', f'{URL}/rest/v1/rpc/reporte_mensual_pendiente',
                        {'p_mes': est['hoy'][:8] + '01'}, ADMIN)[0] >= 400)
+            print('propuestas y casos de éxito (2.4, D102)')
+            caso('A no arma propuestas ni ve casos',
+                 rest('POST', 'rpc/admin_propuesta', {'p_rubro': 'petshop'}, a)[0] >= 400
+                 and rest('POST', 'rpc/admin_casos', {}, a)[0] >= 400
+                 and rest('POST', 'rpc/admin_registrar_propuesta', {'p_rubro': 'petshop'}, a)[0] >= 400)
+            caso('un visitante tampoco', rest('POST', 'rpc/admin_propuesta', {'p_rubro': 'petshop'})[0] >= 400)
+            caso('nadie lee ni escribe los casos directamente',
+                 bloqueado(rest('GET', 'success_stories?select=id', quien=x))
+                 and bloqueado(rest('POST', 'success_stories', {'business_name': 'X', 'business_type': 'vet',
+                                                                'quote': 'Una cita de prueba.'}, a)))
+            s_pr, prop = rest('POST', 'rpc/admin_propuesta', {'p_negocio': tienda}, x)
+            caso('la administración arma la propuesta de un comercio (rubro y zona del comercio)',
+                 s_pr == 200 and prop['rubro'] == 'petshop' and prop['negocio']['nombre'] == 'Pet Shop Catálogo RLS'
+                 and prop['negocio']['aperturas'] >= 0 and 'audiencia' in prop and 'oferta' in prop)
+            caso('solo cantidades, y los grupos chicos sin número',
+                 all(m['cantidad'] is None or m['cantidad'] >= 5 for m in prop['audiencia']['mascotas'])
+                 and (prop['audiencia']['usuarios'] is None or prop['audiencia']['usuarios'] >= 5)
+                 and 'user_id' not in str(prop) and 'email' not in str(prop))
+            caso('sin rubro ni comercio no hay propuesta', rest('POST', 'rpc/admin_propuesta', {}, x)[0] >= 400)
+            caso_sin = {'business_name': 'Pet Shop RLS', 'business_type': 'petshop',
+                        'quote': 'Desde que estamos en la app nos llaman más.', 'status': 'published'}
+            caso('no se publica un caso sin el permiso de la empresa',
+                 rest('POST', 'rpc/admin_guardar_caso', {'p': caso_sin}, x)[0] >= 400)
+            s_ca, caso_id = rest('POST', 'rpc/admin_guardar_caso', {'p': {**caso_sin, 'consent': True,
+                                                                          'business_id': tienda}}, x)
+            caso('con permiso se publica y entra en las propuestas del rubro',
+                 s_ca == 200 and any(c['cita'] == caso_sin['quote'] for c in
+                                     rest('POST', 'rpc/admin_propuesta', {'p_rubro': 'petshop'}, x)[1]['casos']))
+            caso('A no borra casos', rest('POST', 'rpc/admin_borrar_caso', {'p_id': caso_id}, a)[0] >= 400)
+            caso('la administración lo borra',
+                 rest('POST', 'rpc/admin_borrar_caso', {'p_id': caso_id}, x)[0] in (200, 204)
+                 and not any(c['id'] == caso_id for c in filas(rest('POST', 'rpc/admin_casos', {}, x))))
             pedir('DELETE', f'{URL}/rest/v1/businesses?id=eq.{tienda}', headers=ADMIN)
 
             print('rubro Agropecuaria (2.8e)')

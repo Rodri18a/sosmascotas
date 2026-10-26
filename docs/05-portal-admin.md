@@ -49,8 +49,8 @@ Por cada empresa:
 - **Promociones:** vistas y usos de cada promo.
 - **Reputación:** promedio de reseñas y su evolución.
 - **Comparaciones:** mes contra mes, y antes contra después de pasar al plan pago.
-- **Reporte mensual automático** (PDF o email) para enviar a la empresa.
-- **Casos de éxito:** testimonios con números, para usar en ventas.
+- **Reporte mensual automático** (PDF o email) para enviar a la empresa. ✅ 2.3 (D101): por push el día 1; el email, con el SMTP. Resultados por empresa en Lugares → «Resultados».
+- **Casos de éxito:** testimonios con números, para usar en ventas. ✅ 2.4 (D102): portal → Propuestas → Casos de éxito (con el permiso de la empresa para publicarlos).
 
 ### 6. Captación de empresas — Fase 1 (CRM) / Fase 2 (datos y propuestas)
 *Objetivo: llegar a un comercio con datos concretos, no con una promesa.*
@@ -59,7 +59,7 @@ Por cada empresa:
 - **Lugares sin reclamar con tracción:** cuántos usuarios lo marcaron y cuántas veces se abrió su ficha. Ejemplo: *"Marcado por 23 usuarios, 140 aperturas de ficha"*. ✅ 1.8.5 (D99): Lugares → «Sin reclamar con tracción», con `admin_sin_reclamar()` y «Ver en Google Maps».
 - **Audiencia por zona y especie:** usuarios y mascotas (*"1.200 perros, 400 gatos"*). Sirve para comercios y para **marcas** (noticias patrocinadas).
 - **Embudo de ventas (mini CRM):** prospecto → contactado → demo → Socio Fundador → pagando → renovó / perdido. Con notas, responsable y fecha del próximo contacto.
-- **Generador de propuesta:** PDF de una página con los datos de su zona y rubro, listo para mostrar en una visita.
+- **Generador de propuesta:** PDF de una página con los datos de su zona y rubro, listo para mostrar en una visita. ✅ 2.4 (D102): portal → Propuestas, con `admin_propuesta()`; se descarga una página para imprimir o guardar como PDF.
 
 ### 7. Planes y cobros — Fase 2
 - Quién paga qué plan, vencimientos y renovaciones.

@@ -267,3 +267,107 @@ class PendienteComercio {
   final DateTime? creado;
   final bool tieneDuenio;
 }
+
+/// Datos de una propuesta para un comercio (`admin_propuesta()`, 2.4, D102).
+/// Los grupos de menos de 5 llegan como `null` ("menos de 5").
+class Propuesta {
+  const Propuesta(this.datos);
+
+  final Map<String, Object?> datos;
+
+  Map<String, Object?> _mapa(String clave) =>
+      ((datos[clave] as Map?) ?? const {}).cast<String, Object?>();
+
+  String get rubro => datos['rubro']! as String;
+  int get dias => (datos['dias'] as num?)?.toInt() ?? 30;
+  String? get zona => datos['zona'] as String?;
+
+  int? get usuarios => (_mapa('audiencia')['usuarios'] as num?)?.toInt();
+  int? get activos => (_mapa('audiencia')['activos'] as num?)?.toInt();
+  List<({String especie, int? cantidad})> get mascotas => [
+    for (final m in (_mapa('audiencia')['mascotas'] as List?) ?? const [])
+      (
+        especie: (m as Map)['especie'] as String,
+        cantidad: (m['cantidad'] as num?)?.toInt(),
+      ),
+  ];
+
+  int get busquedas => (_mapa('demanda')['busquedas'] as num?)?.toInt() ?? 0;
+  int get sinResultados =>
+      (_mapa('demanda')['sin_resultados'] as num?)?.toInt() ?? 0;
+  int get lugares => (_mapa('oferta')['lugares'] as num?)?.toInt() ?? 0;
+  int get verificados => (_mapa('oferta')['verificados'] as num?)?.toInt() ?? 0;
+  int get rubroAperturas => (datos['rubro_aperturas'] as num?)?.toInt() ?? 0;
+
+  /// Lo del comercio, si la propuesta es para uno en particular.
+  Map<String, Object?>? get negocio =>
+      (datos['negocio'] as Map?)?.cast<String, Object?>();
+
+  int numeroDelNegocio(String clave) => (negocio?[clave] as num?)?.toInt() ?? 0;
+
+  List<({String comercio, String cita, String? autor, String? numeros})>
+  get casos => [
+    for (final c in (datos['casos'] as List?) ?? const [])
+      (
+        comercio: (c as Map)['comercio'] as String,
+        cita: c['cita'] as String,
+        autor: c['autor'] as String?,
+        numeros: c['numeros'] as String?,
+      ),
+  ];
+}
+
+/// Caso de éxito para ventas (`success_stories`, 2.4, D102).
+class CasoExito {
+  const CasoExito({
+    required this.id,
+    required this.comercio,
+    required this.rubro,
+    required this.cita,
+    this.negocioId,
+    this.zonaId,
+    this.autor,
+    this.numeros,
+    this.permiso = false,
+    this.publicado = false,
+  });
+
+  factory CasoExito.fromJson(Map<String, Object?> json) => CasoExito(
+    id: json['id']! as String,
+    negocioId: json['business_id'] as String?,
+    comercio: json['business_name']! as String,
+    rubro: json['business_type']! as String,
+    zonaId: (json['zone_id'] as num?)?.toInt(),
+    cita: json['quote']! as String,
+    autor: json['author'] as String?,
+    numeros: json['numbers'] as String?,
+    permiso: json['consent'] as bool? ?? false,
+    publicado: json['status'] == 'published',
+  );
+
+  final String id;
+  final String? negocioId;
+  final String comercio;
+  final String rubro;
+  final int? zonaId;
+  final String cita;
+  final String? autor;
+  final String? numeros;
+
+  /// La empresa autorizó usar su nombre y sus números.
+  final bool permiso;
+  final bool publicado;
+
+  Map<String, Object?> toJson() => {
+    'id': id.isEmpty ? null : id,
+    'business_id': negocioId,
+    'business_name': comercio,
+    'business_type': rubro,
+    'zone_id': zonaId,
+    'quote': cita,
+    'author': autor,
+    'numbers': numeros,
+    'consent': permiso,
+    'status': publicado ? 'published' : 'draft',
+  };
+}
