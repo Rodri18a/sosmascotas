@@ -2071,5 +2071,10 @@
   "descuentosSinPropios": "Todavía no cargaste descuentos.",
   "descuentoTituloEjemplo": "Por ejemplo: 10 % en baños",
   "descuentoResumen": "{pedidos, plural, =1{1 código pedido} other{{pedidos} códigos pedidos}} · usado {usados, plural, =1{1 vez} other{{usados} veces}}",
-  "@descuentoResumen": {"placeholders": {"pedidos": {"type": "int"}, "usados": {"type": "int"}}}
+  "@descuentoResumen": {"placeholders": {"pedidos": {"type": "int"}, "usados": {"type": "int"}}},
+  "panelParaAtender": "Para atender",
+  "panelPedidosNuevos": "{n, plural, =1{1 pedido nuevo} other{{n} pedidos nuevos}}",
+  "@panelPedidosNuevos": {"placeholders": {"n": {"type": "int"}}},
+  "panelTurnosPendientes": "{n, plural, =1{1 turno por confirmar} other{{n} turnos por confirmar}}",
+  "@panelTurnosPendientes": {"placeholders": {"n": {"type": "int"}}}
 }

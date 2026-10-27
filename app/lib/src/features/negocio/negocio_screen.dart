@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
+import '../../agenda/agenda_repositorio.dart';
 import '../../comercios/comercios_repositorio.dart';
 import '../../comercios/negocios_repositorio.dart';
 import '../../comercios/textos_comercio.dart';
@@ -112,6 +113,15 @@ class _NegocioScreenState extends ConsumerState<NegocioScreen> {
       AsyncData(value: final lista) => () {
         final negocio =
             lista.where((n) => n.id == _elegido).firstOrNull ?? lista.first;
+        final ancho = MediaQuery.sizeOf(context).width;
+        final grande = ancho >= 900;
+        final secciones = [
+          (Icons.insights_outlined, t.negocioPanel),
+          (Icons.event_outlined, t.negocioAgenda),
+          (Icons.inventory_2_outlined, t.negocioCatalogo),
+          (Icons.receipt_long_outlined, t.negocioPedidos),
+          (Icons.storefront_outlined, t.negocioFicha),
+        ];
         return Scaffold(
           appBar: AppBar(
             leading: volverSiNoHayAtras(context),
@@ -136,48 +146,73 @@ class _NegocioScreenState extends ConsumerState<NegocioScreen> {
               ),
             ],
           ),
-          body: Column(
-            children: [
-              _Cabecera(negocio: negocio),
-              const Divider(height: 1),
-              Expanded(
-                child: switch (_seccion) {
-                  _Seccion.panel => _Panel(negocio: negocio),
-                  _Seccion.agenda => _Agenda(negocio: negocio),
-                  _Seccion.catalogo => _Tienda(negocio: negocio),
-                  _Seccion.pedidos => _Tienda(negocio: negocio, pedidos: true),
-                  _Seccion.negocio => _Ficha(negocio: negocio),
-                },
-              ),
-            ],
-          ),
-          bottomNavigationBar: NavigationBar(
-            selectedIndex: _seccion.index,
-            onDestinationSelected: (i) =>
-                setState(() => _seccion = _Seccion.values[i]),
-            destinations: [
-              NavigationDestination(
-                icon: const Icon(Icons.insights_outlined),
-                label: t.negocioPanel,
-              ),
-              NavigationDestination(
-                icon: const Icon(Icons.event_outlined),
-                label: t.negocioAgenda,
-              ),
-              NavigationDestination(
-                icon: const Icon(Icons.inventory_2_outlined),
-                label: t.negocioCatalogo,
-              ),
-              NavigationDestination(
-                icon: const Icon(Icons.receipt_long_outlined),
-                label: t.negocioPedidos,
-              ),
-              NavigationDestination(
-                icon: const Icon(Icons.storefront_outlined),
-                label: t.negocioFicha,
-              ),
-            ],
-          ),
+          body: () {
+            final contenido = Column(
+              children: [
+                _Cabecera(negocio: negocio),
+                const Divider(height: 1),
+                Expanded(
+                  child: switch (_seccion) {
+                    _Seccion.panel => _Panel(
+                      negocio: negocio,
+                      onIr: (s) => setState(() => _seccion = s),
+                    ),
+                    _Seccion.agenda => _Agenda(negocio: negocio),
+                    _Seccion.catalogo => _Tienda(negocio: negocio),
+                    _Seccion.pedidos => _Tienda(
+                      negocio: negocio,
+                      pedidos: true,
+                    ),
+                    _Seccion.negocio => _Ficha(negocio: negocio),
+                  },
+                ),
+              ],
+            );
+            if (!grande) return contenido;
+            // Portal web de empresas v1 (2.10, D114): en la computadora, el
+            // mismo modo comercio con el menú al costado.
+            return Row(
+              children: [
+                NavigationRail(
+                  selectedIndex: _seccion.index,
+                  extended: ancho >= 1200,
+                  labelType: ancho >= 1200
+                      ? NavigationRailLabelType.none
+                      : NavigationRailLabelType.all,
+                  onDestinationSelected: (i) =>
+                      setState(() => _seccion = _Seccion.values[i]),
+                  destinations: [
+                    for (final (icono, texto) in secciones)
+                      NavigationRailDestination(
+                        icon: Icon(icono),
+                        label: Text(texto),
+                      ),
+                  ],
+                ),
+                const VerticalDivider(width: 1),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 1200),
+                      child: contenido,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }(),
+          bottomNavigationBar: grande
+              ? null
+              : NavigationBar(
+                  selectedIndex: _seccion.index,
+                  onDestinationSelected: (i) =>
+                      setState(() => _seccion = _Seccion.values[i]),
+                  destinations: [
+                    for (final (icono, texto) in secciones)
+                      NavigationDestination(icon: Icon(icono), label: texto),
+                  ],
+                ),
         );
       }(),
       AsyncLoading() => const Scaffold(
@@ -202,6 +237,80 @@ String textoVerificacion(AppLocalizations t, Verificacion v) => switch (v) {
   Verificacion.pending => t.verifPendiente,
   Verificacion.verified => t.verifSi,
 };
+
+/// Pedidos nuevos y turnos por confirmar; nada si no hay.
+class _ParaAtender extends ConsumerWidget {
+  const _ParaAtender({required this.negocio, this.onIr});
+
+  final MiNegocio negocio;
+  final ValueChanged<_Seccion>? onIr;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = context.t;
+    final pedidos =
+        (ref.watch(pedidosDelNegocioProvider(negocio.id)).value ?? const [])
+            .where((p) => p.estado == EstadoPedido.nuevo)
+            .length;
+    final turnos =
+        ref.watch(funcionalidadActivaProvider(Funcionalidades.agenda))
+        ? (ref.watch(turnosDelNegocioProvider(negocio.id)).value ?? const [])
+              .where((x) => x.estado == EstadoTurno.pendiente)
+              .length
+        : 0;
+    if (pedidos == 0 && turnos == 0) return const SizedBox.shrink();
+    return Card(
+      color: Theme.of(context).colorScheme.secondaryContainer,
+      child: Column(
+        children: [
+          ListTile(title: Text(t.panelParaAtender)),
+          if (pedidos > 0)
+            ListTile(
+              leading: const Icon(Icons.receipt_long_outlined),
+              title: Text(t.panelPedidosNuevos(pedidos)),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => onIr?.call(_Seccion.pedidos),
+            ),
+          if (turnos > 0)
+            ListTile(
+              leading: const Icon(Icons.event_outlined),
+              title: Text(t.panelTurnosPendientes(turnos)),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => onIr?.call(_Seccion.agenda),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Las tarjetas del panel: una debajo de la otra en el celular, y en dos
+/// columnas en una pantalla grande (portal de empresas, D114).
+class _ListaPanel extends StatelessWidget {
+  const _ListaPanel({required this.children});
+
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (context, lugar) {
+      if (lugar.maxWidth < 900) {
+        return ListView(padding: const EdgeInsets.all(16), children: children);
+      }
+      final ancho = (lugar.maxWidth - 32 - 12) / 2;
+      return SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Wrap(
+          spacing: 12,
+          runSpacing: 4,
+          children: [
+            for (final c in children) SizedBox(width: ancho, child: c),
+          ],
+        ),
+      );
+    },
+  );
+}
 
 class _Cabecera extends StatelessWidget {
   const _Cabecera({required this.negocio});
@@ -233,18 +342,22 @@ class _Cabecera extends StatelessWidget {
 
 /// Panel básico con los contadores de `events` (1.3.6).
 class _Panel extends ConsumerWidget {
-  const _Panel({required this.negocio});
+  const _Panel({required this.negocio, this.onIr});
 
   final MiNegocio negocio;
+
+  /// Ir a otra sección (desde «Para atender»).
+  final ValueChanged<_Seccion>? onIr;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final t = context.t;
     final tema = Theme.of(context);
     return switch (ref.watch(panelNegocioProvider(negocio.id))) {
-      AsyncData(value: final p) => ListView(
-        padding: const EdgeInsets.all(16),
+      AsyncData(value: final p) => _ListaPanel(
         children: [
+          // Lo que espera respuesta (portal de empresas, 2.10, D114).
+          _ParaAtender(negocio: negocio, onIr: onIr),
           // Plan, vencimiento y pagos (2.2, D103).
           if (ref.watch(funcionalidadActivaProvider(Funcionalidades.planes)))
             Card(

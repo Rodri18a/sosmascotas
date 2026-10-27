@@ -9123,6 +9123,24 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'{pedidos, plural, =1{1 código pedido} other{{pedidos} códigos pedidos}} · usado {usados, plural, =1{1 vez} other{{usados} veces}}'**
   String descuentoResumen(int pedidos, int usados);
+
+  /// No description provided for @panelParaAtender.
+  ///
+  /// In es, this message translates to:
+  /// **'Para atender'**
+  String get panelParaAtender;
+
+  /// No description provided for @panelPedidosNuevos.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =1{1 pedido nuevo} other{{n} pedidos nuevos}}'**
+  String panelPedidosNuevos(int n);
+
+  /// No description provided for @panelTurnosPendientes.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =1{1 turno por confirmar} other{{n} turnos por confirmar}}'**
+  String panelTurnosPendientes(int n);
 }
 
 class _AppLocalizationsDelegate

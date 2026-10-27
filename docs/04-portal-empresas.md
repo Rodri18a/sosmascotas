@@ -7,7 +7,7 @@
 - **Fase 2:** portal v1 con estadísticas, reporte mensual, promociones y catálogo.
 - **Fase 3:** portal completo con agenda, pedidos, socios y varios usuarios por empresa.
 
-Tecnología: **Flutter Web**, reutilizando el código del modo comercio. Se entra con la misma cuenta de la app.
+Tecnología: **Flutter Web**, reutilizando el código del modo comercio. Se entra con la misma cuenta de la app. ✅ 2.10 (D114): el portal **es el modo comercio de la app en pantalla grande** (menú al costado, panel en dos columnas y «Para atender»), no un proyecto aparte.
 
 ## Funciones
 

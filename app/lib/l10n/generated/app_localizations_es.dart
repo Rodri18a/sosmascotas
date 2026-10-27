@@ -5440,4 +5440,29 @@ class AppLocalizationsEs extends AppLocalizations {
     );
     return '$_temp0 · usado $_temp1';
   }
+
+  @override
+  String get panelParaAtender => 'Para atender';
+
+  @override
+  String panelPedidosNuevos(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n pedidos nuevos',
+      one: '1 pedido nuevo',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String panelTurnosPendientes(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n turnos por confirmar',
+      one: '1 turno por confirmar',
+    );
+    return '$_temp0';
+  }
 }
