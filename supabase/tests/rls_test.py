@@ -2021,6 +2021,99 @@ def main():
             pedir('DELETE', f'{URL}/rest/v1/businesses?id=in.({hotel},{pelu})', headers=ADMIN)
             pedir('DELETE', f'{URL}/rest/v1/pets?id=in.({m1},{m2})', headers=ADMIN)
 
+            print('comunidad por raza y especie (3.4, D116)')
+            grupos_v = filas(rest('POST', 'rpc/grupos', {}))
+            perros = next((g['id'] for g in grupos_v if g['kind'] == 'species' and g['name'] == 'Perros'), None)
+            caso('un visitante ve los grupos de entrada (especies y temas)',
+                 perros is not None and any(g['kind'] == 'topic' for g in grupos_v))
+            caso('nadie lee ni escribe la comunidad directamente',
+                 bloqueado(rest('GET', 'community_posts?select=id', quien=a))
+                 and bloqueado(rest('GET', 'community_greetings?select=id', quien=a))
+                 and bloqueado(rest('POST', 'community_groups', {'kind': 'topic', 'name': 'Hackeado'}, a))
+                 and bloqueado(rest('POST', 'community_members', {'group_id': perros, 'user_id': a_id}, a)))
+            caso('sin ser parte no se publica',
+                 rest('POST', 'rpc/publicar', {'p_grupo': perros, 'p_tipo': 'question', 'p_texto': 'Hola'}, a)[0] >= 400)
+            caso('un visitante no se une', rest('POST', 'rpc/unirme_grupo', {'p_grupo': perros})[0] >= 400)
+            rest('POST', 'rpc/unirme_grupo', {'p_grupo': perros}, a)
+            rest('POST', 'rpc/unirme_grupo', {'p_grupo': perros}, b)
+            caso('A y B se unen a Perros',
+                 next(g for g in filas(rest('POST', 'rpc/grupos', {}, a)) if g['id'] == perros)['soy_miembro'])
+            caso('no se publica venta ni cruza',
+                 rest('POST', 'rpc/publicar', {'p_grupo': perros, 'p_tipo': 'question',
+                                               'p_texto': 'Vendo cachorros de labrador'}, a)[0] >= 400)
+            caso('ni fotos de la carpeta de otro',
+                 rest('POST', 'rpc/publicar', {'p_grupo': perros, 'p_tipo': 'tip', 'p_texto': 'Mirá',
+                                               'p_fotos': [f'{b_id}/x.jpg']}, a)[0] >= 400)
+            s_pu, post = rest('POST', 'rpc/publicar', {'p_grupo': perros, 'p_tipo': 'question',
+                                                       'p_texto': '¿Cada cuánto baño a mi perro?',
+                                                       'p_fotos': [f'{a_id}/foto.jpg']}, a)
+            caso('A publica una pregunta con foto de su carpeta', s_pu == 200)
+            lista_p = filas(rest('POST', 'rpc/publicaciones_de', {'p_grupo': perros}))
+            mia = next((p for p in lista_p if p['id'] == post), None)
+            caso('un visitante la ve con el primer nombre y sin el id de quien escribe',
+                 mia is not None and mia['autor'] == 'Prueba' and 'author_id' not in mia)
+            s_co, comentario = rest('POST', 'rpc/comentar', {'p_post': post, 'p_texto': 'Una vez al mes'}, b)
+            caso('B comenta', s_co == 200)
+            caso('un visitante no comenta', rest('POST', 'rpc/comentar', {'p_post': post, 'p_texto': 'Hola'})[0] >= 400)
+            det = rest('POST', 'rpc/publicacion', {'p_id': post}, a)[1]
+            caso('el detalle trae el comentario y "es mío" para A',
+                 det['es_mio'] is True and len(det['comentarios']) == 1 and det['comentarios'][0]['es_mio'] is False)
+            caso('B no borra lo de A',
+                 rest('POST', 'rpc/borrar_de_comunidad', {'p_tipo': 'post', 'p_id': post}, b)[0] >= 400)
+            caso('A no se saluda a sí mismo',
+                 rest('POST', 'rpc/saludar', {'p_tipo': 'post', 'p_id': post, 'p_mensaje': 'Hola'}, a)[0] >= 400)
+            s_sa, saludo = rest('POST', 'rpc/saludar', {'p_tipo': 'post', 'p_id': post,
+                                                       'p_mensaje': 'Hola, mi perro también'}, b)
+            caso('B saluda a quien publicó (sin conocer su id)', s_sa == 200)
+            caso('saludar otra vez devuelve el mismo saludo',
+                 rest('POST', 'rpc/saludar', {'p_tipo': 'post', 'p_id': post, 'p_mensaje': 'Hola'}, b)[1] == saludo)
+            caso('A tiene un saludo pendiente', rest('POST', 'rpc/saludos_pendientes', {}, a)[1] == 1)
+            caso('B no responde su propio saludo',
+                 rest('POST', 'rpc/responder_saludo', {'p_id': saludo, 'p_aceptar': True}, b)[0] >= 400)
+            s_rs, chat_u = rest('POST', 'rpc/responder_saludo', {'p_id': saludo, 'p_aceptar': True}, a)
+            caso('A acepta y se abre un chat entre los dos con el saludo como primer mensaje',
+                 s_rs == 200 and filas(rest('GET', f'messages?select=body&conversation_id=eq.{chat_u}', quien=b))[0]['body']
+                 == 'Hola, mi perro también')
+            conv = next((c for c in filas(rest('POST', 'rpc/mis_conversaciones', {}, b)) if c['id'] == chat_u), None)
+            caso('en el chat se ve solo el primer nombre', conv is not None and conv['otro_nombre'] == 'Prueba')
+            s_sb, saludo2 = rest('POST', 'rpc/saludar', {'p_tipo': 'comment', 'p_id': comentario,
+                                                        'p_mensaje': '¡Gracias!'}, a)
+            rest('POST', 'rpc/responder_saludo', {'p_id': saludo2, 'p_aceptar': False}, b)
+            caso('rechazado, no se vuelve a saludar por 30 días',
+                 rest('POST', 'rpc/saludar', {'p_tipo': 'comment', 'p_id': comentario, 'p_mensaje': 'Hola'}, a)[0] >= 400)
+            for quien in (a, b):
+                rest('POST', 'flags', {'target_type': 'post', 'target_id': post, 'reason': 'venta'}, quien, 'return=minimal')
+            caso('con 2 reportes sigue visible', rest('POST', 'rpc/publicacion', {'p_id': post})[1] is not None)
+            z_id, z = crear_usuario('z')
+            try:
+                rest('POST', 'flags', {'target_type': 'post', 'target_id': post, 'reason': 'venta'}, z, 'return=minimal')
+            finally:
+                pedir('DELETE', f'{URL}/auth/v1/admin/users/{z_id}', headers=ADMIN)
+            caso('con 3 reportes se oculta sola', rest('POST', 'rpc/publicacion', {'p_id': post})[1] is None)
+            caso('y aparece en la moderación del portal',
+                 any(m['target_type'] == 'post' and m['target_id'] == post
+                     for m in filas(rest('POST', 'rpc/admin_moderacion', {}, x))))
+            caso('nadie sin rol modera ni crea grupos',
+                 rest('POST', 'rpc/admin_moderar', {'p_tipo': 'post', 'p_id': post, 'p_accion': 'aprobar'}, a)[0] >= 400
+                 and rest('POST', 'rpc/admin_guardar_grupo', {'p': {'name': 'Hackeado'}}, a)[0] >= 400)
+            caso('la administración la aprueba y vuelve a verse',
+                 rest('POST', 'rpc/admin_moderar', {'p_tipo': 'post', 'p_id': post, 'p_accion': 'aprobar'}, x)[0] in (200, 204)
+                 and rest('POST', 'rpc/publicacion', {'p_id': post})[1] is not None)
+            labrador = filas(rest('GET', 'breeds?select=id&species_id=eq.1&name=eq.Labrador'))
+            if labrador:
+                caso('el grupo de raza solo se pide con una mascota de esa raza',
+                     rest('POST', 'rpc/grupo_de_raza', {'p_raza': labrador[0]['id']}, b)[0] >= 400)
+                m_lab = filas(rest('POST', 'pets', {'name': 'Rex', 'species_id': 1, 'breed_id': labrador[0]['id']}, b))[0]['id']
+                s_gr, gr = rest('POST', 'rpc/grupo_de_raza', {'p_raza': labrador[0]['id']}, b)
+                caso('con un labrador, B obtiene el grupo de la raza (siempre el mismo)',
+                     s_gr == 200 and rest('POST', 'rpc/grupo_de_raza', {'p_raza': labrador[0]['id']}, b)[1] == gr)
+                pedir('DELETE', f'{URL}/rest/v1/pets?id=eq.{m_lab}', headers=ADMIN)
+            pedir('DELETE', f'{URL}/rest/v1/community_posts?id=eq.{post}', headers=ADMIN)
+            pedir('DELETE', f'{URL}/rest/v1/community_greetings?id=in.({saludo},{saludo2})', headers=ADMIN)
+            pedir('DELETE', f'{URL}/rest/v1/conversations?id=eq.{chat_u}', headers=ADMIN)
+            pedir('DELETE', f'{URL}/rest/v1/community_members?group_id=eq.{perros}&user_id=in.({a_id},{b_id})',
+                  headers=ADMIN)
+
             print('rubro Agropecuaria (2.8e)')
             s_ag, agro = rest('POST', 'rpc/alta_negocio', {'p': {
                 'name': 'Agropecuaria RLS', 'business_type': 'agro', 'kind': 'local', 'lat': -34.7213, 'lng': -55.9613}}, a)

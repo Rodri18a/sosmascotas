@@ -7,6 +7,7 @@ import '../../comercios/textos_comercio.dart';
 import '../../cuenta/con_cuenta.dart';
 import '../../cuenta/servicio_cuenta.dart';
 import '../../eventos/eventos_repositorio.dart';
+import '../../funcionalidades/funcionalidades_activas.dart';
 import '../../mascotas/catalogo.dart';
 import '../../mascotas/mascota_elegida.dart';
 import '../../mascotas/mascotas_repositorio.dart';
@@ -17,6 +18,7 @@ import '../../utiles/enlaces.dart';
 import '../../widgets/boton_ajustes.dart';
 import '../../widgets/boton_avisos.dart';
 import '../../widgets/boton_mensajes.dart';
+import '../comunidad/comunidad_screen.dart';
 import '../eventos/eventos.dart';
 import '../menu/menu_principal.dart';
 import '../sos/sos_detalle_screen.dart';
@@ -367,6 +369,9 @@ class _Comunidad extends ConsumerWidget {
           padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
           child: Text(t.comunidadExplicacion, style: tema.textTheme.bodySmall),
         ),
+        // Grupos por raza y especie (3.4, D116).
+        if (ref.watch(funcionalidadActivaProvider(Funcionalidades.grupos)))
+          const TarjetaGrupos(),
         if (enResumen.isNotEmpty)
           Card(
             margin: const EdgeInsets.fromLTRB(16, 12, 16, 0),

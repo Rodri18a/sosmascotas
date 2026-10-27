@@ -161,6 +161,17 @@ class RepoFalso implements AdminRepositorio {
   @override
   Future<List<EntradaAyuda>> ayuda() async => const [];
 
+  final gruposGuardados = <Map<String, Object?>>[];
+
+  @override
+  Future<List<GrupoAdmin>> grupos() async => const [
+    GrupoAdmin(id: 'g1', tipo: 'species', nombre: 'Perros', icono: '🐶'),
+  ];
+
+  @override
+  Future<void> guardarGrupo(Map<String, Object?> datos) async =>
+      gruposGuardados.add(datos);
+
   var pendientes = <PendienteComercio>[
     const PendienteComercio(
       tipo: 'claim',
@@ -1092,6 +1103,30 @@ void main() {
       repo.ayudaGuardada.single,
       containsPair('link', 'https://patitas.uy/adopciones'),
     );
+  });
+
+  testWidgets('grupos: crear un tema nuevo (3.4)', (tester) async {
+    _pantallaGrande(tester);
+    final repo = RepoFalso(rol: 'moderator');
+    await tester.pumpWidget(
+      _portal(sesion: SesionFalsa('mod@x.uy'), repo: repo),
+    );
+    await tester.pumpAndSettle();
+    await _tocar(tester, find.byIcon(Icons.forum_outlined));
+    expect(find.text('Perros'), findsOneWidget);
+    await _tocar(tester, find.text('Nuevo grupo'));
+    await tester.enterText(
+      find.widgetWithText(TextField, 'Nombre'),
+      'Viajar con mascotas',
+    );
+    await _tocar(tester, find.text('Guardar'));
+    expect(repo.gruposGuardados.single, {
+      'kind': 'topic',
+      'name': 'Viajar con mascotas',
+      'description': '',
+      'icon': '',
+      'status': 'active',
+    });
   });
 
   testWidgets('salir vuelve al ingreso', (tester) async {

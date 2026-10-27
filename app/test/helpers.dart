@@ -19,6 +19,7 @@ import 'package:sosmascota/src/comercios/descuentos_repositorio.dart';
 import 'package:sosmascota/src/comercios/mis_lugares.dart';
 import 'package:sosmascota/src/comercios/negocios_repositorio.dart';
 import 'package:sosmascota/src/comercios/resenas_repositorio.dart';
+import 'package:sosmascota/src/comunidad/comunidad_repositorio.dart';
 import 'package:sosmascota/src/config/env_provider.dart';
 import 'package:sosmascota/src/config/supabase_providers.dart';
 import 'package:sosmascota/src/cuenta/perfil_repositorio.dart';
@@ -59,6 +60,7 @@ import 'avisos_falsos.dart';
 import 'ayuda_falsa.dart';
 import 'chat_falso.dart';
 import 'comercios_falsos.dart';
+import 'comunidad_falsa.dart';
 import 'cuenta_falsa.dart';
 import 'cuidados_falsos.dart';
 import 'descuentos_falsos.dart';
@@ -120,6 +122,7 @@ Widget appDePrueba({
   TiendaRepositorio? tienda,
   AgendaRepositorio? agenda,
   CuidadosRepositorio? cuidados,
+  ComunidadRepositorio? comunidad,
   PlanUsuarioRepositorio? planUsuario,
   AlmacenFiltros? almacenFiltros,
   DescuentosRepositorio? descuentos,
@@ -210,6 +213,9 @@ Widget appDePrueba({
     tiendaRepositorioProvider.overrideWithValue(tienda ?? TiendaFalsa()),
     agendaRepositorioProvider.overrideWithValue(agenda ?? AgendaFalsa()),
     cuidadosRepositorioProvider.overrideWithValue(cuidados ?? CuidadosFalsos()),
+    comunidadRepositorioProvider.overrideWithValue(
+      comunidad ?? ComunidadFalsa(),
+    ),
     descuentosRepositorioProvider.overrideWithValue(
       descuentos ?? DescuentosFalsos(),
     ),

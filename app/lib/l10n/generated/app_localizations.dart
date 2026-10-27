@@ -9555,6 +9555,300 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Para que aparezca «Contratar» en tu ficha, prendé «Tomar turnos desde la app» en Turnos.'**
   String get cuidadosPrenderAgenda;
+
+  /// No description provided for @comunidadPregunta.
+  ///
+  /// In es, this message translates to:
+  /// **'Pregunta'**
+  String get comunidadPregunta;
+
+  /// No description provided for @comunidadConsejo.
+  ///
+  /// In es, this message translates to:
+  /// **'Consejo'**
+  String get comunidadConsejo;
+
+  /// No description provided for @comunidadExperiencia.
+  ///
+  /// In es, this message translates to:
+  /// **'Experiencia'**
+  String get comunidadExperiencia;
+
+  /// No description provided for @comunidadProhibido.
+  ///
+  /// In es, this message translates to:
+  /// **'En la comunidad no se publican ventas ni cruzas de animales. Para dar en adopción está la sección Adopción.'**
+  String get comunidadProhibido;
+
+  /// No description provided for @comunidadUnite.
+  ///
+  /// In es, this message translates to:
+  /// **'Unite al grupo para participar'**
+  String get comunidadUnite;
+
+  /// No description provided for @comunidadLimite.
+  ///
+  /// In es, this message translates to:
+  /// **'Llegaste al máximo por hoy. Probá mañana.'**
+  String get comunidadLimite;
+
+  /// No description provided for @comunidadNoQuiere.
+  ///
+  /// In es, this message translates to:
+  /// **'Esa persona no quiere chatear por ahora.'**
+  String get comunidadNoQuiere;
+
+  /// No description provided for @comunidadGrupos.
+  ///
+  /// In es, this message translates to:
+  /// **'Grupos'**
+  String get comunidadGrupos;
+
+  /// No description provided for @comunidadGruposAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Por raza, especie y temas: preguntas, consejos y experiencias'**
+  String get comunidadGruposAyuda;
+
+  /// No description provided for @comunidadReglas.
+  ///
+  /// In es, this message translates to:
+  /// **'Sin ventas ni cruzas de animales, y sin datos de dónde vive tu mascota. De cada persona se ve solo el primer nombre.'**
+  String get comunidadReglas;
+
+  /// No description provided for @comunidadIngresar.
+  ///
+  /// In es, this message translates to:
+  /// **'Ingresá para participar en los grupos'**
+  String get comunidadIngresar;
+
+  /// No description provided for @comunidadSaludos.
+  ///
+  /// In es, this message translates to:
+  /// **'Saludos'**
+  String get comunidadSaludos;
+
+  /// No description provided for @comunidadTuRaza.
+  ///
+  /// In es, this message translates to:
+  /// **'Sumate al grupo de la raza de tu mascota'**
+  String get comunidadTuRaza;
+
+  /// No description provided for @comunidadMisGrupos.
+  ///
+  /// In es, this message translates to:
+  /// **'Tus grupos'**
+  String get comunidadMisGrupos;
+
+  /// No description provided for @comunidadPorEspecie.
+  ///
+  /// In es, this message translates to:
+  /// **'Por especie'**
+  String get comunidadPorEspecie;
+
+  /// No description provided for @comunidadTemas.
+  ///
+  /// In es, this message translates to:
+  /// **'Temas'**
+  String get comunidadTemas;
+
+  /// No description provided for @comunidadPorRaza.
+  ///
+  /// In es, this message translates to:
+  /// **'Por raza'**
+  String get comunidadPorRaza;
+
+  /// No description provided for @comunidadMiembros.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =0{Sin integrantes todavía} =1{1 integrante} other{{n} integrantes}}'**
+  String comunidadMiembros(int n);
+
+  /// No description provided for @comunidadActividad.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =1{1 publicación esta semana} other{{n} publicaciones esta semana}}'**
+  String comunidadActividad(int n);
+
+  /// No description provided for @comunidadSalir.
+  ///
+  /// In es, this message translates to:
+  /// **'Salir del grupo'**
+  String get comunidadSalir;
+
+  /// No description provided for @comunidadPublicar.
+  ///
+  /// In es, this message translates to:
+  /// **'Publicar'**
+  String get comunidadPublicar;
+
+  /// No description provided for @comunidadUnirme.
+  ///
+  /// In es, this message translates to:
+  /// **'Unirme al grupo'**
+  String get comunidadUnirme;
+
+  /// No description provided for @comunidadSinPublicaciones.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no hay publicaciones. ¡Hacé la primera pregunta!'**
+  String get comunidadSinPublicaciones;
+
+  /// No description provided for @comunidadAlguien.
+  ///
+  /// In es, this message translates to:
+  /// **'Alguien'**
+  String get comunidadAlguien;
+
+  /// No description provided for @comunidadFoto.
+  ///
+  /// In es, this message translates to:
+  /// **'Foto'**
+  String get comunidadFoto;
+
+  /// No description provided for @comunidadComentarios.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =0{Sin comentarios} =1{1 comentario} other{{n} comentarios}}'**
+  String comunidadComentarios(int n);
+
+  /// No description provided for @comunidadBorrar.
+  ///
+  /// In es, this message translates to:
+  /// **'Borrar'**
+  String get comunidadBorrar;
+
+  /// No description provided for @comunidadSaludar.
+  ///
+  /// In es, this message translates to:
+  /// **'Saludar'**
+  String get comunidadSaludar;
+
+  /// No description provided for @comunidadSaludarAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Si acepta, se abre el chat. No compartas tu dirección ni tu teléfono.'**
+  String get comunidadSaludarAyuda;
+
+  /// No description provided for @comunidadMotivoVenta.
+  ///
+  /// In es, this message translates to:
+  /// **'vende o cruza animales'**
+  String get comunidadMotivoVenta;
+
+  /// No description provided for @comunidadMotivoUbicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'muestra dónde vive una mascota'**
+  String get comunidadMotivoUbicacion;
+
+  /// No description provided for @comunidadReportar.
+  ///
+  /// In es, this message translates to:
+  /// **'Reportar: {motivo}'**
+  String comunidadReportar(String motivo);
+
+  /// No description provided for @comunidadBorrado.
+  ///
+  /// In es, this message translates to:
+  /// **'Borrado.'**
+  String get comunidadBorrado;
+
+  /// No description provided for @comunidadSaludado.
+  ///
+  /// In es, this message translates to:
+  /// **'Saludo enviado. Si acepta, lo vas a ver en Saludos y en tus chats.'**
+  String get comunidadSaludado;
+
+  /// No description provided for @comunidadSaludoInicial.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Hola! Vi lo que escribiste en el grupo y me gustaría charlar.'**
+  String get comunidadSaludoInicial;
+
+  /// No description provided for @comunidadMandarSaludo.
+  ///
+  /// In es, this message translates to:
+  /// **'Mandar el saludo'**
+  String get comunidadMandarSaludo;
+
+  /// No description provided for @comunidadOpciones.
+  ///
+  /// In es, this message translates to:
+  /// **'Opciones'**
+  String get comunidadOpciones;
+
+  /// No description provided for @comunidadComentar.
+  ///
+  /// In es, this message translates to:
+  /// **'Escribí un comentario'**
+  String get comunidadComentar;
+
+  /// No description provided for @comunidadNoDisponible.
+  ///
+  /// In es, this message translates to:
+  /// **'Esta publicación ya no está disponible.'**
+  String get comunidadNoDisponible;
+
+  /// No description provided for @comunidadTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Qué querés contar o preguntar?'**
+  String get comunidadTexto;
+
+  /// No description provided for @comunidadAgregarFoto.
+  ///
+  /// In es, this message translates to:
+  /// **'Agregar foto'**
+  String get comunidadAgregarFoto;
+
+  /// No description provided for @comunidadSinSaludos.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no hay saludos. Desde una publicación o un comentario podés saludar a quien lo escribió.'**
+  String get comunidadSinSaludos;
+
+  /// No description provided for @comunidadSaludoDe.
+  ///
+  /// In es, this message translates to:
+  /// **'{nombre} te saluda'**
+  String comunidadSaludoDe(String nombre);
+
+  /// No description provided for @comunidadSaludoA.
+  ///
+  /// In es, this message translates to:
+  /// **'Saludaste a {nombre}'**
+  String comunidadSaludoA(String nombre);
+
+  /// No description provided for @comunidadSobre.
+  ///
+  /// In es, this message translates to:
+  /// **'Sobre: «{texto}»'**
+  String comunidadSobre(String texto);
+
+  /// No description provided for @comunidadAceptarSaludo.
+  ///
+  /// In es, this message translates to:
+  /// **'Aceptar y abrir el chat'**
+  String get comunidadAceptarSaludo;
+
+  /// No description provided for @comunidadAhoraNo.
+  ///
+  /// In es, this message translates to:
+  /// **'Ahora no'**
+  String get comunidadAhoraNo;
+
+  /// No description provided for @comunidadEsperando.
+  ///
+  /// In es, this message translates to:
+  /// **'Esperando respuesta'**
+  String get comunidadEsperando;
+
+  /// No description provided for @comunidadNoAhora.
+  ///
+  /// In es, this message translates to:
+  /// **'No aceptó por ahora'**
+  String get comunidadNoAhora;
 }
 
 class _AppLocalizationsDelegate

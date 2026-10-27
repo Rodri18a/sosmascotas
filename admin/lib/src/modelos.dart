@@ -475,3 +475,44 @@ class Ingresos {
   /// Lo que deberían pagar por mes las vigentes que no son Socios Fundadores.
   final double esperadoPorMes;
 }
+
+/// Un grupo de la comunidad para el portal (`admin_grupos()`, 3.4, D116).
+class GrupoAdmin {
+  const GrupoAdmin({
+    required this.id,
+    required this.tipo,
+    required this.nombre,
+    this.descripcion,
+    this.icono,
+    this.activo = true,
+    this.miembros = 0,
+    this.publicaciones = 0,
+    this.ocultas = 0,
+  });
+
+  factory GrupoAdmin.fromJson(Map<String, Object?> json) => GrupoAdmin(
+    id: json['id']! as String,
+    tipo: json['kind']! as String,
+    nombre: json['name']! as String,
+    descripcion: json['description'] as String?,
+    icono: json['icon'] as String?,
+    activo: json['status'] != 'hidden',
+    miembros: (json['miembros'] as num?)?.toInt() ?? 0,
+    publicaciones: (json['publicaciones'] as num?)?.toInt() ?? 0,
+    ocultas: (json['ocultas'] as num?)?.toInt() ?? 0,
+  );
+
+  final String id;
+
+  /// `species`, `breed` o `topic`.
+  final String tipo;
+  final String nombre;
+  final String? descripcion;
+  final String? icono;
+  final bool activo;
+  final int miembros;
+  final int publicaciones;
+
+  /// Publicaciones ocultas por reportes.
+  final int ocultas;
+}

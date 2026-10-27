@@ -77,6 +77,10 @@ abstract final class Funcionalidades {
   /// pedidos del prestador (3.3, D115).
   static const cuidados = 'cuidados';
 
+  /// Grupos por raza y especie, publicaciones, comentarios y saludo previo
+  /// al chat (3.4, D116).
+  static const grupos = 'grupos';
+
   /// Las que ya están en `todos`: la app las da por prendidas aunque no pueda
   /// preguntarle a la base (sin conexión y sin nada guardado). Las demás, en
   /// ese caso, quedan apagadas (lo seguro).

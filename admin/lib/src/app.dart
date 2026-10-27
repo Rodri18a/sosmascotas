@@ -7,6 +7,7 @@ import 'pantallas/chapitas.dart';
 import 'pantallas/comercios.dart';
 import 'pantallas/denuncias.dart';
 import 'pantallas/equipo.dart';
+import 'pantallas/grupos.dart';
 import 'pantallas/ingreso.dart';
 import 'pantallas/lugares.dart';
 import 'pantallas/moderacion.dart';
@@ -126,6 +127,7 @@ class _PortalState extends ConsumerState<Portal> {
     (Icons.dashboard_outlined, T.panel, PanelScreen(), {}),
     (Icons.shield_outlined, T.moderacion, ModeracionScreen(), {'moderator'}),
     (Icons.report_outlined, T.denuncias, DenunciasScreen(), {'moderator'}),
+    (Icons.forum_outlined, T.grupos, GruposScreen(), {'moderator'}),
     (Icons.storefront_outlined, T.lugares, LugaresScreen(), {'sales'}),
     (Icons.verified_outlined, T.comercios, ComerciosScreen(), {}),
     (Icons.handshake_outlined, T.prospectos, ProspectosScreen(), {'sales'}),
@@ -179,17 +181,28 @@ class _PortalState extends ConsumerState<Portal> {
       body: ancho
           ? Row(
               children: [
-                NavigationRail(
-                  selectedIndex: _seccion,
-                  labelType: NavigationRailLabelType.all,
-                  onDestinationSelected: (i) => setState(() => _seccion = i),
-                  destinations: [
-                    for (final (icono, texto, _) in _secciones)
-                      NavigationRailDestination(
-                        icon: Icon(icono),
-                        label: Text(texto),
+                // Con muchas secciones, el menú se desplaza en pantallas bajas.
+                LayoutBuilder(
+                  builder: (context, lugar) => SingleChildScrollView(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(minHeight: lugar.maxHeight),
+                      child: IntrinsicHeight(
+                        child: NavigationRail(
+                          selectedIndex: _seccion,
+                          labelType: NavigationRailLabelType.all,
+                          onDestinationSelected: (i) =>
+                              setState(() => _seccion = i),
+                          destinations: [
+                            for (final (icono, texto, _) in _secciones)
+                              NavigationRailDestination(
+                                icon: Icon(icono),
+                                label: Text(texto),
+                              ),
+                          ],
+                        ),
                       ),
-                  ],
+                    ),
+                  ),
                 ),
                 const VerticalDivider(width: 1),
                 Expanded(child: contenido),

@@ -175,6 +175,8 @@ class _Tarjeta extends ConsumerWidget {
                   label: Text(switch (item.tipo) {
                     'sos' => T.sos,
                     'review' => T.resena,
+                    'post' => T.publicacion,
+                    'comment' => T.comentario,
                     _ => T.mensaje,
                   }),
                 ),

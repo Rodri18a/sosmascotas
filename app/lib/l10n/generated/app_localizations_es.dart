@@ -5741,4 +5741,193 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get cuidadosPrenderAgenda =>
       'Para que aparezca «Contratar» en tu ficha, prendé «Tomar turnos desde la app» en Turnos.';
+
+  @override
+  String get comunidadPregunta => 'Pregunta';
+
+  @override
+  String get comunidadConsejo => 'Consejo';
+
+  @override
+  String get comunidadExperiencia => 'Experiencia';
+
+  @override
+  String get comunidadProhibido =>
+      'En la comunidad no se publican ventas ni cruzas de animales. Para dar en adopción está la sección Adopción.';
+
+  @override
+  String get comunidadUnite => 'Unite al grupo para participar';
+
+  @override
+  String get comunidadLimite => 'Llegaste al máximo por hoy. Probá mañana.';
+
+  @override
+  String get comunidadNoQuiere => 'Esa persona no quiere chatear por ahora.';
+
+  @override
+  String get comunidadGrupos => 'Grupos';
+
+  @override
+  String get comunidadGruposAyuda =>
+      'Por raza, especie y temas: preguntas, consejos y experiencias';
+
+  @override
+  String get comunidadReglas =>
+      'Sin ventas ni cruzas de animales, y sin datos de dónde vive tu mascota. De cada persona se ve solo el primer nombre.';
+
+  @override
+  String get comunidadIngresar => 'Ingresá para participar en los grupos';
+
+  @override
+  String get comunidadSaludos => 'Saludos';
+
+  @override
+  String get comunidadTuRaza => 'Sumate al grupo de la raza de tu mascota';
+
+  @override
+  String get comunidadMisGrupos => 'Tus grupos';
+
+  @override
+  String get comunidadPorEspecie => 'Por especie';
+
+  @override
+  String get comunidadTemas => 'Temas';
+
+  @override
+  String get comunidadPorRaza => 'Por raza';
+
+  @override
+  String comunidadMiembros(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n integrantes',
+      one: '1 integrante',
+      zero: 'Sin integrantes todavía',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String comunidadActividad(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n publicaciones esta semana',
+      one: '1 publicación esta semana',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get comunidadSalir => 'Salir del grupo';
+
+  @override
+  String get comunidadPublicar => 'Publicar';
+
+  @override
+  String get comunidadUnirme => 'Unirme al grupo';
+
+  @override
+  String get comunidadSinPublicaciones =>
+      'Todavía no hay publicaciones. ¡Hacé la primera pregunta!';
+
+  @override
+  String get comunidadAlguien => 'Alguien';
+
+  @override
+  String get comunidadFoto => 'Foto';
+
+  @override
+  String comunidadComentarios(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n comentarios',
+      one: '1 comentario',
+      zero: 'Sin comentarios',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get comunidadBorrar => 'Borrar';
+
+  @override
+  String get comunidadSaludar => 'Saludar';
+
+  @override
+  String get comunidadSaludarAyuda =>
+      'Si acepta, se abre el chat. No compartas tu dirección ni tu teléfono.';
+
+  @override
+  String get comunidadMotivoVenta => 'vende o cruza animales';
+
+  @override
+  String get comunidadMotivoUbicacion => 'muestra dónde vive una mascota';
+
+  @override
+  String comunidadReportar(String motivo) {
+    return 'Reportar: $motivo';
+  }
+
+  @override
+  String get comunidadBorrado => 'Borrado.';
+
+  @override
+  String get comunidadSaludado =>
+      'Saludo enviado. Si acepta, lo vas a ver en Saludos y en tus chats.';
+
+  @override
+  String get comunidadSaludoInicial =>
+      '¡Hola! Vi lo que escribiste en el grupo y me gustaría charlar.';
+
+  @override
+  String get comunidadMandarSaludo => 'Mandar el saludo';
+
+  @override
+  String get comunidadOpciones => 'Opciones';
+
+  @override
+  String get comunidadComentar => 'Escribí un comentario';
+
+  @override
+  String get comunidadNoDisponible => 'Esta publicación ya no está disponible.';
+
+  @override
+  String get comunidadTexto => '¿Qué querés contar o preguntar?';
+
+  @override
+  String get comunidadAgregarFoto => 'Agregar foto';
+
+  @override
+  String get comunidadSinSaludos =>
+      'Todavía no hay saludos. Desde una publicación o un comentario podés saludar a quien lo escribió.';
+
+  @override
+  String comunidadSaludoDe(String nombre) {
+    return '$nombre te saluda';
+  }
+
+  @override
+  String comunidadSaludoA(String nombre) {
+    return 'Saludaste a $nombre';
+  }
+
+  @override
+  String comunidadSobre(String texto) {
+    return 'Sobre: «$texto»';
+  }
+
+  @override
+  String get comunidadAceptarSaludo => 'Aceptar y abrir el chat';
+
+  @override
+  String get comunidadAhoraNo => 'Ahora no';
+
+  @override
+  String get comunidadEsperando => 'Esperando respuesta';
+
+  @override
+  String get comunidadNoAhora => 'No aceptó por ahora';
 }

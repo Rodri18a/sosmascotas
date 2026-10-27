@@ -112,6 +112,8 @@ class _MenuPrincipalState extends ConsumerState<MenuPrincipal> {
                 ),
               if (activa(Funcionalidades.cuidados))
                 opcion(Icons.pets_outlined, t.misCuidados, Rutas.misCuidados),
+              if (activa(Funcionalidades.grupos))
+                opcion(Icons.forum_outlined, t.comunidadGrupos, Rutas.grupos),
               if (activa(Funcionalidades.comercios))
                 opcion(Icons.storefront_outlined, t.negocioMi, Rutas.negocio),
             ],

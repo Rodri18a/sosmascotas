@@ -107,6 +107,11 @@ abstract final class Eventos {
   static const careRequest = 'care_request';
   static const careStatus = 'care_status';
   static const careSave = 'care_save';
+  static const groupJoin = 'group_join';
+  static const postCreate = 'post_create';
+  static const commentCreate = 'comment_create';
+  static const greetingSend = 'greeting_send';
+  static const greetingAnswer = 'greeting_answer';
 
   /// Lo registra la web pública al abrir `/n/<id>` (no la app).
   static const businessPageOpen = 'business_page_open';

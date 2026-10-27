@@ -71,6 +71,26 @@ abstract final class T {
   static const sos = 'SOS';
   static const mensaje = 'Mensaje del chat';
   static const resena = 'Reseña';
+  static const publicacion = 'Publicación de un grupo';
+  static const comentario = 'Comentario de un grupo';
+
+  // Grupos de la comunidad (3.4, D116)
+  static const grupos = 'Grupos';
+  static const nuevoGrupo = 'Nuevo grupo';
+  static const grupoNombre = 'Nombre';
+  static const grupoDescripcion = 'Descripción (opcional)';
+  static const grupoIcono = 'Ícono (un emoji, opcional)';
+  static const grupoActivo = 'Visible en la app';
+  static const gruposAyuda =
+      'Los de especie y tema los crea el equipo; los de raza se crean solos cuando alguien con una mascota de esa raza se une.';
+  static const tiposGrupo = {
+    'species': 'Especie',
+    'breed': 'Raza',
+    'topic': 'Tema',
+  };
+  static String grupoResumen(int miembros, int publicaciones, int ocultas) =>
+      '$miembros integrantes · $publicaciones publicaciones'
+      '${ocultas > 0 ? ' · $ocultas ocultas' : ''}';
   static const adopcionesRevision = 'Adopciones en revisión';
   static const adopcionesRevisionAyuda =
       'Particulares con 2 camadas o más en 12 meses (posible cría irregular). Antes de aprobar, ofrecé información sobre castración.';

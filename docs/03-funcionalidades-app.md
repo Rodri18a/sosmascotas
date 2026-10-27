@@ -183,6 +183,8 @@ El objetivo no es solo publicar animales: es que **la adopción salga bien y el 
   - Contacto entre personas solo por el chat de la app, con un **saludo que el otro acepta** antes de abrir la conversación.
 - Moderación de siempre: reportar, ocultamiento automático y revisión del administrador.
 
+- **Hecho (D116), detrás de `grupos`:** Noticias → Comunidad → **Grupos** (también en el menú). Grupos por especie y por tema de entrada, y el **de la raza de tu mascota** con un toque (se crea solo; no para «Mestizo»). En cada grupo: unirse o salir, publicaciones (pregunta, consejo o experiencia, con hasta 4 fotos sin EXIF) y comentarios; se lee sin cuenta. En cada publicación o comentario: **Saludar** a quien lo escribió, reportar (vende o cruza, ofensivo, muestra dónde vive una mascota, otro) o borrar lo propio. **Saludos** muestra los recibidos (aceptar abre el chat; «Ahora no») y los mandados. Los eventos de grupo patrocinados quedan para más adelante.
+
 > **En espera:** "compañeros de paseo / juego" (listado de mascotas cercanas para socializar). Se pausó por el riesgo de que se use para robar animales o para cruzas. Ver `13-riesgos-pendientes.md`.
 > **Excluido:** cruza o reproducción entre mascotas.
 

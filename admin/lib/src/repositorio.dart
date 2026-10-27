@@ -148,6 +148,12 @@ abstract interface class AdminRepositorio {
   /// Crea (sin `id`) o actualiza una entrada de la Ayuda.
   Future<void> guardarAyuda(Map<String, Object?> datos);
 
+  /// Grupos de la comunidad, también los ocultos (3.4, D116).
+  Future<List<GrupoAdmin>> grupos();
+
+  /// Crea (sin `id`) un grupo de especie o tema, o lo edita / oculta.
+  Future<void> guardarGrupo(Map<String, Object?> datos);
+
   /// Lotes de chapitas físicas (1.8b.1, D95), el más nuevo primero, con
   /// activadas y escaneos.
   Future<List<Map<String, Object?>>> lotes();
@@ -568,6 +574,15 @@ class SupabaseAdminRepositorio implements AdminRepositorio {
   }
 
   @override
+  Future<List<GrupoAdmin>> grupos() async => _filas(
+    await _cliente.rpc<List<dynamic>>('admin_grupos'),
+  ).map(GrupoAdmin.fromJson).toList();
+
+  @override
+  Future<void> guardarGrupo(Map<String, Object?> datos) =>
+      _cliente.rpc<String>('admin_guardar_grupo', params: {'p': datos});
+
+  @override
   Future<List<Map<String, Object?>>> lotes() async =>
       _filas(await _cliente.rpc<List<dynamic>>('admin_lotes'));
 
@@ -818,6 +833,10 @@ final noticiasProvider = FutureProvider<List<Map<String, Object?>>>(
 
 final novedadesProvider = FutureProvider<List<Map<String, Object?>>>(
   (ref) => ref.watch(adminRepositorioProvider).novedades(),
+);
+
+final gruposProvider = FutureProvider<List<GrupoAdmin>>(
+  (ref) => ref.watch(adminRepositorioProvider).grupos(),
 );
 
 final ayudaProvider = FutureProvider<List<EntradaAyuda>>(

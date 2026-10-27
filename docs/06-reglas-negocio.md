@@ -181,6 +181,8 @@ Además de lo habitual (ofensas, spam, estafas):
 - Publicar la **ubicación** o la rutina de una mascota (dónde vive, a qué hora la pasean).
 - Las fotos se suben siempre **sin metadatos de ubicación** (EXIF), en toda la app.
 
+**Cómo se aplica (D116):** la base rechaza publicaciones, comentarios y saludos que ofrecen venta o cruza (`texto_prohibido_comunidad()`: «vendo», «se vende», «venta de cachorros», «cruzar», «servicio de monta», «busco novia»…; «cruza de labrador» sola no, porque describe una mezcla) y la app lo avisa antes de mandar. De cada persona se ve **solo el primer nombre**; no hay perfiles ni listados de personas o mascotas. Publicar y comentar piden ser parte del grupo (hasta 10 publicaciones, 60 comentarios y 10 saludos por día). Con **3 reportes** una publicación o un comentario se oculta solo y pasa a la moderación del portal. El chat entre personas se abre solo si la otra acepta el **saludo**; si lo rechaza, no se le puede volver a saludar por 30 días.
+
 ## Privacidad (Ley 18.331)
 
 - Términos, política de privacidad y consentimiento al registrarse.
