@@ -120,6 +120,32 @@ class FiltrosMapa {
     colocaMicrochip: colocaMicrochip ?? this.colocaMicrochip,
     porMascotaActiva: porMascotaActiva ?? this.porMascotaActiva,
   );
+
+  /// Para guardarlos como «mis filtros» (plan Pro, 2.11, D112).
+  Map<String, Object?> toJson() => {
+    'categorias': [for (final c in categorias) c.name],
+    'sos': sos,
+    'distancia': distancia.name,
+    'abierto_ahora': abiertoAhora,
+    'solo_favoritos': soloFavoritos,
+    'coloca_microchip': colocaMicrochip,
+    'por_mascota_activa': porMascotaActiva,
+  };
+
+  /// Lo guardado con [toJson]; lo que no se reconoce queda como por defecto.
+  factory FiltrosMapa.fromJson(Map<String, Object?> json) => FiltrosMapa(
+    categorias: {
+      for (final c in (json['categorias'] as List?) ?? const [])
+        ?Categoria.values.asNameMap()[c],
+    },
+    sos: json['sos'] as bool? ?? false,
+    distancia:
+        Distancia.values.asNameMap()[json['distancia']] ?? Distancia.todo,
+    abiertoAhora: json['abierto_ahora'] as bool? ?? false,
+    soloFavoritos: json['solo_favoritos'] as bool? ?? false,
+    colocaMicrochip: json['coloca_microchip'] as bool? ?? false,
+    porMascotaActiva: json['por_mascota_activa'] as bool? ?? true,
+  );
 }
 
 /// Regla de coincidencia por especie (06): coincide si atiende alguna de

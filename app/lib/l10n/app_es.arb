@@ -2034,5 +2034,19 @@
   "@miPlanPedido": {"placeholders": {"plan": {"type": "String"}}},
   "miPlanLimiteMascotas": "Con el plan Gratis podés tener hasta 5 mascotas. Con Pro o Familia, todas las que quieras.",
   "miPlanVerPlanes": "Ver planes",
-  "miPlanHogarFamilia": "El hogar compartido es del plan Familia y ya usaste la prueba gratis de 30 días."
+  "miPlanHogarFamilia": "El hogar compartido es del plan Familia y ya usaste la prueba gratis de 30 días.",
+  "historialPdf": "Historial en PDF",
+  "historialTitulo": "Historial de salud de {nombre}",
+  "@historialTitulo": {"placeholders": {"nombre": {"type": "String"}}},
+  "historialPie": "Hecho con SOS Mascota el {fecha}",
+  "@historialPie": {"placeholders": {"fecha": {"type": "String"}}},
+  "historialSi": "Sí",
+  "historialNo": "No",
+  "historialNoDisponible": "En este dispositivo todavía no se puede descargar. Probá desde la web.",
+  "mapaFiltrosGuardar": "Guardar como mis filtros",
+  "mapaFiltrosGuardados": "Listo: el mapa va a abrir con estos filtros.",
+  "ajustesLetra": "Tamaño de letra",
+  "letraNormal": "Normal",
+  "letraGrande": "Grande",
+  "letraMuyGrande": "Muy grande"
 }

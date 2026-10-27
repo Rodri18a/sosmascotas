@@ -227,8 +227,10 @@ class _SeccionCuenta extends ConsumerWidget {
         const InterruptorPush(),
         if (perfil != null) TileZonaAvisos(perfil: perfil),
         if (perfil != null) _RadioAvisos(perfil: perfil),
-        if (ref.watch(tienePlanConTemasProvider))
+        if (ref.watch(tienePlanConTemasProvider)) ...[
           const SiFuncionalidad(Funcionalidades.temasPro, child: TileTema()),
+          const TileLetra(),
+        ],
       ],
     );
   }

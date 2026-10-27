@@ -7,9 +7,11 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'comercios_falsos.dart';
 import 'cuenta_falsa.dart';
+import 'filtros_falsos.dart';
 import 'funcionalidades_falsas.dart';
 import 'helpers.dart';
 import 'mascotas_falsas.dart';
+import 'plan_usuario_falso.dart';
 import 'sos_falso.dart';
 
 const _ana = Usuario(id: 'u1', email: 'ana@correo.com');
@@ -64,6 +66,8 @@ Future<void> _abrir(
   List<Mascota> mascotas = const [],
   MisLugaresFalsos? misLugares,
   List<Map<String, Object?>>? eventos,
+  bool pro = false,
+  AlmacenFiltrosFalso? almacenFiltros,
 }) async {
   tester.view
     ..physicalSize = const Size(1080, 2400)
@@ -94,7 +98,12 @@ Future<void> _abrir(
       ),
       funcionalidades: FuncionalidadesFalsas({
         if (completo) Funcionalidades.mapaCompleto,
+        if (pro) Funcionalidades.planesUsuario,
       }),
+      planUsuario: PlanUsuarioFalso(
+        MiPlanUsuario(plan: pro ? Plan.pro : Plan.free),
+      ),
+      almacenFiltros: almacenFiltros,
       ahora: DateTime(2026, 10, 17, 10, 20),
     ),
   );
@@ -246,6 +255,40 @@ void main() {
 
     expect(find.text('Paseos a Domicilio'), findsOneWidget);
     expect(find.textContaining('Paseador · A domicilio'), findsOneWidget);
+  });
+
+  testWidgets('filtros guardados: solo con Pro, y el mapa abre con ellos', (
+    tester,
+  ) async {
+    await _abrir(tester, comercios: _todos());
+    await _tocar(tester, find.text('Filtros'));
+    expect(find.text('Guardar como mis filtros'), findsNothing);
+    await _tocar(tester, find.text('Listo'));
+
+    final almacen = AlmacenFiltrosFalso();
+    final eventos = <Map<String, Object?>>[];
+    await _abrir(
+      tester,
+      comercios: _todos(),
+      pro: true,
+      almacenFiltros: almacen,
+      eventos: eventos,
+    );
+    await _tocar(tester, find.text('Filtros'));
+    await _tocar(tester, find.text('Abierto ahora'));
+    await _tocar(tester, find.text('Guardar como mis filtros'));
+    expect(almacen.guardados['u1']?.abiertoAhora, isTrue);
+    expect(eventos.where((e) => e['name'] == 'filters_save'), hasLength(1));
+    expect(find.text('mapa: 2 pines'), findsOneWidget);
+
+    // Al volver a abrir la app, el mapa ya viene filtrado.
+    await _abrir(
+      tester,
+      comercios: _todos(),
+      pro: true,
+      almacenFiltros: almacen,
+    );
+    expect(find.text('mapa: 2 pines'), findsOneWidget);
   });
 
   testWidgets('filtros: abierto ahora y coloca microchip', (tester) async {

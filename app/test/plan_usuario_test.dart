@@ -112,4 +112,23 @@ void main() {
     expect(find.text('Plan Familia'), findsOneWidget);
     expect(find.textContaining('sos parte de un hogar'), findsOneWidget);
   });
+
+  testWidgets('con Pro se elige el tamaño de letra', (tester) async {
+    await _abrir(tester, plan: const MiPlanUsuario(plan: Plan.pro));
+    await _ir(tester, '/ajustes');
+    await tester.scrollUntilVisible(find.text('Tamaño de letra'), 200);
+    double escala() => MediaQuery.of(
+      tester.element(find.text('Tamaño de letra')),
+    ).textScaler.scale(1);
+    expect(escala(), 1);
+    await tester.tap(find.text('Grande'));
+    await tester.pumpAndSettle();
+    expect(escala(), closeTo(1.15, 0.001));
+  });
+
+  testWidgets('con Gratis no aparece el tamaño de letra', (tester) async {
+    await _abrir(tester);
+    await _ir(tester, '/ajustes');
+    expect(find.text('Tamaño de letra'), findsNothing);
+  });
 }

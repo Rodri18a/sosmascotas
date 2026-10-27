@@ -93,6 +93,9 @@ abstract final class Eventos {
   static const serviceSave = 'service_save';
   static const businessPageShare = 'business_page_share';
   static const planRequest = 'plan_request';
+  static const healthPdf = 'health_pdf';
+  static const filtersSave = 'filters_save';
+  static const textSizeChange = 'text_size_change';
   static const bookingCreate = 'booking_create';
   static const bookingStatus = 'booking_status';
   static const agendaSave = 'agenda_save';

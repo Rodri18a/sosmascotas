@@ -13,7 +13,7 @@
 | Mascotas | Hasta 5 (D111) | Ilimitadas | Ilimitadas |
 | Sin publicidad (barra de anuncio chica) | | ✅ | ✅ |
 | Sin repreguntas de "Busco veterinaria" tras un "Ahora no" | | ✅ | ✅ |
-| Filtros y favoritos guardados | | ✅ | ✅ |
+| Filtros guardados (los favoritos son gratis, D112) | | ✅ | ✅ |
 | Descuentos en comercios adheridos | | ✅ | ✅ |
 | Historial de salud en PDF | | ✅ | ✅ |
 | Personalización: temas Faro, Vecinos y Pop (`14-brief-identidad-visual.md` §10) y tamaño de letra | | ✅ | ✅ |

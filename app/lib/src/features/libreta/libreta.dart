@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
+import '../../cuenta/plan_usuario_repositorio.dart';
 import '../../funcionalidades/funcionalidades_activas.dart';
+import '../../mascotas/catalogo.dart';
+import '../../mascotas/historial_pdf.dart';
 import '../../mascotas/libreta_repositorio.dart';
+import '../../mascotas/mascotas_repositorio.dart';
 import '../../mascotas/textos_mascota.dart';
 import '../../metricas/metricas.dart';
 import '../../router.dart';
 import '../../theme/paleta.dart';
+import '../../utiles/descargar.dart';
 import '../../utiles/enlaces.dart';
 import '../../widgets/volver.dart';
 
@@ -76,10 +82,71 @@ class TarjetaLibreta extends ConsumerWidget {
                 label: Text(t.libretaAgregar),
               ),
             ),
+            // Historial en PDF: del plan Pro (2.11, D112).
+            if (ref.watch(miPlanUsuarioProvider).value?.esPro ?? false)
+              if (libreta case AsyncData(value: final grupos))
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                  child: OutlinedButton.icon(
+                    onPressed: () =>
+                        _historial(context, ref, mascotaId, grupos),
+                    icon: const Icon(Icons.picture_as_pdf_outlined),
+                    label: Text(t.historialPdf),
+                  ),
+                ),
           ],
         ),
       ),
     );
+  }
+}
+
+Future<void> _historial(
+  BuildContext context,
+  WidgetRef ref,
+  String mascotaId,
+  Map<TipoRegistroSalud, List<RegistroSalud>> grupos,
+) async {
+  final t = context.t;
+  final fechas = MaterialLocalizations.of(context);
+  final mensajes = ScaffoldMessenger.of(context);
+  final mascota = ref.read(mascotaProvider(mascotaId)).value;
+  if (mascota == null) return;
+  final especie = (ref.read(especiesProvider).value ?? const <Especie>[])
+      .where((e) => e.id == mascota.especieId)
+      .firstOrNull;
+  final pdf = await historialSaludPdf(
+    grupos: grupos,
+    normal: await rootBundle.load('assets/fuentes/SourceSans3-Regular.ttf'),
+    negrita: await rootBundle.load('assets/fuentes/SourceSans3-Bold.ttf'),
+    textos: (
+      titulo: t.historialTitulo(mascota.nombre),
+      datos: [
+        if (especie != null) (t.mascotaEspecie, especie.nombre),
+        (t.mascotaSexo, textoSexo(t, mascota.sexo)),
+        if (mascota.nacimiento case final n?)
+          (t.mascotaNacimiento, fechas.formatMediumDate(n)),
+        if (mascota.microchip case final m? when m.isNotEmpty)
+          (t.mascotaMicrochip, m),
+        if (mascota.castrada case final c?)
+          (t.fichaCastrada, c ? t.historialSi : t.historialNo),
+      ],
+      sinRegistros: t.libretaVacia,
+      grupo: (tipo) => textoGrupoLibreta(t, tipo),
+      fecha: fechas.formatMediumDate,
+      proxima: t.libretaProximaEl,
+      pie: t.historialPie(fechas.formatMediumDate(DateTime.now())),
+    ),
+  );
+  final ok = descargarArchivo(
+    pdf,
+    'historial-${mascota.nombre.toLowerCase()}.pdf',
+    'application/pdf',
+  );
+  if (ok) {
+    ref.read(metricasProvider).track(Eventos.healthPdf);
+  } else {
+    mensajes.showSnackBar(SnackBar(content: Text(t.historialNoDisponible)));
   }
 }
 

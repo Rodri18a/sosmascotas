@@ -117,3 +117,40 @@ class _Muestra extends StatelessWidget {
     ),
   );
 }
+
+/// Fila "Tamaño de letra" de Ajustes (plan Pro, 2.11, D112).
+class TileLetra extends ConsumerWidget {
+  const TileLetra({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = context.t;
+    final elegido = ref.watch(tamanoLetraElegidoProvider);
+    return ListTile(
+      leading: const Icon(Icons.format_size),
+      title: Text(t.ajustesLetra),
+      subtitle: Padding(
+        padding: const EdgeInsets.only(top: 8),
+        child: SegmentedButton<TamanoLetra>(
+          segments: [
+            ButtonSegment(
+              value: TamanoLetra.normal,
+              label: Text(t.letraNormal),
+            ),
+            ButtonSegment(
+              value: TamanoLetra.grande,
+              label: Text(t.letraGrande),
+            ),
+            ButtonSegment(
+              value: TamanoLetra.muyGrande,
+              label: Text(t.letraMuyGrande),
+            ),
+          ],
+          selected: {elegido},
+          onSelectionChanged: (s) =>
+              ref.read(tamanoLetraElegidoProvider.notifier).elegir(s.first),
+        ),
+      ),
+    );
+  }
+}

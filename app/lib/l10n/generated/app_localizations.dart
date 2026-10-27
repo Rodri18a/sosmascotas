@@ -8919,6 +8919,78 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'El hogar compartido es del plan Familia y ya usaste la prueba gratis de 30 días.'**
   String get miPlanHogarFamilia;
+
+  /// No description provided for @historialPdf.
+  ///
+  /// In es, this message translates to:
+  /// **'Historial en PDF'**
+  String get historialPdf;
+
+  /// No description provided for @historialTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Historial de salud de {nombre}'**
+  String historialTitulo(String nombre);
+
+  /// No description provided for @historialPie.
+  ///
+  /// In es, this message translates to:
+  /// **'Hecho con SOS Mascota el {fecha}'**
+  String historialPie(String fecha);
+
+  /// No description provided for @historialSi.
+  ///
+  /// In es, this message translates to:
+  /// **'Sí'**
+  String get historialSi;
+
+  /// No description provided for @historialNo.
+  ///
+  /// In es, this message translates to:
+  /// **'No'**
+  String get historialNo;
+
+  /// No description provided for @historialNoDisponible.
+  ///
+  /// In es, this message translates to:
+  /// **'En este dispositivo todavía no se puede descargar. Probá desde la web.'**
+  String get historialNoDisponible;
+
+  /// No description provided for @mapaFiltrosGuardar.
+  ///
+  /// In es, this message translates to:
+  /// **'Guardar como mis filtros'**
+  String get mapaFiltrosGuardar;
+
+  /// No description provided for @mapaFiltrosGuardados.
+  ///
+  /// In es, this message translates to:
+  /// **'Listo: el mapa va a abrir con estos filtros.'**
+  String get mapaFiltrosGuardados;
+
+  /// No description provided for @ajustesLetra.
+  ///
+  /// In es, this message translates to:
+  /// **'Tamaño de letra'**
+  String get ajustesLetra;
+
+  /// No description provided for @letraNormal.
+  ///
+  /// In es, this message translates to:
+  /// **'Normal'**
+  String get letraNormal;
+
+  /// No description provided for @letraGrande.
+  ///
+  /// In es, this message translates to:
+  /// **'Grande'**
+  String get letraGrande;
+
+  /// No description provided for @letraMuyGrande.
+  ///
+  /// In es, this message translates to:
+  /// **'Muy grande'**
+  String get letraMuyGrande;
 }
 
 class _AppLocalizationsDelegate

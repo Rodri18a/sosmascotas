@@ -5310,4 +5310,46 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get miPlanHogarFamilia =>
       'El hogar compartido es del plan Familia y ya usaste la prueba gratis de 30 días.';
+
+  @override
+  String get historialPdf => 'Historial en PDF';
+
+  @override
+  String historialTitulo(String nombre) {
+    return 'Historial de salud de $nombre';
+  }
+
+  @override
+  String historialPie(String fecha) {
+    return 'Hecho con SOS Mascota el $fecha';
+  }
+
+  @override
+  String get historialSi => 'Sí';
+
+  @override
+  String get historialNo => 'No';
+
+  @override
+  String get historialNoDisponible =>
+      'En este dispositivo todavía no se puede descargar. Probá desde la web.';
+
+  @override
+  String get mapaFiltrosGuardar => 'Guardar como mis filtros';
+
+  @override
+  String get mapaFiltrosGuardados =>
+      'Listo: el mapa va a abrir con estos filtros.';
+
+  @override
+  String get ajustesLetra => 'Tamaño de letra';
+
+  @override
+  String get letraNormal => 'Normal';
+
+  @override
+  String get letraGrande => 'Grande';
+
+  @override
+  String get letraMuyGrande => 'Muy grande';
 }

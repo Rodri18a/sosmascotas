@@ -144,3 +144,64 @@ final fuentesDelTemaProvider = Provider<void>((ref) {
   if (paleta.fuentesADescargar.isEmpty) return;
   unawaited(ref.read(cargadorFuentesProvider).cargar(paleta));
 });
+
+/// Tamaño de letra de la app (plan Pro, 2.11, D112). Se suma al del sistema,
+/// que sigue siendo gratis.
+enum TamanoLetra {
+  normal(1),
+  grande(1.15),
+  muyGrande(1.3);
+
+  const TamanoLetra(this.factor);
+
+  final double factor;
+}
+
+/// El tamaño elegido en este dispositivo.
+final tamanoLetraElegidoProvider =
+    NotifierProvider<TamanoLetraElegido, TamanoLetra>(TamanoLetraElegido.new);
+
+class TamanoLetraElegido extends Notifier<TamanoLetra> {
+  static const _clave = 'tema.letra';
+
+  @override
+  TamanoLetra build() {
+    unawaited(_cargar());
+    return TamanoLetra.normal;
+  }
+
+  Future<void> _cargar() async {
+    try {
+      final guardado = (await SharedPreferences.getInstance()).getString(
+        _clave,
+      );
+      state = TamanoLetra.values.asNameMap()[guardado] ?? state;
+    } on Exception catch (e) {
+      debugPrint('No se pudo leer el tamaño de letra: $e');
+    }
+  }
+
+  Future<void> elegir(TamanoLetra tamano) async {
+    if (tamano == state) return;
+    state = tamano;
+    ref
+        .read(metricasProvider)
+        .track(Eventos.textSizeChange, props: {'size': tamano.name});
+    try {
+      await (await SharedPreferences.getInstance()).setString(
+        _clave,
+        tamano.name,
+      );
+    } on Exception catch (e) {
+      debugPrint('No se pudo guardar el tamaño de letra: $e');
+    }
+  }
+}
+
+/// El factor con el que se dibuja la letra: sin Pro, el normal (sin borrar
+/// la elección guardada).
+final factorLetraActivoProvider = Provider<double>(
+  (ref) => ref.watch(tienePlanConTemasProvider)
+      ? ref.watch(tamanoLetraElegidoProvider).factor
+      : 1,
+);

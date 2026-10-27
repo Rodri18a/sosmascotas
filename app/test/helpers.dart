@@ -28,6 +28,7 @@ import 'package:sosmascota/src/funcionalidades/funcionalidades_activas.dart';
 import 'package:sosmascota/src/hogar/hogar_repositorio.dart';
 import 'package:sosmascota/src/hogar/tareas_repositorio.dart';
 import 'package:sosmascota/src/instalar/servicio_instalacion.dart';
+import 'package:sosmascota/src/mapa/filtros_guardados.dart';
 import 'package:sosmascota/src/mapa/mapa_vista.dart';
 import 'package:sosmascota/src/mascotas/catalogo.dart';
 import 'package:sosmascota/src/mascotas/libreta_repositorio.dart';
@@ -58,6 +59,7 @@ import 'chat_falso.dart';
 import 'comercios_falsos.dart';
 import 'cuenta_falsa.dart';
 import 'eventos_falsos.dart';
+import 'filtros_falsos.dart';
 import 'funcionalidades_falsas.dart';
 import 'hogar_falso.dart';
 import 'instalacion_falsa.dart';
@@ -114,6 +116,7 @@ Widget appDePrueba({
   TiendaRepositorio? tienda,
   AgendaRepositorio? agenda,
   PlanUsuarioRepositorio? planUsuario,
+  AlmacenFiltros? almacenFiltros,
   Posicion? posicion,
   SelectorFoto? selectorFoto,
   QrRepositorio? qr,
@@ -200,6 +203,9 @@ Widget appDePrueba({
     noticiasRepositorioProvider.overrideWithValue(noticias ?? NoticiasFalsas()),
     tiendaRepositorioProvider.overrideWithValue(tienda ?? TiendaFalsa()),
     agendaRepositorioProvider.overrideWithValue(agenda ?? AgendaFalsa()),
+    almacenFiltrosProvider.overrideWithValue(
+      almacenFiltros ?? AlmacenFiltrosFalso(),
+    ),
     planUsuarioRepositorioProvider.overrideWithValue(
       planUsuario ?? PlanUsuarioFalso(),
     ),

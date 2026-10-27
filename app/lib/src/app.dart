@@ -26,6 +26,7 @@ class SosMascotaApp extends ConsumerWidget {
     // Sin sesión no quedan copias de los datos en el dispositivo (1.5.6).
     ref.watch(limpiezaRespaldoProvider);
     final paleta = ref.watch(paletaActivaProvider);
+    final factorLetra = ref.watch(factorLetraActivoProvider);
     ref
       ..watch(fuentesDelTemaProvider)
       ..watch(renovarPushProvider)
@@ -49,8 +50,22 @@ class SosMascotaApp extends ConsumerWidget {
       // Sigue el modo claro u oscuro del celular.
       themeMode: ThemeMode.system,
       routerConfig: router,
-      builder: (context, child) =>
-          env.isProd ? child! : Stack(children: [child!, const MarcaDev()]),
+      builder: (context, child) {
+        final contenido = env.isProd
+            ? child!
+            : Stack(children: [child!, const MarcaDev()]);
+        if (factorLetra == 1) return contenido;
+        // Letra más grande (Pro, D112), encima de la que elige el sistema.
+        final datos = MediaQuery.of(context);
+        return MediaQuery(
+          data: datos.copyWith(
+            textScaler: TextScaler.linear(
+              datos.textScaler.scale(1) * factorLetra,
+            ),
+          ),
+          child: contenido,
+        );
+      },
     );
   }
 }

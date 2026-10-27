@@ -10,9 +10,11 @@ import '../../../l10n/l10n.dart';
 import '../../comercios/comercios_repositorio.dart';
 import '../../comercios/mis_lugares.dart';
 import '../../comercios/textos_comercio.dart';
+import '../../cuenta/plan_usuario_repositorio.dart';
 import '../../cuenta/servicio_cuenta.dart';
 import '../../eventos/eventos_repositorio.dart';
 import '../../funcionalidades/funcionalidades_activas.dart';
+import '../../mapa/filtros_guardados.dart';
 import '../../mapa/mapa_vista.dart';
 import '../../mascotas/mascota_activa.dart';
 import '../../mascotas/mascotas_repositorio.dart';
@@ -70,6 +72,31 @@ class _MapaScreenState extends ConsumerState<MapaScreen> {
 
   var _vista = _Vista.mapa;
   late var _filtros = FiltrosMapa(colocaMicrochip: widget.colocaMicrochip);
+
+  @override
+  void initState() {
+    super.initState();
+    unawaited(_cargarMisFiltros());
+  }
+
+  /// Con Pro, el mapa abre con «mis filtros» (2.11, D112).
+  Future<void> _cargarMisFiltros() async {
+    final cuenta = ref.read(usuarioActualProvider).value?.id;
+    if (cuenta == null) return;
+    try {
+      final plan = await ref.read(miPlanUsuarioProvider.future);
+      if (!(plan?.esPro ?? false)) return;
+      final guardados = await ref.read(almacenFiltrosProvider).leer(cuenta);
+      if (guardados == null || !mounted) return;
+      setState(
+        () => _filtros = widget.colocaMicrochip
+            ? guardados.copyWith(colocaMicrochip: true)
+            : guardados,
+      );
+    } on Exception {
+      // Sin plan o sin lo guardado, quedan los de siempre.
+    }
+  }
 
   @override
   void didUpdateWidget(MapaScreen anterior) {
@@ -598,6 +625,28 @@ class _HojaFiltrosState extends ConsumerState<_HojaFiltros> {
               ),
             ),
             const SizedBox(height: 8),
+            if (ref.watch(miPlanUsuarioProvider).value?.esPro ?? false)
+              TextButton.icon(
+                onPressed: () async {
+                  final cuenta = ref.read(usuarioActualProvider).value?.id;
+                  if (cuenta == null) return;
+                  final mensajes = ScaffoldMessenger.of(context);
+                  final navegador = Navigator.of(context);
+                  await ref.read(almacenFiltrosProvider).guardar(cuenta, _f);
+                  ref
+                      .read(metricasProvider)
+                      .track(
+                        Eventos.filtersSave,
+                        props: {'activos': _f.activos},
+                      );
+                  mensajes.showSnackBar(
+                    SnackBar(content: Text(t.mapaFiltrosGuardados)),
+                  );
+                  navegador.pop(_f);
+                },
+                icon: const Icon(Icons.bookmark_add_outlined),
+                label: Text(t.mapaFiltrosGuardar),
+              ),
             Row(
               children: [
                 TextButton(

@@ -81,7 +81,7 @@ Pantalla inicial: logo sobre el azul petróleo de la marca (`#0F5E7A`, D62) dura
 - **Chips (D84):** sin ninguno elegido se ve todo; con alguno, solo lo elegido. "Perdidos y encontrados" solo muestra únicamente los SOS. La lista arranca con las tarjetas de perdidos y encontrados y sigue con los lugares.
 - **Capas / categorías:** veterinarias (y urgencias 24 h), petshops, farmacias veterinarias, peluquerías, paseadores, hoteles y guarderías, adiestradores, **lugares que aceptan mascotas** (bares, restaurantes, alojamientos), refugios, agropecuarias / agroveterinarias (D89: salen también al filtrar "Pet shop"), eventos, perdidos y encontrados.
 - Filtros: categoría, especie de la mascota activa, distancia (300 m, 800 m, 2,5 km, todo), "Abierto ahora", favoritos, **"Coloca microchip"** (veterinarias con la insignia Operador RENAC, Fase 1).
-- **Guardar filtros y favoritos:** función Pro.
+- **Guardar filtros:** función Pro (✅ 2.11, D112: «Guardar como mis filtros» y el mapa abre con ellos). Los favoritos siguen gratis (D112).
 - **Estados de un lugar:** sin reclamar (gris) · no verificado · verificado ✔️ · destacado (naranja, plan pago).
 - **Íconos de los pines (D82):** el ícono dice el rubro (veterinaria cruz, pet shop carrito, farmacia pastilla, peluquería tijera, paseador persona caminando, hotel cama, adiestrador birrete, acepta mascotas huella, refugio casita, agropecuaria tractor) y el color, el estado. Perdidos y encontrados: lupa roja o verde. Eventos: calendario coral. Un lugar sin reclamar es gris **con el ícono de su rubro**.
 - **Marcar lugar (Fase 1):** el usuario elige el rubro, toca el mapa y puede pegar un link de Google. **No puede ponerle nombre.** Queda "sin reclamar", con el texto "marcado por N usuarios".
