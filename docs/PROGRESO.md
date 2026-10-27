@@ -47,6 +47,8 @@ Fase 2, lo que falta: 2.1 (planes Pro y Familia), 2.9 (solo la venta de diseños
 
 </details>
 
+27/10/2026: compilación nueva de la app y del portal subida a sosmascota-dev y sosmascota-admin (con 3.1, 3.2, 2.9, 3.6 y D110), lista para probar online.
+
 **Paso actual:** 0.8.3 (prueba con conocidos) · pendiente del dueño: 0.4.4b (proveedor de correo) · validación pendiente desde 0.0.2 · el código va adelantado (fases 1–3): falta probar online 3.2 y 1.5.6
 
 > ▶️ Retomado el 16/10/2026 (se había pausado el 15/10). La lista de abajo sigue siendo el orden sugerido.
