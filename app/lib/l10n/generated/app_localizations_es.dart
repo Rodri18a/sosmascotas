@@ -5550,4 +5550,195 @@ class AppLocalizationsEs extends AppLocalizations {
   String reporteTitulo(String mes) {
     return 'Reporte de $mes';
   }
+
+  @override
+  String get cuidadoPaseo => 'Paseo';
+
+  @override
+  String get cuidadoGuarderia => 'Guardería de día';
+
+  @override
+  String get cuidadoEstadia => 'Estadía';
+
+  @override
+  String get cuidadoVisitas => 'Visitas a domicilio';
+
+  @override
+  String get cuidadoManana => 'De mañana';
+
+  @override
+  String get cuidadoTarde => 'De tarde';
+
+  @override
+  String get cuidadoNoche => 'De noche';
+
+  @override
+  String get cuidadoPendiente => 'Esperando respuesta';
+
+  @override
+  String get cuidadoAceptado => 'Aceptado: coordinen por el chat';
+
+  @override
+  String get cuidadoRechazado => 'No disponible';
+
+  @override
+  String get cuidadoCanceladoEstado => 'Cancelado';
+
+  @override
+  String get cuidadoTerminado => 'Terminado';
+
+  @override
+  String cuidadoElDia(String dia) {
+    return 'el $dia';
+  }
+
+  @override
+  String cuidadoDelAl(String desde, String hasta) {
+    return 'del $desde al $hasta';
+  }
+
+  @override
+  String get cuidadoSinLugar =>
+      'No le queda lugar en alguno de esos días. Probá con otras fechas.';
+
+  @override
+  String get cuidadoLimite =>
+      'Llegaste al máximo de pedidos por ahora (3 por prestador, 10 por día).';
+
+  @override
+  String get cuidadoFueraDeRango => 'Esas fechas no se pueden pedir todavía.';
+
+  @override
+  String cuidadoContratar(String servicios) {
+    return 'Contratar: $servicios';
+  }
+
+  @override
+  String get cuidadoIngresar => 'Ingresá para contratar un paseo o una estadía';
+
+  @override
+  String get cuidadoTitulo => 'Contratar';
+
+  @override
+  String get cuidadoCondiciones => 'Condiciones del prestador';
+
+  @override
+  String get cuidadoQue => '¿Qué necesitás?';
+
+  @override
+  String get cuidadoFechas => '¿Qué días?';
+
+  @override
+  String get cuidadoElegirFechas => 'Elegir las fechas';
+
+  @override
+  String cuidadoMaximoDias(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Hasta $n días seguidos por pedido.',
+      one: 'Un día por pedido.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get cuidadoFranja => '¿En qué momento del día?';
+
+  @override
+  String get cuidadoSinFranja => 'Me da igual';
+
+  @override
+  String get cuidadoMascotas => '¿Para qué mascotas? (hasta 5)';
+
+  @override
+  String get cuidadoNota =>
+      'Lo que tenga que saber: horarios, comida, medicación, carácter (opcional)';
+
+  @override
+  String get cuidadoComoSigue =>
+      'Si acepta, se abre el chat para acordar la dirección, el precio y el pago. Tu teléfono y tu dirección no se comparten.';
+
+  @override
+  String get cuidadoEnviar => 'Enviar el pedido';
+
+  @override
+  String get cuidadoPedido => '¡Listo! Te avisamos cuando responda.';
+
+  @override
+  String get misCuidados => 'Mis paseos y estadías';
+
+  @override
+  String get misCuidadosAyuda =>
+      'Lo que pediste a paseadores, hoteles y cuidadores';
+
+  @override
+  String get misCuidadosVacio =>
+      'Todavía no pediste nada. Los paseadores y hoteles que toman pedidos tienen «Contratar» en su ficha.';
+
+  @override
+  String get cuidadoChat => 'Abrir el chat';
+
+  @override
+  String get cuidadoCancelar => 'Cancelar el pedido';
+
+  @override
+  String get cuidadoCancelarTexto =>
+      'Se avisa al prestador. Un pedido aceptado se cancela hasta el día anterior.';
+
+  @override
+  String get cuidadoCancelado => 'Pedido cancelado.';
+
+  @override
+  String get cuidadoNoCancelable =>
+      'Ya empezó: si necesitás cambiar algo, escribile por el chat.';
+
+  @override
+  String get cuidadosTab => 'Paseos y estadías';
+
+  @override
+  String get cuidadosTurnosTab => 'Turnos';
+
+  @override
+  String get cuidadosQueOfreces => 'Qué ofrecés';
+
+  @override
+  String get cuidadosQueOfrecesAyuda =>
+      'Aparece «Contratar» en tu ficha. Vos aceptás o rechazás cada pedido; al aceptar se abre el chat.';
+
+  @override
+  String get cuidadosCupo => 'Mascotas por día (guardería y estadía)';
+
+  @override
+  String get cuidadosMaximoDias => 'Días seguidos como máximo';
+
+  @override
+  String get cuidadosCondiciones => 'Condiciones (vacunas, tamaño, qué traer…)';
+
+  @override
+  String get cuidadosPedidos => 'Pedidos';
+
+  @override
+  String get cuidadosSinPedidos => 'Todavía no te pidieron nada.';
+
+  @override
+  String get cuidadosAceptar => 'Aceptar y abrir el chat';
+
+  @override
+  String get cuidadosTerminado => 'Terminado';
+
+  @override
+  String panelCuidadosPendientes(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n pedidos de paseo o estadía',
+      one: '1 pedido de paseo o estadía',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get cuidadosPrenderAgenda =>
+      'Para que aparezca «Contratar» en tu ficha, prendé «Tomar turnos desde la app» en Turnos.';
 }

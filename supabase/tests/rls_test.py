@@ -1915,6 +1915,112 @@ def main():
             pedir('DELETE', f'{URL}/rest/v1/pets?id=eq.{mascota_b}', headers=ADMIN)
             pedir('DELETE', f'{URL}/rest/v1/businesses?id=eq.{tienda}', headers=ADMIN)
 
+            print('contratar paseadores, hoteles y cuidadores (3.3, D115)')
+            s_ho, hotel = rest('POST', 'rpc/alta_negocio', {'p': {
+                'name': 'Hotel Canino RLS', 'business_type': 'hotel', 'kind': 'local',
+                'lat': -34.7216, 'lng': -55.9616}}, a)
+            caso('A da de alta un hotel', s_ho == 200)
+            ofrece = {'kinds': ['boarding', 'walk'], 'capacity': 2, 'days_ahead': 30, 'max_days': 10,
+                      'conditions': 'Vacunas al día'}
+            caso('sin Plus no se ofrecen cuidados',
+                 rest('POST', 'rpc/guardar_cuidados', {'p_negocio': hotel, 'p': ofrece}, a)[0] >= 400)
+            rest('POST', 'rpc/admin_plan_comercio', {'p_business': hotel, 'p_plan': 'plus'}, x)
+            caso('B no configura los cuidados de otro',
+                 rest('POST', 'rpc/guardar_cuidados', {'p_negocio': hotel, 'p': ofrece}, b)[0] >= 400
+                 and rest('POST', 'rpc/mis_ajustes_cuidados', {'p_negocio': hotel}, b)[0] >= 400)
+            caso('un servicio inventado no se guarda',
+                 rest('POST', 'rpc/guardar_cuidados', {'p_negocio': hotel, 'p': {'kinds': ['cria']}}, a)[0] >= 400)
+            caso('A ofrece estadía y paseo (2 mascotas por día)',
+                 rest('POST', 'rpc/guardar_cuidados', {'p_negocio': hotel, 'p': ofrece}, a)[0] in (200, 204)
+                 and rest('POST', 'rpc/mis_ajustes_cuidados', {'p_negocio': hotel}, a)[1]['capacity'] == 2)
+            caso('con la agenda apagada no se ofrece nada',
+                 rest('POST', 'rpc/condiciones_cuidados', {'p_negocio': hotel})[1] is None)
+            rest('POST', 'rpc/prender_modulo', {'p_business': hotel, 'p_modulo': 'agenda', 'p_prendido': True}, a)
+            cond = rest('POST', 'rpc/condiciones_cuidados', {'p_negocio': hotel})[1]
+            caso('prendida, un visitante ve qué ofrece (sin el cupo)',
+                 cond is not None and sorted(cond['kinds']) == ['boarding', 'walk'] and cond['completos'] == []
+                 and 'capacity' not in cond)
+            caso('nadie lee ni escribe los cuidados directamente',
+                 bloqueado(rest('GET', 'care_requests?select=id', quien=a))
+                 and bloqueado(rest('GET', 'care_settings?select=business_id', quien=a))
+                 and bloqueado(rest('GET', 'care_notifications?select=kind', quien=a))
+                 and bloqueado(rest('POST', 'care_requests', {'business_id': hotel, 'pet_ids': [pet['id']],
+                                                              'kind': 'walk', 'start_day': dia, 'end_day': dia}, a)))
+            m1 = filas(rest('POST', 'pets', {'name': 'Luna', 'species_id': 1}, b))[0]['id']
+            m2 = filas(rest('POST', 'pets', {'name': 'Rocco', 'species_id': 1}, b))[0]['id']
+            d1 = (hoy_uy + _dt2.timedelta(days=3)).isoformat()
+            d3 = (hoy_uy + _dt2.timedelta(days=5)).isoformat()
+
+            def pedir_c(quien, **p):
+                cuerpo = {'p_negocio': hotel, 'p_tipo': 'boarding', 'p_desde': d1, 'p_hasta': d3,
+                          'p_mascotas': [m1, m2], **p}
+                return rest('POST', 'rpc/pedir_cuidado', cuerpo, quien)
+            caso('un visitante no pide', pedir_c(None)[0] >= 400)
+            caso('B no pide con la mascota de A', pedir_c(b, p_mascotas=[pet['id']])[0] >= 400)
+            caso('ni repite la mascota', pedir_c(b, p_mascotas=[m1, m1])[0] >= 400)
+            caso('ni pide lo que no se ofrece', pedir_c(b, p_tipo='daycare')[0] >= 400)
+            caso('ni fechas al revés o más largas que el máximo',
+                 pedir_c(b, p_desde=d3, p_hasta=d1)[0] >= 400
+                 and pedir_c(b, p_hasta=(hoy_uy + _dt2.timedelta(days=20)).isoformat())[0] >= 400)
+            caso('ni días que ya pasaron', pedir_c(b, p_desde=(hoy_uy - _dt2.timedelta(days=1)).isoformat())[0] >= 400)
+            s_c1, c1 = pedir_c(b, p_nota='Rocco come aparte')
+            caso('B pide una estadía para sus dos mascotas', s_c1 == 200)
+            mis_c = filas(rest('POST', 'rpc/mis_cuidados', {}, b))
+            caso('B ve su pedido pendiente, sin chat todavía',
+                 len(mis_c) == 1 and mis_c[0]['status'] == 'pending' and mis_c[0]['pets'] == ['Luna', 'Rocco']
+                 and mis_c[0]['conversation_id'] is None)
+            del_h = filas(rest('POST', 'rpc/cuidados_del_negocio', {'p_negocio': hotel}, a))
+            caso('el hotel ve primer nombre, mascotas y nota (sin id ni contacto)',
+                 len(del_h) == 1 and del_h[0]['cliente'] == 'Prueba' and del_h[0]['pets'][0].startswith('Luna')
+                 and del_h[0]['note'] == 'Rocco come aparte' and 'user_id' not in del_h[0])
+            caso('B no ve los pedidos del hotel ni responde el suyo',
+                 rest('POST', 'rpc/cuidados_del_negocio', {'p_negocio': hotel}, b)[0] >= 400
+                 and rest('POST', 'rpc/responder_cuidado', {'p_id': c1, 'p_aceptar': True}, b)[0] >= 400)
+            caso('el hotel cuenta un pendiente', rest('POST', 'rpc/cuidados_pendientes', {'p_negocio': hotel}, a)[1] == 1)
+
+            def avisar_c(id_, actor):
+                return filas(pedir('POST', f'{URL}/rest/v1/rpc/avisar_cuidado', {'p_pedido': id_, 'p_actor': actor}, ADMIN))
+            caso('nadie con sesión pide a quién avisar de un cuidado',
+                 rest('POST', 'rpc/avisar_cuidado', {'p_pedido': c1, 'p_actor': b_id}, b)[0] in (401, 403, 404))
+            av = avisar_c(c1, b_id)
+            caso('pedido nuevo: se avisa al hotel una sola vez',
+                 len(av) == 1 and av[0]['destino'] == 'negocio' and av[0]['tipo'] == 'boarding'
+                 and avisar_c(c1, b_id) == [])
+            s_ac, conv_c = rest('POST', 'rpc/responder_cuidado', {'p_id': c1, 'p_aceptar': True}, a)
+            caso('A acepta y se abre el chat', s_ac == 200 and isinstance(conv_c, str))
+            caso('B ve el chat del pedido aceptado',
+                 filas(rest('POST', 'rpc/mis_cuidados', {}, b))[0]['conversation_id'] == conv_c)
+            caso('aceptado: se avisa a B', avisar_c(c1, a_id)[0]['destino'] == 'cliente')
+            caso('con el cupo lleno, esos días figuran completos y no se piden más',
+                 d1 in rest('POST', 'rpc/condiciones_cuidados', {'p_negocio': hotel})[1]['completos']
+                 and pedir_c(b, p_mascotas=[m1])[0] >= 400)
+            caso('el paseo no ocupa lugar',
+                 pedir_c(b, p_tipo='walk', p_desde=d1, p_hasta=d1, p_mascotas=[m1], p_franja='morning')[0] == 200)
+            caso('pero un momento del día inventado no',
+                 pedir_c(b, p_tipo='walk', p_desde=d1, p_hasta=d1, p_mascotas=[m1], p_franja='madrugada')[0] >= 400)
+            caso('el hotel no marca terminado antes del primer día',
+                 rest('POST', 'rpc/cambiar_estado_cuidado', {'p_id': c1, 'p_estado': 'done'}, a)[0] >= 400)
+            caso('B cancela antes del primer día y vuelve el lugar',
+                 rest('POST', 'rpc/cambiar_estado_cuidado', {'p_id': c1, 'p_estado': 'cancelled'}, b)[0] in (200, 204)
+                 and rest('POST', 'rpc/condiciones_cuidados', {'p_negocio': hotel})[1]['completos'] == [])
+            caso('cancelado: se avisa al hotel', avisar_c(c1, b_id)[0]['estado'] == 'cancelled')
+            caso('A no puede reabrir un pedido cancelado',
+                 rest('POST', 'rpc/responder_cuidado', {'p_id': c1, 'p_aceptar': True}, a)[0] >= 400)
+
+            def escucha_c(canal, quien):
+                return rest('POST', 'rpc/puedo_escuchar_cuidados', {'p_canal': canal}, quien)[1] is True
+            caso('cada uno escucha sus cuidados en vivo y el hotel los suyos',
+                 escucha_c(f'cuidados:cliente:{b_id}', b) and not escucha_c(f'cuidados:cliente:{b_id}', a)
+                 and escucha_c(f'cuidados:negocio:{hotel}', a) and not escucha_c(f'cuidados:negocio:{hotel}', b))
+            s_pl, pelu = rest('POST', 'rpc/alta_negocio', {'p': {
+                'name': 'Peluquería Cuidados RLS', 'business_type': 'grooming', 'kind': 'local',
+                'lat': -34.7217, 'lng': -55.9617}}, a)
+            rest('POST', 'rpc/admin_plan_comercio', {'p_business': pelu, 'p_plan': 'plus'}, x)
+            caso('una peluquería con Plus no ofrece cuidados',
+                 s_pl == 200 and rest('POST', 'rpc/guardar_cuidados', {'p_negocio': pelu, 'p': ofrece}, a)[0] >= 400)
+            pedir('DELETE', f'{URL}/rest/v1/businesses?id=in.({hotel},{pelu})', headers=ADMIN)
+            pedir('DELETE', f'{URL}/rest/v1/pets?id=in.({m1},{m2})', headers=ADMIN)
+
             print('rubro Agropecuaria (2.8e)')
             s_ag, agro = rest('POST', 'rpc/alta_negocio', {'p': {
                 'name': 'Agropecuaria RLS', 'business_type': 'agro', 'kind': 'local', 'lat': -34.7213, 'lng': -55.9613}}, a)

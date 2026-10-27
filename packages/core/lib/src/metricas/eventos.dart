@@ -104,6 +104,9 @@ abstract final class Eventos {
   static const bookingCreate = 'booking_create';
   static const bookingStatus = 'booking_status';
   static const agendaSave = 'agenda_save';
+  static const careRequest = 'care_request';
+  static const careStatus = 'care_status';
+  static const careSave = 'care_save';
 
   /// Lo registra la web pública al abrir `/n/<id>` (no la app).
   static const businessPageOpen = 'business_page_open';

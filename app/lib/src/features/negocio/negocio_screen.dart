@@ -6,6 +6,7 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
 import '../../agenda/agenda_repositorio.dart';
+import '../../agenda/cuidados_repositorio.dart';
 import '../../comercios/comercios_repositorio.dart';
 import '../../comercios/negocios_repositorio.dart';
 import '../../comercios/textos_comercio.dart';
@@ -22,6 +23,7 @@ import '../adopcion/apadrinamiento_screen.dart';
 import '../adopcion/pack_screen.dart';
 import '../adopcion/transito_screen.dart';
 import '../agenda/agenda_negocio.dart';
+import '../agenda/cuidados_negocio.dart';
 import '../chapitas/pedido_chapita.dart';
 import '../resenas/resenas.dart';
 import '../tienda/pedidos.dart';
@@ -258,7 +260,16 @@ class _ParaAtender extends ConsumerWidget {
               .where((x) => x.estado == EstadoTurno.pendiente)
               .length
         : 0;
-    if (pedidos == 0 && turnos == 0) return const SizedBox.shrink();
+    final cuidados =
+        ofreceCuidados(negocio.comercio) &&
+            ref.watch(funcionalidadActivaProvider(Funcionalidades.cuidados))
+        ? (ref.watch(cuidadosDelNegocioProvider(negocio.id)).value ?? const [])
+              .where((x) => x.estado == EstadoCuidado.pendiente)
+              .length
+        : 0;
+    if (pedidos == 0 && turnos == 0 && cuidados == 0) {
+      return const SizedBox.shrink();
+    }
     return Card(
       color: Theme.of(context).colorScheme.secondaryContainer,
       child: Column(
@@ -275,6 +286,13 @@ class _ParaAtender extends ConsumerWidget {
             ListTile(
               leading: const Icon(Icons.event_outlined),
               title: Text(t.panelTurnosPendientes(turnos)),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => onIr?.call(_Seccion.agenda),
+            ),
+          if (cuidados > 0)
+            ListTile(
+              leading: const Icon(Icons.pets_outlined),
+              title: Text(t.panelCuidadosPendientes(cuidados)),
               trailing: const Icon(Icons.chevron_right),
               onTap: () => onIr?.call(_Seccion.agenda),
             ),
@@ -546,7 +564,54 @@ class _Agenda extends ConsumerWidget {
         !moduloAdmitido(c.categoria, c.modalidad, Modulo.agenda)) {
       return _Modulo(negocio: negocio, modulo: Modulo.agenda);
     }
+    // Paseadores y hoteles: turnos y, aparte, paseos y estadías (3.3, D115).
+    if (ofreceCuidados(c) &&
+        ref.watch(funcionalidadActivaProvider(Funcionalidades.cuidados))) {
+      return _AgendaYCuidados(negocioId: negocio.id);
+    }
     return AgendaNegocio(negocioId: negocio.id);
+  }
+}
+
+/// Paseador u hotel: los únicos que ofrecen paseos y estadías (D115).
+bool ofreceCuidados(Comercio c) =>
+    c.categoria == Categoria.walker || c.categoria == Categoria.hotel;
+
+class _AgendaYCuidados extends StatefulWidget {
+  const _AgendaYCuidados({required this.negocioId});
+
+  final String negocioId;
+
+  @override
+  State<_AgendaYCuidados> createState() => _AgendaYCuidadosState();
+}
+
+class _AgendaYCuidadosState extends State<_AgendaYCuidados> {
+  var _cuidados = true;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = context.t;
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+          child: SegmentedButton<bool>(
+            segments: [
+              ButtonSegment(value: true, label: Text(t.cuidadosTab)),
+              ButtonSegment(value: false, label: Text(t.cuidadosTurnosTab)),
+            ],
+            selected: {_cuidados},
+            onSelectionChanged: (s) => setState(() => _cuidados = s.first),
+          ),
+        ),
+        Expanded(
+          child: _cuidados
+              ? CuidadosNegocio(negocioId: widget.negocioId)
+              : AgendaNegocio(negocioId: widget.negocioId),
+        ),
+      ],
+    );
   }
 }
 

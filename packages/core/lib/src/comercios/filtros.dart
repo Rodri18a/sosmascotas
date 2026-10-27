@@ -55,6 +55,21 @@ class FiltrosMapa {
     this.porMascotaActiva = true,
   });
 
+  /// Lo guardado con [toJson]; lo que no se reconoce queda como por defecto.
+  factory FiltrosMapa.fromJson(Map<String, Object?> json) => FiltrosMapa(
+    categorias: {
+      for (final c in (json['categorias'] as List?) ?? const [])
+        ?Categoria.values.asNameMap()[c],
+    },
+    sos: json['sos'] as bool? ?? false,
+    distancia:
+        Distancia.values.asNameMap()[json['distancia']] ?? Distancia.todo,
+    abiertoAhora: json['abierto_ahora'] as bool? ?? false,
+    soloFavoritos: json['solo_favoritos'] as bool? ?? false,
+    colocaMicrochip: json['coloca_microchip'] as bool? ?? false,
+    porMascotaActiva: json['por_mascota_activa'] as bool? ?? true,
+  );
+
   /// Chips de rubros elegidos. Con [sos], son los chips de arriba del mapa:
   /// sin ninguno elegido se ve todo; si hay alguno, solo lo elegido (D84).
   final Set<Categoria> categorias;
@@ -131,21 +146,6 @@ class FiltrosMapa {
     'coloca_microchip': colocaMicrochip,
     'por_mascota_activa': porMascotaActiva,
   };
-
-  /// Lo guardado con [toJson]; lo que no se reconoce queda como por defecto.
-  factory FiltrosMapa.fromJson(Map<String, Object?> json) => FiltrosMapa(
-    categorias: {
-      for (final c in (json['categorias'] as List?) ?? const [])
-        ?Categoria.values.asNameMap()[c],
-    },
-    sos: json['sos'] as bool? ?? false,
-    distancia:
-        Distancia.values.asNameMap()[json['distancia']] ?? Distancia.todo,
-    abiertoAhora: json['abierto_ahora'] as bool? ?? false,
-    soloFavoritos: json['solo_favoritos'] as bool? ?? false,
-    colocaMicrochip: json['coloca_microchip'] as bool? ?? false,
-    porMascotaActiva: json['por_mascota_activa'] as bool? ?? true,
-  );
 }
 
 /// Regla de coincidencia por especie (06): coincide si atiende alguna de

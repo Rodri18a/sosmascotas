@@ -98,6 +98,7 @@ Páginas livianas en **HTML + JavaScript sin frameworks** (cargan rápido en cua
 | `sos-zone-alert` | ✅ Al publicar un SOS, la app la llama y se avisa por push a quienes están cerca (`difundir_sos()`: hasta el radio de cada persona, máx. 3 avisos por día, una sola vez por SOS). Valida la sesión y que el SOS sea de quien llama. Envía por FCM HTTP v1 (`_shared/fcm.ts`, secreto `FIREBASE_SERVICE_ACCOUNT`) y borra los tokens vencidos. Sin el secreto responde 503 sin marcar nada (la app reintenta al abrir) | 0.6.3 |
 | `qr-scan-alert` | La llama la página pública del QR después de `registrar_escaneo()`: push al dueño "📍 Escanearon el QR de…" (abre `/mascotas/<id>/qr`). Sin sesión; solo acepta el id de un escaneo de menos de 5 min, una push por escaneo y como mucho una por QR cada 10 min (`aviso_escaneo()`). Responde siempre igual | 0.6.4 ✅ |
 | `order-status-alert` | Pedidos (3.2, D100): la app la llama después de pedir o de cambiar el estado; push a la otra parte según `avisar_pedido()` (una por pedido y estado). Valida la sesión. Registra `order_push` | 3.2 |
+| `care-alert` | Paseos y estadías (3.3, D115): la app la llama después de pedir, responder o cambiar el estado; push a la otra parte según `avisar_cuidado()` (una por pedido y estado; abre `/cuidados` o `/negocio?seccion=agenda`) | 3.3 ✅ |
 | `owner-alert` | Contacto inverso: aviso al dueño desde el QR o un SOS, con push "💬 …te dejó un mensaje" (abre `/avisos`; si la push no sale, el aviso queda igual en la bandeja). Con sesión (desde la app) no pide anti-bots; sin sesión, Turnstile (secreto `TURNSTILE_SECRET`; en dev, la clave de prueba de Cloudflare), límites 5/h por dispositivo y 10/h por destino, remitentes bloqueados | 0.4.4 ✅ |
 
 ### Comercios cargados a mano (Fase 0)
@@ -116,6 +117,7 @@ Se despliegan con `supabase functions deploy <nombre> --use-api` y se prueban en
 | Escaneo de QR | Edge Function + FCM | "Escanearon el QR de Toby cerca de…" |
 | Novedades de búsquedas que sigo | Edge Function `sos-follow-alert` + FCM (D74) | "¡Luna volvió a casa!" |
 | Chat, turnos | Realtime + FCM | |
+| Paseos y estadías (D115) | Edge Function `care-alert` + FCM; estado en vivo con Broadcast en `cuidados:cliente:<usuario>` y `cuidados:negocio:<comercio>` | "✅ Hotel Canino aceptó: estadía para Luna, del 24/12 al 26/12" |
 | Pedidos (D100) | Edge Function `order-status-alert` + FCM; estado en vivo con Broadcast desde la base (canales privados) | "✅ ¡Tu pedido #7 está listo!" / "🛍️ Pedido nuevo #12" |
 | Recordatorios de medicación, comida y vacunas | **Locales** (sin servidor). En la web, solo con la app abierta (D67) | "Antibiótico para Toby" |
 | Recordatorios del hogar compartido | Locales + sincronización por Realtime / FCM | "Ana ya le dio la pastilla" |

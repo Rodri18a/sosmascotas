@@ -73,6 +73,10 @@ abstract final class Funcionalidades {
   /// D104).
   static const agenda = 'agenda';
 
+  /// Contratar paseadores, hoteles y cuidadores: pedir, Mis cuidados y los
+  /// pedidos del prestador (3.3, D115).
+  static const cuidados = 'cuidados';
+
   /// Las que ya están en `todos`: la app las da por prendidas aunque no pueda
   /// preguntarle a la base (sin conexión y sin nada guardado). Las demás, en
   /// ese caso, quedan apagadas (lo seguro).

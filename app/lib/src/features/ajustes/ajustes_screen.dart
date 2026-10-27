@@ -195,6 +195,16 @@ class _SeccionCuenta extends ConsumerWidget {
           ),
         ),
         SiFuncionalidad(
+          Funcionalidades.cuidados,
+          child: ListTile(
+            leading: const Icon(Icons.pets_outlined),
+            title: Text(t.misCuidados),
+            subtitle: Text(t.misCuidadosAyuda),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.push(Rutas.misCuidados),
+          ),
+        ),
+        SiFuncionalidad(
           Funcionalidades.comercios,
           child: ListTile(
             leading: const Icon(Icons.storefront_outlined),

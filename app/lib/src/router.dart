@@ -9,6 +9,7 @@ import 'features/adopcion/adopcion_screen.dart';
 import 'features/adopcion/apadrinamiento_screen.dart';
 import 'features/adopcion/pack_screen.dart';
 import 'features/adopcion/transito_screen.dart';
+import 'features/agenda/cuidados.dart';
 import 'features/agenda/reservar_turno.dart';
 import 'features/ajustes/ajustes_screen.dart';
 import 'features/ajustes/plan_usuario_screen.dart';
@@ -82,6 +83,9 @@ abstract final class Rutas {
   static const misTurnos = '/turnos';
   static String reservarTurno(String negocioId) =>
       '$misTurnos/reservar/$negocioId';
+  static const misCuidados = '/cuidados';
+  static String pedirCuidado(String negocioId) =>
+      '$misCuidados/pedir/$negocioId';
   static const _tienda = '/tienda';
   static String tienda(String negocioId) => '$_tienda/$negocioId';
   static const denuncia = '/denuncia';
@@ -138,6 +142,7 @@ abstract final class Rutas {
     buscarLugares: Funcionalidades.busqueda,
     '$_chapitas/': Funcionalidades.pedidoChapitas,
     misTurnos: Funcionalidades.agenda,
+    misCuidados: Funcionalidades.cuidados,
     miPlan: Funcionalidades.planesUsuario,
   };
 
@@ -165,6 +170,7 @@ abstract final class Rutas {
     misPedidos,
     '$_chapitas/',
     misTurnos,
+    misCuidados,
     miPlan,
   ];
 
@@ -521,6 +527,17 @@ final routerProvider = Provider<GoRouter>((ref) {
             path: 'reservar/:id',
             builder: (_, state) =>
                 ReservarTurnoScreen(negocioId: state.pathParameters['id']!),
+          ),
+        ],
+      ),
+      GoRoute(
+        path: Rutas.misCuidados,
+        builder: (_, _) => const MisCuidadosScreen(),
+        routes: [
+          GoRoute(
+            path: 'pedir/:id',
+            builder: (_, state) =>
+                PedirCuidadoScreen(negocioId: state.pathParameters['id']!),
           ),
         ],
       ),

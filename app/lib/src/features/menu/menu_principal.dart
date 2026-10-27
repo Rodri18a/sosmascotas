@@ -110,6 +110,8 @@ class _MenuPrincipalState extends ConsumerState<MenuPrincipal> {
                   t.misTurnos,
                   Rutas.misTurnos,
                 ),
+              if (activa(Funcionalidades.cuidados))
+                opcion(Icons.pets_outlined, t.misCuidados, Rutas.misCuidados),
               if (activa(Funcionalidades.comercios))
                 opcion(Icons.storefront_outlined, t.negocioMi, Rutas.negocio),
             ],

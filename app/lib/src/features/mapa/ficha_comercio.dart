@@ -13,6 +13,7 @@ import '../../metricas/metricas.dart';
 import '../../theme/paleta.dart';
 import '../../utiles/enlaces.dart';
 import '../adopcion/apadrinamiento_screen.dart';
+import '../agenda/cuidados.dart';
 import '../agenda/reservar_turno.dart';
 import '../chat/chat_screen.dart';
 import '../resenas/resenas.dart';
@@ -289,6 +290,8 @@ class FichaComercio extends ConsumerWidget {
             SeccionServicios(comercio: c),
             // Turnos (3.1, D104): solo si el comercio toma turnos.
             BotonReservar(comercio: c),
+            // Paseos y estadías (3.3, D115): paseadores y hoteles que ofrecen.
+            BotonContratar(comercio: c),
             // Favorito, "fui" y "es mi veterinaria" (1.2.8), con sesión y
             // con el mapa completo.
             if (ref.watch(conectadoProvider) &&

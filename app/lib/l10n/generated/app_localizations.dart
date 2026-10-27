@@ -9237,6 +9237,324 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Reporte de {mes}'**
   String reporteTitulo(String mes);
+
+  /// No description provided for @cuidadoPaseo.
+  ///
+  /// In es, this message translates to:
+  /// **'Paseo'**
+  String get cuidadoPaseo;
+
+  /// No description provided for @cuidadoGuarderia.
+  ///
+  /// In es, this message translates to:
+  /// **'Guardería de día'**
+  String get cuidadoGuarderia;
+
+  /// No description provided for @cuidadoEstadia.
+  ///
+  /// In es, this message translates to:
+  /// **'Estadía'**
+  String get cuidadoEstadia;
+
+  /// No description provided for @cuidadoVisitas.
+  ///
+  /// In es, this message translates to:
+  /// **'Visitas a domicilio'**
+  String get cuidadoVisitas;
+
+  /// No description provided for @cuidadoManana.
+  ///
+  /// In es, this message translates to:
+  /// **'De mañana'**
+  String get cuidadoManana;
+
+  /// No description provided for @cuidadoTarde.
+  ///
+  /// In es, this message translates to:
+  /// **'De tarde'**
+  String get cuidadoTarde;
+
+  /// No description provided for @cuidadoNoche.
+  ///
+  /// In es, this message translates to:
+  /// **'De noche'**
+  String get cuidadoNoche;
+
+  /// No description provided for @cuidadoPendiente.
+  ///
+  /// In es, this message translates to:
+  /// **'Esperando respuesta'**
+  String get cuidadoPendiente;
+
+  /// No description provided for @cuidadoAceptado.
+  ///
+  /// In es, this message translates to:
+  /// **'Aceptado: coordinen por el chat'**
+  String get cuidadoAceptado;
+
+  /// No description provided for @cuidadoRechazado.
+  ///
+  /// In es, this message translates to:
+  /// **'No disponible'**
+  String get cuidadoRechazado;
+
+  /// No description provided for @cuidadoCanceladoEstado.
+  ///
+  /// In es, this message translates to:
+  /// **'Cancelado'**
+  String get cuidadoCanceladoEstado;
+
+  /// No description provided for @cuidadoTerminado.
+  ///
+  /// In es, this message translates to:
+  /// **'Terminado'**
+  String get cuidadoTerminado;
+
+  /// No description provided for @cuidadoElDia.
+  ///
+  /// In es, this message translates to:
+  /// **'el {dia}'**
+  String cuidadoElDia(String dia);
+
+  /// No description provided for @cuidadoDelAl.
+  ///
+  /// In es, this message translates to:
+  /// **'del {desde} al {hasta}'**
+  String cuidadoDelAl(String desde, String hasta);
+
+  /// No description provided for @cuidadoSinLugar.
+  ///
+  /// In es, this message translates to:
+  /// **'No le queda lugar en alguno de esos días. Probá con otras fechas.'**
+  String get cuidadoSinLugar;
+
+  /// No description provided for @cuidadoLimite.
+  ///
+  /// In es, this message translates to:
+  /// **'Llegaste al máximo de pedidos por ahora (3 por prestador, 10 por día).'**
+  String get cuidadoLimite;
+
+  /// No description provided for @cuidadoFueraDeRango.
+  ///
+  /// In es, this message translates to:
+  /// **'Esas fechas no se pueden pedir todavía.'**
+  String get cuidadoFueraDeRango;
+
+  /// No description provided for @cuidadoContratar.
+  ///
+  /// In es, this message translates to:
+  /// **'Contratar: {servicios}'**
+  String cuidadoContratar(String servicios);
+
+  /// No description provided for @cuidadoIngresar.
+  ///
+  /// In es, this message translates to:
+  /// **'Ingresá para contratar un paseo o una estadía'**
+  String get cuidadoIngresar;
+
+  /// No description provided for @cuidadoTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Contratar'**
+  String get cuidadoTitulo;
+
+  /// No description provided for @cuidadoCondiciones.
+  ///
+  /// In es, this message translates to:
+  /// **'Condiciones del prestador'**
+  String get cuidadoCondiciones;
+
+  /// No description provided for @cuidadoQue.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Qué necesitás?'**
+  String get cuidadoQue;
+
+  /// No description provided for @cuidadoFechas.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Qué días?'**
+  String get cuidadoFechas;
+
+  /// No description provided for @cuidadoElegirFechas.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegir las fechas'**
+  String get cuidadoElegirFechas;
+
+  /// No description provided for @cuidadoMaximoDias.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =1{Un día por pedido.} other{Hasta {n} días seguidos por pedido.}}'**
+  String cuidadoMaximoDias(int n);
+
+  /// No description provided for @cuidadoFranja.
+  ///
+  /// In es, this message translates to:
+  /// **'¿En qué momento del día?'**
+  String get cuidadoFranja;
+
+  /// No description provided for @cuidadoSinFranja.
+  ///
+  /// In es, this message translates to:
+  /// **'Me da igual'**
+  String get cuidadoSinFranja;
+
+  /// No description provided for @cuidadoMascotas.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Para qué mascotas? (hasta 5)'**
+  String get cuidadoMascotas;
+
+  /// No description provided for @cuidadoNota.
+  ///
+  /// In es, this message translates to:
+  /// **'Lo que tenga que saber: horarios, comida, medicación, carácter (opcional)'**
+  String get cuidadoNota;
+
+  /// No description provided for @cuidadoComoSigue.
+  ///
+  /// In es, this message translates to:
+  /// **'Si acepta, se abre el chat para acordar la dirección, el precio y el pago. Tu teléfono y tu dirección no se comparten.'**
+  String get cuidadoComoSigue;
+
+  /// No description provided for @cuidadoEnviar.
+  ///
+  /// In es, this message translates to:
+  /// **'Enviar el pedido'**
+  String get cuidadoEnviar;
+
+  /// No description provided for @cuidadoPedido.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Listo! Te avisamos cuando responda.'**
+  String get cuidadoPedido;
+
+  /// No description provided for @misCuidados.
+  ///
+  /// In es, this message translates to:
+  /// **'Mis paseos y estadías'**
+  String get misCuidados;
+
+  /// No description provided for @misCuidadosAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Lo que pediste a paseadores, hoteles y cuidadores'**
+  String get misCuidadosAyuda;
+
+  /// No description provided for @misCuidadosVacio.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no pediste nada. Los paseadores y hoteles que toman pedidos tienen «Contratar» en su ficha.'**
+  String get misCuidadosVacio;
+
+  /// No description provided for @cuidadoChat.
+  ///
+  /// In es, this message translates to:
+  /// **'Abrir el chat'**
+  String get cuidadoChat;
+
+  /// No description provided for @cuidadoCancelar.
+  ///
+  /// In es, this message translates to:
+  /// **'Cancelar el pedido'**
+  String get cuidadoCancelar;
+
+  /// No description provided for @cuidadoCancelarTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Se avisa al prestador. Un pedido aceptado se cancela hasta el día anterior.'**
+  String get cuidadoCancelarTexto;
+
+  /// No description provided for @cuidadoCancelado.
+  ///
+  /// In es, this message translates to:
+  /// **'Pedido cancelado.'**
+  String get cuidadoCancelado;
+
+  /// No description provided for @cuidadoNoCancelable.
+  ///
+  /// In es, this message translates to:
+  /// **'Ya empezó: si necesitás cambiar algo, escribile por el chat.'**
+  String get cuidadoNoCancelable;
+
+  /// No description provided for @cuidadosTab.
+  ///
+  /// In es, this message translates to:
+  /// **'Paseos y estadías'**
+  String get cuidadosTab;
+
+  /// No description provided for @cuidadosTurnosTab.
+  ///
+  /// In es, this message translates to:
+  /// **'Turnos'**
+  String get cuidadosTurnosTab;
+
+  /// No description provided for @cuidadosQueOfreces.
+  ///
+  /// In es, this message translates to:
+  /// **'Qué ofrecés'**
+  String get cuidadosQueOfreces;
+
+  /// No description provided for @cuidadosQueOfrecesAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Aparece «Contratar» en tu ficha. Vos aceptás o rechazás cada pedido; al aceptar se abre el chat.'**
+  String get cuidadosQueOfrecesAyuda;
+
+  /// No description provided for @cuidadosCupo.
+  ///
+  /// In es, this message translates to:
+  /// **'Mascotas por día (guardería y estadía)'**
+  String get cuidadosCupo;
+
+  /// No description provided for @cuidadosMaximoDias.
+  ///
+  /// In es, this message translates to:
+  /// **'Días seguidos como máximo'**
+  String get cuidadosMaximoDias;
+
+  /// No description provided for @cuidadosCondiciones.
+  ///
+  /// In es, this message translates to:
+  /// **'Condiciones (vacunas, tamaño, qué traer…)'**
+  String get cuidadosCondiciones;
+
+  /// No description provided for @cuidadosPedidos.
+  ///
+  /// In es, this message translates to:
+  /// **'Pedidos'**
+  String get cuidadosPedidos;
+
+  /// No description provided for @cuidadosSinPedidos.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no te pidieron nada.'**
+  String get cuidadosSinPedidos;
+
+  /// No description provided for @cuidadosAceptar.
+  ///
+  /// In es, this message translates to:
+  /// **'Aceptar y abrir el chat'**
+  String get cuidadosAceptar;
+
+  /// No description provided for @cuidadosTerminado.
+  ///
+  /// In es, this message translates to:
+  /// **'Terminado'**
+  String get cuidadosTerminado;
+
+  /// No description provided for @panelCuidadosPendientes.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =1{1 pedido de paseo o estadía} other{{n} pedidos de paseo o estadía}}'**
+  String panelCuidadosPendientes(int n);
+
+  /// No description provided for @cuidadosPrenderAgenda.
+  ///
+  /// In es, this message translates to:
+  /// **'Para que aparezca «Contratar» en tu ficha, prendé «Tomar turnos desde la app» en Turnos.'**
+  String get cuidadosPrenderAgenda;
 }
 
 class _AppLocalizationsDelegate

@@ -451,3 +451,6 @@ verify_jwt = false
 # la sesión por su cuenta) y pg_cron a las 18:00 con CRON_SECRET (recordatorios).
 [functions.booking-alert]
 verify_jwt = false
+
+[functions.care-alert]
+verify_jwt = false
