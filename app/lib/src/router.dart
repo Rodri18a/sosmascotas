@@ -30,6 +30,7 @@ import 'features/mascotas/ficha_mascota_screen.dart';
 import 'features/mascotas/mascota_form_screen.dart';
 import 'features/mascotas/mascotas_screen.dart';
 import 'features/mascotas/qr_mascota_screen.dart';
+import 'features/negocio/descuentos_screen.dart';
 import 'features/negocio/estadisticas_screen.dart';
 import 'features/negocio/negocio_screen.dart';
 import 'features/negocio/plan_screen.dart';
@@ -94,6 +95,8 @@ abstract final class Rutas {
   static const hogarTransito = '$adopcion/transito';
   static const packAdopcion = '$adopcion/pack';
   static String packNegocio(String id) => '$negocio/pack/$id';
+  static String descuentosNegocio(String id) => '$negocio/descuentos/$id';
+  static const descuentosPro = '/descuentos';
   static String apadrinar(String id) => '$negocio/apadrinar/$id';
   static String transitoRefugio(String id) => '$negocio/transito/$id';
 
@@ -121,6 +124,8 @@ abstract final class Rutas {
     '$negocio/chapitas/': Funcionalidades.pedidoChapitas,
     '$negocio/transito/': Funcionalidades.adopcion,
     '$negocio/pack/': Funcionalidades.adopcion,
+    '$negocio/descuentos/': Funcionalidades.planesUsuario,
+    descuentosPro: Funcionalidades.planesUsuario,
     '$negocio/apadrinar/': Funcionalidades.adopcion,
     '$negocio/estadisticas/': Funcionalidades.estadisticas,
     '$negocio/plan/': Funcionalidades.planes,
@@ -414,6 +419,11 @@ final routerProvider = Provider<GoRouter>((ref) {
                 PackNegocioScreen(negocioId: state.pathParameters['id']!),
           ),
           GoRoute(
+            path: 'descuentos/:id',
+            builder: (_, state) =>
+                DescuentosNegocioScreen(negocioId: state.pathParameters['id']!),
+          ),
+          GoRoute(
             path: 'apadrinar/:id',
             builder: (_, state) =>
                 ApadrinamientoScreen(negocioId: state.pathParameters['id']!),
@@ -519,6 +529,10 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (_, _) => const MisPedidosScreen(),
       ),
       GoRoute(path: Rutas.miPlan, builder: (_, _) => const PlanUsuarioScreen()),
+      GoRoute(
+        path: Rutas.descuentosPro,
+        builder: (_, _) => const DescuentosProScreen(),
+      ),
       GoRoute(
         path: Rutas.nuevoEvento,
         builder: (_, state) {

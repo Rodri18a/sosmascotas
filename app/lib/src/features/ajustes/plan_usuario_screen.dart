@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
 import '../../cuenta/plan_usuario_repositorio.dart';
 import '../../metricas/metricas.dart';
+import '../../router.dart';
 import '../../widgets/volver.dart';
 
 String textoPlanUsuario(AppLocalizations t, Plan p) => switch (p) {
@@ -114,6 +116,16 @@ class _Contenido extends ConsumerWidget {
         ),
         const SizedBox(height: 8),
         Text(t.miPlanSiempreGratis, style: tema.textTheme.bodySmall),
+        const SizedBox(height: 8),
+        Card(
+          child: ListTile(
+            leading: const Icon(Icons.local_offer_outlined),
+            title: Text(t.descuentosTitulo),
+            subtitle: Text(t.descuentosTarjeta),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.push(Rutas.descuentosPro),
+          ),
+        ),
         if (mejores.isNotEmpty) ...[
           const SizedBox(height: 16),
           Text(t.planMejorar, style: tema.textTheme.titleMedium),

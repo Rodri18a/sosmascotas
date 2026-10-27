@@ -66,7 +66,13 @@ void main() {
     expect(find.text('Plan Gratis'), findsOneWidget);
     expect(find.textContaining('3 mascotas de 5'), findsOneWidget);
     expect(find.textContaining('es gratis siempre'), findsOneWidget);
+    await tester.scrollUntilVisible(
+      find.textContaining('30 días gratis de Familia'),
+      200,
+    );
     expect(find.textContaining('30 días gratis de Familia'), findsOneWidget);
+    await tester.ensureVisible(find.text('Quiero Pro'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Quiero Pro'));
     await tester.pumpAndSettle();
     expect(planes.pedidos.single, Plan.pro);
@@ -75,6 +81,7 @@ void main() {
     });
     expect(find.text('Ya pediste Pro: te vamos a contactar.'), findsOneWidget);
     // Con un pedido abierto, no se pide otro.
+    await tester.scrollUntilVisible(find.text('Quiero Familia'), 200);
     final familia = find.widgetWithText(FilledButton, 'Quiero Familia');
     expect(tester.widget<FilledButton>(familia).onPressed, isNull);
   });

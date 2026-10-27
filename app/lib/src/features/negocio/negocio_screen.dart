@@ -24,6 +24,7 @@ import '../agenda/agenda_negocio.dart';
 import '../chapitas/pedido_chapita.dart';
 import '../resenas/resenas.dart';
 import '../tienda/pedidos.dart';
+import 'descuentos_screen.dart';
 import 'formulario_negocio.dart';
 
 /// Alta de un negocio (1.3.3, opción C).
@@ -353,6 +354,13 @@ class _Panel extends ConsumerWidget {
               negocio.verificacion == Verificacion.verified &&
               ref.watch(funcionalidadActivaProvider(Funcionalidades.adopcion)))
             TarjetaPackNegocio(negocioId: negocio.id),
+          // Descuentos para Pro (2.11, D113): verificados, menos refugios.
+          if (negocio.verificacion == Verificacion.verified &&
+              negocio.comercio.categoria != Categoria.shelter &&
+              ref.watch(
+                funcionalidadActivaProvider(Funcionalidades.planesUsuario),
+              ))
+            TarjetaDescuentosNegocio(negocioId: negocio.id),
           // Apadrinamiento (3.4b, D108): comercios y refugios verificados.
           if (negocio.verificacion == Verificacion.verified &&
               ref.watch(funcionalidadActivaProvider(Funcionalidades.adopcion)))

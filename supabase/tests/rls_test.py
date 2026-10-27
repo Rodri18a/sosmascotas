@@ -2601,6 +2601,44 @@ def main():
                 caso('X registra un pago de C', rest('POST', 'rpc/admin_registrar_pago', {
                     'p_sub': sub_c, 'p_monto': 60, 'p_metodo': 'transfer'}, x)[0] == 200)
 
+                print('descuentos para Pro (2.11)')
+                _, tienda_d = pedir('POST', f'{URL}/rest/v1/businesses', {
+                    'name': 'Prueba RLS descuentos', 'business_type': 'grooming', 'kind': 'local', 'owner_id': b_id,
+                    'location': 'SRID=4326;POINT(-55.958 -34.717)', 'verification': 'unverified', 'is_sample': True},
+                    {**ADMIN, 'Prefer': 'return=representation'})
+                tienda_d = tienda_d[0]['id']
+                caso('sin verificar, B no carga descuentos', 'solo_verificados' in json.dumps(rest(
+                    'POST', 'rpc/guardar_descuento_pro', {'p_business': tienda_d, 'p': {'title': '10 % en baños'}}, b)[1]))
+                pedir('PATCH', f'{URL}/rest/v1/businesses?id=eq.{tienda_d}', {'verification': 'verified'},
+                      {**ADMIN, 'Prefer': 'return=minimal'})
+                caso('A no carga descuentos en el negocio de B', rest('POST', 'rpc/guardar_descuento_pro', {
+                    'p_business': tienda_d, 'p': {'title': 'Trampa'}}, a)[0] >= 400)
+                s_d, desc = rest('POST', 'rpc/guardar_descuento_pro', {
+                    'p_business': tienda_d, 'p': {'title': '10 % en baños'}}, b)
+                caso('verificado, B carga un descuento', s_d == 200)
+                caso('nadie lee las tablas de descuentos directo', all(bloqueado(rest('GET', f'{t}?select=id', quien=c))
+                                                                       for t in ('pro_discounts', 'pro_discount_codes')))
+                visto = rest('POST', 'rpc/descuentos_pro', {'p_business': tienda_d})[1]
+                caso('un visitante ve el descuento, sin códigos', visto['pro'] is False
+                     and [d['title'] for d in visto['descuentos']] == ['10 % en baños'])
+                caso('A (Gratis) no pide el código', 'sin_pro' in json.dumps(
+                    rest('POST', 'rpc/pedir_descuento_pro', {'p_discount': desc}, a)[1]))
+                s_cod, cod = rest('POST', 'rpc/pedir_descuento_pro', {'p_discount': desc}, c)
+                caso('C (Pro) pide su código, y es siempre el mismo', s_cod == 200
+                     and rest('POST', 'rpc/pedir_descuento_pro', {'p_discount': desc}, c)[1] == cod)
+                caso('C lo ve en la lista', rest('POST', 'rpc/descuentos_pro', {'p_business': tienda_d}, c)[1]
+                     ['descuentos'][0]['code'] == cod)
+                caso('A no canjea en el negocio de B', rest('POST', 'rpc/canjear_descuento_pro', {
+                    'p_business': tienda_d, 'p_code': cod}, a)[0] >= 400)
+                s_cj, canje = rest('POST', 'rpc/canjear_descuento_pro', {
+                    'p_business': tienda_d, 'p_code': cod.lower()}, b)
+                caso('B canjea el código de C y ve solo el primer nombre', s_cj == 200
+                     and canje['title'] == '10 % en baños' and 'email' not in json.dumps(canje))
+                caso('el mismo día no se canjea dos veces', 'usado_hoy' in json.dumps(rest(
+                    'POST', 'rpc/canjear_descuento_pro', {'p_business': tienda_d, 'p_code': cod}, b)[1]))
+                propio = rest('POST', 'rpc/mis_descuentos_pro', {'p_business': tienda_d}, b)[1]['descuentos'][0]
+                caso('B ve cuántos lo pidieron y usaron', propio['pedidos'] == 1 and propio['usados'] == 1)
+
                 codigo = rest('POST', 'rpc/invitar_al_hogar', {}, c)[1]
                 plan_c = rest('POST', 'rpc/mi_plan_usuario', {}, c)[1]
                 caso('al invitar al hogar, C pasa a la prueba de Familia (Pro se cierra)',
@@ -2625,6 +2663,13 @@ def main():
                 caso('ni invita de nuevo al hogar (ya usó la prueba)', 'plan_familia' in json.dumps(
                     rest('POST', 'rpc/invitar_al_hogar', {}, c)[1]))
                 caso('B ya no tiene Familia', rest('POST', 'rpc/mi_plan_usuario', {}, b)[1]['efectivo'] == 'free')
+                usos = filas(pedir('GET', f'{URL}/rest/v1/pro_discount_codes?select=id&discount_id=eq.{desc}',
+                                   headers=ADMIN))
+                pedir('DELETE', f"{URL}/rest/v1/pro_discount_uses?code_id=in.({','.join(u['id'] for u in usos)})",
+                      headers=ADMIN)
+                caso('sin Pro, el código ya no se canjea', 'sin_pro' in json.dumps(rest(
+                    'POST', 'rpc/canjear_descuento_pro', {'p_business': tienda_d, 'p_code': cod}, b)[1]))
+                pedir('DELETE', f'{URL}/rest/v1/businesses?id=eq.{tienda_d}', headers=ADMIN)
                 pedir('PATCH', f'{URL}/rest/v1/feature_flag_users?flag_key=eq.planes_usuario&user_id=eq.{c_id}',
                       {'enabled': False}, {**ADMIN, 'Prefer': 'return=minimal'})
                 caso('con los planes apagados, no hay tope', rest('POST', 'pets', {'name': 'Plan 7', 'species_id': 1}, c,

@@ -5352,4 +5352,92 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get letraMuyGrande => 'Muy grande';
+
+  @override
+  String get descuentosTitulo => 'Descuentos Pro';
+
+  @override
+  String get descuentosTarjeta =>
+      'Descuentos en comercios de tu zona para Pro y Familia';
+
+  @override
+  String get descuentosTarjetaNegocio =>
+      'Ofrecé un descuento a quienes tienen Pro: te traen clientes y es gratis';
+
+  @override
+  String get descuentosIntroPro =>
+      'Pedí tu código y mostralo en el local. Sirve cada vez que vuelvas (una vez por día).';
+
+  @override
+  String get descuentosIntroGratis =>
+      'Estos comercios tienen descuentos para quienes tienen Pro o Familia.';
+
+  @override
+  String get descuentosSinDescuentos => 'Todavía no hay descuentos en tu zona.';
+
+  @override
+  String get descuentoQuiero => 'Quiero mi código';
+
+  @override
+  String get descuentoMostralo => 'Mostralo en el local antes de pagar.';
+
+  @override
+  String get descuentoSinPro =>
+      'Los descuentos son para quienes tienen Pro o Familia.';
+
+  @override
+  String get descuentoSoloVerificados =>
+      'Para ofrecer descuentos, tu negocio tiene que estar verificado.';
+
+  @override
+  String get descuentoDemasiados => 'Podés tener hasta 5 descuentos activos.';
+
+  @override
+  String get descuentoNoDisponible => 'Ese descuento ya no está disponible.';
+
+  @override
+  String get descuentoUsadoHoy =>
+      'Ese código ya se usó hoy. Vale de nuevo mañana.';
+
+  @override
+  String get descuentoVencido => 'Ese descuento venció o está apagado.';
+
+  @override
+  String get descuentoCanjeado => 'Descuento válido';
+
+  @override
+  String get descuentosNegocioAyuda =>
+      'Quien tiene Pro pide su código en la app y te lo muestra. Al canjearlo, la app confirma que su plan sigue vigente. Es gratis para tu negocio.';
+
+  @override
+  String get descuentosTuyos => 'Tus descuentos';
+
+  @override
+  String get descuentoNuevo => 'Nuevo descuento';
+
+  @override
+  String get descuentoEditar => 'Editar descuento';
+
+  @override
+  String get descuentosSinPropios => 'Todavía no cargaste descuentos.';
+
+  @override
+  String get descuentoTituloEjemplo => 'Por ejemplo: 10 % en baños';
+
+  @override
+  String descuentoResumen(int pedidos, int usados) {
+    String _temp0 = intl.Intl.pluralLogic(
+      pedidos,
+      locale: localeName,
+      other: '$pedidos códigos pedidos',
+      one: '1 código pedido',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      usados,
+      locale: localeName,
+      other: '$usados veces',
+      one: '1 vez',
+    );
+    return '$_temp0 · usado $_temp1';
+  }
 }

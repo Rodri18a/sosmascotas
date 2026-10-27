@@ -96,6 +96,9 @@ abstract final class Eventos {
   static const healthPdf = 'health_pdf';
   static const filtersSave = 'filters_save';
   static const textSizeChange = 'text_size_change';
+  static const discountClaim = 'discount_claim';
+  static const discountRedeem = 'discount_redeem';
+  static const discountSave = 'discount_save';
   static const bookingCreate = 'booking_create';
   static const bookingStatus = 'booking_status';
   static const agendaSave = 'agenda_save';

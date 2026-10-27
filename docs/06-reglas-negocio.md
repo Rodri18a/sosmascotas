@@ -14,7 +14,7 @@
 | Sin publicidad (barra de anuncio chica) | | ✅ | ✅ |
 | Sin repreguntas de "Busco veterinaria" tras un "Ahora no" | | ✅ | ✅ |
 | Filtros guardados (los favoritos son gratis, D112) | | ✅ | ✅ |
-| Descuentos en comercios adheridos | | ✅ | ✅ |
+| Descuentos en comercios adheridos (D113: código que se canjea en el local, una vez por día) | | ✅ | ✅ |
 | Historial de salud en PDF | | ✅ | ✅ |
 | Personalización: temas Faro, Vecinos y Pop (`14-brief-identidad-visual.md` §10) y tamaño de letra | | ✅ | ✅ |
 | Hogar compartido (hasta 5 integrantes), tareas, cuidador temporal | | | ✅ |

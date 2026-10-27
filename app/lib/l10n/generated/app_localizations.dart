@@ -8991,6 +8991,138 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Muy grande'**
   String get letraMuyGrande;
+
+  /// No description provided for @descuentosTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Descuentos Pro'**
+  String get descuentosTitulo;
+
+  /// No description provided for @descuentosTarjeta.
+  ///
+  /// In es, this message translates to:
+  /// **'Descuentos en comercios de tu zona para Pro y Familia'**
+  String get descuentosTarjeta;
+
+  /// No description provided for @descuentosTarjetaNegocio.
+  ///
+  /// In es, this message translates to:
+  /// **'Ofrecé un descuento a quienes tienen Pro: te traen clientes y es gratis'**
+  String get descuentosTarjetaNegocio;
+
+  /// No description provided for @descuentosIntroPro.
+  ///
+  /// In es, this message translates to:
+  /// **'Pedí tu código y mostralo en el local. Sirve cada vez que vuelvas (una vez por día).'**
+  String get descuentosIntroPro;
+
+  /// No description provided for @descuentosIntroGratis.
+  ///
+  /// In es, this message translates to:
+  /// **'Estos comercios tienen descuentos para quienes tienen Pro o Familia.'**
+  String get descuentosIntroGratis;
+
+  /// No description provided for @descuentosSinDescuentos.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no hay descuentos en tu zona.'**
+  String get descuentosSinDescuentos;
+
+  /// No description provided for @descuentoQuiero.
+  ///
+  /// In es, this message translates to:
+  /// **'Quiero mi código'**
+  String get descuentoQuiero;
+
+  /// No description provided for @descuentoMostralo.
+  ///
+  /// In es, this message translates to:
+  /// **'Mostralo en el local antes de pagar.'**
+  String get descuentoMostralo;
+
+  /// No description provided for @descuentoSinPro.
+  ///
+  /// In es, this message translates to:
+  /// **'Los descuentos son para quienes tienen Pro o Familia.'**
+  String get descuentoSinPro;
+
+  /// No description provided for @descuentoSoloVerificados.
+  ///
+  /// In es, this message translates to:
+  /// **'Para ofrecer descuentos, tu negocio tiene que estar verificado.'**
+  String get descuentoSoloVerificados;
+
+  /// No description provided for @descuentoDemasiados.
+  ///
+  /// In es, this message translates to:
+  /// **'Podés tener hasta 5 descuentos activos.'**
+  String get descuentoDemasiados;
+
+  /// No description provided for @descuentoNoDisponible.
+  ///
+  /// In es, this message translates to:
+  /// **'Ese descuento ya no está disponible.'**
+  String get descuentoNoDisponible;
+
+  /// No description provided for @descuentoUsadoHoy.
+  ///
+  /// In es, this message translates to:
+  /// **'Ese código ya se usó hoy. Vale de nuevo mañana.'**
+  String get descuentoUsadoHoy;
+
+  /// No description provided for @descuentoVencido.
+  ///
+  /// In es, this message translates to:
+  /// **'Ese descuento venció o está apagado.'**
+  String get descuentoVencido;
+
+  /// No description provided for @descuentoCanjeado.
+  ///
+  /// In es, this message translates to:
+  /// **'Descuento válido'**
+  String get descuentoCanjeado;
+
+  /// No description provided for @descuentosNegocioAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Quien tiene Pro pide su código en la app y te lo muestra. Al canjearlo, la app confirma que su plan sigue vigente. Es gratis para tu negocio.'**
+  String get descuentosNegocioAyuda;
+
+  /// No description provided for @descuentosTuyos.
+  ///
+  /// In es, this message translates to:
+  /// **'Tus descuentos'**
+  String get descuentosTuyos;
+
+  /// No description provided for @descuentoNuevo.
+  ///
+  /// In es, this message translates to:
+  /// **'Nuevo descuento'**
+  String get descuentoNuevo;
+
+  /// No description provided for @descuentoEditar.
+  ///
+  /// In es, this message translates to:
+  /// **'Editar descuento'**
+  String get descuentoEditar;
+
+  /// No description provided for @descuentosSinPropios.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no cargaste descuentos.'**
+  String get descuentosSinPropios;
+
+  /// No description provided for @descuentoTituloEjemplo.
+  ///
+  /// In es, this message translates to:
+  /// **'Por ejemplo: 10 % en baños'**
+  String get descuentoTituloEjemplo;
+
+  /// No description provided for @descuentoResumen.
+  ///
+  /// In es, this message translates to:
+  /// **'{pedidos, plural, =1{1 código pedido} other{{pedidos} códigos pedidos}} · usado {usados, plural, =1{1 vez} other{{usados} veces}}'**
+  String descuentoResumen(int pedidos, int usados);
 }
 
 class _AppLocalizationsDelegate
