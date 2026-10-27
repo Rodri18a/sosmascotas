@@ -2094,5 +2094,8 @@
   "planillaCargar": "{n, plural, =1{Cargar 1 producto} other{Cargar {n} productos}}",
   "@planillaCargar": {"placeholders": {"n": {"type": "int"}}},
   "planillaLimite": "Se llegó al máximo de 200 productos. Se cargaron {n}.",
-  "@planillaLimite": {"placeholders": {"n": {"type": "int"}}}
+  "@planillaLimite": {"placeholders": {"n": {"type": "int"}}},
+  "reporteDescargar": "Descargar el reporte del mes en PDF",
+  "reporteTitulo": "Reporte de {mes}",
+  "@reporteTitulo": {"placeholders": {"mes": {"type": "String"}}}
 }

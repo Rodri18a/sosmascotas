@@ -15,7 +15,7 @@ Tecnología: **Flutter Web**, reutilizando el código del modo comercio. Se entr
 |---|---|---|
 | **Inicio** | Resumen: vistas, contactos, reseñas nuevas, turnos y pedidos pendientes | 2 |
 | **Estadísticas** | Apariciones en mapa y búsquedas, aperturas de ficha, clics (WhatsApp, llamar, cómo llegar, web, Instagram), favoritos, chats, promos vistas y usadas, evolución de las reseñas, comparación mensual y antes/después del plan. ✅ En la app desde 2.3 (D101): modo comercio → Panel → «Ver estadísticas»; el antes/después del plan llega con 2.2 | 2 |
-| **Reporte mensual** | PDF o email automático: *"Este mes 340 personas vieron tu ficha y 52 te contactaron"* — ✅ por push desde 2.3 (D101); el email, con el SMTP (0.4.4b) | 2 |
+| **Reporte mensual** | PDF o email automático: *"Este mes 340 personas vieron tu ficha y 52 te contactaron"* — ✅ por push desde 2.3 (D101) y en PDF desde Estadísticas (2.10, D114); el email, con el SMTP (0.4.4b) | 2 |
 | **Mi negocio** | Datos, horarios, fotos, especies que atiende, contactos, zona de cobertura | 2 |
 | **Promociones y eventos** | Crear, programar y medir | 2 |
 | **Catálogo** | Carga de productos y servicios (también carga masiva por planilla) — ✅ planilla en 2.10 (D114): se pega lo copiado de Excel o Google Sheets, se revisa y se confirma | 2 |

@@ -9225,6 +9225,18 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Se llegó al máximo de 200 productos. Se cargaron {n}.'**
   String planillaLimite(int n);
+
+  /// No description provided for @reporteDescargar.
+  ///
+  /// In es, this message translates to:
+  /// **'Descargar el reporte del mes en PDF'**
+  String get reporteDescargar;
+
+  /// No description provided for @reporteTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Reporte de {mes}'**
+  String reporteTitulo(String mes);
 }
 
 class _AppLocalizationsDelegate

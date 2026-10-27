@@ -5542,4 +5542,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String planillaLimite(int n) {
     return 'Se llegó al máximo de 200 productos. Se cargaron $n.';
   }
+
+  @override
+  String get reporteDescargar => 'Descargar el reporte del mes en PDF';
+
+  @override
+  String reporteTitulo(String mes) {
+    return 'Reporte de $mes';
+  }
 }

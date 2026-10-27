@@ -93,6 +93,14 @@ void main() {
     );
     expect(find.textContaining('nunca se muestra quién fue'), findsOneWidget);
     expect(find.textContaining('Con el plan Básico'), findsNothing);
+
+    // Reporte del mes en PDF (D114). Fuera de la web no se descarga: avisa.
+    await tester.tap(find.byTooltip('Descargar el reporte del mes en PDF'));
+    await tester.pumpAndSettle();
+    expect(
+      find.textContaining('todavía no se puede descargar'),
+      findsOneWidget,
+    );
   });
 
   testWidgets('plan Básico: solo el resumen y la invitación a Destacado', (
@@ -118,6 +126,7 @@ void main() {
     expect(find.textContaining('Igual que el mes anterior'), findsOneWidget);
     expect(find.textContaining('Con el plan Básico'), findsOneWidget);
     expect(find.text('Últimas 12 semanas'), findsNothing);
+    expect(find.byTooltip('Descargar el reporte del mes en PDF'), findsNothing);
   });
 
   testWidgets('sin movimiento lo dice', (tester) async {

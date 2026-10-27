@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
 import '../../comercios/negocios_repositorio.dart';
+import '../../comercios/reporte_pdf.dart';
+import '../../metricas/metricas.dart';
+import '../../utiles/descargar.dart';
 import '../../widgets/volver.dart';
 
 /// Estadísticas del comercio (2.3, D101): este mes contra el anterior, las
@@ -20,6 +24,17 @@ class EstadisticasScreen extends ConsumerWidget {
       appBar: AppBar(
         leading: volverSiNoHayAtras(context),
         title: Text(t.estadisticasTitulo),
+        actions: [
+          // Reporte mensual en PDF (portal de empresas, 2.10, D114): con
+          // las estadísticas completas (Destacado y Plus).
+          if (ref.watch(estadisticasNegocioProvider(negocioId)).value
+              case final e? when e.completo && e.meses.isNotEmpty)
+            IconButton(
+              tooltip: t.reporteDescargar,
+              onPressed: () => _reporte(context, ref, e),
+              icon: const Icon(Icons.picture_as_pdf_outlined),
+            ),
+        ],
       ),
       body: switch (ref.watch(estadisticasNegocioProvider(negocioId))) {
         AsyncData(:final value) => RefreshIndicator(
@@ -31,6 +46,63 @@ class EstadisticasScreen extends ConsumerWidget {
         _ => const Center(child: CircularProgressIndicator()),
       },
     );
+  }
+
+  /// El último mes completo (o el actual, si es el primero) contra el anterior.
+  Future<void> _reporte(
+    BuildContext context,
+    WidgetRef ref,
+    EstadisticasNegocio e,
+  ) async {
+    final t = context.t;
+    final mensajes = ScaffoldMessenger.of(context);
+    final fechas = MaterialLocalizations.of(context);
+    final i = e.meses.length >= 2 ? e.meses.length - 2 : e.meses.length - 1;
+    final mes = e.meses[i];
+    final antes = i > 0 ? e.meses[i - 1] : null;
+    String nombreMes(DateTime m) => fechas.formatMonthYear(m);
+    final comercio = (ref.read(misNegociosProvider).value ?? const [])
+        .where((n) => n.id == negocioId)
+        .firstOrNull
+        ?.comercio
+        .nombre;
+    final pdf = await reporteMensualPdf(
+      titulo: t.reporteTitulo(nombreMes(mes.mes)),
+      subtitulo: comercio ?? '',
+      encabezadoAntes: antes == null ? '' : nombreMes(antes.mes),
+      encabezadoAhora: nombreMes(mes.mes),
+      filas: [
+        for (final (metrica, texto) in [
+          (MetricasComercio.aperturas, t.estadisticasAperturas),
+          (MetricasComercio.personas, t.estadisticasPersonas),
+          (MetricasComercio.contactos, t.estadisticasContactos),
+          (MetricasComercio.favoritos, t.estadisticasFavoritos),
+          (MetricasComercio.visitas, t.estadisticasVisitas),
+          (MetricasComercio.chats, t.estadisticasChats),
+          (MetricasComercio.catalogo, t.estadisticasCatalogo),
+          (MetricasComercio.pedidos, t.estadisticasPedidos),
+          (MetricasComercio.pagina, t.estadisticasPagina),
+          (MetricasComercio.resenas, t.estadisticasResenas),
+        ])
+          (texto, mes[metrica], antes?[metrica] ?? 0),
+      ],
+      privacidad: t.estadisticasPrivacidad,
+      pie: t.historialPie(fechas.formatMediumDate(DateTime.now())),
+      normal: await rootBundle.load('assets/fuentes/SourceSans3-Regular.ttf'),
+      negrita: await rootBundle.load('assets/fuentes/SourceSans3-Bold.ttf'),
+    );
+    final ok = descargarArchivo(
+      pdf,
+      'reporte-${mes.mes.year}-${mes.mes.month.toString().padLeft(2, '0')}.pdf',
+      'application/pdf',
+    );
+    if (ok) {
+      ref
+          .read(metricasProvider)
+          .track(Eventos.reportDownload, businessId: negocioId);
+    } else {
+      mensajes.showSnackBar(SnackBar(content: Text(t.historialNoDisponible)));
+    }
   }
 }
 
