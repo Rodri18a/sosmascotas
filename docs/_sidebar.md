@@ -11,6 +11,7 @@
   - [Brief de identidad visual](14-brief-identidad-visual.md)
   - [Ideas para el futuro](16-ideas-futuras.md)
   - [Propuestas: perfil y gamificación](17-propuestas-perfil-gamificacion.md)
+  - [Campaña de fin de año 2027](18-campana-fin-de-anio.md)
 
 - **Portales**
   - [Portal de empresas](04-portal-empresas.md)
