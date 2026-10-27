@@ -9141,6 +9141,90 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'{n, plural, =1{1 turno por confirmar} other{{n} turnos por confirmar}}'**
   String panelTurnosPendientes(int n);
+
+  /// No description provided for @planillaTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Cargar desde una planilla'**
+  String get planillaTitulo;
+
+  /// No description provided for @planillaTarjeta.
+  ///
+  /// In es, this message translates to:
+  /// **'Pegá tu lista de productos desde Excel o Google Sheets'**
+  String get planillaTarjeta;
+
+  /// No description provided for @planillaAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Columnas, en este orden: nombre, descripción, precio y disponible (si o no). Copiá las filas de tu planilla y pegalas acá. Si un producto ya existe con el mismo nombre, se actualiza y conserva su foto.'**
+  String get planillaAyuda;
+
+  /// No description provided for @planillaModelo.
+  ///
+  /// In es, this message translates to:
+  /// **'Descargar el modelo'**
+  String get planillaModelo;
+
+  /// No description provided for @planillaPegar.
+  ///
+  /// In es, this message translates to:
+  /// **'Pegá acá las filas'**
+  String get planillaPegar;
+
+  /// No description provided for @planillaRevisar.
+  ///
+  /// In es, this message translates to:
+  /// **'Revisar'**
+  String get planillaRevisar;
+
+  /// No description provided for @planillaResumen.
+  ///
+  /// In es, this message translates to:
+  /// **'{nuevos, plural, =1{1 producto nuevo} other{{nuevos} productos nuevos}} · {actualizados, plural, =1{1 se actualiza} other{{actualizados} se actualizan}} · {errores, plural, =0{sin errores} =1{1 fila con error} other{{errores} filas con error}}'**
+  String planillaResumen(int nuevos, int actualizados, int errores);
+
+  /// No description provided for @planillaErrorFila.
+  ///
+  /// In es, this message translates to:
+  /// **'Fila {fila}: {motivo}'**
+  String planillaErrorFila(int fila, String motivo);
+
+  /// No description provided for @planillaSinNombre.
+  ///
+  /// In es, this message translates to:
+  /// **'falta el nombre'**
+  String get planillaSinNombre;
+
+  /// No description provided for @planillaNombreLargo.
+  ///
+  /// In es, this message translates to:
+  /// **'el nombre tiene más de 80 letras'**
+  String get planillaNombreLargo;
+
+  /// No description provided for @planillaPrecioInvalido.
+  ///
+  /// In es, this message translates to:
+  /// **'el precio no es un número'**
+  String get planillaPrecioInvalido;
+
+  /// No description provided for @planillaRepetido.
+  ///
+  /// In es, this message translates to:
+  /// **'el nombre está repetido en la planilla'**
+  String get planillaRepetido;
+
+  /// No description provided for @planillaCargar.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =1{Cargar 1 producto} other{Cargar {n} productos}}'**
+  String planillaCargar(int n);
+
+  /// No description provided for @planillaLimite.
+  ///
+  /// In es, this message translates to:
+  /// **'Se llegó al máximo de 200 productos. Se cargaron {n}.'**
+  String planillaLimite(int n);
 }
 
 class _AppLocalizationsDelegate

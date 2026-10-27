@@ -7,6 +7,7 @@ import '../../fotos/elegir_foto.dart';
 import '../../metricas/metricas.dart';
 import '../../tienda/tienda_repositorio.dart';
 import 'catalogo_screen.dart';
+import 'planilla_catalogo.dart';
 
 /// Un pedido con sus renglones, el total, el estado y [acciones].
 class TarjetaPedido extends StatelessWidget {
@@ -162,6 +163,22 @@ class CatalogoNegocio extends ConsumerWidget {
     }
   }
 
+  Future<void> _planilla(BuildContext context, WidgetRef ref) async {
+    final cargado = await showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => CargaPlanilla(
+        negocioId: negocioId,
+        existentes: ref.read(miCatalogoProvider(negocioId)).value ?? const [],
+      ),
+    );
+    if (cargado ?? false) {
+      ref
+        ..invalidate(miCatalogoProvider(negocioId))
+        ..invalidate(catalogoDeProvider(negocioId));
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final t = context.t;
@@ -184,6 +201,14 @@ class CatalogoNegocio extends ConsumerWidget {
             onChanged: onPrender,
           ),
           _CondicionesNegocio(negocioId: negocioId),
+          // Carga masiva (portal de empresas, 2.10, D114).
+          ListTile(
+            leading: const Icon(Icons.table_view_outlined),
+            title: Text(t.planillaTitulo),
+            subtitle: Text(t.planillaTarjeta),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => _planilla(context, ref),
+          ),
           const Divider(height: 1),
           switch (ref.watch(miCatalogoProvider(negocioId))) {
             AsyncData(value: final lista) when lista.isEmpty => Padding(

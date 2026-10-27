@@ -514,4 +514,52 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Pedido #4 · Beto'), findsOneWidget);
   });
+
+  testWidgets('modo comercio: cargar el catálogo desde una planilla (D114)', (
+    tester,
+  ) async {
+    final tienda = TiendaFalsa(
+      productos: const [
+        Producto(
+          id: 'p1',
+          nombre: 'Collar',
+          precio: 300,
+          foto: 'b1/collar.jpg',
+        ),
+      ],
+    );
+    final metricas = <Map<String, Object?>>[];
+    await _abrir(
+      tester,
+      tienda: tienda,
+      negocios: NegociosFalsos([_miPetshop()]),
+      metricas: metricas,
+    );
+    await _ir(tester, '/negocio');
+    await _tocar(tester, find.text('Catálogo').last);
+    await _tocar(tester, find.text('Cargar desde una planilla'));
+    await tester.enterText(
+      find.widgetWithText(TextField, 'Pegá acá las filas'),
+      'nombre\tdescripcion\tprecio\tdisponible\n'
+      'collar\tRegulable\t350\tsi\n'
+      'Hueso\t\tdiez\t\n'
+      'Pelota\t\t120\tno\n',
+    );
+    await _tocar(tester, find.text('Revisar'));
+    expect(
+      find.text('1 producto nuevo · 1 se actualiza · 1 fila con error'),
+      findsOneWidget,
+    );
+    expect(find.text('Fila 3: el precio no es un número'), findsOneWidget);
+    await _tocar(tester, find.text('Cargar 2 productos'));
+
+    expect(tienda.guardados.map((p) => (p.id, p.nombre, p.precio)), [
+      ('p1', 'collar', 350.0),
+      ('', 'Pelota', 120.0),
+    ]);
+    expect(tienda.guardados.first.foto, 'b1/collar.jpg');
+    expect(tienda.guardados.last.disponible, isFalse);
+    expect(metricas.where((e) => e['name'] == 'catalog_import'), hasLength(1));
+    expect(find.text('Pelota'), findsOneWidget);
+  });
 }

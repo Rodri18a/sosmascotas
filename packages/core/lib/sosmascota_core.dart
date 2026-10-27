@@ -9,6 +9,7 @@ export 'src/agenda/turno.dart';
 export 'src/avisos/aviso.dart';
 export 'src/ayuda/ayuda.dart';
 export 'src/catalogo/catalogo.dart';
+export 'src/catalogo/planilla.dart';
 export 'src/catalogo/servicio.dart';
 export 'src/chat/chat.dart';
 export 'src/comercios/busqueda.dart';

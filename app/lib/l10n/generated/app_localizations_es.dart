@@ -5465,4 +5465,81 @@ class AppLocalizationsEs extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get planillaTitulo => 'Cargar desde una planilla';
+
+  @override
+  String get planillaTarjeta =>
+      'Pegá tu lista de productos desde Excel o Google Sheets';
+
+  @override
+  String get planillaAyuda =>
+      'Columnas, en este orden: nombre, descripción, precio y disponible (si o no). Copiá las filas de tu planilla y pegalas acá. Si un producto ya existe con el mismo nombre, se actualiza y conserva su foto.';
+
+  @override
+  String get planillaModelo => 'Descargar el modelo';
+
+  @override
+  String get planillaPegar => 'Pegá acá las filas';
+
+  @override
+  String get planillaRevisar => 'Revisar';
+
+  @override
+  String planillaResumen(int nuevos, int actualizados, int errores) {
+    String _temp0 = intl.Intl.pluralLogic(
+      nuevos,
+      locale: localeName,
+      other: '$nuevos productos nuevos',
+      one: '1 producto nuevo',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      actualizados,
+      locale: localeName,
+      other: '$actualizados se actualizan',
+      one: '1 se actualiza',
+    );
+    String _temp2 = intl.Intl.pluralLogic(
+      errores,
+      locale: localeName,
+      other: '$errores filas con error',
+      one: '1 fila con error',
+      zero: 'sin errores',
+    );
+    return '$_temp0 · $_temp1 · $_temp2';
+  }
+
+  @override
+  String planillaErrorFila(int fila, String motivo) {
+    return 'Fila $fila: $motivo';
+  }
+
+  @override
+  String get planillaSinNombre => 'falta el nombre';
+
+  @override
+  String get planillaNombreLargo => 'el nombre tiene más de 80 letras';
+
+  @override
+  String get planillaPrecioInvalido => 'el precio no es un número';
+
+  @override
+  String get planillaRepetido => 'el nombre está repetido en la planilla';
+
+  @override
+  String planillaCargar(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Cargar $n productos',
+      one: 'Cargar 1 producto',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String planillaLimite(int n) {
+    return 'Se llegó al máximo de 200 productos. Se cargaron $n.';
+  }
 }

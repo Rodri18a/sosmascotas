@@ -99,6 +99,7 @@ abstract final class Eventos {
   static const discountClaim = 'discount_claim';
   static const discountRedeem = 'discount_redeem';
   static const discountSave = 'discount_save';
+  static const catalogImport = 'catalog_import';
   static const bookingCreate = 'booking_create';
   static const bookingStatus = 'booking_status';
   static const agendaSave = 'agenda_save';
