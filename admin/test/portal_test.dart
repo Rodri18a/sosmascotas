@@ -314,6 +314,47 @@ class RepoFalso implements AdminRepositorio {
     String? motivo,
   }) async => bajas.add(suscripcionId);
 
+  final planesPersonas = <(String, String, double)>[];
+  final pedidosDescartados = <String>[];
+
+  @override
+  Future<List<Suscripcion>> suscripcionesUsuarios() async => [
+    Suscripcion.deUsuario({
+      'id': 'su1',
+      'user_id': 'u5',
+      'email': 'lu@x.uy',
+      'nombre': 'Lucía',
+      'plan': 'family',
+      'status': 'active',
+      'period_end': '2026-11-26',
+      'trial': true,
+      'price': 0,
+      'pagado': 0,
+    }),
+  ];
+
+  @override
+  Future<void> crearSuscripcionUsuario({
+    required String correo,
+    required String plan,
+    required double precio,
+    required DateTime hasta,
+    String? notas,
+  }) async {
+    if (correo == 'nadie@x.uy') throw Exception('sin_cuenta');
+    planesPersonas.add((correo, plan, precio));
+  }
+
+  @override
+  Future<List<Map<String, Object?>>> pedidosPlanUsuario() async => [
+    if (!pedidosDescartados.contains('pp1'))
+      {'id': 'pp1', 'email': 'ana@x.uy', 'nombre': 'Ana', 'plan': 'pro'},
+  ];
+
+  @override
+  Future<void> descartarPedidoPlan(String id) async =>
+      pedidosDescartados.add(id);
+
   @override
   Future<EstadisticasNegocio> resultadosComercio(String negocioId) async =>
       EstadisticasNegocio.fromJson({
@@ -944,6 +985,45 @@ void main() {
     await _tocar(tester, find.text('Guardar'));
     expect(find.text('Elegí el comercio, el plan y la fecha.'), findsOneWidget);
     expect(repo.planesCreados, isEmpty);
+  });
+
+  testWidgets('planes de personas: pedidos, prueba y activar (2.1)', (
+    tester,
+  ) async {
+    _pantallaGrande(tester);
+    final repo = RepoFalso();
+    await tester.pumpWidget(
+      _portal(sesion: SesionFalsa('admin@x.uy'), repo: repo),
+    );
+    await tester.pumpAndSettle();
+    await _tocar(tester, find.text('Planes'));
+    await _tocar(tester, find.text('Personas'));
+    expect(find.text('Lucía · lu@x.uy'), findsOneWidget);
+    expect(find.textContaining('Prueba gratis'), findsOneWidget);
+    expect(find.text('Ana pidió Pro'), findsOneWidget);
+
+    await _tocar(tester, find.text('Activar'));
+    final campos = find.descendant(
+      of: find.byType(AlertDialog),
+      matching: find.byType(TextField),
+    );
+    expect(tester.widget<TextField>(campos.first).controller!.text, 'ana@x.uy');
+    await _tocar(tester, find.widgetWithText(FilledButton, 'Guardar'));
+    expect(find.textContaining('Falta el correo'), findsOneWidget);
+    await _tocar(
+      tester,
+      find.descendant(
+        of: find.byType(AlertDialog),
+        matching: find.textContaining('Vence el'),
+      ),
+    );
+    await _tocar(tester, find.text('ACEPTAR'));
+    await _tocar(tester, find.widgetWithText(FilledButton, 'Guardar'));
+    expect(repo.planesPersonas.single, ('ana@x.uy', 'pro', 0.0));
+
+    await _tocar(tester, find.text('Descartar'));
+    expect(repo.pedidosDescartados.single, 'pp1');
+    expect(find.text('Ana pidió Pro'), findsNothing);
   });
 
   testWidgets('lugares: sin coordenadas no se guarda un local', (tester) async {

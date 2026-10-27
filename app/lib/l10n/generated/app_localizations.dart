@@ -8805,6 +8805,120 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'{nombre} · {mascota}'**
   String agendaCliente(String nombre, String mascota);
+
+  /// No description provided for @miPlanTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Mi plan'**
+  String get miPlanTitulo;
+
+  /// No description provided for @miPlanAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Gratis, Pro o Familia: qué incluye cada uno'**
+  String get miPlanAyuda;
+
+  /// No description provided for @miPlanGratis.
+  ///
+  /// In es, this message translates to:
+  /// **'Gratis'**
+  String get miPlanGratis;
+
+  /// No description provided for @miPlanPro.
+  ///
+  /// In es, this message translates to:
+  /// **'Pro'**
+  String get miPlanPro;
+
+  /// No description provided for @miPlanFamilia.
+  ///
+  /// In es, this message translates to:
+  /// **'Familia'**
+  String get miPlanFamilia;
+
+  /// No description provided for @miPlanIncluyeGratis.
+  ///
+  /// In es, this message translates to:
+  /// **'Todo lo que cuida a tu mascota: SOS, avisos por zona, chapita QR, foto, mapa, chat y recordatorios de medicación, comida y vacunas. Hasta 5 mascotas.'**
+  String get miPlanIncluyeGratis;
+
+  /// No description provided for @miPlanIncluyePro.
+  ///
+  /// In es, this message translates to:
+  /// **'Todo lo de Gratis, más mascotas ilimitadas, sin publicidad, filtros y favoritos guardados, descuentos en comercios adheridos, historial de salud en PDF y temas de color.'**
+  String get miPlanIncluyePro;
+
+  /// No description provided for @miPlanIncluyeFamilia.
+  ///
+  /// In es, this message translates to:
+  /// **'Todo lo de Pro, más el hogar compartido: hasta 5 personas cuidan a las mismas mascotas, con tareas y cuidador temporal. Las personas de tu hogar también tienen Pro.'**
+  String get miPlanIncluyeFamilia;
+
+  /// No description provided for @miPlanSiempreGratis.
+  ///
+  /// In es, this message translates to:
+  /// **'Lo que hace a la seguridad y la salud de tu mascota es gratis siempre, con cualquier plan.'**
+  String get miPlanSiempreGratis;
+
+  /// No description provided for @miPlanPorHogar.
+  ///
+  /// In es, this message translates to:
+  /// **'Tenés Familia porque sos parte de un hogar con ese plan.'**
+  String get miPlanPorHogar;
+
+  /// No description provided for @miPlanPrueba.
+  ///
+  /// In es, this message translates to:
+  /// **'Prueba gratis de Familia hasta el {fecha}.'**
+  String miPlanPrueba(String fecha);
+
+  /// No description provided for @miPlanVencido.
+  ///
+  /// In es, this message translates to:
+  /// **'Venció el {fecha}. Tenés 7 días para pagarlo antes de volver a Gratis.'**
+  String miPlanVencido(String fecha);
+
+  /// No description provided for @miPlanVolverGratis.
+  ///
+  /// In es, this message translates to:
+  /// **'Diste de baja el plan: sigue hasta el {fecha}. Después volvés a Gratis y no perdés nada de lo cargado.'**
+  String miPlanVolverGratis(String fecha);
+
+  /// No description provided for @miPlanMascotas.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =1{1 mascota} other{{n} mascotas}} de {limite}'**
+  String miPlanMascotas(int n, int limite);
+
+  /// No description provided for @miPlanPruebaFamilia.
+  ///
+  /// In es, this message translates to:
+  /// **'Al invitar a la primera persona a tu hogar, tenés 30 días gratis de Familia.'**
+  String get miPlanPruebaFamilia;
+
+  /// No description provided for @miPlanPedido.
+  ///
+  /// In es, this message translates to:
+  /// **'Ya pediste {plan}: te vamos a contactar.'**
+  String miPlanPedido(String plan);
+
+  /// No description provided for @miPlanLimiteMascotas.
+  ///
+  /// In es, this message translates to:
+  /// **'Con el plan Gratis podés tener hasta 5 mascotas. Con Pro o Familia, todas las que quieras.'**
+  String get miPlanLimiteMascotas;
+
+  /// No description provided for @miPlanVerPlanes.
+  ///
+  /// In es, this message translates to:
+  /// **'Ver planes'**
+  String get miPlanVerPlanes;
+
+  /// No description provided for @miPlanHogarFamilia.
+  ///
+  /// In es, this message translates to:
+  /// **'El hogar compartido es del plan Familia y ya usaste la prueba gratis de 30 días.'**
+  String get miPlanHogarFamilia;
 }
 
 class _AppLocalizationsDelegate

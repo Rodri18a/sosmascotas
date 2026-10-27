@@ -107,6 +107,22 @@ abstract interface class AdminRepositorio {
 
   Future<void> cancelarSuscripcion(String suscripcionId, {String? motivo});
 
+  /// Planes Pro y Familia de las personas (2.1, D111).
+  Future<List<Suscripcion>> suscripcionesUsuarios();
+
+  Future<void> crearSuscripcionUsuario({
+    required String correo,
+    required String plan,
+    required double precio,
+    required DateTime hasta,
+    String? notas,
+  });
+
+  /// «Quiero Pro / Familia» pedidos desde la app, sin atender.
+  Future<List<Map<String, Object?>>> pedidosPlanUsuario();
+
+  Future<void> descartarPedidoPlan(String id);
+
   /// Publicaciones de adopción en revisión (2 camadas en 12 meses, 06).
   Future<List<Map<String, Object?>>> adopcionesEnRevision();
 
@@ -405,6 +421,37 @@ class SupabaseAdminRepositorio implements AdminRepositorio {
   Future<List<Suscripcion>> suscripciones() async => _filas(
     await _cliente.rpc<List<dynamic>>('admin_suscripciones'),
   ).map(Suscripcion.fromJson).toList();
+
+  @override
+  Future<List<Suscripcion>> suscripcionesUsuarios() async => _filas(
+    await _cliente.rpc<List<dynamic>>('admin_suscripciones_usuarios'),
+  ).map(Suscripcion.deUsuario).toList();
+
+  @override
+  Future<void> crearSuscripcionUsuario({
+    required String correo,
+    required String plan,
+    required double precio,
+    required DateTime hasta,
+    String? notas,
+  }) => _cliente.rpc<void>(
+    'admin_crear_suscripcion_usuario',
+    params: {
+      'p_email': correo,
+      'p_plan': plan,
+      'p_precio': precio,
+      'p_hasta': fechaIso(hasta),
+      'p_notas': notas,
+    },
+  );
+
+  @override
+  Future<List<Map<String, Object?>>> pedidosPlanUsuario() async =>
+      _filas(await _cliente.rpc<List<dynamic>>('admin_pedidos_plan_usuario'));
+
+  @override
+  Future<void> descartarPedidoPlan(String id) =>
+      _cliente.rpc<void>('admin_descartar_pedido_plan', params: {'p_id': id});
 
   @override
   Future<Ingresos> ingresos() async => Ingresos.fromJson(
@@ -731,6 +778,14 @@ final lugaresProvider = FutureProvider.family<List<LugarAdmin>, String>(
 
 final suscripcionesProvider = FutureProvider<List<Suscripcion>>(
   (ref) => ref.watch(adminRepositorioProvider).suscripciones(),
+);
+
+final suscripcionesUsuariosProvider = FutureProvider<List<Suscripcion>>(
+  (ref) => ref.watch(adminRepositorioProvider).suscripcionesUsuarios(),
+);
+
+final pedidosPlanUsuarioProvider = FutureProvider<List<Map<String, Object?>>>(
+  (ref) => ref.watch(adminRepositorioProvider).pedidosPlanUsuario(),
 );
 
 final ingresosProvider = FutureProvider<Ingresos>(

@@ -5229,4 +5229,85 @@ class AppLocalizationsEs extends AppLocalizations {
   String agendaCliente(String nombre, String mascota) {
     return '$nombre · $mascota';
   }
+
+  @override
+  String get miPlanTitulo => 'Mi plan';
+
+  @override
+  String get miPlanAyuda => 'Gratis, Pro o Familia: qué incluye cada uno';
+
+  @override
+  String get miPlanGratis => 'Gratis';
+
+  @override
+  String get miPlanPro => 'Pro';
+
+  @override
+  String get miPlanFamilia => 'Familia';
+
+  @override
+  String get miPlanIncluyeGratis =>
+      'Todo lo que cuida a tu mascota: SOS, avisos por zona, chapita QR, foto, mapa, chat y recordatorios de medicación, comida y vacunas. Hasta 5 mascotas.';
+
+  @override
+  String get miPlanIncluyePro =>
+      'Todo lo de Gratis, más mascotas ilimitadas, sin publicidad, filtros y favoritos guardados, descuentos en comercios adheridos, historial de salud en PDF y temas de color.';
+
+  @override
+  String get miPlanIncluyeFamilia =>
+      'Todo lo de Pro, más el hogar compartido: hasta 5 personas cuidan a las mismas mascotas, con tareas y cuidador temporal. Las personas de tu hogar también tienen Pro.';
+
+  @override
+  String get miPlanSiempreGratis =>
+      'Lo que hace a la seguridad y la salud de tu mascota es gratis siempre, con cualquier plan.';
+
+  @override
+  String get miPlanPorHogar =>
+      'Tenés Familia porque sos parte de un hogar con ese plan.';
+
+  @override
+  String miPlanPrueba(String fecha) {
+    return 'Prueba gratis de Familia hasta el $fecha.';
+  }
+
+  @override
+  String miPlanVencido(String fecha) {
+    return 'Venció el $fecha. Tenés 7 días para pagarlo antes de volver a Gratis.';
+  }
+
+  @override
+  String miPlanVolverGratis(String fecha) {
+    return 'Diste de baja el plan: sigue hasta el $fecha. Después volvés a Gratis y no perdés nada de lo cargado.';
+  }
+
+  @override
+  String miPlanMascotas(int n, int limite) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n mascotas',
+      one: '1 mascota',
+    );
+    return '$_temp0 de $limite';
+  }
+
+  @override
+  String get miPlanPruebaFamilia =>
+      'Al invitar a la primera persona a tu hogar, tenés 30 días gratis de Familia.';
+
+  @override
+  String miPlanPedido(String plan) {
+    return 'Ya pediste $plan: te vamos a contactar.';
+  }
+
+  @override
+  String get miPlanLimiteMascotas =>
+      'Con el plan Gratis podés tener hasta 5 mascotas. Con Pro o Familia, todas las que quieras.';
+
+  @override
+  String get miPlanVerPlanes => 'Ver planes';
+
+  @override
+  String get miPlanHogarFamilia =>
+      'El hogar compartido es del plan Familia y ya usaste la prueba gratis de 30 días.';
 }

@@ -7,21 +7,43 @@ import '../textos.dart';
 import 'propuestas.dart' show ElegirLugar, hoyProvider;
 
 /// Planes y cobros (2.2, D103; 05 §7): planes pagos de los comercios con cobro
-/// manual, vencimientos e ingresos por mes y por plan.
-class PlanesScreen extends ConsumerWidget {
+/// manual, vencimientos e ingresos por mes y por plan. También Pro y Familia
+/// de las personas (2.1, D111).
+class PlanesScreen extends ConsumerStatefulWidget {
   const PlanesScreen({super.key});
+
+  @override
+  ConsumerState<PlanesScreen> createState() => _PlanesState();
+}
+
+class _PlanesState extends ConsumerState<PlanesScreen> {
+  var _personas = false;
 
   void _refrescar(WidgetRef ref) => ref
     ..invalidate(suscripcionesProvider)
+    ..invalidate(suscripcionesUsuariosProvider)
+    ..invalidate(pedidosPlanUsuarioProvider)
     ..invalidate(ingresosProvider)
     ..invalidate(lugaresProvider);
 
-  Future<void> _nuevo(BuildContext context, WidgetRef ref) async {
+  Future<void> _nuevo(
+    BuildContext context,
+    WidgetRef ref, {
+    String? correo,
+    String? plan,
+  }) async {
     final creado = await showDialog<bool>(
       context: context,
-      builder: (_) => const _NuevoPlan(),
+      builder: (_) => _personas
+          ? _NuevoPlanPersona(correo: correo, plan: plan)
+          : const _NuevoPlan(),
     );
     if (creado ?? false) _refrescar(ref);
+  }
+
+  Future<void> _descartar(WidgetRef ref, String id) async {
+    await ref.read(adminRepositorioProvider).descartarPedidoPlan(id);
+    _refrescar(ref);
   }
 
   Future<void> _pago(BuildContext context, WidgetRef ref, Suscripcion s) async {
@@ -64,17 +86,68 @@ class PlanesScreen extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) => Scaffold(
+  Widget build(BuildContext context) => Scaffold(
     floatingActionButton: FloatingActionButton.extended(
       onPressed: () => _nuevo(context, ref),
       icon: const Icon(Icons.add),
-      label: const Text(T.nuevoPlan),
+      label: Text(_personas ? T.nuevoPlanPersona : T.nuevoPlan),
     ),
     body: ListView(
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 88),
       children: [
-        const Text(T.planesAyuda),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: SegmentedButton<bool>(
+            segments: const [
+              ButtonSegment(value: false, label: Text(T.planesComercios)),
+              ButtonSegment(value: true, label: Text(T.planesPersonas)),
+            ],
+            selected: {_personas},
+            onSelectionChanged: (s) => setState(() => _personas = s.first),
+          ),
+        ),
         const SizedBox(height: 8),
+        Text(_personas ? T.planesPersonasAyuda : T.planesAyuda),
+        const SizedBox(height: 8),
+        if (_personas)
+          if (ref.watch(pedidosPlanUsuarioProvider).value case final pedidos?
+              when pedidos.isNotEmpty)
+            Card(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const ListTile(title: Text(T.pedidosDePlan)),
+                  for (final pedido in pedidos)
+                    ListTile(
+                      title: Text(
+                        T.pidio(
+                          '${pedido['nombre'] ?? pedido['email']}',
+                          T.planes[pedido['plan']] ?? '${pedido['plan']}',
+                        ),
+                      ),
+                      subtitle: Text('${pedido['email'] ?? ''}'),
+                      trailing: Wrap(
+                        spacing: 4,
+                        children: [
+                          FilledButton.tonal(
+                            onPressed: () => _nuevo(
+                              context,
+                              ref,
+                              correo: pedido['email'] as String?,
+                              plan: pedido['plan'] as String?,
+                            ),
+                            child: const Text(T.activar),
+                          ),
+                          TextButton(
+                            onPressed: () => _descartar(ref, '${pedido['id']}'),
+                            child: const Text(T.descartar),
+                          ),
+                        ],
+                      ),
+                    ),
+                ],
+              ),
+            ),
         if (ref.watch(ingresosProvider).value case final i?)
           Card(
             child: Padding(
@@ -93,7 +166,9 @@ class PlanesScreen extends ConsumerWidget {
               ),
             ),
           ),
-        switch (ref.watch(suscripcionesProvider)) {
+        switch (ref.watch(
+          _personas ? suscripcionesUsuariosProvider : suscripcionesProvider,
+        )) {
           AsyncData(value: final lista) when lista.isEmpty => const Padding(
             padding: EdgeInsets.all(24),
             child: Center(child: Text(T.sinSuscripciones)),
@@ -245,6 +320,147 @@ class _NuevoPlanState extends ConsumerState<_NuevoPlan> {
                 title: const Text(T.esFundador),
                 value: _fundador,
                 onChanged: (v) => setState(() => _fundador = v ?? false),
+              ),
+              TextField(
+                controller: _notas,
+                decoration: const InputDecoration(labelText: T.notas),
+              ),
+              if (_error case final e?)
+                Text(
+                  e,
+                  style: TextStyle(color: Theme.of(context).colorScheme.error),
+                ),
+            ],
+          ),
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context, false),
+          child: const Text(T.cancelar),
+        ),
+        FilledButton(
+          onPressed: _guardando ? null : _guardar,
+          child: const Text(T.guardar),
+        ),
+      ],
+    );
+  }
+}
+
+/// Pro o Familia para una cuenta, por su correo (2.1, D111).
+class _NuevoPlanPersona extends ConsumerStatefulWidget {
+  const _NuevoPlanPersona({this.correo, this.plan});
+
+  final String? correo;
+  final String? plan;
+
+  @override
+  ConsumerState<_NuevoPlanPersona> createState() => _NuevoPlanPersonaState();
+}
+
+class _NuevoPlanPersonaState extends ConsumerState<_NuevoPlanPersona> {
+  late final _correo = TextEditingController(text: widget.correo);
+  final _precio = TextEditingController(text: '0');
+  final _notas = TextEditingController();
+  late String _plan = widget.plan ?? 'pro';
+  DateTime? _hasta;
+  var _guardando = false;
+  String? _error;
+
+  @override
+  void dispose() {
+    _correo.dispose();
+    _precio.dispose();
+    _notas.dispose();
+    super.dispose();
+  }
+
+  Future<void> _guardar() async {
+    final hasta = _hasta;
+    final precio = double.tryParse(_precio.text.replaceAll(',', '.'));
+    if (!_correo.text.contains('@') ||
+        hasta == null ||
+        precio == null ||
+        precio < 0) {
+      setState(() => _error = T.faltanDatosPlanPersona);
+      return;
+    }
+    setState(() {
+      _guardando = true;
+      _error = null;
+    });
+    try {
+      await ref
+          .read(adminRepositorioProvider)
+          .crearSuscripcionUsuario(
+            correo: _correo.text.trim(),
+            plan: _plan,
+            precio: precio,
+            hasta: hasta,
+            notas: _notas.text.trim().isEmpty ? null : _notas.text.trim(),
+          );
+      if (mounted) Navigator.pop(context, true);
+    } on Exception catch (e) {
+      if (mounted) {
+        setState(() {
+          _guardando = false;
+          _error = '$e'.contains('sin_cuenta')
+              ? T.sinCuentaPlan
+              : T.errorConexion;
+        });
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final hasta = _hasta;
+    return AlertDialog(
+      title: const Text(T.nuevoPlanPersona),
+      content: SizedBox(
+        width: 480,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: _correo,
+                keyboardType: TextInputType.emailAddress,
+                decoration: const InputDecoration(labelText: T.correoCuenta),
+              ),
+              DropdownButtonFormField<String>(
+                initialValue: _plan,
+                decoration: const InputDecoration(labelText: T.plan),
+                items: [
+                  for (final p in ['pro', 'family'])
+                    DropdownMenuItem(value: p, child: Text(T.planes[p]!)),
+                ],
+                onChanged: (v) => setState(() => _plan = v ?? _plan),
+              ),
+              TextField(
+                controller: _precio,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(labelText: T.precioMes),
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                title: Text(
+                  hasta == null
+                      ? T.venceEl
+                      : '${T.venceEl} ${hasta.day}/${hasta.month}/${hasta.year}',
+                ),
+                trailing: const Icon(Icons.event),
+                onTap: () async {
+                  final hoy = ref.read(hoyProvider)();
+                  final elegido = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime(hoy.year, hoy.month + 1, hoy.day),
+                    firstDate: hoy,
+                    lastDate: DateTime(hoy.year + 2),
+                  );
+                  if (elegido != null) setState(() => _hasta = elegido);
+                },
               ),
               TextField(
                 controller: _notas,

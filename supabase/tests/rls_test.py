@@ -2555,6 +2555,97 @@ def main():
                     pedir('DELETE', f'{URL}/rest/v1/admin_actions?admin_id=eq.{uid}', headers=ADMIN)
                     pedir('DELETE', f'{URL}/auth/v1/admin/users/{uid}', headers=ADMIN)
 
+            print('planes Pro y Familia de las personas (2.1)')
+            c_id, c = crear_usuario('planes')
+            marca_creada = not filas(pedir('GET', f'{URL}/rest/v1/feature_flags?select=key&key=eq.planes_usuario',
+                                           headers=ADMIN))
+            if marca_creada:
+                pedir('POST', f'{URL}/rest/v1/feature_flags', {'key': 'planes_usuario', 'description': 'Prueba RLS',
+                                                              'stage': 'beta'}, {**ADMIN, 'Prefer': 'return=minimal'})
+            pedir('POST', f'{URL}/rest/v1/feature_flag_users', {'flag_key': 'planes_usuario', 'user_id': c_id,
+                                                               'enabled': True}, {**ADMIN, 'Prefer': 'return=minimal'})
+            try:
+                plan_c = rest('POST', 'rpc/mi_plan_usuario', {}, c)[1]
+                caso('C empieza en Gratis con tope de 5 mascotas',
+                     plan_c['plan'] == 'free' and plan_c['efectivo'] == 'free' and plan_c['limite_mascotas'] == 5)
+                caso('C carga 5 mascotas', all(rest('POST', 'pets', {'name': f'Plan {i}', 'species_id': 1}, c,
+                                                    'return=minimal')[0] == 201 for i in range(5)))
+                caso('la 6.ª no (plan Gratis)', 'limite_mascotas' in json.dumps(
+                    rest('POST', 'pets', {'name': 'Plan 6', 'species_id': 1}, c)[1]))
+                caso('C pide Pro', rest('POST', 'rpc/pedir_plan_usuario', {'p_plan': 'pro'}, c)[0] in (200, 204))
+                caso('una sola vez', rest('POST', 'rpc/pedir_plan_usuario', {'p_plan': 'family'}, c)[0] >= 400)
+                caso('C no lee los pedidos ni las suscripciones',
+                     bloqueado(rest('GET', 'user_plan_requests?select=id', quien=c))
+                     and bloqueado(rest('GET', 'subscriptions?select=id', quien=c)))
+                caso('C no se da Pro', rest('POST', 'rpc/admin_crear_suscripcion_usuario', {
+                    'p_email': correo(c_id), 'p_plan': 'pro', 'p_precio': 0, 'p_hasta': '2099-01-01'}, c)[0] >= 400)
+                caso('ni se cambia el plan en el perfil', bloqueado(rest(
+                    'PATCH', f'profiles?id=eq.{c_id}', {'plan': 'pro'}, c)) or filas(pedir(
+                        'GET', f'{URL}/rest/v1/profiles?select=plan&id=eq.{c_id}', headers=ADMIN))[0]['plan'] == 'free')
+                caso('A no ve los pedidos de plan', rest('POST', 'rpc/admin_pedidos_plan_usuario', {}, a)[0] >= 400)
+                caso('X ve el pedido de C', any(p['user_id'] == c_id and p['plan'] == 'pro'
+                                                for p in rest('POST', 'rpc/admin_pedidos_plan_usuario', {}, x)[1]))
+                caso('un correo sin cuenta no se puede', 'sin_cuenta' in json.dumps(rest(
+                    'POST', 'rpc/admin_crear_suscripcion_usuario', {'p_email': 'nadie-rls@example.com', 'p_plan': 'pro',
+                                                                   'p_precio': 0, 'p_hasta': '2099-01-01'}, x)[1]))
+                s_su, sub_c = rest('POST', 'rpc/admin_crear_suscripcion_usuario', {
+                    'p_email': correo(c_id), 'p_plan': 'pro', 'p_precio': 60, 'p_hasta': '2099-01-01'}, x)
+                plan_c = rest('POST', 'rpc/mi_plan_usuario', {}, c)[1]
+                caso('X le da Pro a C y el pedido se cierra', s_su == 200 and plan_c['plan'] == 'pro'
+                     and plan_c['limite_mascotas'] is None and plan_c['pedido_abierto'] is None)
+                caso('con Pro, la 6.ª mascota sí', rest('POST', 'pets', {'name': 'Plan 6', 'species_id': 1}, c,
+                                                       'return=minimal')[0] == 201)
+                caso('X ve la suscripción de C', any(s['id'] == sub_c and s['plan'] == 'pro'
+                                                     for s in rest('POST', 'rpc/admin_suscripciones_usuarios', {}, x)[1]))
+                caso('A no la ve', rest('POST', 'rpc/admin_suscripciones_usuarios', {}, a)[0] >= 400)
+                caso('X registra un pago de C', rest('POST', 'rpc/admin_registrar_pago', {
+                    'p_sub': sub_c, 'p_monto': 60, 'p_metodo': 'transfer'}, x)[0] == 200)
+
+                codigo = rest('POST', 'rpc/invitar_al_hogar', {}, c)[1]
+                plan_c = rest('POST', 'rpc/mi_plan_usuario', {}, c)[1]
+                caso('al invitar al hogar, C pasa a la prueba de Familia (Pro se cierra)',
+                     isinstance(codigo, str) and plan_c['plan'] == 'family' and plan_c['prueba'] is True
+                     and plan_c['prueba_familia_usada'] is True)
+                caso('B se une al hogar de C', rest('POST', 'rpc/unirme_al_hogar', {'p_codigo': codigo}, b)[0] == 200)
+                plan_b = rest('POST', 'rpc/mi_plan_usuario', {}, b)[1]
+                caso('B tiene Familia por el hogar de C', plan_b['efectivo'] == 'family' and plan_b['por_hogar'] is True)
+                caso('una segunda invitación no abre otra prueba', isinstance(
+                    rest('POST', 'rpc/invitar_al_hogar', {}, c)[1], str) and len(filas(pedir(
+                        'GET', f'{URL}/rest/v1/subscriptions?select=id&owner_id=eq.{c_id}&trial=is.true',
+                        headers=ADMIN))) == 1)
+                # La prueba termina.
+                pedir('PATCH', f'{URL}/rest/v1/subscriptions?owner_id=eq.{c_id}&trial=is.true',
+                      {'period_end': '2026-01-01', 'period_start': '2025-12-01'}, {**ADMIN, 'Prefer': 'return=minimal'})
+                pedir('POST', f'{URL}/rest/v1/rpc/vencer_planes', {}, ADMIN)
+                plan_c = rest('POST', 'rpc/mi_plan_usuario', {}, c)[1]
+                caso('terminada la prueba, C vuelve a Gratis', plan_c['plan'] == 'free' and plan_c['efectivo'] == 'free')
+                caso('y conserva sus 6 mascotas', plan_c['mascotas'] == 6)
+                caso('pero no suma otra', 'limite_mascotas' in json.dumps(
+                    rest('POST', 'pets', {'name': 'Plan 7', 'species_id': 1}, c)[1]))
+                caso('ni invita de nuevo al hogar (ya usó la prueba)', 'plan_familia' in json.dumps(
+                    rest('POST', 'rpc/invitar_al_hogar', {}, c)[1]))
+                caso('B ya no tiene Familia', rest('POST', 'rpc/mi_plan_usuario', {}, b)[1]['efectivo'] == 'free')
+                pedir('PATCH', f'{URL}/rest/v1/feature_flag_users?flag_key=eq.planes_usuario&user_id=eq.{c_id}',
+                      {'enabled': False}, {**ADMIN, 'Prefer': 'return=minimal'})
+                caso('con los planes apagados, no hay tope', rest('POST', 'pets', {'name': 'Plan 7', 'species_id': 1}, c,
+                                                                  'return=minimal')[0] == 201)
+            finally:
+                pedir('DELETE', f'{URL}/rest/v1/household_members?user_id=eq.{b_id}&household_id=in.('
+                      f'{",".join(h["id"] for h in filas(pedir("GET", f"{URL}/rest/v1/households?select=id&owner_id=eq.{c_id}", headers=ADMIN))) or uuid.uuid4()})',
+                      headers=ADMIN)
+                subs = [s['id'] for s in filas(pedir('GET', f'{URL}/rest/v1/subscriptions?select=id&owner_id=eq.{c_id}',
+                                                     headers=ADMIN))]
+                if subs:
+                    pedir('DELETE', f"{URL}/rest/v1/payments?subscription_id=in.({','.join(subs)})", headers=ADMIN)
+                    pedir('DELETE', f"{URL}/rest/v1/subscriptions?id=in.({','.join(subs)})", headers=ADMIN)
+                pedir('DELETE', f'{URL}/rest/v1/feature_flag_users?flag_key=eq.planes_usuario&user_id=eq.{c_id}',
+                      headers=ADMIN)
+                if marca_creada:
+                    pedir('DELETE', f'{URL}/rest/v1/feature_flags?key=eq.planes_usuario', headers=ADMIN)
+                    pedir('DELETE', f'{URL}/rest/v1/feature_flag_audit?flag_key=eq.planes_usuario', headers=ADMIN)
+                pedir('DELETE', f'{URL}/rest/v1/admin_actions?target_id=eq.{c_id}', headers=ADMIN)
+                pedir('DELETE', f'{URL}/auth/v1/admin/users/{c_id}', headers=ADMIN)
+
             pedir('DELETE', f'{URL}/rest/v1/businesses?id=in.({negocio},{sin_duenio},{desde_marca})', headers=ADMIN)
             pedir('DELETE', f'{URL}/rest/v1/place_marks?user_id=in.({a_id},{b_id})', headers=ADMIN)
         finally:

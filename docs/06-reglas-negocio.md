@@ -10,7 +10,7 @@
 |---|---|---|---|
 | SOS, avisos, QR, foto, mapa, chat | ✅ | ✅ | ✅ |
 | Recordatorios de medicación, comida y vacunas | ✅ | ✅ | ✅ |
-| Mascotas | Hasta 2 | Ilimitadas | Ilimitadas |
+| Mascotas | Hasta 5 (D111) | Ilimitadas | Ilimitadas |
 | Sin publicidad (barra de anuncio chica) | | ✅ | ✅ |
 | Sin repreguntas de "Busco veterinaria" tras un "Ahora no" | | ✅ | ✅ |
 | Filtros y favoritos guardados | | ✅ | ✅ |
@@ -21,7 +21,8 @@
 | **Precio de ejemplo (a validar)** | $0 | ~$60/mes | ~$120/mes |
 
 - Suscripción mensual o anual con descuento.
-- Plan Familia: **30 días gratis** al invitar al primer integrante. Paga quien invita.
+- Plan Familia: **30 días gratis** al invitar al primer integrante (una sola vez por persona). Paga quien invita. Los integrantes del hogar (no los cuidadores temporales) tienen lo mismo que Pro mientras el plan esté vigente.
+- Vencido el plan, se vuelve a Gratis sin perder nada: las mascotas y el hogar quedan; solo no se suman más mascotas ni integrantes (D111).
 - Si el cobro es dentro de la app, la tienda retiene alrededor del 15%.
 - Cobro: Fase 2. El hogar compartido funciona gratis en la Fase 1 para validar el uso.
 

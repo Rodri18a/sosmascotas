@@ -65,6 +65,10 @@ abstract final class Funcionalidades {
   /// Planes pagos del comercio: «Tu plan», pagos y pedir un plan (2.2, D103).
   static const planes = 'planes';
 
+  /// Planes Pro y Familia de las personas: «Mi plan», tope de 5 mascotas en
+  /// Gratis y hogar compartido con Familia (2.1, D111).
+  static const planesUsuario = 'planes_usuario';
+
   /// Agenda de turnos: reservar, Mis turnos y la agenda del comercio (3.1,
   /// D104).
   static const agenda = 'agenda';

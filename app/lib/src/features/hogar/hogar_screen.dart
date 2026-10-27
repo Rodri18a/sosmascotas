@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
+import '../../cuenta/plan_usuario_repositorio.dart';
 import '../../cuenta/servicio_cuenta.dart';
 import '../../hogar/hogar_repositorio.dart';
 import '../../mascotas/mascotas_repositorio.dart';
@@ -187,9 +188,22 @@ class _Contenido extends ConsumerWidget {
           ],
         ),
       );
-    } on Exception {
-      mensajes.showSnackBar(SnackBar(content: Text(t.errorSinConexion)));
+    } on Exception catch (e) {
+      final familia = '$e'.contains('plan_familia');
+      mensajes.showSnackBar(
+        SnackBar(
+          content: Text(familia ? t.miPlanHogarFamilia : t.errorSinConexion),
+          action: familia
+              ? SnackBarAction(
+                  label: t.miPlanVerPlanes,
+                  onPressed: () => context.push(Rutas.miPlan),
+                )
+              : null,
+        ),
+      );
     }
+    // Una invitación puede abrir la prueba de Familia (D111).
+    ref.invalidate(miPlanUsuarioProvider);
   }
 
   Future<void> _irme(BuildContext context, WidgetRef ref, String hogar) async {

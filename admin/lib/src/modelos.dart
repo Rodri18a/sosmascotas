@@ -383,15 +383,29 @@ class Suscripcion {
     required this.vence,
     this.rubro,
     this.fundador = false,
+    this.prueba = false,
     this.precio = 0,
     this.pagado = 0,
     this.ultimoPago,
   });
 
+  /// Una de las personas (`admin_suscripciones_usuarios()`, 2.1, D111): el id
+  /// de la cuenta va en [negocioId] y el nombre y el correo en [comercio].
+  factory Suscripcion.deUsuario(Map<String, Object?> json) =>
+      Suscripcion.fromJson({
+        ...json,
+        'business_id': json['user_id'],
+        'comercio': [
+          if (json['nombre'] case final String n when n.isNotEmpty) n,
+          json['email'] ?? '—',
+        ].join(' · '),
+      });
+
   factory Suscripcion.fromJson(Map<String, Object?> json) => Suscripcion(
     id: json['id']! as String,
     negocioId: json['business_id']! as String,
     comercio: json['comercio'] as String? ?? '—',
+    prueba: json['trial'] as bool? ?? false,
     rubro: json['rubro'] as String?,
     plan: json['plan']! as String,
     estado: json['status']! as String,
@@ -410,8 +424,11 @@ class Suscripcion {
   final String comercio;
   final String? rubro;
 
-  /// `featured` o `plus`.
+  /// `featured` o `plus`; de las personas, `pro` o `family`.
   final String plan;
+
+  /// Prueba gratis de 30 días de Familia.
+  final bool prueba;
 
   /// `active`, `past_due`, `cancelled` o `expired`.
   final String estado;

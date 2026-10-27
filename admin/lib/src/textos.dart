@@ -138,6 +138,21 @@ abstract final class T {
       'app. Vencido el período, el plan sigue 7 días «con atraso» y después '
       'vuelve a Básico solo. No se cobra antes de formalizar (0.0.9d).';
   static const nuevoPlan = 'Nuevo plan pago';
+  static const planesComercios = 'Comercios';
+  static const planesPersonas = 'Personas';
+  static const planesPersonasAyuda =
+      'Pro y Familia de las personas, con cobro manual como los comercios. '
+      'La prueba de Familia (30 días, una vez) arranca sola al invitar a '
+      'alguien al hogar. Vencido, vuelve a Gratis sin perder nada.';
+  static const nuevoPlanPersona = 'Nuevo plan Pro o Familia';
+  static const pedidosDePlan = 'Pidieron un plan desde la app';
+  static String pidio(String quien, String plan) => '$quien pidió $plan';
+  static const activar = 'Activar';
+  static const descartar = 'Descartar';
+  static const faltanDatosPlanPersona =
+      'Falta el correo, el precio o la fecha de vencimiento.';
+  static const sinCuentaPlan =
+      'No hay una cuenta con ese correo: primero tiene que registrarse en la app.';
   static const sinSuscripciones = 'Todavía no hay planes pagos.';
   static const precioMes = r'Precio por mes ($)';
   static const venceEl = 'Vence el…';
@@ -168,14 +183,16 @@ abstract final class T {
       '${hasta.day}/${hasta.month}/${hasta.year}.';
   static String resumenIngresos(Ingresos i) => [
     'Vigentes: Destacado ${i.vigentes['featured'] ?? 0} · '
-        'Plus ${i.vigentes['plus'] ?? 0}',
+        'Plus ${i.vigentes['plus'] ?? 0} · Pro ${i.vigentes['pro'] ?? 0} · '
+        'Familia ${i.vigentes['family'] ?? 0}',
     'Esperado por mes (sin Socios Fundadores): '
         '\$ ${i.esperadoPorMes.toStringAsFixed(0)}',
   ].join('\n');
   static String suscripcionDetalle(Suscripcion s) => [
     '${planes[s.plan] ?? s.plan} · ${estadosPlan[s.estado] ?? s.estado}',
     'Vence el ${s.vence.day}/${s.vence.month}/${s.vence.year}'
-        '${s.fundador ? ' · Socio Fundador' : ''}',
+        '${s.fundador ? ' · Socio Fundador' : ''}'
+        '${s.prueba ? ' · Prueba gratis' : ''}',
     '\$ ${s.precio.toStringAsFixed(0)} por mes · cobrado '
         '\$ ${s.pagado.toStringAsFixed(0)}',
   ].join('\n');
@@ -234,6 +251,8 @@ abstract final class T {
     'basic': 'Básico',
     'featured': 'Destacado',
     'plus': 'Plus (módulos, como Socios)',
+    'pro': 'Pro',
+    'family': 'Familia',
   };
   static const revisarRenac =
       'Verificá el RUT contra el listado oficial de operadores RENAC del MGAP antes de aprobar.';

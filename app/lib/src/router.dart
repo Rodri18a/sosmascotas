@@ -11,6 +11,7 @@ import 'features/adopcion/pack_screen.dart';
 import 'features/adopcion/transito_screen.dart';
 import 'features/agenda/reservar_turno.dart';
 import 'features/ajustes/ajustes_screen.dart';
+import 'features/ajustes/plan_usuario_screen.dart';
 import 'features/avisos/avisos_screen.dart';
 import 'features/ayuda/ayuda_screen.dart';
 import 'features/chapitas/pedido_chapita.dart';
@@ -76,6 +77,7 @@ abstract final class Rutas {
   static const adopcion = '/adopcion';
   static const noticias = '/noticias';
   static const misPedidos = '/pedidos';
+  static const miPlan = '/mi-plan';
   static const misTurnos = '/turnos';
   static String reservarTurno(String negocioId) =>
       '$misTurnos/reservar/$negocioId';
@@ -131,6 +133,7 @@ abstract final class Rutas {
     buscarLugares: Funcionalidades.busqueda,
     '$_chapitas/': Funcionalidades.pedidoChapitas,
     misTurnos: Funcionalidades.agenda,
+    miPlan: Funcionalidades.planesUsuario,
   };
 
   /// Rutas que un visitante no puede ver: se le pide ingresar y después vuelve.
@@ -157,6 +160,7 @@ abstract final class Rutas {
     misPedidos,
     '$_chapitas/',
     misTurnos,
+    miPlan,
   ];
 
   static String fichaMascota(String id) => '$mascotas/$id';
@@ -514,6 +518,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: Rutas.misPedidos,
         builder: (_, _) => const MisPedidosScreen(),
       ),
+      GoRoute(path: Rutas.miPlan, builder: (_, _) => const PlanUsuarioScreen()),
       GoRoute(
         path: Rutas.nuevoEvento,
         builder: (_, state) {

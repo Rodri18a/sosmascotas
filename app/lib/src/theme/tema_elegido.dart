@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../cuenta/perfil_repositorio.dart';
+import '../cuenta/plan_usuario_repositorio.dart';
 import '../funcionalidades/funcionalidades_activas.dart';
 import '../metricas/metricas.dart';
 import 'paleta.dart';
@@ -36,10 +37,13 @@ final almacenTemaProvider = Provider<AlmacenTema>(
   (ref) => const AlmacenTemaLocal(),
 );
 
-/// Elegir otro tema es del plan Pro (también lo incluye Familia).
+/// Elegir otro tema es del plan Pro (también lo incluye Familia, y a las
+/// personas de un hogar Familia, D111).
 final tienePlanConTemasProvider = Provider<bool>((ref) {
   final plan = ref.watch(perfilProvider).value?.plan;
-  return plan == Plan.pro || plan == Plan.family;
+  return plan == Plan.pro ||
+      plan == Plan.family ||
+      (ref.watch(miPlanUsuarioProvider).value?.esPro ?? false);
 });
 
 /// Además del plan, la funcionalidad `temas_pro` tiene que estar prendida

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
+import '../../cuenta/plan_usuario_repositorio.dart';
 import '../../cuenta/servicio_cuenta.dart';
 import '../../fotos/elegir_foto.dart';
 import '../../funcionalidades/funcionalidades_activas.dart';
@@ -230,10 +231,18 @@ class _FormularioState extends ConsumerState<_Formulario> {
             .read(metricasProvider)
             .track(Eventos.renacStatusSet, props: {'estado': renac.valor});
       }
-      ref.invalidate(misMascotasProvider);
+      ref
+        ..invalidate(misMascotasProvider)
+        ..invalidate(miPlanUsuarioProvider);
       if (mounted) context.go(Rutas.fichaMascota(guardada.id));
-    } on Exception {
-      if (mounted) setState(() => _error = t.errorSinConexion);
+    } on Exception catch (e) {
+      if (mounted) {
+        setState(
+          () => _error = '$e'.contains('limite_mascotas')
+              ? t.miPlanLimiteMascotas
+              : t.errorSinConexion,
+        );
+      }
     } catch (e) {
       // En la web también llegan errores que no son Exception: que se vean.
       debugPrint('[mascota] No se pudo guardar: $e');

@@ -205,6 +205,16 @@ class _SeccionCuenta extends ConsumerWidget {
           ),
         ),
         SiFuncionalidad(
+          Funcionalidades.planesUsuario,
+          child: ListTile(
+            leading: const Icon(Icons.workspace_premium_outlined),
+            title: Text(t.miPlanTitulo),
+            subtitle: Text(t.miPlanAyuda),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.push(Rutas.miPlan),
+          ),
+        ),
+        SiFuncionalidad(
           Funcionalidades.hogar,
           child: ListTile(
             leading: const Icon(Icons.family_restroom),
