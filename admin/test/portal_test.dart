@@ -554,9 +554,31 @@ class RepoFalso implements AdminRepositorio {
       'yo': true,
       'ultima_accion': '2026-10-26T12:00:00Z',
     },
+    {
+      'user_id': 'u7',
+      'email': 'mod@sosmascotas.uy',
+      'rol': 'moderator',
+      'zonas': [
+        for (final id in zonasDe['u7'] ?? const <int>[])
+          {'id': id, 'name': id == 1 ? 'Pando' : 'Zona $id'},
+      ],
+    },
     for (final (correo, rol) in rolesPuestos)
       if (rol != 'user') {'user_id': correo, 'email': correo, 'rol': rol},
   ];
+
+  /// Zonas de cada integrante (D110).
+  final zonasDe = <String, List<int>>{};
+
+  /// Lo que devuelve `misZonas()`: null, todas.
+  List<String>? misZonasFalsas;
+
+  @override
+  Future<void> zonasIntegrante(String userId, List<int> zonas) async =>
+      zonasDe[userId] = zonas;
+
+  @override
+  Future<List<String>?> misZonas() async => misZonasFalsas;
 
   @override
   Future<void> ponerRol(String correo, String rol) async {
@@ -1345,6 +1367,52 @@ void main() {
     expect(find.text('Propuestas'), findsOneWidget);
     expect(find.text('Moderación'), findsNothing);
     expect(find.text('Planes'), findsNothing);
+  });
+
+  testWidgets('moderación y ventas ven el aviso de sus zonas', (tester) async {
+    _pantallaGrande(tester);
+    await tester.pumpWidget(
+      _portal(
+        sesion: SesionFalsa('mod@x.uy'),
+        repo: RepoFalso(rol: 'moderator')..misZonasFalsas = const [],
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(
+      find.textContaining('Todavía no tenés zonas asignadas'),
+      findsOneWidget,
+    );
+
+    await tester.pumpWidget(
+      _portal(
+        sesion: SesionFalsa('ventas@x.uy'),
+        repo: RepoFalso(rol: 'sales')..misZonasFalsas = const ['Pando'],
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('Ves solo lo de tus zonas: Pando.'), findsOneWidget);
+
+    await tester.pumpWidget(
+      _portal(sesion: SesionFalsa('admin@x.uy'), repo: RepoFalso()),
+    );
+    await tester.pumpAndSettle();
+    expect(find.textContaining('tus zonas'), findsNothing);
+  });
+
+  testWidgets('equipo: asignar zonas a un integrante', (tester) async {
+    _pantallaGrande(tester);
+    final repo = RepoFalso();
+    await tester.pumpWidget(
+      _portal(sesion: SesionFalsa('admin@sosmascotas.uy'), repo: repo),
+    );
+    await _tocar(tester, find.text('Equipo'));
+    expect(find.textContaining('Sin zonas: no ve nada'), findsOneWidget);
+
+    await _tocar(tester, find.byTooltip('Zonas de mod@sosmascotas.uy'));
+    await _tocar(tester, find.widgetWithText(CheckboxListTile, 'Pando'));
+    await _tocar(tester, find.widgetWithText(FilledButton, 'Guardar'));
+    expect(repo.zonasDe['u7'], [1]);
+    expect(find.textContaining('Zonas: Pando'), findsOneWidget);
   });
 
   testWidgets('equipo: dar un rol por correo', (tester) async {

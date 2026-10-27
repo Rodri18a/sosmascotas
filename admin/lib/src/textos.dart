@@ -505,4 +505,13 @@ abstract final class T {
       'Cada acción del equipo queda registrada: quién, qué y cuándo. Se ven las últimas 500.';
   static const todasLasAcciones = 'Todas las acciones';
   static const sinRegistro = 'No hay acciones en este período.';
+  static String susZonas(List<String> zonas) => 'Zonas: ${zonas.join(', ')}';
+  static const sinZonas = 'Sin zonas: no ve nada';
+  static String zonasDeIntegrante(String correo) => 'Zonas de $correo';
+  static const zonasIntegranteAyuda =
+      'Ve solo lo de estas zonas: SOS, mensajes, reseñas, denuncias, lugares, prospectos y propuestas. Sin ninguna, no ve nada.';
+  static String tusZonas(List<String> zonas) =>
+      'Ves solo lo de tus zonas: ${zonas.join(', ')}.';
+  static const sinTusZonas =
+      'Todavía no tenés zonas asignadas, así que no vas a ver datos. Pedíselas a la administración.';
 }

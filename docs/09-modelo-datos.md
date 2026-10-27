@@ -144,7 +144,8 @@ Trigger: con 3 `flags` de usuarios distintos, el contenido pasa a `hidden`.
 | `daily_stats` | day, business_id, zone_id, metric, value — ✅ creada en 2.3 (D101): resumen diario (hora de Uruguay) de los eventos de cada comercio, lo escribe `resumir_estadisticas()` con pg_cron; sin acceso desde la app, se lee con `estadisticas_negocio()` | 2 |
 | `monthly_reports` | business_id, month, totals, devices, created_at — ✅ creada en 2.3 (D101): un reporte mensual por comercio y mes (no se repite); solo `service_role` | 2 |
 | `success_stories` | id, business_id, business_name, business_type, zone_id, quote, author, numbers, consent, status (`draft`, `published`) — ✅ creada en 2.4 (D102): casos de éxito para ventas; solo administración con `admin_casos()`, `admin_guardar_caso()`, `admin_borrar_caso()`; publicado solo con `consent` | 2 |
-| `prospects` | id, name, business_type, zone_id, location, contact, stage (`prospect`, `contacted`, `demo`, `founder`, `paying`, `renewed`, `lost`), business_id, next_contact_at, owner_admin_id | 1 |
+| `team_zones` | user_id, zone_id, created_by, created_at — ✅ 3.6 (D110): zonas de cada integrante de moderación o ventas; sin acceso directo (se asignan con `admin_zonas_integrante()`) | 3 |
+| `prospects` | id, name, business_type, zone_id (✅ D110: la del lugar o la primera de quien lo carga; ventas ve solo los de sus zonas), location, contact, stage (`prospect`, `contacted`, `demo`, `founder`, `paying`, `renewed`, `lost`), business_id, next_contact_at, owner_admin_id | 1 |
 | `prospect_notes` | id, prospect_id, admin_id, note, created_at | 1 |
 | `admin_audit_log` | id, admin_id, action, target, data, created_at | 3 |
 

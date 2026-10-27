@@ -2420,6 +2420,10 @@ def main():
                      and rest('POST', 'rpc/admin_lugares', {}, m)[0] >= 400
                      and rest('POST', 'rpc/admin_equipo', {}, m)[0] >= 400)
                 caso('M no es admin para el resto de la base', rest('POST', 'rpc/es_admin', {}, m)[1] is False)
+                pando_id = filas(rest('GET', 'zones?select=id&slug=eq.pando'))[0]['id']
+                caso('V sin zonas no carga prospectos (D110)', rest('POST', 'prospects', {
+                    'name': 'Prospecto RLS ventas'}, v, 'return=minimal')[0] >= 400)
+                rest('POST', 'rpc/admin_zonas_integrante', {'p_user': v_id, 'p_zonas': [pando_id]}, x)
                 caso('V (ventas) ve los lugares', rest('POST', 'rpc/admin_lugares', {}, v)[0] == 200)
                 caso('y los sin reclamar', rest('POST', 'rpc/admin_sin_reclamar', {}, v)[0] == 200)
                 caso('y carga prospectos', rest('POST', 'prospects', {'name': 'Prospecto RLS ventas'}, v,
@@ -2460,6 +2464,91 @@ def main():
                 rest('POST', 'rpc/admin_guardar_zona', {'p': {'id': zona, 'active': True}}, x)
                 caso('prendida, sí', len(filas(rest('GET', f'zones?select=id&id=eq.{zona}'))) == 1)
                 caso('V no ve las zonas', rest('POST', 'rpc/admin_zonas', {}, v)[0] >= 400)
+
+                print('cada integrante ve solo sus zonas (D110)')
+                # La zona de prueba se mueve fuera de Pando (Montevideo).
+                rest('POST', 'rpc/admin_guardar_zona', {'p': {
+                    'id': zona, 'lat_min': -34.95, 'lat_max': -34.85, 'lng_min': -56.30, 'lng_max': -56.20}}, x)
+                caso('A no asigna zonas', rest('POST', 'rpc/admin_zonas_integrante', {
+                    'p_user': v_id, 'p_zonas': [zona]}, a)[0] >= 400)
+                caso('V no se asigna zonas', rest('POST', 'rpc/admin_zonas_integrante', {
+                    'p_user': v_id, 'p_zonas': [zona]}, v)[0] >= 400)
+                caso('a quien no es del equipo no se le asignan', 'solo_equipo' in json.dumps(rest(
+                    'POST', 'rpc/admin_zonas_integrante', {'p_user': a_id, 'p_zonas': [zona]}, x)[1]))
+                caso('X deja a V solo con la zona de prueba', rest('POST', 'rpc/admin_zonas_integrante', {
+                    'p_user': v_id, 'p_zonas': [zona]}, x)[0] in (200, 204))
+                caso('el equipo muestra sus zonas', next(e['zonas'] for e in rest('POST', 'rpc/admin_equipo', {}, x)[1]
+                                                         if e['user_id'] == v_id) == [{'id': zona, 'name': 'Prueba RLS'}])
+                caso('V ve cuáles son sus zonas', rest('POST', 'rpc/mis_zonas_equipo', {}, v)[1]
+                     == {'todas': False, 'zonas': ['Prueba RLS']})
+                caso('X las ve todas', rest('POST', 'rpc/mis_zonas_equipo', {}, x)[1]['todas'] is True)
+                caso('A no es del equipo', rest('POST', 'rpc/mis_zonas_equipo', {}, a)[1] is None)
+                caso('A no lee team_zones', bloqueado(rest('GET', 'team_zones?select=user_id', quien=a)))
+
+                s_l, lugar_z = rest('POST', 'rpc/admin_guardar_lugar', {'p': {
+                    'name': 'Prueba RLS zona', 'business_type': 'vet', 'lat': -34.90, 'lng': -56.25}}, x)
+                caso('X crea un lugar en la zona de prueba y toma esa zona', s_l == 200 and filas(pedir(
+                    'GET', f'{URL}/rest/v1/businesses?select=zone_id&id=eq.{lugar_z}', headers=ADMIN))[0]['zone_id'] == zona)
+                s_lp, lugar_p = rest('POST', 'rpc/admin_guardar_lugar', {'p': {
+                    'name': 'Prueba RLS zona Pando', 'business_type': 'vet', 'lat': -34.72, 'lng': -55.95}}, x)
+                nombres_v = {l['name'] for l in rest('POST', 'rpc/admin_lugares', {'p_buscar': 'Prueba RLS zona'}, v)[1]}
+                caso('V ve el de su zona y no el de Pando', nombres_v == {'Prueba RLS zona'})
+                caso('X ve los dos', {l['name'] for l in rest(
+                    'POST', 'rpc/admin_lugares', {'p_buscar': 'Prueba RLS zona'}, x)[1]} >= {'Prueba RLS zona', 'Prueba RLS zona Pando'})
+                caso('V edita el de su zona', rest('POST', 'rpc/admin_guardar_lugar', {'p': {
+                    'id': lugar_z, 'phone': '099000000'}}, v)[0] == 200)
+                caso('V no edita el de Pando', 'fuera_de_tu_zona' in json.dumps(rest('POST', 'rpc/admin_guardar_lugar', {'p': {
+                    'id': lugar_p, 'phone': '099000000'}}, v)[1]))
+                caso('ni crea uno en Pando', 'fuera_de_tu_zona' in json.dumps(rest('POST', 'rpc/admin_guardar_lugar', {'p': {
+                    'name': 'Prueba RLS zona otra', 'business_type': 'vet', 'lat': -34.72, 'lng': -55.95}}, v)[1]))
+                caso('ni lo saca de su zona', 'fuera_de_tu_zona' in json.dumps(rest('POST', 'rpc/admin_guardar_lugar', {'p': {
+                    'id': lugar_z, 'lat': -34.72, 'lng': -55.95}}, v)[1]))
+                caso('V no arma la propuesta de un lugar de Pando', rest('POST', 'rpc/admin_propuesta', {
+                    'p_negocio': lugar_p}, v)[0] >= 400)
+                caso('ni la de Pando por rubro', rest('POST', 'rpc/admin_propuesta', {
+                    'p_rubro': 'vet', 'p_zona': pando_id}, v)[0] >= 400)
+                s_pr, prop = rest('POST', 'rpc/admin_propuesta', {'p_rubro': 'vet'}, v)
+                caso('sin zona, la propuesta de V es de su zona', s_pr == 200 and prop['zona'] == 'Prueba RLS')
+
+                caso('V carga un prospecto (queda en su zona)', rest('POST', 'prospects', {
+                    'name': 'Prospecto RLS zona'}, v, 'return=minimal')[0] == 201)
+                pedir('POST', f'{URL}/rest/v1/prospects', {'name': 'Prospecto RLS Pando', 'zone_id': pando_id},
+                      {**ADMIN, 'Prefer': 'return=minimal'})
+                caso('V ve su prospecto y no el de Pando', {p['name'] for p in filas(rest(
+                    'GET', 'prospects?select=name&name=like.Prospecto%20RLS*', quien=v))} == {'Prospecto RLS zona'})
+                caso('V no mueve su prospecto a Pando', bloqueado(rest(
+                    'PATCH', 'prospects?name=eq.Prospecto%20RLS%20zona', {'zone_id': pando_id}, v)) or filas(pedir(
+                        'GET', f'{URL}/rest/v1/prospects?select=zone_id&name=eq.Prospecto%20RLS%20zona',
+                        headers=ADMIN))[0]['zone_id'] == zona)
+                pedir('DELETE', f'{URL}/rest/v1/prospects?name=like.Prospecto%20RLS*', headers=ADMIN)
+
+                # Moderación: una denuncia en Pando.
+                rest('POST', 'rpc/admin_poner_rol', {'p_email': correo(m_id), 'p_rol': 'moderator'}, x)
+                s_dz, den_z = rest('POST', 'rpc/denunciar_maltrato', {
+                    'p_descripcion': 'Prueba RLS de zona, perro sin agua', 'p_lat': -34.72, 'p_lng': -55.96}, b)
+                caso('M sin zonas no ve denuncias', s_dz == 200 and rest('POST', 'rpc/admin_denuncias', {}, m)[1] == [])
+                caso('ni la moderación de Pando', rest('POST', 'rpc/admin_moderacion', {}, m)[1] == [])
+                caso('ni el historial de B (de Pando)', 'fuera_de_tu_zona' in json.dumps(rest(
+                    'POST', 'rpc/admin_historial_usuario', {'p_user': b_id}, m)[1]))
+                caso('ni la cambia de estado', rest('POST', 'rpc/admin_estado_denuncia', {
+                    'p_id': den_z, 'p_estado': 'closed'}, m)[0] >= 400)
+                rest('POST', 'rpc/admin_zonas_integrante', {'p_user': m_id, 'p_zonas': [zona]}, x)
+                caso('con otra zona, M tampoco la ve', all(d['id'] != den_z for d in rest(
+                    'POST', 'rpc/admin_denuncias', {}, m)[1]))
+                rest('POST', 'rpc/admin_zonas_integrante', {'p_user': m_id, 'p_zonas': [pando_id]}, x)
+                caso('con Pando, sí', any(d['id'] == den_z for d in rest('POST', 'rpc/admin_denuncias', {}, m)[1]))
+                caso('y la cierra', rest('POST', 'rpc/admin_estado_denuncia', {
+                    'p_id': den_z, 'p_estado': 'closed'}, m)[0] in (200, 204))
+                caso('X la sigue viendo', any(d['id'] == den_z for d in rest('POST', 'rpc/admin_denuncias', {}, x)[1]))
+                pedir('DELETE', f'{URL}/rest/v1/abuse_reports?id=eq.{den_z}', headers=ADMIN)
+
+                caso('al sacarlo del equipo, pierde sus zonas', rest('POST', 'rpc/admin_poner_rol', {
+                    'p_email': correo(m_id), 'p_rol': 'user'}, x)[0] in (200, 204) and filas(pedir(
+                        'GET', f'{URL}/rest/v1/team_zones?select=zone_id&user_id=eq.{m_id}', headers=ADMIN)) == [])
+                caso('el cambio de zonas queda en la auditoría', any(
+                    r['action'] == 'zonas_integrante' and r['target_id'] == v_id
+                    for r in rest('POST', 'rpc/admin_auditoria', {'p_dias': 1}, x)[1]))
+                pedir('DELETE', f'{URL}/rest/v1/businesses?id=in.({lugar_z},{lugar_p})', headers=ADMIN)
                 pedir('DELETE', f'{URL}/rest/v1/zones?id=eq.{zona}', headers=ADMIN)
             finally:
                 for uid in (m_id, v_id):

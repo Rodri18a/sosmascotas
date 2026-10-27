@@ -18,7 +18,17 @@ String _errorDe(Object e, Map<String, String> textos) =>
     textos.entries.where((t) => '$e'.contains(t.key)).firstOrNull?.value ??
     T.errorConexion;
 
-/// Equipo (3.6, D109): quién tiene qué rol en el portal.
+List<Map<String, Object?>> _zonasDe(Map<String, Object?> integrante) => [
+  for (final z in integrante['zonas'] as List<Object?>? ?? const [])
+    (z! as Map).cast<String, Object?>(),
+];
+
+List<String> _nombresZonas(Map<String, Object?> integrante) => [
+  for (final z in _zonasDe(integrante)) '${z['name']}',
+];
+
+/// Equipo (3.6, D109): quién tiene qué rol en el portal y, para moderación y
+/// ventas, qué zonas ve (D110).
 class EquipoScreen extends ConsumerWidget {
   const EquipoScreen({super.key});
 
@@ -31,6 +41,18 @@ class EquipoScreen extends ConsumerWidget {
     final hecho = await showDialog<bool>(
       context: context,
       builder: (_) => _PonerRol(correo: correo, rol: rol),
+    );
+    if (hecho ?? false) ref.invalidate(equipoProvider);
+  }
+
+  Future<void> _zonas(
+    BuildContext context,
+    WidgetRef ref,
+    Map<String, Object?> integrante,
+  ) async {
+    final hecho = await showDialog<bool>(
+      context: context,
+      builder: (_) => _ZonasIntegrante(integrante: integrante),
     );
     if (hecho ?? false) ref.invalidate(equipoProvider);
   }
@@ -59,6 +81,11 @@ class EquipoScreen extends ConsumerWidget {
                 subtitle: Text(
                   [
                     T.rolesEquipo[p['rol']] ?? '${p['rol']}',
+                    if (p['rol'] != 'admin')
+                      switch (_nombresZonas(p)) {
+                        [] => T.sinZonas,
+                        final zonas => T.susZonas(zonas),
+                      },
                     switch (p['ultima_accion']) {
                       final String f => T.ultimaAccion(_fecha(f)),
                       _ => T.sinAcciones,
@@ -67,15 +94,26 @@ class EquipoScreen extends ConsumerWidget {
                 ),
                 trailing: p['yo'] == true
                     ? null
-                    : IconButton(
-                        tooltip: T.sumarAlEquipo,
-                        onPressed: () => _poner(
-                          context,
-                          ref,
-                          correo: '${p['email']}',
-                          rol: '${p['rol']}',
-                        ),
-                        icon: const Icon(Icons.edit_outlined),
+                    : Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (p['rol'] != 'admin')
+                            IconButton(
+                              tooltip: T.zonasDeIntegrante('${p['email']}'),
+                              onPressed: () => _zonas(context, ref, p),
+                              icon: const Icon(Icons.map_outlined),
+                            ),
+                          IconButton(
+                            tooltip: T.sumarAlEquipo,
+                            onPressed: () => _poner(
+                              context,
+                              ref,
+                              correo: '${p['email']}',
+                              rol: '${p['rol']}',
+                            ),
+                            icon: const Icon(Icons.edit_outlined),
+                          ),
+                        ],
                       ),
               ),
             ),
@@ -182,6 +220,107 @@ class _PonerRolState extends ConsumerState<_PonerRol> {
       ),
       FilledButton(
         onPressed: _guardando ? null : () => _guardar(_rol),
+        child: const Text(T.guardar),
+      ),
+    ],
+  );
+}
+
+/// Las zonas de un integrante de moderación o ventas (D110).
+class _ZonasIntegrante extends ConsumerStatefulWidget {
+  const _ZonasIntegrante({required this.integrante});
+
+  final Map<String, Object?> integrante;
+
+  @override
+  ConsumerState<_ZonasIntegrante> createState() => _ZonasIntegranteState();
+}
+
+class _ZonasIntegranteState extends ConsumerState<_ZonasIntegrante> {
+  late final _elegidas = {
+    for (final z in _zonasDe(widget.integrante)) _n(z['id']),
+  };
+  String? _error;
+  var _guardando = false;
+
+  Future<void> _guardar() async {
+    setState(() {
+      _guardando = true;
+      _error = null;
+    });
+    try {
+      await ref
+          .read(adminRepositorioProvider)
+          .zonasIntegrante(
+            '${widget.integrante['user_id']}',
+            _elegidas.toList()..sort(),
+          );
+      if (mounted) Navigator.pop(context, true);
+    } on Exception {
+      if (mounted) {
+        setState(() {
+          _guardando = false;
+          _error = T.errorConexion;
+        });
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) => AlertDialog(
+    title: Text(T.zonasDeIntegrante('${widget.integrante['email']}')),
+    content: SizedBox(
+      width: 420,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              T.zonasIntegranteAyuda,
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+            switch (ref.watch(zonasProvider)) {
+              AsyncData(value: final zonas) => Column(
+                children: [
+                  for (final z in zonas)
+                    CheckboxListTile(
+                      title: Text(
+                        z['active'] == true
+                            ? '${z['name']}'
+                            : '${z['name']} (${T.apagada})',
+                      ),
+                      value: _elegidas.contains(_n(z['id'])),
+                      onChanged: (v) => setState(
+                        () => v ?? false
+                            ? _elegidas.add(_n(z['id']))
+                            : _elegidas.remove(_n(z['id'])),
+                      ),
+                    ),
+                ],
+              ),
+              AsyncError() => const Text(T.errorConexion),
+              _ => const LinearProgressIndicator(),
+            },
+            if (_error case final e?)
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Text(
+                  e,
+                  style: TextStyle(color: Theme.of(context).colorScheme.error),
+                ),
+              ),
+          ],
+        ),
+      ),
+    ),
+    actions: [
+      TextButton(
+        onPressed: () => Navigator.pop(context, false),
+        child: const Text(T.cancelar),
+      ),
+      FilledButton(
+        onPressed: _guardando ? null : _guardar,
         child: const Text(T.guardar),
       ),
     ],

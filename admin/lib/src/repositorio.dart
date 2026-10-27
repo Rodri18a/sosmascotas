@@ -192,6 +192,12 @@ abstract interface class AdminRepositorio {
   /// [rol]: `admin`, `moderator`, `sales` o `user` (sacarlo del equipo).
   Future<void> ponerRol(String correo, String rol);
 
+  /// Reemplaza las zonas de un integrante de moderación o ventas (D110).
+  Future<void> zonasIntegrante(String userId, List<int> zonas);
+
+  /// Los nombres de las zonas que ve la cuenta, o null si ve todas (admin).
+  Future<List<String>?> misZonas();
+
   /// Zonas con usuarios, mascotas, lugares y SOS activos.
   Future<List<Map<String, Object?>>> zonas();
 
@@ -638,6 +644,20 @@ class SupabaseAdminRepositorio implements AdminRepositorio {
   );
 
   @override
+  Future<void> zonasIntegrante(String userId, List<int> zonas) =>
+      _cliente.rpc<void>(
+        'admin_zonas_integrante',
+        params: {'p_user': userId, 'p_zonas': zonas},
+      );
+
+  @override
+  Future<List<String>?> misZonas() async {
+    final datos = await _cliente.rpc<Map<String, dynamic>?>('mis_zonas_equipo');
+    if (datos == null || datos['todas'] == true) return null;
+    return [for (final z in datos['zonas'] as List<dynamic>) '$z'];
+  }
+
+  @override
   Future<List<Map<String, Object?>>> zonas() async =>
       _filas(await _cliente.rpc<List<dynamic>>('admin_zonas'));
 
@@ -672,6 +692,10 @@ final equipoProvider = FutureProvider<List<Map<String, Object?>>>(
 
 final zonasProvider = FutureProvider<List<Map<String, Object?>>>(
   (ref) => ref.watch(adminRepositorioProvider).zonas(),
+);
+
+final misZonasProvider = FutureProvider<List<String>?>(
+  (ref) => ref.watch(adminRepositorioProvider).misZonas(),
 );
 
 final diasPanelProvider = NotifierProvider<DiasPanel, int>(DiasPanel.new);

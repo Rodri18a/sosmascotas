@@ -148,7 +148,19 @@ class _PortalState extends ConsumerState<Portal> {
   @override
   Widget build(BuildContext context) {
     final ancho = MediaQuery.sizeOf(context).width >= 800;
-    final contenido = _secciones[_seccion].$3;
+    final seccion = _secciones[_seccion].$3;
+    // Moderación y ventas ven solo lo de sus zonas (D110): se lo recuerda.
+    final contenido = widget.rol == 'admin'
+        ? seccion
+        : Column(
+            children: [
+              switch (ref.watch(misZonasProvider)) {
+                AsyncData(value: final zonas?) => _AvisoZonas(zonas),
+                _ => const SizedBox.shrink(),
+              },
+              Expanded(child: seccion),
+            ],
+          );
     return Scaffold(
       appBar: AppBar(
         title: Text(_secciones[_seccion].$2),
@@ -194,6 +206,34 @@ class _PortalState extends ConsumerState<Portal> {
                   NavigationDestination(icon: Icon(icono), label: texto),
               ],
             ),
+    );
+  }
+}
+
+class _AvisoZonas extends StatelessWidget {
+  const _AvisoZonas(this.zonas);
+
+  final List<String> zonas;
+
+  @override
+  Widget build(BuildContext context) {
+    final colores = Theme.of(context).colorScheme;
+    return Material(
+      color: zonas.isEmpty
+          ? colores.errorContainer
+          : colores.surfaceContainerHighest,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: Row(
+          children: [
+            const Icon(Icons.map_outlined, size: 18),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(zonas.isEmpty ? T.sinTusZonas : T.tusZonas(zonas)),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

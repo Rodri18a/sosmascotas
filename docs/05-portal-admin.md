@@ -87,7 +87,7 @@ Informes **agregados y anónimos** por zona para organismos con convenio (Zoonos
 Habilitar zonas nuevas a medida que se expande, con sus métricas propias. ✅ 3.6 (D109): sección **Zonas** con usuarios, mascotas, lugares y SOS activos de cada una; "Nueva zona" con un rectángulo de coordenadas (sin geocodificar), apagada hasta que se prende.
 
 ### 11. Equipo y auditoría — Fase 3
-Roles (admin, moderador, ventas) y registro de cada acción administrativa (quién, qué, cuándo). ✅ 3.6 (D109): sección **Equipo** (dar o quitar el rol por correo; moderación ve Moderación y Denuncias, ventas ve Lugares, Prospectos y Propuestas) y **Auditoría** (las últimas 500 acciones, por días y por acción). Falta: limitar a un integrante a su zona.
+Roles (admin, moderador, ventas) y registro de cada acción administrativa (quién, qué, cuándo). ✅ 3.6 (D109): sección **Equipo** (dar o quitar el rol por correo; moderación ve Moderación y Denuncias, ventas ve Lugares, Prospectos y Propuestas) y **Auditoría** (las últimas 500 acciones, por días y por acción). Cada integrante de moderación o ventas ve solo sus zonas, que se tildan en Equipo; sin zonas no ve nada (D110).
 
 ---
 
