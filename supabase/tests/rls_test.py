@@ -2114,6 +2114,85 @@ def main():
             pedir('DELETE', f'{URL}/rest/v1/community_members?group_id=eq.{perros}&user_id=in.({a_id},{b_id})',
                   headers=ADMIN)
 
+            print('equipo de la empresa (3.5, D117)')
+            s_eq, equipo = rest('POST', 'rpc/alta_negocio', {'p': {
+                'name': 'Pet Shop Equipo RLS', 'business_type': 'petshop', 'kind': 'local', 'lat': -34.7215, 'lng': -55.9615}}, a)
+            z_id, z = crear_usuario('z')
+            try:
+                caso('nadie lee las tablas del equipo directo',
+                     bloqueado(rest('GET', 'business_team?select=user_id', quien=a))
+                     and bloqueado(rest('GET', 'business_team_invites?select=code', quien=a))
+                     and bloqueado(rest('POST', 'business_team', {'business_id': equipo, 'user_id': b_id}, b)))
+                caso('sin Plus no se arma equipo',
+                     s_eq == 200 and rest('POST', 'rpc/invitar_al_equipo', {'p_negocio': equipo}, a)[0] >= 400)
+                rest('POST', 'rpc/admin_plan_comercio', {'p_business': equipo, 'p_plan': 'plus'}, x)
+                caso('B no invita a un equipo ajeno', rest('POST', 'rpc/invitar_al_equipo', {'p_negocio': equipo}, b)[0] >= 400)
+                s_in, codigo = rest('POST', 'rpc/invitar_al_equipo', {'p_negocio': equipo}, a)
+                caso('con Plus, A genera un código de 8', s_in == 200 and len(codigo) == 8)
+                caso('un visitante no usa el código', rest('POST', 'rpc/unirme_al_equipo', {'p_codigo': codigo})[0] >= 400)
+                caso('el dueño no se suma a su propio equipo',
+                     rest('POST', 'rpc/unirme_al_equipo', {'p_codigo': codigo}, a)[0] >= 400)
+                caso('B se suma con el código (en minúsculas también)',
+                     rest('POST', 'rpc/unirme_al_equipo', {'p_codigo': codigo.lower()}, b)[1] == equipo)
+                caso('el código se usa una sola vez',
+                     rest('POST', 'rpc/unirme_al_equipo', {'p_codigo': codigo}, z)[0] >= 400)
+                mio_b = next((n for n in filas(rest('POST', 'rpc/mis_negocios', {}, b)) if n['id'] == equipo), None)
+                caso('B lo ve en sus negocios como empleado, sin el RUT',
+                     mio_b is not None and mio_b['rol'] == 'employee' and mio_b['rut'] is None)
+                caso('A lo sigue viendo como dueño',
+                     any(n['id'] == equipo and n['rol'] == 'owner' for n in filas(rest('POST', 'rpc/mis_negocios', {}, a))))
+                eq = rest('POST', 'rpc/equipo_del_negocio', {'p_negocio': equipo}, a)[1]
+                caso('el dueño ve al equipo con el primer nombre, sin códigos usados',
+                     eq['soy_titular'] and [p['nombre'] for p in eq['personas']] == ['Prueba'] and eq['invitaciones'] == [])
+                eq_b = rest('POST', 'rpc/equipo_del_negocio', {'p_negocio': equipo}, b)[1]
+                caso('el empleado ve al equipo pero no las invitaciones',
+                     not eq_b['soy_titular'] and eq_b['invitaciones'] == [])
+                caso('Z, de afuera, no ve el equipo', rest('POST', 'rpc/equipo_del_negocio', {'p_negocio': equipo}, z)[0] >= 400)
+                caso('el empleado carga productos',
+                     rest('POST', 'rpc/guardar_producto', {'p_negocio': equipo, 'p': {'name': 'Collar', 'price': 300}}, b)[0] == 200)
+                caso('pero no edita la ficha, ni ve el plan ni las estadísticas',
+                     rest('POST', 'rpc/editar_mi_negocio', {'p_id': equipo, 'p': {'name': 'Hackeado'}}, b)[0] >= 400
+                     and rest('POST', 'rpc/mi_plan', {'p_business': equipo}, b)[0] >= 400
+                     and rest('POST', 'rpc/estadisticas_negocio', {'p_id': equipo}, b)[0] >= 400)
+                caso('ni invita, ni prende módulos, ni ve los contactos privados',
+                     rest('POST', 'rpc/invitar_al_equipo', {'p_negocio': equipo}, b)[0] >= 400
+                     and rest('POST', 'rpc/prender_modulo', {'p_business': equipo, 'p_modulo': 'catalogo', 'p_prendido': True}, b)[0] >= 400
+                     and filas(rest('GET', f'business_contacts_private?select=business_id&business_id=eq.{equipo}', quien=b)) == [])
+                rest('POST', 'rpc/prender_modulo', {'p_business': equipo, 'p_modulo': 'catalogo', 'p_prendido': True}, a)
+                collar = filas(rest('POST', 'rpc/mi_catalogo', {'p_negocio': equipo}, b))[0]['id']
+                s_pz, pedido_z = rest('POST', 'rpc/hacer_pedido', {'p_negocio': equipo, 'p_items': [{'id': collar, 'qty': 1}]}, z)
+                caso('Z pide y el empleado ve el pedido',
+                     s_pz == 200 and len(filas(rest('POST', 'rpc/pedidos_del_negocio', {'p_negocio': equipo}, b))) == 1)
+                caso('el empleado escucha los pedidos del comercio en vivo',
+                     rest('POST', 'rpc/puedo_escuchar_pedidos', {'p_canal': f'pedidos:negocio:{equipo}'}, b)[1] is True)
+                av = avisar(pedido_z, z_id)
+                caso('el pedido nuevo le avisa al comercio', len(av) == 1 and av[0]['destino'] == 'negocio')
+                caso('el empleado lo prepara',
+                     rest('POST', 'rpc/cambiar_estado_pedido', {'p_id': pedido_z, 'p_estado': 'preparing'}, b)[0] in (200, 204))
+                av = avisar(pedido_z, b_id)
+                caso('y se le avisa a Z como si lo hiciera el dueño',
+                     len(av) == 1 and av[0]['destino'] == 'cliente' and av[0]['estado'] == 'preparing')
+                rest('POST', 'rpc/admin_plan_comercio', {'p_business': equipo, 'p_plan': 'basic'}, x)
+                caso('sin Plus, el empleado ya no entra (el equipo se conserva)',
+                     all(n['id'] != equipo for n in filas(rest('POST', 'rpc/mis_negocios', {}, b)))
+                     and rest('POST', 'rpc/pedidos_del_negocio', {'p_negocio': equipo}, b)[0] >= 400
+                     and len(rest('POST', 'rpc/equipo_del_negocio', {'p_negocio': equipo}, a)[1]['personas']) == 1)
+                rest('POST', 'rpc/admin_plan_comercio', {'p_business': equipo, 'p_plan': 'plus'}, x)
+                caso('con Plus de nuevo, vuelve',
+                     rest('POST', 'rpc/pedidos_del_negocio', {'p_negocio': equipo}, b)[0] == 200)
+                s_in2, codigo2 = rest('POST', 'rpc/invitar_al_equipo', {'p_negocio': equipo}, a)
+                caso('el dueño anula un código abierto',
+                     rest('POST', 'rpc/anular_invitacion_equipo', {'p_codigo': codigo2}, a)[0] in (200, 204)
+                     and rest('POST', 'rpc/unirme_al_equipo', {'p_codigo': codigo2}, z)[0] >= 400)
+                caso('B no saca al dueño ni a otros (solo se va él)',
+                     rest('POST', 'rpc/quitar_del_equipo', {'p_negocio': equipo, 'p_user': a_id}, b)[0] >= 400)
+                caso('el dueño saca a B y B pierde el acceso',
+                     rest('POST', 'rpc/quitar_del_equipo', {'p_negocio': equipo, 'p_user': b_id}, a)[0] in (200, 204)
+                     and rest('POST', 'rpc/pedidos_del_negocio', {'p_negocio': equipo}, b)[0] >= 400)
+            finally:
+                pedir('DELETE', f'{URL}/rest/v1/businesses?id=eq.{equipo}', headers=ADMIN)
+                pedir('DELETE', f'{URL}/auth/v1/admin/users/{z_id}', headers=ADMIN)
+
             print('rubro Agropecuaria (2.8e)')
             s_ag, agro = rest('POST', 'rpc/alta_negocio', {'p': {
                 'name': 'Agropecuaria RLS', 'business_type': 'agro', 'kind': 'local', 'lat': -34.7213, 'lng': -55.9613}}, a)
