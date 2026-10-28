@@ -54,7 +54,8 @@ class SociosScreen extends ConsumerWidget {
               title: Text(t.sociosModulo),
               subtitle: Text(esPlus ? t.sociosModuloAyuda : t.sociosSoloPlus),
               value: activo,
-              onChanged: esPlus
+              // Prender el módulo es del dueño; el equipo atiende (D117).
+              onChanged: esPlus && negocio.esTitular
                   ? (si) async {
                       final mensajes = ScaffoldMessenger.of(context);
                       try {
@@ -75,8 +76,10 @@ class SociosScreen extends ConsumerWidget {
           if (activo) ...[
             const SizedBox(height: 12),
             _Socios(negocioId: negocioId),
-            const SizedBox(height: 12),
-            _Demanda(negocioId: negocioId),
+            if (negocio.esTitular) ...[
+              const SizedBox(height: 12),
+              _Demanda(negocioId: negocioId),
+            ],
           ],
         ],
       ),

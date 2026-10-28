@@ -16,6 +16,7 @@ import 'package:sosmascota/src/chat/chat_repositorio.dart';
 import 'package:sosmascota/src/chat/posicion.dart';
 import 'package:sosmascota/src/comercios/comercios_repositorio.dart';
 import 'package:sosmascota/src/comercios/descuentos_repositorio.dart';
+import 'package:sosmascota/src/comercios/equipo_repositorio.dart';
 import 'package:sosmascota/src/comercios/mis_lugares.dart';
 import 'package:sosmascota/src/comercios/negocios_repositorio.dart';
 import 'package:sosmascota/src/comercios/resenas_repositorio.dart';
@@ -64,6 +65,7 @@ import 'comunidad_falsa.dart';
 import 'cuenta_falsa.dart';
 import 'cuidados_falsos.dart';
 import 'descuentos_falsos.dart';
+import 'equipo_falso.dart';
 import 'eventos_falsos.dart';
 import 'filtros_falsos.dart';
 import 'funcionalidades_falsas.dart';
@@ -126,6 +128,7 @@ Widget appDePrueba({
   PlanUsuarioRepositorio? planUsuario,
   AlmacenFiltros? almacenFiltros,
   DescuentosRepositorio? descuentos,
+  EquipoRepositorio? equipo,
   Posicion? posicion,
   SelectorFoto? selectorFoto,
   QrRepositorio? qr,
@@ -216,6 +219,7 @@ Widget appDePrueba({
     comunidadRepositorioProvider.overrideWithValue(
       comunidad ?? ComunidadFalsa(),
     ),
+    equipoRepositorioProvider.overrideWithValue(equipo ?? EquipoFalso()),
     descuentosRepositorioProvider.overrideWithValue(
       descuentos ?? DescuentosFalsos(),
     ),

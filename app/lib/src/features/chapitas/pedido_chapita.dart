@@ -5,6 +5,7 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
 import '../../comercios/mis_lugares.dart';
+import '../../comercios/negocios_repositorio.dart';
 import '../../mascotas/mascotas_repositorio.dart';
 import '../../metricas/metricas.dart';
 import '../../qr/pedidos_chapita_repositorio.dart';
@@ -339,28 +340,30 @@ class _ChapitasNegocioState extends ConsumerState<ChapitasNegocioScreen> {
         AsyncData(value: final d) => ListView(
           padding: const EdgeInsets.all(16),
           children: [
-            SwitchListTile(
-              contentPadding: EdgeInsets.zero,
-              title: Text(t.retiroSerPunto),
-              subtitle: Text(
-                d.puedeSer ? t.retiroSerPuntoAyuda : t.retiroSoloVerificadas,
+            // Ser punto de retiro lo decide el dueño; el equipo entrega (D117).
+            if (ref.watch(esTitularProvider(widget.negocioId)))
+              SwitchListTile(
+                contentPadding: EdgeInsets.zero,
+                title: Text(t.retiroSerPunto),
+                subtitle: Text(
+                  d.puedeSer ? t.retiroSerPuntoAyuda : t.retiroSoloVerificadas,
+                ),
+                value: d.puntoRetiro,
+                onChanged: !d.puedeSer || _ocupado
+                    ? null
+                    : (v) => _hacer(() async {
+                        await ref
+                            .read(pedidosChapitaRepositorioProvider)
+                            .prenderPuntoRetiro(widget.negocioId, prender: v);
+                        ref
+                            .read(metricasProvider)
+                            .track(
+                              Eventos.tagPickupToggle,
+                              businessId: widget.negocioId,
+                              props: {'prendido': v},
+                            );
+                      }),
               ),
-              value: d.puntoRetiro,
-              onChanged: !d.puedeSer || _ocupado
-                  ? null
-                  : (v) => _hacer(() async {
-                      await ref
-                          .read(pedidosChapitaRepositorioProvider)
-                          .prenderPuntoRetiro(widget.negocioId, prender: v);
-                      ref
-                          .read(metricasProvider)
-                          .track(
-                            Eventos.tagPickupToggle,
-                            businessId: widget.negocioId,
-                            props: {'prendido': v},
-                          );
-                    }),
-            ),
             if (d.stockDisponibles + d.stockActivadas > 0)
               Card(
                 child: ListTile(

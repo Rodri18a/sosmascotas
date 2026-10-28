@@ -16,6 +16,7 @@ export 'src/chat/chat.dart';
 export 'src/comercios/busqueda.dart';
 export 'src/comercios/comercio.dart';
 export 'src/comercios/descuento_pro.dart';
+export 'src/comercios/equipo.dart';
 export 'src/comercios/filtros.dart';
 export 'src/comercios/mi_plan.dart';
 export 'src/comunidad/comunidad.dart';

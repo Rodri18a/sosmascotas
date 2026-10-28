@@ -5,6 +5,7 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
 import '../../adopcion/pack_repositorio.dart';
+import '../../comercios/negocios_repositorio.dart';
 import '../../metricas/metricas.dart';
 import '../../router.dart';
 import '../../widgets/volver.dart';
@@ -252,7 +253,9 @@ class _PackNegocioState extends ConsumerState<PackNegocioScreen> {
                   ),
               ],
             ),
-            if (!puede) Text(t.packSoloVerificados),
+            // Cargarlos es del dueño; el equipo solo canjea (D117).
+            if (!puede && ref.watch(esTitularProvider(widget.negocioId)))
+              Text(t.packSoloVerificados),
             if (puede && beneficios.isEmpty) Text(t.packSinPropios),
             for (final b in beneficios)
               Card(

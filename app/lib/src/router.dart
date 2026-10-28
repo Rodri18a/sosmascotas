@@ -33,6 +33,7 @@ import 'features/mascotas/mascota_form_screen.dart';
 import 'features/mascotas/mascotas_screen.dart';
 import 'features/mascotas/qr_mascota_screen.dart';
 import 'features/negocio/descuentos_screen.dart';
+import 'features/negocio/equipo_screen.dart';
 import 'features/negocio/estadisticas_screen.dart';
 import 'features/negocio/negocio_screen.dart';
 import 'features/negocio/plan_screen.dart';
@@ -107,6 +108,9 @@ abstract final class Rutas {
   static const packAdopcion = '$adopcion/pack';
   static String packNegocio(String id) => '$negocio/pack/$id';
   static String descuentosNegocio(String id) => '$negocio/descuentos/$id';
+  static String equipoNegocio(String id) => '$negocio/equipo/$id';
+  static const _equipo = '/equipo';
+  static String unirmeEquipo(String codigo) => '$_equipo/$codigo';
   static const descuentosPro = '/descuentos';
   static String apadrinar(String id) => '$negocio/apadrinar/$id';
   static String transitoRefugio(String id) => '$negocio/transito/$id';
@@ -136,6 +140,7 @@ abstract final class Rutas {
     '$negocio/transito/': Funcionalidades.adopcion,
     '$negocio/pack/': Funcionalidades.adopcion,
     '$negocio/descuentos/': Funcionalidades.planesUsuario,
+    '$negocio/equipo/': Funcionalidades.equipo,
     descuentosPro: Funcionalidades.planesUsuario,
     '$negocio/apadrinar/': Funcionalidades.adopcion,
     '$negocio/estadisticas/': Funcionalidades.estadisticas,
@@ -165,6 +170,7 @@ abstract final class Rutas {
     '$recordatorios/',
     hogar,
     '$unirme/',
+    '$_equipo/',
     '$activar/',
     perfil,
     chats,
@@ -441,6 +447,11 @@ final routerProvider = Provider<GoRouter>((ref) {
                 DescuentosNegocioScreen(negocioId: state.pathParameters['id']!),
           ),
           GoRoute(
+            path: 'equipo/:id',
+            builder: (_, state) =>
+                EquipoScreen(negocioId: state.pathParameters['id']!),
+          ),
+          GoRoute(
             path: 'apadrinar/:id',
             builder: (_, state) =>
                 ApadrinamientoScreen(negocioId: state.pathParameters['id']!),
@@ -619,6 +630,13 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '${Rutas.unirme}/:codigo',
         builder: (_, state) =>
             UnirmeScreen(codigo: state.pathParameters['codigo']!),
+      ),
+      // Sin funcionalidad, como el hogar: quien recibe el código del equipo
+      // (3.5, D117) tiene que poder sumarse.
+      GoRoute(
+        path: '${Rutas._equipo}/:codigo',
+        builder: (_, state) =>
+            UnirmeEquipoScreen(codigo: state.pathParameters['codigo']!),
       ),
       // Enlace de la página de una chapita sin activar (1.8b.2, D95).
       GoRoute(

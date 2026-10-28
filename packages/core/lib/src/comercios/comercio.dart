@@ -69,11 +69,13 @@ bool moduloActivo(
 enum Verificacion { unverified, pending, verified }
 
 /// Un negocio propio (`mis_negocios()`, 1.3, D77): la ficha pública más lo
-/// que solo ve su dueño.
+/// que solo ve su dueño. También los negocios en cuyo equipo está la persona
+/// (3.5, D117), sin el RUT.
 class MiNegocio {
   const MiNegocio({
     required this.comercio,
     required this.verificacion,
+    this.esTitular = true,
     this.visible = true,
     this.rut,
     this.fundadorHasta,
@@ -86,6 +88,7 @@ class MiNegocio {
     verificacion:
         Verificacion.values.asNameMap()[json['verification']] ??
         Verificacion.unverified,
+    esTitular: json['rol'] != 'employee',
     visible: json['status'] != 'hidden',
     rut: json['rut'] as String?,
     fundadorHasta: switch (json['founder_until']) {
@@ -98,6 +101,10 @@ class MiNegocio {
 
   final Comercio comercio;
   final Verificacion verificacion;
+
+  /// El dueño; si no, es del equipo: atiende, pero la ficha, el plan, las
+  /// estadísticas y la configuración son del dueño (D117).
+  final bool esTitular;
   final bool visible;
   final String? rut;
 

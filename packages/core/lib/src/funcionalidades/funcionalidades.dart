@@ -81,6 +81,10 @@ abstract final class Funcionalidades {
   /// al chat (3.4, D116).
   static const grupos = 'grupos';
 
+  /// Equipo de la empresa: invitar con un código, sumarse y quitar (3.5,
+  /// D117). Lo que hace el equipo ya adentro no depende de esta marca.
+  static const equipo = 'equipo';
+
   /// Las que ya están en `todos`: la app las da por prendidas aunque no pueda
   /// preguntarle a la base (sin conexión y sin nada guardado). Las demás, en
   /// ese caso, quedan apagadas (lo seguro).

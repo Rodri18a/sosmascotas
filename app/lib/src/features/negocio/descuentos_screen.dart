@@ -5,6 +5,7 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
 import '../../comercios/descuentos_repositorio.dart';
+import '../../comercios/negocios_repositorio.dart';
 import '../../metricas/metricas.dart';
 import '../../router.dart';
 import '../../widgets/volver.dart';
@@ -260,7 +261,9 @@ class _DescuentosNegocioState extends ConsumerState<DescuentosNegocioScreen> {
                   ),
               ],
             ),
-            if (!puede) Text(t.descuentoSoloVerificados),
+            // Cargarlos es del dueño; el equipo solo canjea (D117).
+            if (!puede && ref.watch(esTitularProvider(widget.negocioId)))
+              Text(t.descuentoSoloVerificados),
             if (puede && descuentos.isEmpty) Text(t.descuentosSinPropios),
             for (final d in descuentos)
               Card(

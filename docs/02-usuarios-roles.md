@@ -18,6 +18,7 @@
 | **Cuidador temporal** | Acceso por X días (1 a 90) **solo a las mascotas que elige el dueño** (vacaciones, guardería). Con esas mascotas puede lo mismo que un integrante; al vencer, deja de verlas solo (D72) | App |
 | **Empresa con local** | Veterinaria, petshop, peluquería, farmacia veterinaria, hotel o guardería, adiestrador | App (modo comercio) → luego portal web |
 | **Empresa sin local** | Tienda online o servicio a domicilio (paseador, peluquería móvil) con zona de cobertura | App (modo comercio) → luego portal web |
+| **Empleado de una empresa** | Fue invitado al equipo de una empresa con plan Plus (hasta 5 por empresa). Atiende pedidos, turnos, paseos y estadías, socios, canjes y el catálogo; **no** ve el RUT ni los contactos privados, ni toca la ficha, el plan, las estadísticas, la configuración ni el equipo. El chat del comercio sigue con el dueño (3.5, D117) | App (modo comercio) |
 | **Refugio / ONG / rescatista** | Publica adopciones y perdidos y aparece en el directorio de Ayuda | App |
 | **Administrador** | Modera, verifica empresas, carga lugares, ve indicadores y gestiona ventas | Portal de administración |
 | **Equipo: moderación** | Modera contenido y denuncias (3.6, D109) | Portal: Moderación y Denuncias |

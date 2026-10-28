@@ -5930,4 +5930,105 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get comunidadNoAhora => 'No aceptó por ahora';
+
+  @override
+  String get equipoTitulo => 'Equipo';
+
+  @override
+  String get equipoAbrirAyuda =>
+      'Sumá personas para que atiendan pedidos, turnos y el catálogo';
+
+  @override
+  String get equipoAyudaDuenio =>
+      'Las personas del equipo atienden pedidos, turnos, paseos y estadías, socios, canjes y el catálogo. La ficha, el plan, las estadísticas y la configuración siguen siendo solo tuyos. Entre ustedes se ven solo el primer nombre.';
+
+  @override
+  String get equipoAyudaEmpleado =>
+      'Sos parte del equipo de este negocio: atendés pedidos, turnos, paseos y estadías, socios, canjes y el catálogo. La ficha, el plan, las estadísticas y la configuración los maneja el dueño.';
+
+  @override
+  String get equipoSoloPlus => 'El equipo es del plan Plus.';
+
+  @override
+  String get equipoVacio => 'Todavía no sumaste a nadie.';
+
+  @override
+  String get equipoInvitar => 'Invitar a alguien';
+
+  @override
+  String equipoLleno(int n) {
+    return 'El equipo ya tiene $n personas.';
+  }
+
+  @override
+  String equipoDesde(String fecha) {
+    return 'Desde el $fecha';
+  }
+
+  @override
+  String get equipoQuitar => 'Sacar del equipo';
+
+  @override
+  String equipoQuitarPregunta(String nombre) {
+    return '¿Sacar a $nombre del equipo? Va a dejar de ver los pedidos y la agenda del negocio.';
+  }
+
+  @override
+  String get equipoIrme => 'Dejar el equipo';
+
+  @override
+  String equipoIrmePregunta(String negocio) {
+    return '¿Dejar el equipo de $negocio? Para volver, el dueño te tiene que invitar de nuevo.';
+  }
+
+  @override
+  String get equipoInvitaciones => 'Invitaciones sin usar';
+
+  @override
+  String equipoVence(String codigo, String fecha) {
+    return '$codigo · vence el $fecha';
+  }
+
+  @override
+  String get equipoAnular => 'Anular';
+
+  @override
+  String get equipoInvitacionTitulo => 'Invitación al equipo';
+
+  @override
+  String equipoInvitacionTexto(String codigo) {
+    return 'Mandale este enlace a quien quieras sumar. Sirve una sola vez y vence en 7 días. También puede escribir el código en la app: $codigo';
+  }
+
+  @override
+  String equipoMensajeInvitacion(String negocio, String enlace) {
+    return 'Te invito al equipo de $negocio en SOS Mascota: $enlace';
+  }
+
+  @override
+  String get equipoTengoCodigo => 'Tengo un código de equipo';
+
+  @override
+  String get equipoCodigo => 'Código o enlace';
+
+  @override
+  String get unirmeEquipoTitulo => 'Invitación a un equipo';
+
+  @override
+  String get unirmeEquipoTexto =>
+      'Te invitaron a ser parte del equipo de un negocio en SOS Mascota. Vas a atender pedidos, turnos y el catálogo desde el modo comercio. El dueño y el equipo van a ver tu primer nombre (nunca tu correo).';
+
+  @override
+  String get unirmeEquipoBoton => 'Unirme al equipo';
+
+  @override
+  String get unirmeEquipoListo => '¡Listo! Ya sos parte del equipo.';
+
+  @override
+  String get equipoErrorCodigo =>
+      'Este código no existe, ya se usó o venció. Pedile uno nuevo al dueño.';
+
+  @override
+  String get equipoErrorDuenio =>
+      'Este código es de tu propio negocio: mandáselo a quien quieras sumar.';
 }

@@ -230,3 +230,15 @@ final estadisticasNegocioProvider =
     FutureProvider.family<EstadisticasNegocio, String>(
       (ref, id) => ref.watch(negociosRepositorioProvider).estadisticas(id),
     );
+
+/// Si la persona es la dueña de [id] o está en su equipo (D117). Solo oculta
+/// la configuración del dueño en la pantalla: el permiso lo decide la base.
+/// Mientras no se sabe, o si no está en «Mis negocios», cuenta como dueño.
+final esTitularProvider = Provider.family<bool, String>(
+  (ref, id) =>
+      (ref.watch(misNegociosProvider).value ?? const <MiNegocio>[])
+          .where((n) => n.id == id)
+          .firstOrNull
+          ?.esTitular ??
+      true,
+);

@@ -112,6 +112,9 @@ abstract final class Eventos {
   static const commentCreate = 'comment_create';
   static const greetingSend = 'greeting_send';
   static const greetingAnswer = 'greeting_answer';
+  static const teamInvite = 'team_invite';
+  static const teamJoin = 'team_join';
+  static const teamLeave = 'team_leave';
 
   /// Lo registra la web pública al abrir `/n/<id>` (no la app).
   static const businessPageOpen = 'business_page_open';

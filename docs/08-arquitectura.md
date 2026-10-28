@@ -185,6 +185,7 @@ Tabla `events` (append-only), escrita por el cliente con `ref.read(metricasProvi
 | `order_push` | target_id del pedido, destino (`cliente`/`negocio`), estado y dispositivos avisados (lo registra `order-status-alert`; D100) |
 | `service_ask` / `service_save` | servicios del comercio: consultar por uno desde la ficha y cargarlo o editarlo (D90) |
 | `booking_create` / `booking_status` / `agenda_save` | business_id; con_servicio / estado y quién / duración y a la vez: turnos (D104). La Edge Function suma `booking_push` y `booking_reminder` |
+| `team_invite` / `team_join` / `team_leave` | business_id; `team_leave` con quién (`yo` o `duenio`): equipo de la empresa (D117) |
 | `plan_request` | business_id, plan: el comercio pidió un plan pago desde «Tu plan» (D103) |
 | `business_page_share` / `business_page_open` | página pública del comercio: el comercio copia su enlace (app) y alguien la abre (web pública, sin cuenta) (D90) |
 | `adoption_publish` / `adoption_interest` / `adoption_stage` / `adoption_commit` / `adoption_followup` | cantidad de animales, etapa o día del seguimiento; sin datos de nadie (D79) |

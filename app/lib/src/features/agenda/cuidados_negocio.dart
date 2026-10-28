@@ -5,6 +5,7 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
 import '../../agenda/cuidados_repositorio.dart';
+import '../../comercios/negocios_repositorio.dart';
 import '../../metricas/metricas.dart';
 import '../../router.dart';
 import '../../utiles/enlaces.dart';
@@ -42,7 +43,12 @@ class CuidadosNegocio extends ConsumerWidget {
             },
           );
       ref.invalidate(cuidadosDelNegocioProvider(negocioId));
-      if (chat != null && context.mounted) await context.push(Rutas.chat(chat));
+      // El chat del comercio es del dueño (D117): el equipo no lo abre.
+      if (chat != null &&
+          context.mounted &&
+          ref.read(esTitularProvider(negocioId))) {
+        await context.push(Rutas.chat(chat));
+      }
     } on Object catch (e) {
       mensajes.showSnackBar(SnackBar(content: Text(textoErrorCuidado(t, e))));
       ref.invalidate(cuidadosDelNegocioProvider(negocioId));
@@ -80,6 +86,7 @@ class CuidadosNegocio extends ConsumerWidget {
       ref.invalidate(cuidadosDelNegocioProvider(negocioId));
     });
     final hoy = ref.watch(relojProvider)();
+    final titular = ref.watch(esTitularProvider(negocioId));
     return RefreshIndicator(
       onRefresh: () =>
           ref.refresh(cuidadosDelNegocioProvider(negocioId).future),
@@ -99,7 +106,7 @@ class CuidadosNegocio extends ConsumerWidget {
                 title: Text(t.cuidadosPrenderAgenda),
               ),
             ),
-          _AjustesCuidados(negocioId: negocioId),
+          if (titular) _AjustesCuidados(negocioId: negocioId),
           const SizedBox(height: 16),
           Text(t.cuidadosPedidos, style: tema.textTheme.titleMedium),
           switch (ref.watch(cuidadosDelNegocioProvider(negocioId))) {
@@ -156,7 +163,7 @@ class CuidadosNegocio extends ConsumerWidget {
                                   child: Text(t.agendaRechazar),
                                 ),
                               ],
-                              if (x.chatId case final chat?)
+                              if (x.chatId case final chat? when titular)
                                 FilledButton.tonalIcon(
                                   onPressed: () =>
                                       context.push(Rutas.chat(chat)),

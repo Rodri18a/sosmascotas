@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
+import '../../comercios/negocios_repositorio.dart';
 import '../../fotos/elegir_foto.dart';
 import '../../metricas/metricas.dart';
 import '../../tienda/tienda_repositorio.dart';
@@ -183,6 +184,8 @@ class CatalogoNegocio extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final t = context.t;
     final repo = ref.watch(tiendaRepositorioProvider);
+    // El equipo carga productos; prender y las condiciones son del dueño (D117).
+    final titular = ref.watch(esTitularProvider(negocioId));
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _editar(context, ref),
@@ -192,15 +195,17 @@ class CatalogoNegocio extends ConsumerWidget {
       body: ListView(
         padding: const EdgeInsets.only(bottom: 88),
         children: [
-          SwitchListTile(
-            title: Text(t.catalogoPrender),
-            subtitle: Text(
-              prendido ? t.catalogoPrendidoAyuda : t.catalogoApagadoAyuda,
+          if (titular) ...[
+            SwitchListTile(
+              title: Text(t.catalogoPrender),
+              subtitle: Text(
+                prendido ? t.catalogoPrendidoAyuda : t.catalogoApagadoAyuda,
+              ),
+              value: prendido,
+              onChanged: onPrender,
             ),
-            value: prendido,
-            onChanged: onPrender,
-          ),
-          _CondicionesNegocio(negocioId: negocioId),
+            _CondicionesNegocio(negocioId: negocioId),
+          ],
           // Carga masiva (portal de empresas, 2.10, D114).
           ListTile(
             leading: const Icon(Icons.table_view_outlined),

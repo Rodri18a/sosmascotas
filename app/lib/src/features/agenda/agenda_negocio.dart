@@ -4,6 +4,7 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
 import '../../agenda/agenda_repositorio.dart';
+import '../../comercios/negocios_repositorio.dart';
 import '../../metricas/metricas.dart';
 import '../../utiles/enlaces.dart';
 import '../../veterinarias/veterinarias_repositorio.dart';
@@ -54,45 +55,48 @@ class AgendaNegocio extends ConsumerWidget {
             ?.contains(Modulo.agenda) ??
         false;
     final ahora = ref.watch(relojProvider)();
+    // El equipo atiende los turnos; la configuración es del dueño (D117).
+    final titular = ref.watch(esTitularProvider(negocioId));
     return RefreshIndicator(
       onRefresh: () => ref.refresh(turnosDelNegocioProvider(negocioId).future),
       child: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          Card(
-            child: SwitchListTile(
-              title: Text(t.agendaModulo),
-              subtitle: Text(t.agendaModuloAyuda),
-              value: prendido,
-              onChanged: (si) async {
-                final mensajes = ScaffoldMessenger.of(context);
-                try {
-                  // Sin configuración guardada, la agenda no toma turnos.
-                  final ajustes = await ref.read(
-                    miAgendaProvider(negocioId).future,
-                  );
-                  if (si && !ajustes.configurada) {
+          if (titular)
+            Card(
+              child: SwitchListTile(
+                title: Text(t.agendaModulo),
+                subtitle: Text(t.agendaModuloAyuda),
+                value: prendido,
+                onChanged: (si) async {
+                  final mensajes = ScaffoldMessenger.of(context);
+                  try {
+                    // Sin configuración guardada, la agenda no toma turnos.
+                    final ajustes = await ref.read(
+                      miAgendaProvider(negocioId).future,
+                    );
+                    if (si && !ajustes.configurada) {
+                      await ref
+                          .read(agendaRepositorioProvider)
+                          .guardarAgenda(negocioId, ajustes);
+                    }
                     await ref
-                        .read(agendaRepositorioProvider)
-                        .guardarAgenda(negocioId, ajustes);
+                        .read(veterinariasRepositorioProvider)
+                        .prenderModulo(negocioId, Modulo.agenda, si);
+                    ref.read(metricasProvider).track(Eventos.moduleToggle);
+                  } on Object {
+                    mensajes.showSnackBar(
+                      SnackBar(content: Text(t.errorDesconocido)),
+                    );
                   }
-                  await ref
-                      .read(veterinariasRepositorioProvider)
-                      .prenderModulo(negocioId, Modulo.agenda, si);
-                  ref.read(metricasProvider).track(Eventos.moduleToggle);
-                } on Object {
-                  mensajes.showSnackBar(
-                    SnackBar(content: Text(t.errorDesconocido)),
-                  );
-                }
-                ref
-                  ..invalidate(modulosPrendidosProvider(negocioId))
-                  ..invalidate(miAgendaProvider(negocioId))
-                  ..invalidate(condicionesAgendaProvider(negocioId));
-              },
+                  ref
+                    ..invalidate(modulosPrendidosProvider(negocioId))
+                    ..invalidate(miAgendaProvider(negocioId))
+                    ..invalidate(condicionesAgendaProvider(negocioId));
+                },
+              ),
             ),
-          ),
-          if (prendido) ...[
+          if (prendido && titular) ...[
             _Ajustes(negocioId: negocioId),
             _Bloqueados(negocioId: negocioId),
           ],

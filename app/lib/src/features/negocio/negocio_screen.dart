@@ -28,6 +28,7 @@ import '../chapitas/pedido_chapita.dart';
 import '../resenas/resenas.dart';
 import '../tienda/pedidos.dart';
 import 'descuentos_screen.dart';
+import 'equipo_screen.dart';
 import 'formulario_negocio.dart';
 
 /// Alta de un negocio (1.3.3, opción C).
@@ -48,6 +49,16 @@ class AltaNegocioScreen extends ConsumerWidget {
         padding: const EdgeInsets.all(16),
         children: [
           Text(t.negocioAltaExplicacion),
+          // Sumarse al equipo de otro negocio (3.5, D117).
+          if (ref.watch(funcionalidadActivaProvider(Funcionalidades.equipo)))
+            Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: TextButton.icon(
+                onPressed: () => pedirCodigoEquipo(context),
+                icon: const Icon(Icons.badge_outlined),
+                label: Text(t.equipoTengoCodigo),
+              ),
+            ),
           const SizedBox(height: 16),
           FormularioNegocio(
             textoBoton: t.negocioCrear,
@@ -122,7 +133,11 @@ class _NegocioScreenState extends ConsumerState<NegocioScreen> {
           (Icons.event_outlined, t.negocioAgenda),
           (Icons.inventory_2_outlined, t.negocioCatalogo),
           (Icons.receipt_long_outlined, t.negocioPedidos),
-          (Icons.storefront_outlined, t.negocioFicha),
+          // Quien no es el dueño ve el equipo en vez de la ficha (D117).
+          if (negocio.esTitular)
+            (Icons.storefront_outlined, t.negocioFicha)
+          else
+            (Icons.badge_outlined, t.equipoTitulo),
         ];
         return Scaffold(
           appBar: AppBar(
@@ -164,6 +179,9 @@ class _NegocioScreenState extends ConsumerState<NegocioScreen> {
                     _Seccion.pedidos => _Tienda(
                       negocio: negocio,
                       pedidos: true,
+                    ),
+                    _Seccion.negocio when !negocio.esTitular => ListaEquipo(
+                      negocioId: negocio.id,
                     ),
                     _Seccion.negocio => _Ficha(negocio: negocio),
                   },
@@ -371,13 +389,32 @@ class _Panel extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final t = context.t;
     final tema = Theme.of(context);
+    final titular = negocio.esTitular;
     return switch (ref.watch(panelNegocioProvider(negocio.id))) {
       AsyncData(value: final p) => _ListaPanel(
         children: [
           // Lo que espera respuesta (portal de empresas, 2.10, D114).
           _ParaAtender(negocio: negocio, onIr: onIr),
-          // Plan, vencimiento y pagos (2.2, D103).
-          if (ref.watch(funcionalidadActivaProvider(Funcionalidades.planes)))
+          // Equipo de la empresa (3.5, D117): lo arma el dueño.
+          if (titular &&
+              ref.watch(funcionalidadActivaProvider(Funcionalidades.equipo)))
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.badge_outlined),
+                title: Text(t.equipoTitulo),
+                subtitle: Text(
+                  negocio.comercio.plan == PlanComercio.plus
+                      ? t.equipoAbrirAyuda
+                      : t.equipoSoloPlus,
+                ),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => context.push(Rutas.equipoNegocio(negocio.id)),
+              ),
+            ),
+          // Plan, vencimiento y pagos (2.2, D103). Lo del dueño, no del
+          // equipo (D117): plan, estadísticas, tránsito, apadrinar y reseñas.
+          if (titular &&
+              ref.watch(funcionalidadActivaProvider(Funcionalidades.planes)))
             Card(
               child: ListTile(
                 leading: const Icon(Icons.workspace_premium_outlined),
@@ -390,9 +427,10 @@ class _Panel extends ConsumerWidget {
               ),
             ),
           // Estadísticas mes a mes y reporte mensual (2.3, D101).
-          if (ref.watch(
-            funcionalidadActivaProvider(Funcionalidades.estadisticas),
-          ))
+          if (titular &&
+              ref.watch(
+                funcionalidadActivaProvider(Funcionalidades.estadisticas),
+              ))
             Card(
               child: ListTile(
                 leading: const Icon(Icons.bar_chart),
@@ -471,7 +509,8 @@ class _Panel extends ConsumerWidget {
               ))
             TarjetaRetiroChapitas(negocio: negocio),
           // Hogares de tránsito (3.4b, D106): solo refugios verificados.
-          if (negocio.comercio.categoria == Categoria.shelter &&
+          if (titular &&
+              negocio.comercio.categoria == Categoria.shelter &&
               negocio.verificacion == Verificacion.verified &&
               ref.watch(funcionalidadActivaProvider(Funcionalidades.adopcion)))
             TarjetaTransitoRefugio(negocioId: negocio.id),
@@ -493,14 +532,16 @@ class _Panel extends ConsumerWidget {
               ))
             TarjetaDescuentosNegocio(negocioId: negocio.id),
           // Apadrinamiento (3.4b, D108): comercios y refugios verificados.
-          if (negocio.verificacion == Verificacion.verified &&
+          if (titular &&
+              negocio.verificacion == Verificacion.verified &&
               ref.watch(funcionalidadActivaProvider(Funcionalidades.adopcion)))
             TarjetaApadrinar(
               negocioId: negocio.id,
               esRefugio: negocio.comercio.categoria == Categoria.shelter,
             ),
           // Reputación y respuestas (1.7): el comercio responde una vez.
-          if (ref.watch(funcionalidadActivaProvider(Funcionalidades.resenas)))
+          if (titular &&
+              ref.watch(funcionalidadActivaProvider(Funcionalidades.resenas)))
             Card(
               child: Padding(
                 padding: const EdgeInsets.all(12),
@@ -924,6 +965,12 @@ class _Ficha extends ConsumerWidget {
           icon: const Icon(Icons.add_business_outlined),
           label: Text(t.negocioOtro),
         ),
+        if (ref.watch(funcionalidadActivaProvider(Funcionalidades.equipo)))
+          TextButton.icon(
+            onPressed: () => pedirCodigoEquipo(context),
+            icon: const Icon(Icons.badge_outlined),
+            label: Text(t.equipoTengoCodigo),
+          ),
       ],
     );
   }

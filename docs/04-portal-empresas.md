@@ -21,10 +21,10 @@ Tecnología: **Flutter Web**, reutilizando el código del modo comercio. Se entr
 | **Catálogo** | Carga de productos y servicios (también carga masiva por planilla) — ✅ planilla en 2.10 (D114): se pega lo copiado de Excel o Google Sheets, se revisa y se confirma | 2 |
 | **Reseñas** | Ver, responder, reportar | 2 |
 | **Plan y facturación** | Plan actual, vencimiento, cambio de plan, comprobantes | 2 |
-| **Agenda** | Configuración (días, horarios, duración, servicios) y turnos | 3 |
-| **Pedidos** | Gestión de estados | 3 |
-| **Socios** | Lista de mascotas socias y envío de recordatorios | 3 |
-| **Equipo** | Varios usuarios por empresa con roles (dueño, empleado) | 3 |
+| **Agenda** | Configuración (días, horarios, duración, servicios) y turnos — ✅ en el modo comercio desde 3.1 (D104) | 3 |
+| **Pedidos** | Gestión de estados — ✅ en el modo comercio desde 3.2 (D85, D100) | 3 |
+| **Socios** | Lista de mascotas socias y envío de recordatorios — ✅ en el modo comercio desde 2.6 (D81) | 3 |
+| **Equipo** | Varios usuarios por empresa con roles (dueño, empleado) — ✅ 3.5 (D117): con **Plus**, hasta 5 personas además del dueño; se suman con un enlace o código de un uso (7 días). El empleado atiende pedidos, turnos, paseos y estadías, socios, canjes y el catálogo; la ficha, el plan, las estadísticas y la configuración son del dueño. El chat del comercio sigue con el dueño | 3 |
 
 ## Reglas
 

@@ -9849,6 +9849,168 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'No aceptó por ahora'**
   String get comunidadNoAhora;
+
+  /// No description provided for @equipoTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Equipo'**
+  String get equipoTitulo;
+
+  /// No description provided for @equipoAbrirAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Sumá personas para que atiendan pedidos, turnos y el catálogo'**
+  String get equipoAbrirAyuda;
+
+  /// No description provided for @equipoAyudaDuenio.
+  ///
+  /// In es, this message translates to:
+  /// **'Las personas del equipo atienden pedidos, turnos, paseos y estadías, socios, canjes y el catálogo. La ficha, el plan, las estadísticas y la configuración siguen siendo solo tuyos. Entre ustedes se ven solo el primer nombre.'**
+  String get equipoAyudaDuenio;
+
+  /// No description provided for @equipoAyudaEmpleado.
+  ///
+  /// In es, this message translates to:
+  /// **'Sos parte del equipo de este negocio: atendés pedidos, turnos, paseos y estadías, socios, canjes y el catálogo. La ficha, el plan, las estadísticas y la configuración los maneja el dueño.'**
+  String get equipoAyudaEmpleado;
+
+  /// No description provided for @equipoSoloPlus.
+  ///
+  /// In es, this message translates to:
+  /// **'El equipo es del plan Plus.'**
+  String get equipoSoloPlus;
+
+  /// No description provided for @equipoVacio.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no sumaste a nadie.'**
+  String get equipoVacio;
+
+  /// No description provided for @equipoInvitar.
+  ///
+  /// In es, this message translates to:
+  /// **'Invitar a alguien'**
+  String get equipoInvitar;
+
+  /// No description provided for @equipoLleno.
+  ///
+  /// In es, this message translates to:
+  /// **'El equipo ya tiene {n} personas.'**
+  String equipoLleno(int n);
+
+  /// No description provided for @equipoDesde.
+  ///
+  /// In es, this message translates to:
+  /// **'Desde el {fecha}'**
+  String equipoDesde(String fecha);
+
+  /// No description provided for @equipoQuitar.
+  ///
+  /// In es, this message translates to:
+  /// **'Sacar del equipo'**
+  String get equipoQuitar;
+
+  /// No description provided for @equipoQuitarPregunta.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Sacar a {nombre} del equipo? Va a dejar de ver los pedidos y la agenda del negocio.'**
+  String equipoQuitarPregunta(String nombre);
+
+  /// No description provided for @equipoIrme.
+  ///
+  /// In es, this message translates to:
+  /// **'Dejar el equipo'**
+  String get equipoIrme;
+
+  /// No description provided for @equipoIrmePregunta.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Dejar el equipo de {negocio}? Para volver, el dueño te tiene que invitar de nuevo.'**
+  String equipoIrmePregunta(String negocio);
+
+  /// No description provided for @equipoInvitaciones.
+  ///
+  /// In es, this message translates to:
+  /// **'Invitaciones sin usar'**
+  String get equipoInvitaciones;
+
+  /// No description provided for @equipoVence.
+  ///
+  /// In es, this message translates to:
+  /// **'{codigo} · vence el {fecha}'**
+  String equipoVence(String codigo, String fecha);
+
+  /// No description provided for @equipoAnular.
+  ///
+  /// In es, this message translates to:
+  /// **'Anular'**
+  String get equipoAnular;
+
+  /// No description provided for @equipoInvitacionTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Invitación al equipo'**
+  String get equipoInvitacionTitulo;
+
+  /// No description provided for @equipoInvitacionTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Mandale este enlace a quien quieras sumar. Sirve una sola vez y vence en 7 días. También puede escribir el código en la app: {codigo}'**
+  String equipoInvitacionTexto(String codigo);
+
+  /// No description provided for @equipoMensajeInvitacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Te invito al equipo de {negocio} en SOS Mascota: {enlace}'**
+  String equipoMensajeInvitacion(String negocio, String enlace);
+
+  /// No description provided for @equipoTengoCodigo.
+  ///
+  /// In es, this message translates to:
+  /// **'Tengo un código de equipo'**
+  String get equipoTengoCodigo;
+
+  /// No description provided for @equipoCodigo.
+  ///
+  /// In es, this message translates to:
+  /// **'Código o enlace'**
+  String get equipoCodigo;
+
+  /// No description provided for @unirmeEquipoTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Invitación a un equipo'**
+  String get unirmeEquipoTitulo;
+
+  /// No description provided for @unirmeEquipoTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Te invitaron a ser parte del equipo de un negocio en SOS Mascota. Vas a atender pedidos, turnos y el catálogo desde el modo comercio. El dueño y el equipo van a ver tu primer nombre (nunca tu correo).'**
+  String get unirmeEquipoTexto;
+
+  /// No description provided for @unirmeEquipoBoton.
+  ///
+  /// In es, this message translates to:
+  /// **'Unirme al equipo'**
+  String get unirmeEquipoBoton;
+
+  /// No description provided for @unirmeEquipoListo.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Listo! Ya sos parte del equipo.'**
+  String get unirmeEquipoListo;
+
+  /// No description provided for @equipoErrorCodigo.
+  ///
+  /// In es, this message translates to:
+  /// **'Este código no existe, ya se usó o venció. Pedile uno nuevo al dueño.'**
+  String get equipoErrorCodigo;
+
+  /// No description provided for @equipoErrorDuenio.
+  ///
+  /// In es, this message translates to:
+  /// **'Este código es de tu propio negocio: mandáselo a quien quieras sumar.'**
+  String get equipoErrorDuenio;
 }
 
 class _AppLocalizationsDelegate
