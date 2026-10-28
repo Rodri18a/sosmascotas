@@ -2051,7 +2051,7 @@ def main():
             lista_p = filas(rest('POST', 'rpc/publicaciones_de', {'p_grupo': perros}))
             mia = next((p for p in lista_p if p['id'] == post), None)
             caso('un visitante la ve con el primer nombre y sin el id de quien escribe',
-                 mia is not None and mia['autor'] == 'Prueba' and 'author_id' not in mia)
+                 mia is not None and mia['autor'] == 'Ana' and 'author_id' not in mia)
             s_co, comentario = rest('POST', 'rpc/comentar', {'p_post': post, 'p_texto': 'Una vez al mes'}, b)
             caso('B comenta', s_co == 200)
             caso('un visitante no comenta', rest('POST', 'rpc/comentar', {'p_post': post, 'p_texto': 'Hola'})[0] >= 400)
@@ -2075,7 +2075,7 @@ def main():
                  s_rs == 200 and filas(rest('GET', f'messages?select=body&conversation_id=eq.{chat_u}', quien=b))[0]['body']
                  == 'Hola, mi perro también')
             conv = next((c for c in filas(rest('POST', 'rpc/mis_conversaciones', {}, b)) if c['id'] == chat_u), None)
-            caso('en el chat se ve solo el primer nombre', conv is not None and conv['otro_nombre'] == 'Prueba')
+            caso('en el chat se ve solo el primer nombre', conv is not None and conv['otro_nombre'] == 'Ana')
             s_sb, saludo2 = rest('POST', 'rpc/saludar', {'p_tipo': 'comment', 'p_id': comentario,
                                                         'p_mensaje': '¡Gracias!'}, a)
             rest('POST', 'rpc/responder_saludo', {'p_id': saludo2, 'p_aceptar': False}, b)
