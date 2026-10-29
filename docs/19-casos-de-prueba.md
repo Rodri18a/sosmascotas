@@ -53,7 +53,7 @@ Si a una cuenta no le llega el código de ingreso, se genera un enlace de un uso
 
 | ID | Caso | Pasos | Resultado esperado | Estado |
 |---|---|---|---|---|
-| QR-01 | Etiqueta para el collar | Ficha → Chapita QR → «Descargar la etiqueta para el collar» | Baja un PNG con el QR y el nombre, para papel adhesivo mientras no haya chapita | ⬜ |
+| QR-01 | Etiqueta para el collar | Ficha → Chapita QR → «Descargar la etiqueta para el collar» | Baja un PNG con el QR y el nombre, para papel adhesivo mientras no haya chapita | ✅ 29/10 |
 | QR-02 | Página pública | Escanear el QR con otro celular | Abre `/m/<código>` con foto, nombre, la nota y los datos elegidos; **sin teléfono** | ⬜ |
 | QR-03 | Push del escaneo | Escanear el QR (con la ubicación compartida y sin compartirla) | Al dueño le llega «📍 Escanearon el QR de…»; en la app figura en «Últimos escaneos» | ⬜ |
 | QR-04 | Avisar a mi familia | En la página del QR, completar el formulario | Al dueño le llega la push «💬 Alguien vio a…» y el aviso a la bandeja Avisos, con el consejo contra estafas | ⬜ |
@@ -85,8 +85,8 @@ Si a una cuenta no le llega el código de ingreso, se genera un enlace de un uso
 | SO-11 | Seguir un reporte | Con B: «Seguir este reporte»; A marca «¡Apareció!» | A B le llega «¡<nombre> volvió a casa!», una sola vez | ⬜ |
 | SO-12 | Zona aproximada | Ajustes → borrar la zona y guardarla de nuevo | Se guarda el centro de la celda, no el punto exacto; borrada no vuelve sola | ⬜ |
 | SO-13 | Imprimir cartel (D119) | Reporte activo (propio o de otra persona) → «Imprimir cartel» → escribir dónde la vieron → «Armar el cartel». Repetir con una encontrada | Baja un PDF A4: «SE BUSCA · nombre» en rojo o «SE ENCONTRÓ · ¿Es tuyo?», foto, datos, dónde la vieron y QR. **Sin teléfono ni recompensa.** Escanear el QR abre la página del reporte y **no** le llega aviso al dueño hasta que alguien completa «Avisar» | ✅ 29/10 |
-| SO-14 | Sin recompensa (D119) | SOS → Reportar | El formulario ya no pide recompensa; los reportes y la web pública no la muestran | ⬜ |
-| SO-15 | Una perdida por mascota | Con un reporte de perdida abierto, ir a la ficha de esa mascota | En vez de «Se perdió: reportarla» aparece «Ver su reporte de perdida»; la base tampoco deja crear otro (`ya_reportada`) | ⬜ |
+| SO-14 | Sin recompensa (D119) | SOS → Reportar | El formulario ya no pide recompensa; los reportes y la web pública no la muestran | ✅ 29/10 |
+| SO-15 | Una perdida por mascota | Con un reporte de perdida abierto, ir a la ficha de esa mascota | En vez de «Se perdió: reportarla» aparece «Ver su reporte de perdida»; la base tampoco deja crear otro (`ya_reportada`) | ✅ 29/10 |
 
 ## 5. Mapa, lugares y búsqueda (Fases 0 y 1)
 
@@ -293,4 +293,4 @@ Antes: cargar `supabase/seeds/paseador_ejemplo.sql`.
 | 28/10 | MA-04 | Observación: después de subir una versión nueva, la app instalada siguió mostrando el texto viejo hasta recargar la página en Chrome. **Mejora a evaluar:** avisar «Hay una versión nueva · Actualizar» cuando cambia la compilación, para que las personas no se queden con una versión vieja | 0.8.3 | ⬜ |
 | 28/10 | QR-01 | Propuesta del dueño: descargar solo el QR sirve poco sin chapita; lo útil es un **cartel A4** de mascota perdida con foto, datos, zona y QR. Hecho como «Imprimir cartel» en los SOS (D119, casos SO-13 y SO-14), sin recompensa; el QR suelto queda como etiqueta para el collar. Idea relacionada para después: sumarse al hogar con un QR (16-ideas-futuras, I4) | 0.8.3 | ✅ 28/10, validado en el celular el 29/10 |
 | 28/10 | SO-13 | El texto del recuadro del QR («No hace falta la app… Nunca pagues ni cobres nada») no iba con lo acordado: hablaba de plata y no explicaba que escanear muestra el reporte y que se avisa recién al dejar un mensaje. Reescrito: «Vas a ver su reporte y podés dejarle un mensaje a su familia… Como comunidad, la ayudamos a volver a casa.» (29/10: «comunidad» en vez de «vecinos», también en el pie) | 0.8.3 | ✅ 28/10, validado en el celular el 29/10 |
-| 29/10 | SO-15 | Se pudo reportar dos veces como perdida la misma mascota. Arreglado: la base no deja dos reportes de perdida abiertos (activo u oculto) de la misma mascota (migración `sos_una_perdida_por_mascota`, con índice único; el repetido que había en dev quedó archivado) y la ficha muestra «Ver su reporte de perdida». Caso nuevo en `rls_test.py` | 0.8.3 | ✅ 29/10 (falta validar en el celular) |
+| 29/10 | SO-15 | Se pudo reportar dos veces como perdida la misma mascota. Arreglado: la base no deja dos reportes de perdida abiertos (activo u oculto) de la misma mascota (migración `sos_una_perdida_por_mascota`, con índice único; el repetido que había en dev quedó archivado) y la ficha muestra «Ver su reporte de perdida». Caso nuevo en `rls_test.py` | 0.8.3 | ✅ 29/10, validado en el celular |
