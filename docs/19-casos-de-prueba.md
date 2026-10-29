@@ -6,6 +6,27 @@
 
 > 👉 **Paso a paso, botón por botón:** [Pruebas con dos teléfonos](guias/pruebas-paso-a-paso.md) (rondas de Equipo, Paseos y cuidados y Comunidad).
 
+## Avance
+
+Actualizado el 29/10/2026. **35 ✅ · 135 ⬜ · 0 ❌ · 2 ➖** (de 172 casos). Las rondas del 28 y 29/10 se hicieron con dos teléfonos (cuenta A y cuenta B).
+
+| Sección | ✅ | ⬜ |
+|---|---|---|
+| 1. Cuentas y acceso | 11 | 0 |
+| 2. Mascotas | 4 | 0 |
+| 3. Chapita QR | 9 | 5 (QR-10 a QR-14) |
+| 4. SOS | 4 | 11 |
+| 7. Libreta, recordatorios y hogar | 3 | 9 |
+| 14. Veterinarias, adopción, eventos y noticias | 3 | 9 |
+| 17. Privacidad y seguridad | 1 | 5 |
+| Resto (5, 6, 8 a 13, 15, 16) | 0 | 96 |
+
+**Arreglado durante las pruebas** (todo subido a sosmascota-dev y validado en el celular): al cerrar sesión, la pestaña Mascotas se trababa (CU-07); ✏️ para cambiar el nombre desde «Mi perfil» (CU-05); tope del plan Gratis de nuevo en 2 mascotas (D118); **cartel A4 de los SOS** con QR y sin recompensa, y se sacó la recompensa de los SOS (D119); una sola perdida abierta por mascota (SO-15).
+
+**Pendientes anotados** (ver «Registro de fallas»): avisar antes de borrar una cuenta con negocios o rol (CU-08); avisar «Hay una versión nueva» en la app instalada (MA-04); proveedor de correo propio para que siempre llegue el código (QR-08, paso 0.4.4b); sumarse al hogar con un QR (idea I4).
+
+**Sigue:** QR-10 (desvincular la chapita) y el resto de la sección 3; después, SOS (SO-01 en adelante).
+
 ## Preparación
 
 | Qué | Dónde |
@@ -60,8 +81,8 @@ Si a una cuenta no le llega el código de ingreso, se genera un enlace de un uso
 | QR-05 | Anti-bots y límites | Mandar más de 5 avisos en una hora desde el mismo dispositivo | A partir del sexto lo frena con un mensaje claro | ✅ 29/10 |
 | QR-06 | Cambiar el código | Ficha → Chapita QR → Cambiar código | El código viejo deja de funcionar y el nuevo anda | ✅ 29/10 |
 | QR-07 | Perdida con QR | Con un SOS activo, escanear el QR | La página muestra «Estoy perdido 🆘» y enlaza al reporte | ✅ 29/10 |
-| QR-08 | Chapita física sin activar | Portal → Chapitas → crear un lote → abrir `/m/<código>` de uno | «Activá esta chapita con la app» y el código | ⬜ |
-| QR-09 | Activar la chapita | Abrir «Activar con la app» → elegir la mascota | Queda vinculada; el escaneo muestra la mascota | ⬜ |
+| QR-08 | Chapita física sin activar | Portal → Chapitas → crear un lote → abrir `/m/<código>` de uno | «Activá esta chapita con la app» y el código | ✅ 29/10 |
+| QR-09 | Activar la chapita | Abrir «Activar con la app» → elegir la mascota | Queda vinculada; el escaneo muestra la mascota | ✅ 29/10 |
 | QR-10 | Desvincular | Chapita QR → Chapitas físicas → Desvincular | Pide confirmar; la página dice «Esta chapita ya no está activa»; no se puede volver a activar | ⬜ |
 | QR-11 | Pedir una chapita | (`pedido_chapitas`) Chapita QR → Pedir una chapita → elegir la veterinaria | Queda pedida; se puede cancelar; el estado cambia cuando la veterinaria la marca | ⬜ |
 | QR-12 | Entregar en la veterinaria | Modo comercio → Chapitas: punto de retiro → «Llegó» → «Entregada» | Al entregarla queda vinculada sola a la mascota | ⬜ |
