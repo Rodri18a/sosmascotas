@@ -160,7 +160,7 @@ Si a una cuenta no le llega el código de ingreso, se genera un enlace de un uso
 
 | ID | Caso | Pasos | Resultado esperado | Estado |
 |---|---|---|---|---|
-| CO-01 | Alta de negocio | Ajustes → Mi negocio → alta con rubro, punto o zona, horario | Aparece al instante como «no verificado» | ⬜ |
+| CO-01 | Alta de negocio | Ajustes → Mi negocio → alta con rubro, punto o zona, horario | Aparece al instante como «no verificado» | ✅ 29/10 |
 | CO-02 | Reclamar un lugar | Ficha de un lugar sin dueño → «¿Es tu negocio? Reclamalo» | Queda pendiente en el portal → Comercios | ⬜ |
 | CO-03 | Verificación | Pedir ✔️ con RUT → aprobar desde el portal | La ficha muestra ✔️; el RUT nunca se ve en público | ⬜ |
 | CO-04 | Modo comercio | Entrar y «Volver al modo dueño» | Barra Panel · Agenda · Catálogo · Pedidos · Negocio | ⬜ |

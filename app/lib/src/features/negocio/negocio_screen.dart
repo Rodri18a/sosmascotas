@@ -142,25 +142,49 @@ class _NegocioScreenState extends ConsumerState<NegocioScreen> {
         return Scaffold(
           appBar: AppBar(
             leading: volverSiNoHayAtras(context),
-            title: Text(t.modoComercio),
+            // El título es el negocio activo; con más de uno, se cambia
+            // tocándolo (en el celular no entraba el título con «⇄»).
+            title: lista.length > 1
+                ? PopupMenuButton<String>(
+                    tooltip: t.modoComercio,
+                    onSelected: (id) => setState(() => _elegido = id),
+                    itemBuilder: (_) => [
+                      for (final n in lista)
+                        PopupMenuItem(
+                          value: n.id,
+                          child: Text(n.comercio.nombre),
+                        ),
+                    ],
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Flexible(
+                          child: Text(
+                            negocio.comercio.nombre,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        const Icon(Icons.arrow_drop_down),
+                      ],
+                    ),
+                  )
+                : Text(
+                    negocio.comercio.nombre,
+                    overflow: TextOverflow.ellipsis,
+                  ),
             actions: [
-              if (lista.length > 1)
-                PopupMenuButton<String>(
-                  icon: const Icon(Icons.swap_horiz),
-                  onSelected: (id) => setState(() => _elegido = id),
-                  itemBuilder: (_) => [
-                    for (final n in lista)
-                      PopupMenuItem(
-                        value: n.id,
-                        child: Text(n.comercio.nombre),
-                      ),
-                  ],
+              if (ancho >= 600)
+                TextButton.icon(
+                  onPressed: () => context.go(Rutas.mapa),
+                  icon: const Icon(Icons.pets),
+                  label: Text(t.volverModoDueno),
+                )
+              else
+                IconButton(
+                  onPressed: () => context.go(Rutas.mapa),
+                  icon: const Icon(Icons.pets),
+                  tooltip: t.volverModoDueno,
                 ),
-              TextButton.icon(
-                onPressed: () => context.go(Rutas.mapa),
-                icon: const Icon(Icons.pets),
-                label: Text(t.volverModoDueno),
-              ),
             ],
           ),
           body: () {

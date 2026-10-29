@@ -113,7 +113,7 @@ void main() {
     expect(alta['kind'], 'local');
     expect(alta['lat'], -34.72);
     expect((alta['hours']! as Map).keys, ['mon', 'tue', 'wed', 'thu', 'fri']);
-    expect(find.text('Modo comercio'), findsOneWidget);
+    expect(find.widgetWithText(AppBar, 'Peluquería Luna'), findsOneWidget);
     expect(find.textContaining('No verificado'), findsOneWidget);
     expect(
       eventos.where((e) => e['name'] == 'business_create').single['props'],
@@ -152,6 +152,29 @@ void main() {
     expect(find.textContaining('25 en los 30 días anteriores'), findsOneWidget);
     expect(find.text('Llamar: 6'), findsOneWidget);
     expect(find.text('Te eligieron como su veterinaria'), findsOneWidget);
+  });
+
+  testWidgets('con dos negocios, se cambia tocando el título', (tester) async {
+    final otro = MiNegocio.fromJson({
+      'id': 'b2',
+      'name': 'Veterinaria Sol',
+      'business_type': 'vet',
+      'kind': 'local',
+      'plan': 'basic',
+      'status': 'active',
+    });
+    await _abrir(tester, negocios: NegociosFalsos([_negocio(), otro]));
+    await _ir(tester, '/negocio');
+    expect(find.widgetWithText(AppBar, 'Peluquería Luna'), findsOneWidget);
+    // En el celular, «Volver al modo dueño» es solo el ícono.
+    expect(find.byTooltip('Volver al modo dueño'), findsOneWidget);
+    expect(
+      find.widgetWithText(TextButton, 'Volver al modo dueño'),
+      findsNothing,
+    );
+    await _tocar(tester, find.byIcon(Icons.arrow_drop_down));
+    await _tocar(tester, find.text('Veterinaria Sol').last);
+    expect(find.widgetWithText(AppBar, 'Veterinaria Sol'), findsOneWidget);
   });
 
   testWidgets('módulos: "No aplica" o "Llega con el plan Plus"', (

@@ -186,7 +186,7 @@ void main() {
     await tester.tap(find.text('Unirme al equipo'));
     await tester.pumpAndSettle();
     expect(equipo.unidos, ['ABCD2345']);
-    expect(find.text('Modo comercio'), findsOneWidget);
+    expect(find.widgetWithText(AppBar, 'Pet Shop Luna'), findsOneWidget);
   });
 
   testWidgets('un código que no sirve se explica', (tester) async {
