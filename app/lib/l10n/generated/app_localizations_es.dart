@@ -953,19 +953,19 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get sosCartelEscaneaPerdida =>
-      '¿La viste? Escaneá el QR con la cámara del celular y avisale a su familia.';
+      '¿La viste? Escaneá el QR con la cámara del celular.';
 
   @override
   String get sosCartelEscaneaEncontrada =>
-      '¿Es tuyo o sabés de quién es? Escaneá el QR con la cámara del celular y avisale a quien lo encontró.';
+      '¿Es tuyo o sabés de quién es? Escaneá el QR con la cámara del celular.';
 
   @override
   String get sosCartelPrivacidadPerdida =>
-      'No hace falta la app ni una cuenta. Tu mensaje le llega a su familia y ella decide cómo contactarte. Nunca pagues ni cobres nada.';
+      'Vas a ver su reporte y podés dejarle un mensaje a su familia con dónde y cuándo la viste. Entre vecinos la ayudamos a volver a casa.';
 
   @override
   String get sosCartelPrivacidadEncontrada =>
-      'No hace falta la app ni una cuenta. Tu mensaje le llega a quien lo encontró y decide cómo contactarte. Nunca pagues ni cobres nada.';
+      'Vas a ver el reporte y podés dejarle un mensaje a quien lo encontró. Entre vecinos lo ayudamos a volver a casa.';
 
   @override
   String sosCartelPie(String enlace) {

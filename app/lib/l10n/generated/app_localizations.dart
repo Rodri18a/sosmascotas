@@ -1639,25 +1639,25 @@ abstract class AppLocalizations {
   /// No description provided for @sosCartelEscaneaPerdida.
   ///
   /// In es, this message translates to:
-  /// **'¿La viste? Escaneá el QR con la cámara del celular y avisale a su familia.'**
+  /// **'¿La viste? Escaneá el QR con la cámara del celular.'**
   String get sosCartelEscaneaPerdida;
 
   /// No description provided for @sosCartelEscaneaEncontrada.
   ///
   /// In es, this message translates to:
-  /// **'¿Es tuyo o sabés de quién es? Escaneá el QR con la cámara del celular y avisale a quien lo encontró.'**
+  /// **'¿Es tuyo o sabés de quién es? Escaneá el QR con la cámara del celular.'**
   String get sosCartelEscaneaEncontrada;
 
   /// No description provided for @sosCartelPrivacidadPerdida.
   ///
   /// In es, this message translates to:
-  /// **'No hace falta la app ni una cuenta. Tu mensaje le llega a su familia y ella decide cómo contactarte. Nunca pagues ni cobres nada.'**
+  /// **'Vas a ver su reporte y podés dejarle un mensaje a su familia con dónde y cuándo la viste. Entre vecinos la ayudamos a volver a casa.'**
   String get sosCartelPrivacidadPerdida;
 
   /// No description provided for @sosCartelPrivacidadEncontrada.
   ///
   /// In es, this message translates to:
-  /// **'No hace falta la app ni una cuenta. Tu mensaje le llega a quien lo encontró y decide cómo contactarte. Nunca pagues ni cobres nada.'**
+  /// **'Vas a ver el reporte y podés dejarle un mensaje a quien lo encontró. Entre vecinos lo ayudamos a volver a casa.'**
   String get sosCartelPrivacidadEncontrada;
 
   /// No description provided for @sosCartelPie.
