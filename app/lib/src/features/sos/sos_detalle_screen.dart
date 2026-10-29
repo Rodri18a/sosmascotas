@@ -72,42 +72,51 @@ class _Detalle extends ConsumerWidget {
     final fecha = DateFormat("d 'de' MMMM", 'es').format(detalle.cuando);
     final lugar = donde.trim().isEmpty ? null : donde.trim();
     final url = _url(ref);
-    final pdf = await cartelSosPdf(
-      url: url,
-      perdida: perdida,
-      foto: await _bajarFoto(ref.read(sosRepositorioProvider)),
-      normal: await rootBundle.load('assets/fuentes/SourceSans3-Regular.ttf'),
-      negrita: await rootBundle.load('assets/fuentes/SourceSans3-Bold.ttf'),
-      textos: (
-        titulo: perdida ? t.sosCartelSeBusca : t.sosCartelSeEncontro,
-        subtitulo: perdida
-            ? (detalle.nombre ?? detalle.especie)
-            : t.sosCartelEsTuyo,
-        datos: [
-          detalle.especie,
-          ?detalle.raza,
-          if (detalle.sexo != Sexo.unknown) textoSexo(t, detalle.sexo),
-          ?detalle.color,
-        ].join(' · '),
-        senas: detalle.senas == null ? null : t.sosCartelSenas(detalle.senas!),
-        descripcion: detalle.descripcion,
-        cuando: perdida
-            ? t.sosCartelFaltaDesde(fecha)
-            : t.sosCartelEncontradaEl(fecha),
-        donde: lugar == null
-            ? null
-            : (perdida
-                  ? t.sosCartelVistaEn(lugar)
-                  : t.sosCartelEncontradaEn(lugar)),
-        escanea: perdida
-            ? t.sosCartelEscaneaPerdida
-            : t.sosCartelEscaneaEncontrada,
-        privacidad: perdida
-            ? t.sosCartelPrivacidadPerdida
-            : t.sosCartelPrivacidadEncontrada,
-        pie: t.sosCartelPie(url.replaceFirst(RegExp('^https?://'), '')),
-      ),
-    );
+    final Uint8List pdf;
+    try {
+      pdf = await cartelSosPdf(
+        url: url,
+        perdida: perdida,
+        foto: await _bajarFoto(ref.read(sosRepositorioProvider)),
+        normal: await rootBundle.load('assets/fuentes/SourceSans3-Regular.ttf'),
+        negrita: await rootBundle.load('assets/fuentes/SourceSans3-Bold.ttf'),
+        textos: (
+          titulo: perdida ? t.sosCartelSeBusca : t.sosCartelSeEncontro,
+          subtitulo: perdida
+              ? (detalle.nombre ?? detalle.especie)
+              : t.sosCartelEsTuyo,
+          datos: [
+            detalle.especie,
+            ?detalle.raza,
+            if (detalle.sexo != Sexo.unknown) textoSexo(t, detalle.sexo),
+            ?detalle.color,
+          ].join(' · '),
+          senas: detalle.senas == null
+              ? null
+              : t.sosCartelSenas(detalle.senas!),
+          descripcion: detalle.descripcion,
+          cuando: perdida
+              ? t.sosCartelFaltaDesde(fecha)
+              : t.sosCartelEncontradaEl(fecha),
+          donde: lugar == null
+              ? null
+              : (perdida
+                    ? t.sosCartelVistaEn(lugar)
+                    : t.sosCartelEncontradaEn(lugar)),
+          escanea: perdida
+              ? t.sosCartelEscaneaPerdida
+              : t.sosCartelEscaneaEncontrada,
+          privacidad: perdida
+              ? t.sosCartelPrivacidadPerdida
+              : t.sosCartelPrivacidadEncontrada,
+          pie: t.sosCartelPie(url.replaceFirst(RegExp('^https?://'), '')),
+        ),
+      );
+    } on Object {
+      // Sin esto, una falla al armarlo no mostraba nada (29/10).
+      mensajes.showSnackBar(SnackBar(content: Text(t.errorDesconocido)));
+      return;
+    }
     final ok = descargarArchivo(
       pdf,
       'cartel-${(detalle.nombre ?? detalle.especie).toLowerCase()}.pdf',
