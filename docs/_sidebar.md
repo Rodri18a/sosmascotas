@@ -9,6 +9,7 @@
   - [Reglas de negocio](06-reglas-negocio.md)
   - [Habilitación gradual de funcionalidades](15-funcionalidades-graduales.md)
   - [Brief de identidad visual](14-brief-identidad-visual.md)
+  - [Brief de logo e íconos (diseñador)](20-brief-logo-iconos.md)
   - [Ideas para el futuro](16-ideas-futuras.md)
   - [Propuestas: perfil y gamificación](17-propuestas-perfil-gamificacion.md)
   - [Campaña de fin de año 2027](18-campana-fin-de-anio.md)

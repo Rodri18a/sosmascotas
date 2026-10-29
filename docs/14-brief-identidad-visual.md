@@ -1,6 +1,6 @@
 # 14 · Brief de identidad visual (para pasarle a una IA o a un diseñador)
 
-> Versión para mandarle a un diseñador (logo amigable e íconos, 29/10/2026): documento «SOS Mascota · Brief de logo e íconos» en Claude Docs (https://claude.ai/artifact/TbREXr3WMkSVB7uT5Wee93).
+> Versión para mandarle a un diseñador (logo amigable e íconos, 29/10/2026): [Brief de logo e íconos](20-brief-logo-iconos.md), con una copia para compartir en Claude Docs.
 >
 > Documento pensado para **copiar y pegar** en una IA de imágenes o de diseño (o mandárselo a un diseñador) y obtener la identidad completa de SOS Mascota: logo, ícono de la app, paleta, tipografías, íconos, pines del mapa, ilustraciones y piezas impresas.
 > Las 4 direcciones de partida se pueden ver en el lienzo **"SOS Mascota · Opciones de identidad"** (enlace en la sesión del 15/10/2026). **Elegida el 15/10/2026: C · Cielo** (D62). Faro, Vecinos y Pop quedan como **temas opcionales del plan Pro** (§10).

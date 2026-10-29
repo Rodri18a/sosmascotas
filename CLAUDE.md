@@ -23,6 +23,7 @@ Plataforma para dueños de mascotas y empresas del rubro, con un mapa como centr
 | `docs/12-decisiones.md` | Registro de decisiones (qué se decidió y por qué) |
 | `docs/13-riesgos-pendientes.md` | Riesgos y temas abiertos |
 | `docs/14-brief-identidad-visual.md` | Brief para generar logo, paleta, tipografías e íconos (con una IA o un diseñador) |
+| `docs/20-brief-logo-iconos.md` | Brief corto para mandarle a un diseñador: logo amigable, ícono de la app e íconos |
 | `docs/15-funcionalidades-graduales.md` | Propuesta: prender funcionalidades de a poco (marcas, porcentaje, zona, plan, apagado de emergencia) |
 | `reference/sos-mascota.html` | Prototipo funcional: referencia de pantallas y textos. **No portar el código tal cual** |
 | `reference/SOS-Mascota-brief.md` | Brief anterior (costos detallados en pesos, cronología del prototipo) |
