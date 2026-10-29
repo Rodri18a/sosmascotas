@@ -34,6 +34,10 @@
 
 Palabras clave: **rescate, vecinos, confianza, rapidez, cuidado, huella, señal**.
 
+**Frase de la marca** (elegida por el dueño el 29/10/2026, se usa en el cartel de los SOS, D119):
+- Larga: «SOS Mascota es **la comunidad que armamos entre todos, con las mascotas en el centro**».
+- Corta: «SOS Mascota · **la comunidad que tu mascota necesita**: encontrar, adoptar, eventos y servicios».
+
 ## 4. Restricciones técnicas (obligatorias)
 
 1. **Legibilidad al sol**: contraste mínimo 4,5:1 para texto (3:1 para texto ≥ 24 px). Los colores que se tienen que distinguir (perdido / encontrado / veterinaria / urgencia en el mapa) también difieren en **luminosidad**, no solo en tono (daltonismo).

@@ -1651,19 +1651,19 @@ abstract class AppLocalizations {
   /// No description provided for @sosCartelPrivacidadPerdida.
   ///
   /// In es, this message translates to:
-  /// **'Vas a ver su reporte y podés dejarle un mensaje a su familia con dónde y cuándo la viste. Como comunidad, la ayudamos a volver a casa.'**
+  /// **'Vas a ver su reporte y podés dejarle un mensaje a su familia con dónde y cuándo la viste. SOS Mascota es la comunidad que armamos entre todos, con las mascotas en el centro.'**
   String get sosCartelPrivacidadPerdida;
 
   /// No description provided for @sosCartelPrivacidadEncontrada.
   ///
   /// In es, this message translates to:
-  /// **'Vas a ver el reporte y podés dejarle un mensaje a quien lo encontró. Como comunidad, lo ayudamos a volver a casa.'**
+  /// **'Vas a ver el reporte y podés dejarle un mensaje a quien lo encontró. SOS Mascota es la comunidad que armamos entre todos, con las mascotas en el centro.'**
   String get sosCartelPrivacidadEncontrada;
 
   /// No description provided for @sosCartelPie.
   ///
   /// In es, this message translates to:
-  /// **'SOS Mascota · una comunidad que ayuda a encontrar mascotas · {enlace}'**
+  /// **'SOS Mascota · la comunidad que tu mascota necesita: encontrar, adoptar, eventos y servicios · {enlace}'**
   String sosCartelPie(String enlace);
 
   /// No description provided for @sosPrivacidadDetalle.
