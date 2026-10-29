@@ -1199,6 +1199,11 @@ def main():
                  all(rest('POST', 'business_photos', {'business_id': negocio, 'path': f'{negocio}/{i}.jpg'}, a, 'return=minimal')[0] == 201
                      for i in range(3))
                  and rest('POST', 'business_photos', {'business_id': negocio, 'path': f'{negocio}/4.jpg'}, a, 'return=minimal')[0] >= 400)
+            # «Mi negocio» lee las fotos directo de la tabla (sin permiso sobre businesses).
+            s_f, fotos_a = rest('GET', f'business_photos?select=path&business_id=eq.{negocio}', quien=a)
+            caso('A lee las fotos de su negocio', s_f == 200 and len(fotos_a) == 3)
+            s_fb, fotos_b = rest('GET', f'business_photos?select=path&business_id=eq.{negocio}', quien=b)
+            caso('B lee las fotos de un negocio activo', s_fb == 200 and len(fotos_b) == 3)
             pend = filas(rest('POST', 'rpc/admin_pendientes_comercios', {}, x))
             caso('X ve el pedido de verificación', any(q['tipo'] == 'verification' and q['business_id'] == negocio for q in pend))
             caso('A no ve los pendientes de administración', rest('POST', 'rpc/admin_pendientes_comercios', {}, a)[0] >= 400)
@@ -2873,7 +2878,7 @@ def main():
                 plan_c = rest('POST', 'rpc/mi_plan_usuario', {}, c)[1]
                 caso('X le da Pro a C y el pedido se cierra', s_su == 200 and plan_c['plan'] == 'pro'
                      and plan_c['limite_mascotas'] is None and plan_c['pedido_abierto'] is None)
-                caso('con Pro, la 6.ª mascota sí', rest('POST', 'pets', {'name': 'Plan 3', 'species_id': 1}, c,
+                caso('con Pro, la 3.ª mascota sí', rest('POST', 'pets', {'name': 'Plan 3', 'species_id': 1}, c,
                                                        'return=minimal')[0] == 201)
                 caso('X ve la suscripción de C', any(s['id'] == sub_c and s['plan'] == 'pro'
                                                      for s in rest('POST', 'rpc/admin_suscripciones_usuarios', {}, x)[1]))
@@ -2937,7 +2942,7 @@ def main():
                 pedir('POST', f'{URL}/rest/v1/rpc/vencer_planes', {}, ADMIN)
                 plan_c = rest('POST', 'rpc/mi_plan_usuario', {}, c)[1]
                 caso('terminada la prueba, C vuelve a Gratis', plan_c['plan'] == 'free' and plan_c['efectivo'] == 'free')
-                caso('y conserva sus 6 mascotas', plan_c['mascotas'] == 6)
+                caso('y conserva sus 3 mascotas', plan_c['mascotas'] == 3)
                 caso('pero no suma otra', 'limite_mascotas' in json.dumps(
                     rest('POST', 'pets', {'name': 'Plan 7', 'species_id': 1}, c)[1]))
                 caso('ni invita de nuevo al hogar (ya usó la prueba)', 'plan_familia' in json.dumps(
