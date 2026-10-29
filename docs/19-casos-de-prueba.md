@@ -54,12 +54,12 @@ Si a una cuenta no le llega el código de ingreso, se genera un enlace de un uso
 | ID | Caso | Pasos | Resultado esperado | Estado |
 |---|---|---|---|---|
 | QR-01 | Etiqueta para el collar | Ficha → Chapita QR → «Descargar la etiqueta para el collar» | Baja un PNG con el QR y el nombre, para papel adhesivo mientras no haya chapita | ✅ 29/10 |
-| QR-02 | Página pública | Escanear el QR con otro celular | Abre `/m/<código>` con foto, nombre, la nota y los datos elegidos; **sin teléfono** | ⬜ |
-| QR-03 | Push del escaneo | Escanear el QR (con la ubicación compartida y sin compartirla) | Al dueño le llega «📍 Escanearon el QR de…»; en la app figura en «Últimos escaneos» | ⬜ |
-| QR-04 | Avisar a mi familia | En la página del QR, completar el formulario | Al dueño le llega la push «💬 Alguien vio a…» y el aviso a la bandeja Avisos, con el consejo contra estafas | ⬜ |
-| QR-05 | Anti-bots y límites | Mandar más de 5 avisos en una hora desde el mismo dispositivo | A partir del sexto lo frena con un mensaje claro | ⬜ |
+| QR-02 | Página pública | Escanear el QR con otro celular | Abre `/m/<código>` con foto, nombre, la nota y los datos elegidos; **sin teléfono** | ✅ 29/10 |
+| QR-03 | Push del escaneo | Escanear el QR (con la ubicación compartida y sin compartirla) | Al dueño le llega «📍 Escanearon el QR de…»; en la app figura en «Últimos escaneos» | ✅ 29/10 |
+| QR-04 | Avisar a mi familia | En la página del QR, completar el formulario | Al dueño le llega la push «💬 Alguien vio a…» y el aviso a la bandeja Avisos, con el consejo contra estafas | ✅ 29/10 |
+| QR-05 | Anti-bots y límites | Mandar más de 5 avisos en una hora desde el mismo dispositivo | A partir del sexto lo frena con un mensaje claro | ✅ 29/10 |
 | QR-06 | Cambiar el código | Ficha → Chapita QR → Cambiar código | El código viejo deja de funcionar y el nuevo anda | ⬜ |
-| QR-07 | Perdida con QR | Con un SOS activo, escanear el QR | La página muestra «Estoy perdido 🆘» y enlaza al reporte | ⬜ |
+| QR-07 | Perdida con QR | Con un SOS activo, escanear el QR | La página muestra «Estoy perdido 🆘» y enlaza al reporte | ✅ 29/10 |
 | QR-08 | Chapita física sin activar | Portal → Chapitas → crear un lote → abrir `/m/<código>` de uno | «Activá esta chapita con la app» y el código | ⬜ |
 | QR-09 | Activar la chapita | Abrir «Activar con la app» → elegir la mascota | Queda vinculada; el escaneo muestra la mascota | ⬜ |
 | QR-10 | Desvincular | Chapita QR → Chapitas físicas → Desvincular | Pide confirmar; la página dice «Esta chapita ya no está activa»; no se puede volver a activar | ⬜ |
