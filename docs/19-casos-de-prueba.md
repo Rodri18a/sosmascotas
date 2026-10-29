@@ -36,9 +36,9 @@ Si a una cuenta no le llega el código de ingreso, se genera un enlace de un uso
 | CU-06 | Radio de avisos | Ajustes → cambiar el radio (1 a 20 km) | Se guarda y se respeta en el aviso de SOS (SO-09) | ✅ 28/10 |
 | CU-07 | Cerrar sesión | Ajustes → Cerrar sesión | Vuelve a visitante; no queda nada privado a la vista (ni la copia sin internet) | ✅ 28/10 (después del arreglo) |
 | CU-08 | Borrar mi cuenta | Con una cuenta descartable: Ajustes → Borrar mi cuenta | Pide confirmar; borra la cuenta, las mascotas y las fotos; no se puede volver a entrar con los datos viejos | ✅ 28/10 |
-| CU-09 | PWA instalable | Android: «Instalar la app». iPhone: instrucciones de «Compartir → Agregar a inicio» | Se instala con el ícono propio; ya instalada no vuelve a ofrecerlo | ⬜ |
-| CU-10 | Barra inferior | Recorrer Noticias · SOS · Mapa · Mascotas · Ayuda | El Mapa es el botón redondo del medio; cada pestaña abre lo suyo | ⬜ |
-| CU-11 | Flecha para volver | Entrar a una pantalla por un enlace o un aviso | Tiene flecha y vuelve al Mapa o a la ficha | ⬜ |
+| CU-09 | PWA instalable | Android: «Instalar la app». iPhone: instrucciones de «Compartir → Agregar a inicio» | Se instala con el ícono propio; ya instalada no vuelve a ofrecerlo | ✅ 28/10 |
+| CU-10 | Barra inferior | Recorrer Noticias · SOS · Mapa · Mascotas · Ayuda | El Mapa es el botón redondo del medio; cada pestaña abre lo suyo | ✅ 28/10 |
+| CU-11 | Flecha para volver | Entrar a una pantalla por un enlace o un aviso | Tiene flecha y vuelve al Mapa o a la ficha | ✅ 28/10 |
 
 ## 2. Mascotas (Fase 0)
 
