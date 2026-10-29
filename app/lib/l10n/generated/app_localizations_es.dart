@@ -961,15 +961,15 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get sosCartelPrivacidadPerdida =>
-      'Vas a ver su reporte y podés dejarle un mensaje a su familia con dónde y cuándo la viste. Entre vecinos la ayudamos a volver a casa.';
+      'Vas a ver su reporte y podés dejarle un mensaje a su familia con dónde y cuándo la viste. Como comunidad, la ayudamos a volver a casa.';
 
   @override
   String get sosCartelPrivacidadEncontrada =>
-      'Vas a ver el reporte y podés dejarle un mensaje a quien lo encontró. Entre vecinos lo ayudamos a volver a casa.';
+      'Vas a ver el reporte y podés dejarle un mensaje a quien lo encontró. Como comunidad, lo ayudamos a volver a casa.';
 
   @override
   String sosCartelPie(String enlace) {
-    return 'SOS Mascota · vecinos que ayudan a encontrar mascotas · $enlace';
+    return 'SOS Mascota · una comunidad que ayuda a encontrar mascotas · $enlace';
   }
 
   @override
