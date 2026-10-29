@@ -187,6 +187,7 @@ class _SosNuevoScreenState extends ConsumerState<SosNuevoScreen> {
       setState(
         () => _error = switch (e.tipo) {
           ErrorSos.limiteDiario => t.sosLimiteDiario,
+          ErrorSos.yaReportada => t.sosYaReportada,
           ErrorSos.datosInvalidos => t.errorDesconocido,
           ErrorSos.demasiadosAvisos => t.errorDemasiadosIntentos,
           ErrorSos.sinConexion => t.errorSinConexion,

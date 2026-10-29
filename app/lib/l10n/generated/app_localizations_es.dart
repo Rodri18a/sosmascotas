@@ -748,6 +748,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get fichaReportarPerdida => 'Se perdió: reportarla';
 
   @override
+  String get fichaVerReportePerdida => 'Ver su reporte de perdida';
+
+  @override
+  String get sosYaReportada =>
+      'Esta mascota ya tiene un reporte de perdida abierto. Lo encontrás en su ficha o en SOS.';
+
+  @override
   String get sosFiltroTodos => 'Todos';
 
   @override

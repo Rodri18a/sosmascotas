@@ -11,6 +11,7 @@ import '../../mascotas/catalogo.dart';
 import '../../mascotas/mascotas_repositorio.dart';
 import '../../mascotas/textos_mascota.dart';
 import '../../router.dart';
+import '../../sos/sos_repositorio.dart';
 import '../../theme/paleta.dart';
 import '../../widgets/foto_mascota.dart';
 import '../hogar/tareas.dart';
@@ -153,15 +154,34 @@ class _Ficha extends ConsumerWidget {
           // Reportar un SOS es del dueño (D69): quien comparte lo ve en
           // la ficha pero no lo dispara.
           if (esDueno) ...[
-            FilledButton.icon(
-              style: FilledButton.styleFrom(
-                backgroundColor: context.marca.acento,
-                foregroundColor: context.marca.sobreAcento,
+            // Con un reporte de perdida abierto, se va a ese reporte en vez de
+            // hacer otro (la base tampoco deja repetirlo).
+            if ((ref.watch(misSosProvider).value ?? const <MiSos>[])
+                    .where(
+                      (s) =>
+                          s.mascotaId == mascota.id &&
+                          s.tipo == TipoSos.perdida &&
+                          (s.estado == EstadoSos.activo ||
+                              s.estado == EstadoSos.oculto),
+                    )
+                    .firstOrNull
+                case final abierto?)
+              FilledButton.icon(
+                onPressed: () => context.push(Rutas.detalleSos(abierto.id)),
+                icon: const Icon(Icons.sos),
+                label: Text(t.fichaVerReportePerdida),
+              )
+            else
+              FilledButton.icon(
+                style: FilledButton.styleFrom(
+                  backgroundColor: context.marca.acento,
+                  foregroundColor: context.marca.sobreAcento,
+                ),
+                onPressed: () =>
+                    context.push(Rutas.reportarMascota(mascota.id)),
+                icon: const Icon(Icons.sos),
+                label: Text(t.fichaReportarPerdida),
               ),
-              onPressed: () => context.push(Rutas.reportarMascota(mascota.id)),
-              icon: const Icon(Icons.sos),
-              label: Text(t.fichaReportarPerdida),
-            ),
             const SizedBox(height: 12),
           ],
           Card(

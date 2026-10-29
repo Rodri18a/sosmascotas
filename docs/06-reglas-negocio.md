@@ -104,7 +104,7 @@ Un lugar, producto o noticia **coincide** con la mascota activa si la lista de e
 
 - Para publicar hay que tener cuenta, y el reporte necesita **al menos una foto** y una ubicación.
 - La ubicación publicada es **aproximada** (se desplaza al azar dentro de unos 150–200 m). La exacta queda guardada en privado.
-- **Límite:** 3 reportes por usuario por día.
+- **Límite:** 3 reportes por usuario por día, y **una sola perdida abierta por mascota** (activa o en revisión; la base rechaza la segunda y la ficha lleva al reporte que ya existe).
 - Aviso a los usuarios a **5 km o menos** (configurable por usuario entre 1 y 20 km). Un usuario recibe como máximo un número limitado de avisos por día, para no saturar.
 - Vencimiento: 60 días sin actividad → se pregunta al autor; si no responde en 7 días, se archiva.
 - Al resolverse, se avisa a los seguidores y el reporte sale del mapa.

@@ -330,6 +330,8 @@
   "sosDetalleTitulo": "Reporte",
   "sosPublicado": "¡Publicado! Los vecinos de la zona ya pueden verlo.",
   "fichaReportarPerdida": "Se perdió: reportarla",
+  "fichaVerReportePerdida": "Ver su reporte de perdida",
+  "sosYaReportada": "Esta mascota ya tiene un reporte de perdida abierto. Lo encontrás en su ficha o en SOS.",
   "sosFiltroTodos": "Todos",
   "sosFiltroPerdidas": "Perdidas",
   "sosFiltroEncontradas": "Encontradas",

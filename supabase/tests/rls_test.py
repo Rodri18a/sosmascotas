@@ -382,6 +382,8 @@ def main():
              and rest('POST', 'rpc/crear_sos', {'p': {**reporte, 'photos': [f'otro/{a_id}/x.jpg']}}, a)[0] >= 400)
         s_sos, sos_id = rest('POST', 'rpc/crear_sos', {'p': reporte}, a)
         caso('A publica un SOS de su mascota', s_sos == 200 and isinstance(sos_id, str))
+        caso('la misma mascota no se reporta perdida dos veces',
+             'ya_reportada' in json.dumps(rest('POST', 'rpc/crear_sos', {'p': reporte}, a)[1]))
         OBJETIVOS_DE_PRUEBA.append(sos_id if isinstance(sos_id, str) else '')
 
         print('chat (conversaciones y mensajes)')

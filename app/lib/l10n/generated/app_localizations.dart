@@ -1342,6 +1342,18 @@ abstract class AppLocalizations {
   /// **'Se perdió: reportarla'**
   String get fichaReportarPerdida;
 
+  /// No description provided for @fichaVerReportePerdida.
+  ///
+  /// In es, this message translates to:
+  /// **'Ver su reporte de perdida'**
+  String get fichaVerReportePerdida;
+
+  /// No description provided for @sosYaReportada.
+  ///
+  /// In es, this message translates to:
+  /// **'Esta mascota ya tiene un reporte de perdida abierto. Lo encontrás en su ficha o en SOS.'**
+  String get sosYaReportada;
+
   /// No description provided for @sosFiltroTodos.
   ///
   /// In es, this message translates to:

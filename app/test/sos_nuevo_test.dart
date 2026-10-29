@@ -202,4 +202,45 @@ void main() {
     expect(find.widgetWithText(AppBar, 'Nuevo reporte'), findsOneWidget);
     expect(find.text('Foto de su ficha'), findsOneWidget);
   });
+
+  testWidgets('con un reporte de perdida abierto, la ficha lleva a ese '
+      'reporte en vez de hacer otro', (tester) async {
+    _pantallaDeCelular(tester);
+    final sos = SosFalso()
+      ..mios = [
+        MiSos(
+          id: 's9',
+          tipo: TipoSos.perdida,
+          estado: EstadoSos.activo,
+          creado: DateTime(2026, 10, 29),
+          ubicacion: const Punto(-34.72, -55.95),
+          nombre: 'Luna',
+          mascotaId: _luna.id,
+        ),
+      ];
+    await tester.pumpWidget(
+      appDePrueba(
+        cuenta: ServicioCuentaFalso(conectado: _ana),
+        mascotas: MascotasFalsas([_luna]),
+        sos: sos,
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(
+      find.descendant(
+        of: find.byType(BarraInferior),
+        matching: find.text('Mascotas'),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(ListTile, 'Luna'));
+    await tester.pumpAndSettle();
+
+    await tester.scrollUntilVisible(
+      find.text('Ver su reporte de perdida'),
+      150,
+      scrollable: find.byType(Scrollable).first,
+    );
+    expect(find.text('Se perdió: reportarla'), findsNothing);
+  });
 }

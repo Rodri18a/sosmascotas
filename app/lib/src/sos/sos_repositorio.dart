@@ -8,7 +8,13 @@ import '../config/supabase_providers.dart';
 import '../cuenta/servicio_cuenta.dart';
 
 /// Motivo por el que no se pudo publicar un SOS.
-enum ErrorSos { limiteDiario, datosInvalidos, demasiadosAvisos, sinConexion }
+enum ErrorSos {
+  limiteDiario,
+  yaReportada,
+  datosInvalidos,
+  demasiadosAvisos,
+  sinConexion,
+}
 
 class SosException implements Exception {
   const SosException(this.tipo);
@@ -101,11 +107,11 @@ class SupabaseSosRepositorio implements SosRepositorio {
         params: {'p': sos.toJson()},
       );
     } on PostgrestException catch (e) {
-      throw SosException(
-        e.message.contains('limite_diario')
-            ? ErrorSos.limiteDiario
-            : ErrorSos.datosInvalidos,
-      );
+      throw SosException(switch (e.message) {
+        final m when m.contains('limite_diario') => ErrorSos.limiteDiario,
+        final m when m.contains('ya_reportada') => ErrorSos.yaReportada,
+        _ => ErrorSos.datosInvalidos,
+      });
     } on Exception {
       throw const SosException(ErrorSos.sinConexion);
     }
