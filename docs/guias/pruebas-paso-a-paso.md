@@ -1,6 +1,6 @@
 # Pruebas paso a paso con dos teléfonos
 
-> Armada el 28/10/2026 para recorrer las rondas 1 a 3 de [Casos de prueba](../19-casos-de-prueba.md) (Equipo, Paseos y cuidados, Comunidad) **tocando botón por botón**. Los nombres entre «comillas» son los textos exactos que aparecen en la app.
+> Armada el 28/10/2026 para recorrer las rondas 1 a 3 de [Casos de prueba](../19-casos-de-prueba.md) (Equipo, Paseos y cuidados, Comunidad) **tocando botón por botón**. El 29/10 se sumaron las rondas 4 a 7 (Chapita QR, SOS, Mapa y Privacidad: lo que falta de la Fase 0). Los nombres entre «comillas» son los textos exactos que aparecen en la app.
 >
 > Cuando termines cada caso, anotá ✅ o ❌ con su ID (por ejemplo «EQ-04 ❌ ve las estadísticas») y se pasa a la tabla de casos.
 
@@ -200,6 +200,247 @@ En **los dos teléfonos**:
 
 **📱1**: en la pantalla **«Grupos»**, tocá **👋 «Saludos»** → en «Rodri te saluda», **«Aceptar y abrir el chat»**.
 ✅ Esperado: se abre el chat. Cada uno ve solo el primer nombre del otro.
+
+---
+
+## Ronda 4 · Chapita QR: lo que falta (QR-10 a QR-14)
+
+> Agregada el 29/10/2026. Se usa también el **portal de administración** en la compu: **https://sosmascota-admin.vercel.app** (con la cuenta A, que es admin).
+>
+> ⚠️ QR-12 y QR-14 necesitan que A tenga una **veterinaria verificada** con **«Ser punto de retiro de chapitas»** prendido. Si no la tiene: portal → Comercios → verificar una veterinaria de A (o reclamar una de ejemplo y verificarla).
+
+### QR-10 · Desvincular
+
+**📱1**
+1. Pestaña **Mascotas** → la mascota que tiene la chapita activada en QR-09 → tarjeta **«Chapita QR»**.
+2. Bajá hasta **«Chapitas físicas»** → al lado del código, **«Desvincular»**.
+3. Aparece «¿Desvincular la chapita?» → confirmá.
+
+✅ Esperado: «Chapita desvinculada.» y desaparece de la lista.
+
+**📱2**: escaneá esa chapita (o abrí `/m/<código>`).
+✅ Esperado: «Esta chapita ya no está activa».
+
+**📱1**: **«Activar una chapita»** → escribí el mismo código.
+✅ Esperado: «Esta chapita ya está vinculada o se dio de baja, y no se puede volver a usar.»
+
+### QR-11 · Pedir una chapita
+
+> Necesita la marca `pedido_chapitas` prendida para A. Si no aparece el botón, avisá.
+
+**📱1**
+1. Mascotas → una mascota **sin** chapita → **«Chapita QR»** → **«Pedir una chapita»**.
+2. En **«Texto grabado»** poné el nombre (hasta 20 letras). En **«¿Dónde la retirás?»** elegí la veterinaria de retiro → **«Pedirla»**.
+
+✅ Esperado: «Listo, la pediste…» y la tarjeta muestra «Pedido N.º … · Pedida: la estamos preparando.». Se puede **cancelar** mientras está pedida (probalo con un segundo pedido, no con este).
+
+**Compu (portal)**: **Chapitas** → **«Pedidos con retiro en veterinaria»** → el pedido → **«Enviar»** → elegí un código de un lote sin usar → confirmar.
+**📱1**: la tarjeta pasa a «En camino a <veterinaria>.».
+
+### QR-12 · Entregar en la veterinaria
+
+**📱1** (como veterinaria)
+1. **☰ → «Mi negocio»** → **⇄** → la veterinaria de retiro.
+2. **Panel** → tarjeta **«Chapitas: punto de retiro»** → en el pedido de QR-11, **«Llegó»**.
+3. Después **«Entregada»** → confirmá «¿La entregaste?».
+
+✅ Esperado: en el modo dueño, la ficha de la mascota muestra «Entregada y vinculada.» y la chapita figura en «Chapitas físicas». Al escanearla, aparece la mascota.
+
+### QR-13 · Sponsor en la página
+
+**Compu (portal)**
+1. **Chapitas → «Sponsors» → «Nuevo sponsor»** → nombre «Sponsor de prueba», logo, **«Activo»** prendido → guardar.
+2. **Chapitas → «Nuevo lote»** → cantidad 3 → **«Crear»**. En el lote, **«Sponsor del lote…»** → «Sponsor de prueba».
+3. Copiá un código de ese lote (o **«Descargar CSV»**).
+
+**📱1**: Mascotas → otra mascota → **«Chapita QR» → «Activar una chapita»** → ese código.
+**📱2**: abrí `/m/<código>`.
+✅ Esperado: abajo, chico, «Chapita donada por» con el logo y el nombre.
+
+### QR-14 · Stock en la veterinaria
+
+**Compu (portal)**: **Chapitas → «Stock en veterinarias» → «Pasar a una veterinaria…»** → la veterinaria de A, cantidad 2 → **«Pasar»**. Anotá los códigos que muestra («Entregale estas 2 chapitas (y solo estas)»).
+
+**📱1**
+1. Hacé otro pedido como en QR-11 (otra mascota, misma veterinaria).
+2. Modo comercio → **«Chapitas: punto de retiro»**: arriba dice «Tu stock: 2 chapitas sin usar…».
+3. En el pedido, **«Entregar el N.º … de mi stock»** → escribí uno de los códigos → **«Entregada»**.
+
+✅ Esperado: el stock baja a 1 sin usar · 1 activada, y la mascota queda vinculada. Con un código que no es del stock: «Ese código no está entre las chapitas sin usar de tu stock.»
+
+---
+
+## Ronda 5 · SOS (SO-01 a SO-12)
+
+> Antes: los dos teléfonos con las notificaciones permitidas. En el **📱2**, **☰ → «Ajustes»** → **«Zona para avisos de perdidos»** → **«Usar mi zona»** (estando cerca del 📱1, o en Pando) y el radio en 5 km.
+>
+> Ojo con el **tope de 3 SOS por día por cuenta** (SO-10): en esta ronda A publica 2 y B publica 1.
+
+### SO-01 · Reportar perdida
+
+**📱1**
+1. Mascotas → una mascota **sin** reporte abierto → **«Se perdió: reportarla»**.
+2. Revisá que esté la foto de la ficha. En **«¿Dónde la viste por última vez?»** tocá el mapa en un punto que conozcas (anotalo: por ejemplo, una esquina) → «Lugar marcado ✔».
+3. Completá la descripción. Dejá **apagado** «Mostrar mi WhatsApp en este reporte» → **«Publicar»**.
+
+✅ Esperado: «¡Publicado! Los vecinos de la zona ya pueden verlo.». En el Mapa aparece el pin **corrido unos 150–200 m** del punto que tocaste (no encima).
+
+### SO-09 · Push a la zona
+
+**📱2** (sin hacer nada): tendría que llegar «🐾 Se perdió un perro cerca tuyo» (o la especie que sea) **justo después de SO-01**.
+Si no llega, anotá si el 📱2 tenía la app abierta o cerrada.
+
+### SO-02 · Reportar encontrada
+
+**📱2**
+1. Pestaña **SOS** → **«Reportar»** → **«Encontré una mascota»**.
+2. Una foto cualquiera de un animal, tocá el mapa en **«¿Dónde la encontraste o la viste?»**, descripción → **«Publicar»**.
+
+✅ Esperado: en el mapa aparece con su pin propio (distinto del de las perdidas). En la pestaña SOS, el filtro **«Encontradas»** la muestra y **«Perdidas»** no.
+
+### SO-03 · Mapa por zona
+
+**📱1**: en el Mapa, alejate mucho y movete a otra ciudad (por ejemplo, Montevideo), y después volvé a Pando.
+✅ Esperado: lejos no aparecen los SOS de Pando; al volver aparecen otra vez. (Si querés verlo técnico: en la compu, con las herramientas de Chrome → Red, cada movimiento pide solo la zona visible.)
+
+### SO-04 · Detalle y compartir
+
+**📱2**
+1. Tocá el pin de la perdida de A → se abre «Reporte» → **«Compartir»**.
+2. Mandate el enlace por WhatsApp.
+
+✅ Esperado: en WhatsApp se ve la **vista previa** con la foto. Al abrirlo en Chrome **sin sesión** (o en una ventana de incógnito en la compu) se ve la página `/s/<id>` con la foto, la «Zona aproximada» y el botón para avisar.
+
+### SO-05 · Avisar al dueño
+
+**📱2**: en el reporte de A, **«Avisar al dueño»** → «Dejale un aviso» → mensaje («La vi en la plaza a las 10»), tu nombre y teléfono → marcá «Acepto que reciba mi nombre y mi teléfono…» → **«Enviar aviso»**.
+✅ Esperado: «¡Gracias! Tu aviso le llegó.».
+
+**📱1**: llega la push. **☰ → «Avisos»**: está el aviso de «Rodri» con el contacto de B, el consejo contra estafas y «Ya lo contacté» / «Es una estafa».
+✅ Y en todo el recorrido del 📱2, **nunca** aparece el teléfono de A.
+
+Repetilo desde la **página web** (`/s/<id>`, sin sesión): el aviso también tiene que llegar.
+
+### SO-06 · WhatsApp opcional
+
+**📱1**: publicá la segunda perdida (otra mascota) y esta vez prendé **«Mostrar mi WhatsApp en este reporte»**.
+✅ Esperado: el interruptor arranca **apagado**; al prenderlo se ve «No recomendado: cualquiera vería tu número…» y pide «Tu WhatsApp».
+
+**📱2**: en ese reporte aparece el botón de WhatsApp. Al tocarlo, primero «Antes de escribir por WhatsApp» con «Nunca pidas ni mandes plata…» y después **«Abrir WhatsApp»**.
+
+### SO-11 · Seguir un reporte
+
+**📱2**: en la **primera** perdida de A, **«Seguir este reporte»**.
+✅ Esperado: «Te vamos a avisar cuando vuelva a casa.» y el botón pasa a «Dejar de seguir».
+
+### SO-07 · ¡Apareció!
+
+**📱1**: en esa misma perdida, **«¡Apareció!»** → confirmá «¿Apareció?».
+✅ Esperado:
+- «¡Qué alegría! 💚 Gracias por avisar.» y la pregunta **«¿Compartís la buena noticia?»** → «Compartir»: aparece en **Noticias → Comunidad**.
+- El pin sale del mapa. En **SOS → «Mis reportes»** figura «Apareció».
+- Si la mascota tiene QR, la página deja de decir «Estoy perdido 🆘».
+
+**📱2** (SO-11): llega **una sola** push «¡<nombre> volvió a casa!».
+
+### SO-08 · Reportar publicación (3 cuentas)
+
+> A es el autor y no cuenta, así que hacen falta **tres cuentas más**: B (📱2), C y D (por ejemplo, en la compu, en ventanas de incógnito con otros correos).
+
+Sobre la **segunda perdida de A**:
+1. **📱2**: en el reporte, **⋮ → «Reportar publicación»** → motivo «Es falso» → **«Enviar reporte»** → «Gracias, lo vamos a revisar.».
+2. Lo mismo con la **cuenta C**.
+3. Lo mismo con una **cuenta D** (otra ventana o el 📱2 con otra cuenta).
+
+✅ Esperado: después del tercero, el reporte desaparece del mapa; A lo ve con «Este reporte está oculto mientras lo revisamos.». En el **portal → Moderación** aparece como «Oculto por reportes». Desde ahí, **«Aprobar»** lo vuelve a mostrar (eso ya es AD-P03).
+
+### SO-12 · Zona aproximada
+
+**📱2**: **☰ → «Ajustes» → «Zona para avisos de perdidos»** → borrala → «Borramos tu zona…». Cerrá y abrí la app: **no** tiene que volver sola. Después **«Usar mi zona»** otra vez.
+✅ Esperado: «Guardada: una zona aproximada (unos 500 m)…».
+
+**Compu** (opcional, técnico): en Supabase, la zona guardada de B es el **centro de una celda**, no las coordenadas exactas del teléfono.
+
+> Al terminar: archivá los reportes de prueba (**SOS → «Mis reportes» → el reporte → «Archivar»**) para que no queden en el mapa de dev.
+
+---
+
+## Ronda 6 · Mapa, lugares y búsqueda (MP-01 a MP-11)
+
+> Con un solo teléfono alcanza (📱1). Antes, conviene recargar los ejemplos del mapa (`supabase/seeds/mapa_ejemplo.sql`).
+
+### MP-01 · Chips de rubros
+
+1. **Mapa**: sin ningún chip elegido se ve todo.
+2. Tocá **«Salud»**: quedan solo veterinarias y similares. Sumá **«Tiendas»**: se suman los pet shops.
+3. Probá **«Cuidado»**, **«Salidas»** y **«Refugios»** de a uno. Con **«Quitar»** vuelve a mostrarse todo.
+
+### MP-02 · Filtros
+
+**«Filtros»** → probá de a uno y tocá **«Listo»**:
+- **«Distancia»**: 1 km, 5 km y **«Todo»**.
+- **«Abierto ahora»**.
+- **«Para qué mascota»**: con una mascota activa, por ejemplo «Para <nombre>».
+- **«Coloca microchip (Operador RENAC)»**.
+- **«Solo mis favoritos»** (marcá antes uno como favorito, en MP-07).
+
+✅ Esperado: cada filtro deja solo lo que corresponde. **«Limpiar»** vuelve todo atrás.
+
+### MP-03 · Abierto ahora
+
+Abrí una veterinaria con horario y fijate si dice abierta o cerrada según la **hora de Uruguay**. Repetilo de noche o un domingo. Si hay un feriado cargado, en ese día tiene que respetarlo.
+
+### MP-04 · Clusters
+
+Alejá el mapa: los lugares cercanos se agrupan en un círculo con un número; al tocarlo, se acerca. **Los SOS nunca se agrupan** (siempre se ven sueltos).
+
+### MP-05 · Lista y «Sin local»
+
+Arriba, cambiá a **«Lista»**.
+✅ Esperado: primero **«Perdidos y encontrados»**, después los abiertos, los sin horario y al final los cerrados, cada uno con «a … km».
+Después **«Sin local»**: tiendas online y servicios a domicilio, con «Trabaja en: <zona>».
+
+### MP-06 · Ficha de un lugar
+
+Abrí una veterinaria con todos los datos.
+✅ Esperado: horario, **Llamar**, **WhatsApp**, **Cómo llegar** (abre Google Maps con el destino), web, e insignias (✔️ verificada, RENAC, etc.).
+
+### MP-07 · Favoritos y «Fui»
+
+En la ficha: **«Favorito»**, **«Fui»** (pasa a «Fuiste el …») y **«Es mi veterinaria»** (pasa a «Tu veterinaria»).
+Después, en **otra** veterinaria, **«Es mi veterinaria»**.
+✅ Esperado: la primera deja de ser «Tu veterinaria» (solo puede haber una). Todo sigue igual al cerrar y abrir la app.
+
+### MP-08 · Marcar un lugar
+
+**Mapa → «Marcar un lugar»** → **«Rubro»** → tocá el mapa → (opcional) un enlace de Google Maps → **«Marcar»**.
+✅ Esperado: «¡Gracias! Quedó marcado.» y aparece un **pin gris**. Si marcás el mismo otra vez: «Ya marcaste este lugar.». Con el **📱2** marcando cerca, el mismo rubro: la ficha dice «Marcado por 2 personas».
+
+### MP-09 · Búsqueda
+
+> Necesita la marca `busqueda`.
+
+Tocá la **lupa** («Buscar lugares») y buscá:
+- **«vete»**: aparecen las veterinarias.
+- **«peluqueria»** (sin tilde): aparecen las peluquerías.
+- **«zzzz»**: «No encontramos lugares con «zzzz».» y «¿Conocés uno? Marcalo en el mapa…», que lleva a «Marcar un lugar».
+
+### MP-11 · Ayuda
+
+Pestaña **Ayuda**.
+✅ Esperado: la tarjeta del **911**, **«Veterinarias de urgencia»** con «abierto ahora», y el directorio (**«Refugios y protectoras»**, **«Grupos para difundir»**, **«Organismos»**) con **«Abrir»**.
+
+---
+
+## Ronda 7 · Privacidad (PR-01 a PR-06): ir mirando durante las otras rondas
+
+No es una ronda aparte: **en cada pantalla de las rondas 4 a 6** fijate en esto, y al final anotá el resultado.
+
+- **PR-01 · Teléfono**: en el 📱2, en ningún lugar (QR, SOS, avisos, chat, pedidos, turnos, cuidados, grupos, equipo) aparece el teléfono de A. La única excepción es el WhatsApp que A prendió a propósito en SO-06.
+- **PR-02 · Primer nombre**: siempre «Rodri», nunca un apellido ni un correo.
+- **PR-03 · Ubicación**: los SOS siempre corridos (SO-01) y la zona de avisos en una celda (SO-12).
+- **PR-04 · Fotos sin GPS**: en el 📱2, mantené apretada una foto de un SOS → «Descargar imagen» → en la galería, **Detalles**: no tiene que tener ubicación. Repetilo con una foto de mascota, del chat y de un grupo, subidas desde un celular con el GPS de la cámara prendido.
+- **PR-06 · Métricas**: en Supabase → Table Editor → `events`, ordenado por fecha: después de cada ronda tiene que haber eventos de lo que hiciste (por ejemplo `sos_follow`, `sos_poster`, `alert_zone_set`, `favorite_add`, `my_vet_set`, `search`, `tab_open`), **sin** correo ni nombre.
 
 ---
 
