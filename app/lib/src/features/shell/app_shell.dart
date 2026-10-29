@@ -5,6 +5,7 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
 import '../../metricas/metricas.dart';
+import '../../theme/paleta.dart';
 
 /// Pestañas de la barra inferior, en el orden de las ramas del router (D94).
 enum Pestana { noticias, sos, mapa, mascotas, ayuda }
@@ -79,8 +80,9 @@ class BarraInferior extends StatelessWidget {
             top: _sobresale,
             child: PhysicalShape(
               clipper: const _RecorteBarra(radio: _sobresale + 6),
-              // Del mismo color que el botón del Mapa (pedido del dueño).
-              color: colores.primary,
+              // Del mismo color que el botón del Mapa (pedido del dueño),
+              // salvo en Blanco y negro, que tiene la barra blanca (D120).
+              color: context.marca.barra,
               elevation: 3,
               shadowColor: colores.shadow,
               child: Padding(
@@ -182,7 +184,7 @@ class _ItemBarra extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colores = Theme.of(context).colorScheme;
+    final sobre = context.marca.sobreBarra;
     return Semantics(
       button: true,
       selected: elegido,
@@ -203,12 +205,10 @@ class _ItemBarra extends StatelessWidget {
                   vertical: 3,
                 ),
                 decoration: BoxDecoration(
-                  color: elegido
-                      ? colores.onPrimary.withValues(alpha: 0.2)
-                      : null,
+                  color: elegido ? sobre.withValues(alpha: 0.2) : null,
                   borderRadius: BorderRadius.circular(16),
                 ),
-                child: Icon(icono, color: colores.onPrimary),
+                child: Icon(icono, color: sobre),
               ),
               const SizedBox(height: 4),
               _Etiqueta(texto: texto, elegido: elegido),
@@ -234,7 +234,7 @@ class _Etiqueta extends StatelessWidget {
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
       style: tema.textTheme.labelMedium?.copyWith(
-        color: tema.colorScheme.onPrimary,
+        color: context.marca.sobreBarra,
         fontWeight: elegido ? FontWeight.w700 : FontWeight.w500,
       ),
     );

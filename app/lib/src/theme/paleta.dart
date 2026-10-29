@@ -18,7 +18,10 @@ class ColoresModo {
     required this.sobreError,
     required this.exito,
     required this.urgencia,
-  });
+    Color? barra,
+    Color? sobreBarra,
+  }) : _barra = barra,
+       _sobreBarra = sobreBarra;
 
   final Color fondo;
   final Color texto;
@@ -40,6 +43,14 @@ class ColoresModo {
 
   /// Texto o ícono de "urgencias / 24 h" (el pin ámbar no contrasta como texto).
   final Color urgencia;
+
+  final Color? _barra;
+  final Color? _sobreBarra;
+
+  /// Fondo de la barra de arriba y de la de abajo: el primario, salvo en
+  /// Blanco y negro, que las tiene blancas.
+  Color get barra => _barra ?? primario;
+  Color get sobreBarra => _sobreBarra ?? sobrePrimario;
 }
 
 /// Archivo de una tipografía que se descarga al elegir un tema Pro
@@ -54,8 +65,8 @@ class ArchivoFuente {
 
 /// Una identidad visual completa: colores de los dos modos y tipografías.
 ///
-/// [cielo] es la de la marca y la de todos; [faro], [vecinos] y [pop] son
-/// temas del plan Pro (D62). Detalle en `docs/14-brief-identidad-visual.md` §10.
+/// [cielo] es la de la marca y la de todos; [faro], [vecinos], [pop] y
+/// [blancoNegro] son temas del plan Pro (D62, D120). Detalle en `docs/14-brief-identidad-visual.md` §10.
 @immutable
 class Paleta {
   const Paleta({
@@ -78,7 +89,7 @@ class Paleta {
   final List<ArchivoFuente> fuentesADescargar;
 
   /// Cielo primero; el orden es el del selector de Ajustes.
-  static const todas = [cielo, faro, vecinos, pop];
+  static const todas = [cielo, faro, vecinos, pop, blancoNegro];
 
   /// La paleta con ese id, o Cielo si no existe (por ejemplo, un id viejo).
   static Paleta porId(String? id) =>
@@ -233,6 +244,45 @@ class Paleta {
       ArchivoFuente('Figtree', 'Figtree-Bold.ttf'),
     ],
   );
+
+  /// Tema Pro · Blanco y negro (D120): sin color, con las barras blancas (en
+  /// oscuro, negras). Error, éxito y urgencia conservan su color porque
+  /// avisan algo; los pines del mapa no cambian en ningún tema.
+  static const blancoNegro = Paleta(
+    id: 'blanco_negro',
+    claro: ColoresModo(
+      fondo: Color(0xFFF4F4F4),
+      texto: Color(0xFF111111),
+      textoSuave: Color(0xFF555555),
+      primario: Color(0xFF111111),
+      sobrePrimario: Color(0xFFFFFFFF),
+      acento: Color(0xFF2B2B2B),
+      sobreAcento: Color(0xFFFFFFFF),
+      error: Color(0xFFB3261E),
+      sobreError: Color(0xFFFFFFFF),
+      exito: Color(0xFF17705F),
+      urgencia: Color(0xFF9A4A00),
+      barra: Color(0xFFFFFFFF),
+      sobreBarra: Color(0xFF111111),
+    ),
+    oscuro: ColoresModo(
+      fondo: Color(0xFF0F0F0F),
+      texto: Color(0xFFF2F2F2),
+      textoSuave: Color(0xFFB0B0B0),
+      primario: Color(0xFFF2F2F2),
+      sobrePrimario: Color(0xFF0F0F0F),
+      acento: Color(0xFFE0E0E0),
+      sobreAcento: Color(0xFF0F0F0F),
+      error: Color(0xFFFF8A80),
+      sobreError: Color(0xFF0F0F0F),
+      exito: Color(0xFF5ED3BF),
+      urgencia: Color(0xFFFFB238),
+      barra: Color(0xFF000000),
+      sobreBarra: Color(0xFFF2F2F2),
+    ),
+    fuenteTitulos: 'Sora',
+    fuenteTexto: 'SourceSans3',
+  );
 }
 
 /// Colores de la marca que Material no tiene como rol propio.
@@ -244,6 +294,8 @@ class ColoresMarca extends ThemeExtension<ColoresMarca> {
     required this.sobreAcento,
     required this.exito,
     required this.urgencia,
+    required this.barra,
+    required this.sobreBarra,
   });
 
   factory ColoresMarca.de(ColoresModo c) => ColoresMarca(
@@ -251,6 +303,8 @@ class ColoresMarca extends ThemeExtension<ColoresMarca> {
     sobreAcento: c.sobreAcento,
     exito: c.exito,
     urgencia: c.urgencia,
+    barra: c.barra,
+    sobreBarra: c.sobreBarra,
   );
 
   final Color acento;
@@ -258,17 +312,25 @@ class ColoresMarca extends ThemeExtension<ColoresMarca> {
   final Color exito;
   final Color urgencia;
 
+  /// Barras de arriba y de abajo.
+  final Color barra;
+  final Color sobreBarra;
+
   @override
   ColoresMarca copyWith({
     Color? acento,
     Color? sobreAcento,
     Color? exito,
     Color? urgencia,
+    Color? barra,
+    Color? sobreBarra,
   }) => ColoresMarca(
     acento: acento ?? this.acento,
     sobreAcento: sobreAcento ?? this.sobreAcento,
     exito: exito ?? this.exito,
     urgencia: urgencia ?? this.urgencia,
+    barra: barra ?? this.barra,
+    sobreBarra: sobreBarra ?? this.sobreBarra,
   );
 
   @override
@@ -279,6 +341,8 @@ class ColoresMarca extends ThemeExtension<ColoresMarca> {
       sobreAcento: Color.lerp(sobreAcento, other.sobreAcento, t)!,
       exito: Color.lerp(exito, other.exito, t)!,
       urgencia: Color.lerp(urgencia, other.urgencia, t)!,
+      barra: Color.lerp(barra, other.barra, t)!,
+      sobreBarra: Color.lerp(sobreBarra, other.sobreBarra, t)!,
     );
   }
 }

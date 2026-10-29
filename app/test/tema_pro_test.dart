@@ -73,7 +73,13 @@ void main() {
     await tester.tap(find.text('Tema de colores'));
     await tester.pumpAndSettle();
     expect(find.text('Elegí cómo se ve la app'), findsOneWidget);
-    for (final nombre in ['Cielo', 'Faro', 'Vecinos', 'Pop']) {
+    for (final nombre in [
+      'Cielo',
+      'Faro',
+      'Vecinos',
+      'Pop',
+      'Blanco y negro',
+    ]) {
       expect(find.text(nombre), findsOneWidget);
     }
 
@@ -84,6 +90,32 @@ void main() {
     expect(almacen.guardado, 'faro');
     final cambio = eventos.singleWhere((e) => e['name'] == 'theme_change');
     expect(cambio['props'], {'theme': 'faro'});
+  });
+
+  testWidgets('Blanco y negro: las barras de arriba y de abajo son blancas', (
+    tester,
+  ) async {
+    _pantallaDeCelular(tester);
+    await tester.pumpWidget(
+      appDePrueba(
+        cuenta: ServicioCuentaFalso(conectado: _ana),
+        perfiles: PerfilRepositorioFalso(plan: Plan.pro),
+        funcionalidades: _temasPro(),
+        almacenTema: AlmacenTemaFalso('blanco_negro'),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final tema = Theme.of(tester.element(find.byType(Scaffold).first));
+    expect(tema.appBarTheme.backgroundColor, const Color(0xFFFFFFFF));
+    expect(tema.appBarTheme.foregroundColor, const Color(0xFF111111));
+    final barraAbajo = tester.widget<PhysicalShape>(
+      find.byWidgetPredicate(
+        (w) =>
+            w is PhysicalShape && '${w.clipper.runtimeType}' == '_RecorteBarra',
+      ),
+    );
+    expect(barraAbajo.color, const Color(0xFFFFFFFF));
   });
 
   testWidgets('con plan Familia arranca con el tema guardado', (tester) async {

@@ -25,7 +25,7 @@ Actualizado el 29/10/2026. **35 ✅ · 135 ⬜ · 0 ❌ · 2 ➖** (de 172 casos
 
 **Pendientes anotados** (ver «Registro de fallas»): avisar antes de borrar una cuenta con negocios o rol (CU-08); avisar «Hay una versión nueva» en la app instalada (MA-04); proveedor de correo propio para que siempre llegue el código (QR-08, paso 0.4.4b); sumarse al hogar con un QR (idea I4).
 
-**Sigue:** QR-10 (desvincular la chapita) y el resto de la sección 3; después, SOS (SO-01 en adelante).
+**Sigue:** ⏸️ **pendiente (29/10):** «veterinaria prueba» de la cuenta A ya está verificada (CO-03 hecho en la base; falta mirar el ✔️ en la ficha) → prender «Ser punto de retiro de chapitas» y seguir con QR-11 a QR-14. Después, SOS (SO-01 en adelante).
 
 ## Preparación
 

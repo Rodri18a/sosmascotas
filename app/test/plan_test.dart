@@ -130,6 +130,7 @@ void main() {
       ),
       findsOneWidget,
     );
+    await tester.scrollUntilVisible(find.text('Quiero Plus'), 300);
     expect(find.text('Quiero Plus'), findsOneWidget);
     expect(find.text('Quiero Destacado'), findsNothing);
     await tester.scrollUntilVisible(find.textContaining(r'$ 600 · 1 mes'), 300);

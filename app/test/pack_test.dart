@@ -30,6 +30,18 @@ void _pantallaDeCelular(WidgetTester tester) {
 Future<void> _tocar(WidgetTester tester, Finder objetivo) async {
   FocusManager.instance.primaryFocus?.unfocus();
   await tester.pumpAndSettle();
+  // La lista dibuja solo lo cercano: si todavía no está, bajar hasta verlo.
+  if (objetivo.evaluate().isEmpty) {
+    await tester.scrollUntilVisible(
+      objetivo,
+      200,
+      scrollable: find
+          .byWidgetPredicate(
+            (w) => w is Scrollable && w.axisDirection == AxisDirection.down,
+          )
+          .first,
+    );
+  }
   await tester.ensureVisible(objetivo);
   await tester.pumpAndSettle();
   await tester.tap(objetivo);

@@ -1,5 +1,7 @@
 # 14 · Brief de identidad visual (para pasarle a una IA o a un diseñador)
 
+> Versión para mandarle a un diseñador (logo amigable e íconos, 29/10/2026): documento «SOS Mascota · Brief de logo e íconos» en Claude Docs (https://claude.ai/artifact/TbREXr3WMkSVB7uT5Wee93).
+>
 > Documento pensado para **copiar y pegar** en una IA de imágenes o de diseño (o mandárselo a un diseñador) y obtener la identidad completa de SOS Mascota: logo, ícono de la app, paleta, tipografías, íconos, pines del mapa, ilustraciones y piezas impresas.
 > Las 4 direcciones de partida se pueden ver en el lienzo **"SOS Mascota · Opciones de identidad"** (enlace en la sesión del 15/10/2026). **Elegida el 15/10/2026: C · Cielo** (D62). Faro, Vecinos y Pop quedan como **temas opcionales del plan Pro** (§10).
 
@@ -154,6 +156,7 @@ Cambian **solo la apariencia de la app para esa persona**: paleta y tipografías
 | **Faro** (Pro) | `#FFF8F0` / `#14213D` / `#14213D` / `#F25C05` | `#0F1626` / `#F3EEE8` / `#9DB4E8` / `#FF8A3D` | Bricolage Grotesque + Atkinson Hyperlegible |
 | **Vecinos** (Pro) | `#FAF3E3` / `#2B2118` / `#B5462F` / `#F2C14E` | `#1E1914` / `#F4ECDD` / `#E8836B` / `#F2C14E` | Fraunces + Nunito Sans |
 | **Pop** (Pro) | `#F3EEFF` / `#17151F` / `#5B2EBB` / `#FFD23F` | `#17151F` / `#F1EDFA` / `#B49BFF` / `#FFD23F` | Baloo 2 + Figtree |
+| **Blanco y negro** (Pro, D120) | `#F4F4F4` / `#111111` / `#111111` / `#2B2B2B`, barras blancas | `#0F0F0F` / `#F2F2F2` / `#F2F2F2` / `#E0E0E0`, barras negras | Sora + Source Sans 3 |
 
 Texto sobre el primario: blanco en claro y el color de fondo en oscuro. Texto sobre el acento: el color de texto oscuro de cada tema. Texto secundario: Faro `#4F566B` / `#B3B8C6`, Vecinos `#5E5246` / `#C2B6A3`, Pop `#4D4860` / `#B7B0C9`.
 

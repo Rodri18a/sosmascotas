@@ -560,6 +560,8 @@
   "temaVecinosDescripcion": "Terracota y mostaza, de barrio",
   "temaPop": "Pop",
   "temaPopDescripcion": "Violeta y amarillo, tipo sticker",
+  "temaBlancoNegro": "Blanco y negro",
+  "temaBlancoNegroDescripcion": "Sin colores, con las barras blancas",
   "noDisponibleTitulo": "Todavía no está disponible",
   "noDisponibleTexto": "Esta función se está probando de a poco y todavía no te llegó. Cuando esté lista para vos, la vas a ver en la app.",
   "noDisponibleIrAlMapa": "Ir al mapa",

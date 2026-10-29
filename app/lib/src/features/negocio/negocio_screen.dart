@@ -362,7 +362,7 @@ class _ListaPanel extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Wrap(
           spacing: 12,
-          runSpacing: 4,
+          runSpacing: 12,
           children: [
             for (final c in children) SizedBox(width: ancho, child: c),
           ],

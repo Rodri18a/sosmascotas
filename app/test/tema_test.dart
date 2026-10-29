@@ -33,6 +33,10 @@ void main() {
             'sobre error': (c.sobreError, c.error),
             'éxito/fondo': (c.exito, c.fondo),
             'urgencia/fondo': (c.urgencia, c.fondo),
+            'sobre las barras': (c.sobreBarra, c.barra),
+            // Con barras de otro color, el botón del Mapa se tiene que ver.
+            if (c.barra != c.primario)
+              'botón del Mapa/barra': (c.primario, c.barra),
           };
           for (final MapEntry(key: par, value: (a, b)) in pares.entries) {
             expect(contraste(a, b), greaterThanOrEqualTo(4.5), reason: par);

@@ -23,19 +23,21 @@ abstract final class AppTheme {
       // La barra de arriba, del mismo color que la de abajo (D94).
       appBarTheme: AppBarTheme(
         centerTitle: false,
-        backgroundColor: colores.primary,
-        foregroundColor: colores.onPrimary,
+        backgroundColor: c.barra,
+        foregroundColor: c.sobreBarra,
         scrolledUnderElevation: 1,
       ),
       // La única TabBar va dentro de una barra de arriba (Adopción).
       tabBarTheme: TabBarThemeData(
-        labelColor: colores.onPrimary,
-        unselectedLabelColor: colores.onPrimary.withValues(alpha: 0.8),
-        indicatorColor: colores.onPrimary,
+        labelColor: c.sobreBarra,
+        unselectedLabelColor: c.sobreBarra.withValues(alpha: 0.8),
+        indicatorColor: c.sobreBarra,
         dividerColor: Colors.transparent,
       ),
+      // 8 px entre tarjetas seguidas: con margen cero quedaban pegadas en
+      // las pantallas que no agregaban el espacio a mano.
       cardTheme: const CardThemeData(
-        margin: EdgeInsets.zero,
+        margin: EdgeInsets.symmetric(vertical: 4),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(16)),
         ),

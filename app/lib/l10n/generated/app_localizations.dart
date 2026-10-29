@@ -2320,6 +2320,18 @@ abstract class AppLocalizations {
   /// **'Violeta y amarillo, tipo sticker'**
   String get temaPopDescripcion;
 
+  /// No description provided for @temaBlancoNegro.
+  ///
+  /// In es, this message translates to:
+  /// **'Blanco y negro'**
+  String get temaBlancoNegro;
+
+  /// No description provided for @temaBlancoNegroDescripcion.
+  ///
+  /// In es, this message translates to:
+  /// **'Sin colores, con las barras blancas'**
+  String get temaBlancoNegroDescripcion;
+
   /// No description provided for @noDisponibleTitulo.
   ///
   /// In es, this message translates to:

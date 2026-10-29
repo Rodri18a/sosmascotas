@@ -1342,6 +1342,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get temaPopDescripcion => 'Violeta y amarillo, tipo sticker';
 
   @override
+  String get temaBlancoNegro => 'Blanco y negro';
+
+  @override
+  String get temaBlancoNegroDescripcion =>
+      'Sin colores, con las barras blancas';
+
+  @override
   String get noDisponibleTitulo => 'Todavía no está disponible';
 
   @override

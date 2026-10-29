@@ -33,6 +33,7 @@ String nombreTema(AppLocalizations t, Paleta p) => switch (p.id) {
   'faro' => t.temaFaro,
   'vecinos' => t.temaVecinos,
   'pop' => t.temaPop,
+  'blanco_negro' => t.temaBlancoNegro,
   _ => t.temaCielo,
 };
 
@@ -40,6 +41,7 @@ String _descripcionTema(AppLocalizations t, Paleta p) => switch (p.id) {
   'faro' => t.temaFaroDescripcion,
   'vecinos' => t.temaVecinosDescripcion,
   'pop' => t.temaPopDescripcion,
+  'blanco_negro' => t.temaBlancoNegroDescripcion,
   _ => t.temaCieloDescripcion,
 };
 
