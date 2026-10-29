@@ -4,6 +4,8 @@
 >
 > **Estado:** ⬜ sin probar · ✅ anda · ❌ falla (anotar qué pasó y el paso de `PROGRESO.md`) · ➖ no aplica todavía.
 
+> 👉 **Paso a paso, botón por botón:** [Pruebas con dos teléfonos](guias/pruebas-paso-a-paso.md) (rondas de Equipo, Paseos y cuidados y Comunidad).
+
 ## Preparación
 
 | Qué | Dónde |

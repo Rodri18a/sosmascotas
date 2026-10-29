@@ -35,6 +35,7 @@
 
 - **Proyecto**
   - [Casos de prueba a validar](19-casos-de-prueba.md)
+  - [Pruebas paso a paso (dos teléfonos)](guias/pruebas-paso-a-paso.md)
   - [Publicación de esta web](PUBLICACION.md)
   - [Guía: login con Google](guias/login-google.md)
   - [Plantilla: validar una idea](guias/validar-una-idea.md)
