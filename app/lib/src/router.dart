@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -257,16 +259,37 @@ final routerProvider = Provider<GoRouter>((ref) {
     ref.read(necesitaConsentimientoProvider),
     ref.read(funcionalidadesProvider),
   ));
-  void actualizar() => cambio.value = (
-    ref.read(conectadoProvider),
-    ref.read(necesitaConsentimientoProvider),
-    ref.read(funcionalidadesProvider),
-  );
+  var descartado = false;
+  void actualizar() {
+    final valor = (
+      ref.read(conectadoProvider),
+      ref.read(necesitaConsentimientoProvider),
+      ref.read(funcionalidadesProvider),
+    );
+    // Leer puede terminar de cerrar la sesión y descartar este router.
+    if (!descartado) cambio.value = valor;
+  }
+
   ref
-    ..listen(conectadoProvider, (_, _) => actualizar())
+    ..listen(conectadoProvider, (antes, ahora) {
+      // Al cerrar sesión se descarta toda la navegación (CU-07): las
+      // pestañas guardaban pantallas privadas (por ejemplo, la ficha de una
+      // mascota) y volver a ellas mandaba a ingresar o al Mapa.
+      // Después de la notificación en curso: descartar el router en medio de
+      // una navegación (por ejemplo, al borrar la cuenta) lo rompe.
+      if (antes == true && !ahora) {
+        return scheduleMicrotask(() {
+          if (!descartado) ref.invalidateSelf();
+        });
+      }
+      actualizar();
+    })
     ..listen(necesitaConsentimientoProvider, (_, _) => actualizar())
     ..listen(funcionalidadesProvider, (_, _) => actualizar())
-    ..onDispose(cambio.dispose);
+    ..onDispose(() {
+      descartado = true;
+      cambio.dispose();
+    });
 
   final router = GoRouter(
     initialLocation: Rutas.mapa,

@@ -21,7 +21,7 @@ En **los dos teléfonos**:
 2. Instalala: menú de Chrome **⋮** (arriba a la derecha) → **«Instalar app»** (o «Agregar a la pantalla principal»). Desde ahora, abrila siempre con el ícono de SOS Mascota, no desde Chrome.
 3. Ingresá con tu correo (A en el 📱1, B en el 📱2) → poné el código de 6 números que te llega por correo → aceptá términos y privacidad.
 4. Cuando pregunte por las notificaciones, tocá **«Permitir»**. Sin eso no llegan las push.
-5. Solo en el **📱2**: **☰** (arriba a la izquierda) → tocá tu nombre arriba de todo (abre **«Mi perfil»**) → cambiá el nombre a «Rodri» → guardar.
+5. Solo en el **📱2**: **☰** (arriba a la izquierda) → **«Ajustes»** → tocá la **primera fila** (tu nombre y el correo, con un lápiz ✏️ a la derecha) → en «Tu nombre» escribí «Rodri» → guardar. (En «Mi perfil» el nombre se ve, pero no se cambia.)
 
 ### Cómo se mueve uno por la app
 

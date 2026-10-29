@@ -94,6 +94,10 @@ void main() {
     await tester.tap(find.text('Cerrar sesión'));
     await tester.pumpAndSettle();
 
+    // Se descarta la navegación y arranca de nuevo en el Mapa (CU-07).
+    expect(find.widgetWithText(AppBar, 'Mapa'), findsOneWidget);
+    await tester.tap(find.byTooltip('Ajustes'));
+    await tester.pumpAndSettle();
     expect(find.text('Ingresar o crear cuenta'), findsOneWidget);
   });
 

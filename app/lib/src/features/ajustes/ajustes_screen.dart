@@ -165,7 +165,7 @@ class _SeccionCuenta extends ConsumerWidget {
           trailing: const Icon(Icons.edit_outlined),
           onTap: perfil == null
               ? null
-              : () => _editarNombre(context, ref, perfil),
+              : () => editarNombre(context, ref, perfil),
         ),
         SiFuncionalidad(
           Funcionalidades.perfil,
@@ -244,24 +244,26 @@ class _SeccionCuenta extends ConsumerWidget {
       ],
     );
   }
+}
 
-  Future<void> _editarNombre(
-    BuildContext context,
-    WidgetRef ref,
-    Perfil perfil,
-  ) async {
-    final nombre = await showDialog<String>(
-      context: context,
-      builder: (context) => _DialogoNombre(inicial: perfil.nombre),
-    );
-    final limpio = nombre?.trim() ?? '';
-    if (limpio.isEmpty || limpio == perfil.nombre || !context.mounted) return;
-    await _guardar(context, ref, () {
-      return ref
-          .read(perfilRepositorioProvider)
-          .actualizar(perfil.id, nombre: limpio);
-    });
-  }
+/// Pide el nombre con el que te ven los demás y lo guarda (también desde
+/// «Mi perfil», CU-05).
+Future<void> editarNombre(
+  BuildContext context,
+  WidgetRef ref,
+  Perfil perfil,
+) async {
+  final nombre = await showDialog<String>(
+    context: context,
+    builder: (context) => _DialogoNombre(inicial: perfil.nombre),
+  );
+  final limpio = nombre?.trim() ?? '';
+  if (limpio.isEmpty || limpio == perfil.nombre || !context.mounted) return;
+  await _guardar(context, ref, () {
+    return ref
+        .read(perfilRepositorioProvider)
+        .actualizar(perfil.id, nombre: limpio);
+  });
 }
 
 /// Pide el nombre. Es dueño de su controlador: se libera cuando termina la

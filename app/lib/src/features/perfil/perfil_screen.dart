@@ -12,6 +12,7 @@ import '../../mascotas/mascotas_repositorio.dart';
 import '../../router.dart';
 import '../../widgets/foto_mascota.dart';
 import '../../widgets/volver.dart';
+import '../ajustes/ajustes_screen.dart';
 import '../hogar/hogar_screen.dart';
 
 /// "Mi perfil" (D70): quién soy en la app, qué mascotas tengo a cargo y con
@@ -56,8 +57,22 @@ class PerfilScreen extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 8),
-          if (nombre.isNotEmpty)
-            Center(child: Text(nombre, style: tema.textTheme.headlineSmall)),
+          // El nombre también se cambia desde acá, no solo en Ajustes (CU-05).
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (nombre.isNotEmpty)
+                Flexible(
+                  child: Text(nombre, style: tema.textTheme.headlineSmall),
+                ),
+              if (perfil != null)
+                IconButton(
+                  icon: const Icon(Icons.edit_outlined),
+                  tooltip: t.ajustesNombreTitulo,
+                  onPressed: () => editarNombre(context, ref, perfil),
+                ),
+            ],
+          ),
           if (usuario?.email case final email?)
             Center(child: Text(email, style: tema.textTheme.bodySmall)),
           const SizedBox(height: 16),

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
+import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'cuenta_falsa.dart';
+import 'funcionalidades_falsas.dart';
 import 'helpers.dart';
 import 'perfil_falso.dart';
 
@@ -53,6 +55,32 @@ void main() {
     await tester.tap(find.text('Ana'));
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextField), '  Ana Laura ');
+    await tester.tap(find.text('Guardar'));
+    await tester.pumpAndSettle();
+
+    expect(perfiles.nombre, 'Ana Laura');
+    expect(find.text('Ana Laura'), findsOneWidget);
+  });
+
+  testWidgets('el nombre también se cambia desde «Mi perfil» (CU-05)', (
+    tester,
+  ) async {
+    _pantallaDeCelular(tester);
+    final perfiles = PerfilRepositorioFalso();
+    await tester.pumpWidget(
+      appDePrueba(
+        cuenta: ServicioCuentaFalso(conectado: _ana),
+        perfiles: perfiles,
+        funcionalidades: FuncionalidadesFalsas({Funcionalidades.perfil}),
+      ),
+    );
+    await _abrirAjustes(tester);
+    await tester.tap(find.text('Mi perfil'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byTooltip('Tu nombre'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField), 'Ana Laura');
     await tester.tap(find.text('Guardar'));
     await tester.pumpAndSettle();
 

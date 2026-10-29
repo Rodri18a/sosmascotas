@@ -138,4 +138,32 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.widgetWithText(AppBar, 'Luna'), findsOneWidget);
   });
+
+  testWidgets('al cerrar sesión se descarta la navegación: Mascotas abre su '
+      'pantalla aunque se haya quedado en una ficha (CU-07)', (tester) async {
+    final cuenta = ServicioCuentaFalso(
+      conectado: const Usuario(id: 'u1', email: 'ana@correo.com'),
+    );
+    await tester.pumpWidget(
+      appDePrueba(
+        cuenta: cuenta,
+        mascotas: MascotasFalsas(const [
+          Mascota(id: 'm1', nombre: 'Luna', especieId: 2),
+        ]),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await _tocarPestana(tester, 'Mascotas');
+    await irDirecto(tester, '/mascotas/m1');
+    expect(find.widgetWithText(AppBar, 'Luna'), findsOneWidget);
+
+    cuenta.conectar(null);
+    await tester.pumpAndSettle();
+    expect(find.widgetWithText(AppBar, 'Mapa'), findsOneWidget);
+    expect(find.text('Luna'), findsNothing, reason: 'no queda nada privado');
+
+    await _tocarPestana(tester, 'Mascotas');
+    expect(find.widgetWithText(AppBar, 'Mis mascotas'), findsOneWidget);
+    expect(find.widgetWithText(AppBar, 'Ingresar'), findsNothing);
+  });
 }
