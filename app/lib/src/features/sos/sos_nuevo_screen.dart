@@ -37,7 +37,6 @@ class _SosNuevoScreenState extends ConsumerState<SosNuevoScreen> {
   final _color = TextEditingController();
   final _senas = TextEditingController();
   final _descripcion = TextEditingController();
-  final _recompensa = TextEditingController();
   final _whatsapp = TextEditingController();
   bool _mostrarWhatsapp = false;
 
@@ -75,7 +74,6 @@ class _SosNuevoScreenState extends ConsumerState<SosNuevoScreen> {
       _color,
       _senas,
       _descripcion,
-      _recompensa,
       _whatsapp,
     ]) {
       c.dispose();
@@ -169,7 +167,6 @@ class _SosNuevoScreenState extends ConsumerState<SosNuevoScreen> {
           color: _color.text,
           senas: _senas.text,
           descripcion: _descripcion.text,
-          recompensa: _recompensa.text,
           tieneMicrochip: _tieneMicrochip,
           cuando: _cuando,
         ),
@@ -408,7 +405,9 @@ class _SosNuevoScreenState extends ConsumerState<SosNuevoScreen> {
                   minLines: 1,
                   decoration: InputDecoration(
                     labelText: t.mascotaSenas,
-                    helperText: t.mascotaSenasAyuda,
+                    helperText: perdida
+                        ? t.mascotaSenasAyuda
+                        : t.sosSenasAyudaEncontrada,
                   ),
                 ),
                 TextFormField(
@@ -443,14 +442,6 @@ class _SosNuevoScreenState extends ConsumerState<SosNuevoScreen> {
                     title: Text(t.sosTieneMicrochip),
                     value: _tieneMicrochip,
                     onChanged: (v) => setState(() => _tieneMicrochip = v),
-                  ),
-                  TextFormField(
-                    controller: _recompensa,
-                    maxLength: 100,
-                    decoration: InputDecoration(
-                      labelText: t.sosRecompensa,
-                      helperText: t.sosRecompensaAyuda,
-                    ),
                   ),
                 ],
                 SwitchListTile(

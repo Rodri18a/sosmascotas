@@ -54,7 +54,7 @@ Pantalla inicial: logo sobre el azul petróleo de la marca (`#0F5E7A`, D62) dura
 
 ## 4. SOS: perdidos y encontrados — Fase 0
 
-- **Reportar:** perdida o encontrada; mascota propia (precarga los datos) u otra; especie, raza, nombre, color, señas, descripción, **al menos una foto**, fecha, **ubicación tocando el mapa** (se publica una zona aproximada), recompensa opcional y contacto.
+- **Reportar:** perdida o encontrada; mascota propia (precarga los datos) u otra; especie, raza, nombre, color, señas, descripción, **al menos una foto**, fecha, **ubicación tocando el mapa** (se publica una zona aproximada) y contacto. **Sin recompensa** (D119): la app es una red de apoyo y una recompensa a la vista atrae estafas. En los reportes de encontradas se aconseja guardarse una seña sin publicar para comprobar quién es la familia.
 - **Lista** ordenada por cercanía y **pines en el mapa** (capa activable).
 - **Contacto inverso (Fase 0):** el número del autor **nunca se muestra**, ni siquiera a quien quiere contactarlo.
   1. Quien vio o encontró al animal toca **"Avisar al dueño"** (en el reporte o en la página del QR). **No necesita cuenta.**
@@ -70,6 +70,7 @@ Pantalla inicial: logo sobre el azul petróleo de la marca (`#0F5E7A`, D62) dura
 - **Resolver:** el autor marca "¡Apareció!" y el reporte pasa a resuelto y se archiva. Se avisa a los seguidores.
 - **Vencimiento:** si no hay actividad en 60 días, se le pregunta al autor si sigue vigente. Si no responde, se archiva (valor a confirmar).
 - **Compartir:** cada reporte tiene una página web pública para compartir en Facebook y WhatsApp.
+- **Imprimir cartel** (D119): en cualquier reporte activo (no solo el de quien reportó, así los vecinos también pueden pegarlo), un PDF A4 con «SE BUSCA · nombre» (perdida) o «SE ENCONTRÓ · ¿Es tuyo?» (encontrada), la foto, los datos públicos, dónde la vieron (texto opcional que escribe quien lo arma: sin geocodificación) y un **QR a la página del reporte**. Nunca lleva teléfono ni recompensa. Abrir esa página **no avisa a nadie** (a diferencia del QR de la chapita): solo avisa el formulario «Avisar», así un cartel escaneado en la calle no genera falsas alarmas. Al marcar «¡Apareció!», la página dice «¡Apareció! Gracias por ayudar». Métrica `sos_poster`.
 - **Ayuda:** directorio de refugios, protectoras y grupos de Pando, y aviso de llamar al **911** si hay una persona en riesgo (la app es solo para animales).
 
 ## 5. Mapa integral (Explorar) — Fase 0 (perdidos + urgencias) / Fase 1 (completo)

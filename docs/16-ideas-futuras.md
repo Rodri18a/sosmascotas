@@ -49,3 +49,10 @@
 - No es un diagnóstico médico: la app tiene que decir siempre "consultá con tu veterinaria".
 
 **A investigar:** qué collares de salud existen, si son confiables, si se consiguen en Uruguay y si tienen API.
+
+## I4 · Sumarse al hogar escaneando un QR
+
+**La idea:** propuesta del dueño durante las pruebas del 28/10/2026. Hoy, para sumar a alguien al hogar (o como cuidador temporal) se manda un enlace o un código. Con un **QR en pantalla**, la otra persona lo escanea con su celular ahí mismo y queda sumada: más fácil cuando están juntos (la familia en casa, el paseador que viene a buscar al perro).
+
+**Cómo encajaría:** el QR lleva al mismo enlace de un uso que ya existe (`/unirme/<código>`, vence a los 7 días), así que no cambia la seguridad; es otra forma de mostrar la invitación. Lo mismo serviría para el **equipo de una empresa** (`/equipo/<código>`, D117).
+

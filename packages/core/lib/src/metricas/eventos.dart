@@ -32,6 +32,7 @@ abstract final class Eventos {
   static const chatMessage = 'chat_message';
   static const chatBlock = 'chat_block';
   static const sosFollow = 'sos_follow';
+  static const sosPoster = 'sos_poster';
   static const favoriteAdd = 'favorite_add';
   static const placeVisit = 'place_visit';
   static const myVetSet = 'my_vet_set';

@@ -47,11 +47,6 @@ function mostrarReporte(r) {
     `${perdida ? 'Se perdió el' : 'Encontrada el'} ${fecha(r.happened_at)}`;
   document.getElementById('senas').textContent = r.marks || '';
   document.getElementById('descripcion').textContent = r.description || '';
-  if (r.reward) {
-    const p = document.getElementById('recompensa');
-    p.textContent = `Recompensa: ${r.reward}`;
-    p.hidden = false;
-  }
   document.getElementById('consejo').textContent = perdida
     ? 'Si la ves, no la persigas: avisá con el lugar y la hora. Si la tenés con vos, una veterinaria puede leer su microchip.'
     : 'Si es tuya o sabés de quién es, avisá: le llega tu mensaje a quien la encontró.';

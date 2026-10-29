@@ -8,16 +8,15 @@ void main() {
       especieId: 1,
       ubicacion: centroPando,
       fotos: const ['sos-photos/u1/a.jpg'],
-      recompensa: r'$ 2000',
       cuando: DateTime.utc(2026, 10, 14, 12),
     ).toJson();
 
     expect(json['kind'], 'found');
     expect(json['lat'], centroPando.lat);
     expect(
-      json['reward'],
-      isNull,
-      reason: 'solo los perdidos llevan recompensa',
+      json.containsKey('reward'),
+      isFalse,
+      reason: 'sin recompensa (D119)',
     );
     expect(json['happened_at'], '2026-10-14T12:00:00.000Z');
   });

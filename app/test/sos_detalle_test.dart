@@ -22,7 +22,6 @@ SosDetalle _detalle({bool mio = false, String? whatsapp}) => SosDetalle(
   raza: 'Labrador',
   color: 'Negro',
   senas: 'Collar rojo',
-  recompensa: r'$ 2000',
   tieneMicrochip: true,
   cuando: DateTime(2026, 10, 13),
   zona: const Punto(-34.72, -55.95),
@@ -82,7 +81,7 @@ void main() {
 
     expect(find.text('🐶 Perro · Labrador · Negro'), findsOneWidget);
     expect(find.text('Collar rojo'), findsOneWidget);
-    expect(find.text(r'Recompensa: $ 2000'), findsOneWidget);
+    expect(find.textContaining('Recompensa'), findsNothing, reason: 'D119');
     expect(find.textContaining('llevala a una veterinaria'), findsOneWidget);
   });
 

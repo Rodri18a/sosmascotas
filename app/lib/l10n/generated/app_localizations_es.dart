@@ -478,7 +478,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get qrCartelIndicacion => '¿Me encontraste? Escaneame 🐾';
 
   @override
-  String get qrDescargar => 'Descargar para imprimir';
+  String get qrDescargar => 'Descargar la etiqueta para el collar';
 
   @override
   String get qrDescargaNoDisponible =>
@@ -599,7 +599,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get avisosAntiEstafa =>
-      'Nunca pagues por adelantado ni mandes plata para recuperar a tu mascota. Si te la piden, marcá el aviso como estafa.';
+      'Nunca pagues por adelantado ni mandes plata para recuperar a tu mascota. Si te la piden, marcá el aviso como estafa. Si encontraste una mascota y alguien dice que es suya, antes de entregarla pedile fotos de antes con ella o el carné de vacunas y una seña que no publicaste, y encuéntrense en un lugar público.';
 
   @override
   String avisosDe(String nombre) {
@@ -719,13 +719,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get sosTieneMicrochip => 'Tiene microchip';
-
-  @override
-  String get sosRecompensa => 'Recompensa (opcional)';
-
-  @override
-  String get sosRecompensaAyuda =>
-      'Si ofrecés una, ponela acá. Nunca pagues antes de tener a tu mascota.';
 
   @override
   String get sosPrivacidad =>
@@ -872,11 +865,6 @@ class AppLocalizationsEs extends AppLocalizations {
       'Este reporte está oculto mientras lo revisamos.';
 
   @override
-  String sosRecompensaValor(String valor) {
-    return 'Recompensa: $valor';
-  }
-
-  @override
   String get sosConsejoVeterinaria =>
       'Si la tenés con vos, llevala a una veterinaria: pueden leer si tiene microchip y avisar a su familia.';
 
@@ -903,6 +891,86 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get sosCompartir => 'Compartir';
+
+  @override
+  String get sosSenasAyudaEncontrada =>
+      'Guardate una seña sin publicar: te sirve para comprobar quién es su familia.';
+
+  @override
+  String get sosCartel => 'Imprimir cartel';
+
+  @override
+  String get sosCartelExplicacion =>
+      'Un cartel A4 para pegar en el barrio, con la foto y un QR: quien la vea avisa desde el celular, sin la app. No lleva tu teléfono.';
+
+  @override
+  String get sosCartelDondePerdida =>
+      '¿Dónde la vieron por última vez? (opcional)';
+
+  @override
+  String get sosCartelDondeEncontrada => '¿Dónde la encontraste? (opcional)';
+
+  @override
+  String get sosCartelDondeAyuda =>
+      'Un barrio o una referencia, por ejemplo: Centro, cerca de la plaza. Nunca tu dirección.';
+
+  @override
+  String get sosCartelArmar => 'Armar el cartel';
+
+  @override
+  String get sosCartelSeBusca => 'SE BUSCA';
+
+  @override
+  String get sosCartelSeEncontro => 'SE ENCONTRÓ';
+
+  @override
+  String get sosCartelEsTuyo => '¿Es tuyo?';
+
+  @override
+  String sosCartelSenas(String senas) {
+    return 'Señas: $senas';
+  }
+
+  @override
+  String sosCartelFaltaDesde(String fecha) {
+    return 'Falta desde el $fecha';
+  }
+
+  @override
+  String sosCartelEncontradaEl(String fecha) {
+    return 'Encontrada el $fecha';
+  }
+
+  @override
+  String sosCartelVistaEn(String lugar) {
+    return 'Vista por última vez: $lugar';
+  }
+
+  @override
+  String sosCartelEncontradaEn(String lugar) {
+    return 'Encontrada en: $lugar';
+  }
+
+  @override
+  String get sosCartelEscaneaPerdida =>
+      '¿La viste? Escaneá el QR con la cámara del celular y avisale a su familia.';
+
+  @override
+  String get sosCartelEscaneaEncontrada =>
+      '¿Es tuyo o sabés de quién es? Escaneá el QR con la cámara del celular y avisale a quien lo encontró.';
+
+  @override
+  String get sosCartelPrivacidadPerdida =>
+      'No hace falta la app ni una cuenta. Tu mensaje le llega a su familia y ella decide cómo contactarte. Nunca pagues ni cobres nada.';
+
+  @override
+  String get sosCartelPrivacidadEncontrada =>
+      'No hace falta la app ni una cuenta. Tu mensaje le llega a quien lo encontró y decide cómo contactarte. Nunca pagues ni cobres nada.';
+
+  @override
+  String sosCartelPie(String enlace) {
+    return 'SOS Mascota · vecinos que ayudan a encontrar mascotas · $enlace';
+  }
 
   @override
   String get sosPrivacidadDetalle =>

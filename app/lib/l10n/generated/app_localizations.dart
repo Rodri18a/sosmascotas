@@ -877,7 +877,7 @@ abstract class AppLocalizations {
   /// No description provided for @qrDescargar.
   ///
   /// In es, this message translates to:
-  /// **'Descargar para imprimir'**
+  /// **'Descargar la etiqueta para el collar'**
   String get qrDescargar;
 
   /// No description provided for @qrDescargaNoDisponible.
@@ -1081,7 +1081,7 @@ abstract class AppLocalizations {
   /// No description provided for @avisosAntiEstafa.
   ///
   /// In es, this message translates to:
-  /// **'Nunca pagues por adelantado ni mandes plata para recuperar a tu mascota. Si te la piden, marcá el aviso como estafa.'**
+  /// **'Nunca pagues por adelantado ni mandes plata para recuperar a tu mascota. Si te la piden, marcá el aviso como estafa. Si encontraste una mascota y alguien dice que es suya, antes de entregarla pedile fotos de antes con ella o el carné de vacunas y una seña que no publicaste, y encuéntrense en un lugar público.'**
   String get avisosAntiEstafa;
 
   /// No description provided for @avisosDe.
@@ -1294,18 +1294,6 @@ abstract class AppLocalizations {
   /// **'Tiene microchip'**
   String get sosTieneMicrochip;
 
-  /// No description provided for @sosRecompensa.
-  ///
-  /// In es, this message translates to:
-  /// **'Recompensa (opcional)'**
-  String get sosRecompensa;
-
-  /// No description provided for @sosRecompensaAyuda.
-  ///
-  /// In es, this message translates to:
-  /// **'Si ofrecés una, ponela acá. Nunca pagues antes de tener a tu mascota.'**
-  String get sosRecompensaAyuda;
-
   /// No description provided for @sosPrivacidad.
   ///
   /// In es, this message translates to:
@@ -1510,12 +1498,6 @@ abstract class AppLocalizations {
   /// **'Este reporte está oculto mientras lo revisamos.'**
   String get sosEstadoOculto;
 
-  /// No description provided for @sosRecompensaValor.
-  ///
-  /// In es, this message translates to:
-  /// **'Recompensa: {valor}'**
-  String sosRecompensaValor(String valor);
-
   /// No description provided for @sosConsejoVeterinaria.
   ///
   /// In es, this message translates to:
@@ -1563,6 +1545,126 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Compartir'**
   String get sosCompartir;
+
+  /// No description provided for @sosSenasAyudaEncontrada.
+  ///
+  /// In es, this message translates to:
+  /// **'Guardate una seña sin publicar: te sirve para comprobar quién es su familia.'**
+  String get sosSenasAyudaEncontrada;
+
+  /// No description provided for @sosCartel.
+  ///
+  /// In es, this message translates to:
+  /// **'Imprimir cartel'**
+  String get sosCartel;
+
+  /// No description provided for @sosCartelExplicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Un cartel A4 para pegar en el barrio, con la foto y un QR: quien la vea avisa desde el celular, sin la app. No lleva tu teléfono.'**
+  String get sosCartelExplicacion;
+
+  /// No description provided for @sosCartelDondePerdida.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Dónde la vieron por última vez? (opcional)'**
+  String get sosCartelDondePerdida;
+
+  /// No description provided for @sosCartelDondeEncontrada.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Dónde la encontraste? (opcional)'**
+  String get sosCartelDondeEncontrada;
+
+  /// No description provided for @sosCartelDondeAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Un barrio o una referencia, por ejemplo: Centro, cerca de la plaza. Nunca tu dirección.'**
+  String get sosCartelDondeAyuda;
+
+  /// No description provided for @sosCartelArmar.
+  ///
+  /// In es, this message translates to:
+  /// **'Armar el cartel'**
+  String get sosCartelArmar;
+
+  /// No description provided for @sosCartelSeBusca.
+  ///
+  /// In es, this message translates to:
+  /// **'SE BUSCA'**
+  String get sosCartelSeBusca;
+
+  /// No description provided for @sosCartelSeEncontro.
+  ///
+  /// In es, this message translates to:
+  /// **'SE ENCONTRÓ'**
+  String get sosCartelSeEncontro;
+
+  /// No description provided for @sosCartelEsTuyo.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Es tuyo?'**
+  String get sosCartelEsTuyo;
+
+  /// No description provided for @sosCartelSenas.
+  ///
+  /// In es, this message translates to:
+  /// **'Señas: {senas}'**
+  String sosCartelSenas(String senas);
+
+  /// No description provided for @sosCartelFaltaDesde.
+  ///
+  /// In es, this message translates to:
+  /// **'Falta desde el {fecha}'**
+  String sosCartelFaltaDesde(String fecha);
+
+  /// No description provided for @sosCartelEncontradaEl.
+  ///
+  /// In es, this message translates to:
+  /// **'Encontrada el {fecha}'**
+  String sosCartelEncontradaEl(String fecha);
+
+  /// No description provided for @sosCartelVistaEn.
+  ///
+  /// In es, this message translates to:
+  /// **'Vista por última vez: {lugar}'**
+  String sosCartelVistaEn(String lugar);
+
+  /// No description provided for @sosCartelEncontradaEn.
+  ///
+  /// In es, this message translates to:
+  /// **'Encontrada en: {lugar}'**
+  String sosCartelEncontradaEn(String lugar);
+
+  /// No description provided for @sosCartelEscaneaPerdida.
+  ///
+  /// In es, this message translates to:
+  /// **'¿La viste? Escaneá el QR con la cámara del celular y avisale a su familia.'**
+  String get sosCartelEscaneaPerdida;
+
+  /// No description provided for @sosCartelEscaneaEncontrada.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Es tuyo o sabés de quién es? Escaneá el QR con la cámara del celular y avisale a quien lo encontró.'**
+  String get sosCartelEscaneaEncontrada;
+
+  /// No description provided for @sosCartelPrivacidadPerdida.
+  ///
+  /// In es, this message translates to:
+  /// **'No hace falta la app ni una cuenta. Tu mensaje le llega a su familia y ella decide cómo contactarte. Nunca pagues ni cobres nada.'**
+  String get sosCartelPrivacidadPerdida;
+
+  /// No description provided for @sosCartelPrivacidadEncontrada.
+  ///
+  /// In es, this message translates to:
+  /// **'No hace falta la app ni una cuenta. Tu mensaje le llega a quien lo encontró y decide cómo contactarte. Nunca pagues ni cobres nada.'**
+  String get sosCartelPrivacidadEncontrada;
+
+  /// No description provided for @sosCartelPie.
+  ///
+  /// In es, this message translates to:
+  /// **'SOS Mascota · vecinos que ayudan a encontrar mascotas · {enlace}'**
+  String sosCartelPie(String enlace);
 
   /// No description provided for @sosPrivacidadDetalle.
   ///

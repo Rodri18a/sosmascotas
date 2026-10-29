@@ -45,7 +45,6 @@ class NuevoSos {
     this.color,
     this.senas,
     this.descripcion,
-    this.recompensa,
     this.tieneMicrochip = false,
     this.cuando,
   });
@@ -64,7 +63,6 @@ class NuevoSos {
   final String? color;
   final String? senas;
   final String? descripcion;
-  final String? recompensa;
   final bool tieneMicrochip;
   final DateTime? cuando;
 
@@ -82,7 +80,6 @@ class NuevoSos {
     'color': color,
     'marks': senas,
     'description': descripcion,
-    'reward': tipo == TipoSos.perdida ? recompensa : null,
     'has_microchip': tieneMicrochip,
     'happened_at': cuando?.toUtc().toIso8601String(),
   };
@@ -201,7 +198,6 @@ class SosDetalle {
     this.color,
     this.senas,
     this.descripcion,
-    this.recompensa,
     this.tieneMicrochip = false,
     this.whatsapp,
     this.muestraWhatsapp = false,
@@ -226,7 +222,6 @@ class SosDetalle {
     color: json['color'] as String?,
     senas: json['marks'] as String?,
     descripcion: json['description'] as String?,
-    recompensa: json['reward'] as String?,
     tieneMicrochip: json['has_microchip'] == true,
     whatsapp: json['whatsapp'] as String?,
     muestraWhatsapp: json['show_whatsapp'] == true,
@@ -249,7 +244,6 @@ class SosDetalle {
   final String? color;
   final String? senas;
   final String? descripcion;
-  final String? recompensa;
   final bool tieneMicrochip;
   final String? whatsapp;
   final bool muestraWhatsapp;

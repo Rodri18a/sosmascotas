@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -16,7 +17,9 @@ import '../../mascotas/textos_mascota.dart';
 import '../../metricas/metricas.dart';
 import '../../noticias/noticias_repositorio.dart';
 import '../../router.dart';
+import '../../sos/cartel_sos_pdf.dart';
 import '../../sos/sos_repositorio.dart';
+import '../../utiles/descargar.dart';
 import '../chat/chat_screen.dart';
 
 /// Detalle de un SOS: fotos, datos, zona aproximada y cómo ayudar.
@@ -54,6 +57,81 @@ class _Detalle extends ConsumerWidget {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text(context.t.sosEnlaceCopiado)));
+    }
+  }
+
+  Future<void> _cartel(BuildContext context, WidgetRef ref) async {
+    final t = context.t;
+    final mensajes = ScaffoldMessenger.of(context);
+    final perdida = detalle.tipo == TipoSos.perdida;
+    final donde = await showDialog<String>(
+      context: context,
+      builder: (_) => _DialogoCartel(perdida: perdida),
+    );
+    if (donde == null || !context.mounted) return;
+    final fecha = DateFormat("d 'de' MMMM", 'es').format(detalle.cuando);
+    final lugar = donde.trim().isEmpty ? null : donde.trim();
+    final url = _url(ref);
+    final pdf = await cartelSosPdf(
+      url: url,
+      perdida: perdida,
+      foto: await _bajarFoto(ref.read(sosRepositorioProvider)),
+      normal: await rootBundle.load('assets/fuentes/SourceSans3-Regular.ttf'),
+      negrita: await rootBundle.load('assets/fuentes/SourceSans3-Bold.ttf'),
+      textos: (
+        titulo: perdida ? t.sosCartelSeBusca : t.sosCartelSeEncontro,
+        subtitulo: perdida
+            ? (detalle.nombre ?? detalle.especie)
+            : t.sosCartelEsTuyo,
+        datos: [
+          detalle.especie,
+          ?detalle.raza,
+          if (detalle.sexo != Sexo.unknown) textoSexo(t, detalle.sexo),
+          ?detalle.color,
+        ].join(' · '),
+        senas: detalle.senas == null ? null : t.sosCartelSenas(detalle.senas!),
+        descripcion: detalle.descripcion,
+        cuando: perdida
+            ? t.sosCartelFaltaDesde(fecha)
+            : t.sosCartelEncontradaEl(fecha),
+        donde: lugar == null
+            ? null
+            : (perdida
+                  ? t.sosCartelVistaEn(lugar)
+                  : t.sosCartelEncontradaEn(lugar)),
+        escanea: perdida
+            ? t.sosCartelEscaneaPerdida
+            : t.sosCartelEscaneaEncontrada,
+        privacidad: perdida
+            ? t.sosCartelPrivacidadPerdida
+            : t.sosCartelPrivacidadEncontrada,
+        pie: t.sosCartelPie(url.replaceFirst(RegExp('^https?://'), '')),
+      ),
+    );
+    final ok = descargarArchivo(
+      pdf,
+      'cartel-${(detalle.nombre ?? detalle.especie).toLowerCase()}.pdf',
+      'application/pdf',
+    );
+    if (ok) {
+      ref.read(metricasProvider).track(Eventos.sosPoster, targetId: detalle.id);
+    } else {
+      mensajes.showSnackBar(SnackBar(content: Text(t.historialNoDisponible)));
+    }
+  }
+
+  /// La primera foto del reporte, o nada si no se puede bajar (el cartel sale
+  /// igual, sin foto).
+  Future<Uint8List?> _bajarFoto(SosRepositorio repo) async {
+    final url = detalle.fotos.isEmpty
+        ? null
+        : repo.urlFoto(detalle.fotos.first);
+    if (url == null) return null;
+    try {
+      final r = await http.get(Uri.parse(url));
+      return r.statusCode == 200 ? r.bodyBytes : null;
+    } on Exception {
+      return null;
     }
   }
 
@@ -271,13 +349,6 @@ class _Detalle extends ConsumerWidget {
                 const SizedBox(height: 12),
                 Text(descripcion),
               ],
-              if (detalle.recompensa case final recompensa?) ...[
-                const SizedBox(height: 12),
-                Text(
-                  t.sosRecompensaValor(recompensa),
-                  style: tema.textTheme.titleSmall,
-                ),
-              ],
               const SizedBox(height: 16),
               Card(
                 child: ListTile(
@@ -374,6 +445,16 @@ class _Detalle extends ConsumerWidget {
                 icon: const Icon(Icons.share_outlined),
                 label: Text(t.sosCompartir),
               ),
+              // Cartel para pegar en el barrio (D119): lo puede imprimir
+              // cualquiera, no solo quien reportó.
+              if (activo) ...[
+                const SizedBox(height: 8),
+                OutlinedButton.icon(
+                  onPressed: () => _cartel(context, ref),
+                  icon: const Icon(Icons.print_outlined),
+                  label: Text(t.sosCartel),
+                ),
+              ],
               const SizedBox(height: 8),
               Text(t.sosPrivacidadDetalle, style: tema.textTheme.bodySmall),
               if (activo && !detalle.esMio) ...[
@@ -386,6 +467,65 @@ class _Detalle extends ConsumerWidget {
               ],
             ],
           ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Antes de armar el cartel: dónde la vieron (o la encontraron), opcional.
+/// Devuelve el texto (puede ser vacío) o `null` si se canceló.
+class _DialogoCartel extends StatefulWidget {
+  const _DialogoCartel({required this.perdida});
+
+  final bool perdida;
+
+  @override
+  State<_DialogoCartel> createState() => _DialogoCartelState();
+}
+
+class _DialogoCartelState extends State<_DialogoCartel> {
+  final _donde = TextEditingController();
+
+  @override
+  void dispose() {
+    _donde.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final t = context.t;
+    return AlertDialog(
+      title: Text(t.sosCartel),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(t.sosCartelExplicacion),
+          const SizedBox(height: 12),
+          TextField(
+            controller: _donde,
+            maxLength: 60,
+            textCapitalization: TextCapitalization.sentences,
+            decoration: InputDecoration(
+              labelText: widget.perdida
+                  ? t.sosCartelDondePerdida
+                  : t.sosCartelDondeEncontrada,
+              helperText: t.sosCartelDondeAyuda,
+              helperMaxLines: 2,
+            ),
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text(t.cancelar),
+        ),
+        FilledButton(
+          onPressed: () => Navigator.pop(context, _donde.text),
+          child: Text(t.sosCartelArmar),
         ),
       ],
     );
