@@ -81,7 +81,7 @@ Si a una cuenta no le llega el código de ingreso, se genera un enlace de un uso
 | SO-07 | ¡Apareció! | Marcar «¡Apareció!» | Se archiva, sale del mapa y pregunta «¿Compartís la buena noticia?» | ⬜ |
 | SO-08 | Reportar publicación | Con 3 cuentas distintas, reportar el mismo SOS | Se oculta solo y aparece en la moderación del portal | ⬜ |
 | SO-09 | Push a la zona | B con la zona guardada cerca de A; A publica un SOS | A B le llega «🐾 Se perdió un perro cerca tuyo» | ⬜ |
-| SO-10 | Tope de 3 por día | Publicar un cuarto SOS en el día | Lo frena con un mensaje claro | ⬜ |
+| SO-10 | Tope de 3 por día | Publicar un cuarto SOS en el día | Lo frena con un mensaje claro | ✅ 29/10 |
 | SO-11 | Seguir un reporte | Con B: «Seguir este reporte»; A marca «¡Apareció!» | A B le llega «¡<nombre> volvió a casa!», una sola vez | ⬜ |
 | SO-12 | Zona aproximada | Ajustes → borrar la zona y guardarla de nuevo | Se guarda el centro de la celda, no el punto exacto; borrada no vuelve sola | ⬜ |
 | SO-13 | Imprimir cartel (D119) | Reporte activo (propio o de otra persona) → «Imprimir cartel» → escribir dónde la vieron → «Armar el cartel». Repetir con una encontrada | Baja un PDF A4: «SE BUSCA · nombre» en rojo o «SE ENCONTRÓ · ¿Es tuyo?», foto, datos, dónde la vieron y QR. **Sin teléfono ni recompensa.** Escanear el QR abre la página del reporte y **no** le llega aviso al dueño hasta que alguien completa «Avisar» | ✅ 29/10 |
