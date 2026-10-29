@@ -2844,12 +2844,12 @@ def main():
                                                                'enabled': True}, {**ADMIN, 'Prefer': 'return=minimal'})
             try:
                 plan_c = rest('POST', 'rpc/mi_plan_usuario', {}, c)[1]
-                caso('C empieza en Gratis con tope de 5 mascotas',
-                     plan_c['plan'] == 'free' and plan_c['efectivo'] == 'free' and plan_c['limite_mascotas'] == 5)
-                caso('C carga 5 mascotas', all(rest('POST', 'pets', {'name': f'Plan {i}', 'species_id': 1}, c,
-                                                    'return=minimal')[0] == 201 for i in range(5)))
-                caso('la 6.ª no (plan Gratis)', 'limite_mascotas' in json.dumps(
-                    rest('POST', 'pets', {'name': 'Plan 6', 'species_id': 1}, c)[1]))
+                caso('C empieza en Gratis con tope de 2 mascotas',
+                     plan_c['plan'] == 'free' and plan_c['efectivo'] == 'free' and plan_c['limite_mascotas'] == 2)
+                caso('C carga 2 mascotas', all(rest('POST', 'pets', {'name': f'Plan {i}', 'species_id': 1}, c,
+                                                    'return=minimal')[0] == 201 for i in range(2)))
+                caso('la 3.ª no (plan Gratis)', 'limite_mascotas' in json.dumps(
+                    rest('POST', 'pets', {'name': 'Plan 3', 'species_id': 1}, c)[1]))
                 caso('C pide Pro', rest('POST', 'rpc/pedir_plan_usuario', {'p_plan': 'pro'}, c)[0] in (200, 204))
                 caso('una sola vez', rest('POST', 'rpc/pedir_plan_usuario', {'p_plan': 'family'}, c)[0] >= 400)
                 caso('C no lee los pedidos ni las suscripciones',
@@ -2871,7 +2871,7 @@ def main():
                 plan_c = rest('POST', 'rpc/mi_plan_usuario', {}, c)[1]
                 caso('X le da Pro a C y el pedido se cierra', s_su == 200 and plan_c['plan'] == 'pro'
                      and plan_c['limite_mascotas'] is None and plan_c['pedido_abierto'] is None)
-                caso('con Pro, la 6.ª mascota sí', rest('POST', 'pets', {'name': 'Plan 6', 'species_id': 1}, c,
+                caso('con Pro, la 6.ª mascota sí', rest('POST', 'pets', {'name': 'Plan 3', 'species_id': 1}, c,
                                                        'return=minimal')[0] == 201)
                 caso('X ve la suscripción de C', any(s['id'] == sub_c and s['plan'] == 'pro'
                                                      for s in rest('POST', 'rpc/admin_suscripciones_usuarios', {}, x)[1]))

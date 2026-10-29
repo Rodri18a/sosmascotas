@@ -8839,7 +8839,7 @@ abstract class AppLocalizations {
   /// No description provided for @miPlanIncluyeGratis.
   ///
   /// In es, this message translates to:
-  /// **'Todo lo que cuida a tu mascota: SOS, avisos por zona, chapita QR, foto, mapa, chat y recordatorios de medicación, comida y vacunas. Hasta 5 mascotas.'**
+  /// **'Todo lo que cuida a tu mascota: SOS, avisos por zona, chapita QR, foto, mapa, chat y recordatorios de medicación, comida y vacunas. Hasta 2 mascotas.'**
   String get miPlanIncluyeGratis;
 
   /// No description provided for @miPlanIncluyePro.
@@ -8905,7 +8905,7 @@ abstract class AppLocalizations {
   /// No description provided for @miPlanLimiteMascotas.
   ///
   /// In es, this message translates to:
-  /// **'Con el plan Gratis podés tener hasta 5 mascotas. Con Pro o Familia, todas las que quieras.'**
+  /// **'Con el plan Gratis podés tener hasta 2 mascotas. Con Pro o Familia, todas las que quieras.'**
   String get miPlanLimiteMascotas;
 
   /// No description provided for @miPlanVerPlanes.

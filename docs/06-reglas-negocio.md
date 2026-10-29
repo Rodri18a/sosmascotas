@@ -10,7 +10,7 @@
 |---|---|---|---|
 | SOS, avisos, QR, foto, mapa, chat | ✅ | ✅ | ✅ |
 | Recordatorios de medicación, comida y vacunas | ✅ | ✅ | ✅ |
-| Mascotas | Hasta 5 (D111) | Ilimitadas | Ilimitadas |
+| Mascotas | Hasta 2 (D118) | Ilimitadas | Ilimitadas |
 | Sin publicidad (barra de anuncio chica) | | ✅ | ✅ |
 | Sin repreguntas de "Busco veterinaria" tras un "Ahora no" | | ✅ | ✅ |
 | Filtros guardados (los favoritos son gratis, D112) | | ✅ | ✅ |

@@ -26,7 +26,7 @@ Pantalla inicial: logo sobre el azul petróleo de la marca (`#0F5E7A`, D62) dura
 
 ## 2. Mascotas — Fase 0 (básico) / Fase 1 (libreta)
 
-- Varias mascotas por usuario. El plan Gratis permite **hasta 5** y Pro o Familia, ilimitadas (D111: era 2). ✅ 2.1 (D111), detrás de `planes_usuario`: la base corta la 6.ª; quien ya tenga más las conserva. Ajustes → **Mi plan** muestra qué incluye cada plan y permite pedir Pro o Familia.
+- Varias mascotas por usuario. El plan Gratis permite **hasta 2** y Pro o Familia, ilimitadas (D118: vuelve a 2; D111 lo había subido a 5). ✅ 2.1 (D111), detrás de `planes_usuario`: la base corta la 3.ª; quien ya tenga más las conserva. Ajustes → **Mi plan** muestra qué incluye cada plan y permite pedir Pro o Familia.
 - Ficha: nombre, especie, raza, sexo, color, señas particulares, fecha de nacimiento (se muestra la edad), **foto (gratis)**, microchip (opcional), castrado/a, notas.
 - **Microchip (Fase 0):** número de 15 dígitos, validado (ISO 11784).
 - **RENAC (Fase 1):** estado declarado (registrado / no registrado / no sé), guía "Cómo registrar a tu mascota", recordatorio si no está registrada, y botón **"Verificar en el RENAC"**, que abre la consulta pública oficial. Ver `investigacion/renac.md`.

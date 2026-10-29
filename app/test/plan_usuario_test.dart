@@ -15,8 +15,8 @@ Future<PlanUsuarioFalso> _abrir(
   WidgetTester tester, {
   MiPlanUsuario plan = const MiPlanUsuario(
     plan: Plan.free,
-    mascotas: 3,
-    limiteMascotas: 5,
+    mascotas: 1,
+    limiteMascotas: 2,
   ),
   bool prendida = true,
   List<Map<String, Object?>>? eventos,
@@ -64,7 +64,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Plan Gratis'), findsOneWidget);
-    expect(find.textContaining('3 mascotas de 5'), findsOneWidget);
+    expect(find.textContaining('1 mascota de 2'), findsOneWidget);
     expect(find.textContaining('es gratis siempre'), findsOneWidget);
     await tester.scrollUntilVisible(
       find.textContaining('30 días gratis de Familia'),

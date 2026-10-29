@@ -5247,7 +5247,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get miPlanIncluyeGratis =>
-      'Todo lo que cuida a tu mascota: SOS, avisos por zona, chapita QR, foto, mapa, chat y recordatorios de medicación, comida y vacunas. Hasta 5 mascotas.';
+      'Todo lo que cuida a tu mascota: SOS, avisos por zona, chapita QR, foto, mapa, chat y recordatorios de medicación, comida y vacunas. Hasta 2 mascotas.';
 
   @override
   String get miPlanIncluyePro =>
@@ -5302,7 +5302,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get miPlanLimiteMascotas =>
-      'Con el plan Gratis podés tener hasta 5 mascotas. Con Pro o Familia, todas las que quieras.';
+      'Con el plan Gratis podés tener hasta 2 mascotas. Con Pro o Familia, todas las que quieras.';
 
   @override
   String get miPlanVerPlanes => 'Ver planes';

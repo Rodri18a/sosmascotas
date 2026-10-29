@@ -28,8 +28,8 @@ void main() {
     final p = MiPlanUsuario.fromJson({
       'plan': 'free',
       'efectivo': 'free',
-      'mascotas': 5,
-      'limite_mascotas': 5,
+      'mascotas': 2,
+      'limite_mascotas': 2,
       'pedido_abierto': 'pro',
     });
     expect(p.esPro, isFalse);

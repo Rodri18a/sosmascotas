@@ -44,10 +44,10 @@ Si a una cuenta no le llega el código de ingreso, se genera un enlace de un uso
 
 | ID | Caso | Pasos | Resultado esperado | Estado |
 |---|---|---|---|---|
-| MA-01 | Alta con foto | Mascotas → Agregar → especie, raza, foto con GPS | Se guarda; la foto se ve comprimida y **sin datos de ubicación** | ⬜ |
-| MA-02 | Edición | Cambiar nombre, raza o foto | Se actualiza en la lista y en la ficha | ⬜ |
-| MA-03 | Fila superior | Con 2 o más mascotas | Se elige una y filtra lo que se muestra | ⬜ |
-| MA-04 | Límite del plan Gratis | Con `planes_usuario`: cargar una sexta mascota en Gratis | Avisa que el tope es 5 y ofrece Pro | ⬜ |
+| MA-01 | Alta con foto | Mascotas → Agregar → especie, raza, foto con GPS | Se guarda; la foto se ve comprimida y **sin datos de ubicación** | ✅ 28/10 |
+| MA-02 | Edición | Cambiar nombre, raza o foto | Se actualiza en la lista y en la ficha | ✅ 28/10 |
+| MA-03 | Fila superior | Con 2 o más mascotas | Se elige una y filtra lo que se muestra | ✅ 28/10 |
+| MA-04 | Límite del plan Gratis | Con `planes_usuario`: cargar una tercera mascota en Gratis | Avisa que el tope es 2 y ofrece Pro (D118) | ⬜ |
 
 ## 3. Chapita QR y contacto inverso (Fase 0)
 
