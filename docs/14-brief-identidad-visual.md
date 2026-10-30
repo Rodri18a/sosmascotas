@@ -114,7 +114,7 @@ volante A5 y post cuadrado para redes.
 1. Cargar la paleta y las tipografías en `app/lib/src/theme/app_theme.dart` (hoy el tema sale del verde `#1F8A5B`) y en la web pública (`web-publica/assets/estilo.css`).
 2. Reemplazar los íconos de `app/web/icons/` y el favicon: en **0.8.1** se pusieron íconos **provisorios** (huella hueso sobre azul petróleo, D65). Con el logo final: cambiar `_dibujarMarca` en `app/tool/generar_iconos.dart` (o cargar el PNG del logo) y correr `dart run tool/generar_iconos.dart` desde `app/`.
 3. Colores de los pines en `coloresPin` (`app/lib/src/mapa/mapa_vista.dart`).
-4. Anotar la decisión en `12-decisiones.md` y cerrar el paso **0.0.9b**.
+4. Anotar la decisión en `12-decisiones.md` y cerrar el paso **0.0.9b**. ✅ Hecho el 30/10/2026 con la guía de marca (D122).
 
 ## 10. Decisión: C · Cielo + temas Pro (15/10/2026, D62)
 

@@ -11,7 +11,7 @@ Actualizado el 27/10/2026. Avance = pasos tildados `[x]` sobre el total; las hor
 
 | Fase | Estado | Pasos hechos | Avance | Horas estimadas (hechas / total) |
 |---|---|---|---|---|
-| 0 · SOS | 🔄 En curso | 46 / 72 | ▓▓▓▓▓▓░░░░ 64 % | ≈ 105 / 160 h |
+| 0 · SOS | 🔄 En curso | 47 / 72 | ▓▓▓▓▓▓▓░░░ 65 % | ≈ 108 / 160 h |
 | 1 · MVP | 🔄 Adelantada (código casi completo) | 43 / 55 | ▓▓▓▓▓▓▓▓░░ 78 % | ≈ 125 / 160 h |
 | 2 · Monetización | 🔄 Adelantada | 19 / 21 | ▓▓▓▓▓▓▓▓▓░ 90 % | a detallar |
 | 3 · Servicios | 🔄 Empezada | 3 / 8 (3.2 hecho en parte) | ▓▓▓▓░░░░░░ 38 % | a detallar |
@@ -22,7 +22,7 @@ Actualizado el 27/10/2026. Avance = pasos tildados `[x]` sobre el total; las hor
 
 | Etapa | Pasos hechos | Horas estimadas (hechas / total) | Qué falta |
 |---|---|---|---|
-| 0.0 · Documentación y validación | 2 / 16 | 2 / 34 h | Casi toda la validación sin código (competencia, entrevistas, logo, legal, contador, chapita) |
+| 0.0 · Documentación y validación | 3 / 16 | 5 / 34 h | Casi toda la validación sin código (competencia, entrevistas, legal, contador, chapita) |
 | 0.1 · Base técnica | 7 / 7 ✅ | 11 / 11 h | — |
 | 0.2 · Cuentas | 6 / 6 ✅ | 13 / 13 h | — |
 | 0.3 · Mascotas | 4 / 4 ✅ | 10 / 10 h | — |
@@ -59,7 +59,7 @@ Fase 2, lo que falta: 2.1 (solo el cobro dentro de la app) y 2.9 (solo la venta 
 
 Lo que quedó pedido o decidido en la última sesión y todavía no está hecho. Cada ítem dice dónde está su detalle.
 
-1. ~~Elegir la identidad visual~~ ✅ 15/10: **C · Cielo** (D62). Falta **generar el logo y las piezas** con el prompt de `docs/14-brief-identidad-visual.md` §8 (IA o diseñador) para cerrar el 0.0.9b.
+1. ~~Elegir la identidad visual~~ ✅ 15/10: **C · Cielo** (D62). Logo y piezas ✅ 30/10 con la guía de marca (D122): 0.0.9b cerrado.
 2. ~~Aplicar la identidad a la interfaz~~ ✅ 0.8.0 (15/10) y 0.8.0a, temas Pro (16/10).
 3. ~~Aprobar la habilitación gradual~~ ✅ 16/10 (D64). Falta implementar los pasos **0.8.0b–0.8.0e** (abajo) antes del lanzamiento.
 4. **0.8.1 PWA instalable**: el plan ya está acordado (ver el paso). Conviene hacerlo **después** del 0.8.0, así los íconos ya son los definitivos.
@@ -100,7 +100,7 @@ Regla de trabajo: **por cada etapa de desarrollo, avanzar al menos un paso de va
 - [ ] 0.0.8 🧪 Mostrar el prototipo a 5–8 comercios y anotar candidatos a Socios Fundadores (⏱️ 6 h)
 - [ ] 0.0.8b 🧪 Analizar las entrevistas en `investigacion/entrevistas.md` y aplicar los **criterios de corte** de `11-roadmap.md` (⏱️ 2 h)
 - [ ] 0.0.9 🧪 Decidir los pendientes P1 (nombre) y P2 (horas por semana). Verificar que el nombre esté libre en DNPI, tiendas de apps y dominios (⏱️ 2 h)
-- [ ] 0.0.9b 🧪 Identidad mínima: logo simple, colores y tipografía. **Requisito antes de imprimir chapitas o volantes** (⏱️ 3 h) → 15/10/2026: **elegida C · Cielo**, paleta, tipografías y pines definidos (D62, `docs/14-brief-identidad-visual.md` §10). **Falta:** generar el logo y las piezas con el prompt de la §8 (IA o diseñador) y guardarlas en `reference/identidad/`
+- [x] 0.0.9b 🧪 Identidad mínima: logo simple, colores y tipografía. **Requisito antes de imprimir chapitas o volantes** (⏱️ 3 h) → 15/10/2026: **elegida C · Cielo**, paleta, tipografías y pines definidos (D62, `docs/14-brief-identidad-visual.md` §10). **Falta:** generar el logo y las piezas con el prompt de la §8 (IA o diseñador) y guardarlas en `reference/identidad/` — **30/10/2026: cerrado** con la guía de marca definitiva (`guias/Guía de marca SOS Mascotas.png`, D122): nombre «SOS Mascotas», logo (pin con huella y aro) dibujado en `app/lib/src/widgets/logo.dart`, ícono de la app, paleta, tipografías, íconos de línea y pines en gota, todo aplicado en la app, la web y la web pública. Los íconos se generan con `flutter test tool/iconos_marca_test.dart` (reemplaza a `generar_iconos.dart`)
 - [ ] 0.0.9c 🧪 💳 Pedir presupuesto a una **asesoría legal** (términos, privacidad, registro URCDP, compromiso de adopción) y enviarle el borrador (ya escrito: `app/assets/legal/terminos.md` y `privacidad.md`). **Arrancar temprano: puede llevar semanas** (⏱️ 2 h)
 - [ ] 0.0.9d 🧪 Consultar con un **contador** cómo formalizar (unipersonal, SAS u otra), DGI, BPS, facturación electrónica: costo y plazos. **Requisito antes del primer cobro**, sea de chapitas, sponsors o planes (⏱️ 1 h)
 - [ ] 0.0.10 🧪 Prototipo de chapita con el amigo de impresión 3D: 3–5 muestras con distintos materiales y métodos de QR, costo por unidad y tiempo por lote (P15) (⏱️ 2 h)

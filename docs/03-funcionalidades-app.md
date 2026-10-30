@@ -12,7 +12,7 @@ Barra inferior: **Explorar** (mapa) · **Noticias** · **SOS** (en rojo) · **Ma
 - **Secciones:** Adopción, Mensajes, Avisos, Mi hogar, Mis pedidos, Mi negocio y Ajustes, cada una según su funcionalidad gradual y si hace falta cuenta.
 Ayuda queda para urgencias (911, guardias, refugios y denuncias). Los **próximos eventos** de la zona están arriba de Noticias → Comunidad (D94).
 
-Pantalla inicial: logo sobre el azul petróleo de la marca (`#0F5E7A`, D62) durante 1,5 segundos. Hasta tener el logo (0.0.9b) se usa 🐾 y el nombre en Sora.
+Pantalla inicial: el logo de la marca (D122) sobre el fondo claro `#EAF4FA` (oscuro `#0E1E26` en modo oscuro) mientras carga.
 
 ---
 
