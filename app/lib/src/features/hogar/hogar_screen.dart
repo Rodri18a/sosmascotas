@@ -86,7 +86,7 @@ class _Contenido extends ConsumerWidget {
         const SizedBox(height: 8),
         OutlinedButton.icon(
           onPressed: lleno ? null : () => _invitarCuidador(context, ref),
-          icon: const Icon(Icons.schedule),
+          icon: const Icon(Icons.schedule_outlined),
           label: Text(t.hogarInvitarCuidador),
         ),
         if (lleno)
@@ -107,7 +107,7 @@ class _Contenido extends ConsumerWidget {
           const SizedBox(height: 8),
           OutlinedButton.icon(
             onPressed: () => _irme(context, ref, h),
-            icon: const Icon(Icons.logout),
+            icon: const Icon(Icons.logout_outlined),
             label: Text(t.hogarIrme),
           ),
         ],
@@ -182,7 +182,7 @@ class _Contenido extends ConsumerWidget {
                 if (context.mounted) Navigator.pop(context);
                 mensajes.showSnackBar(SnackBar(content: Text(t.hogarCopiado)));
               },
-              icon: const Icon(Icons.copy),
+              icon: const Icon(Icons.copy_outlined),
               label: Text(t.hogarCopiar),
             ),
           ],
@@ -379,7 +379,7 @@ class _UnirmeScreenState extends ConsumerState<UnirmeScreen> {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          const Icon(Icons.family_restroom, size: 64),
+          const Icon(Icons.family_restroom_outlined, size: 64),
           const SizedBox(height: 16),
           Text(t.unirmeTexto),
           const SizedBox(height: 24),

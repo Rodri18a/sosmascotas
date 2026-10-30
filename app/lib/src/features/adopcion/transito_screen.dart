@@ -736,7 +736,7 @@ class TarjetaTransitoRefugio extends StatelessWidget {
       leading: const Icon(Icons.house_outlined),
       title: Text(context.t.transitoRefugioTitulo),
       subtitle: Text(context.t.transitoRefugioTarjeta),
-      trailing: const Icon(Icons.chevron_right),
+      trailing: const Icon(Icons.chevron_right_outlined),
       onTap: () => context.push(Rutas.transitoRefugio(negocioId)),
     ),
   );

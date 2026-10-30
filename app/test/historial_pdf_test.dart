@@ -80,7 +80,7 @@ void main() {
         grupo: (t) => 'Vacunas',
         fecha: (f) => '${f.day}/${f.month}/${f.year}',
         proxima: (f) => 'Próxima: $f',
-        pie: 'Hecho con SOS Mascota',
+        pie: 'Hecho con SOS Mascotas',
       ),
     );
     expect(latin1.decode(bytes.sublist(0, 5)), '%PDF-');

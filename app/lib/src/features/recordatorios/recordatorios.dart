@@ -86,7 +86,7 @@ class TarjetaRecordatorios extends ConsumerWidget {
                       ),
                       title: Text(r.titulo),
                       subtitle: Text(_estado(context, r, ahora)),
-                      trailing: const Icon(Icons.chevron_right),
+                      trailing: const Icon(Icons.chevron_right_outlined),
                       onTap: () => context.push(
                         Rutas.editarRecordatorio(mascotaId, r.id),
                       ),
@@ -822,7 +822,7 @@ class _FormularioState extends ConsumerState<_Formulario> {
                           ),
                         ),
                       ActionChip(
-                        avatar: const Icon(Icons.add, size: 18),
+                        avatar: const Icon(Icons.add_outlined, size: 18),
                         label: Text(t.recordatorioAgregarHorario),
                         onPressed: _agregarHorario,
                       ),

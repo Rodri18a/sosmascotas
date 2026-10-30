@@ -256,7 +256,7 @@ class _DescuentosNegocioState extends ConsumerState<DescuentosNegocioScreen> {
                 if (puede)
                   TextButton.icon(
                     onPressed: _editar,
-                    icon: const Icon(Icons.add),
+                    icon: const Icon(Icons.add_outlined),
                     label: Text(t.descuentoNuevo),
                   ),
               ],
@@ -382,7 +382,7 @@ class TarjetaDescuentosNegocio extends StatelessWidget {
       leading: const Icon(Icons.local_offer_outlined),
       title: Text(context.t.descuentosTitulo),
       subtitle: Text(context.t.descuentosTarjetaNegocio),
-      trailing: const Icon(Icons.chevron_right),
+      trailing: const Icon(Icons.chevron_right_outlined),
       onTap: () => context.push(Rutas.descuentosNegocio(negocioId)),
     ),
   );

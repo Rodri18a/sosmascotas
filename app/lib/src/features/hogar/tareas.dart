@@ -12,11 +12,11 @@ import '../../utiles/enlaces.dart';
 import '../recordatorios/recordatorios.dart';
 
 IconData iconoTarea(TipoTarea tipo) => switch (tipo) {
-  TipoTarea.walk => Icons.directions_walk,
+  TipoTarea.walk => Icons.directions_walk_outlined,
   TipoTarea.food => Icons.restaurant_outlined,
   TipoTarea.bath => Icons.bathtub_outlined,
   TipoTarea.vet => Icons.local_hospital_outlined,
-  TipoTarea.other => Icons.task_alt,
+  TipoTarea.other => Icons.task_alt_outlined,
 };
 
 String textoTipoTarea(AppLocalizations t, TipoTarea tipo) => switch (tipo) {
@@ -73,7 +73,7 @@ class TarjetaTareas extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ListTile(
-              leading: const Icon(Icons.checklist),
+              leading: const Icon(Icons.checklist_outlined),
               title: Text(t.tareasTitulo, style: tema.textTheme.titleMedium),
             ),
             switch (tareas) {
@@ -126,7 +126,7 @@ class TarjetaTareas extends ConsumerWidget {
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
               child: OutlinedButton.icon(
                 onPressed: yo == null ? null : () => _nueva(context, ref, yo),
-                icon: const Icon(Icons.add_task),
+                icon: const Icon(Icons.add_task_outlined),
                 label: Text(t.tareasAgregar),
               ),
             ),

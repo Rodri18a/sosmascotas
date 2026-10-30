@@ -161,7 +161,7 @@ void main() {
 
     expect(find.text('Una vez al mes'), findsOneWidget);
     await tester.enterText(find.byType(TextField), 'Depende del pelo');
-    await _tocar(tester, find.byIcon(Icons.send));
+    await _tocar(tester, find.byIcon(Icons.send_outlined));
     expect(comunidad.comentarios.single, ('p1', 'Depende del pelo'));
 
     await _tocar(tester, find.text('Opciones'));

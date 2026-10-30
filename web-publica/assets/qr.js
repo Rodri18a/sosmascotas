@@ -17,7 +17,7 @@ function mostrarEstado(clave) {
 
 // Chapita física sin vincular (1.8b.3, D95): invita a su dueño a activarla.
 function mostrarSinActivar(codigo) {
-  document.title = 'Chapita sin activar · SOS Mascota';
+  document.title = 'Chapita sin activar · SOS Mascotas';
   document.getElementById('codigo-chapita').textContent = codigo;
   if (CONF.appUrl) {
     const boton = document.getElementById('activar-chapita');
@@ -29,7 +29,7 @@ function mostrarSinActivar(codigo) {
 
 function mostrarMascota(datos) {
   const m = datos.pet;
-  document.title = `${m.name} · SOS Mascota`;
+  document.title = `${m.name} · SOS Mascotas`;
   document.getElementById('nombre').textContent = m.name;
   document.getElementById('detalle').textContent =
     [m.species_icon && m.species ? `${m.species_icon} ${m.species}` : m.species, m.breed, m.color]

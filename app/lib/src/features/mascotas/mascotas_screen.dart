@@ -35,18 +35,18 @@ class MascotasScreen extends ConsumerWidget {
         destino: Rutas.mascotaNueva,
         motivo: t.mascotasMotivoCuenta,
       ),
-      icon: const Icon(Icons.add),
+      icon: const Icon(Icons.add_outlined),
       label: Text(t.mascotasAgregar),
     );
 
     final cuerpo = switch (mascotas) {
       _ when !conectado => EnConstruccion.vacio(
-        icono: Icons.pets,
+        icono: Icons.pets_outlined,
         descripcion: t.mascotasDescripcion,
         accion: agregar(),
       ),
       AsyncData(value: final lista) when lista.isEmpty => EnConstruccion.vacio(
-        icono: Icons.pets,
+        icono: Icons.pets_outlined,
         descripcion: t.mascotasVacio,
         accion: agregar(),
       ),
@@ -66,7 +66,7 @@ class MascotasScreen extends ConsumerWidget {
       floatingActionButton: hayLista
           ? FloatingActionButton.extended(
               onPressed: () => context.push(Rutas.mascotaNueva),
-              icon: const Icon(Icons.add),
+              icon: const Icon(Icons.add_outlined),
               label: Text(t.mascotasAgregar),
             )
           : null,
@@ -185,7 +185,7 @@ class _FilaMascota extends ConsumerWidget {
       leading: FotoMascota(ruta: mascota.fotoPath, icono: especie?.icono),
       title: Text(mascota.nombre),
       subtitle: detalle.isEmpty ? null : Text(detalle),
-      trailing: const Icon(Icons.chevron_right),
+      trailing: const Icon(Icons.chevron_right_outlined),
       onTap: () => context.push(Rutas.fichaMascota(mascota.id)),
     );
   }

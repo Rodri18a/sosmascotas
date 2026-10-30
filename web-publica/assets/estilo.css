@@ -1,5 +1,5 @@
-/* Web pública de SOS Mascota: liviana, legible al sol y en celulares de gama baja. */
-/* Identidad C · Cielo (D62, docs/14-brief-identidad-visual.md §10). Fuentes propias: sin pedidos a terceros. */
+/* Web pública de SOS Mascotas: liviana, legible al sol y en celulares de gama baja. */
+/* Identidad C · Cielo con la guía de marca (D62, D122, docs/14-brief-identidad-visual.md §10). Fuentes propias: sin pedidos a terceros. */
 @font-face {
   font-family: 'Sora'; font-style: normal; font-weight: 600 700; font-display: swap;
   src: url(/assets/fuentes/sora-latin.woff2) format('woff2');
@@ -12,14 +12,14 @@
   --primario: #0f5e7a;
   --sobre-primario: #ffffff;
   --primario-claro: #e1eef2;
-  --acento: #ff7a59;
+  --acento: #7cc4de;
   --sobre-acento: #102a35;
   --error: #b3261e;
   --texto: #102a35;
   --suave: #4a5f68;
-  --fondo: #f6f4ef;
+  --fondo: #eaf4fa;
   --tarjeta: #ffffff;
-  --borde: #ddd8cd;
+  --borde: #cfe0e9;
   color-scheme: light dark;
 }
 @media (prefers-color-scheme: dark) {
@@ -27,11 +27,11 @@
     --primario: #7cc4de;
     --sobre-primario: #0e1e26;
     --primario-claro: #16323d;
-    --acento: #ff8a6b;
+    --acento: #a6daec;
     --sobre-acento: #0e1e26;
     --error: #ff8a80;
-    --texto: #ece9e2;
-    --suave: #a9b8be;
+    --texto: #e6f1f6;
+    --suave: #a9bcc4;
     --fondo: #0e1e26;
     --tarjeta: #13262f;
     --borde: #2a414c;
@@ -45,7 +45,7 @@ body {
   background: var(--fondo);
 }
 main { max-width: 520px; margin: 0 auto; padding: 16px 16px 48px; }
-header.marca { display: flex; align-items: center; gap: 8px; color: var(--primario); font-family: "Sora", sans-serif; font-weight: 700; margin-bottom: 12px; }
+header.marca { display: flex; align-items: center; gap: 8px; font-size: 20px; color: var(--primario); font-family: "Sora", sans-serif; font-weight: 700; margin-bottom: 12px; }
 .tarjeta { background: var(--tarjeta); border: 1px solid var(--borde); border-radius: 16px; padding: 16px; margin-bottom: 16px; }
 .foto { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 12px; background: var(--primario-claro); display: block; }
 .sin-foto { display: grid; place-items: center; font-size: 96px; }

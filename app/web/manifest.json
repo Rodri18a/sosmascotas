@@ -1,7 +1,7 @@
 {
     "id": "/",
-    "name": "SOS Mascota",
-    "short_name": "SOS Mascota",
+    "name": "SOS Mascotas",
+    "short_name": "SOS Mascotas",
     "description": "Encontrá veterinarias, avisá si se pierde tu mascota y ayudá a las de tu barrio.",
     "lang": "es-UY",
     "dir": "ltr",
@@ -9,7 +9,7 @@
     "scope": "/",
     "display": "standalone",
     "orientation": "portrait-primary",
-    "background_color": "#0F5E7A",
+    "background_color": "#EAF4FA",
     "theme_color": "#0F5E7A",
     "categories": ["lifestyle", "utilities"],
     "prefer_related_applications": false,

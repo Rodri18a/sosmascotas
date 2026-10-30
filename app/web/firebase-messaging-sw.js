@@ -1,4 +1,4 @@
-// Avisos push de SOS Mascota (paso 0.6.1).
+// Avisos push de SOS Mascotas (paso 0.6.1).
 //
 // Firebase registra este archivo al pedir el token. FCM entrega Web Push
 // estándar, así que no hace falta cargar el SDK de Firebase acá (ni su
@@ -20,7 +20,7 @@ self.addEventListener('push', (event) => {
   }
   const notificacion = mensaje.notification || {};
   const datos = mensaje.data || {};
-  const titulo = notificacion.title || datos.titulo || 'SOS Mascota';
+  const titulo = notificacion.title || datos.titulo || 'SOS Mascotas';
   const ruta = datos.ruta || (mensaje.fcmOptions && mensaje.fcmOptions.link) || '/avisos';
 
   event.waitUntil(

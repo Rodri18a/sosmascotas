@@ -128,7 +128,7 @@ class _Foto extends ConsumerWidget {
     final r = ruta;
     final vacio = SizedBox(
       height: alto,
-      child: const Icon(Icons.volunteer_activism, size: 48),
+      child: const Icon(Icons.volunteer_activism_outlined, size: 48),
     );
     if (r == null) return vacio;
     return Image.network(
@@ -441,7 +441,7 @@ class _MisSolicitudes extends ConsumerWidget {
                 leading: const Icon(Icons.favorite_outline),
                 title: Text(t.adopcionSeguimiento(s.animal ?? '')),
                 subtitle: Text(t.adopcionSeguimientoDia(s.dia)),
-                trailing: const Icon(Icons.chevron_right),
+                trailing: const Icon(Icons.chevron_right_outlined),
                 onTap: () => _responderSeguimiento(context, ref, s),
               ),
             ),
@@ -520,7 +520,9 @@ class _MisSolicitudes extends ConsumerWidget {
                   setState(() => foto = ruta);
                 },
                 icon: Icon(
-                  foto == null ? Icons.add_a_photo_outlined : Icons.check,
+                  foto == null
+                      ? Icons.add_a_photo_outlined
+                      : Icons.check_outlined,
                 ),
                 label: Text(t.publicarFoto),
               ),
@@ -573,7 +575,7 @@ class _DarEnAdopcion extends ConsumerWidget {
       children: [
         FilledButton.icon(
           onPressed: () => context.push('${Rutas.adopcion}/publicar'),
-          icon: const Icon(Icons.add),
+          icon: const Icon(Icons.add_outlined),
           label: Text(t.publicarTitulo),
         ),
         const SizedBox(height: 16),
@@ -1213,7 +1215,8 @@ class _PublicarAdopcionScreenState
               Wrap(
                 spacing: 8,
                 children: [
-                  for (final _ in b.fotos) const Chip(label: Icon(Icons.photo)),
+                  for (final _ in b.fotos)
+                    const Chip(label: Icon(Icons.photo_outlined)),
                   ActionChip(
                     avatar: const Icon(Icons.add_a_photo_outlined, size: 18),
                     label: Text(t.publicarFoto),
@@ -1225,7 +1228,7 @@ class _PublicarAdopcionScreenState
             if (_animales.length < 8)
               TextButton.icon(
                 onPressed: () => setState(() => _animales.add(_Borrador())),
-                icon: const Icon(Icons.add),
+                icon: const Icon(Icons.add_outlined),
                 label: Text(t.publicarAgregarAnimal),
               ),
             const SizedBox(height: 8),

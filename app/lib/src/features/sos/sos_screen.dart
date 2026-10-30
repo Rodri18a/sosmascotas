@@ -44,7 +44,7 @@ class _SosScreenState extends ConsumerState<SosScreen> {
           destino: Rutas.sosNuevo,
           motivo: t.sosMotivoCuenta,
         ),
-        icon: const Icon(Icons.add),
+        icon: const Icon(Icons.add_outlined),
         label: Text(t.sosReportar),
       ),
       body: RefreshIndicator(
@@ -207,7 +207,7 @@ class _MisReportes extends ConsumerWidget {
               EstadoSos.archivado => t.sosEstadoArchivadoCorto,
               EstadoSos.oculto => t.sosEstadoOcultoCorto,
             }),
-            trailing: const Icon(Icons.chevron_right),
+            trailing: const Icon(Icons.chevron_right_outlined),
             onTap: () => context.push(Rutas.detalleSos(s.id)),
           ),
       ],

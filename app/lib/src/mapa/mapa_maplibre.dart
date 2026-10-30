@@ -161,6 +161,8 @@ class _MapaMapLibreState extends State<MapaMapLibre> {
             geometry: LatLng(pin.punto.lat, pin.punto.lng),
             iconImage: imagen,
             iconSize: _tamanioIcono,
+            // La punta de la gota marca el lugar.
+            iconAnchor: 'bottom',
             zIndex: _capa(pin),
           ),
         );

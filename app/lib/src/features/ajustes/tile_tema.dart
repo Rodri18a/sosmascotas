@@ -17,7 +17,7 @@ class TileTema extends ConsumerWidget {
       leading: const Icon(Icons.palette_outlined),
       title: Text(t.ajustesTema),
       subtitle: Text(t.ajustesTemaPro(nombreTema(t, elegida))),
-      trailing: const Icon(Icons.chevron_right),
+      trailing: const Icon(Icons.chevron_right_outlined),
       onTap: () => showModalBottomSheet<void>(
         context: context,
         useRootNavigator: true,
@@ -129,7 +129,7 @@ class TileLetra extends ConsumerWidget {
     final t = context.t;
     final elegido = ref.watch(tamanoLetraElegidoProvider);
     return ListTile(
-      leading: const Icon(Icons.format_size),
+      leading: const Icon(Icons.format_size_outlined),
       title: Text(t.ajustesLetra),
       subtitle: Padding(
         padding: const EdgeInsets.only(top: 8),

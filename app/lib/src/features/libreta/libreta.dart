@@ -24,7 +24,7 @@ IconData iconoRegistro(TipoRegistroSalud tipo) => switch (tipo) {
   TipoRegistroSalud.deworming => Icons.bug_report_outlined,
   TipoRegistroSalud.checkup => Icons.medical_services_outlined,
   TipoRegistroSalud.allergy => Icons.warning_amber_outlined,
-  TipoRegistroSalud.other => Icons.notes,
+  TipoRegistroSalud.other => Icons.notes_outlined,
 };
 
 /// Libreta sanitaria dentro de la ficha de la mascota (paso 1.5.1).
@@ -78,7 +78,7 @@ class TarjetaLibreta extends ConsumerWidget {
               child: OutlinedButton.icon(
                 onPressed: () =>
                     context.push(Rutas.nuevoRegistroSalud(mascotaId)),
-                icon: const Icon(Icons.add),
+                icon: const Icon(Icons.add_outlined),
                 label: Text(t.libretaAgregar),
               ),
             ),
@@ -232,7 +232,7 @@ class _Registros extends StatelessWidget {
                         ),
                       ),
                     )
-                  : const Icon(Icons.chevron_right),
+                  : const Icon(Icons.chevron_right_outlined),
               onTap: () =>
                   context.push(Rutas.editarRegistroSalud(mascotaId, r.id)),
             ),

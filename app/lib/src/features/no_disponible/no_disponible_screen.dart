@@ -22,7 +22,7 @@ class NoDisponibleScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
-                Icons.hourglass_empty,
+                Icons.hourglass_empty_outlined,
                 size: 56,
                 color: tema.colorScheme.primary,
               ),

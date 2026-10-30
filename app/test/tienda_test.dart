@@ -221,7 +221,7 @@ void main() {
     expect(enlaces.single.path, '/59899000014');
     expect(
       enlaces.single.queryParameters['text'],
-      'Hola, te hago un pedido desde SOS Mascota (#1):\n'
+      'Hola, te hago un pedido desde SOS Mascotas (#1):\n'
       '• 2 × Alimento perro adulto 3 kg — \$ 1.780\n'
       'Subtotal: \$ 1.780 · Envío: \$ 150 · Total: \$ 1.930\n'
       'Pago: Transferencia\n'

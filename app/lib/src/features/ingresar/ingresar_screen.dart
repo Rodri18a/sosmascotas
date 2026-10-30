@@ -9,6 +9,7 @@ import '../../config/supabase_providers.dart';
 import '../../cuenta/servicio_cuenta.dart';
 import '../../redireccion.dart';
 import '../../router.dart';
+import '../../widgets/logo.dart';
 import '../../widgets/volver.dart';
 
 /// Ingresar o crear cuenta con el correo (sin contraseñas).
@@ -107,6 +108,10 @@ class _IngresarScreenState extends ConsumerState<IngresarScreen> {
               padding: const EdgeInsets.all(24),
               children: [
                 if (emailEnviado == null) ...[
+                  // El logo solo en el primer paso: en el del código, el
+                  // aviso de error tiene que quedar a la vista.
+                  const Center(child: LogoSosMascotas(alto: 30)),
+                  const SizedBox(height: 28),
                   if (ref.watch(googleHabilitadoProvider).value ?? false) ...[
                     OutlinedButton.icon(
                       onPressed: _ocupado

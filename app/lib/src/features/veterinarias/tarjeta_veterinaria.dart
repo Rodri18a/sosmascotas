@@ -114,7 +114,7 @@ class TarjetaVeterinaria extends ConsumerWidget {
               ),
             if (estado.buscando)
               ListTile(
-                leading: const Icon(Icons.travel_explore),
+                leading: const Icon(Icons.travel_explore_outlined),
                 title: Text(t.vetBuscando),
                 trailing: TextButton(
                   onPressed: () => _hacer(

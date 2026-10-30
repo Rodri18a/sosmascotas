@@ -86,7 +86,7 @@ class TarjetaPedidoChapita extends ConsumerWidget {
       child: ListTile(
         leading: Icon(
           abierto.estado == EstadoPedidoChapita.listo
-              ? Icons.storefront
+              ? Icons.storefront_outlined
               : Icons.local_shipping_outlined,
         ),
         title: Text(t.pedidoChapitaNumero(abierto.numero, abierto.grabado)),
@@ -501,10 +501,10 @@ class TarjetaRetiroChapitas extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Card(
     child: ListTile(
-      leading: const Icon(Icons.qr_code_2),
+      leading: const Icon(Icons.qr_code_2_outlined),
       title: Text(context.t.retiroTitulo),
       subtitle: Text(context.t.retiroTarjetaAyuda),
-      trailing: const Icon(Icons.chevron_right),
+      trailing: const Icon(Icons.chevron_right_outlined),
       onTap: () => context.push(Rutas.chapitasNegocio(negocio.id)),
     ),
   );

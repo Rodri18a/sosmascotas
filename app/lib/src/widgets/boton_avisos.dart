@@ -24,7 +24,9 @@ class BotonAvisos extends ConsumerWidget {
         isLabelVisible: nuevos > 0,
         label: Text('$nuevos'),
         child: Icon(
-          nuevos > 0 ? Icons.notifications_active : Icons.notifications_none,
+          nuevos > 0
+              ? Icons.notifications_active_outlined
+              : Icons.notifications_none_outlined,
         ),
       ),
     );

@@ -192,13 +192,13 @@ class _TarjetaProducto extends ConsumerWidget {
                               IconButton(
                                 tooltip: t.catalogoQuitarUno,
                                 onPressed: () => notificador.restar(p.id),
-                                icon: const Icon(Icons.remove),
+                                icon: const Icon(Icons.remove_outlined),
                               ),
                               Text('$cantidad'),
                               IconButton(
                                 tooltip: t.catalogoSumarUno,
                                 onPressed: () => notificador.sumar(p),
-                                icon: const Icon(Icons.add),
+                                icon: const Icon(Icons.add_outlined),
                               ),
                             ],
                           ),

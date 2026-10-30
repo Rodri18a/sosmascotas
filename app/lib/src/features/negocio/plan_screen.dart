@@ -121,7 +121,7 @@ class _Contenido extends ConsumerWidget {
           const SizedBox(height: 8),
           Card(
             child: ListTile(
-              leading: const Icon(Icons.trending_up),
+              leading: const Icon(Icons.trending_up_outlined),
               title: Text(t.planAntesDespues),
               subtitle: Text(
                 t.planAntesDespuesTexto(

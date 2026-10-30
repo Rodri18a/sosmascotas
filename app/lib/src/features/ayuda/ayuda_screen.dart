@@ -63,7 +63,7 @@ class AyudaScreen extends ConsumerWidget {
                       leading: const Icon(Icons.report_outlined),
                       title: Text(t.denunciaTitulo),
                       subtitle: Text(t.denunciaEntradaAyuda),
-                      trailing: const Icon(Icons.chevron_right),
+                      trailing: const Icon(Icons.chevron_right_outlined),
                       onTap: () => context.push(Rutas.denuncia),
                     ),
                   ),
@@ -147,7 +147,7 @@ class _Tarjeta911 extends ConsumerWidget {
               ),
               onPressed: () =>
                   _abrir(ref, Uri(scheme: 'tel', path: '911'), '911'),
-              icon: const Icon(Icons.call),
+              icon: const Icon(Icons.call_outlined),
               label: Text(t.ayuda911Boton),
             ),
           ],
@@ -185,7 +185,7 @@ class _FilaUrgencia extends ConsumerWidget {
         ),
         title: Text(comercio.nombre),
         subtitle: Text(textoApertura(context.t, estado)),
-        trailing: const Icon(Icons.chevron_right),
+        trailing: const Icon(Icons.chevron_right_outlined),
         onTap: () => mostrarFichaComercio(context, ref, comercio),
       ),
     );
@@ -259,7 +259,7 @@ class _FilaAyuda extends ConsumerWidget {
                 if (enlace != null)
                   TextButton.icon(
                     onPressed: () => _abrir(ref, enlace, 'enlace', kind: kind),
-                    icon: const Icon(Icons.open_in_new),
+                    icon: const Icon(Icons.open_in_new_outlined),
                     label: Text(t.ayudaAbrir),
                   ),
               ],

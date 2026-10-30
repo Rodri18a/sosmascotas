@@ -286,7 +286,7 @@ class _MapaScreenState extends ConsumerState<MapaScreen> {
             Funcionalidades.busqueda,
             child: IconButton(
               tooltip: t.buscarLugares,
-              icon: const Icon(Icons.search),
+              icon: const Icon(Icons.search_outlined),
               onPressed: () => context.push(
                 Rutas.buscar(_visible?.centro ?? ref.read(miZonaProvider)),
               ),
@@ -310,7 +310,7 @@ class _MapaScreenState extends ConsumerState<MapaScreen> {
                 ),
                 ButtonSegment(
                   value: _Vista.lista,
-                  icon: const Icon(Icons.list),
+                  icon: const Icon(Icons.list_outlined),
                   label: Text(t.mapaVistaLista),
                 ),
                 ButtonSegment(
@@ -387,7 +387,7 @@ class _BarraFiltros extends StatelessWidget {
             avatar: Badge(
               isLabelVisible: activos > 0,
               label: Text('$activos'),
-              child: const Icon(Icons.tune, size: 18),
+              child: const Icon(Icons.tune_outlined, size: 18),
             ),
             label: Text(t.mapaFiltros),
             onPressed: onMasFiltros,
@@ -418,7 +418,7 @@ class _BarraFiltros extends StatelessWidget {
                         : textoGrupo(t, g),
                   ),
                   if (g.categorias.length > 1)
-                    const Icon(Icons.arrow_drop_down, size: 18),
+                    const Icon(Icons.arrow_drop_down_outlined, size: 18),
                 ],
               ),
               selected: g.elegidosEn(filtros.categorias) > 0,
@@ -829,7 +829,9 @@ class _LeyendaState extends State<_Leyenda> {
                 children: [
                   Text(t.leyendaTitulo, style: tema.textTheme.labelMedium),
                   Icon(
-                    _abierta ? Icons.expand_more : Icons.expand_less,
+                    _abierta
+                        ? Icons.expand_more_outlined
+                        : Icons.expand_less_outlined,
                     size: 20,
                     semanticLabel: _abierta
                         ? t.leyendaOcultar

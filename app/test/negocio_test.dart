@@ -172,7 +172,7 @@ void main() {
       find.widgetWithText(TextButton, 'Volver al modo dueño'),
       findsNothing,
     );
-    await _tocar(tester, find.byIcon(Icons.arrow_drop_down));
+    await _tocar(tester, find.byIcon(Icons.arrow_drop_down_outlined));
     await _tocar(tester, find.text('Veterinaria Sol').last);
     expect(find.widgetWithText(AppBar, 'Veterinaria Sol'), findsOneWidget);
   });

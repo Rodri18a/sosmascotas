@@ -77,7 +77,7 @@ void main() {
         donde: 'Vista por última vez: Centro, cerca de la plaza',
         escanea: '¿La viste? Escaneá el QR.',
         privacidad: 'No hace falta la app.',
-        pie: 'SOS Mascota · sosmascota.uy/s/s1',
+        pie: 'SOS Mascotas · sosmascota.uy/s/s1',
       ),
     );
     expect(latin1.decode(bytes.sublist(0, 5)), '%PDF-');

@@ -1,4 +1,4 @@
-# SOS Mascota
+# SOS Mascotas
 
 Plataforma para dueños de mascotas y empresas del rubro, con un mapa como centro: veterinarias, petshops, servicios, lugares que aceptan mascotas, mascotas perdidas y encontradas, chapita QR, recordatorios de salud y más. Es un emprendimiento propio que arranca en **Pando (Uruguay)** y se expande por zonas.
 
@@ -24,6 +24,7 @@ Plataforma para dueños de mascotas y empresas del rubro, con un mapa como centr
 | `docs/13-riesgos-pendientes.md` | Riesgos y temas abiertos |
 | `docs/14-brief-identidad-visual.md` | Brief para generar logo, paleta, tipografías e íconos (con una IA o un diseñador) |
 | `docs/20-brief-logo-iconos.md` | Brief corto para mandarle a un diseñador: logo amigable, ícono de la app e íconos |
+| `docs/guias/Guía de marca SOS Mascotas.png` | **Guía de marca definitiva** (D122): logo, ícono de la app, paleta, tipografías, set de íconos y pines |
 | `docs/15-funcionalidades-graduales.md` | Propuesta: prender funcionalidades de a poco (marcas, porcentaje, zona, plan, apagado de emergencia) |
 | `reference/sos-mascota.html` | Prototipo funcional: referencia de pantallas y textos. **No portar el código tal cual** |
 | `reference/SOS-Mascota-brief.md` | Brief anterior (costos detallados en pesos, cronología del prototipo) |
@@ -46,6 +47,7 @@ Si un dato de `reference/` contradice `docs/`, **manda `docs/`** (ver `docs/12-d
 - Portal de administración (`admin/`, D76): `flutter analyze`, `flutter test` y `flutter run -d chrome --dart-define-from-file=config/dev.json` desde `admin/` (config real en `admin/config/dev.json`, ignorada por git). El primer `admin` se pone desde la base (`profiles.role`); después, la administración da roles (admin, moderación, ventas) desde el portal → Equipo (D109).
 - La configuración real va en `app/config/dev.json` / `prod.json` (ignorados por git; copiar de `*.example.json`).
 - Textos de la app: solo en `app/lib/l10n/app_es.arb` (voseo), usados con `context.t.<clave>`.
+- Logo e íconos (D122): el logo se dibuja en `app/lib/src/widgets/logo.dart`; si cambia, regenerar los íconos (web, favicon, Android, iPhone, PDF, web pública) con `flutter test tool/iconos_marca_test.dart` desde `app/`. Íconos de la app: Material de línea (`_outlined`).
 - Base de datos: migraciones en `supabase/migrations/`. Aplicar con `set -a; . ~/.config/sosmascotas/supabase-dev.env; set +a; supabase db push --linked` (probar antes con `--dry-run` y mostrar el SQL y las políticas para aprobar). En otra máquina: instalar la CLI, crear ese archivo y `supabase link --project-ref <ref>`.
 - Edge Functions en `supabase/functions/`: `supabase functions deploy <nombre> --use-api` (no hace falta Docker).
 - Configuración de login (Auth) versionada en `supabase/configurar_auth.py` (`--aplicar`).

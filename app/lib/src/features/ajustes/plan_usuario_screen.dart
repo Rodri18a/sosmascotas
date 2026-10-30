@@ -122,7 +122,7 @@ class _Contenido extends ConsumerWidget {
             leading: const Icon(Icons.local_offer_outlined),
             title: Text(t.descuentosTitulo),
             subtitle: Text(t.descuentosTarjeta),
-            trailing: const Icon(Icons.chevron_right),
+            trailing: const Icon(Icons.chevron_right_outlined),
             onTap: () => context.push(Rutas.descuentosPro),
           ),
         ),

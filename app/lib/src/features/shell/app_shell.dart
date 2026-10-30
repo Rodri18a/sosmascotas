@@ -91,14 +91,14 @@ class BarraInferior extends StatelessWidget {
                   children: [
                     item(
                       Pestana.noticias,
-                      Icons.newspaper_outlined,
-                      Icons.newspaper,
+                      Icons.article_outlined,
+                      Icons.article,
                       t.noticiasTitulo,
                     ),
                     item(
                       Pestana.sos,
-                      Icons.sos_outlined,
-                      Icons.sos,
+                      Icons.place_outlined,
+                      Icons.place,
                       t.pestanaSos,
                     ),
                     // Lugar del botón del Mapa, con su nombre debajo (también
@@ -130,8 +130,8 @@ class BarraInferior extends StatelessWidget {
                     ),
                     item(
                       Pestana.ayuda,
-                      Icons.health_and_safety_outlined,
-                      Icons.health_and_safety,
+                      Icons.help_outline,
+                      Icons.help,
                       t.pestanaAyuda,
                     ),
                   ],

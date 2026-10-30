@@ -129,7 +129,7 @@ class PerfilScreen extends ConsumerWidget {
                         final n? => t.mascotaCompartidaDe(n),
                         null => t.mascotaCompartida,
                       }),
-                trailing: const Icon(Icons.chevron_right),
+                trailing: const Icon(Icons.chevron_right_outlined),
                 onTap: () => context.push(Rutas.fichaMascota(m.id)),
               ),
           ],
@@ -168,7 +168,7 @@ class PerfilScreen extends ConsumerWidget {
               alignment: AlignmentDirectional.centerStart,
               child: TextButton.icon(
                 onPressed: () => context.push(Rutas.hogar),
-                icon: const Icon(Icons.family_restroom),
+                icon: const Icon(Icons.family_restroom_outlined),
                 label: Text(t.perfilVerHogar),
               ),
             ),

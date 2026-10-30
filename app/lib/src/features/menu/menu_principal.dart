@@ -13,6 +13,7 @@ import '../../mascotas/mascotas_repositorio.dart';
 import '../../metricas/metricas.dart';
 import '../../router.dart';
 import '../../widgets/foto_mascota.dart';
+import '../../widgets/logo.dart';
 
 /// Menú ☰ de las pestañas (D88): mis datos, la mascota elegida (filtra
 /// Noticias, Comunidad y Adopción por su especie, con accesos a lo suyo) y
@@ -59,6 +60,14 @@ class _MenuPrincipalState extends ConsumerState<MenuPrincipal> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
+            // Logo de la marca arriba del menú (guía de marca, D122).
+            const Padding(
+              padding: EdgeInsets.fromLTRB(16, 20, 16, 4),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: LogoSosMascotas(horizontal: true, alto: 22),
+              ),
+            ),
             _Cabecera(onIr: _ir),
             if (mascotas.isNotEmpty) ...[
               const Divider(),
@@ -70,13 +79,13 @@ class _MenuPrincipalState extends ConsumerState<MenuPrincipal> {
                   Rutas.fichaMascota(elegida.id),
                 ),
                 opcion(
-                  Icons.qr_code_2,
+                  Icons.qr_code_2_outlined,
                   t.fichaQrTitulo,
                   Rutas.qrMascota(elegida.id),
                 ),
                 if (elegida.esDe(ref.watch(usuarioActualProvider).value?.id))
                   opcion(
-                    Icons.sos,
+                    Icons.sos_outlined,
                     t.menuReportarPerdida,
                     Rutas.reportarMascota(elegida.id),
                   ),
@@ -98,7 +107,11 @@ class _MenuPrincipalState extends ConsumerState<MenuPrincipal> {
                 Rutas.avisos,
               ),
               if (activa(Funcionalidades.hogar))
-                opcion(Icons.family_restroom, t.ajustesHogar, Rutas.hogar),
+                opcion(
+                  Icons.family_restroom_outlined,
+                  t.ajustesHogar,
+                  Rutas.hogar,
+                ),
               opcion(
                 Icons.shopping_bag_outlined,
                 t.misPedidos,
@@ -163,7 +176,7 @@ class _Cabecera extends ConsumerWidget {
       ),
       title: Text(nombre.isEmpty ? t.ajustesPerfil : nombre),
       subtitle: Text(usuario.email ?? ''),
-      trailing: const Icon(Icons.chevron_right),
+      trailing: const Icon(Icons.chevron_right_outlined),
       onTap: () => onIr(conPerfil ? Rutas.perfil : Rutas.ajustes),
     );
   }

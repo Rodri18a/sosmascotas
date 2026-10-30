@@ -1,4 +1,4 @@
-# SOS Mascota en 2 minutos
+# SOS Mascotas en 2 minutos
 
 <div id="estado">Cargando el progreso…</div>
 

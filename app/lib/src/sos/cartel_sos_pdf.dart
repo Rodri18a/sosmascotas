@@ -27,12 +27,13 @@ Future<Uint8List> cartelSosPdf({
   required String url,
   required bool perdida,
   Uint8List? foto,
+  Uint8List? logo,
   ByteData? normal,
   ByteData? negrita,
 }) {
   final doc = pw.Document(
     title: textos.titulo,
-    creator: 'SOS Mascota',
+    creator: 'SOS Mascotas',
     theme: normal == null
         ? null
         : pw.ThemeData.withFont(
@@ -148,10 +149,22 @@ Future<Uint8List> cartelSosPdf({
             ),
           ),
           pw.SizedBox(height: 8),
-          pw.Text(
-            textos.pie,
-            textAlign: pw.TextAlign.center,
-            style: const pw.TextStyle(fontSize: 9, color: gris),
+          // El pie con el isotipo de la marca (D122), si se pasó.
+          pw.Row(
+            mainAxisAlignment: pw.MainAxisAlignment.center,
+            children: [
+              if (logo case final logo?) ...[
+                pw.Image(pw.MemoryImage(logo), width: 18, height: 18),
+                pw.SizedBox(width: 6),
+              ],
+              pw.Flexible(
+                child: pw.Text(
+                  textos.pie,
+                  textAlign: pw.TextAlign.center,
+                  style: const pw.TextStyle(fontSize: 9, color: gris),
+                ),
+              ),
+            ],
           ),
         ],
       ),

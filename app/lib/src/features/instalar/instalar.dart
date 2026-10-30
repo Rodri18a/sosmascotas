@@ -40,7 +40,7 @@ class TileInstalar extends ConsumerWidget {
     }
     final t = context.t;
     return ListTile(
-      leading: const Icon(Icons.install_mobile),
+      leading: const Icon(Icons.install_mobile_outlined),
       title: Text(t.instalarTitulo),
       subtitle: Text(t.instalarSubtitulo),
       onTap: () => ofrecerInstalar(context, ref, 'ajustes'),
@@ -70,7 +70,10 @@ class TarjetaInstalarApp extends ConsumerWidget {
           children: [
             Row(
               children: [
-                Icon(Icons.install_mobile, color: tema.colorScheme.primary),
+                Icon(
+                  Icons.install_mobile_outlined,
+                  color: tema.colorScheme.primary,
+                ),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(

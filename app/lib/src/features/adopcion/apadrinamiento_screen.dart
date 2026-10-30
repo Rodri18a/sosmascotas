@@ -342,7 +342,7 @@ class TarjetaApadrinar extends StatelessWidget {
             ? context.t.apadrinarTarjetaRefugio
             : context.t.apadrinarTarjeta,
       ),
-      trailing: const Icon(Icons.chevron_right),
+      trailing: const Icon(Icons.chevron_right_outlined),
       onTap: () => context.push(Rutas.apadrinar(negocioId)),
     ),
   );

@@ -44,6 +44,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/legal/
+    - assets/marca/
   # Tipografías de la identidad Cielo (D62), licencia OFL (ver assets/fuentes/).
   fonts:
     - family: Sora

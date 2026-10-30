@@ -27,7 +27,11 @@ class FotoMascota extends ConsumerWidget {
       backgroundColor: colores.primaryContainer,
       foregroundImage: url == null ? null : NetworkImage(url),
       child: icono == null
-          ? Icon(Icons.pets, size: radio, color: colores.onPrimaryContainer)
+          ? Icon(
+              Icons.pets_outlined,
+              size: radio,
+              color: colores.onPrimaryContainer,
+            )
           : Text(icono!, style: TextStyle(fontSize: radio * 0.9)),
     );
   }

@@ -140,7 +140,7 @@ class _Contenido extends StatelessWidget {
         _Metrica(
           e: e,
           metrica: MetricasComercio.contactos,
-          icono: Icons.call_made,
+          icono: Icons.call_made_outlined,
           texto: t.estadisticasContactos,
           ayuda: t.estadisticasContactosAyuda,
         ),
@@ -185,7 +185,11 @@ class _Contenido extends StatelessWidget {
               Icons.receipt_long_outlined,
               t.estadisticasPedidos,
             ),
-            (MetricasComercio.pagina, Icons.public, t.estadisticasPagina),
+            (
+              MetricasComercio.pagina,
+              Icons.public_outlined,
+              t.estadisticasPagina,
+            ),
             (
               MetricasComercio.resenas,
               Icons.star_outline,
@@ -314,9 +318,9 @@ class _Metrica extends StatelessWidget {
         subtitle: Text([texto, ?ayuda, ?comparacion].join('\n')),
         // Color y texto: la flecha nunca es la única pista (accesibilidad).
         trailing: v.sube
-            ? Icon(Icons.trending_up, color: tema.colorScheme.primary)
+            ? Icon(Icons.trending_up_outlined, color: tema.colorScheme.primary)
             : v.baja
-            ? Icon(Icons.trending_down, color: tema.colorScheme.error)
+            ? Icon(Icons.trending_down_outlined, color: tema.colorScheme.error)
             : null,
       ),
     );

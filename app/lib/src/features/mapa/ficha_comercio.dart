@@ -132,7 +132,7 @@ class FichaComercio extends ConsumerWidget {
             Row(
               children: [
                 Icon(
-                  Icons.schedule,
+                  Icons.schedule_outlined,
                   size: 20,
                   color: estado.abierto
                       ? context.marca.exito
@@ -226,7 +226,7 @@ class FichaComercio extends ConsumerWidget {
                       'llamar',
                       Uri(scheme: 'tel', path: c.telefono!.replaceAll(' ', '')),
                     ),
-                    icon: const Icon(Icons.call),
+                    icon: const Icon(Icons.call_outlined),
                     label: Text(t.comercioLlamar),
                   ),
                 if (whatsapp != null)
@@ -256,7 +256,7 @@ class FichaComercio extends ConsumerWidget {
                 if (c.web != null)
                   OutlinedButton.icon(
                     onPressed: () => _abrir(ref, 'web', Uri.parse(c.web!)),
-                    icon: const Icon(Icons.language),
+                    icon: const Icon(Icons.language_outlined),
                     label: Text(t.comercioWeb),
                   ),
                 if (c.facebook != null)
@@ -266,7 +266,7 @@ class FichaComercio extends ConsumerWidget {
                       'facebook',
                       Uri.https('www.facebook.com', '/${c.facebook}'),
                     ),
-                    icon: const Icon(Icons.facebook),
+                    icon: const Icon(Icons.facebook_outlined),
                     label: Text(t.fichaFacebook),
                   ),
                 if (c.instagram != null)

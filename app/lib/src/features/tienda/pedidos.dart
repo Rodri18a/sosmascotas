@@ -189,7 +189,7 @@ class CatalogoNegocio extends ConsumerWidget {
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _editar(context, ref),
-        icon: const Icon(Icons.add),
+        icon: const Icon(Icons.add_outlined),
         label: Text(t.productoNuevo),
       ),
       body: ListView(
@@ -211,7 +211,7 @@ class CatalogoNegocio extends ConsumerWidget {
             leading: const Icon(Icons.table_view_outlined),
             title: Text(t.planillaTitulo),
             subtitle: Text(t.planillaTarjeta),
-            trailing: const Icon(Icons.chevron_right),
+            trailing: const Icon(Icons.chevron_right_outlined),
             onTap: () => _planilla(context, ref),
           ),
           const Divider(height: 1),

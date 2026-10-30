@@ -2,7 +2,7 @@
 
 > **Borrador** (versión `borrador-2026-10`). Falta la revisión de la asesoría legal (pendiente P13). Puede cambiar antes de usarse con adopciones reales.
 
-Al adoptar a través de SOS Mascota te comprometés a:
+Al adoptar a través de SOS Mascotas te comprometés a:
 
 1. **Cuidar su salud.** Darle alimento adecuado, agua, abrigo y atención veterinaria cuando la necesite.
 2. **Castración.** Si no está castrado, castrarlo antes de la **fecha límite** que te indica la app (Ley 19.889). La app te lo recuerda.

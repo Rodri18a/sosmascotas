@@ -42,7 +42,7 @@ class TarjetaGrupos extends StatelessWidget {
         leading: const Icon(Icons.forum_outlined),
         title: Text(t.comunidadGrupos),
         subtitle: Text(t.comunidadGruposAyuda),
-        trailing: const Icon(Icons.chevron_right),
+        trailing: const Icon(Icons.chevron_right_outlined),
         onTap: () => context.push(Rutas.grupos),
       ),
     );
@@ -177,7 +177,7 @@ class GruposScreen extends ConsumerWidget {
                     for (final MapEntry(key: id, value: nombre)
                         in misRazas.entries)
                       ActionChip(
-                        avatar: const Icon(Icons.add, size: 18),
+                        avatar: const Icon(Icons.add_outlined, size: 18),
                         label: Text(nombre),
                         onPressed: () => _deMiRaza(context, ref, id),
                       ),
@@ -228,7 +228,7 @@ class _FilaGrupo extends StatelessWidget {
         ),
         trailing: grupo.soyMiembro
             ? const Icon(Icons.check_circle_outline)
-            : const Icon(Icons.chevron_right),
+            : const Icon(Icons.chevron_right_outlined),
         onTap: () => context.push(Rutas.grupo(grupo.id)),
       ),
     );
@@ -635,7 +635,7 @@ class _PublicacionScreenState extends ConsumerState<PublicacionScreen> {
                             if (p.esMia && context.mounted) context.pop();
                           },
                         ),
-                        icon: const Icon(Icons.more_horiz),
+                        icon: const Icon(Icons.more_horiz_outlined),
                         label: Text(t.comunidadOpciones),
                       ),
                     ),
@@ -654,7 +654,7 @@ class _PublicacionScreenState extends ConsumerState<PublicacionScreen> {
                       trailing: conectado
                           ? IconButton(
                               tooltip: t.comunidadOpciones,
-                              icon: const Icon(Icons.more_vert),
+                              icon: const Icon(Icons.more_vert_outlined),
                               onPressed: () => _acciones(
                                 context,
                                 ref,
@@ -691,7 +691,7 @@ class _PublicacionScreenState extends ConsumerState<PublicacionScreen> {
                           IconButton(
                             tooltip: t.comunidadComentar,
                             onPressed: _enviando ? null : () => _comentar(p),
-                            icon: const Icon(Icons.send),
+                            icon: const Icon(Icons.send_outlined),
                           ),
                         ],
                       )

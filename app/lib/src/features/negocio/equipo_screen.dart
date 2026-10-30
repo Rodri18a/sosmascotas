@@ -112,7 +112,7 @@ class ListaEquipo extends ConsumerWidget {
               if (context.mounted) Navigator.pop(context);
               mensajes.showSnackBar(SnackBar(content: Text(t.hogarCopiado)));
             },
-            icon: const Icon(Icons.copy),
+            icon: const Icon(Icons.copy_outlined),
             label: Text(t.hogarCopiar),
           ),
         ],

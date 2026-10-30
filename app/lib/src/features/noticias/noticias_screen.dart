@@ -312,7 +312,7 @@ Future<void> abrirNoticia(BuildContext context, WidgetRef ref, Noticia n) {
                         );
                     ref.read(abrirEnlaceProvider)(Uri.parse(enlace));
                   },
-                  icon: const Icon(Icons.open_in_new),
+                  icon: const Icon(Icons.open_in_new_outlined),
                   label: Text(t.noticiasLeerMas),
                 ),
               ],
@@ -352,7 +352,7 @@ class _Comunidad extends ConsumerWidget {
               ),
             if (resumen.perdidasActivas > 0)
               (
-                Icons.search,
+                Icons.search_outlined,
                 t.comunidadResumenPerdidas(resumen.perdidasActivas),
               ),
             if (resumen.lugaresVerificados > 0)
@@ -496,7 +496,7 @@ class TarjetaNovedad extends ConsumerWidget {
     TipoNovedad.adopcion => Icons.volunteer_activism_outlined,
     TipoNovedad.comercio => Icons.verified_outlined,
     TipoNovedad.evento => Icons.event_outlined,
-    TipoNovedad.perdida => Icons.search,
+    TipoNovedad.perdida => Icons.search_outlined,
   };
 
   @override
@@ -557,7 +557,7 @@ class TarjetaNovedad extends ConsumerWidget {
                   ],
                 ),
               ),
-              if (perdida) const Icon(Icons.chevron_right),
+              if (perdida) const Icon(Icons.chevron_right_outlined),
             ],
           ),
         ),

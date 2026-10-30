@@ -79,7 +79,7 @@ Future<void> mostrarEvento(BuildContext context, WidgetRef ref, Evento e) {
                     OutlinedButton.icon(
                       onPressed: () =>
                           ref.read(abrirEnlaceProvider)(Uri.parse(link)),
-                      icon: const Icon(Icons.open_in_new),
+                      icon: const Icon(Icons.open_in_new_outlined),
                       label: Text(t.eventoMasInfo),
                     ),
                   if (e.mio)
@@ -463,7 +463,8 @@ class _DenunciaState extends ConsumerState<DenunciaScreen> {
             Wrap(
               spacing: 8,
               children: [
-                for (final _ in _fotos) const Chip(label: Icon(Icons.photo)),
+                for (final _ in _fotos)
+                  const Chip(label: Icon(Icons.photo_outlined)),
                 if (_fotos.length < 6)
                   ActionChip(
                     avatar: const Icon(Icons.add_a_photo_outlined, size: 18),

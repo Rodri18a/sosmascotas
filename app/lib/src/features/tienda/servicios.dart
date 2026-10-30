@@ -122,7 +122,7 @@ class ServiciosNegocioScreen extends ConsumerWidget {
       floatingActionButton: esPlus
           ? FloatingActionButton.extended(
               onPressed: () => _editar(context, ref),
-              icon: const Icon(Icons.add),
+              icon: const Icon(Icons.add_outlined),
               label: Text(t.servicioNuevo),
             )
           : null,

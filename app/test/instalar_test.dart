@@ -35,7 +35,10 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(navegador.avisosMostrados, 1);
-      expect(find.textContaining('Ya podés abrir SOS Mascota'), findsOneWidget);
+      expect(
+        find.textContaining('Ya podés abrir SOS Mascotas'),
+        findsOneWidget,
+      );
       expect(find.text('Instalar la app'), findsNothing);
       expect(_props(eventos, 'pwa_prompt'), [
         {'origen': 'ajustes', 'forma': 'aviso', 'resultado': 'aceptada'},
@@ -135,7 +138,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('Instalá SOS Mascota'), findsNothing);
+      expect(find.text('Instalá SOS Mascotas'), findsNothing);
     });
 
     testWidgets('desde la segunda apertura aparece, y "Ahora no" la descarta', (
@@ -151,11 +154,11 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('Instalá SOS Mascota'), findsOneWidget);
+      expect(find.text('Instalá SOS Mascotas'), findsOneWidget);
       await tester.tap(find.text('Ahora no'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Instalá SOS Mascota'), findsNothing);
+      expect(find.text('Instalá SOS Mascotas'), findsNothing);
       expect(almacen.estaDescartada, isTrue);
     });
 
@@ -174,7 +177,7 @@ void main() {
       await tester.tap(find.widgetWithText(FilledButton, 'Instalar'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Instalá SOS Mascota'), findsNothing);
+      expect(find.text('Instalá SOS Mascotas'), findsNothing);
       expect(_props(eventos, 'pwa_prompt'), [
         {'origen': 'mapa', 'forma': 'aviso', 'resultado': 'aceptada'},
       ]);
@@ -193,7 +196,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('Instalá SOS Mascota'), findsNothing);
+      expect(find.text('Instalá SOS Mascotas'), findsNothing);
     });
   });
 

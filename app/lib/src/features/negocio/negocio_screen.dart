@@ -164,7 +164,7 @@ class _NegocioScreenState extends ConsumerState<NegocioScreen> {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        const Icon(Icons.arrow_drop_down),
+                        const Icon(Icons.arrow_drop_down_outlined),
                       ],
                     ),
                   )
@@ -176,13 +176,13 @@ class _NegocioScreenState extends ConsumerState<NegocioScreen> {
               if (ancho >= 600)
                 TextButton.icon(
                   onPressed: () => context.go(Rutas.mapa),
-                  icon: const Icon(Icons.pets),
+                  icon: const Icon(Icons.pets_outlined),
                   label: Text(t.volverModoDueno),
                 )
               else
                 IconButton(
                   onPressed: () => context.go(Rutas.mapa),
-                  icon: const Icon(Icons.pets),
+                  icon: const Icon(Icons.pets_outlined),
                   tooltip: t.volverModoDueno,
                 ),
             ],
@@ -321,21 +321,21 @@ class _ParaAtender extends ConsumerWidget {
             ListTile(
               leading: const Icon(Icons.receipt_long_outlined),
               title: Text(t.panelPedidosNuevos(pedidos)),
-              trailing: const Icon(Icons.chevron_right),
+              trailing: const Icon(Icons.chevron_right_outlined),
               onTap: () => onIr?.call(_Seccion.pedidos),
             ),
           if (turnos > 0)
             ListTile(
               leading: const Icon(Icons.event_outlined),
               title: Text(t.panelTurnosPendientes(turnos)),
-              trailing: const Icon(Icons.chevron_right),
+              trailing: const Icon(Icons.chevron_right_outlined),
               onTap: () => onIr?.call(_Seccion.agenda),
             ),
           if (cuidados > 0)
             ListTile(
               leading: const Icon(Icons.pets_outlined),
               title: Text(t.panelCuidadosPendientes(cuidados)),
-              trailing: const Icon(Icons.chevron_right),
+              trailing: const Icon(Icons.chevron_right_outlined),
               onTap: () => onIr?.call(_Seccion.agenda),
             ),
         ],
@@ -431,7 +431,7 @@ class _Panel extends ConsumerWidget {
                       ? t.equipoAbrirAyuda
                       : t.equipoSoloPlus,
                 ),
-                trailing: const Icon(Icons.chevron_right),
+                trailing: const Icon(Icons.chevron_right_outlined),
                 onTap: () => context.push(Rutas.equipoNegocio(negocio.id)),
               ),
             ),
@@ -446,7 +446,7 @@ class _Panel extends ConsumerWidget {
                   '${t.planTitulo}: ${textoPlan(t, negocio.comercio.plan)}',
                 ),
                 subtitle: Text(t.planAbrirAyuda),
-                trailing: const Icon(Icons.chevron_right),
+                trailing: const Icon(Icons.chevron_right_outlined),
                 onTap: () => context.push(Rutas.planNegocio(negocio.id)),
               ),
             ),
@@ -457,10 +457,10 @@ class _Panel extends ConsumerWidget {
               ))
             Card(
               child: ListTile(
-                leading: const Icon(Icons.bar_chart),
+                leading: const Icon(Icons.bar_chart_outlined),
                 title: Text(t.estadisticasAbrir),
                 subtitle: Text(t.estadisticasAbrirAyuda),
-                trailing: const Icon(Icons.chevron_right),
+                trailing: const Icon(Icons.chevron_right_outlined),
                 onTap: () =>
                     context.push(Rutas.estadisticasNegocio(negocio.id)),
               ),
@@ -522,7 +522,7 @@ class _Panel extends ConsumerWidget {
               child: ListTile(
                 leading: const Icon(Icons.groups_outlined),
                 title: Text(t.sociosAbrir),
-                trailing: const Icon(Icons.chevron_right),
+                trailing: const Icon(Icons.chevron_right_outlined),
                 onTap: () => context.push(Rutas.sociosNegocio(negocio.id)),
               ),
             ),
@@ -846,7 +846,7 @@ class _Ficha extends ConsumerWidget {
                             .borrarFoto(negocio.id, f);
                         ref.invalidate(misNegociosProvider);
                       },
-                      icon: const Icon(Icons.close),
+                      icon: const Icon(Icons.close_outlined),
                     ),
                   ),
                 ],
@@ -962,7 +962,7 @@ class _Ficha extends ConsumerWidget {
                     ? t.serviciosAbrirAyuda
                     : t.serviciosSoloPlus,
               ),
-              trailing: const Icon(Icons.chevron_right),
+              trailing: const Icon(Icons.chevron_right_outlined),
               onTap: () => context.push(Rutas.serviciosNegocio(negocio.id)),
             ),
           ),

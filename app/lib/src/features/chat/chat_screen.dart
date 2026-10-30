@@ -63,7 +63,9 @@ class ConversacionesScreen extends ConsumerWidget {
                 ListTile(
                   leading: CircleAvatar(
                     child: Icon(
-                      c.tipo == 'sos' ? Icons.pets : Icons.chat_outlined,
+                      c.tipo == 'sos'
+                          ? Icons.pets_outlined
+                          : Icons.chat_outlined,
                     ),
                   ),
                   title: Text(nombreDelOtro(t, c)),
@@ -403,7 +405,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                     IconButton(
                       tooltip: t.chatEnviar,
                       onPressed: _enviando ? null : _enviarTexto,
-                      icon: const Icon(Icons.send),
+                      icon: const Icon(Icons.send_outlined),
                     ),
                   ],
                 ),

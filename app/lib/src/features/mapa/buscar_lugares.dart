@@ -146,7 +146,7 @@ class _BuscarLugaresState extends ConsumerState<BuscarLugaresScreen> {
           if (_texto.text.isNotEmpty)
             IconButton(
               tooltip: t.buscarBorrar,
-              icon: const Icon(Icons.close),
+              icon: const Icon(Icons.close_outlined),
               onPressed: () {
                 _texto.clear();
                 _alEscribir('');

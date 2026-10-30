@@ -16,7 +16,7 @@ String htmlDePropuesta(Propuesta p, {required DateTime fecha}) {
   final rubro = T.rubros[p.rubro] ?? p.rubro;
   final zona = _e(p.zona ?? 'todas las zonas');
   final nombre = p.negocio?['nombre'] as String?;
-  final titulo = 'SOS Mascota para ${_e(nombre ?? rubro)}';
+  final titulo = 'SOS Mascotas para ${_e(nombre ?? rubro)}';
   final aperturas = p.numeroDelNegocio('aperturas');
   final contactos = p.numeroDelNegocio('contactos');
   final favoritos = p.numeroDelNegocio('favoritos');
@@ -64,7 +64,7 @@ String htmlDePropuesta(Propuesta p, {required DateTime fecha}) {
 <title>$titulo</title>
 <style>
   @page { size: A4; margin: 16mm; }
-  :root { --petroleo: #0F5E7A; --coral: #FF7A59; --hueso: #F6F4EF; --tinta: #102A35; --gris: #4A5F68; }
+  :root { --petroleo: #0F5E7A; --celeste: #7CC4DE; --fondo: #EAF4FA; --tinta: #102A35; --gris: #4A5F68; }
   * { box-sizing: border-box; }
   body { margin: 0; padding: 24px; background: #fff; color: var(--tinta);
          font: 15px/1.45 "Source Sans 3", "Segoe UI", system-ui, sans-serif; }
@@ -72,10 +72,10 @@ String htmlDePropuesta(Propuesta p, {required DateTime fecha}) {
   h2 { font: 600 16px/1.3 Sora, "Segoe UI", system-ui, sans-serif; margin: 24px 0 8px; }
   .sub { color: var(--gris); margin: 0 0 20px; }
   .numeros { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
-  .numero { background: var(--hueso); border-left: 4px solid var(--coral); padding: 12px; border-radius: 6px; }
+  .numero { background: var(--fondo); border-left: 4px solid var(--celeste); padding: 12px; border-radius: 6px; }
   .numero b { display: block; font: 700 28px/1.1 Sora, "Segoe UI", system-ui, sans-serif; color: var(--petroleo); }
   ul { padding-left: 20px; margin: 0; }
-  blockquote { margin: 0 0 12px; padding: 12px; background: var(--hueso); border-radius: 6px; }
+  blockquote { margin: 0 0 12px; padding: 12px; background: var(--fondo); border-radius: 6px; }
   blockquote p { margin: 0 0 6px; font-style: italic; }
   footer, .nota { color: var(--gris); font-size: 13px; }
   .pie { margin-top: 28px; border-top: 1px solid #ddd; padding-top: 8px; }
@@ -106,7 +106,7 @@ ${mascotas.isEmpty ? '' : '  <li>Mascotas registradas: $mascotas</li>'}
 
 ${casos.isEmpty ? '' : '<h2>Lo que dicen otros comercios</h2>\n$casos'}
 
-<p class="nota pie">SOS Mascota · Pando, Uruguay. Son cantidades de la app: nunca se comparte quién fue (Ley 18.331).</p>
+<p class="nota pie">SOS Mascotas · Pando, Uruguay. Son cantidades de la app: nunca se comparte quién fue (Ley 18.331).</p>
 </body>
 </html>
 ''';

@@ -98,16 +98,17 @@ class Paleta {
   ColoresModo modo(Brightness brillo) =>
       brillo == Brightness.dark ? oscuro : claro;
 
-  /// Identidad de la marca: C · Cielo (D62).
+  /// Identidad de la marca: C · Cielo (D62), con los colores de la guía de
+  /// marca (D122): celeste de acento y fondo claro celeste.
   static const cielo = Paleta(
     id: 'cielo',
     claro: ColoresModo(
-      fondo: Color(0xFFF6F4EF), // hueso
+      fondo: Color(0xFFEAF4FA), // fondo claro
       texto: Color(0xFF102A35), // tinta
-      textoSuave: Color(0xFF4A5F68),
+      textoSuave: Color(0xFF465D68),
       primario: Color(0xFF0F5E7A), // azul petróleo
       sobrePrimario: Color(0xFFFFFFFF),
-      acento: Color(0xFFFF7A59), // coral
+      acento: Color(0xFF7CC4DE), // celeste del logo
       sobreAcento: Color(0xFF102A35),
       error: Color(0xFFB3261E),
       sobreError: Color(0xFFFFFFFF),
@@ -116,11 +117,11 @@ class Paleta {
     ),
     oscuro: ColoresModo(
       fondo: Color(0xFF0E1E26),
-      texto: Color(0xFFECE9E2),
-      textoSuave: Color(0xFFA9B8BE),
+      texto: Color(0xFFE6F1F6),
+      textoSuave: Color(0xFFA9BCC4),
       primario: Color(0xFF7CC4DE),
       sobrePrimario: Color(0xFF0E1E26),
-      acento: Color(0xFFFF8A6B),
+      acento: Color(0xFFA6DAEC),
       sobreAcento: Color(0xFF0E1E26),
       error: Color(0xFFFF8A80),
       sobreError: Color(0xFF0E1E26),

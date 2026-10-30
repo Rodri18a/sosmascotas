@@ -120,19 +120,21 @@ volante A5 y post cuadrado para redes.
 
 **Identidad de la marca: C · Cielo.** Es la única que usan el logo, el ícono de la app, la chapita, la web pública, los volantes y la pantalla de carga. Contraste verificado (WCAG): todos los roles ≥ 4,5:1 en claro y oscuro.
 
+> **30/10/2026 (D122): guía de marca definitiva** en `docs/guias/Guía de marca SOS Mascotas.png`: nombre **SOS Mascotas**, logo (pin con huella y aro), ícono de la app celeste, íconos de línea y pines en gota. La paleta de abajo ya tiene sus colores (acento celeste y fondo claro celeste en lugar de coral y hueso). Los íconos de la app se generan desde el logo con `flutter test tool/iconos_marca_test.dart` (desde `app/`).
+
 ### Paleta de Cielo
 
 | Rol | Claro | Oscuro |
 |---|---|---|
-| Fondo (`surface`) | hueso `#F6F4EF` | `#0E1E26` |
-| Texto | tinta `#102A35` (13,6:1) | `#ECE9E2` (14,1:1) |
-| Texto secundario | `#4A5F68` (6,1:1) | `#A9B8BE` (8,3:1) |
+| Fondo (`surface`) | fondo claro `#EAF4FA` | `#0E1E26` |
+| Texto | tinta `#102A35` | `#E6F1F6` |
+| Texto secundario | `#465D68` | `#A9BCC4` |
 | Primario (botones, enlaces) | azul petróleo `#0F5E7A` (6,6:1) | `#7CC4DE` (8,8:1) |
 | Sobre el primario | `#FFFFFF` (7,2:1) | `#0E1E26` |
-| Acento (SOS, destacado) | coral `#FF7A59` | `#FF8A6B` |
-| Sobre el acento | tinta `#102A35` (5,8:1) | `#0E1E26` (7,4:1) |
+| Acento (SOS, destacado, logo) | celeste `#7CC4DE` | `#A6DAEC` |
+| Sobre el acento | tinta `#102A35` | `#0E1E26` |
 
-- El coral **no se usa como color de texto** sobre fondo claro (no llega a 4,5:1): va de relleno con texto tinta encima.
+- El celeste **no se usa como color de texto** sobre fondo claro (no llega a 4,5:1): va de relleno con texto tinta encima. Los contrastes los verifica `app/test/tema_test.dart`.
 - Tipografías: **Sora** (títulos) y **Source Sans 3** (texto), de Google Fonts.
 
 ### Pines del mapa (fijos en todos los temas)

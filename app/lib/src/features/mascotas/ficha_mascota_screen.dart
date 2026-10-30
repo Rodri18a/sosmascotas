@@ -78,8 +78,10 @@ class _Ficha extends ConsumerWidget {
         (Icons.healing_outlined, t.fichaCastrada, c ? t.si : t.no),
       if (mascota.color case final c?)
         (Icons.palette_outlined, t.mascotaColor, c),
-      if (mascota.senas case final s?) (Icons.search, t.mascotaSenas, s),
-      if (mascota.notas case final n?) (Icons.notes, t.mascotaNotas, n),
+      if (mascota.senas case final s?)
+        (Icons.search_outlined, t.mascotaSenas, s),
+      if (mascota.notas case final n?)
+        (Icons.notes_outlined, t.mascotaNotas, n),
     ];
 
     return Scaffold(
@@ -168,7 +170,7 @@ class _Ficha extends ConsumerWidget {
                 case final abierto?)
               FilledButton.icon(
                 onPressed: () => context.push(Rutas.detalleSos(abierto.id)),
-                icon: const Icon(Icons.sos),
+                icon: const Icon(Icons.sos_outlined),
                 label: Text(t.fichaVerReportePerdida),
               )
             else
@@ -179,17 +181,17 @@ class _Ficha extends ConsumerWidget {
                 ),
                 onPressed: () =>
                     context.push(Rutas.reportarMascota(mascota.id)),
-                icon: const Icon(Icons.sos),
+                icon: const Icon(Icons.sos_outlined),
                 label: Text(t.fichaReportarPerdida),
               ),
             const SizedBox(height: 12),
           ],
           Card(
             child: ListTile(
-              leading: const Icon(Icons.qr_code_2),
+              leading: const Icon(Icons.qr_code_2_outlined),
               title: Text(t.fichaQrTitulo),
               subtitle: Text(t.fichaQrDescripcion),
-              trailing: const Icon(Icons.chevron_right),
+              trailing: const Icon(Icons.chevron_right_outlined),
               onTap: () => context.push(Rutas.qrMascota(mascota.id)),
             ),
           ),

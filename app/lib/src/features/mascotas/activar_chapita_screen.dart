@@ -77,7 +77,7 @@ class _ActivarChapitaScreenState extends ConsumerState<ActivarChapitaScreen> {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          const Icon(Icons.qr_code_2, size: 64),
+          const Icon(Icons.qr_code_2_outlined, size: 64),
           if (codigo != null)
             Center(
               child: Text(
@@ -100,7 +100,7 @@ class _ActivarChapitaScreenState extends ConsumerState<ActivarChapitaScreen> {
             const SizedBox(height: 16),
             FilledButton.icon(
               onPressed: () => context.go(Rutas.mascotaNueva),
-              icon: const Icon(Icons.add),
+              icon: const Icon(Icons.add_outlined),
               label: Text(t.mascotasAgregar),
             ),
           ] else ...[

@@ -1,4 +1,4 @@
-/// Lógica compartida de SOS Mascota: la usan la app y el portal de administración.
+/// Lógica compartida de SOS Mascotas: la usan la app y el portal de administración.
 library;
 
 export 'src/adopcion/adopcion.dart';

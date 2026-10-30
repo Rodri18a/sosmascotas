@@ -177,7 +177,7 @@ class _GuiaRenacScreenState extends ConsumerState<GuiaRenacScreen> {
                   const SizedBox(height: 8),
                   OutlinedButton.icon(
                     onPressed: () => verificarEnRenac(ref),
-                    icon: const Icon(Icons.open_in_new),
+                    icon: const Icon(Icons.open_in_new_outlined),
                     label: Text(t.renacVerificar),
                   ),
                   const SizedBox(height: 4),

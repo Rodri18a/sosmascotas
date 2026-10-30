@@ -78,6 +78,9 @@ class _Detalle extends ConsumerWidget {
         url: url,
         perdida: perdida,
         foto: await _bajarFoto(ref.read(sosRepositorioProvider)),
+        logo: (await rootBundle.load(
+          'assets/marca/isotipo.png',
+        )).buffer.asUint8List(),
         normal: await rootBundle.load('assets/fuentes/SourceSans3-Regular.ttf'),
         negrita: await rootBundle.load('assets/fuentes/SourceSans3-Bold.ttf'),
         textos: (

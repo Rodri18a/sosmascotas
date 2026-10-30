@@ -26,7 +26,7 @@ void main() {
       }),
       fecha: fecha,
     );
-    expect(html, contains('SOS Mascota para Vete &lt;Pando&gt;'));
+    expect(html, contains('SOS Mascotas para Vete &lt;Pando&gt;'));
     expect(html, isNot(contains('<Pando>')));
     expect(html, contains('14</b>veces se abrió tu ficha'));
     // Lo que es cero no se muestra como destacado.
@@ -54,7 +54,7 @@ void main() {
       }),
       fecha: fecha,
     );
-    expect(html, contains('SOS Mascota para Petshop'));
+    expect(html, contains('SOS Mascotas para Petshop'));
     expect(html, contains('todas las zonas'));
     expect(html, contains('«Nos llaman más.»'));
     expect(html, contains('Pet Shop Luna — Laura, dueña'));

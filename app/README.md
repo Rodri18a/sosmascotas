@@ -1,4 +1,4 @@
-# App SOS Mascota (Flutter)
+# App SOS Mascotas (Flutter)
 
 App de usuarios y modo comercio, para Android, iPhone y web (PWA). La lógica compartida está en `../packages/core`.
 

@@ -187,19 +187,19 @@ class _ContenidoState extends ConsumerState<_Contenido> {
         const SizedBox(height: 16),
         FilledButton.icon(
           onPressed: _ocupado ? null : _descargar,
-          icon: const Icon(Icons.download),
+          icon: const Icon(Icons.download_outlined),
           label: Text(t.qrDescargar),
         ),
         const SizedBox(height: 8),
         OutlinedButton.icon(
           onPressed: _copiar,
-          icon: const Icon(Icons.link),
+          icon: const Icon(Icons.link_outlined),
           label: Text(t.qrCopiarEnlace),
         ),
         const SizedBox(height: 8),
         OutlinedButton.icon(
           onPressed: () => launchUrl(Uri.parse(_url)),
-          icon: const Icon(Icons.open_in_new),
+          icon: const Icon(Icons.open_in_new_outlined),
           label: Text(t.qrVerPagina),
         ),
         if (esDueno) ...[
@@ -233,7 +233,7 @@ class _ContenidoState extends ConsumerState<_Contenido> {
           const SizedBox(height: 8),
           TextButton.icon(
             onPressed: _ocupado ? null : _regenerar,
-            icon: const Icon(Icons.autorenew),
+            icon: const Icon(Icons.autorenew_outlined),
             label: Text(t.qrRegenerar),
           ),
         ],
@@ -264,7 +264,11 @@ class _Escaneos extends ConsumerWidget {
         for (final e in escaneos)
           ListTile(
             contentPadding: EdgeInsets.zero,
-            leading: Icon(e.conUbicacion ? Icons.place : Icons.qr_code_scanner),
+            leading: Icon(
+              e.conUbicacion
+                  ? Icons.place_outlined
+                  : Icons.qr_code_scanner_outlined,
+            ),
             title: Text(formato.format(e.creado)),
             subtitle: Text(
               e.conUbicacion
@@ -364,7 +368,7 @@ class _Chapitas extends ConsumerWidget {
         for (final c in chapitas)
           ListTile(
             contentPadding: EdgeInsets.zero,
-            leading: const Icon(Icons.qr_code_2),
+            leading: const Icon(Icons.qr_code_2_outlined),
             title: Text(c.codigo),
             trailing: esDueno
                 ? TextButton(
@@ -378,7 +382,7 @@ class _Chapitas extends ConsumerWidget {
             alignment: Alignment.centerLeft,
             child: OutlinedButton.icon(
               onPressed: () => _activar(context, ref),
-              icon: const Icon(Icons.add_link),
+              icon: const Icon(Icons.add_link_outlined),
               label: Text(t.chapitaActivar),
             ),
           ),

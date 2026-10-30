@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
@@ -70,10 +72,24 @@ Color colorDePin(TipoPin tipo) =>
     coloresPin[tipo] ??
     (tipo == TipoPin.evento ? colorEvento : colorSinReclamar);
 
-/// Ícono de cada rubro: en el pin del mapa, en la ficha y en los chips (D82).
+/// Ícono de línea de cada rubro: en la ficha y en los chips (D82, D122).
 IconData iconoCategoria(Categoria c) => switch (c) {
+  Categoria.vet => Icons.local_hospital_outlined,
+  Categoria.petshop => Icons.storefront_outlined,
+  Categoria.pharmacy => Icons.medication_outlined,
+  Categoria.grooming => Icons.content_cut_outlined,
+  Categoria.walker => Icons.directions_walk_outlined,
+  Categoria.hotel => Icons.hotel_outlined,
+  Categoria.trainer => Icons.school_outlined,
+  Categoria.petFriendly => Icons.pets_outlined,
+  Categoria.shelter => Icons.house_outlined,
+  Categoria.agro => Icons.agriculture_outlined,
+};
+
+/// El mismo ícono, relleno: en el pin chico del mapa se lee mejor.
+IconData iconoPinCategoria(Categoria c) => switch (c) {
   Categoria.vet => Icons.local_hospital,
-  Categoria.petshop => Icons.shopping_cart,
+  Categoria.petshop => Icons.storefront,
   Categoria.pharmacy => Icons.medication,
   Categoria.grooming => Icons.content_cut,
   Categoria.walker => Icons.directions_walk,
@@ -84,17 +100,17 @@ IconData iconoCategoria(Categoria c) => switch (c) {
   Categoria.agro => Icons.agriculture,
 };
 
-/// Ícono del pin (D82): lupa en los SOS (roja o verde), calendario en los
-/// eventos, el del rubro en los lugares y ninguno en los grupos (llevan el
-/// número).
+/// Ícono del pin (D82, guía de marca D122): huella en los SOS (roja o verde),
+/// calendario en los eventos, el del rubro en los lugares y ninguno en los
+/// grupos (llevan el número). Las urgencias llevan «24» en vez de ícono.
 IconData? iconoDePin(Pin pin) => switch (pin.tipo) {
   TipoPin.grupo => null,
-  TipoPin.perdido || TipoPin.encontrado => Icons.search,
+  TipoPin.perdido || TipoPin.encontrado => Icons.pets,
   TipoPin.evento => Icons.event,
   TipoPin.veterinaria || TipoPin.urgencia => Icons.local_hospital,
   TipoPin.aceptaMascotas => Icons.pets,
   _ => switch (pin.categoria) {
-    final c? => iconoCategoria(c),
+    final c? => iconoPinCategoria(c),
     null => Icons.storefront,
   },
 };
@@ -109,6 +125,7 @@ class AspectoPin {
     required this.icono,
     required this.diametro,
     this.grosorBorde = 2,
+    this.texto,
   });
 
   final Color fondo;
@@ -120,9 +137,39 @@ class AspectoPin {
   final double diametro;
   final double grosorBorde;
 
+  /// En lugar del ícono (el «24» de las urgencias).
+  final String? texto;
+
+  /// Los pines son gotas (guía de marca, D122): la cabeza redonda y la punta
+  /// abajo, en el lugar exacto.
+  double get alto => diametro * 1.3;
+
   String get clave =>
       'pin-${fondo.toARGB32()}-${borde.toARGB32()}-${colorIcono.toARGB32()}'
-      '-${icono.codePoint}-${diametro.round()}-${grosorBorde.round()}';
+      '-${icono.codePoint}-${diametro.round()}-${grosorBorde.round()}'
+      '-${texto ?? ''}';
+}
+
+/// Contorno de gota de un pin de [diametro] (y [AspectoPin.alto] de alto),
+/// con lugar para un borde de [grosor].
+Path gotaPin(double diametro, double grosor) {
+  final r = diametro / 2;
+  final radio = r - grosor / 2;
+  final punta = Offset(r, diametro * 1.3 - grosor / 2);
+  // Puntos donde las rectas que salen de la punta tocan el círculo.
+  final distancia = punta.dy - r;
+  final cos = radio / distancia;
+  final sen = math.sqrt(1 - cos * cos);
+  return Path()
+    ..moveTo(punta.dx, punta.dy)
+    ..lineTo(r + radio * sen, r + radio * cos)
+    ..arcToPoint(
+      Offset(r - radio * sen, r + radio * cos),
+      radius: Radius.circular(radio),
+      largeArc: true,
+      clockwise: false,
+    )
+    ..close();
 }
 
 /// Aspecto de un pin, o `null` si no lleva ícono (los grupos).
@@ -149,6 +196,7 @@ AspectoPin? aspectoDePin(Pin pin) {
     colorIcono: colorIconoSobre(fondo),
     icono: icono,
     diametro: pin.esSos ? 30 : (sinReclamar ? 22 : 26),
+    texto: pin.tipo == TipoPin.urgencia ? '24' : null,
   );
 }
 
@@ -160,16 +208,61 @@ class MarcaPin extends StatelessWidget {
   final double tamanio;
 
   @override
-  Widget build(BuildContext context) => Container(
+  Widget build(BuildContext context) => SizedBox(
     width: tamanio,
-    height: tamanio,
-    decoration: BoxDecoration(
-      color: aspecto.fondo,
-      shape: BoxShape.circle,
-      border: Border.all(color: aspecto.borde, width: 1.5),
+    height: tamanio * 1.3,
+    child: CustomPaint(
+      painter: _PintorGota(aspecto),
+      child: Align(
+        alignment: Alignment.topCenter,
+        child: SizedBox.square(
+          dimension: tamanio,
+          child: Center(
+            child: switch (aspecto.texto) {
+              final texto? => Text(
+                texto,
+                style: TextStyle(
+                  fontSize: tamanio * 0.42,
+                  fontWeight: FontWeight.w700,
+                  color: aspecto.colorIcono,
+                  height: 1,
+                ),
+              ),
+              null => Icon(
+                aspecto.icono,
+                size: tamanio * 0.58,
+                color: aspecto.colorIcono,
+              ),
+            },
+          ),
+        ),
+      ),
     ),
-    child: Icon(aspecto.icono, size: tamanio * 0.62, color: aspecto.colorIcono),
   );
+}
+
+class _PintorGota extends CustomPainter {
+  const _PintorGota(this.aspecto);
+
+  final AspectoPin aspecto;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final gota = gotaPin(size.width, 1.5);
+    canvas
+      ..drawPath(gota, Paint()..color = aspecto.fondo)
+      ..drawPath(
+        gota,
+        Paint()
+          ..color = aspecto.borde
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 1.5,
+      );
+  }
+
+  @override
+  bool shouldRepaint(_PintorGota anterior) =>
+      anterior.aspecto.clave != aspecto.clave;
 }
 
 /// Ícono blanco sobre los pines oscuros y tinta sobre los claros (ámbar y

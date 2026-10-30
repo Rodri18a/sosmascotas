@@ -74,8 +74,11 @@ class _ConsentimientoScreenState extends ConsumerState<ConsentimientoScreen> {
                 const SizedBox(height: 16),
                 for (final (icono, texto) in [
                   (Icons.phone_disabled_outlined, t.consentimientoTelefono),
-                  (Icons.location_searching, t.consentimientoUbicacion),
-                  (Icons.query_stats, t.consentimientoMetricas),
+                  (
+                    Icons.location_searching_outlined,
+                    t.consentimientoUbicacion,
+                  ),
+                  (Icons.query_stats_outlined, t.consentimientoMetricas),
                   (Icons.delete_outline, t.consentimientoBorrar),
                 ])
                   ListTile(

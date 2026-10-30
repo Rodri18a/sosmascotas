@@ -38,7 +38,7 @@ class AjustesScreen extends ConsumerWidget {
         children: [
           if (usuario == null)
             ListTile(
-              leading: const Icon(Icons.login),
+              leading: const Icon(Icons.login_outlined),
               title: Text(t.ingresarOCrearCuenta),
               subtitle: Text(t.ingresarSubtitulo),
               onTap: () => context.push(Rutas.ingresarYVolverA(Rutas.ajustes)),
@@ -60,7 +60,7 @@ class AjustesScreen extends ConsumerWidget {
           if (usuario != null) ...[
             const Divider(),
             ListTile(
-              leading: const Icon(Icons.logout),
+              leading: const Icon(Icons.logout_outlined),
               title: Text(t.cerrarSesion),
               onTap: () => _salir(ref),
             ),
@@ -173,7 +173,7 @@ class _SeccionCuenta extends ConsumerWidget {
             leading: const Icon(Icons.badge_outlined),
             title: Text(t.perfilAbrir),
             subtitle: Text(t.perfilAbrirAyuda),
-            trailing: const Icon(Icons.chevron_right),
+            trailing: const Icon(Icons.chevron_right_outlined),
             onTap: () => context.push(Rutas.perfil),
           ),
         ),
@@ -181,7 +181,7 @@ class _SeccionCuenta extends ConsumerWidget {
           leading: const Icon(Icons.shopping_bag_outlined),
           title: Text(t.misPedidos),
           subtitle: Text(t.misPedidosAyuda),
-          trailing: const Icon(Icons.chevron_right),
+          trailing: const Icon(Icons.chevron_right_outlined),
           onTap: () => context.push(Rutas.misPedidos),
         ),
         SiFuncionalidad(
@@ -190,7 +190,7 @@ class _SeccionCuenta extends ConsumerWidget {
             leading: const Icon(Icons.event_available_outlined),
             title: Text(t.misTurnos),
             subtitle: Text(t.misTurnosAyuda),
-            trailing: const Icon(Icons.chevron_right),
+            trailing: const Icon(Icons.chevron_right_outlined),
             onTap: () => context.push(Rutas.misTurnos),
           ),
         ),
@@ -200,7 +200,7 @@ class _SeccionCuenta extends ConsumerWidget {
             leading: const Icon(Icons.pets_outlined),
             title: Text(t.misCuidados),
             subtitle: Text(t.misCuidadosAyuda),
-            trailing: const Icon(Icons.chevron_right),
+            trailing: const Icon(Icons.chevron_right_outlined),
             onTap: () => context.push(Rutas.misCuidados),
           ),
         ),
@@ -210,7 +210,7 @@ class _SeccionCuenta extends ConsumerWidget {
             leading: const Icon(Icons.storefront_outlined),
             title: Text(t.negocioMi),
             subtitle: Text(t.negocioMiAyuda),
-            trailing: const Icon(Icons.chevron_right),
+            trailing: const Icon(Icons.chevron_right_outlined),
             onTap: () => context.push(Rutas.negocio),
           ),
         ),
@@ -220,17 +220,17 @@ class _SeccionCuenta extends ConsumerWidget {
             leading: const Icon(Icons.workspace_premium_outlined),
             title: Text(t.miPlanTitulo),
             subtitle: Text(t.miPlanAyuda),
-            trailing: const Icon(Icons.chevron_right),
+            trailing: const Icon(Icons.chevron_right_outlined),
             onTap: () => context.push(Rutas.miPlan),
           ),
         ),
         SiFuncionalidad(
           Funcionalidades.hogar,
           child: ListTile(
-            leading: const Icon(Icons.family_restroom),
+            leading: const Icon(Icons.family_restroom_outlined),
             title: Text(t.ajustesHogar),
             subtitle: Text(t.ajustesHogarAyuda),
-            trailing: const Icon(Icons.chevron_right),
+            trailing: const Icon(Icons.chevron_right_outlined),
             onTap: () => context.push(Rutas.hogar),
           ),
         ),

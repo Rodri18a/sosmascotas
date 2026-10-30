@@ -248,7 +248,7 @@ class _PackNegocioState extends ConsumerState<PackNegocioScreen> {
                 if (puede)
                   TextButton.icon(
                     onPressed: _editar,
-                    icon: const Icon(Icons.add),
+                    icon: const Icon(Icons.add_outlined),
                     label: Text(t.packNuevo),
                   ),
               ],
@@ -370,7 +370,7 @@ class TarjetaPackAdopcion extends StatelessWidget {
       leading: const Icon(Icons.card_giftcard_outlined),
       title: Text(context.t.packTitulo),
       subtitle: Text(context.t.packTarjeta),
-      trailing: const Icon(Icons.chevron_right),
+      trailing: const Icon(Icons.chevron_right_outlined),
       onTap: () => context.push(Rutas.packAdopcion),
     ),
   );
@@ -388,7 +388,7 @@ class TarjetaPackNegocio extends StatelessWidget {
       leading: const Icon(Icons.card_giftcard_outlined),
       title: Text(context.t.packTitulo),
       subtitle: Text(context.t.packTarjetaNegocio),
-      trailing: const Icon(Icons.chevron_right),
+      trailing: const Icon(Icons.chevron_right_outlined),
       onTap: () => context.push(Rutas.packNegocio(negocioId)),
     ),
   );

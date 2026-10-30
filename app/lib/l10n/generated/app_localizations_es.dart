@@ -9,7 +9,13 @@ class AppLocalizationsEs extends AppLocalizations {
   AppLocalizationsEs([String locale = 'es']) : super(locale);
 
   @override
-  String get appNombre => 'SOS Mascota';
+  String get appNombre => 'SOS Mascotas';
+
+  @override
+  String get logoNombre => 'SOS\nMascotas';
+
+  @override
+  String get logoFrase => 'La comunidad que tu mascota necesita';
 
   @override
   String get pestanaMapa => 'Mapa';
@@ -193,7 +199,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get consentimientoExplicacion =>
-      'Para usar tu cuenta necesitamos que leas y aceptes cómo funciona SOS Mascota y cómo cuidamos tus datos. En resumen:';
+      'Para usar tu cuenta necesitamos que leas y aceptes cómo funciona SOS Mascotas y cómo cuidamos tus datos. En resumen:';
 
   @override
   String get consentimientoTelefono =>
@@ -525,7 +531,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String chapitasExplicacion(Object nombre) {
-    return 'Si tenés una chapita de SOS Mascota, vinculala con $nombre: escaneala con la cámara del celular o escribí el código que tiene impreso.';
+    return 'Si tenés una chapita de SOS Mascotas, vinculala con $nombre: escaneala con la cámara del celular o escribí el código que tiene impreso.';
   }
 
   @override
@@ -968,15 +974,15 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get sosCartelPrivacidadPerdida =>
-      'Vas a ver su reporte y podés dejarle un mensaje a su familia con dónde y cuándo la viste. SOS Mascota es la comunidad que armamos entre todos, con las mascotas en el centro.';
+      'Vas a ver su reporte y podés dejarle un mensaje a su familia con dónde y cuándo la viste. SOS Mascotas es la comunidad que armamos entre todos, con las mascotas en el centro.';
 
   @override
   String get sosCartelPrivacidadEncontrada =>
-      'Vas a ver el reporte y podés dejarle un mensaje a quien lo encontró. SOS Mascota es la comunidad que armamos entre todos, con las mascotas en el centro.';
+      'Vas a ver el reporte y podés dejarle un mensaje a quien lo encontró. SOS Mascotas es la comunidad que armamos entre todos, con las mascotas en el centro.';
 
   @override
   String sosCartelPie(String enlace) {
-    return 'SOS Mascota · la comunidad que tu mascota necesita: encontrar, adoptar, eventos y servicios · $enlace';
+    return 'SOS Mascotas · la comunidad que tu mascota necesita: encontrar, adoptar, eventos y servicios · $enlace';
   }
 
   @override
@@ -1098,7 +1104,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get pushNoDisponible =>
-      'Este navegador no admite avisos. En iPhone, primero agregá SOS Mascota a la pantalla de inicio (Compartir → Agregar a inicio) y abrila desde ahí.';
+      'Este navegador no admite avisos. En iPhone, primero agregá SOS Mascotas a la pantalla de inicio (Compartir → Agregar a inicio) y abrila desde ahí.';
 
   @override
   String get pushBloqueado =>
@@ -1274,7 +1280,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get ayuda911Texto =>
-      'Llamá al 911. SOS Mascota es solo para animales.';
+      'Llamá al 911. SOS Mascotas es solo para animales.';
 
   @override
   String get ayuda911Boton => 'Llamar al 911';
@@ -1321,7 +1327,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get temaCielo => 'Cielo';
 
   @override
-  String get temaCieloDescripcion => 'Calma y confianza: el de SOS Mascota';
+  String get temaCieloDescripcion => 'Calma y confianza: el de SOS Mascotas';
 
   @override
   String get temaFaro => 'Faro';
@@ -1366,7 +1372,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'Abrila desde la pantalla de inicio, más rápido y con avisos';
 
   @override
-  String get instalarTarjetaTitulo => 'Instalá SOS Mascota';
+  String get instalarTarjetaTitulo => 'Instalá SOS Mascotas';
 
   @override
   String get instalarTarjetaTexto =>
@@ -1380,7 +1386,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get instalarGracias =>
-      '¡Listo! Ya podés abrir SOS Mascota desde la pantalla de inicio.';
+      '¡Listo! Ya podés abrir SOS Mascotas desde la pantalla de inicio.';
 
   @override
   String get instalarIphoneTitulo => 'Instalar en el iPhone';
@@ -1819,7 +1825,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String hogarMensajeInvitacion(String enlace) {
-    return 'Te invito a cuidar a mis mascotas en SOS Mascota: $enlace';
+    return 'Te invito a cuidar a mis mascotas en SOS Mascotas: $enlace';
   }
 
   @override
@@ -1884,7 +1890,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get unirmeTexto =>
-      'Te invitaron a cuidar mascotas en SOS Mascota. Vas a poder ver y editar sus fichas, la libreta y los recordatorios, y vas a recibir los avisos del QR. Las personas del hogar van a ver tu nombre (nunca tu correo).';
+      'Te invitaron a cuidar mascotas en SOS Mascotas. Vas a poder ver y editar sus fichas, la libreta y los recordatorios, y vas a recibir los avisos del QR. Las personas del hogar van a ver tu nombre (nunca tu correo).';
 
   @override
   String get unirmeBoton => 'Unirme';
@@ -1936,7 +1942,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get perfilRolDueno => 'Dueño o dueña de mascotas';
 
   @override
-  String get perfilRolAdmin => 'Administración de SOS Mascota';
+  String get perfilRolAdmin => 'Administración de SOS Mascotas';
 
   @override
   String get perfilPlan => 'Plan';
@@ -2129,7 +2135,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get chatQuienEncontro => 'Quien la encontró';
 
   @override
-  String get chatSinNombre => 'Persona de SOS Mascota';
+  String get chatSinNombre => 'Persona de SOS Mascotas';
 
   @override
   String chatSobreReporte(String nombre) {
@@ -2884,7 +2890,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String catalogoConsultaTexto(String producto) {
-    return 'Hola, te escribo desde SOS Mascota. Quería consultar por: $producto';
+    return 'Hola, te escribo desde SOS Mascotas. Quería consultar por: $producto';
   }
 
   @override
@@ -3105,7 +3111,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String pedidoMensajeSaludo(int numero) {
-    return 'Hola, te hago un pedido desde SOS Mascota (#$numero):';
+    return 'Hola, te hago un pedido desde SOS Mascotas (#$numero):';
   }
 
   @override
@@ -3397,7 +3403,8 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get comunidadAdopcionDetalle => 'Adopción responsable en SOS Mascota.';
+  String get comunidadAdopcionDetalle =>
+      'Adopción responsable en SOS Mascotas.';
 
   @override
   String comunidadLugarNuevo(String nombre) {
@@ -4278,7 +4285,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get renacGuiaTexto =>
-      '## Qué es el RENAC\nEs el **Registro Nacional de Animales de Compañía** del MGAP (Ley 18.471). Los perros y gatos se identifican con un **microchip** y se registran a nombre de quien los tiene a cargo. Es obligatorio.\n## Cuándo\nA partir de los **90 días de vida**.\n## Cómo se hace\n- Andá a una veterinaria que sea **operador RENAC** (veterinarios acreditados por el INBA).\n- Te coloca el microchip, si no tiene, y carga los datos de tu mascota y los tuyos.\n- Te dan una **constancia** con esos datos. Guardala.\n- El costo lo fija cada veterinaria: preguntá antes.\n## Si se muda o cambia de dueño\nPedile a tu veterinaria que actualice los datos en el RENAC.\n## Si se pierde\nAdemás de publicar el SOS en la app, pedí que la marquen como **extraviada** en el RENAC.\n## Chip y chapita QR\nEl chip solo lo lee una veterinaria con un lector. La chapita QR la lee cualquier celular. **Se complementan.**\n> SOS Mascota no es parte del RENAC ni del MGAP. Esta guía es orientativa: ante cualquier duda, consultá con tu veterinaria o con el INBA.';
+      '## Qué es el RENAC\nEs el **Registro Nacional de Animales de Compañía** del MGAP (Ley 18.471). Los perros y gatos se identifican con un **microchip** y se registran a nombre de quien los tiene a cargo. Es obligatorio.\n## Cuándo\nA partir de los **90 días de vida**.\n## Cómo se hace\n- Andá a una veterinaria que sea **operador RENAC** (veterinarios acreditados por el INBA).\n- Te coloca el microchip, si no tiene, y carga los datos de tu mascota y los tuyos.\n- Te dan una **constancia** con esos datos. Guardala.\n- El costo lo fija cada veterinaria: preguntá antes.\n## Si se muda o cambia de dueño\nPedile a tu veterinaria que actualice los datos en el RENAC.\n## Si se pierde\nAdemás de publicar el SOS en la app, pedí que la marquen como **extraviada** en el RENAC.\n## Chip y chapita QR\nEl chip solo lo lee una veterinaria con un lector. La chapita QR la lee cualquier celular. **Se complementan.**\n> SOS Mascotas no es parte del RENAC ni del MGAP. Esta guía es orientativa: ante cualquier duda, consultá con tu veterinaria o con el INBA.';
 
   @override
   String get renacVerVeterinarias => 'Ver veterinarias que colocan microchip';
@@ -4307,7 +4314,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String buscarSinRubro(String rubro) {
-    return 'Todavía no hay $rubro cerca en SOS Mascota.';
+    return 'Todavía no hay $rubro cerca en SOS Mascotas.';
   }
 
   @override
@@ -5403,7 +5410,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String historialPie(String fecha) {
-    return 'Hecho con SOS Mascota el $fecha';
+    return 'Hecho con SOS Mascotas el $fecha';
   }
 
   @override
@@ -6084,7 +6091,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String equipoMensajeInvitacion(String negocio, String enlace) {
-    return 'Te invito al equipo de $negocio en SOS Mascota: $enlace';
+    return 'Te invito al equipo de $negocio en SOS Mascotas: $enlace';
   }
 
   @override
@@ -6098,7 +6105,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get unirmeEquipoTexto =>
-      'Te invitaron a ser parte del equipo de un negocio en SOS Mascota. Vas a atender pedidos, turnos y el catálogo desde el modo comercio. El dueño y el equipo van a ver tu primer nombre (nunca tu correo).';
+      'Te invitaron a ser parte del equipo de un negocio en SOS Mascotas. Vas a atender pedidos, turnos y el catálogo desde el modo comercio. El dueño y el equipo van a ver tu primer nombre (nunca tu correo).';
 
   @override
   String get unirmeEquipoBoton => 'Unirme al equipo';
