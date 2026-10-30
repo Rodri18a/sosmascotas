@@ -9,6 +9,11 @@ Uso (desde la raíz del repo):
     set -a; . ~/.config/sosmascotas/supabase-dev.env; set +a
     python3 -I supabase/configurar_auth.py            # muestra los cambios
     python3 -I supabase/configurar_auth.py --aplicar  # los aplica
+
+Producción (0.8.5): el archivo de credenciales de prod define SOSM_APP_URL y
+SOSM_ADMIN_URL; con ellas se usan esas direcciones y no se permite localhost.
+Si además define SOSM_PROJECT_REF, el script se niega a correr contra otro
+proyecto (por ejemplo, con dev todavía vinculado).
 """
 import json
 import os
@@ -40,16 +45,17 @@ CORREO = """<div style="font-family:system-ui,-apple-system,'Segoe UI',Roboto,sa
 # Dirección principal: la app de prueba online (Vercel, docs/PUBLICACION.md).
 # Supabase manda ahí si el pedido no trae una dirección permitida; localhost
 # queda permitido para desarrollar en la máquina.
-APP_ONLINE = 'https://sosmascota-dev.vercel.app'
+APP_ONLINE = os.environ.get('SOSM_APP_URL', 'https://sosmascota-dev.vercel.app')
 # Portal de administración (etapa 1.8, D76): el enlace del correo vuelve ahí.
-ADMIN_ONLINE = 'https://sosmascota-admin.vercel.app'
+ADMIN_ONLINE = os.environ.get('SOSM_ADMIN_URL', 'https://sosmascota-admin.vercel.app')
+PRODUCCION = 'SOSM_APP_URL' in os.environ
+LOCALES = [] if PRODUCCION else ['http://localhost:3001/**', 'http://127.0.0.1:3001/**']
 DESEADO = {
     'site_url': APP_ONLINE,
     'uri_allow_list': ','.join([
         f'{APP_ONLINE}/**',
         f'{ADMIN_ONLINE}/**',
-        'http://localhost:3001/**',
-        'http://127.0.0.1:3001/**',
+        *LOCALES,
     ]),
     'mailer_otp_length': 6,
     'mailer_otp_exp': 600,
@@ -76,6 +82,11 @@ def pedir(metodo, cuerpo=None):
 
 
 def main():
+    esperado = os.environ.get('SOSM_PROJECT_REF')
+    if esperado and esperado != REF:
+        sys.exit(f'❌ El proyecto vinculado es {REF}, pero las credenciales son de {esperado}. '
+                 'Vinculá el proyecto correcto con supabase link.')
+    print(f"Proyecto {REF} ({'producción' if PRODUCCION else 'dev'}): {APP_ONLINE}")
     actual = pedir('GET')
     deseado = dict(DESEADO)
     # Google (paso 0.2.3): se activa cuando el archivo privado tiene las credenciales.

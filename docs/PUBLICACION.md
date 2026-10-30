@@ -70,17 +70,40 @@ En **Zero Trust → Access → Aplicaciones → sosmascotas → Política**, agr
 
 ## Producción (paso 0.8.5) — lista para cuando se cree el proyecto
 
-Revisado el 22/10/2026: las 51 migraciones sirven tal cual para producción. No traen datos de ejemplo (eso va en `supabase/seeds/` y en los cargadores con `--ejemplo`), ni direcciones de dev, ni ids de usuarios. La única funcionalidad gradual que crean es `temas_pro` (en beta). Las demás (`comercios`, `eventos`, `catalogo`, `chat`, etc.) se crean con `funcionalidades.py`; mientras no existan, en producción quedan **apagadas**, que es lo que queremos para el lanzamiento.
+Revisado de nuevo el **30/10/2026**: las **82 migraciones** sirven tal cual para producción. No traen datos de ejemplo (van en `supabase/seeds/` y en los cargadores con `--ejemplo`), ni direcciones de dev, ni correos o ids de usuarios. La única funcionalidad gradual que crean es `temas_pro` (en beta); las otras 23 que hay en dev (`comercios`, `chat`, `cuidados`, etc.) se crean con `funcionalidades.py`, así que en producción quedan **apagadas** hasta crearlas. Las migraciones también prenden `pg_cron` y `pg_net` y programan 4 tareas (`resumir-estadisticas`, `reporte-mensual`, `vencer-planes`, `recordar-turnos`).
 
-Pasos, en orden:
+**Cuidado con el proyecto vinculado:** `supabase link` cambia `supabase/.temp/project-ref`, y **todos** los scripts de Python (`configurar_auth.py`, `funcionalidades.py`, `cargar_*.py`, `rls_test.py`) usan ese proyecto. `configurar_auth.py` se niega a correr si `SOSM_PROJECT_REF` no coincide con el vinculado; con los demás, mirar `cat supabase/.temp/project-ref` antes. **Volver a vincular dev al terminar.**
 
-1. **El dueño** crea el proyecto de Supabase de producción (en la misma región que dev) y guarda la contraseña de la base. Credenciales en un archivo aparte, por ejemplo `~/.config/sosmascotas/supabase-prod.env`, **nunca** en el repo.
-2. `supabase link --project-ref <ref de prod>` y `supabase db push --linked --dry-run`, revisar, y después sin `--dry-run`. Ojo: `link` cambia `supabase/.temp/project-ref`, que usan también los scripts de Python. **Volver a linkear dev al terminar.**
-3. Edge Functions: `supabase functions deploy <nombre> --use-api` para `delete-account`, `owner-alert`, `qr-scan-alert`, `sos-follow-alert` y `sos-zone-alert`.
-4. Secretos de las funciones: `FIREBASE_SERVICE_ACCOUNT` (del proyecto Firebase de **producción**; en Windows, con `--env-file`) y `TURNSTILE_SECRET` (clave de Turnstile para `sosmascotas.uy`). `SUPABASE_URL` y `SUPABASE_SERVICE_ROLE_KEY` los pone Supabase.
-5. Login: **antes** de correr `supabase/configurar_auth.py --aplicar` contra producción, cambiarle `APP_ONLINE` y `ADMIN_ONLINE` a las direcciones de producción y sacar `localhost` de `uri_allow_list`. Hoy tiene escritas las de dev.
-6. Datos reales: `cargar_comercios.py investigacion/veterinarias.csv --aplicar` y `cargar_ayuda.py investigacion/ayuda.csv --aplicar`. **Nunca** los seeds de `supabase/seeds/` (son solo para dev).
-7. Rol de administración: `update profiles set role = 'admin'` para la cuenta del dueño, desde la base.
-8. Configuración: `app/config/prod.json` (copiar de `prod.example.json`), `web-publica/config.js` con la clave publishable de producción y `admin/config/prod.json` (copiar de `prod.example.json`).
-9. Respaldo: el plan gratis de Supabase no incluye respaldos. Hasta pagar Pro, `supabase db dump --linked` semanal guardado fuera del repo.
-10. `rls_test.py` crea dos cuentas temporales y las borra: se puede correr contra producción, pero mejor antes de abrirla al público.
+### Lo que hace el dueño (≈ 15 min)
+
+1. Crear el proyecto de Supabase de producción, en la **misma región que dev**, y guardar la contraseña de la base.
+2. Crear `~/.config/sosmascotas/supabase-prod.env` (**nunca** en el repo), con:
+   ```
+   SUPABASE_ACCESS_TOKEN=…        # el mismo token de la cuenta
+   SUPABASE_DB_PASSWORD=…         # la de producción
+   SOSM_PROJECT_REF=<ref de prod>
+   SOSM_APP_URL=https://sosmascotas.uy
+   SOSM_ADMIN_URL=https://<dirección del portal de prod>
+   ```
+3. Si se separan los avisos: proyecto de **Firebase de producción** (cuenta de servicio y configuración web) y un sitio de **Turnstile** para el dominio de producción.
+4. Decidir qué funcionalidades se prenden en el lanzamiento (ver el paso 9).
+
+### Lo que hace Claude después, en orden
+
+1. `set -a; . ~/.config/sosmascotas/supabase-prod.env; set +a`, después `supabase link --project-ref $SOSM_PROJECT_REF` y `supabase db push --linked --dry-run`. Mostrar el resultado, esperar el visto bueno y aplicar sin `--dry-run`.
+2. **Edge Functions** (las 9): `delete-account`, `owner-alert`, `qr-scan-alert`, `sos-follow-alert`, `sos-zone-alert`, `order-status-alert`, `booking-alert`, `care-alert` y `monthly-report`, con `supabase functions deploy <nombre> --use-api`. Todas llevan `verify_jwt = false` (está en `config.toml`) y controlan quién las llama por dentro.
+3. **Secretos de las funciones** (`supabase secrets set`; en Windows, los que tienen JSON con `--env-file`):
+   - `FIREBASE_SERVICE_ACCOUNT`: todas las que mandan push (`_shared/fcm.ts`).
+   - `TURNSTILE_SECRET`: `owner-alert` (el anti-bots de la página del QR).
+   - `CRON_SECRET`: `booking-alert` (recordatorio de turnos).
+   - `MONTHLY_REPORT_SECRET`: `monthly-report`.
+   - `SUPABASE_URL` y `SUPABASE_SERVICE_ROLE_KEY` los pone Supabase.
+4. **Vault** (para las tareas programadas que llaman a funciones; sin esto solo dejan un aviso y no hacen nada): `select vault.create_secret('<https://ref.supabase.co>', 'project_url');`, más `cron_secret` y `monthly_report_secret` con **los mismos valores** que `CRON_SECRET` y `MONTHLY_REPORT_SECRET`.
+5. **Login:** `python -I -X utf8 supabase/configurar_auth.py` (vista previa) y después `--aplicar`. Con `SOSM_APP_URL` y `SOSM_ADMIN_URL` usa las direcciones de producción y **no** permite `localhost`. Si ya existe el proveedor de correo (0.4.4b), los correos salen en español con código.
+6. **Datos reales:** `cargar_comercios.py investigacion/veterinarias.csv --aplicar` y `cargar_ayuda.py investigacion/ayuda.csv --aplicar`. **Nunca** los seeds de `supabase/seeds/` (son solo para dev: a nombre del dueño, con teléfonos de mentira).
+7. **Rol de administración:** `update profiles set role = 'admin'` para la cuenta del dueño, después de que entre por primera vez.
+8. **Configuración:** `app/config/prod.json` y `admin/config/prod.json` (copiar de `prod.example.json`) y `web-publica/config.js` con la clave publishable de producción. Antes de subir, revisar en `main.dart.js` que **no** aparezcan `localhost` ni `sosmascota-web-dev`.
+9. **Funcionalidades:** crear con `funcionalidades.py crear` solo las que se lanzan y dejarlas en el estado que decida el dueño. Lo que no se cree queda apagado.
+10. **Seguridad:** `python -I -X utf8 supabase/tests/rls_test.py` contra producción **antes** de abrirla al público (crea dos cuentas temporales y las borra).
+11. **Respaldo:** el plan gratis de Supabase no incluye respaldos. Hasta pasar a Pro, `supabase db dump --linked -f <carpeta fuera del repo>/prod-AAAA-MM-DD.sql` **una vez por semana** (y también con `--data-only`).
+12. Volver a vincular dev: `supabase link --project-ref <ref de dev>`.
