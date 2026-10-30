@@ -5,7 +5,7 @@
 | # | Idea | Origen | Fecha | Estado |
 |---|---|---|---|---|
 | I1 | Seguir el paseo en vivo (el paseador comparte la ubicación) | Visto en MiMascota App | 16/10/2026 | 💡 Para evaluar |
-| I2 | Seguimiento por GPS de la chapita o el collar | Visto en MiMascota App; retomado por el dueño | 16/10/2026 (act. 30/10) | 💡 Para investigar · paso 1 sin hardware propuesto |
+| I2 | Seguimiento por GPS de la chapita o el collar | Visto en MiMascota App; retomado por el dueño | 16/10/2026 (act. 30/10) | ⏸️ Para una próxima versión (D121) |
 | I3 | Collar que informa datos de salud (como un reloj biométrico) | Idea del dueño | 16/10/2026 | 💡 Para investigar |
 | I4 | "Con quién me cruzo" por las mascotas | Idea del dueño | 17/10/2026 | 📝 Propuesta en `17-propuestas-perfil-gamificacion.md` §2 |
 | I5 | Gamificación con logros concretos (protección, libreta al día, tratamiento completo, vecino solidario) | Idea del dueño | 17/10/2026 | 📝 Propuesta en `17-propuestas-perfil-gamificacion.md` §3 |
@@ -53,6 +53,8 @@
 - Qué rastreadores se venden en Uruguay (Mercado Libre, veterinarias, pet shops), precio y mensualidad, cobertura en Pando y si tienen API.
 - En las charlas con dueños: ¿ya usan alguno? ¿Pagarían por esto o es un "estaría bueno"?
 - El paso 1 se puede hacer antes porque es chico y además **mide** el interés.
+
+**Estado (30/10/2026, D121):** queda **para una próxima versión**, después del lanzamiento. Aunque el paso 1 es chico, toca la ficha de la mascota, el SOS, la base y la privacidad, y no tiene que demorar las pruebas ni el lanzamiento de la Fase 0.
 
 ## I3 · Collar con datos de salud
 
