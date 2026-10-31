@@ -34,12 +34,19 @@ void main() {
             'éxito/fondo': (c.exito, c.fondo),
             'urgencia/fondo': (c.urgencia, c.fondo),
             'sobre las barras': (c.sobreBarra, c.barra),
-            // Con barras de otro color, el botón del Mapa se tiene que ver.
-            if (c.barra != c.primario)
-              'botón del Mapa/barra': (c.primario, c.barra),
+            'sobre el relleno': (c.sobreRelleno, c.relleno),
           };
           for (final MapEntry(key: par, value: (a, b)) in pares.entries) {
             expect(contraste(a, b), greaterThanOrEqualTo(4.5), reason: par);
+          }
+          // Con barras de otro color, el botón del Mapa se tiene que ver:
+          // es un elemento gráfico, alcanza con 3:1 (WCAG 1.4.11).
+          if (c.barra != c.primario) {
+            expect(
+              contraste(c.primario, c.barra),
+              greaterThanOrEqualTo(3),
+              reason: 'botón del Mapa/barra',
+            );
           }
         });
 

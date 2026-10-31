@@ -129,12 +129,13 @@ volante A5 y post cuadrado para redes.
 | Fondo (`surface`) | fondo claro `#EAF4FA` | `#0E1E26` |
 | Texto | tinta `#102A35` | `#E6F1F6` |
 | Texto secundario | `#465D68` | `#A9BCC4` |
-| Primario (botones, enlaces) | azul petróleo `#0F5E7A` (6,6:1) | `#7CC4DE` (8,8:1) |
-| Sobre el primario | `#FFFFFF` (7,2:1) | `#0E1E26` |
-| Acento (SOS, destacado, logo) | celeste `#7CC4DE` | `#A6DAEC` |
-| Sobre el acento | tinta `#102A35` | `#0E1E26` |
+| Barras y botones principales (relleno, D123) | celeste `#7CC4DE` con texto tinta `#102A35` | `#7CC4DE` con `#0E1E26` |
+| Primario (textos, enlaces, íconos, botón del Mapa) | celeste profundo `#1D6C8F` | `#7CC4DE` |
+| Sobre el primario | `#FFFFFF` | `#0E1E26` |
+| Acento (SOS, destacado) | azul petróleo `#0F5E7A` | `#3D95C2` |
+| Sobre el acento | `#FFFFFF` | `#0E1E26` |
 
-- El celeste **no se usa como color de texto** sobre fondo claro (no llega a 4,5:1): va de relleno con texto tinta encima. Los contrastes los verifica `app/test/tema_test.dart`.
+- **El celeste es el color principal (D123)**, pero **no se usa como color de texto** sobre fondo claro (no llega a 4,5:1): va de relleno con texto tinta encima; para textos e íconos se usa el mismo tono más profundo `#1D6C8F`. Los contrastes los verifica `app/test/tema_test.dart`.
 - Tipografías: **Sora** (títulos) y **Source Sans 3** (texto), de Google Fonts.
 
 ### Pines del mapa (fijos en todos los temas)

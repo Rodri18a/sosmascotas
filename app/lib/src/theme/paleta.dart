@@ -20,8 +20,12 @@ class ColoresModo {
     required this.urgencia,
     Color? barra,
     Color? sobreBarra,
+    Color? relleno,
+    Color? sobreRelleno,
   }) : _barra = barra,
-       _sobreBarra = sobreBarra;
+       _sobreBarra = sobreBarra,
+       _relleno = relleno,
+       _sobreRelleno = sobreRelleno;
 
   final Color fondo;
   final Color texto;
@@ -46,11 +50,19 @@ class ColoresModo {
 
   final Color? _barra;
   final Color? _sobreBarra;
+  final Color? _relleno;
+  final Color? _sobreRelleno;
 
   /// Fondo de la barra de arriba y de la de abajo: el primario, salvo en
   /// Blanco y negro, que las tiene blancas.
   Color get barra => _barra ?? primario;
   Color get sobreBarra => _sobreBarra ?? sobrePrimario;
+
+  /// Relleno de los botones principales: el primario, salvo en Cielo claro,
+  /// que usa el celeste de la marca con texto oscuro (D123). El primario
+  /// queda para textos, enlaces e íconos, que tienen que contrastar.
+  Color get relleno => _relleno ?? primario;
+  Color get sobreRelleno => _sobreRelleno ?? sobrePrimario;
 }
 
 /// Archivo de una tipografía que se descarga al elegir un tema Pro
@@ -99,21 +111,28 @@ class Paleta {
       brillo == Brightness.dark ? oscuro : claro;
 
   /// Identidad de la marca: C · Cielo (D62), con los colores de la guía de
-  /// marca (D122): celeste de acento y fondo claro celeste.
+  /// marca (D122). El principal es el celeste del logo (D123): de relleno en
+  /// las barras y los botones; para textos e íconos, el mismo tono más
+  /// profundo (el celeste no llega a 4,5:1 sobre el fondo claro). El acento
+  /// es el azul petróleo.
   static const cielo = Paleta(
     id: 'cielo',
     claro: ColoresModo(
       fondo: Color(0xFFEAF4FA), // fondo claro
       texto: Color(0xFF102A35), // tinta
       textoSuave: Color(0xFF465D68),
-      primario: Color(0xFF0F5E7A), // azul petróleo
+      primario: Color(0xFF1D6C8F), // celeste profundo
       sobrePrimario: Color(0xFFFFFFFF),
-      acento: Color(0xFF7CC4DE), // celeste del logo
-      sobreAcento: Color(0xFF102A35),
+      acento: Color(0xFF0F5E7A), // azul petróleo
+      sobreAcento: Color(0xFFFFFFFF),
       error: Color(0xFFB3261E),
       sobreError: Color(0xFFFFFFFF),
       exito: Color(0xFF17705F),
       urgencia: Color(0xFF9A4A00),
+      barra: Color(0xFF7CC4DE), // celeste del logo
+      sobreBarra: Color(0xFF102A35),
+      relleno: Color(0xFF7CC4DE),
+      sobreRelleno: Color(0xFF102A35),
     ),
     oscuro: ColoresModo(
       fondo: Color(0xFF0E1E26),
@@ -121,7 +140,7 @@ class Paleta {
       textoSuave: Color(0xFFA9BCC4),
       primario: Color(0xFF7CC4DE),
       sobrePrimario: Color(0xFF0E1E26),
-      acento: Color(0xFFA6DAEC),
+      acento: Color(0xFF3D95C2),
       sobreAcento: Color(0xFF0E1E26),
       error: Color(0xFFFF8A80),
       sobreError: Color(0xFF0E1E26),
