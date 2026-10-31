@@ -44,8 +44,6 @@ abstract final class AppTheme {
       ),
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
-          backgroundColor: c.relleno,
-          foregroundColor: c.sobreRelleno,
           minimumSize: tamanoBoton,
           shape: const RoundedRectangleBorder(borderRadius: radio),
         ),
@@ -75,18 +73,13 @@ abstract final class AppTheme {
   static ColorScheme esquema(ColoresModo c, Brightness brillo) {
     final oscuro = brillo == Brightness.dark;
     Color hacia(double t) => Color.lerp(c.fondo, c.texto, t)!;
-    final conRelleno = c.relleno != c.primario;
     return ColorScheme.fromSeed(
-      seedColor: c.relleno,
+      seedColor: c.primario,
       brightness: brillo,
       dynamicSchemeVariant: DynamicSchemeVariant.fidelity,
     ).copyWith(
       primary: c.primario,
       onPrimary: c.sobrePrimario,
-      // Con relleno propio (Cielo claro), los contenedores son ese celeste:
-      // el botón flotante, la pestaña elegida, los avatares.
-      primaryContainer: conRelleno ? c.relleno : null,
-      onPrimaryContainer: conRelleno ? c.sobreRelleno : null,
       secondary: c.acento,
       onSecondary: c.sobreAcento,
       error: c.error,

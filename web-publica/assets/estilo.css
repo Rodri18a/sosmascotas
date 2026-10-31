@@ -9,11 +9,11 @@
   src: url(/assets/fuentes/source-sans-3-latin.woff2) format('woff2');
 }
 :root {
-  --primario: #1d6c8f;
+  --primario: #0f5e7a;
   --sobre-primario: #ffffff;
   --primario-claro: #e1eef2;
-  --acento: #0f5e7a;
-  --sobre-acento: #ffffff;
+  --acento: #7cc4de;
+  --sobre-acento: #102a35;
   --error: #b3261e;
   --texto: #102a35;
   --suave: #4a5f68;
@@ -27,7 +27,7 @@
     --primario: #7cc4de;
     --sobre-primario: #0e1e26;
     --primario-claro: #16323d;
-    --acento: #3d95c2;
+    --acento: #a6daec;
     --sobre-acento: #0e1e26;
     --error: #ff8a80;
     --texto: #e6f1f6;
