@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
-import '../../theme/paleta.dart';
 import '../../theme/tema_elegido.dart';
 
 /// Fila "Tema de colores" de Ajustes (solo con plan Pro o Familia, D62).

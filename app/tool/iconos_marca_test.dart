@@ -6,7 +6,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sosmascota/src/widgets/logo.dart';
+import 'package:sosmascota_core/sosmascota_core.dart';
 
 /// Fondo del ícono de la app: celeste del logo, un poco más oscuro abajo.
 const _fondoArriba = Color(0xFF8FD0E8);

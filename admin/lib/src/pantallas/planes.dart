@@ -284,6 +284,7 @@ class _NuevoPlanState extends ConsumerState<_NuevoPlan> {
               ElegirLugar(onElegido: (l) => _lugar = l),
               DropdownButtonFormField<String>(
                 initialValue: _plan,
+                isExpanded: true,
                 decoration: const InputDecoration(labelText: T.plan),
                 items: [
                   for (final p in ['featured', 'plus'])

@@ -43,4 +43,7 @@ export 'src/noticias/novedad.dart';
 export 'src/qr/pedido_chapita.dart';
 export 'src/qr/qr_tag.dart';
 export 'src/sos/sos.dart';
+export 'src/tema/app_theme.dart';
+export 'src/tema/isotipo.dart';
+export 'src/tema/paleta.dart';
 export 'src/veterinarias/veterinarias.dart';

@@ -166,4 +166,4 @@ Texto sobre el primario: blanco en claro y el color de fondo en oscuro. Texto so
 - Las tipografías de Cielo vienen con la app. Las de los otros temas se descargan solo si alguien elige ese tema, para no agrandar la carga de la web.
 - Si el plan Pro vence, la app vuelve a Cielo sin perder la elección guardada.
 - En Faro oscuro el primario es un azul claro (`#9DB4E8`) y el acento sigue naranja, para que el SOS sea naranja en los dos modos (D63).
-- Error, "abierto ahora" y "urgencias" de cada tema: valores en `app/lib/src/theme/paleta.dart`; la prueba `app/test/tema_test.dart` controla el contraste de todos.
+- Error, "abierto ahora" y "urgencias" de cada tema: valores en `packages/core/lib/src/tema/paleta.dart` (D125); la prueba `app/test/tema_test.dart` controla el contraste de todos.

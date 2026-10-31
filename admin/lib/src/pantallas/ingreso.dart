@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../sesion.dart';
 import '../textos.dart';
@@ -52,6 +53,8 @@ class _IngresoScreenState extends ConsumerState<IngresoScreen> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                const Center(child: Isotipo(tamanio: 96)),
+                const SizedBox(height: 12),
                 Text(
                   T.titulo,
                   style: Theme.of(context).textTheme.titleLarge,

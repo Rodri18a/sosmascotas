@@ -28,3 +28,19 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  # Las tipografías de la marca (D62, D122), las mismas que la app; licencia
+  # OFL (ver assets/fuentes/).
+  fonts:
+    - family: Sora
+      fonts:
+        - asset: assets/fuentes/Sora-SemiBold.ttf
+          weight: 600
+        - asset: assets/fuentes/Sora-Bold.ttf
+          weight: 700
+    - family: SourceSans3
+      fonts:
+        - asset: assets/fuentes/SourceSans3-Regular.ttf
+        - asset: assets/fuentes/SourceSans3-SemiBold.ttf
+          weight: 600
+        - asset: assets/fuentes/SourceSans3-Bold.ttf
+          weight: 700

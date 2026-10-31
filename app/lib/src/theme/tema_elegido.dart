@@ -11,7 +11,6 @@ import '../cuenta/perfil_repositorio.dart';
 import '../cuenta/plan_usuario_repositorio.dart';
 import '../funcionalidades/funcionalidades_activas.dart';
 import '../metricas/metricas.dart';
-import 'paleta.dart';
 
 /// Dónde se guarda el tema elegido (en el dispositivo, D62).
 abstract interface class AlmacenTema {

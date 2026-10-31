@@ -10,7 +10,6 @@ import '../../cuenta/servicio_cuenta.dart';
 import '../../funcionalidades/funcionalidades_activas.dart';
 import '../../mascotas/catalogo.dart';
 import '../../metricas/metricas.dart';
-import '../../theme/paleta.dart';
 import '../../utiles/enlaces.dart';
 import '../adopcion/apadrinamiento_screen.dart';
 import '../agenda/cuidados.dart';

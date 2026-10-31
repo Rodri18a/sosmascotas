@@ -7,7 +7,6 @@ import '../../../l10n/l10n.dart';
 import '../../cuenta/con_cuenta.dart';
 import '../../router.dart';
 import '../../sos/sos_repositorio.dart';
-import '../../theme/paleta.dart';
 import '../../utiles/tiempo.dart';
 import '../../widgets/boton_ajustes.dart';
 import '../../widgets/boton_avisos.dart';

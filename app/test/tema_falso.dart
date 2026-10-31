@@ -1,5 +1,5 @@
-import 'package:sosmascota/src/theme/paleta.dart';
 import 'package:sosmascota/src/theme/tema_elegido.dart';
+import 'package:sosmascota_core/sosmascota_core.dart';
 
 /// Tema guardado en memoria para las pruebas.
 class AlmacenTemaFalso implements AlmacenTema {

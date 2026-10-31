@@ -8,7 +8,6 @@ import '../../ayuda/ayuda_repositorio.dart';
 import '../../funcionalidades/funcionalidades_activas.dart';
 import '../../metricas/metricas.dart';
 import '../../router.dart';
-import '../../theme/paleta.dart';
 import '../../utiles/enlaces.dart';
 import '../../widgets/boton_ajustes.dart';
 import '../../widgets/boton_avisos.dart';

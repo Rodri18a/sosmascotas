@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'pantallas/ayuda.dart';
 import 'pantallas/chapitas.dart';
@@ -30,10 +31,10 @@ class AdminApp extends StatelessWidget {
     locale: const Locale('es', 'UY'),
     supportedLocales: const [Locale('es', 'UY'), Locale('es')],
     localizationsDelegates: GlobalMaterialLocalizations.delegates,
-    theme: ThemeData(
-      colorSchemeSeed: const Color(0xFF0F5E7A),
-      useMaterial3: true,
-    ),
+    // El mismo tema que la app: paleta y tipografías de la guía de marca
+    // (D122, D125).
+    theme: AppTheme.claro,
+    darkTheme: AppTheme.oscuro,
     home: const _Puerta(),
   );
 }
@@ -165,6 +166,10 @@ class _PortalState extends ConsumerState<Portal> {
           );
     return Scaffold(
       appBar: AppBar(
+        leading: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Isotipo(tinta: context.marca.sobreBarra),
+        ),
         title: Text(_secciones[_seccion].$2),
         actions: [
           Padding(

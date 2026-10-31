@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../l10n/l10n.dart';
 
@@ -9,7 +10,6 @@ import 'push/servicio_push.dart';
 import 'recordatorios/avisador.dart';
 import 'router.dart';
 import 'sos/difusion_sos.dart';
-import 'theme/app_theme.dart';
 import 'theme/tema_elegido.dart';
 import 'ubicacion/servicio_ubicacion.dart';
 import 'utiles/respaldo.dart';

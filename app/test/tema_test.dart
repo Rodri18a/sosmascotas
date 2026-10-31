@@ -3,8 +3,6 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sosmascota/src/mapa/mapa_vista.dart';
-import 'package:sosmascota/src/theme/app_theme.dart';
-import 'package:sosmascota/src/theme/paleta.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 /// Contraste WCAG entre dos colores (1 a 21).

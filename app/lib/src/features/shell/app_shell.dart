@@ -5,7 +5,6 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
 import '../../metricas/metricas.dart';
-import '../../theme/paleta.dart';
 
 /// Pestañas de la barra inferior, en el orden de las ramas del router (D94).
 enum Pestana { noticias, sos, mapa, mascotas, ayuda }

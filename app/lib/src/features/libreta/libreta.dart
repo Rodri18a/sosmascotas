@@ -14,7 +14,6 @@ import '../../mascotas/mascotas_repositorio.dart';
 import '../../mascotas/textos_mascota.dart';
 import '../../metricas/metricas.dart';
 import '../../router.dart';
-import '../../theme/paleta.dart';
 import '../../utiles/descargar.dart';
 import '../../utiles/enlaces.dart';
 import '../../widgets/volver.dart';

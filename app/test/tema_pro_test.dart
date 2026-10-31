@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
-import 'package:sosmascota/src/theme/paleta.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'cuenta_falsa.dart';

@@ -5,7 +5,6 @@ import 'package:flutter/widgets.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
-import '../theme/paleta.dart';
 import 'dibujo_pin.dart';
 import 'mapa_vista.dart';
 

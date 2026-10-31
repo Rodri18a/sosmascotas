@@ -12,7 +12,6 @@ import '../../mascotas/mascotas_repositorio.dart';
 import '../../mascotas/textos_mascota.dart';
 import '../../router.dart';
 import '../../sos/sos_repositorio.dart';
-import '../../theme/paleta.dart';
 import '../../widgets/foto_mascota.dart';
 import '../hogar/tareas.dart';
 import '../libreta/libreta.dart';
