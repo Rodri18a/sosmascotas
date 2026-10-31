@@ -129,7 +129,7 @@ volante A5 y post cuadrado para redes.
 | Fondo (`surface`) | fondo claro `#EAF4FA` | `#0E1E26` |
 | Texto | tinta `#102A35` | `#E6F1F6` |
 | Texto secundario | `#465D68` | `#A9BCC4` |
-| Barras y botones principales (relleno, D123) | celeste `#7CC4DE` con texto tinta `#102A35` | `#7CC4DE` con `#0E1E26` |
+| Barras y botones principales (relleno, D123) | celeste `#7CC4DE` con letras e íconos blancos (D124, 2,1:1: excepción pedida por el dueño) | `#7CC4DE` con `#0E1E26` |
 | Primario (textos, enlaces, íconos, botón del Mapa) | celeste profundo `#1D6C8F` | `#7CC4DE` |
 | Sobre el primario | `#FFFFFF` | `#0E1E26` |
 | Acento (SOS, destacado) | azul petróleo `#0F5E7A` | `#3D95C2` |

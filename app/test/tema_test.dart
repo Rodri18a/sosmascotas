@@ -33,8 +33,12 @@ void main() {
             'sobre error': (c.sobreError, c.error),
             'éxito/fondo': (c.exito, c.fondo),
             'urgencia/fondo': (c.urgencia, c.fondo),
-            'sobre las barras': (c.sobreBarra, c.barra),
-            'sobre el relleno': (c.sobreRelleno, c.relleno),
+            // Excepción pedida por el dueño (D124): en Cielo claro, blanco
+            // sobre el celeste.
+            if (!(nombre == 'cielo' && brillo == Brightness.light)) ...{
+              'sobre las barras': (c.sobreBarra, c.barra),
+              'sobre el relleno': (c.sobreRelleno, c.relleno),
+            },
           };
           for (final MapEntry(key: par, value: (a, b)) in pares.entries) {
             expect(contraste(a, b), greaterThanOrEqualTo(4.5), reason: par);

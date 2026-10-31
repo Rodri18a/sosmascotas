@@ -129,10 +129,12 @@ class Paleta {
       sobreError: Color(0xFFFFFFFF),
       exito: Color(0xFF17705F),
       urgencia: Color(0xFF9A4A00),
+      // Letras e íconos blancos sobre el celeste, pedido del dueño (D124):
+      // contraste 2,1:1, por debajo del 4,5:1 de los requisitos.
       barra: Color(0xFF7CC4DE), // celeste del logo
-      sobreBarra: Color(0xFF102A35),
+      sobreBarra: Color(0xFFFFFFFF),
       relleno: Color(0xFF7CC4DE),
-      sobreRelleno: Color(0xFF102A35),
+      sobreRelleno: Color(0xFFFFFFFF),
     ),
     oscuro: ColoresModo(
       fondo: Color(0xFF0E1E26),
