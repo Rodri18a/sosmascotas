@@ -1,6 +1,6 @@
 # 14 · Brief de identidad visual (para pasarle a una IA o a un diseñador)
 
-> 🧭 **01/11/2026:** se está explorando el nombre **HUELLITAS** con una identidad más alegre: ver [Brief de identidad · HUELLITAS](21-brief-huellitas.md). Hasta que se decida, este documento sigue vigente.
+> 🧭 **01/11/2026:** se está pasando a **Huellitas**: ver [Brief de identidad · HUELLITAS](21-brief-huellitas.md) y la [Guía visual](23-guia-visual.md). Hasta que se aplique, este documento sigue vigente.
 >
 > Versión para mandarle a un diseñador (logo amigable e íconos, 29/10/2026): [Brief de logo e íconos](20-brief-logo-iconos.md), con una copia para compartir en Claude Docs.
 >

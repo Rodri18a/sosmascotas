@@ -10,6 +10,7 @@
   - [Planes y precios (cómo explicarlo)](22-planes-y-precios.md)
   - [Habilitación gradual de funcionalidades](15-funcionalidades-graduales.md)
   - [Brief de identidad visual](14-brief-identidad-visual.md)
+  - [Guía visual (look and feel)](23-guia-visual.md)
   - [Brief de logo e íconos (diseñador)](20-brief-logo-iconos.md)
   - [Brief de identidad · HUELLITAS (exploración)](21-brief-huellitas.md)
   - [Ideas para el futuro](16-ideas-futuras.md)

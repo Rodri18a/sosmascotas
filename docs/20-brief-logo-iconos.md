@@ -1,123 +1,110 @@
-# 20 · Brief de logo e íconos (para el diseñador)
+# 20 · Brief de logo e íconos · Huellitas (para el diseñador)
 
-> 🧭 **01/11/2026:** se está explorando el nombre **HUELLITAS** con una identidad más alegre: ver [Brief de identidad · HUELLITAS](21-brief-huellitas.md). Hasta que se decida, este documento sigue vigente.
->
-> ✅ **Resuelto el 30/10/2026** con la guía de marca definitiva (`guias/Guía de marca SOS Mascotas.png`, D122), ya aplicada en la app. Este brief queda como referencia.
+> Reescrito el 01/11/2026 para **Huellitas**. La versión anterior (SOS Mascota, resuelta el 30/10/2026 con la guía de marca de la D122) queda en el historial de git. La copia en Claude Docs («SOS Mascota · Brief de logo e íconos») es de esa versión anterior: no mandarla.
+> Hoy el logo y los íconos los dibujamos nosotros en código. Este brief sirve para pasarle el trabajo a un diseñador el día que haga falta un **arte final**. La referencia completa de colores, tipografía y componentes es la [Guía visual](23-guia-visual.md); las propuestas que llevaron a esta elección están en el [brief de identidad](21-brief-huellitas.md) y en la página «Huellitas · Exploración de marca».
 
-> Armado el 29/10/2026 para mandarle a un diseñador. Es la versión corta y para personas de [Brief de identidad visual](14-brief-identidad-visual.md), que sigue siendo la referencia completa (paleta, temas, prompt para una IA). Hay una copia editable para compartir en Claude Docs: «SOS Mascota · Brief de logo e íconos» (https://claude.ai/artifact/TbREXr3WMkSVB7uT5Wee93). Si cambia algo, actualizar los dos.
+Necesitamos el **arte final del logo y del ícono** de Huellitas, a partir de una idea ya elegida, y el **set de íconos** de la app.
 
-Necesitamos un **logo amigable** y el **set de íconos** de SOS Mascota, una app uruguaya para cuidar mascotas y encontrarlas cuando se pierden.
+## Qué es Huellitas
 
-## Qué es SOS Mascota
+Una app uruguaya (Android, iPhone y web) que reúne todo el mundo de las mascotas en un lugar: un **mapa** de veterinarias, peluquerías, paseadores y comercios; **mascotas perdidas y encontradas** con avisos a los vecinos y una **chapita con QR**; un **muro** de noticias, promociones y eventos; **adopciones y comunidad**; y la **libreta de salud** con recordatorios. Es para todo tipo de mascotas, no solo perros y gatos. Arranca en Pando y está pensada para crecer a otros países.
 
-Es una app (Android, iPhone y web instalable) para dueños de mascotas y comercios del rubro, con un **mapa** como centro. Arranca en **Pando, Uruguay**, y se expande por zonas. Todos los textos van en español rioplatense, con voseo: «Reportá», «Avisale», «Tocá».
+Son **dos apps** con la misma cuenta: **Huellitas**, para las personas, y **Huellitas Comercios**, para los negocios del rubro.
 
-Lo que la marca tiene que poder representar:
-
-- **SOS**: mascotas perdidas y encontradas en el mapa, con avisos a los vecinos cercanos.
-- **Chapita con QR**: quien encuentra a la mascota escanea la chapita y avisa a la familia sin ver su teléfono.
-- **Mapa de lugares**: veterinarias de urgencia, pet shops, paseadores, lugares que aceptan mascotas.
-- **Comunidad**: refugios, adopciones, grupos y eventos.
-- **Salud**: libreta sanitaria y recordatorios de vacunas y medicación.
-
-A quién le habla: dueños de perros y gatos de 18 a 65 años en ciudades chicas y medianas, muchas veces con apuro y nervios porque se perdió su mascota. También vecinos que encuentran un animal y quieren ayudar en 30 segundos, y veterinarias de barrio que tienen que verla como una herramienta seria.
-
-Frase de la marca: **«la comunidad que tu mascota necesita»**.
+Frase de la marca: **«La comunidad que deja huella»**. Todos los textos van en español rioplatense, con voseo: «Reportá», «Avisale», «Tocá».
 
 ## Personalidad
 
-La marca tiene que sentirse **cercana y cálida**, como un vecino que te da una mano, pero **seria y confiable** cuando alguien está en una urgencia.
-
 | Es | No es |
-| --- | --- |
-| Cercana, de barrio, solidaria | Infantil o caricaturesca |
-| Clara y calma en una urgencia | Alarmista, con rojo sirena por todos lados |
-| Confiable con los datos | Fría o burocrática |
-| Uruguaya, sin estereotipos turísticos | Genérica, de app de Silicon Valley |
+|---|---|
+| Alegre, cercana, de barrio | Infantil o caricaturesca |
+| Moderna y simple | Corporativa o de clínica |
+| Para todos los animales | Solo perros y gatos |
+| Confiable y calma en una urgencia | Alarmista |
 
-Palabras clave: rescate, vecinos, confianza, rapidez, cuidado, huella, señal.
+## La idea elegida (punto de partida)
 
-## Logo
+- **Símbolo:** un **globo de conversación** de un solo color con una **huella toda blanca** adentro (almohadilla y 4 dedos). Dice comunidad, consultas y novedades, y la huella dice mascotas.
+- **Colores del símbolo:** **celeste `#1E9BD7`** en la app de personas y **azul `#1F4FD1`** en la de comercios. La huella siempre blanca.
+- **Logotipo:** el símbolo a la izquierda y «Huellitas» en una tipografía redondeada y gruesa (hoy Nunito Black), en azul noche `#13294B`.
+- El boceto está en la página «Huellitas · Exploración de marca» (ronda 3).
 
-Pedimos **3 propuestas** de logo amigable a partir de una idea base: una **chapita redonda con argolla y una huella** adentro. Pueden explorar otras ideas si mantienen la calidez.
+**Lo que te pedimos mejorar:**
 
-- **Amigable sin ser infantil**: formas redondeadas, una huella o un gesto de cuidado (un abrazo, un corazón, una señal); nada de caricaturas con ojos grandes.
-- **Isotipo + nombre** «SOS Mascota», en versión horizontal y vertical.
-- **Funciona a una tinta**: se graba con láser en una chapita de metal de 25 mm, se imprime en sellos y fotocopias en blanco y negro.
-- **Se lee a 16 px** (el ícono de la pestaña del navegador) y en el ícono de la app.
-- Versiones: a color, a una tinta negra y a una tinta blanca (sobre fondo oscuro).
+1. Darle al globo una **forma propia**, que no se confunda con el ícono de las apps de mensajería. Por ejemplo, la cola del globo en forma de dedo, de oreja o de colita.
+2. Una huella con **proporciones propias**, que se lea a 16 px y que no sea la huella genérica de los bancos de íconos.
+3. Revisar el logotipo: espaciado, peso y, si hace falta, letras retocadas (la «H» puede tener un detalle). Que «Huellitas» se lea de un vistazo.
+4. Proponer **2 o 3 variantes** dentro de esta idea, no ideas nuevas.
 
-Dónde se usa: ícono de la app, pantalla de carga, chapita QR, página web pública del QR, carteles A4 de mascota perdida, volantes y redes sociales.
+## Restricciones
 
-## Íconos
+- **A una tinta:** se graba con láser en una chapita de metal de 25 mm y se imprime en sellos y fotocopias.
+- **Se lee a 16 px** (la pestaña del navegador) y en el ícono de la app.
+- **Ícono de la app:** cuadrado, sin texto, con lo importante dentro del 80 % central (Android lo recorta en círculo).
+- **Contraste:** la huella blanca sobre el celeste queda a 3,1:1, el mínimo para un ícono. Si se cambia el tono, que no baje de ahí.
+- No puede parecerse a los **pines del mapa**: los perdidos y encontrados son gotas con una huella. Por eso el símbolo **no** es un pin.
+- La tipografía del logotipo tiene que ser gratuita o con licencia que nos pase, y soportar ñ, tildes, ¿ y ¡.
 
-Dos cosas distintas: el **ícono de la app** (el que queda en la pantalla del celular) y un **set de íconos** para adentro de la app, todos del mismo estilo, trazo y esquinas.
+## Colores
 
-**Ícono de la app**: cuadrado, sin texto, con el isotipo. En Android se recorta en círculo o en otras formas, así que lo importante va dentro del 80 % central.
+| Rol | HEX |
+|---|---|
+| Símbolo, app de personas | `#1E9BD7` |
+| Símbolo y primario, app de comercios | `#1F4FD1` |
+| Primario de la app de personas (barras y botones) | `#126FA3` |
+| Texto y logotipo | `#13294B` |
+| Acento (SOS) | `#FF6150` |
+| Fondo de la app | `#F2F8FC` |
+| De apoyo (ilustraciones y campañas) | `#12B5A5` · `#FFC531` · `#FF7EB3` · `#2DBE73` · `#FF8A2B` |
+| Pines del mapa (fijos) | Veterinaria `#0B3D52` · Perdido `#D62839` · Encontrado `#1F9E8E` · Urgencia `#FFB238` |
 
-**Set de íconos** (SVG de 24 × 24):
+Los colores de apoyo van **de relleno con texto azul noche encima**, nunca como texto ni con letras blancas (no se leen al sol).
+
+## Íconos de la app
+
+Hoy usamos los íconos Material de línea. Si el diseñador hace un set propio: **SVG de 24 × 24**, todos del mismo trazo y con esquinas redondeadas que acompañen a la huella. Línea en general, y relleno solo para los estados (favorito, estrellas, pestaña elegida).
 
 | Grupo | Íconos |
-| --- | --- |
+|---|---|
 | Barra de abajo | Noticias · SOS · Mapa · Mascotas · Ayuda |
 | Rubros del mapa | Salud (veterinaria) · Tiendas · Cuidado (paseos, guardería) · Salidas (lugares que aceptan mascotas) · Refugios · Urgencia 24 h |
-| Animales | Perro · Gato · Ave · Conejo · Otro animal |
+| Animales | Perro · Gato · Ave · Conejo · Tortuga · Caballo · Otro animal |
 | SOS | Perdido · Encontrado · ¡Apareció! · Zona aproximada (círculo punteado) · Cartel para imprimir |
 | Chapita y salud | QR · Chapita · Microchip · Vacuna · Medicación · Libreta · Recordatorio |
 | Comunidad | Grupo · Adopción · Evento · Reseña · Favorito · Chat · Saludo |
 | Comercio | Mi negocio · Agenda · Catálogo · Pedido · Equipo · Verificado |
 | Acciones | Avisos (campana) · Ajustes · Teléfono · Mensaje (genérico, no el logo de WhatsApp) · Cómo llegar · Compartir · Foto · Ubicación · Reportar (bandera) · Filtro · Buscar · Cerrar · Atrás · Más |
 
-**Pines del mapa**: 4 tipos (veterinaria, perdido, encontrado, urgencia 24 h), legibles sobre un mapa claro y uno oscuro, a 24 y 32 px. Los colores ya están definidos (ver la sección de colores).
-
-## Colores y tipografías
-
-La paleta ya está elegida («Cielo») y el logo y los íconos tienen que funcionar con ella, en modo claro y oscuro.
-
-| Rol | Claro | Oscuro |
-| --- | --- | --- |
-| Fondo | hueso `#F6F4EF` | `#0E1E26` |
-| Texto | tinta `#102A35` | `#ECE9E2` |
-| Primario | azul petróleo `#0F5E7A` | `#7CC4DE` |
-| Acento (SOS) | coral `#FF7A59` | `#FF8A6B` |
-| Pin veterinaria | `#0B3D52` | igual |
-| Pin perdido | `#D62839` | igual |
-| Pin encontrado | `#1F9E8E` | igual |
-| Pin urgencia 24 h | `#FFB238` | igual |
-
-- **Contraste mínimo 4,5:1** para texto: la app se usa al sol. El coral no va como color de texto sobre fondo claro.
-- Los pines se distinguen también por **luminosidad**, no solo por tono, para personas con daltonismo.
-- La app también tiene un tema en **blanco y negro** (D120): el logo y los íconos tienen que verse bien sin color.
-- Tipografías: **Sora** (títulos) y **Source Sans 3** (texto), de Google Fonts. Si el logotipo usa otra, que sea gratuita y con buen soporte de ñ, tildes, ¿ y ¡.
+**Pines del mapa:** 4 tipos (veterinaria, perdido, encontrado, urgencia 24 h) en forma de gota con la punta en el lugar exacto, legibles sobre un mapa claro y uno oscuro, a 24 y 32 px. Los colores ya están fijos.
 
 ## Entregables
 
 | Pieza | Formatos y tamaños |
-| --- | --- |
-| Logo horizontal y vertical | SVG y PNG; a color, a una tinta negra y a una tinta blanca |
-| Isotipo solo | SVG; legible a 16 px |
-| Ícono de la app | PNG de 1024, 512 y 192 px (normal y recortable), 180 px (iPhone) y favicon de 32 y 16 px |
-| Set de íconos | SVG de 24 × 24, editables (trazos, no imágenes) |
+|---|---|
+| Logo horizontal y vertical, versión personas y versión comercios | SVG y PNG; a color, a una tinta negra y a una tinta blanca |
+| Símbolo solo | SVG; legible a 16 px |
+| Ícono de las dos apps | PNG de 1024, 512 y 192 px (normal y recortable), 180 px (iPhone) y favicon de 32 y 16 px |
+| Set de íconos (opcional) | SVG de 24 × 24, editables (trazos, no imágenes) |
 | Pines del mapa | SVG, 4 tipos, a 24 y 32 px |
-| Guía corta de uso | PDF de 1 o 2 páginas: área de respeto, tamaño mínimo, usos correctos e incorrectos |
+| Ilustraciones de estado vacío (opcional) | 5: sin mascotas, sin perdidos cerca, sin avisos, sin conexión, «¡Apareció!». Planas, con 2 o 3 colores de la paleta, sin caras de ojos grandes |
+| Guía corta de uso | PDF de 1 o 2 páginas: área libre, tamaño mínimo, usos correctos e incorrectos |
 
-Los archivos fuente (Figma, Illustrator o similar) quedan para SOS Mascota, con todos los derechos de uso.
+Los archivos fuente (Figma, Illustrator o similar) quedan para Huellitas, con todos los derechos de uso.
 
 ## Qué evitar
 
 - Personajes infantiles, mascotas con ojos grandes o estilo dibujito.
-- Rojo de emergencia o sirenas: la urgencia se transmite con calma, no con alarma.
-- Cruces de farmacia u hospital como símbolo principal.
+- Un pin de mapa como símbolo, una cruz de farmacia u hospital, sirenas o rojo de emergencia.
+- Huellas de colores, degradés o sombras en el símbolo: la huella es blanca y el globo de un solo color.
 - Logos de otras marcas (por ejemplo el de WhatsApp), fotos de stock y emojis.
 - Detalles finos que se pierden a 16 px o al grabar la chapita.
-- Tipografías genéricas como Inter, Roboto, Arial u Open Sans.
 
 ## Cómo seguimos
 
-1. **Primera ronda**: 3 propuestas de logo, cada una con el ícono de la app y 6 íconos de muestra (Mapa, SOS, Mascotas, Veterinaria, Chapita, Avisos), aplicadas a una pantalla de la app.
-2. **Segunda ronda**: ajustes sobre la propuesta elegida y el set de íconos completo.
-3. **Cierre**: archivos finales y la guía corta de uso.
+1. **Primera ronda:** 2 o 3 variantes del símbolo y del logotipo dentro de la idea elegida, cada una con el ícono de las dos apps y 6 íconos de muestra (Mapa, SOS, Mascotas, Veterinaria, Chapita, Avisos), aplicadas a una pantalla de la app.
+2. **Segunda ronda:** ajustes sobre la elegida y el set completo.
+3. **Cierre:** archivos finales y guía corta de uso.
 
 Para acordar con el diseñador: plazo de cada ronda, presupuesto y cantidad de cambios incluidos.
 
-Con los archivos finales, aplicarlos como dice [Brief de identidad visual](14-brief-identidad-visual.md) §9 (íconos de `app/web/icons/`, `generar_iconos.dart`, colores de los pines) y cerrar el paso **0.0.9b**.
+**Con los archivos finales:** pasar el dibujo a `packages/core/lib/src/tema/isotipo.dart` y `app/lib/src/widgets/logo.dart`, regenerar los íconos con `flutter test tool/iconos_marca_test.dart` (desde `app/`) y actualizar la [Guía visual](23-guia-visual.md).
