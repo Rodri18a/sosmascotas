@@ -1,5 +1,7 @@
 # 14 · Brief de identidad visual (para pasarle a una IA o a un diseñador)
 
+> 🧭 **01/11/2026:** se está explorando el nombre **HUELLITAS** con una identidad más alegre: ver [Brief de identidad · HUELLITAS](21-brief-huellitas.md). Hasta que se decida, este documento sigue vigente.
+>
 > Versión para mandarle a un diseñador (logo amigable e íconos, 29/10/2026): [Brief de logo e íconos](20-brief-logo-iconos.md), con una copia para compartir en Claude Docs.
 >
 > Documento pensado para **copiar y pegar** en una IA de imágenes o de diseño (o mandárselo a un diseñador) y obtener la identidad completa de SOS Mascota: logo, ícono de la app, paleta, tipografías, íconos, pines del mapa, ilustraciones y piezas impresas.

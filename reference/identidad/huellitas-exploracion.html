@@ -1,0 +1,519 @@
+<title>Huellitas · Exploración de marca</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Figtree:wght@400;600;800&family=Fredoka:wght@500;600;700&family=Nunito:wght@800;900&family=Quicksand:wght@700&family=Varela+Round&display=swap">
+<style>
+/* Layout: hoja de estudio de marca. Encabezado, grilla de 10 tarjetas comparables, tabla de puntajes, 3 desarrollos y la recomendación. */
+:root {
+  --bg: #F3F6FB;
+  --surface: #FFFFFF;
+  --ink: #13294B;
+  --muted: #55657F;
+  --line: #DCE3EE;
+  --accent: #1F4FD1;
+  --accent-soft: #E3EAFB;
+  --paper: #FFFFFF;          /* el «fondo blanco» de las piezas: igual en los dos temas */
+  --paper-ink: #13294B;
+  --font-display: "Fredoka", "Nunito", system-ui, sans-serif;
+  --font-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  /* colores de marca candidatos */
+  --az: #1F4FD1; --no: #13294B; --tu: #12B5A5; --ce: #5CC8F0; --am: #FFC531;
+  --na: #FF8A2B; --co: #FF6150; --ro: #FF7EB3; --ve: #2DBE73;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0D1626; --surface: #152238; --ink: #E8EEF8; --muted: #9DAAC0;
+    --line: #26354F; --accent: #8FB0FF; --accent-soft: #1C2E52; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0D1626; --surface: #152238; --ink: #E8EEF8; --muted: #9DAAC0;
+  --line: #26354F; --accent: #8FB0FF; --accent-soft: #1C2E52; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--font-body);
+  font-size: 15px; line-height: 1.55;
+}
+.wrap {
+  max-width: 1180px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 32px 72px;
+  display: grid; gap: 56px;
+}
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; margin: 0; text-wrap: balance; line-height: 1.15; }
+h1 { font-size: clamp(30px, 5vw, 46px); }
+h2 { font-size: 26px; }
+h3 { font-size: 20px; }
+p { margin: 0; max-width: 68ch; }
+.eyebrow { font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+section { display: grid; gap: 20px; min-width: 0; }
+.lead { color: var(--muted); font-size: 16px; }
+
+/* Encabezado */
+header.top { display: grid; gap: 14px; }
+.status { display: flex; flex-wrap: wrap; gap: 8px; }
+.pill { font-size: 12.5px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--ink); }
+.pill.warn { background: #FFE9A8; color: #13294B; }
+.stripe { display: flex; height: 8px; border-radius: 4px; overflow: hidden; max-width: 420px; }
+.stripe i { flex: 1; }
+
+/* Piezas de marca */
+.stage { background: var(--paper); color: var(--paper-ink); border-radius: 14px; display: grid; place-items: center; }
+.wm { display: inline-flex; align-items: baseline; white-space: nowrap; line-height: 1; }
+.wm svg.inl { height: .86em; width: auto; align-self: baseline; transform: translateY(.09em); margin-right: .02em; overflow: visible; }
+.wm svg.side { height: 1.25em; width: auto; margin-right: .22em; transform: translateY(.22em); overflow: visible; }
+.f-fredoka { font-family: "Fredoka", sans-serif; font-weight: 600; }
+.f-nunito { font-family: "Nunito", sans-serif; font-weight: 900; }
+.f-baloo { font-family: "Baloo 2", sans-serif; font-weight: 800; }
+.f-quick { font-family: "Quicksand", sans-serif; font-weight: 700; }
+.f-varela { font-family: "Varela Round", sans-serif; }
+.wm .sl { color: var(--slc, inherit); }
+
+/* Grilla de propuestas */
+.grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+@media (min-width: 700px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 14px; display: grid; gap: 12px; align-content: start; min-width: 0; }
+.card .hero { aspect-ratio: 16 / 7; max-width: 100%; }
+.card .hero svg { width: auto; height: 78%; }
+.card .wmrow { padding: 14px 8px; font-size: 30px; }
+.card .meta { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.card .num { font-family: var(--font-display); font-size: 15px; color: var(--muted); }
+.card .dir { font-size: 11.5px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+.card p { font-size: 14px; color: var(--muted); }
+.sizes { display: flex; align-items: end; gap: 12px; }
+.ic { border-radius: 22%; display: grid; place-items: center; }
+.sizes .lbl { font-size: 11px; color: var(--muted); text-align: center; font-variant-numeric: tabular-nums; }
+.sizes figure { margin: 0; display: grid; gap: 4px; justify-items: center; }
+.chips { display: flex; gap: 4px; }
+.chips i { width: 22px; height: 22px; border-radius: 50%; border: 1px solid rgba(19,41,75,.15); }
+.foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.score { font-family: var(--font-display); font-size: 15px; font-variant-numeric: tabular-nums; }
+.score b { font-size: 22px; }
+.card.top3 { border: 2px solid var(--accent); }
+.badge { font-size: 11.5px; font-weight: 800; background: var(--accent); color: var(--bg); padding: 2px 8px; border-radius: 999px; }
+
+/* Tabla */
+.tablewrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
+table { border-collapse: collapse; width: 100%; min-width: 860px; font-variant-numeric: tabular-nums; }
+th, td { padding: 9px 10px; text-align: center; border-bottom: 1px solid var(--line); font-size: 13.5px; }
+th { font-size: 11.5px; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; vertical-align: bottom; }
+td:first-child, th:first-child { text-align: left; white-space: nowrap; }
+td.s { font-weight: 600; }
+td.s5 { background: color-mix(in srgb, var(--accent) 26%, transparent); }
+td.s4 { background: color-mix(in srgb, var(--accent) 13%, transparent); }
+td.s2, td.s1 { color: var(--muted); }
+tr.top td:first-child { font-weight: 800; }
+td.tot { font-family: var(--font-display); font-size: 17px; font-weight: 600; }
+
+/* Desarrollo de las 3 mejores */
+.dev { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: clamp(16px, 3vw, 28px); display: grid; gap: 22px; min-width: 0; }
+.devhead { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; align-items: baseline; }
+.devgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.tile { display: grid; gap: 6px; min-width: 0; }
+.tile .stage { min-height: 150px; padding: 18px 12px; font-size: 34px; border: 1px solid var(--line); overflow: hidden; }
+.tile .cap { font-size: 12.5px; color: var(--muted); }
+.row2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 22px; align-items: start; }
+@media (max-width: 760px) { .row2 { grid-template-columns: minmax(0, 1fr); } }
+
+.phone { width: 100%; max-width: 250px; aspect-ratio: 9 / 18.5; border-radius: 34px; padding: 10px; background: #0E1524; justify-self: center; }
+.screen { width: 100%; height: 100%; border-radius: 26px; overflow: hidden; position: relative; padding: 38px 16px 16px; display: grid; grid-template-columns: repeat(4, 1fr); align-content: start; gap: 16px 8px; }
+.screen .clock { position: absolute; top: 10px; left: 0; right: 0; text-align: center; color: #fff; font: 600 12px var(--font-body); }
+.app { display: grid; gap: 4px; justify-items: center; }
+.app .sq { width: 100%; aspect-ratio: 1; border-radius: 24%; display: grid; place-items: center; }
+.app .sq svg { width: 62%; height: 62%; }
+.app span { color: #fff; font: 500 9.5px var(--font-body); text-shadow: 0 1px 2px rgba(0,0,0,.4); white-space: nowrap; }
+.dock { position: absolute; left: 10px; right: 10px; bottom: 10px; padding: 9px; border-radius: 22px; background: rgba(255,255,255,.22); display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+
+.pal { display: grid; gap: 8px; }
+.sw { display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; gap: 12px; align-items: center; }
+.sw i { height: 40px; border-radius: 10px; border: 1px solid rgba(19,41,75,.12); }
+.sw .n { font-weight: 600; font-size: 14px; }
+.sw .r { font-size: 12.5px; color: var(--muted); }
+.sw code { font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.pros { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+.pros div { display: grid; gap: 6px; align-content: start; }
+.pros ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: 14px; display: grid; gap: 4px; }
+
+.chapita { width: 112px; aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; background: radial-gradient(circle at 35% 30%, #F2F4F7, #B9C0CA 70%, #9AA3AF); position: relative; }
+.chapita::before { content: ""; position: absolute; top: -9px; left: 50%; width: 18px; height: 18px; margin-left: -9px; border-radius: 50%; border: 4px solid #A3ABB6; }
+.chapita svg { width: 58%; height: 58%; }
+
+/* Recomendación */
+.reco { background: var(--ink); color: var(--bg); border-radius: 22px; padding: clamp(18px, 3.5vw, 34px); display: grid; gap: 16px; }
+.reco p { color: inherit; opacity: .9; }
+.reco ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; max-width: 70ch; }
+.reco .stage { width: min(100%, 520px); padding: 22px; font-size: clamp(32px, 7vw, 50px); }
+
+.slogans { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; }
+.slogans div { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; font-family: var(--font-display); font-size: 17px; font-weight: 500; }
+.slogans div small { display: block; font-family: var(--font-body); font-size: 12px; color: var(--muted); font-weight: 400; margin-top: 2px; }
+ol.next { margin: 0; padding-left: 20px; display: grid; gap: 6px; max-width: 72ch; }
+@media (prefers-reduced-motion: no-preference) {
+  .card { transition: transform .15s ease; }
+  .card:hover { transform: translateY(-2px); }
+}
+</style>
+
+<!-- Símbolos (viewBox 100×100). Colores por variables: --a … --f y --k (calado, el color del fondo). -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="s1" viewBox="0 0 100 100">
+      <rect x="12" y="10" width="22" height="80" rx="11" style="fill:var(--a)"/>
+      <rect x="66" y="10" width="22" height="80" rx="11" style="fill:var(--a)"/>
+      <path d="M50 46c9 0 15 6 19 13c4 7 2 15-6 15c-5 0-8-3-13-3s-8 3-13 3c-8 0-10-8-6-15c4-7 10-13 19-13z" style="fill:var(--b)"/>
+      <circle cx="41.5" cy="34" r="5.5" style="fill:var(--c)"/>
+      <circle cx="50" cy="25" r="6" style="fill:var(--c)"/>
+      <circle cx="58.5" cy="34" r="5.5" style="fill:var(--c)"/>
+    </symbol>
+    <symbol id="s2" viewBox="0 0 100 100">
+      <path d="M50 80C32 68 22 56 24 44c2-10 14-15 22-8l4 4 4-4c8-7 20-2 22 8 2 12-8 24-26 36z" style="fill:var(--b)"/>
+      <rect x="10" y="10" width="22" height="80" rx="11" style="fill:var(--a)"/>
+      <rect x="68" y="10" width="22" height="80" rx="11" style="fill:var(--a)"/>
+    </symbol>
+    <symbol id="s3" viewBox="0 0 100 100">
+      <ellipse cx="15" cy="40" rx="9" ry="18" transform="rotate(26 15 40)" style="fill:var(--b)"/>
+      <path d="M64 36L72 12Q74.5 6 79 11L88 34Z" style="fill:var(--b);stroke:var(--b);stroke-width:5;stroke-linejoin:round"/>
+      <rect x="14" y="26" width="22" height="64" rx="11" style="fill:var(--a)"/>
+      <rect x="64" y="26" width="22" height="64" rx="11" style="fill:var(--a)"/>
+      <rect x="24" y="50" width="52" height="18" rx="9" style="fill:var(--a)"/>
+    </symbol>
+    <symbol id="s4" viewBox="0 0 100 100">
+      <circle cx="23" cy="16" r="10" style="fill:var(--a)"/>
+      <rect x="12" y="31" width="22" height="59" rx="11" style="fill:var(--a)"/>
+      <circle cx="77" cy="38" r="9" style="fill:var(--b)"/>
+      <rect x="66" y="51" width="22" height="39" rx="11" style="fill:var(--b)"/>
+      <path d="M29 58Q50 86 71 63" style="fill:none;stroke:var(--c);stroke-width:13;stroke-linecap:round"/>
+    </symbol>
+    <symbol id="s5" viewBox="0 0 100 100">
+      <path d="M50 54c11 0 22 9 23 19 1 9-6 13-13 11-4-1-6-2-10-2s-6 1-10 2c-7 2-14-2-13-11 1-10 12-19 23-19z" style="fill:var(--a)"/>
+      <ellipse cx="21" cy="49" rx="8" ry="10.5" transform="rotate(-28 21 49)" style="fill:var(--b)"/>
+      <circle cx="38" cy="28" r="9.5" style="fill:var(--c)"/>
+      <ellipse cx="62" cy="25" rx="7" ry="13" transform="rotate(12 62 25)" style="fill:var(--d)"/>
+      <g transform="rotate(28 80 48)" style="fill:none;stroke:var(--e);stroke-width:6;stroke-linecap:round;stroke-linejoin:round">
+        <path d="M80 60V38M80 56L71 43M80 56L89 43"/>
+      </g>
+    </symbol>
+    <symbol id="p-perro" viewBox="-10 -10 20 20">
+      <ellipse cx="0" cy="3.5" rx="5" ry="4"/><circle cx="-4.6" cy="-2.5" r="1.9"/><circle cx="-1.6" cy="-5.6" r="1.9"/><circle cx="1.6" cy="-5.6" r="1.9"/><circle cx="4.6" cy="-2.5" r="1.9"/>
+    </symbol>
+    <symbol id="p-gato" viewBox="-10 -10 20 20">
+      <circle cx="0" cy="3" r="4.4"/><circle cx="-4.4" cy="-3" r="1.6"/><circle cx="-1.5" cy="-5.4" r="1.6"/><circle cx="1.5" cy="-5.4" r="1.6"/><circle cx="4.4" cy="-3" r="1.6"/>
+    </symbol>
+    <symbol id="p-ave" viewBox="-10 -10 20 20">
+      <path d="M0 7V-6M0 4L-5.5 -4M0 4L5.5 -4" style="fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round"/>
+    </symbol>
+    <symbol id="p-conejo" viewBox="-10 -10 20 20">
+      <ellipse cx="0" cy="2" rx="3.4" ry="6.5"/><circle cx="0" cy="-7" r="2.2"/>
+    </symbol>
+    <symbol id="p-tortuga" viewBox="-10 -10 20 20">
+      <ellipse cx="0" cy="0" rx="4.3" ry="5.4"/><circle cx="-5.3" cy="-4" r="1.8"/><circle cx="5.3" cy="-4" r="1.8"/><circle cx="-5.3" cy="4" r="1.8"/><circle cx="5.3" cy="4" r="1.8"/>
+    </symbol>
+    <symbol id="s6" viewBox="0 0 100 100">
+      <use href="#p-perro" x="40" y="1" width="20" height="20" transform="rotate(90 50 11)" style="fill:var(--b);color:var(--b)"/>
+      <use href="#p-gato" x="74" y="27" width="20" height="20" transform="rotate(162 84 37)" style="fill:var(--c);color:var(--c)"/>
+      <use href="#p-ave" x="61" y="68" width="20" height="20" transform="rotate(234 71 78)" style="fill:var(--d);color:var(--d)"/>
+      <use href="#p-conejo" x="19" y="68" width="20" height="20" transform="rotate(306 29 78)" style="fill:var(--e);color:var(--e)"/>
+      <use href="#p-tortuga" x="6" y="27" width="20" height="20" transform="rotate(18 16 37)" style="fill:var(--f);color:var(--f)"/>
+      <text x="50" y="65" text-anchor="middle" style="font:700 42px Fredoka, sans-serif;fill:var(--a)">H</text>
+    </symbol>
+    <symbol id="s7" viewBox="0 0 100 100">
+      <path d="M24 18V54a26 26 0 0 0 52 0V18" style="fill:none;stroke:var(--a);stroke-width:20;stroke-linecap:round"/>
+      <path d="M50 50c6 0 11 5 12 10 1 5-3 7-7 6-2 0-3-1-5-1s-3 1-5 1c-4 1-8-1-7-6 1-5 6-10 12-10z" style="fill:var(--b)"/>
+      <circle cx="41" cy="43" r="4" style="fill:var(--b)"/>
+      <circle cx="50" cy="38" r="4.5" style="fill:var(--b)"/>
+      <circle cx="59" cy="43" r="4" style="fill:var(--b)"/>
+    </symbol>
+    <symbol id="s8" viewBox="0 0 100 100">
+      <path d="M22 12a10 10 0 0 1 20 0V40c5-5 11-7 17-7 13 0 21 9 21 23V84a10 10 0 0 1-20 0V58c0-5-3-8-8-8s-10 4-10 10V84a10 10 0 0 1-20 0Z" style="fill:var(--a)"/>
+      <circle cx="80" cy="16" r="10" style="fill:var(--b)"/>
+    </symbol>
+    <symbol id="s9" viewBox="0 0 100 100">
+      <path d="M30 10H70A20 20 0 0 1 90 30V60A20 20 0 0 1 70 80H42L24 93L27 79A20 20 0 0 1 10 60V30A20 20 0 0 1 30 10Z" style="fill:var(--a)"/>
+      <path d="M50 44c8 0 15 7 16 13 1 6-4 9-9 8-3-1-4-2-7-2s-4 1-7 2c-5 1-10-2-9-8 1-6 8-13 16-13z" style="fill:var(--k)"/>
+      <circle cx="33.5" cy="40" r="5" style="fill:var(--k)"/>
+      <circle cx="43" cy="30" r="5.5" style="fill:var(--k)"/>
+      <circle cx="57" cy="30" r="5.5" style="fill:var(--k)"/>
+      <circle cx="66.5" cy="40" r="5" style="fill:var(--k)"/>
+    </symbol>
+    <symbol id="s10" viewBox="0 0 100 100">
+      <circle cx="50" cy="29" r="17" style="fill:var(--b)"/>
+      <circle cx="70" cy="43.5" r="17" style="fill:var(--c)"/>
+      <circle cx="62.3" cy="67" r="17" style="fill:var(--d)"/>
+      <circle cx="37.7" cy="67" r="17" style="fill:var(--e)"/>
+      <circle cx="30" cy="43.5" r="17" style="fill:var(--f)"/>
+      <circle cx="50" cy="51" r="15" style="fill:var(--k)"/>
+      <path d="M50 49c4 0 7.5 3.5 8 6.5.5 3-2 4.5-4.5 4-1.5-.3-2-1-3.5-1s-2 .7-3.5 1c-2.5.5-5-1-4.5-4 .5-3 4-6.5 8-6.5z" style="fill:var(--a)"/>
+      <circle cx="44" cy="45" r="2.6" style="fill:var(--a)"/><circle cx="50" cy="41.5" r="2.8" style="fill:var(--a)"/><circle cx="56" cy="45" r="2.6" style="fill:var(--a)"/>
+    </symbol>
+    <!-- íconos genéricos para la pantalla del celular (no son marcas reales) -->
+    <symbol id="g1" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7" fill="none" stroke="#fff" stroke-width="2.2"/><path d="M12 8v4l3 2" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="g2" viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="13" rx="3" fill="none" stroke="#fff" stroke-width="2.2"/><circle cx="12" cy="12.5" r="3" fill="#fff"/></symbol>
+    <symbol id="g3" viewBox="0 0 24 24"><path d="M12 4a6 6 0 0 1 6 6c0 4-6 10-6 10S6 14 6 10a6 6 0 0 1 6-6z" fill="none" stroke="#fff" stroke-width="2.2"/></symbol>
+    <symbol id="g4" viewBox="0 0 24 24"><circle cx="9" cy="10" r="4" fill="#fff"/><path d="M8 18h10a3 3 0 0 0 0-6 5 5 0 0 0-9.5-1" fill="none" stroke="#fff" stroke-width="2.2"/></symbol>
+    <symbol id="g5" viewBox="0 0 24 24"><path d="M5 7h14M5 12h14M5 17h9" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="g6" viewBox="0 0 24 24"><path d="M5 17V9l7-4 7 4v8l-7 4z" fill="none" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/></symbol>
+    <symbol id="g7" viewBox="0 0 24 24"><path d="M5 5h14v10H9l-4 4z" fill="none" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/></symbol>
+    <symbol id="g8" viewBox="0 0 24 24"><path d="M6 19c0-4 3-6 6-6s6 2 6 6M12 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" fill="none" stroke="#fff" stroke-width="2.2"/></symbol>
+  </defs>
+</svg>
+
+<div class="wrap">
+  <header class="top">
+    <span class="eyebrow">Exploración de marca · ronda 1 · 01/11/2026</span>
+    <h1>HUELLITAS: 10 caminos para la identidad</h1>
+    <p class="lead">Diez conceptos distintos para comparar, con su símbolo, el logotipo, el ícono de la app a tres tamaños y la paleta. Después, el puntaje de cada uno, las tres mejores desarrolladas y una recomendación.</p>
+    <div class="status">
+      <span class="pill warn">Exploración: la app sigue con SOS Mascotas</span>
+      <span class="pill">Bocetos dibujados en código, no son artes finales</span>
+      <span class="pill">Brief: docs/21-brief-huellitas.md</span>
+    </div>
+    <div class="stripe" aria-hidden="true">
+      <i style="background:var(--az)"></i><i style="background:var(--tu)"></i><i style="background:var(--am)"></i><i style="background:var(--na)"></i><i style="background:var(--co)"></i><i style="background:var(--ro)"></i><i style="background:var(--ve)"></i>
+    </div>
+  </header>
+
+  <section>
+    <div>
+      <span class="eyebrow">1 · Grilla de propuestas</span>
+      <h2>Diez conceptos, uno por tarjeta</h2>
+    </div>
+    <p class="lead">Las letras A a E son las direcciones del brief. Los íconos de 32 y 16 px muestran qué queda del símbolo en la pantalla del celular y en la pestaña del navegador.</p>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section>
+    <div>
+      <span class="eyebrow">2 · Evaluación</span>
+      <h2>Puntaje de 1 a 5 en los nueve criterios</h2>
+    </div>
+    <p class="lead">Es mi lectura de cada boceto, para ordenar la discusión. El puntaje del ícono sale de mirar las versiones de 32 y 16 px.</p>
+    <div class="tablewrap"><table id="tabla"></table></div>
+  </section>
+
+  <section>
+    <div>
+      <span class="eyebrow">3 · Las tres mejores</span>
+      <h2>Desarrolladas en cada formato</h2>
+    </div>
+    <p class="lead">Logotipo sobre blanco y sobre color, a una tinta, ícono de la app, chapita grabada, pantalla de inicio del celular y paleta con HEX. Los contrastes están medidos (WCAG).</p>
+    <div id="devs" style="display:grid;gap:24px"></div>
+  </section>
+
+  <section class="reco" id="reco"></section>
+
+  <section>
+    <div>
+      <span class="eyebrow">5 · Frases</span>
+      <h2>Para acompañar al nombre</h2>
+    </div>
+    <div class="slogans">
+      <div>Cada huella cuenta<small>Corta, sirve en cualquier país y le da sentido al nombre. Mi favorita.</small></div>
+      <div>Todo un mundo para ellos<small>Cálida; dice «plataforma completa» sin decir «plataforma».</small></div>
+      <div>Cuidarlos nos une<small>Pone el foco en la comunidad.</small></div>
+      <div>Todo lo que necesitan, en un solo lugar<small>La más clara para quien llega por primera vez; larga para el logo.</small></div>
+      <div>Conectando mascotas y personas<small>Va bien con la propuesta 4 (H Conexión).</small></div>
+      <div>Seguí sus huellas<small>Nueva, en voseo. Sirve para campañas del SOS.</small></div>
+      <div>Tu mascota, tu barrio, tu comunidad<small>Nueva. Para el lanzamiento por zonas.</small></div>
+      <div>Una comunidad para todos<small>Correcta, pero muy usada.</small></div>
+    </div>
+  </section>
+
+  <section>
+    <div>
+      <span class="eyebrow">6 · Cómo seguir</span>
+      <h2>Lo que falta después de esta ronda</h2>
+    </div>
+    <ol class="next">
+      <li>Elegir una de las tres, o combinarlas (por ejemplo la H Huella con los dedos de colores de la Huella diversa).</li>
+      <li>Con esa elección, pedir el arte final a un diseñador o a una IA de imágenes con el prompt del brief (§11). Estos bocetos sirven de referencia.</li>
+      <li>Anotar la decisión (reemplaza a la D122 y la D123) y aplicarla en la app y el portal desde <code>packages/core</code>.</li>
+      <li>Definir el dominio y el paquete de Android/iPhone antes de comprar el dominio (0.8.6) y publicar en Google Play (0.8.9).</li>
+    </ol>
+  </section>
+</div>
+
+<script>
+const C = { az:'#1F4FD1', no:'#13294B', tu:'#12B5A5', ce:'#5CC8F0', am:'#FFC531', na:'#FF8A2B', co:'#FF6150', ro:'#FF7EB3', ve:'#2DBE73', bl:'#FFFFFF' };
+const CRIT = ['Reconocimiento','Recordación','Originalidad','Cercanía','Versatilidad','Potencial comercial','Ícono de app','Todas las mascotas','Expansión internacional'];
+
+// wm: cómo se arma el logotipo. symH = el símbolo es la H; symU = el símbolo es la U; side = símbolo al lado; multi = letras de colores
+const P = [
+  { id:1, nombre:'H Huella', dir:'A · H protagonista', sym:'s1', font:'f-fredoka', wm:'symH', text:'uellitas',
+    idea:'Las dos patas de la H son firmes y redondas; el travesaño es la almohadilla de una huella y los dedos asoman arriba. Es la P de PATITAS llevada a la H.',
+    v:{a:C.az,b:C.tu,c:C.am}, ic:{bg:C.az, v:{a:C.bl,b:C.am,c:C.bl}}, col:{bg:C.az, fg:C.bl, v:{a:C.bl,b:C.am,c:C.tu}},
+    s:[5,5,3,4,5,5,5,3,5] },
+  { id:2, nombre:'H Abrazo', dir:'A · H protagonista', sym:'s2', font:'f-nunito', wm:'symH', text:'UELLITAS',
+    idea:'Las patas de la H abrazan un corazón que hace de travesaño. Se entiende al instante, pero el corazón es un recurso muy visto en el rubro.',
+    v:{a:C.tu,b:C.co}, ic:{bg:C.tu, v:{a:C.bl,b:C.co}}, col:{bg:C.tu, fg:C.no, v:{a:C.bl,b:C.co}},
+    s:[4,4,2,5,4,4,4,2,4] },
+  { id:3, nombre:'H Orejas', dir:'A · H con silueta', sym:'s3', font:'f-baloo', wm:'symH', text:'uellitas',
+    idea:'Una oreja caída de perro a la izquierda y una puntiaguda de gato a la derecha: la H se vuelve una carita sin dibujar ojos. Las orejas se pierden a 16 px.',
+    v:{a:C.no,b:C.na}, ic:{bg:C.am, v:{a:C.no,b:C.na}}, col:{bg:C.na, fg:C.no, v:{a:C.no,b:C.bl}},
+    s:[4,4,4,4,3,4,3,3,4] },
+  { id:4, nombre:'H Conexión', dir:'A · H en dos colores', sym:'s4', font:'f-fredoka', wm:'symH', text:'uellitas',
+    idea:'Una pata alta (la persona) y una más baja (la mascota), cada una con su cabeza, unidas por una sonrisa. La H cuenta la idea de la app: personas y mascotas conectadas.',
+    v:{a:C.az,b:C.co,c:C.am}, ic:{bg:C.no, v:{a:C.bl,b:C.co,c:C.am}}, col:{bg:C.am, fg:C.no, v:{a:C.az,b:C.co,c:C.bl}},
+    s:[4,4,5,5,4,4,4,4,5] },
+  { id:5, nombre:'Huella diversa', dir:'B · Huella como símbolo', sym:'s5', font:'f-nunito', wm:'side', text:'Huellitas',
+    idea:'Una sola huella donde cada dedo es de otro animal: el óvalo del perro, el bollito del gato, la oreja larga del conejo y el tridente del ave. Una forma, todas las mascotas.',
+    v:{a:C.az,b:C.tu,c:C.am,d:C.ro,e:C.co}, ic:{bg:C.bl, v:{a:C.az,b:C.tu,c:C.am,d:C.ro,e:C.co}, borde:true}, col:{bg:C.az, fg:C.bl, v:{a:C.bl,b:C.tu,c:C.am,d:C.ro,e:C.co}},
+    s:[4,4,5,4,4,4,4,5,4] },
+  { id:6, nombre:'Rastro de todos', dir:'B · Huellas combinadas', sym:'s6', font:'f-varela', wm:'side', text:'huellitas',
+    idea:'Cinco rastros (perro, gato, ave, conejo, tortuga) dan la vuelta alrededor de la H. Cuenta muy bien la diversidad, pero es un sello con mucho detalle.',
+    v:{a:C.no,b:C.az,c:C.co,d:C.tu,e:C.ro,f:C.ve}, ic:{bg:C.bl, v:{a:C.no,b:C.az,c:C.co,d:C.tu,e:C.ro,f:C.ve}, borde:true}, col:{bg:C.no, fg:C.bl, v:{a:C.bl,b:C.ce,c:C.co,d:C.tu,e:C.ro,f:C.am}},
+    s:[3,3,4,4,2,3,2,5,4] },
+  { id:7, nombre:'La U que cuida', dir:'C · Huella en el nombre', sym:'s7', font:'f-fredoka', wm:'symU', text:['H','ELLITAS'],
+    idea:'La U de HUELLITAS es un cuenco que sostiene una huella: cuidado y protección dentro del nombre. La H queda normal y el símbolo está en la segunda letra.',
+    v:{a:C.co,b:C.az}, ic:{bg:C.co, v:{a:C.bl,b:C.no}}, col:{bg:C.co, fg:C.no, v:{a:C.bl,b:C.no}},
+    s:[3,4,4,4,3,3,3,3,4] },
+  { id:8, nombre:'Saltarinas', dir:'D · Solo tipografía', sym:'s8', font:'f-baloo', wm:'multi', text:'huellitas',
+    idea:'Minúsculas que saltan, cada una de un color, como huellas que no van en fila. El símbolo es la «h» con un punto, que suena a «hi».',
+    v:{a:C.no,b:C.co}, ic:{bg:C.tu, v:{a:C.bl,b:C.am}}, col:{bg:C.no, fg:C.bl, v:{a:C.bl,b:C.am}},
+    s:[4,3,3,5,4,4,3,3,4] },
+  { id:9, nombre:'Burbuja', dir:'E · Ícono de app', sym:'s9', font:'f-nunito', wm:'side', text:'Huellitas',
+    idea:'Un globo de conversación con una huella calada: comunidad, consultas y novedades. Funciona muy bien de ícono; se parece a otras apps de mensajería.',
+    v:{a:C.tu,k:C.bl}, ic:{bg:C.tu, v:{a:C.bl,k:C.tu}}, col:{bg:C.tu, fg:C.no, v:{a:C.no,k:C.tu}},
+    s:[4,4,3,4,4,4,5,3,4] },
+  { id:10, nombre:'Flor de colores', dir:'E · Figura geométrica', sym:'s10', font:'f-quick', wm:'side', text:'huellitas',
+    idea:'Cinco círculos de colores, uno por animal, forman una flor con una huellita en el centro. Alegre y diversa, aunque de lejos se lee como una flor y no como una mascota.',
+    v:{a:C.no,b:C.az,c:C.tu,d:C.am,e:C.co,f:C.ro,k:C.bl}, ic:{bg:C.bl, v:{a:C.no,b:C.az,c:C.tu,d:C.am,e:C.co,f:C.ro,k:C.bl}, borde:true}, col:{bg:C.no, fg:C.bl, v:{a:C.no,b:C.az,c:C.tu,d:C.am,e:C.co,f:C.ro,k:C.bl}},
+    s:[3,3,4,4,3,3,3,4,4] },
+];
+P.forEach(p => p.tot = p.s.reduce((a, b) => a + b, 0));
+const TOP = [...P].sort((a, b) => b.tot - a.tot).slice(0, 3).map(p => p.id);
+
+const vars = (v, mono) => Object.entries(v).map(([k, c]) => `--${k}:${mono ? (k === 'k' ? mono.k : mono.c) : c}`).join(';');
+const sym = (p, v, cls = '', extra = '') => `<svg class="${cls}" viewBox="0 0 100 100" style="${v};${extra}" aria-hidden="true"><use href="#${p.sym}"/></svg>`;
+const monoV = (p, c, k) => vars(p.v, { c, k });
+
+function wordmark(p, v, fg, opts = {}) {
+  const s = opts.svgVars || v;
+  const color = `color:${fg}`;
+  if (p.wm === 'symH') return `<span class="wm ${p.font}" style="${color}" aria-label="Huellitas">${sym(p, s, 'inl')}<span>${p.text}</span></span>`;
+  if (p.wm === 'symU') return `<span class="wm ${p.font}" style="${color}" aria-label="Huellitas"><span>${p.text[0]}</span>${sym(p, s, 'inl', 'margin-left:.03em')}<span>${p.text[1]}</span></span>`;
+  if (p.wm === 'multi') {
+    const cols = opts.mono ? null : [C.tu, C.co, C.az, C.am, C.ve, C.ro, C.az, C.na, C.tu];
+    const letters = [...p.text].map((ch, i) => `<span class="sl" style="display:inline-block;transform:translateY(${[0,-.06,.03,-.04,.05,-.07,.02,-.03,.04][i]}em) rotate(${[-4,3,-2,4,-3,2,-4,3,-2][i]}deg);--slc:${cols ? (opts.onColor && [3,5].includes(i) ? fg : cols[i]) : fg}">${ch}</span>`).join('');
+    return `<span class="wm ${p.font}" style="${color}" aria-label="Huellitas">${letters}</span>`;
+  }
+  return `<span class="wm ${p.font}" style="${color}" aria-label="Huellitas">${sym(p, s, 'side')}<span>${p.text}</span></span>`;
+}
+
+function appIcon(p, size) {
+  const borde = p.ic.borde ? 'box-shadow:inset 0 0 0 1px #DCE3EE;' : '';
+  return `<div class="ic" style="width:${size}px;height:${size}px;background:${p.ic.bg};${borde}">${sym(p, vars(p.ic.v), '', `width:${size * .68}px;height:${size * .68}px`)}</div>`;
+}
+
+const chips = cs => `<div class="chips">${cs.map(c => `<i style="background:${c}" title="${c}"></i>`).join('')}</div>`;
+const uniq = p => [...new Set([...Object.entries(p.v).filter(([k]) => k !== 'k').map(([, c]) => c), p.ic.bg])];
+
+document.getElementById('grid').innerHTML = P.map(p => `
+  <article class="card ${TOP.includes(p.id) ? 'top3' : ''}">
+    <div class="meta"><span class="dir">${p.dir}</span><span class="num">${String(p.id).padStart(2, '0')}</span></div>
+    <div class="stage hero">${sym(p, vars(p.v))}</div>
+    <div class="stage wmrow">${wordmark(p, vars(p.v), C.no)}</div>
+    <div style="display:grid;gap:6px"><h3>${p.nombre}</h3><p>${p.idea}</p></div>
+    <div class="foot">
+      <div class="sizes">
+        <figure>${appIcon(p, 56)}<figcaption class="lbl">56</figcaption></figure>
+        <figure>${appIcon(p, 32)}<figcaption class="lbl">32</figcaption></figure>
+        <figure>${appIcon(p, 16)}<figcaption class="lbl">16</figcaption></figure>
+      </div>
+      <div style="display:grid;gap:8px;justify-items:end">
+        ${chips(uniq(p))}
+        <span class="score"><b>${p.tot}</b> / 45 ${TOP.includes(p.id) ? '<span class="badge">Top 3</span>' : ''}</span>
+      </div>
+    </div>
+  </article>`).join('');
+
+const tabla = document.getElementById('tabla');
+tabla.innerHTML = `<thead><tr><th>Propuesta</th>${CRIT.map(c => `<th>${c}</th>`).join('')}<th>Total</th></tr></thead><tbody>${
+  [...P].sort((a, b) => b.tot - a.tot).map(p => `<tr class="${TOP.includes(p.id) ? 'top' : ''}"><td>${String(p.id).padStart(2, '0')} · ${p.nombre}</td>${p.s.map(n => `<td class="s s${n}">${n}</td>`).join('')}<td class="tot">${p.tot}</td></tr>`).join('')
+}</tbody>`;
+
+// Paletas de las tres mejores (contraste medido contra blanco y contra el azul noche)
+const PAL = {
+  1: [['Azul intenso', C.az, 'Primario: la H, botones y barras', 'Texto blanco 6,8:1'],
+      ['Turquesa', C.tu, 'Almohadilla, acento', 'Solo relleno; texto azul noche 5,7:1'],
+      ['Amarillo', C.am, 'Dedos, destacados', 'Solo relleno; texto azul noche 9,2:1'],
+      ['Azul noche', C.no, 'Logotipo y textos', 'Sobre blanco 14,5:1'],
+      ['Fondo', '#F4F8FF', 'Fondo de la app', 'Texto azul noche 13,9:1']],
+  4: [['Azul intenso', C.az, 'Primario: la persona, botones', 'Texto blanco 6,8:1'],
+      ['Coral', C.co, 'La mascota, el SOS', 'Solo relleno; texto azul noche 4,9:1'],
+      ['Amarillo', C.am, 'La sonrisa, destacados', 'Solo relleno; texto azul noche 9,2:1'],
+      ['Azul noche', C.no, 'Logotipo y textos', 'Sobre blanco 14,5:1'],
+      ['Fondo', '#F6F7FC', 'Fondo de la app', 'Texto azul noche 13,9:1']],
+  5: [['Azul intenso', C.az, 'Primario: la almohadilla, botones', 'Texto blanco 6,8:1'],
+      ['Turquesa', C.tu, 'Dedo del perro', 'Solo relleno'],
+      ['Amarillo', C.am, 'Dedo del gato', 'Solo relleno'],
+      ['Rosa', C.ro, 'Dedo del conejo', 'Solo relleno'],
+      ['Coral', C.co, 'Dedo del ave', 'Solo relleno'],
+      ['Azul noche', C.no, 'Logotipo y textos', 'Sobre blanco 14,5:1']],
+};
+const PROS = {
+  1: { a:['Une el nombre y el símbolo: H de Huellitas y huella a la vez.','El mejor ícono: a 16 px sigue siendo una H.','Se graba a una tinta sin perder nada.','La H se entiende en cualquier idioma.'],
+       c:['La H con huella es una idea esperable; la originalidad tiene que estar en el dibujo.','Por sí sola no dice «todos los animales».'] },
+  4: { a:['Es la idea más propia: cuenta la app (personas y mascotas conectadas).','La sonrisa le da cercanía sin dibujar caras.','Dos colores que se pueden cambiar por campaña.'],
+       c:['Las cabezas pueden leerse como un ícono de «usuarios».','Necesita un dibujo fino para que la sonrisa no parezca un caño.'] },
+  5: { a:['La que mejor dice «todo tipo de mascotas».','Original: nadie mezcla huellas en un solo símbolo.','Los colores de los dedos sirven para los rubros de la app.'],
+       c:['El tridente del ave es fino a 16 px.','Separada del nombre: el símbolo no forma la palabra.'] },
+};
+
+function phone(p) {
+  const apps = [['Reloj','#3A4A63','g1'],['Cámara','#56627A','g2'],['Mapas','#2E7D5B','g3'],['Clima','#3C7FC9','g4'],['Notas','#C79A2E','g5'],['Archivos','#5B5F95','g6'],['Mensajes','#3E9E6A','g7'],['Contactos','#7A6A5A','g8']];
+  const appCell = ([n, bg, g]) => `<div class="app"><div class="sq" style="background:${bg}"><svg viewBox="0 0 24 24"><use href="#${g}"/></svg></div><span>${n}</span></div>`;
+  const ours = `<div class="app"><div class="sq" style="background:${p.ic.bg};${p.ic.borde ? 'box-shadow:inset 0 0 0 1px #DCE3EE' : ''}">${sym(p, vars(p.ic.v), '', 'width:70%;height:70%')}</div><span>Huellitas</span></div>`;
+  const cells = [...apps.slice(0, 5).map(appCell), ours, ...apps.slice(5).map(appCell)];
+  const dock = apps.slice(0, 4).map(([, bg, g]) => `<div class="sq" style="width:100%;aspect-ratio:1;border-radius:24%;display:grid;place-items:center;background:${bg}"><svg viewBox="0 0 24 24" style="width:60%;height:60%"><use href="#${g}"/></svg></div>`).join('');
+  return `<div class="phone"><div class="screen" style="background:linear-gradient(160deg, ${C.no} 0%, #2B4C8C 55%, ${p.col.bg} 130%)"><div class="clock">9:41</div>${cells.join('')}<div class="dock">${dock}</div></div></div>`;
+}
+
+document.getElementById('devs').innerHTML = TOP.map((id, i) => {
+  const p = P.find(x => x.id === id);
+  const onColor = vars(p.col.v);
+  return `<article class="dev">
+    <div class="devhead"><div><span class="eyebrow">${i + 1}.ª · ${p.dir}</span><h2>${String(p.id).padStart(2, '0')} · ${p.nombre}</h2></div><span class="score"><b>${p.tot}</b> / 45</span></div>
+    <div class="devgrid">
+      <div class="tile"><div class="stage">${wordmark(p, vars(p.v), C.no)}</div><span class="cap">Logotipo horizontal sobre blanco</span></div>
+      <div class="tile"><div class="stage" style="background:${p.col.bg};border-color:transparent">${wordmark(p, onColor, p.col.fg, { onColor: true })}</div><span class="cap">Sobre el color de marca</span></div>
+      <div class="tile"><div class="stage">${wordmark(p, monoV(p, '#111', '#fff'), '#111', { mono: true })}</div><span class="cap">A una tinta, negro</span></div>
+      <div class="tile"><div class="stage" style="background:${C.no};border-color:transparent">${wordmark(p, monoV(p, '#fff', C.no), '#fff', { mono: true })}</div><span class="cap">A una tinta, blanco sobre azul noche</span></div>
+    </div>
+    <div class="row2">
+      <div style="display:grid;gap:22px">
+        <div class="devgrid" style="grid-template-columns:repeat(auto-fit,minmax(140px,1fr))">
+          <div class="tile"><div class="stage" style="min-height:150px">${sym(p, vars(p.v), '', 'width:96px;height:96px')}</div><span class="cap">Símbolo solo</span></div>
+          <div class="tile"><div class="stage" style="min-height:150px">${appIcon(p, 96)}</div><span class="cap">Ícono de la app (el 80 % central queda libre para el recorte de Android)</span></div>
+          <div class="tile"><div class="stage" style="min-height:150px"><div class="chapita">${sym(p, monoV(p, '#4E5866', '#B9C0CA'))}</div></div><span class="cap">Chapita de 25 mm grabada a una tinta</span></div>
+        </div>
+        <div style="display:grid;gap:10px">
+          <h3>Paleta</h3>
+          <div class="pal">${PAL[p.id].map(([n, hex, rol, cr]) => `<div class="sw"><i style="background:${hex}"></i><div style="min-width:0"><div class="n">${n}</div><div class="r">${rol} · ${cr}</div></div><code>${hex}</code></div>`).join('')}</div>
+        </div>
+        <div class="pros">
+          <div><h3>A favor</h3><ul>${PROS[p.id].a.map(x => `<li>${x}</li>`).join('')}</ul></div>
+          <div><h3>A cuidar</h3><ul>${PROS[p.id].c.map(x => `<li>${x}</li>`).join('')}</ul></div>
+        </div>
+      </div>
+      <div style="display:grid;gap:8px;justify-items:center">${phone(p)}<span class="cap" style="font-size:12.5px;color:var(--muted)">En la pantalla de inicio, entre íconos genéricos</span></div>
+    </div>
+  </article>`;
+}).join('');
+
+// Recomendación
+const r = P.find(x => x.id === 1);
+const mix = { a: C.az, b: C.tu, c: C.am };
+document.getElementById('reco').innerHTML = `
+  <span class="eyebrow" style="color:inherit;opacity:.75">4 · Recomendación</span>
+  <h2>La H Huella, con los dedos de la Huella diversa</h2>
+  <p>La propuesta 01 es la de mayor potencial comercial y visual: une el nombre con el símbolo, es el mejor ícono de la tanda, se graba en la chapita sin perder nada y la H funciona en cualquier país. Es la que sigue la referencia que más les gustó de PATITAS.</p>
+  <p>Su punto flojo es que no dice «todas las mascotas». Para la próxima ronda propongo tomar de la 05 la idea de que cada dedo sea de otro animal y de otro color, sin perder la H. La 04 (H Conexión) queda como alternativa si buscan algo más original.</p>
+  <div class="stage">${wordmark(r, vars(mix), C.no)}</div>
+  <ul>
+    <li>Colores: azul intenso de primario (confianza, se lee con letras blancas) y turquesa, amarillo, coral y rosa de relleno, con texto azul noche encima.</li>
+    <li>Tipografía: Fredoka para el logotipo y los títulos; para el texto de la app, una menos redondeada (Nunito Sans o Figtree).</li>
+    <li>Frase: «Cada huella cuenta».</li>
+  </ul>`;
+</script>

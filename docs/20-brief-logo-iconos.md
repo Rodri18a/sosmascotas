@@ -1,5 +1,7 @@
 # 20 · Brief de logo e íconos (para el diseñador)
 
+> 🧭 **01/11/2026:** se está explorando el nombre **HUELLITAS** con una identidad más alegre: ver [Brief de identidad · HUELLITAS](21-brief-huellitas.md). Hasta que se decida, este documento sigue vigente.
+>
 > ✅ **Resuelto el 30/10/2026** con la guía de marca definitiva (`guias/Guía de marca SOS Mascotas.png`, D122), ya aplicada en la app. Este brief queda como referencia.
 
 > Armado el 29/10/2026 para mandarle a un diseñador. Es la versión corta y para personas de [Brief de identidad visual](14-brief-identidad-visual.md), que sigue siendo la referencia completa (paleta, temas, prompt para una IA). Hay una copia editable para compartir en Claude Docs: «SOS Mascota · Brief de logo e íconos» (https://claude.ai/artifact/TbREXr3WMkSVB7uT5Wee93). Si cambia algo, actualizar los dos.
