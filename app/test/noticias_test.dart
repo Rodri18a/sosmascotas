@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
 import 'package:sosmascota/src/features/sos/sos_detalle_screen.dart';
+import 'package:sosmascota/src/router.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'cuenta_falsa.dart';
@@ -61,6 +62,7 @@ Future<void> _abrir(
   addTearDown(tester.view.reset);
   await tester.pumpWidget(
     appDePrueba(
+      inicio: Rutas.inicio,
       cuenta: ServicioCuentaFalso(conectado: visitante ? null : _ana),
       mascotas: MascotasFalsas(mascotas),
       noticias:

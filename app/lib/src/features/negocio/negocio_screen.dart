@@ -175,13 +175,13 @@ class _NegocioScreenState extends ConsumerState<NegocioScreen> {
             actions: [
               if (ancho >= 600)
                 TextButton.icon(
-                  onPressed: () => context.go(Rutas.mapa),
+                  onPressed: () => context.go(Rutas.inicio),
                   icon: const Icon(Icons.pets_outlined),
                   label: Text(t.volverModoDueno),
                 )
               else
                 IconButton(
-                  onPressed: () => context.go(Rutas.mapa),
+                  onPressed: () => context.go(Rutas.inicio),
                   icon: const Icon(Icons.pets_outlined),
                   tooltip: t.volverModoDueno,
                 ),

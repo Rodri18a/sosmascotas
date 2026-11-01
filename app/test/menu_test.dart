@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
+import 'package:sosmascota/src/features/shell/app_shell.dart';
+import 'package:sosmascota/src/router.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'cuenta_falsa.dart';
@@ -41,6 +43,7 @@ Future<void> _abrir(
   addTearDown(tester.view.reset);
   await tester.pumpWidget(
     appDePrueba(
+      inicio: Rutas.inicio,
       cuenta: ServicioCuentaFalso(conectado: visitante ? null : _ana),
       mascotas: MascotasFalsas([_toby, _luna]),
       noticias: NoticiasFalsas([_paraPerros, _paraGatos]),
@@ -98,21 +101,31 @@ void main() {
       containsAll(['menu_open', 'pet_select']),
     );
 
-    // Noticias (en la barra) se abre filtrada por gatos.
-    await tester.tapAt(const Offset(10, 300)); // cierra el menú
+    // Inicio (en la barra) se abre filtrado por gatos.
+    await tester.tapAt(const Offset(345, 300)); // cierra el menú (fuera de él)
     await tester.pumpAndSettle();
-    await _tocar(tester, find.text('Noticias'));
+    expect(find.byType(Drawer), findsNothing);
+    await _tocar(
+      tester,
+      find.descendant(
+        of: find.byType(BarraInferior),
+        matching: find.text('Inicio'),
+      ),
+    );
     expect(find.text('Gatos y el calor'), findsOneWidget);
     expect(find.text('Paseos con calor'), findsNothing);
     // Los chips la pueden cambiar.
-    await _tocar(tester, find.text('Todas'));
+    await _tocar(tester, find.widgetWithText(ChoiceChip, 'Todas'));
     expect(find.text('Paseos con calor'), findsOneWidget);
   });
 
   testWidgets('la elegida se recuerda al volver a abrir', (tester) async {
     await _abrir(tester, almacen: AlmacenMascotaElegidaFalso({'u1': 'm1'}));
     expect(find.textContaining('para la especie de Toby'), findsOneWidget);
-    await _tocar(tester, find.text('Todas'));
+    await _tocar(
+      tester,
+      find.descendant(of: find.byType(Drawer), matching: find.text('Todas')),
+    );
     expect(find.text('Ver su ficha'), findsNothing);
   });
 

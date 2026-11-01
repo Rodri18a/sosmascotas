@@ -6,6 +6,8 @@ Cada función indica la **fase** en la que se construye (ver `11-roadmap.md`) y 
 
 Barra inferior: **Explorar** (mapa) · **Noticias** · **SOS** (en rojo) · **Mascotas** · **Ajustes**. Arriba, una fila con las mascotas del usuario, la opción "Todas" y "＋".
 
+**Desde el 01/11/2026 (D127):** la barra es **Inicio · SOS · (Mapa) · Mascotas · Urgencias** y la app abre en Inicio (el muro, antes «Noticias»); «Ayuda» pasó a llamarse «Urgencias».
+
 **Hecho hasta ahora (D88, D94):** la barra inferior es **Noticias · SOS · (Mapa) · Mascotas · Ayuda**. El Mapa va en el medio, como un botón redondo que sobresale de la barra (que se curva para dejarle lugar), y es donde abre la app. La barra reserva el lugar del botón, así que nunca tapa el contenido, y las hojas que se abren desde abajo quedan por encima de la barra. Cada pestaña tiene un **menú ☰** con:
 - **Mis datos** (nombre, correo; abre Mi perfil o Ajustes) o "Ingresá o creá tu cuenta" para un visitante.
 - **Ver todo para:** "Todas" o una de mis mascotas. La elegida filtra Noticias, Comunidad y Adopción por su especie (los chips de cada pantalla la pueden cambiar) y suma accesos a su ficha, su chapita QR y "Reportar que se perdió". Se recuerda en el dispositivo, por cuenta.

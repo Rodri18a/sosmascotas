@@ -9,7 +9,7 @@ String? redirigir({
   bool Function(String clave)? funcionalidadActiva,
   Map<String, String> rutasConFuncionalidad = Rutas.conFuncionalidad,
 }) {
-  if (uri.path == '/') return Rutas.mapa;
+  if (uri.path == '/') return Rutas.inicio;
 
   // Con sesión pero sin aceptar los términos vigentes: primero el consentimiento
   // (los textos legales sí se pueden leer).
@@ -26,7 +26,9 @@ String? redirigir({
     ).toString();
   }
   if (uri.path == Rutas.consentimiento) {
-    return conectado ? volverSeguro(uri.queryParameters['volver']) : Rutas.mapa;
+    return conectado
+        ? volverSeguro(uri.queryParameters['volver'])
+        : Rutas.inicio;
   }
 
   // Con sesión, la pantalla de ingreso ya no tiene sentido: volver a la acción.
@@ -69,4 +71,4 @@ String volverSeguro(String? destino) =>
         !destino.startsWith(Rutas.ingresar) &&
         !destino.startsWith(Rutas.consentimiento)
     ? destino
-    : Rutas.mapa;
+    : Rutas.inicio;

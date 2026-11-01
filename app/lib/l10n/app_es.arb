@@ -15,7 +15,7 @@
   "pestanaMapa": "Mapa",
   "pestanaSos": "SOS",
   "pestanaMascotas": "Mis mascotas",
-  "pestanaAyuda": "Ayuda",
+  "pestanaAyuda": "Urgencias",
   "barraMascotas": "Mascotas",
   "@barraMascotas": {
     "description": "Nombre corto de la pestaña Mis mascotas en la barra inferior (D94)."
@@ -1326,7 +1326,7 @@
       }
     }
   },
-  "noticiasTitulo": "Noticias",
+  "noticiasTitulo": "Inicio",
   "noticiasEntradaAyuda": "Novedades, campañas y consejos para tus mascotas.",
   "noticiasTodas": "Todas",
   "noticiasVacio": "Todavía no hay noticias para mostrarte.",
@@ -1437,7 +1437,7 @@
     }
   },
   "comunidadCompartirTitulo": "¿Compartís la buena noticia?",
-  "comunidadCompartirExplicacion": "Se publica en Noticias → Comunidad con el nombre, la especie y la primera foto del reporte. Nunca la ubicación ni tus datos. La podés quitar cuando quieras.",
+  "comunidadCompartirExplicacion": "Se publica en Inicio → Comunidad con el nombre, la especie y la primera foto del reporte. Nunca la ubicación ni tus datos. La podés quitar cuando quieras.",
   "comunidadCompartir": "Compartir",
   "comunidadCompartida": "¡Listo! Ya está en Comunidad.",
   "comunidadInterruptor": "Compartido en Comunidad",

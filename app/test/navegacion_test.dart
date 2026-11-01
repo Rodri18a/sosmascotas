@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
 import 'package:sosmascota/src/features/shell/app_shell.dart';
+import 'package:sosmascota/src/router.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'cuenta_falsa.dart';
@@ -25,9 +26,15 @@ void main() {
   testWidgets('la barra inferior lleva a las 5 pestañas, con el Mapa en el '
       'medio', (tester) async {
     final metricas = <Map<String, Object?>>[];
-    await tester.pumpWidget(appDePrueba(eventos: metricas));
+    await tester.pumpWidget(
+      appDePrueba(eventos: metricas, inicio: Rutas.inicio),
+    );
     await tester.pumpAndSettle();
-    expect(find.widgetWithText(AppBar, 'Mapa'), findsOneWidget, reason: 'abre');
+    expect(
+      find.widgetWithText(AppBar, 'Inicio'),
+      findsOneWidget,
+      reason: 'abre en el muro (D127)',
+    );
 
     final textos = [
       for (final w in tester.widgetList<Text>(
@@ -38,13 +45,12 @@ void main() {
       ))
         w.data,
     ];
-    expect(textos, ['Noticias', 'SOS', 'Mapa', 'Mascotas', 'Ayuda']);
+    expect(textos, ['Inicio', 'SOS', 'Mapa', 'Mascotas', 'Urgencias']);
 
     for (final (pestana, titulo) in [
-      ('Noticias', 'Noticias'),
       ('SOS', 'SOS'),
       ('Mascotas', 'Mis mascotas'),
-      ('Ayuda', 'Ayuda'),
+      ('Urgencias', 'Urgencias'),
     ]) {
       await _tocarPestana(tester, pestana);
       expect(find.widgetWithText(AppBar, titulo), findsOneWidget);
@@ -54,17 +60,19 @@ void main() {
     await tester.tap(find.byIcon(Icons.map_outlined));
     await tester.pumpAndSettle();
     expect(find.widgetWithText(AppBar, 'Mapa'), findsOneWidget);
+    await _tocarPestana(tester, 'Inicio');
+    expect(find.widgetWithText(AppBar, 'Inicio'), findsOneWidget);
     expect(
       [
         for (final e in metricas)
           if (e['name'] == 'tab_open') (e['props']! as Map)['tab'],
       ],
-      ['noticias', 'sos', 'mascotas', 'ayuda', 'mapa'],
+      ['sos', 'mascotas', 'ayuda', 'mapa', 'noticias'],
     );
   });
 
   testWidgets('cada pestaña conserva su estado al cambiar', (tester) async {
-    await tester.pumpWidget(appDePrueba());
+    await tester.pumpWidget(appDePrueba(inicio: Rutas.inicio));
     await tester.pumpAndSettle();
 
     await _tocarPestana(tester, 'SOS');
@@ -78,9 +86,9 @@ void main() {
   testWidgets('Ajustes se abre desde arriba y vuelve a la pestaña', (
     tester,
   ) async {
-    await tester.pumpWidget(appDePrueba());
+    await tester.pumpWidget(appDePrueba(inicio: Rutas.inicio));
     await tester.pumpAndSettle();
-    await _tocarPestana(tester, 'Ayuda');
+    await _tocarPestana(tester, 'Urgencias');
 
     await tester.tap(find.byTooltip('Ajustes'));
     await tester.pumpAndSettle();
@@ -89,7 +97,7 @@ void main() {
 
     await tester.tap(find.byType(BackButton));
     await tester.pumpAndSettle();
-    expect(find.widgetWithText(AppBar, 'Ayuda'), findsOneWidget);
+    expect(find.widgetWithText(AppBar, 'Urgencias'), findsOneWidget);
   });
 
   Future<void> irDirecto(WidgetTester tester, String ruta) async {
@@ -98,8 +106,8 @@ void main() {
   }
 
   testWidgets('entrando directo a una pantalla fuera de las pestañas, la '
-      'flecha lleva al Mapa', (tester) async {
-    await tester.pumpWidget(appDePrueba());
+      'flecha lleva al Inicio', (tester) async {
+    await tester.pumpWidget(appDePrueba(inicio: Rutas.inicio));
     await tester.pumpAndSettle();
     for (final (ruta, titulo) in [
       ('/legal/terminos', 'Términos y condiciones'),
@@ -110,7 +118,7 @@ void main() {
       await tester.tap(find.byType(BackButton));
       await tester.pumpAndSettle();
       expect(
-        find.widgetWithText(AppBar, 'Mapa'),
+        find.widgetWithText(AppBar, 'Inicio'),
         findsOneWidget,
         reason: titulo,
       );
@@ -122,6 +130,7 @@ void main() {
   ) async {
     await tester.pumpWidget(
       appDePrueba(
+        inicio: Rutas.inicio,
         cuenta: ServicioCuentaFalso(
           conectado: const Usuario(id: 'u1', email: 'ana@correo.com'),
         ),
@@ -146,6 +155,7 @@ void main() {
     );
     await tester.pumpWidget(
       appDePrueba(
+        inicio: Rutas.inicio,
         cuenta: cuenta,
         mascotas: MascotasFalsas(const [
           Mascota(id: 'm1', nombre: 'Luna', especieId: 2),
@@ -159,7 +169,7 @@ void main() {
 
     cuenta.conectar(null);
     await tester.pumpAndSettle();
-    expect(find.widgetWithText(AppBar, 'Mapa'), findsOneWidget);
+    expect(find.widgetWithText(AppBar, 'Inicio'), findsOneWidget);
     expect(find.text('Luna'), findsNothing, reason: 'no queda nada privado');
 
     await _tocarPestana(tester, 'Mascotas');

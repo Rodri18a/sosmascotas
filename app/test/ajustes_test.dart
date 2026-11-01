@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
+import 'package:sosmascota/src/router.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'cuenta_falsa.dart';
@@ -109,12 +110,14 @@ void main() {
     );
   });
 
-  testWidgets('borrar la cuenta pide confirmación y deja al visitante en el '
-      'mapa', (tester) async {
+  testWidgets('borrar la cuenta pide confirmación y deja al visitante en '
+      'Inicio', (tester) async {
     _pantallaDeCelular(tester);
     final cuenta = ServicioCuentaFalso(conectado: _ana);
     final eventos = <Map<String, Object?>>[];
-    await tester.pumpWidget(appDePrueba(cuenta: cuenta, eventos: eventos));
+    await tester.pumpWidget(
+      appDePrueba(cuenta: cuenta, eventos: eventos, inicio: Rutas.inicio),
+    );
     await _abrirAjustes(tester);
 
     await tester.tap(find.text('Borrar mi cuenta'));
@@ -126,7 +129,7 @@ void main() {
 
     expect(cuenta.cuentasBorradas, 1);
     expect(eventos.map((e) => e['name']), contains('account_delete'));
-    expect(find.widgetWithText(AppBar, 'Mapa'), findsOneWidget);
+    expect(find.widgetWithText(AppBar, 'Inicio'), findsOneWidget);
     expect(find.text('Tu cuenta y tus datos se borraron.'), findsOneWidget);
   });
 

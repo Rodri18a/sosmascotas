@@ -90,8 +90,8 @@ class BarraInferior extends StatelessWidget {
                   children: [
                     item(
                       Pestana.noticias,
-                      Icons.article_outlined,
-                      Icons.article,
+                      Icons.home_outlined,
+                      Icons.home,
                       t.noticiasTitulo,
                     ),
                     item(
@@ -129,8 +129,8 @@ class BarraInferior extends StatelessWidget {
                     ),
                     item(
                       Pestana.ayuda,
-                      Icons.help_outline,
-                      Icons.help,
+                      Icons.emergency_outlined,
+                      Icons.emergency,
                       t.pestanaAyuda,
                     ),
                   ],

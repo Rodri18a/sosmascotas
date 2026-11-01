@@ -50,7 +50,7 @@ Future<void> _irAAyuda(WidgetTester tester) async {
   await tester.tap(
     find.descendant(
       of: find.byType(BarraInferior),
-      matching: find.text('Ayuda'),
+      matching: find.text('Urgencias'),
     ),
   );
   await tester.pumpAndSettle();

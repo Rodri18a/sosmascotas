@@ -21,9 +21,9 @@
 ## Puntos a decidir antes de arrancar
 
 1. ✅ **El botón de ayuda va arriba a la derecha** (decidido por el dueño el 01/11/2026), en el lugar del ícono de Ajustes de las pestañas, siempre con el mismo ícono (signo de pregunta en un círculo). El menú ☰ queda donde está, arriba a la izquierda, y Ajustes se sigue abriendo desde ahí.
-2. **La pestaña «Ayuda» de la barra de abajo** hoy es para urgencias (911, guardias, refugios, denuncias). Con un botón de ayuda en cada pantalla, dos cosas llamadas «Ayuda» confunden. Propongo renombrar la pestaña a **«Urgencias»**.
-3. **La pestaña «Noticias» pasa a ser «Inicio»** y la app abre ahí. El Mapa sigue en el medio, a un toque.
-4. **Puntos por mirar publicidad: no.** Si la gente toca un aviso para sumar puntos, las vistas y los toques dejan de decir quién está interesado de verdad, y eso es lo que paga el comercio. Además, las redes de anuncios (por ejemplo AdMob, si algún día se usa) prohíben premiar los toques. Se mide qué se vio y qué se tocó (sin saber quién), y los puntos quedan para acciones de cuidado y de comunidad.
+2. ✅ (D127) **La pestaña «Ayuda» de la barra de abajo** hoy es para urgencias (911, guardias, refugios, denuncias). Con un botón de ayuda en cada pantalla, dos cosas llamadas «Ayuda» confunden. Propongo renombrar la pestaña a **«Urgencias»**.
+3. ✅ (D127) **La pestaña «Noticias» pasa a ser «Inicio»** y la app abre ahí. El Mapa sigue en el medio, a un toque.
+4. ✅ (aceptado por el dueño el 01/11/2026) **Puntos por mirar publicidad: no.** Si la gente toca un aviso para sumar puntos, las vistas y los toques dejan de decir quién está interesado de verdad, y eso es lo que paga el comercio. Además, las redes de anuncios (por ejemplo AdMob, si algún día se usa) prohíben premiar los toques. Se mide qué se vio y qué se tocó (sin saber quién), y los puntos («Tus huellas») quedan para acciones de cuidado y de comunidad: completar la ficha, la libreta al día, compartir un perdido, responder una pregunta.
 5. **Publicidad y suscripciones.** El lineamiento pide no depender de suscripciones al principio. Encaja con los planes de [22](22-planes-y-precios.md): lo de seguridad y salud sigue gratis, y los ingresos arrancan por los comercios (Destacado y Plus, que incluyen aparecer en el muro). Pro y Familia quedan como extra.
 6. **Rastreo de paseadores:** el paseador tiene que aceptarlo en cada paseo, la ubicación se comparte solo mientras dura, el recorrido se borra a los 30 días y nunca se ve la casa del dueño. Es de la Fase 4.
 

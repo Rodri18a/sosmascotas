@@ -4,7 +4,7 @@ import 'package:sosmascota/src/redireccion.dart';
 void main() {
   group('redirigir', () {
     test('la raíz lleva al mapa', () {
-      expect(redirigir(conectado: false, uri: Uri.parse('/')), '/mapa');
+      expect(redirigir(conectado: false, uri: Uri.parse('/')), '/noticias');
     });
 
     test('las pestañas se ven sin cuenta', () {
@@ -35,10 +35,10 @@ void main() {
     });
 
     test('rechaza otros sitios y bucles', () {
-      expect(volverSeguro('https://malo.com'), '/mapa');
-      expect(volverSeguro('//malo.com'), '/mapa');
-      expect(volverSeguro('/ingresar?volver=/x'), '/mapa');
-      expect(volverSeguro(null), '/mapa');
+      expect(volverSeguro('https://malo.com'), '/noticias');
+      expect(volverSeguro('//malo.com'), '/noticias');
+      expect(volverSeguro('/ingresar?volver=/x'), '/noticias');
+      expect(volverSeguro(null), '/noticias');
     });
   });
 }

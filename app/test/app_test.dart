@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sosmascota/src/app.dart';
 import 'package:sosmascota/src/features/shell/app_shell.dart';
+import 'package:sosmascota/src/router.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'helpers.dart';
 
 void main() {
-  testWidgets('arranca en la pestaña Mapa', (tester) async {
-    await tester.pumpWidget(appDePrueba());
+  test('abre en Inicio, el muro (D127)', () {
+    final contenedor = ProviderContainer();
+    addTearDown(contenedor.dispose);
+    expect(contenedor.read(rutaInicialProvider), Rutas.inicio);
+  });
+
+  testWidgets('arranca en Inicio', (tester) async {
+    await tester.pumpWidget(appDePrueba(inicio: Rutas.inicio));
     await tester.pumpAndSettle();
 
-    expect(find.widgetWithText(AppBar, 'Mapa'), findsOneWidget);
+    expect(find.widgetWithText(AppBar, 'Inicio'), findsOneWidget);
     expect(find.byType(BarraInferior), findsOneWidget);
   });
 

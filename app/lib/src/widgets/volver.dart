@@ -5,10 +5,10 @@ import '../router.dart';
 
 /// Flecha para volver en las pantallas que se abren fuera de las pestañas.
 /// Si se entró por un enlace directo, un aviso o después de ingresar, no hay
-/// a dónde volver: la flecha lleva a [destino] (el mapa, si no se indica).
+/// a dónde volver: la flecha lleva a [destino] (el inicio, si no se indica).
 /// Con algo detrás devuelve `null` y la barra pone la flecha de siempre.
 Widget? volverSiNoHayAtras(
   BuildContext context, [
-  String destino = Rutas.mapa,
+  String destino = Rutas.inicio,
 ]) =>
     context.canPop() ? null : BackButton(onPressed: () => context.go(destino));

@@ -133,7 +133,7 @@ class AjustesScreen extends ConsumerWidget {
       ref.read(metricasProvider).track(Eventos.accountDelete);
       await ref.read(servicioCuentaProvider).borrarCuenta();
       mensajero.showSnackBar(SnackBar(content: Text(t.borrarCuentaHecho)));
-      if (context.mounted) context.go(Rutas.mapa);
+      if (context.mounted) context.go(Rutas.inicio);
     } on CuentaException catch (e) {
       mensajero.showSnackBar(
         SnackBar(content: Text(mensajeDeError(t, e.tipo))),

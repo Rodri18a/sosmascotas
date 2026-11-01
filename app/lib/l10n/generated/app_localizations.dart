@@ -133,7 +133,7 @@ abstract class AppLocalizations {
   /// No description provided for @pestanaAyuda.
   ///
   /// In es, this message translates to:
-  /// **'Ayuda'**
+  /// **'Urgencias'**
   String get pestanaAyuda;
 
   /// Nombre corto de la pestaña Mis mascotas en la barra inferior (D94).
@@ -5647,7 +5647,7 @@ abstract class AppLocalizations {
   /// No description provided for @noticiasTitulo.
   ///
   /// In es, this message translates to:
-  /// **'Noticias'**
+  /// **'Inicio'**
   String get noticiasTitulo;
 
   /// No description provided for @noticiasEntradaAyuda.
@@ -5809,7 +5809,7 @@ abstract class AppLocalizations {
   /// No description provided for @comunidadCompartirExplicacion.
   ///
   /// In es, this message translates to:
-  /// **'Se publica en Noticias → Comunidad con el nombre, la especie y la primera foto del reporte. Nunca la ubicación ni tus datos. La podés quitar cuando quieras.'**
+  /// **'Se publica en Inicio → Comunidad con el nombre, la especie y la primera foto del reporte. Nunca la ubicación ni tus datos. La podés quitar cuando quieras.'**
   String get comunidadCompartirExplicacion;
 
   /// No description provided for @comunidadCompartir.

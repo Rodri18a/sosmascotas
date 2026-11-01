@@ -27,7 +27,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get pestanaMascotas => 'Mis mascotas';
 
   @override
-  String get pestanaAyuda => 'Ayuda';
+  String get pestanaAyuda => 'Urgencias';
 
   @override
   String get barraMascotas => 'Mascotas';
@@ -3271,7 +3271,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get noticiasTitulo => 'Noticias';
+  String get noticiasTitulo => 'Inicio';
 
   @override
   String get noticiasEntradaAyuda =>
@@ -3419,7 +3419,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get comunidadCompartirExplicacion =>
-      'Se publica en Noticias → Comunidad con el nombre, la especie y la primera foto del reporte. Nunca la ubicación ni tus datos. La podés quitar cuando quieras.';
+      'Se publica en Inicio → Comunidad con el nombre, la especie y la primera foto del reporte. Nunca la ubicación ni tus datos. La podés quitar cuando quieras.';
 
   @override
   String get comunidadCompartir => 'Compartir';

@@ -82,6 +82,9 @@ abstract final class Rutas {
   static const negocio = '/negocio';
   static const adopcion = '/adopcion';
   static const noticias = '/noticias';
+
+  /// Donde abre la app y adonde se vuelve si no hay nada atrás: el muro (D127).
+  static const inicio = noticias;
   static const misPedidos = '/pedidos';
   static const miPlan = '/mi-plan';
   static const misTurnos = '/turnos';
@@ -251,6 +254,9 @@ GoRoute _pestana(
 GoRoute _hija(String ruta, Widget pantalla) =>
     GoRoute(path: ruta.split('/').last, builder: (_, _) => pantalla);
 
+/// Pantalla donde abre la app: el muro (D127). Las pruebas del mapa la cambian.
+final rutaInicialProvider = Provider<String>((_) => Rutas.inicio);
+
 final routerProvider = Provider<GoRouter>((ref) {
   // Al iniciar o cerrar sesión, al cambiar el consentimiento o al cambiar las
   // funcionalidades prendidas, se vuelven a evaluar las redirecciones.
@@ -292,7 +298,7 @@ final routerProvider = Provider<GoRouter>((ref) {
     });
 
   final router = GoRouter(
-    initialLocation: Rutas.mapa,
+    initialLocation: ref.read(rutaInicialProvider),
     refreshListenable: cambio,
     redirect: (context, state) => redirigir(
       conectado: ref.read(conectadoProvider),

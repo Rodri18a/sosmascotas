@@ -45,6 +45,7 @@ import 'package:sosmascota/src/qr/pedidos_chapita_repositorio.dart';
 import 'package:sosmascota/src/qr/qr_repositorio.dart';
 import 'package:sosmascota/src/recordatorios/avisador.dart';
 import 'package:sosmascota/src/recordatorios/recordatorios_repositorio.dart';
+import 'package:sosmascota/src/router.dart';
 import 'package:sosmascota/src/sos/sos_repositorio.dart';
 import 'package:sosmascota/src/theme/tema_elegido.dart';
 import 'package:sosmascota/src/tienda/tienda_repositorio.dart';
@@ -148,8 +149,12 @@ Widget appDePrueba({
   AlmacenInstalacion? almacenInstalacion,
   AlmacenMascotaElegida? almacenMascotaElegida,
   String urlPublica = 'https://sosmascotas.uy',
+  // La mayoría de las pruebas se escribieron arrancando en el Mapa; las de
+  // navegación arrancan donde abre la app de verdad (Rutas.inicio, D127).
+  String inicio = Rutas.mapa,
 }) => ProviderScope(
   overrides: [
+    rutaInicialProvider.overrideWithValue(inicio),
     // Por defecto, como si ya estuviera instalada: no se ofrece nada.
     servicioInstalacionProvider.overrideWithValue(
       instalacion ?? const InstalacionNoDisponible(),
