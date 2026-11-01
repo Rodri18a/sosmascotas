@@ -8,6 +8,7 @@
   - [Funcionalidades de la app](03-funcionalidades-app.md)
   - [Reglas de negocio](06-reglas-negocio.md)
   - [Planes y precios (cómo explicarlo)](22-planes-y-precios.md)
+  - [Plan de mejoras de Huellitas](24-plan-mejoras.md)
   - [Habilitación gradual de funcionalidades](15-funcionalidades-graduales.md)
   - [Brief de identidad visual](14-brief-identidad-visual.md)
   - [Guía visual (look and feel)](23-guia-visual.md)
