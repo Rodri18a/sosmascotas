@@ -97,19 +97,19 @@ abstract class AppLocalizations {
   /// Nombre de la app (pestaña del navegador, lista de apps).
   ///
   /// In es, this message translates to:
-  /// **'SOS Mascotas'**
+  /// **'Huellitas'**
   String get appNombre;
 
   /// Nombre en el logo, en dos renglones (guía de marca, D122).
   ///
   /// In es, this message translates to:
-  /// **'SOS\nMascotas'**
+  /// **'Huellitas'**
   String get logoNombre;
 
   /// Frase de la marca debajo del logo (D119, D122).
   ///
   /// In es, this message translates to:
-  /// **'La comunidad que tu mascota necesita'**
+  /// **'La comunidad que deja huella'**
   String get logoFrase;
 
   /// Barra inferior y título de la pantalla.
@@ -433,7 +433,7 @@ abstract class AppLocalizations {
   /// No description provided for @consentimientoExplicacion.
   ///
   /// In es, this message translates to:
-  /// **'Para usar tu cuenta necesitamos que leas y aceptes cómo funciona SOS Mascotas y cómo cuidamos tus datos. En resumen:'**
+  /// **'Para usar tu cuenta necesitamos que leas y aceptes cómo funciona Huellitas y cómo cuidamos tus datos. En resumen:'**
   String get consentimientoExplicacion;
 
   /// No description provided for @consentimientoTelefono.
@@ -973,7 +973,7 @@ abstract class AppLocalizations {
   /// No description provided for @chapitasExplicacion.
   ///
   /// In es, this message translates to:
-  /// **'Si tenés una chapita de SOS Mascotas, vinculala con {nombre}: escaneala con la cámara del celular o escribí el código que tiene impreso.'**
+  /// **'Si tenés una chapita de Huellitas, vinculala con {nombre}: escaneala con la cámara del celular o escribí el código que tiene impreso.'**
   String chapitasExplicacion(Object nombre);
 
   /// No description provided for @chapitasNinguna.
@@ -1675,19 +1675,19 @@ abstract class AppLocalizations {
   /// No description provided for @sosCartelPrivacidadPerdida.
   ///
   /// In es, this message translates to:
-  /// **'Vas a ver su reporte y podés dejarle un mensaje a su familia con dónde y cuándo la viste. SOS Mascotas es la comunidad que armamos entre todos, con las mascotas en el centro.'**
+  /// **'Vas a ver su reporte y podés dejarle un mensaje a su familia con dónde y cuándo la viste. Huellitas es la comunidad que deja huella.'**
   String get sosCartelPrivacidadPerdida;
 
   /// No description provided for @sosCartelPrivacidadEncontrada.
   ///
   /// In es, this message translates to:
-  /// **'Vas a ver el reporte y podés dejarle un mensaje a quien lo encontró. SOS Mascotas es la comunidad que armamos entre todos, con las mascotas en el centro.'**
+  /// **'Vas a ver el reporte y podés dejarle un mensaje a quien lo encontró. Huellitas es la comunidad que deja huella.'**
   String get sosCartelPrivacidadEncontrada;
 
   /// No description provided for @sosCartelPie.
   ///
   /// In es, this message translates to:
-  /// **'SOS Mascotas · la comunidad que tu mascota necesita: encontrar, adoptar, eventos y servicios · {enlace}'**
+  /// **'Huellitas · la comunidad que deja huella: encontrar, adoptar, eventos y servicios · {enlace}'**
   String sosCartelPie(String enlace);
 
   /// No description provided for @sosPrivacidadDetalle.
@@ -1909,7 +1909,7 @@ abstract class AppLocalizations {
   /// No description provided for @pushNoDisponible.
   ///
   /// In es, this message translates to:
-  /// **'Este navegador no admite avisos. En iPhone, primero agregá SOS Mascotas a la pantalla de inicio (Compartir → Agregar a inicio) y abrila desde ahí.'**
+  /// **'Este navegador no admite avisos. En iPhone, primero agregá Huellitas a la pantalla de inicio (Compartir → Agregar a inicio) y abrila desde ahí.'**
   String get pushNoDisponible;
 
   /// No description provided for @pushBloqueado.
@@ -2209,7 +2209,7 @@ abstract class AppLocalizations {
   /// No description provided for @ayuda911Texto.
   ///
   /// In es, this message translates to:
-  /// **'Llamá al 911. SOS Mascotas es solo para animales.'**
+  /// **'Llamá al 911. Huellitas es solo para animales.'**
   String get ayuda911Texto;
 
   /// No description provided for @ayuda911Boton.
@@ -2287,13 +2287,13 @@ abstract class AppLocalizations {
   /// No description provided for @temaCielo.
   ///
   /// In es, this message translates to:
-  /// **'Cielo'**
+  /// **'Huellitas'**
   String get temaCielo;
 
   /// No description provided for @temaCieloDescripcion.
   ///
   /// In es, this message translates to:
-  /// **'Calma y confianza: el de SOS Mascotas'**
+  /// **'Celeste y alegre: el de la marca'**
   String get temaCieloDescripcion;
 
   /// No description provided for @temaFaro.
@@ -2377,7 +2377,7 @@ abstract class AppLocalizations {
   /// No description provided for @instalarTarjetaTitulo.
   ///
   /// In es, this message translates to:
-  /// **'Instalá SOS Mascotas'**
+  /// **'Instalá Huellitas'**
   String get instalarTarjetaTitulo;
 
   /// No description provided for @instalarTarjetaTexto.
@@ -2401,7 +2401,7 @@ abstract class AppLocalizations {
   /// No description provided for @instalarGracias.
   ///
   /// In es, this message translates to:
-  /// **'¡Listo! Ya podés abrir SOS Mascotas desde la pantalla de inicio.'**
+  /// **'¡Listo! Ya podés abrir Huellitas desde la pantalla de inicio.'**
   String get instalarGracias;
 
   /// No description provided for @instalarIphoneTitulo.
@@ -3127,7 +3127,7 @@ abstract class AppLocalizations {
   /// No description provided for @hogarMensajeInvitacion.
   ///
   /// In es, this message translates to:
-  /// **'Te invito a cuidar a mis mascotas en SOS Mascotas: {enlace}'**
+  /// **'Te invito a cuidar a mis mascotas en Huellitas: {enlace}'**
   String hogarMensajeInvitacion(String enlace);
 
   /// No description provided for @hogarCreador.
@@ -3235,7 +3235,7 @@ abstract class AppLocalizations {
   /// No description provided for @unirmeTexto.
   ///
   /// In es, this message translates to:
-  /// **'Te invitaron a cuidar mascotas en SOS Mascotas. Vas a poder ver y editar sus fichas, la libreta y los recordatorios, y vas a recibir los avisos del QR. Las personas del hogar van a ver tu nombre (nunca tu correo).'**
+  /// **'Te invitaron a cuidar mascotas en Huellitas. Vas a poder ver y editar sus fichas, la libreta y los recordatorios, y vas a recibir los avisos del QR. Las personas del hogar van a ver tu nombre (nunca tu correo).'**
   String get unirmeTexto;
 
   /// No description provided for @unirmeBoton.
@@ -3325,7 +3325,7 @@ abstract class AppLocalizations {
   /// No description provided for @perfilRolAdmin.
   ///
   /// In es, this message translates to:
-  /// **'Administración de SOS Mascotas'**
+  /// **'Administración de Huellitas'**
   String get perfilRolAdmin;
 
   /// No description provided for @perfilPlan.
@@ -3637,7 +3637,7 @@ abstract class AppLocalizations {
   /// No description provided for @chatSinNombre.
   ///
   /// In es, this message translates to:
-  /// **'Persona de SOS Mascotas'**
+  /// **'Persona de Huellitas'**
   String get chatSinNombre;
 
   /// No description provided for @chatSobreReporte.
@@ -4987,7 +4987,7 @@ abstract class AppLocalizations {
   /// No description provided for @catalogoConsultaTexto.
   ///
   /// In es, this message translates to:
-  /// **'Hola, te escribo desde SOS Mascotas. Quería consultar por: {producto}'**
+  /// **'Hola, te escribo desde Huellitas. Quería consultar por: {producto}'**
   String catalogoConsultaTexto(String producto);
 
   /// No description provided for @catalogoSinContacto.
@@ -5383,7 +5383,7 @@ abstract class AppLocalizations {
   /// No description provided for @pedidoMensajeSaludo.
   ///
   /// In es, this message translates to:
-  /// **'Hola, te hago un pedido desde SOS Mascotas (#{numero}):'**
+  /// **'Hola, te hago un pedido desde Huellitas (#{numero}):'**
   String pedidoMensajeSaludo(int numero);
 
   /// No description provided for @pedidoMensajeRenglon.
@@ -5785,7 +5785,7 @@ abstract class AppLocalizations {
   /// No description provided for @comunidadAdopcionDetalle.
   ///
   /// In es, this message translates to:
-  /// **'Adopción responsable en SOS Mascotas.'**
+  /// **'Adopción responsable en Huellitas.'**
   String get comunidadAdopcionDetalle;
 
   /// No description provided for @comunidadLugarNuevo.
@@ -7261,7 +7261,7 @@ abstract class AppLocalizations {
   /// No description provided for @renacGuiaTexto.
   ///
   /// In es, this message translates to:
-  /// **'## Qué es el RENAC\nEs el **Registro Nacional de Animales de Compañía** del MGAP (Ley 18.471). Los perros y gatos se identifican con un **microchip** y se registran a nombre de quien los tiene a cargo. Es obligatorio.\n## Cuándo\nA partir de los **90 días de vida**.\n## Cómo se hace\n- Andá a una veterinaria que sea **operador RENAC** (veterinarios acreditados por el INBA).\n- Te coloca el microchip, si no tiene, y carga los datos de tu mascota y los tuyos.\n- Te dan una **constancia** con esos datos. Guardala.\n- El costo lo fija cada veterinaria: preguntá antes.\n## Si se muda o cambia de dueño\nPedile a tu veterinaria que actualice los datos en el RENAC.\n## Si se pierde\nAdemás de publicar el SOS en la app, pedí que la marquen como **extraviada** en el RENAC.\n## Chip y chapita QR\nEl chip solo lo lee una veterinaria con un lector. La chapita QR la lee cualquier celular. **Se complementan.**\n> SOS Mascotas no es parte del RENAC ni del MGAP. Esta guía es orientativa: ante cualquier duda, consultá con tu veterinaria o con el INBA.'**
+  /// **'## Qué es el RENAC\nEs el **Registro Nacional de Animales de Compañía** del MGAP (Ley 18.471). Los perros y gatos se identifican con un **microchip** y se registran a nombre de quien los tiene a cargo. Es obligatorio.\n## Cuándo\nA partir de los **90 días de vida**.\n## Cómo se hace\n- Andá a una veterinaria que sea **operador RENAC** (veterinarios acreditados por el INBA).\n- Te coloca el microchip, si no tiene, y carga los datos de tu mascota y los tuyos.\n- Te dan una **constancia** con esos datos. Guardala.\n- El costo lo fija cada veterinaria: preguntá antes.\n## Si se muda o cambia de dueño\nPedile a tu veterinaria que actualice los datos en el RENAC.\n## Si se pierde\nAdemás de publicar el SOS en la app, pedí que la marquen como **extraviada** en el RENAC.\n## Chip y chapita QR\nEl chip solo lo lee una veterinaria con un lector. La chapita QR la lee cualquier celular. **Se complementan.**\n> Huellitas no es parte del RENAC ni del MGAP. Esta guía es orientativa: ante cualquier duda, consultá con tu veterinaria o con el INBA.'**
   String get renacGuiaTexto;
 
   /// No description provided for @renacVerVeterinarias.
@@ -7309,7 +7309,7 @@ abstract class AppLocalizations {
   /// No description provided for @buscarSinRubro.
   ///
   /// In es, this message translates to:
-  /// **'Todavía no hay {rubro} cerca en SOS Mascotas.'**
+  /// **'Todavía no hay {rubro} cerca en Huellitas.'**
   String buscarSinRubro(String rubro);
 
   /// No description provided for @buscarSinResultados.
@@ -9073,7 +9073,7 @@ abstract class AppLocalizations {
   /// No description provided for @historialPie.
   ///
   /// In es, this message translates to:
-  /// **'Hecho con SOS Mascotas el {fecha}'**
+  /// **'Hecho con Huellitas el {fecha}'**
   String historialPie(String fecha);
 
   /// No description provided for @historialSi.
@@ -10099,7 +10099,7 @@ abstract class AppLocalizations {
   /// No description provided for @equipoMensajeInvitacion.
   ///
   /// In es, this message translates to:
-  /// **'Te invito al equipo de {negocio} en SOS Mascotas: {enlace}'**
+  /// **'Te invito al equipo de {negocio} en Huellitas: {enlace}'**
   String equipoMensajeInvitacion(String negocio, String enlace);
 
   /// No description provided for @equipoTengoCodigo.
@@ -10123,7 +10123,7 @@ abstract class AppLocalizations {
   /// No description provided for @unirmeEquipoTexto.
   ///
   /// In es, this message translates to:
-  /// **'Te invitaron a ser parte del equipo de un negocio en SOS Mascotas. Vas a atender pedidos, turnos y el catálogo desde el modo comercio. El dueño y el equipo van a ver tu primer nombre (nunca tu correo).'**
+  /// **'Te invitaron a ser parte del equipo de un negocio en Huellitas. Vas a atender pedidos, turnos y el catálogo desde el modo comercio. El dueño y el equipo van a ver tu primer nombre (nunca tu correo).'**
   String get unirmeEquipoTexto;
 
   /// No description provided for @unirmeEquipoBoton.

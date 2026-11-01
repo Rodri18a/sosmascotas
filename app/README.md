@@ -1,4 +1,4 @@
-# App SOS Mascotas (Flutter)
+# App Huellitas (Flutter)
 
 App de usuarios y modo comercio, para Android, iPhone y web (PWA). La lógica compartida está en `../packages/core`.
 

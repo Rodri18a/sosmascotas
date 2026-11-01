@@ -240,7 +240,7 @@ class _Etiqueta extends StatelessWidget {
   }
 }
 
-/// El botón redondo del Mapa, en el color principal de la marca.
+/// El botón redondo del Mapa, en el color del símbolo de la marca (D126).
 class _BotonMapa extends StatelessWidget {
   const _BotonMapa({
     required this.diametro,
@@ -254,7 +254,7 @@ class _BotonMapa extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colores = Theme.of(context).colorScheme;
+    final marca = context.marca;
     return Semantics(
       button: true,
       selected: elegido,
@@ -264,7 +264,7 @@ class _BotonMapa extends StatelessWidget {
         dimension: diametro,
         child: Material(
           shape: const CircleBorder(),
-          color: colores.primary,
+          color: marca.simbolo,
           elevation: elegido ? 6 : 3,
           child: InkWell(
             customBorder: const CircleBorder(),
@@ -272,7 +272,7 @@ class _BotonMapa extends StatelessWidget {
             child: Icon(
               elegido ? Icons.map : Icons.map_outlined,
               size: 30,
-              color: colores.onPrimary,
+              color: marca.sobreSimbolo,
             ),
           ),
         ),

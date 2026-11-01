@@ -17,9 +17,9 @@ void main() {
       encabezadoAhora: 'septiembre de 2026',
       filas: const [('Aperturas de la ficha', 340, 200), ('Reseñas', 0, 0)],
       privacidad: 'Solo cantidades: nunca se muestra quién fue.',
-      pie: 'Hecho con SOS Mascotas',
-      normal: fuente('SourceSans3-Regular'),
-      negrita: fuente('SourceSans3-Bold'),
+      pie: 'Hecho con Huellitas',
+      normal: fuente('NunitoSans-Regular'),
+      negrita: fuente('NunitoSans-Bold'),
     );
     expect(latin1.decode(bytes.sublist(0, 5)), '%PDF-');
   });

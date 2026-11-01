@@ -88,8 +88,8 @@ class EstadisticasScreen extends ConsumerWidget {
       ],
       privacidad: t.estadisticasPrivacidad,
       pie: t.historialPie(fechas.formatMediumDate(DateTime.now())),
-      normal: await rootBundle.load('assets/fuentes/SourceSans3-Regular.ttf'),
-      negrita: await rootBundle.load('assets/fuentes/SourceSans3-Bold.ttf'),
+      normal: await rootBundle.load('assets/fuentes/NunitoSans-Regular.ttf'),
+      negrita: await rootBundle.load('assets/fuentes/NunitoSans-Bold.ttf'),
     );
     final ok = descargarArchivo(
       pdf,

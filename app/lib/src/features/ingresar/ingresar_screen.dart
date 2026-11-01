@@ -110,7 +110,7 @@ class _IngresarScreenState extends ConsumerState<IngresarScreen> {
                 if (emailEnviado == null) ...[
                   // El logo solo en el primer paso: en el del código, el
                   // aviso de error tiene que quedar a la vista.
-                  const Center(child: LogoSosMascotas(alto: 30)),
+                  const Center(child: LogoHuellitas(alto: 30)),
                   const SizedBox(height: 28),
                   if (ref.watch(googleHabilitadoProvider).value ?? false) ...[
                     OutlinedButton.icon(

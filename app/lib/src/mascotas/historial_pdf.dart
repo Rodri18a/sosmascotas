@@ -28,7 +28,7 @@ Future<Uint8List> historialSaludPdf({
 }) {
   final doc = pw.Document(
     title: textos.titulo,
-    creator: 'SOS Mascotas',
+    creator: 'Huellitas',
     theme: normal == null
         ? null
         : pw.ThemeData.withFont(

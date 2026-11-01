@@ -81,8 +81,8 @@ class _Detalle extends ConsumerWidget {
         logo: (await rootBundle.load(
           'assets/marca/isotipo.png',
         )).buffer.asUint8List(),
-        normal: await rootBundle.load('assets/fuentes/SourceSans3-Regular.ttf'),
-        negrita: await rootBundle.load('assets/fuentes/SourceSans3-Bold.ttf'),
+        normal: await rootBundle.load('assets/fuentes/NunitoSans-Regular.ttf'),
+        negrita: await rootBundle.load('assets/fuentes/NunitoSans-Bold.ttf'),
         textos: (
           titulo: perdida ? t.sosCartelSeBusca : t.sosCartelSeEncontro,
           subtitulo: perdida

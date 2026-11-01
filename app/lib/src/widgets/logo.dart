@@ -3,12 +3,13 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../l10n/l10n.dart';
 
-/// Logo completo: isotipo, «SOS Mascotas» y la frase de la marca.
+/// Logo completo: isotipo (globo con huella), «Huellitas» y la frase de la
+/// marca (D126).
 ///
 /// [horizontal]: el isotipo a la izquierda (cabeceras); si no, arriba
 /// (pantallas de bienvenida). Con [tinta], todo de un solo color.
-class LogoSosMascotas extends StatelessWidget {
-  const LogoSosMascotas({
+class LogoHuellitas extends StatelessWidget {
+  const LogoHuellitas({
     this.horizontal = false,
     this.conFrase = true,
     this.alto = 40,
@@ -19,7 +20,7 @@ class LogoSosMascotas extends StatelessWidget {
   final bool horizontal;
   final bool conFrase;
 
-  /// Alto de las letras de «SOS»; el resto se calcula a partir de él.
+  /// Alto de las letras de «Huellitas»; el resto se calcula a partir de él.
   final double alto;
   final Color? tinta;
 
@@ -37,9 +38,9 @@ class LogoSosMascotas extends StatelessWidget {
       style: titulos?.copyWith(
         color: color,
         fontSize: alto,
-        fontWeight: FontWeight.w700,
-        height: 0.95,
-        letterSpacing: -0.5,
+        fontWeight: FontWeight.w900,
+        height: 1,
+        letterSpacing: -0.3,
       ),
     );
     final frase = Text(
@@ -47,8 +48,8 @@ class LogoSosMascotas extends StatelessWidget {
       textAlign: horizontal ? TextAlign.start : TextAlign.center,
       style: tema.textTheme.titleMedium?.copyWith(
         color: color,
-        fontSize: alto * 0.4,
-        fontWeight: FontWeight.w600,
+        fontSize: alto * 0.42,
+        fontWeight: FontWeight.w700,
       ),
     );
     final texto = Column(
@@ -62,7 +63,7 @@ class LogoSosMascotas extends StatelessWidget {
       ],
     );
     final isotipo = Isotipo(
-      tamanio: alto * (horizontal ? 2.4 : 2.6),
+      tamanio: alto * (horizontal ? (conFrase ? 2 : 1.4) : 2.6),
       tinta: tinta,
     );
     return Semantics(

@@ -1,5 +1,5 @@
 name: sosmascota_core
-description: "Lógica compartida de SOS Mascota (modelos, servicios de Supabase, capa de mapa, i18n)."
+description: "Lógica compartida de Huellitas (modelos, servicios de Supabase, capa de mapa, i18n)."
 publish_to: none
 version: 0.1.0
 

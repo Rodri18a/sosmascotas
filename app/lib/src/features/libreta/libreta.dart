@@ -116,8 +116,8 @@ Future<void> _historial(
       .firstOrNull;
   final pdf = await historialSaludPdf(
     grupos: grupos,
-    normal: await rootBundle.load('assets/fuentes/SourceSans3-Regular.ttf'),
-    negrita: await rootBundle.load('assets/fuentes/SourceSans3-Bold.ttf'),
+    normal: await rootBundle.load('assets/fuentes/NunitoSans-Regular.ttf'),
+    negrita: await rootBundle.load('assets/fuentes/NunitoSans-Bold.ttf'),
     textos: (
       titulo: t.historialTitulo(mascota.nombre),
       datos: [

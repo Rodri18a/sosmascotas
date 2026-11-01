@@ -65,8 +65,8 @@ void main() {
         final ruta? => File(ruta).readAsBytesSync(),
         null => null,
       },
-      normal: _fuente('SourceSans3-Regular'),
-      negrita: _fuente('SourceSans3-Bold'),
+      normal: _fuente('NunitoSans-Regular'),
+      negrita: _fuente('NunitoSans-Bold'),
       textos: (
         titulo: 'SE BUSCA',
         subtitulo: 'Firulais',
@@ -77,7 +77,7 @@ void main() {
         donde: 'Vista por última vez: Centro, cerca de la plaza',
         escanea: '¿La viste? Escaneá el QR.',
         privacidad: 'No hace falta la app.',
-        pie: 'SOS Mascotas · sosmascota.uy/s/s1',
+        pie: 'Huellitas · sosmascota.uy/s/s1',
       ),
     );
     expect(latin1.decode(bytes.sublist(0, 5)), '%PDF-');

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'paleta.dart';
 
 /// Tema de la app en modo claro y oscuro (Material 3), armado desde la paleta
-/// de la marca (C · Cielo, D62).
+/// de la marca (Huellitas, D126).
 abstract final class AppTheme {
   static ThemeData get claro => tema(Paleta.cielo, Brightness.light);
 
@@ -63,7 +63,11 @@ abstract final class AppTheme {
       ),
     );
     return base.copyWith(
-      textTheme: _conTitulos(base.textTheme, paleta.fuenteTitulos),
+      textTheme: _conTitulos(
+        base.textTheme,
+        paleta.fuenteTitulos,
+        paleta.pesoTitulos,
+      ),
     );
   }
 
@@ -99,10 +103,10 @@ abstract final class AppTheme {
     );
   }
 
-  /// Títulos con la tipografía de títulos (solo tiene pesos 600 y 700).
-  static TextTheme _conTitulos(TextTheme t, String fuente) {
+  /// Títulos con la tipografía y el peso de títulos de la paleta.
+  static TextTheme _conTitulos(TextTheme t, String fuente, FontWeight peso) {
     TextStyle? titulo(TextStyle? s) =>
-        s?.copyWith(fontFamily: fuente, fontWeight: FontWeight.w600);
+        s?.copyWith(fontFamily: fuente, fontWeight: peso);
     return t.copyWith(
       displayLarge: titulo(t.displayLarge),
       displayMedium: titulo(t.displayMedium),

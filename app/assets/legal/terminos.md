@@ -2,9 +2,9 @@
 
 > BORRADOR del 14/10/2026, pendiente de revisión por la asesoría legal. Puede cambiar antes del lanzamiento.
 
-## Qué es SOS Mascotas
+## Qué es Huellitas
 
-SOS Mascotas es una app para dueños de mascotas y comercios del rubro, que arranca en Pando (Uruguay). Te ayuda a encontrar veterinarias y servicios, reportar mascotas perdidas o encontradas, identificar a tu mascota con una chapita QR y cuidar su salud.
+Huellitas es una app para dueños de mascotas y comercios del rubro, que arranca en Pando (Uruguay). Te ayuda a encontrar veterinarias y servicios, reportar mascotas perdidas o encontradas, identificar a tu mascota con una chapita QR y cuidar su salud.
 
 ## Tu cuenta
 
@@ -20,7 +20,7 @@ Lo que hace a la seguridad y la salud de tu mascota no se cobra: los reportes SO
 
 - Publicá solo mascotas y datos reales. Está prohibido vender animales, ofrecer cruzas o publicar datos de otras personas.
 - No publiques la ubicación exacta de tu casa ni las rutinas de tu mascota.
-- Desconfiá de quien te pida plata por devolverte una mascota: SOS Mascotas nunca te va a pedir pagos por un aviso.
+- Desconfiá de quien te pida plata por devolverte una mascota: Huellitas nunca te va a pedir pagos por un aviso.
 - Podemos ocultar publicaciones o suspender cuentas que no cumplan estas reglas o que otras personas reporten.
 
 ## Contacto entre personas
@@ -29,7 +29,7 @@ Cuando alguien encuentra a tu mascota, te deja un aviso con sus datos de contact
 
 ## Responsabilidad
 
-SOS Mascotas facilita el contacto entre personas y comercios, pero no garantiza que una mascota aparezca ni se hace responsable de los acuerdos entre usuarios. La información de los comercios la cargan ellos o la comunidad; verificala antes de una urgencia.
+Huellitas facilita el contacto entre personas y comercios, pero no garantiza que una mascota aparezca ni se hace responsable de los acuerdos entre usuarios. La información de los comercios la cargan ellos o la comunidad; verificala antes de una urgencia.
 
 ## Cambios
 

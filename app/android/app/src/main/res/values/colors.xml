@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Azul petróleo de la identidad Cielo (D62) -->
-    <color name="color_marca">#0F5E7A</color>
+    <!-- Fondo de la marca Huellitas (D126), igual que la pantalla de carga web -->
+    <color name="color_marca">#F2F8FC</color>
 </resources>

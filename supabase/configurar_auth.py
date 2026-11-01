@@ -34,11 +34,11 @@ HEADERS = {
 # Cuerpo de los correos: el código sirve también en la PWA del iPhone
 # (el enlace se abre en Safari, no en la app instalada).
 CORREO = """<div style="font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;max-width:480px;margin:auto;color:#1b1b1b">
-  <h2 style="color:#0F5E7A">🐾 SOS Mascotas</h2>
+  <h2 style="color:#126FA3;font-weight:900">Huellitas</h2>
   <p>Tu código para entrar es:</p>
   <p style="font-size:32px;font-weight:700;letter-spacing:6px;margin:16px 0">{{ .Token }}</p>
   <p>Escribilo en la app. Vence en 10 minutos.</p>
-  <p>O, si abriste este correo en el mismo dispositivo, tocá acá: <a href="{{ .ConfirmationURL }}">Entrar a SOS Mascotas</a></p>
+  <p>O, si abriste este correo en el mismo dispositivo, tocá acá: <a href="{{ .ConfirmationURL }}">Entrar a Huellitas</a></p>
   <p style="color:#666;font-size:13px">Si no lo pediste, ignorá este correo: nadie puede entrar sin el código.</p>
 </div>"""
 
@@ -64,9 +64,9 @@ DESEADO = {
 # El plan gratis no deja cambiar los correos con el servidor de correo de Supabase:
 # se aplican solo cuando hay un proveedor propio (SMTP, paso 0.4.4b).
 CORREOS = {
-    'mailer_subjects_magic_link': 'Tu código para entrar a SOS Mascotas',
+    'mailer_subjects_magic_link': 'Tu código para entrar a Huellitas',
     'mailer_templates_magic_link_content': CORREO,
-    'mailer_subjects_confirmation': 'Tu código para entrar a SOS Mascotas',
+    'mailer_subjects_confirmation': 'Tu código para entrar a Huellitas',
     'mailer_templates_confirmation_content': CORREO,
 }
 

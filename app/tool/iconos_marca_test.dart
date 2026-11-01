@@ -1,4 +1,4 @@
-// Genera los íconos de la app desde el isotipo (guía de marca, D122).
+// Genera los íconos de la app desde el isotipo (guía visual de Huellitas, D126).
 // No corre con las pruebas: se usa a mano cuando cambia el logo, desde app/:
 //   flutter test tool/iconos_marca_test.dart
 import 'dart:io';
@@ -8,9 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
-/// Fondo del ícono de la app: celeste del logo, un poco más oscuro abajo.
-const _fondoArriba = Color(0xFF8FD0E8);
-const _fondoAbajo = Color(0xFF4FA3CB);
+/// Fondo del ícono de la app: blanco, con el globo celeste encima.
+const _fondo = Color(0xFFFFFFFF);
 
 enum _Forma {
   /// Cuadrado redondeado (web, favicon, Android).
@@ -31,12 +30,7 @@ Future<void> _escribir(String ruta, int lado, _Forma forma) async {
   if (forma == _Forma.isotipo) {
     const PintorIsotipo().paint(lienzo, todo.size);
   } else {
-    final fondo = Paint()
-      ..shader = const LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [_fondoArriba, _fondoAbajo],
-      ).createShader(todo);
+    final fondo = Paint()..color = _fondo;
     if (forma == _Forma.redondeado) {
       lienzo.drawRRect(
         RRect.fromRectAndRadius(todo, Radius.circular(l * 0.22)),
@@ -46,13 +40,11 @@ Future<void> _escribir(String ruta, int lado, _Forma forma) async {
       lienzo.drawRect(todo, fondo);
     }
     // En los «llenos» el sistema recorta: el dibujo va en la zona segura.
-    final margen = l * (forma == _Forma.lleno ? 0.2 : 0.12);
+    final margen = l * (forma == _Forma.lleno ? 0.18 : 0.1);
     lienzo
       ..save()
       ..translate(margen, margen);
-    const PintorIsotipo(
-      tinta: Colors.white,
-    ).paint(lienzo, Size.square(l - 2 * margen));
+    const PintorIsotipo().paint(lienzo, Size.square(l - 2 * margen));
     lienzo.restore();
   }
   final imagen = await grabador.endRecording().toImage(lado, lado);

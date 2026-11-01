@@ -1,4 +1,6 @@
-# SOS Mascotas en 2 minutos
+# Huellitas en 2 minutos
+
+> Desde el 01/11/2026 la marca es **Huellitas** (antes SOS Mascotas, D126). Los nombres técnicos del proyecto siguen como `sosmascota` hasta decidir el dominio.
 
 <div id="estado">Cargando el progreso…</div>
 

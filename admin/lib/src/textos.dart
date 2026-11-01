@@ -3,7 +3,7 @@ import 'modelos.dart';
 /// Textos del portal de administración (en voseo, como la app). El portal es
 /// una herramienta interna: los textos están acá y no en un .arb (D76).
 abstract final class T {
-  static const titulo = 'SOS Mascotas · Administración';
+  static const titulo = 'Huellitas · Administración';
   static const ingresar = 'Ingresar';
   static const correo = 'Correo';
   static const enviarCodigo = 'Enviarme el código';

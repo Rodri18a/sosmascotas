@@ -1,5 +1,5 @@
 name: sosmascota_admin
-description: "Portal de administración de SOS Mascota (etapa 1.8, D76)."
+description: "Portal de administración de Huellitas (etapa 1.8, D76)."
 publish_to: none
 version: 0.1.0+1
 
@@ -28,19 +28,21 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  # Las tipografías de la marca (D62, D122), las mismas que la app; licencia
+  # Las tipografías de la marca (D126), las mismas que la app; licencia
   # OFL (ver assets/fuentes/).
   fonts:
-    - family: Sora
+    - family: Nunito
       fonts:
-        - asset: assets/fuentes/Sora-SemiBold.ttf
-          weight: 600
-        - asset: assets/fuentes/Sora-Bold.ttf
+        - asset: assets/fuentes/Nunito-Bold.ttf
           weight: 700
-    - family: SourceSans3
+        - asset: assets/fuentes/Nunito-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fuentes/Nunito-Black.ttf
+          weight: 900
+    - family: NunitoSans
       fonts:
-        - asset: assets/fuentes/SourceSans3-Regular.ttf
-        - asset: assets/fuentes/SourceSans3-SemiBold.ttf
+        - asset: assets/fuentes/NunitoSans-Regular.ttf
+        - asset: assets/fuentes/NunitoSans-SemiBold.ttf
           weight: 600
-        - asset: assets/fuentes/SourceSans3-Bold.ttf
+        - asset: assets/fuentes/NunitoSans-Bold.ttf
           weight: 700

@@ -23,13 +23,13 @@
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="SOS Mascotas">
+  <meta name="apple-mobile-web-app-title" content="Huellitas">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <title>SOS Mascotas</title>
+  <title>Huellitas</title>
   <script>
     // Instalar la app (0.8.1): el navegador avisa una sola vez y puede ser
     // antes de que arranque Flutter; se guarda acá y la app lo usa después.
@@ -46,22 +46,22 @@
     });
   </script>
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0F5E7A">
+  <meta name="theme-color" content="#126FA3">
   <style>
-    /* Pantalla de carga con el logo y los colores de la guía de marca (D122). */
+    /* Pantalla de carga con el logo y los colores de la guía visual (D126). */
     @font-face {
-      font-family: 'Sora'; font-weight: 600; font-display: swap;
-      src: url(assets/assets/fuentes/Sora-SemiBold.ttf) format('truetype');
+      font-family: 'Nunito'; font-weight: 900; font-display: swap;
+      src: url(assets/assets/fuentes/Nunito-Black.ttf) format('truetype');
     }
     #carga {
       position: fixed; inset: 0; display: flex; flex-direction: column;
       align-items: center; justify-content: center; gap: 12px;
-      background: #EAF4FA; color: #0F5E7A;
-      font-family: "Sora", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: #F2F8FC; color: #13294B;
+      font-family: "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     }
     #carga .logo { width: 112px; height: 112px; animation: latido 1.2s ease-in-out infinite; }
-    #carga .nombre { font-size: 28px; font-weight: 600; }
-    @media (prefers-color-scheme: dark) { #carga { background: #0E1E26; color: #E6F1F6; } }
+    #carga .nombre { font-size: 30px; font-weight: 900; }
+    @media (prefers-color-scheme: dark) { #carga { background: #0E1A26; color: #E8F1F8; } }
     @keyframes latido { 50% { transform: scale(1.12); } }
     @media (prefers-reduced-motion: reduce) { #carga .logo { animation: none; } }
   </style>
@@ -75,9 +75,9 @@
     For more details:
     * https://docs.flutter.dev/platform-integration/web/initialization
   -->
-  <div id="carga" role="status" aria-label="Cargando SOS Mascotas">
+  <div id="carga" role="status" aria-label="Cargando Huellitas">
     <img class="logo" src="icons/isotipo.png" alt="">
-    <div class="nombre">SOS Mascotas</div>
+    <div class="nombre">Huellitas</div>
   </div>
   <script>
     // Se quita cuando Flutter dibuja la primera pantalla.

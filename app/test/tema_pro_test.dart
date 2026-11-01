@@ -68,12 +68,12 @@ void main() {
     );
     await _abrirAjustes(tester);
 
-    expect(find.text('Cielo · beneficio de tu plan Pro'), findsOneWidget);
+    expect(find.text('Huellitas · beneficio de tu plan Pro'), findsOneWidget);
     await tester.tap(find.text('Tema de colores'));
     await tester.pumpAndSettle();
     expect(find.text('Elegí cómo se ve la app'), findsOneWidget);
     for (final nombre in [
-      'Cielo',
+      'Huellitas',
       'Faro',
       'Vecinos',
       'Pop',
@@ -177,11 +177,17 @@ void main() {
     expect(Paleta.porId('pop'), Paleta.pop);
   });
 
-  test('cada tema Pro trae sus tipografías para descargar; Cielo no', () {
+  test('cada tema Pro trae sus tipografías para descargar; Huellitas no', () {
     expect(Paleta.cielo.fuentesADescargar, isEmpty);
+    // Las de Huellitas (Nunito y Nunito Sans) ya vienen con la app.
+    const incluidas = {'Nunito', 'NunitoSans'};
     for (final p in [Paleta.faro, Paleta.vecinos, Paleta.pop]) {
       final familias = p.fuentesADescargar.map((a) => a.familia).toSet();
-      expect(familias, {p.fuenteTitulos, p.fuenteTexto}, reason: p.id);
+      expect(
+        familias,
+        {p.fuenteTitulos, p.fuenteTexto}.difference(incluidas),
+        reason: p.id,
+      );
       for (final a in p.fuentesADescargar) {
         expect(File('web/fuentes/${a.archivo}').existsSync(), isTrue);
       }

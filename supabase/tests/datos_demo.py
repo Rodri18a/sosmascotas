@@ -74,7 +74,7 @@ def crear(h):
     clave = uuid.uuid4().hex
     _, u = pedir('POST', f'{URL}/auth/v1/admin/users', {
         'email': EMAIL, 'password': clave, 'email_confirm': True,
-        'user_metadata': {'full_name': 'Demo SOS Mascota'}}, h)
+        'user_metadata': {'full_name': 'Demo Huellitas'}}, h)
     _, sesion = pedir('POST', f'{URL}/auth/v1/token?grant_type=password',
                       {'email': EMAIL, 'password': clave}, {'apikey': PUBLICA})
     yo = {'apikey': PUBLICA, 'Authorization': f"Bearer {sesion['access_token']}"}

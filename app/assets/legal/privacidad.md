@@ -32,4 +32,4 @@ Podés pedir ver, corregir o borrar tus datos. Desde Ajustes podés **borrar tu 
 
 ## Contacto
 
-Responsable: SOS Mascotas (emprendimiento en formación). El correo de soporte se publica antes del lanzamiento.
+Responsable: Huellitas (emprendimiento en formación). El correo de soporte se publica antes del lanzamiento.

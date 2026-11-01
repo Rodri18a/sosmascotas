@@ -1,14 +1,14 @@
 {
   "@@locale": "es",
-  "appNombre": "SOS Mascotas",
+  "appNombre": "Huellitas",
   "@appNombre": {
     "description": "Nombre de la app (pestaña del navegador, lista de apps)."
   },
-  "logoNombre": "SOS\nMascotas",
+  "logoNombre": "Huellitas",
   "@logoNombre": {
     "description": "Nombre en el logo, en dos renglones (guía de marca, D122)."
   },
-  "logoFrase": "La comunidad que tu mascota necesita",
+  "logoFrase": "La comunidad que deja huella",
   "@logoFrase": {
     "description": "Frase de la marca debajo del logo (D119, D122)."
   },
@@ -91,7 +91,7 @@
   "legalTerminos": "Términos y condiciones",
   "legalPrivacidad": "Política de privacidad",
   "consentimientoTitulo": "Antes de empezar",
-  "consentimientoExplicacion": "Para usar tu cuenta necesitamos que leas y aceptes cómo funciona SOS Mascotas y cómo cuidamos tus datos. En resumen:",
+  "consentimientoExplicacion": "Para usar tu cuenta necesitamos que leas y aceptes cómo funciona Huellitas y cómo cuidamos tus datos. En resumen:",
   "consentimientoTelefono": "Tu teléfono nunca se muestra a otras personas.",
   "consentimientoUbicacion": "Solo guardamos una zona aproximada, nunca tu ubicación exacta.",
   "consentimientoMetricas": "Medimos el uso de la app de forma anónima. No vendemos tus datos.",
@@ -243,7 +243,7 @@
   "qrRegenerarExplicacion": "El código actual deja de funcionar: vas a tener que imprimir el nuevo y reemplazar la chapita.",
   "qrRegenerado": "Listo: el código nuevo ya está activo.",
   "chapitasTitulo": "Chapitas físicas",
-  "chapitasExplicacion": "Si tenés una chapita de SOS Mascotas, vinculala con {nombre}: escaneala con la cámara del celular o escribí el código que tiene impreso.",
+  "chapitasExplicacion": "Si tenés una chapita de Huellitas, vinculala con {nombre}: escaneala con la cámara del celular o escribí el código que tiene impreso.",
   "chapitasNinguna": "Todavía no vinculaste ninguna chapita.",
   "chapitaActivar": "Activar una chapita",
   "chapitaCodigo": "Código de la chapita",
@@ -451,9 +451,9 @@
   "@sosCartelEncontradaEn": {"placeholders": {"lugar": {"type": "String"}}},
   "sosCartelEscaneaPerdida": "¿La viste? Escaneá el QR con la cámara del celular.",
   "sosCartelEscaneaEncontrada": "¿Es tuyo o sabés de quién es? Escaneá el QR con la cámara del celular.",
-  "sosCartelPrivacidadPerdida": "Vas a ver su reporte y podés dejarle un mensaje a su familia con dónde y cuándo la viste. SOS Mascotas es la comunidad que armamos entre todos, con las mascotas en el centro.",
-  "sosCartelPrivacidadEncontrada": "Vas a ver el reporte y podés dejarle un mensaje a quien lo encontró. SOS Mascotas es la comunidad que armamos entre todos, con las mascotas en el centro.",
-  "sosCartelPie": "SOS Mascotas · la comunidad que tu mascota necesita: encontrar, adoptar, eventos y servicios · {enlace}",
+  "sosCartelPrivacidadPerdida": "Vas a ver su reporte y podés dejarle un mensaje a su familia con dónde y cuándo la viste. Huellitas es la comunidad que deja huella.",
+  "sosCartelPrivacidadEncontrada": "Vas a ver el reporte y podés dejarle un mensaje a quien lo encontró. Huellitas es la comunidad que deja huella.",
+  "sosCartelPie": "Huellitas · la comunidad que deja huella: encontrar, adoptar, eventos y servicios · {enlace}",
   "@sosCartelPie": {"placeholders": {"enlace": {"type": "String"}}},
   "sosPrivacidadDetalle": "El teléfono del autor no se muestra: tu aviso le llega y decide cómo contactarte. La ubicación del mapa es aproximada.",
   "sosAvisarTitulo": "Dejale un aviso",
@@ -491,7 +491,7 @@
   "sosMotivoOtro": "Otro",
   "pushInterruptor": "Avisos en este dispositivo",
   "pushDetalle": "Te avisamos si alguien encuentra a tu mascota o escanea su QR.",
-  "pushNoDisponible": "Este navegador no admite avisos. En iPhone, primero agregá SOS Mascotas a la pantalla de inicio (Compartir → Agregar a inicio) y abrila desde ahí.",
+  "pushNoDisponible": "Este navegador no admite avisos. En iPhone, primero agregá Huellitas a la pantalla de inicio (Compartir → Agregar a inicio) y abrila desde ahí.",
   "pushBloqueado": "Los avisos están bloqueados en este navegador. Habilitalos desde el candado de la barra de direcciones → Notificaciones.",
   "pushSinElegir": "No se activaron los avisos. Podés hacerlo cuando quieras desde Ajustes.",
   "pushTarjeta": "Activá los avisos para enterarte al instante si alguien encuentra a tu mascota.",
@@ -546,7 +546,7 @@
   "diaSabado": "sábado",
   "diaDomingo": "domingo",
   "ayuda911Titulo": "¿Hay una persona en riesgo?",
-  "ayuda911Texto": "Llamá al 911. SOS Mascotas es solo para animales.",
+  "ayuda911Texto": "Llamá al 911. Huellitas es solo para animales.",
   "ayuda911Boton": "Llamar al 911",
   "ayudaUrgencias": "Veterinarias de urgencia",
   "ayudaSinUrgencias": "Todavía no hay veterinarias de urgencia cargadas en tu zona.",
@@ -560,8 +560,8 @@
   "@ajustesTemaPro": {"placeholders": {"nombre": {"type": "String"}}},
   "temaElegirTitulo": "Elegí cómo se ve la app",
   "temaExplicacion": "Cambia los colores y las letras de la app solo en este dispositivo. El mapa, la chapita y lo que ven los demás siguen igual.",
-  "temaCielo": "Cielo",
-  "temaCieloDescripcion": "Calma y confianza: el de SOS Mascotas",
+  "temaCielo": "Huellitas",
+  "temaCieloDescripcion": "Celeste y alegre: el de la marca",
   "temaFaro": "Faro",
   "temaFaroDescripcion": "Naranja de rescate y azul noche",
   "temaVecinos": "Vecinos",
@@ -575,11 +575,11 @@
   "noDisponibleIrAlMapa": "Ir al mapa",
   "instalarTitulo": "Instalar la app",
   "instalarSubtitulo": "Abrila desde la pantalla de inicio, más rápido y con avisos",
-  "instalarTarjetaTitulo": "Instalá SOS Mascotas",
+  "instalarTarjetaTitulo": "Instalá Huellitas",
   "instalarTarjetaTexto": "Queda en tu pantalla de inicio y te avisa enseguida si se pierde una mascota cerca.",
   "instalarBoton": "Instalar",
   "instalarAhoraNo": "Ahora no",
-  "instalarGracias": "¡Listo! Ya podés abrir SOS Mascotas desde la pantalla de inicio.",
+  "instalarGracias": "¡Listo! Ya podés abrir Huellitas desde la pantalla de inicio.",
   "instalarIphoneTitulo": "Instalar en el iPhone",
   "instalarIphonePaso1": "Abrí esta página en Safari.",
   "instalarIphonePaso2": "Tocá Compartir (el cuadrado con la flecha hacia arriba).",
@@ -717,7 +717,7 @@
   "hogarInvitacionTexto": "Mandale este enlace por WhatsApp o como quieras. Sirve una sola vez y vence en 7 días.",
   "hogarCopiar": "Copiar enlace",
   "hogarCopiado": "Enlace copiado.",
-  "hogarMensajeInvitacion": "Te invito a cuidar a mis mascotas en SOS Mascotas: {enlace}",
+  "hogarMensajeInvitacion": "Te invito a cuidar a mis mascotas en Huellitas: {enlace}",
   "@hogarMensajeInvitacion": {"placeholders": {"enlace": {"type": "String"}}},
   "hogarCreador": "Creó el hogar",
   "hogarIntegrante": "Integrante",
@@ -740,7 +740,7 @@
   "@hogarDe": {"placeholders": {"nombre": {"type": "String"}}},
   "hogarSoloVos": "Todavía no invitaste a nadie.",
   "unirmeTitulo": "Invitación a un hogar",
-  "unirmeTexto": "Te invitaron a cuidar mascotas en SOS Mascotas. Vas a poder ver y editar sus fichas, la libreta y los recordatorios, y vas a recibir los avisos del QR. Las personas del hogar van a ver tu nombre (nunca tu correo).",
+  "unirmeTexto": "Te invitaron a cuidar mascotas en Huellitas. Vas a poder ver y editar sus fichas, la libreta y los recordatorios, y vas a recibir los avisos del QR. Las personas del hogar van a ver tu nombre (nunca tu correo).",
   "unirmeBoton": "Unirme",
   "unirmeListo": "¡Listo! Ya ves sus mascotas en «Mis mascotas».",
   "unirmeNoSirve": "Esta invitación no existe, ya se usó o venció. Pedí una nueva.",
@@ -757,7 +757,7 @@
   "perfilAbrirAyuda": "Tu rol, tus mascotas y con quién compartís el cuidado.",
   "perfilRol": "Rol",
   "perfilRolDueno": "Dueño o dueña de mascotas",
-  "perfilRolAdmin": "Administración de SOS Mascotas",
+  "perfilRolAdmin": "Administración de Huellitas",
   "perfilPlan": "Plan",
   "perfilPlanGratis": "Gratis",
   "perfilPlanPro": "Pro",
@@ -816,7 +816,7 @@
   "@chatFamiliaDe": {"placeholders": {"nombre": {"type": "String"}}},
   "chatFamiliaSinNombre": "Familia de la mascota perdida",
   "chatQuienEncontro": "Quien la encontró",
-  "chatSinNombre": "Persona de SOS Mascotas",
+  "chatSinNombre": "Persona de Huellitas",
   "chatSobreReporte": "Sobre el reporte de {nombre}",
   "@chatSobreReporte": {"placeholders": {"nombre": {"type": "String"}}},
   "chatEscribir": "Escribí un mensaje",
@@ -1075,7 +1075,7 @@
       }
     }
   },
-  "catalogoConsultaTexto": "Hola, te escribo desde SOS Mascotas. Quería consultar por: {producto}",
+  "catalogoConsultaTexto": "Hola, te escribo desde Huellitas. Quería consultar por: {producto}",
   "@catalogoConsultaTexto": {
     "placeholders": {
       "producto": {
@@ -1190,7 +1190,7 @@
       }
     }
   },
-  "pedidoMensajeSaludo": "Hola, te hago un pedido desde SOS Mascotas (#{numero}):",
+  "pedidoMensajeSaludo": "Hola, te hago un pedido desde Huellitas (#{numero}):",
   "@pedidoMensajeSaludo": {
     "placeholders": {
       "numero": {
@@ -1419,7 +1419,7 @@
       }
     }
   },
-  "comunidadAdopcionDetalle": "Adopción responsable en SOS Mascotas.",
+  "comunidadAdopcionDetalle": "Adopción responsable en Huellitas.",
   "comunidadLugarNuevo": "Nuevo lugar verificado: {nombre}",
   "@comunidadLugarNuevo": {
     "placeholders": {
@@ -1709,7 +1709,7 @@
   "renacYaLaRegistre": "Ya la registré",
   "renacGuardado": "Listo, quedó como registrada.",
   "renacGuiaTitulo": "Cómo registrar a tu mascota",
-  "renacGuiaTexto": "## Qué es el RENAC\nEs el **Registro Nacional de Animales de Compañía** del MGAP (Ley 18.471). Los perros y gatos se identifican con un **microchip** y se registran a nombre de quien los tiene a cargo. Es obligatorio.\n## Cuándo\nA partir de los **90 días de vida**.\n## Cómo se hace\n- Andá a una veterinaria que sea **operador RENAC** (veterinarios acreditados por el INBA).\n- Te coloca el microchip, si no tiene, y carga los datos de tu mascota y los tuyos.\n- Te dan una **constancia** con esos datos. Guardala.\n- El costo lo fija cada veterinaria: preguntá antes.\n## Si se muda o cambia de dueño\nPedile a tu veterinaria que actualice los datos en el RENAC.\n## Si se pierde\nAdemás de publicar el SOS en la app, pedí que la marquen como **extraviada** en el RENAC.\n## Chip y chapita QR\nEl chip solo lo lee una veterinaria con un lector. La chapita QR la lee cualquier celular. **Se complementan.**\n> SOS Mascotas no es parte del RENAC ni del MGAP. Esta guía es orientativa: ante cualquier duda, consultá con tu veterinaria o con el INBA.",
+  "renacGuiaTexto": "## Qué es el RENAC\nEs el **Registro Nacional de Animales de Compañía** del MGAP (Ley 18.471). Los perros y gatos se identifican con un **microchip** y se registran a nombre de quien los tiene a cargo. Es obligatorio.\n## Cuándo\nA partir de los **90 días de vida**.\n## Cómo se hace\n- Andá a una veterinaria que sea **operador RENAC** (veterinarios acreditados por el INBA).\n- Te coloca el microchip, si no tiene, y carga los datos de tu mascota y los tuyos.\n- Te dan una **constancia** con esos datos. Guardala.\n- El costo lo fija cada veterinaria: preguntá antes.\n## Si se muda o cambia de dueño\nPedile a tu veterinaria que actualice los datos en el RENAC.\n## Si se pierde\nAdemás de publicar el SOS en la app, pedí que la marquen como **extraviada** en el RENAC.\n## Chip y chapita QR\nEl chip solo lo lee una veterinaria con un lector. La chapita QR la lee cualquier celular. **Se complementan.**\n> Huellitas no es parte del RENAC ni del MGAP. Esta guía es orientativa: ante cualquier duda, consultá con tu veterinaria o con el INBA.",
   "renacVerVeterinarias": "Ver veterinarias que colocan microchip",
   "renacVerificarAyuda": "Para consultar necesitás el número de chip y tu documento. Se abre la página oficial.",
   "buscarLugares": "Buscar lugares",
@@ -1718,7 +1718,7 @@
   "buscarAyuda": "Buscá por nombre o por rubro: veterinaria, peluquería, guardería, refugio…",
   "buscarIncluyeRubro": "Incluye {rubro} cerca",
   "@buscarIncluyeRubro": {"placeholders": {"rubro": {"type": "String"}}},
-  "buscarSinRubro": "Todavía no hay {rubro} cerca en SOS Mascotas.",
+  "buscarSinRubro": "Todavía no hay {rubro} cerca en Huellitas.",
   "@buscarSinRubro": {"placeholders": {"rubro": {"type": "String"}}},
   "buscarSinResultados": "No encontramos lugares con «{texto}».",
   "@buscarSinResultados": {"placeholders": {"texto": {"type": "String"}}},
@@ -2066,7 +2066,7 @@
   "historialPdf": "Historial en PDF",
   "historialTitulo": "Historial de salud de {nombre}",
   "@historialTitulo": {"placeholders": {"nombre": {"type": "String"}}},
-  "historialPie": "Hecho con SOS Mascotas el {fecha}",
+  "historialPie": "Hecho con Huellitas el {fecha}",
   "@historialPie": {"placeholders": {"fecha": {"type": "String"}}},
   "historialSi": "Sí",
   "historialNo": "No",
@@ -2264,12 +2264,12 @@
   "equipoInvitacionTitulo": "Invitación al equipo",
   "equipoInvitacionTexto": "Mandale este enlace a quien quieras sumar. Sirve una sola vez y vence en 7 días. También puede escribir el código en la app: {codigo}",
   "@equipoInvitacionTexto": {"placeholders": {"codigo": {"type": "String"}}},
-  "equipoMensajeInvitacion": "Te invito al equipo de {negocio} en SOS Mascotas: {enlace}",
+  "equipoMensajeInvitacion": "Te invito al equipo de {negocio} en Huellitas: {enlace}",
   "@equipoMensajeInvitacion": {"placeholders": {"negocio": {"type": "String"}, "enlace": {"type": "String"}}},
   "equipoTengoCodigo": "Tengo un código de equipo",
   "equipoCodigo": "Código o enlace",
   "unirmeEquipoTitulo": "Invitación a un equipo",
-  "unirmeEquipoTexto": "Te invitaron a ser parte del equipo de un negocio en SOS Mascotas. Vas a atender pedidos, turnos y el catálogo desde el modo comercio. El dueño y el equipo van a ver tu primer nombre (nunca tu correo).",
+  "unirmeEquipoTexto": "Te invitaron a ser parte del equipo de un negocio en Huellitas. Vas a atender pedidos, turnos y el catálogo desde el modo comercio. El dueño y el equipo van a ver tu primer nombre (nunca tu correo).",
   "unirmeEquipoBoton": "Unirme al equipo",
   "unirmeEquipoListo": "¡Listo! Ya sos parte del equipo.",
   "equipoErrorCodigo": "Este código no existe, ya se usó o venció. Pedile uno nuevo al dueño.",

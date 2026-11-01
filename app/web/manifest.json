@@ -1,7 +1,7 @@
 {
     "id": "/",
-    "name": "SOS Mascotas",
-    "short_name": "SOS Mascotas",
+    "name": "Huellitas",
+    "short_name": "Huellitas",
     "description": "Encontrá veterinarias, avisá si se pierde tu mascota y ayudá a las de tu barrio.",
     "lang": "es-UY",
     "dir": "ltr",
@@ -9,8 +9,8 @@
     "scope": "/",
     "display": "standalone",
     "orientation": "portrait-primary",
-    "background_color": "#EAF4FA",
-    "theme_color": "#0F5E7A",
+    "background_color": "#F2F8FC",
+    "theme_color": "#126FA3",
     "categories": ["lifestyle", "utilities"],
     "prefer_related_applications": false,
     "icons": [

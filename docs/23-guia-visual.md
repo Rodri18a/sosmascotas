@@ -124,7 +124,7 @@ Se distinguen también por luminosidad (daltonismo), son gotas con la punta en e
 ## 5. Íconos ✅
 
 - **Material de línea** (`_outlined`) en toda la app, del mismo trazo. Quedan rellenos solo los que muestran un estado (favorito, estrellas, pestaña elegida) y los de los pines.
-- Variante **redondeada** (`_rounded`), que acompaña mejor a Nunito y a la huella.
+- La variante de línea **redondeada** (Material Symbols Rounded) acompaña mejor a Nunito, pero Flutter no la trae: necesita otra librería y suma peso a la web. Por ahora quedan los de línea de Material (0.8.3c); se revisa con el set propio del diseñador.
 - Barra de abajo: **Noticias** (artículo) · **SOS** (pin) · **Mapa** (botón redondo en el medio, color de marca) · **Mascotas** (huella) · **Ayuda** (signo de pregunta).
 - Nada de emojis como íconos ni logos de otras marcas (el chat usa un globo genérico, no el de WhatsApp).
 - La lista completa de íconos que necesita la app está en el [brief del diseñador](20-brief-logo-iconos.md).

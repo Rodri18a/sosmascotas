@@ -41,6 +41,10 @@ void main() {
           }
         });
 
+        test('el ícono del botón del Mapa se ve (≥ 3:1)', () {
+          expect(contraste(c.sobreSimbolo, c.simbolo), greaterThanOrEqualTo(3));
+        });
+
         test('el texto contrasta sobre todas las superficies', () {
           final superficies = [
             esquema.surfaceContainerLowest,
@@ -91,11 +95,14 @@ void main() {
     );
   });
 
-  testWidgets('títulos con Sora y texto con Source Sans 3', (tester) async {
+  testWidgets('títulos con Nunito y texto con Nunito Sans (D126)', (
+    tester,
+  ) async {
     final tema = AppTheme.claro;
-    expect(tema.textTheme.headlineSmall?.fontFamily, 'Sora');
-    expect(tema.textTheme.titleLarge?.fontFamily, 'Sora');
-    expect(tema.textTheme.bodyLarge?.fontFamily, 'SourceSans3');
+    expect(tema.textTheme.headlineSmall?.fontFamily, 'Nunito');
+    expect(tema.textTheme.titleLarge?.fontFamily, 'Nunito');
+    expect(tema.textTheme.titleLarge?.fontWeight, FontWeight.w800);
+    expect(tema.textTheme.bodyLarge?.fontFamily, 'NunitoSans');
     expect(tema.extension<ColoresMarca>(), isNotNull);
   });
 }

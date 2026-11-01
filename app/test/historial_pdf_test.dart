@@ -58,8 +58,8 @@ void main() {
       File('assets/fuentes/$nombre.ttf').readAsBytesSync(),
     );
     final bytes = await historialSaludPdf(
-      normal: fuente('SourceSans3-Regular'),
-      negrita: fuente('SourceSans3-Bold'),
+      normal: fuente('NunitoSans-Regular'),
+      negrita: fuente('NunitoSans-Bold'),
       grupos: {
         TipoRegistroSalud.vaccine: [
           RegistroSalud(
@@ -80,7 +80,7 @@ void main() {
         grupo: (t) => 'Vacunas',
         fecha: (f) => '${f.day}/${f.month}/${f.year}',
         proxima: (f) => 'Próxima: $f',
-        pie: 'Hecho con SOS Mascotas',
+        pie: 'Hecho con Huellitas',
       ),
     );
     expect(latin1.decode(bytes.sublist(0, 5)), '%PDF-');

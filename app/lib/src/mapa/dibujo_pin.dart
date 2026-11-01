@@ -33,7 +33,7 @@ Future<Uint8List> dibujarPin(AspectoPin aspecto, {double escala = 1}) async {
       final texto? => TextSpan(
         text: texto,
         style: TextStyle(
-          fontFamily: 'Sora',
+          fontFamily: 'Nunito',
           fontWeight: FontWeight.w700,
           fontSize: aspecto.diametro * 0.42,
           color: aspecto.colorIcono,

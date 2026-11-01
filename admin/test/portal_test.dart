@@ -896,7 +896,7 @@ void main() {
     await _tocar(tester, find.text('Descargar para imprimir'));
     final (nombre, html) = descargas.single;
     expect(nombre, 'propuesta-peluqueria-2026-10-26.html');
-    expect(html, contains('SOS Mascotas para Peluquería'));
+    expect(html, contains('Huellitas para Peluquería'));
     expect(html, contains('85</b>búsquedas'));
     expect(repo.propuestasRegistradas.single, ('grooming', null));
   });

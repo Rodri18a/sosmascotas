@@ -65,7 +65,7 @@ class _MenuPrincipalState extends ConsumerState<MenuPrincipal> {
               padding: EdgeInsets.fromLTRB(16, 20, 16, 4),
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: LogoSosMascotas(horizontal: true, alto: 22),
+                child: LogoHuellitas(horizontal: true, alto: 22),
               ),
             ),
             _Cabecera(onIr: _ir),

@@ -18,7 +18,7 @@ function mostrarEstadoSos(titulo, texto) {
 function mostrarReporte(r) {
   const perdida = r.kind === 'lost';
   const nombre = r.name || r.species;
-  document.title = `${perdida ? 'Se perdió' : 'Encontrada'}: ${nombre} · SOS Mascotas`;
+  document.title = `${perdida ? 'Se perdió' : 'Encontrada'}: ${nombre} · Huellitas`;
 
   const cartel = document.getElementById('cartel');
   if (r.status === 'active') {

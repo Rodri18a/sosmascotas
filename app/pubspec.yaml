@@ -1,5 +1,5 @@
 name: sosmascota
-description: "SOS Mascota: app para dueños de mascotas y comercios del rubro."
+description: "Huellitas: app para dueños de mascotas y comercios del rubro."
 publish_to: none
 version: 0.1.0+1
 
@@ -47,16 +47,18 @@ flutter:
     - assets/marca/
   # Tipografías de la identidad Cielo (D62), licencia OFL (ver assets/fuentes/).
   fonts:
-    - family: Sora
+    - family: Nunito
       fonts:
-        - asset: assets/fuentes/Sora-SemiBold.ttf
-          weight: 600
-        - asset: assets/fuentes/Sora-Bold.ttf
+        - asset: assets/fuentes/Nunito-Bold.ttf
           weight: 700
-    - family: SourceSans3
+        - asset: assets/fuentes/Nunito-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fuentes/Nunito-Black.ttf
+          weight: 900
+    - family: NunitoSans
       fonts:
-        - asset: assets/fuentes/SourceSans3-Regular.ttf
-        - asset: assets/fuentes/SourceSans3-SemiBold.ttf
+        - asset: assets/fuentes/NunitoSans-Regular.ttf
+        - asset: assets/fuentes/NunitoSans-SemiBold.ttf
           weight: 600
-        - asset: assets/fuentes/SourceSans3-Bold.ttf
+        - asset: assets/fuentes/NunitoSans-Bold.ttf
           weight: 700

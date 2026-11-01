@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 /// Colores de un modo (claro u oscuro) de una paleta de la marca.
 ///
 /// Cada par texto/fondo tiene contraste ≥ 4,5:1 (lo verifica `tema_test.dart`).
-/// Detalle y valores en `docs/14-brief-identidad-visual.md` §10.
+/// Detalle y valores en `docs/23-guia-visual.md` (D126); temas Pro en `docs/14-brief-identidad-visual.md` §10.
 @immutable
 class ColoresModo {
   const ColoresModo({
@@ -20,8 +20,10 @@ class ColoresModo {
     required this.urgencia,
     Color? barra,
     Color? sobreBarra,
+    Color? simbolo,
   }) : _barra = barra,
-       _sobreBarra = sobreBarra;
+       _sobreBarra = sobreBarra,
+       _simbolo = simbolo;
 
   final Color fondo;
   final Color texto;
@@ -46,11 +48,21 @@ class ColoresModo {
 
   final Color? _barra;
   final Color? _sobreBarra;
+  final Color? _simbolo;
 
   /// Fondo de la barra de arriba y de la de abajo: el primario, salvo en
   /// Blanco y negro, que las tiene blancas.
   Color get barra => _barra ?? primario;
   Color get sobreBarra => _sobreBarra ?? sobrePrimario;
+
+  /// Color del símbolo de la marca (el globo): botón redondo del Mapa y logo.
+  /// Lleva íconos blancos encima; en los temas Pro es el primario.
+  Color get simbolo => _simbolo ?? primario;
+
+  /// Íconos sobre [simbolo]: blanco en Huellitas (3:1 o más, como pide un
+  /// ícono); en los temas Pro, el de sobre el primario.
+  Color get sobreSimbolo =>
+      _simbolo == null ? sobrePrimario : const Color(0xFFFFFFFF);
 }
 
 /// Archivo de una tipografía que se descarga al elegir un tema Pro
@@ -75,6 +87,7 @@ class Paleta {
     required this.oscuro,
     required this.fuenteTitulos,
     required this.fuenteTexto,
+    this.pesoTitulos = FontWeight.w600,
     this.fuentesADescargar = const [],
   });
 
@@ -85,51 +98,57 @@ class Paleta {
   final String fuenteTitulos;
   final String fuenteTexto;
 
-  /// Vacía si las tipografías ya vienen con la app (Cielo).
+  /// Peso de los títulos: las tipografías de los temas Pro solo traen SemiBold.
+  final FontWeight pesoTitulos;
+
+  /// Vacía si las tipografías ya vienen con la app (Huellitas).
   final List<ArchivoFuente> fuentesADescargar;
 
-  /// Cielo primero; el orden es el del selector de Ajustes.
+  /// La de la marca primero; el orden es el del selector de Ajustes.
   static const todas = [cielo, faro, vecinos, pop, blancoNegro];
 
-  /// La paleta con ese id, o Cielo si no existe (por ejemplo, un id viejo).
+  /// La paleta con ese id, o la de la marca si no existe (por ejemplo, un id viejo).
   static Paleta porId(String? id) =>
       todas.firstWhere((p) => p.id == id, orElse: () => cielo);
 
   ColoresModo modo(Brightness brillo) =>
       brillo == Brightness.dark ? oscuro : claro;
 
-  /// Identidad de la marca: C · Cielo (D62), con los colores de la guía de
-  /// marca (D122): celeste de acento y fondo claro celeste.
+  /// Identidad de la marca: Huellitas (D126, `docs/23-guia-visual.md`).
+  /// Conserva el id `cielo` (D62) porque está guardado en los dispositivos.
   static const cielo = Paleta(
     id: 'cielo',
     claro: ColoresModo(
-      fondo: Color(0xFFEAF4FA), // fondo claro
-      texto: Color(0xFF102A35), // tinta
-      textoSuave: Color(0xFF465D68),
-      primario: Color(0xFF0F5E7A), // azul petróleo
+      fondo: Color(0xFFF2F8FC), // celeste muy claro
+      texto: Color(0xFF13294B), // azul noche
+      textoSuave: Color(0xFF4A5B72),
+      primario: Color(0xFF126FA3), // celeste oscuro: barras y botones
       sobrePrimario: Color(0xFFFFFFFF),
-      acento: Color(0xFF7CC4DE), // celeste del logo
-      sobreAcento: Color(0xFF102A35),
+      acento: Color(0xFFFF6150), // coral: SOS y destacados
+      sobreAcento: Color(0xFF13294B),
       error: Color(0xFFB3261E),
       sobreError: Color(0xFFFFFFFF),
       exito: Color(0xFF17705F),
       urgencia: Color(0xFF9A4A00),
+      simbolo: Color(0xFF1E9BD7), // celeste profundo del globo
     ),
     oscuro: ColoresModo(
-      fondo: Color(0xFF0E1E26),
-      texto: Color(0xFFE6F1F6),
-      textoSuave: Color(0xFFA9BCC4),
-      primario: Color(0xFF7CC4DE),
-      sobrePrimario: Color(0xFF0E1E26),
-      acento: Color(0xFFA6DAEC),
-      sobreAcento: Color(0xFF0E1E26),
+      fondo: Color(0xFF0E1A26),
+      texto: Color(0xFFE8F1F8),
+      textoSuave: Color(0xFFA9BCCB),
+      primario: Color(0xFF5CC8F0),
+      sobrePrimario: Color(0xFF0E1A26),
+      acento: Color(0xFFFF8A7D),
+      sobreAcento: Color(0xFF0E1A26),
       error: Color(0xFFFF8A80),
-      sobreError: Color(0xFF0E1E26),
+      sobreError: Color(0xFF0E1A26),
       exito: Color(0xFF5ED3BF),
       urgencia: Color(0xFFFFB238),
+      simbolo: Color(0xFF1E9BD7),
     ),
-    fuenteTitulos: 'Sora',
-    fuenteTexto: 'SourceSans3',
+    fuenteTitulos: 'Nunito',
+    fuenteTexto: 'NunitoSans',
+    pesoTitulos: FontWeight.w800,
   );
 
   /// Tema Pro A · Faro: señal de rescate (naranja y azul noche).
@@ -201,11 +220,7 @@ class Paleta {
     ),
     fuenteTitulos: 'Fraunces',
     fuenteTexto: 'NunitoSans',
-    fuentesADescargar: [
-      ArchivoFuente('Fraunces', 'Fraunces-SemiBold.ttf'),
-      ArchivoFuente('NunitoSans', 'NunitoSans-Regular.ttf'),
-      ArchivoFuente('NunitoSans', 'NunitoSans-Bold.ttf'),
-    ],
+    fuentesADescargar: [ArchivoFuente('Fraunces', 'Fraunces-SemiBold.ttf')],
   );
 
   /// Tema Pro D · Pop: sticker y redes (violeta y amarillo).
@@ -281,8 +296,9 @@ class Paleta {
       barra: Color(0xFF000000),
       sobreBarra: Color(0xFFF2F2F2),
     ),
-    fuenteTitulos: 'Sora',
-    fuenteTexto: 'SourceSans3',
+    fuenteTitulos: 'Nunito',
+    fuenteTexto: 'NunitoSans',
+    pesoTitulos: FontWeight.w800,
   );
 }
 
@@ -297,6 +313,8 @@ class ColoresMarca extends ThemeExtension<ColoresMarca> {
     required this.urgencia,
     required this.barra,
     required this.sobreBarra,
+    required this.simbolo,
+    required this.sobreSimbolo,
   });
 
   factory ColoresMarca.de(ColoresModo c) => ColoresMarca(
@@ -306,6 +324,8 @@ class ColoresMarca extends ThemeExtension<ColoresMarca> {
     urgencia: c.urgencia,
     barra: c.barra,
     sobreBarra: c.sobreBarra,
+    simbolo: c.simbolo,
+    sobreSimbolo: c.sobreSimbolo,
   );
 
   final Color acento;
@@ -317,6 +337,10 @@ class ColoresMarca extends ThemeExtension<ColoresMarca> {
   final Color barra;
   final Color sobreBarra;
 
+  /// Botón redondo del Mapa y logo.
+  final Color simbolo;
+  final Color sobreSimbolo;
+
   @override
   ColoresMarca copyWith({
     Color? acento,
@@ -325,6 +349,8 @@ class ColoresMarca extends ThemeExtension<ColoresMarca> {
     Color? urgencia,
     Color? barra,
     Color? sobreBarra,
+    Color? simbolo,
+    Color? sobreSimbolo,
   }) => ColoresMarca(
     acento: acento ?? this.acento,
     sobreAcento: sobreAcento ?? this.sobreAcento,
@@ -332,6 +358,8 @@ class ColoresMarca extends ThemeExtension<ColoresMarca> {
     urgencia: urgencia ?? this.urgencia,
     barra: barra ?? this.barra,
     sobreBarra: sobreBarra ?? this.sobreBarra,
+    simbolo: simbolo ?? this.simbolo,
+    sobreSimbolo: sobreSimbolo ?? this.sobreSimbolo,
   );
 
   @override
@@ -344,6 +372,8 @@ class ColoresMarca extends ThemeExtension<ColoresMarca> {
       urgencia: Color.lerp(urgencia, other.urgencia, t)!,
       barra: Color.lerp(barra, other.barra, t)!,
       sobreBarra: Color.lerp(sobreBarra, other.sobreBarra, t)!,
+      simbolo: Color.lerp(simbolo, other.simbolo, t)!,
+      sobreSimbolo: Color.lerp(sobreSimbolo, other.sobreSimbolo, t)!,
     );
   }
 }
