@@ -165,3 +165,12 @@ internacional.
 2. Paleta, tema e isotipo en `packages/core/lib/src/tema/` (app y portal juntos, D125); logo en `app/lib/src/widgets/logo.dart`; íconos con `flutter test tool/iconos_marca_test.dart`.
 3. Nombre visible en la app, la web pública, los correos de ingreso y los textos legales (la misma lista de la D122).
 4. Decidir dominio y paquete de Android/iPhone **antes** de 0.8.6 (dominio) y 0.8.9 (Google Play).
+
+## 13. Elección del dueño (01/11/2026, rondas 2 y 3)
+
+- **Ícono:** el **globo de conversación con una huella toda blanca** (de la propuesta 09), con la forma de un solo color. Se descartó el pin con huella: choca con los pines de perdidos y encontrados del mapa (D122) y es el logo actual de SOS Mascotas.
+- **Colores:** **celeste profundo `#1E9BD7`** para la app de las personas (la huella blanca queda a 3,1:1; el celeste vivo `#5CC8F0` quedaba a 1,9:1 y se lavaba al sol) y **azul `#1F4FD1`** para el modo comercio. El verde queda para alguna campaña: se confunde con «encontrado» y «abierto ahora».
+- **Frase principal (propuesta):** «La comunidad que deja huella». Otras: «Cada acción deja huella», «Dejá tu huella», «Juntos dejamos huella», «Lo que hacés por ellos deja huella», «Cada huella cuenta».
+- **Dentro de la app (ideas):** «Tu aviso dejó huella: lo vieron 48 vecinos» (después de un SOS), «Compartir también deja huella», «Tu reseña deja huella para otros dueños», «Adoptar deja la huella más grande», «Todavía no dejaste huellas acá» (estado vacío) y «Tus huellas» como contador de ayudas en el perfil (ver [17](17-propuestas-perfil-gamificacion.md)).
+- **A cuidar en el arte final:** que el globo tenga una forma propia (por ejemplo, la cola en forma de dedo o de oreja) para no parecerse al ícono de las apps de mensajería.
+- Todavía **no está aplicado**: falta anotar la decisión y decidir si se cambia el nombre de la app (pasos D a F).
