@@ -7,6 +7,7 @@
   - [Usuarios y roles](02-usuarios-roles.md)
   - [Funcionalidades de la app](03-funcionalidades-app.md)
   - [Reglas de negocio](06-reglas-negocio.md)
+  - [Planes y precios (cómo explicarlo)](22-planes-y-precios.md)
   - [Habilitación gradual de funcionalidades](15-funcionalidades-graduales.md)
   - [Brief de identidad visual](14-brief-identidad-visual.md)
   - [Brief de logo e íconos (diseñador)](20-brief-logo-iconos.md)
