@@ -167,6 +167,16 @@ ol.next { margin: 0; padding-left: 20px; display: grid; gap: 6px; max-width: 72c
 .phones figcaption { font-size: 12.5px; color: var(--muted); text-align: center; }
 .r2reco { background: var(--accent-soft); border-radius: 18px; padding: clamp(16px, 3vw, 26px); display: grid; gap: 10px; }
 .r2reco ul { margin: 0; padding-left: 20px; display: grid; gap: 4px; max-width: 72ch; }
+
+/* Ronda 3 */
+.r3cols { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+@media (min-width: 900px) { .r3cols { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.r3 .tbl { display: grid; grid-template-columns: 92px repeat(4, minmax(0, 1fr)); gap: 10px 8px; align-items: center; justify-items: center; }
+.r3 .tbl .h { font-size: 11.5px; font-weight: 800; color: var(--muted); text-align: center; line-height: 1.25; }
+.r3 .tbl .h code { font-weight: 400; font-size: 11px; }
+.r3 .tbl .rl { justify-self: start; font-size: 12px; color: var(--muted); }
+.r3 .ratio { font-size: 11px; color: var(--muted); text-align: center; font-variant-numeric: tabular-nums; }
+@media (max-width: 480px) { .r3 .tbl { grid-template-columns: 64px repeat(4, minmax(0, 1fr)); } .r3 .tbl .ic { transform: scale(.8); } }
 </style>
 
 <!-- Símbolos (viewBox 100×100). Colores por variables: --a … --f y --k (calado, el color del fondo). -->
@@ -289,6 +299,18 @@ ol.next { margin: 0; padding-left: 20px; display: grid; gap: 6px; max-width: 72c
       <circle cx="57" cy="30" r="5.5" style="fill:var(--k)"/>
       <circle cx="66.5" cy="40" r="5" style="fill:var(--k)"/>
     </symbol>
+    <symbol id="sGlobo" viewBox="0 0 100 100">
+      <path d="M30 10H70A20 20 0 0 1 90 30V60A20 20 0 0 1 70 80H42L24 93L27 79A20 20 0 0 1 10 60V30A20 20 0 0 1 30 10Z" style="fill:var(--a)"/>
+      <path d="M50 44c8 0 15 7 16 13 1 6-4 9-9 8-3-1-4-2-7-2s-4 1-7 2c-5 1-10-2-9-8 1-6 8-13 16-13z" style="fill:var(--k)"/>
+      <circle cx="33.5" cy="40" r="5" style="fill:var(--k)"/><circle cx="43" cy="30" r="5.5" style="fill:var(--k)"/>
+      <circle cx="57" cy="30" r="5.5" style="fill:var(--k)"/><circle cx="66.5" cy="40" r="5" style="fill:var(--k)"/>
+    </symbol>
+    <symbol id="sPin" viewBox="0 0 100 100">
+      <path d="M50 5C29 5 14 20 14 40c0 25 28 46 34 52a3 3 0 0 0 4 0c6-6 34-27 34-52C86 20 71 5 50 5Z" style="fill:var(--a)"/>
+      <path d="M50 40c7.5 0 13.5 6 14.5 11.5 1 5-3 8-8 7-3-.6-4-1.8-6.5-1.8s-3.5 1.2-6.5 1.8c-5 1-9-2-8-7C36.5 46 42.5 40 50 40z" style="fill:var(--k)"/>
+      <circle cx="34.5" cy="35" r="4.6" style="fill:var(--k)"/><circle cx="43" cy="25.5" r="5" style="fill:var(--k)"/>
+      <circle cx="57" cy="25.5" r="5" style="fill:var(--k)"/><circle cx="65.5" cy="35" r="4.6" style="fill:var(--k)"/>
+    </symbol>
   </defs>
 </svg>
 
@@ -306,6 +328,17 @@ ol.next { margin: 0; padding-left: 20px; display: grid; gap: 6px; max-width: 72c
       <i style="background:var(--az)"></i><i style="background:var(--tu)"></i><i style="background:var(--am)"></i><i style="background:var(--na)"></i><i style="background:var(--co)"></i><i style="background:var(--ro)"></i><i style="background:var(--ve)"></i>
     </div>
   </header>
+
+  <section id="ronda3">
+    <div>
+      <span class="eyebrow">Ronda 3 · 01/11/2026 · pedido del dueño</span>
+      <h2>Huella blanca sobre un solo color: globo o pin</h2>
+    </div>
+    <p class="lead">La huella va siempre toda blanca y la forma, de un solo color: celeste para la app de las personas, azul para el modo comercio, y verde para comparar. Cada forma se muestra sobre un ícono de fondo blanco y sobre uno azul noche.</p>
+    <div class="r3cols" id="r3cols"></div>
+    <div class="phones" id="r3phones"></div>
+    <div class="r2reco" id="r3reco"></div>
+  </section>
 
   <section id="ronda2">
     <div>
@@ -613,4 +646,61 @@ document.getElementById('r2reco').innerHTML = `
     <li>Los cuatro colores de los dedos pueden pasar a ser los colores de las secciones de la app (por ejemplo Noticias, Mapa, Mascotas y Ayuda), sin chocar con los pines del mapa.</li>
   </ul>
   <p style="color:var(--muted)">A cuidar: el globo de conversación se parece al de las apps de mensajería. El arte final tiene que tener una forma de globo propia (por ejemplo, con la cola en forma de dedo o de oreja).</p>`;
+</script>
+
+<script>
+// Ronda 3: huella siempre blanca (--k) y la forma de un solo color (--a)
+const R3C = [
+  { n:'Celeste vivo', rol:'Personas', hex:'#5CC8F0', cr:'1,9:1' },
+  { n:'Celeste profundo', rol:'Personas', hex:'#1E9BD7', cr:'3,1:1' },
+  { n:'Verde', rol:'Para comparar', hex:'#1FA463', cr:'3,2:1' },
+  { n:'Azul', rol:'Comercio', hex:C.az, cr:'6,8:1' },
+];
+const FORMAS = [
+  { sym:'sGlobo', nombre:'Globo con huella', idea:'La forma de la opción 09: conversación, comunidad y novedades.' },
+  { sym:'sPin', nombre:'Pin con huella', idea:'Un pin de ubicación con la huella adentro: el mapa como centro.' },
+];
+const r3 = (f, hex, bg) => ({ sym:f.sym, font:'f-nunito', wm:'side', text:'Huellitas', v:{a:hex, k:C.bl}, ic:{bg, borde: bg === C.bl, v:{a:hex, k:C.bl}}, col:{bg:hex} });
+
+document.getElementById('r3cols').innerHTML = FORMAS.map(f => `
+  <article class="card r3">
+    <div class="meta"><span class="dir">${f.sym === 'sGlobo' ? 'Opción 1' : 'Opción 2'}</span></div>
+    <h3>${f.nombre}</h3>
+    <p>${f.idea}</p>
+    <div class="tbl">
+      <span></span>${R3C.map(c => `<span class="h">${c.n}<br><code>${c.hex}</code></span>`).join('')}
+      <span class="rl">Fondo blanco</span>${R3C.map(c => appIcon(r3(f, c.hex, C.bl), 64)).join('')}
+      <span class="rl">Fondo azul noche</span>${R3C.map(c => appIcon(r3(f, c.hex, C.no), 64)).join('')}
+      <span class="rl">Huella blanca</span>${R3C.map(c => `<span class="ratio">${c.cr}</span>`).join('')}
+      <span class="rl">Para</span>${R3C.map(c => `<span class="ratio">${c.rol}</span>`).join('')}
+    </div>
+    <div class="icons" style="display:flex;gap:14px;align-items:end;flex-wrap:wrap">
+      ${[56, 32, 16].map(z => `<figure style="margin:0;display:grid;gap:4px;justify-items:center">${appIcon(r3(f, '#1E9BD7', C.bl), z)}<figcaption class="lbl">${z}</figcaption></figure>`).join('')}
+      ${[56, 32, 16].map(z => `<figure style="margin:0;display:grid;gap:4px;justify-items:center">${appIcon(r3(f, C.az, C.no), z)}<figcaption class="lbl">${z}</figcaption></figure>`).join('')}
+    </div>
+    <div class="wms" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">
+      <div class="stage" style="padding:16px 8px;font-size:24px;border:1px solid var(--line)">${wordmark(r3(f, '#1E9BD7', C.bl), vars({a:'#1E9BD7', k:C.bl}), C.no)}</div>
+      <div class="stage" style="padding:16px 8px;font-size:24px;background:${C.az}">${wordmark(r3(f, C.bl, C.az), vars({a:C.bl, k:C.az}), C.bl)}</div>
+      <div class="stage" style="padding:16px 8px;font-size:24px;border:1px solid var(--line)">${wordmark(r3(f, '#111', C.bl), vars({a:'#111', k:C.bl}), '#111')}</div>
+      <div class="stage" style="padding:12px 8px;border:1px solid var(--line)"><div class="chapita" style="width:84px">${sym(r3(f, '#4E5866', C.bl), vars({a:'#4E5866', k:'#B9C0CA'}))}</div></div>
+    </div>
+    <span class="lbl" style="font-size:12px;color:var(--muted)">Logotipo: personas (celeste profundo) · comercio (sobre azul) · a una tinta · chapita grabada</span>
+  </article>`).join('');
+
+document.getElementById('r3phones').innerHTML = [
+  [FORMAS[0], '#1E9BD7', C.bl, 'Globo celeste · personas'],
+  [FORMAS[0], C.az, C.bl, 'Globo azul · comercio'],
+  [FORMAS[1], '#1E9BD7', C.bl, 'Pin celeste · personas'],
+  [FORMAS[1], '#1FA463', C.bl, 'Pin verde'],
+].map(([f, hex, bg, cap]) => { const q = r3(f, hex, bg); q.col.bg = hex; return `<figure>${phone(q)}<figcaption>${cap}</figcaption></figure>`; }).join('');
+
+document.getElementById('r3reco').innerHTML = `
+  <h3>Me quedaría con el globo</h3>
+  <ul>
+    <li><b>El pin choca con el mapa.</b> Los pines de perdidos y encontrados ya son gotas con una huella (D122): con el pin de logo, el ícono de la app y un perro perdido en el mapa serían el mismo dibujo.</li>
+    <li><b>El pin es el logo actual de SOS Mascotas</b> y uno de los más usados en apps de mascotas. Para un nombre nuevo, el globo se distingue más.</li>
+    <li><b>El globo dice lo que suma HUELLITAS</b> (muro, comunidad, consultas). El mapa ya está en la barra de abajo.</li>
+    <li><b>Celeste profundo <code>#1E9BD7</code> para las personas y azul <code>#1F4FD1</code> para el comercio:</b> los dos dejan leer la huella blanca (3:1 o más). El celeste vivo <code>#5CC8F0</code> es más alegre, pero la huella queda a 1,9:1 y se lava al sol y a 16 px.</li>
+    <li>El verde funciona (3,2:1), pero se confunde con los pines de «encontrado» y con «abierto ahora». Lo dejaría para un tema o una campaña.</li>
+  </ul>`;
 </script>
