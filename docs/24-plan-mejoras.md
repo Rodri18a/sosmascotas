@@ -20,7 +20,7 @@
 
 ## Puntos a decidir antes de arrancar
 
-1. **El botón de ayuda arriba a la izquierda.** Ese lugar ya lo ocupan la flecha para volver y el menú ☰. Propongo ponerlo **arriba a la derecha**, siempre con el mismo ícono (signo de pregunta en un círculo).
+1. ✅ **El botón de ayuda va arriba a la derecha** (decidido por el dueño el 01/11/2026), en el lugar del ícono de Ajustes de las pestañas, siempre con el mismo ícono (signo de pregunta en un círculo). El menú ☰ queda donde está, arriba a la izquierda, y Ajustes se sigue abriendo desde ahí.
 2. **La pestaña «Ayuda» de la barra de abajo** hoy es para urgencias (911, guardias, refugios, denuncias). Con un botón de ayuda en cada pantalla, dos cosas llamadas «Ayuda» confunden. Propongo renombrar la pestaña a **«Urgencias»**.
 3. **La pestaña «Noticias» pasa a ser «Inicio»** y la app abre ahí. El Mapa sigue en el medio, a un toque.
 4. **Puntos por mirar publicidad: no.** Si la gente toca un aviso para sumar puntos, las vistas y los toques dejan de decir quién está interesado de verdad, y eso es lo que paga el comercio. Además, las redes de anuncios (por ejemplo AdMob, si algún día se usa) prohíben premiar los toques. Se mide qué se vio y qué se tocó (sin saber quién), y los puntos quedan para acciones de cuidado y de comunidad.
@@ -37,7 +37,7 @@ Cada paso es chico y se prueba antes de pasar al siguiente.
 |---|---|---|
 | 1.1 | **El muro como inicio:** la app abre en «Inicio» (hoy Noticias); la pestaña se renombra; el muro mezcla noticias, eventos de la zona, jornadas de adopción y campañas, con filtros simples arriba (Todo · Eventos · Adopción · Promos) | Al abrir la app se ve el muro con contenido |
 | 1.2 | **Menú ☰ ordenado:** todas las funciones en grupos con ícono y nombre corto (Mis mascotas · Mapa y lugares · Comunidad · Adopción · Eventos · Turnos y pedidos · Mi negocio · Ajustes) | Cualquier función está a 2 toques como máximo |
-| 1.3 | **Botón de ayuda** en la barra de arriba de cada pantalla, con una hoja corta: para qué sirve, qué significa cada opción, qué pasa al confirmar. Textos en `app_es.arb` | Mismo botón, mismo lugar, en todas las pantallas principales |
+| 1.3 | **Botón de ayuda** arriba a la derecha de cada pantalla (en las pestañas, en lugar del ícono de Ajustes), con una hoja corta: para qué sirve, qué significa cada opción, qué pasa al confirmar. Textos en `app_es.arb` | Mismo botón, mismo lugar, en todas las pantallas principales |
 | 1.4 | **Textos más cortos:** las explicaciones largas fijas pasan a la ayuda; en pantalla queda una línea | Revisión pantalla por pantalla |
 | 1.5 | **Pestaña Urgencias** (hoy «Ayuda») y revisión de caminos largos | Prueba con 3 personas: llegar a 5 funciones sin ayuda |
 
