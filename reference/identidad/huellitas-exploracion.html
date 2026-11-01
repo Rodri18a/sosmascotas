@@ -118,12 +118,13 @@ td.tot { font-family: var(--font-display); font-size: 17px; font-weight: 600; }
 @media (max-width: 760px) { .row2 { grid-template-columns: minmax(0, 1fr); } }
 
 .phone { width: 100%; max-width: 250px; aspect-ratio: 9 / 18.5; border-radius: 34px; padding: 10px; background: #0E1524; justify-self: center; }
-.screen { width: 100%; height: 100%; border-radius: 26px; overflow: hidden; position: relative; padding: 38px 16px 16px; display: grid; grid-template-columns: repeat(4, 1fr); align-content: start; gap: 16px 8px; }
+.screen { width: 100%; height: 100%; border-radius: 26px; overflow: hidden; position: relative; padding: 38px 16px 16px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); align-content: start; gap: 16px 8px; }
 .screen .clock { position: absolute; top: 10px; left: 0; right: 0; text-align: center; color: #fff; font: 600 12px var(--font-body); }
 .app { display: grid; gap: 4px; justify-items: center; }
 .app .sq { width: 100%; aspect-ratio: 1; border-radius: 24%; display: grid; place-items: center; }
 .app .sq svg { width: 62%; height: 62%; }
-.app span { color: #fff; font: 500 9.5px var(--font-body); text-shadow: 0 1px 2px rgba(0,0,0,.4); white-space: nowrap; }
+.app { min-width: 0; }
+.app span { color: #fff; font: 500 9.5px var(--font-body); text-shadow: 0 1px 2px rgba(0,0,0,.4); white-space: nowrap; max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
 .dock { position: absolute; left: 10px; right: 10px; bottom: 10px; padding: 9px; border-radius: 22px; background: rgba(255,255,255,.22); display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
 
 .pal { display: grid; gap: 8px; }
@@ -154,6 +155,18 @@ ol.next { margin: 0; padding-left: 20px; display: grid; gap: 6px; max-width: 72c
   .card { transition: transform .15s ease; }
   .card:hover { transform: translateY(-2px); }
 }
+
+/* Ronda 2 */
+.r2 .icons { display: flex; align-items: end; gap: 14px; flex-wrap: wrap; }
+.r2 .icons figure { margin: 0; display: grid; gap: 4px; justify-items: center; }
+.r2 .wms { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.r2 .wms .stage { padding: 16px 8px; font-size: 24px; border: 1px solid var(--line); overflow: hidden; }
+.phones { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 18px; justify-items: center; }
+.phones .phone { max-width: 210px; }
+.phones figure { margin: 0; display: grid; gap: 8px; justify-items: center; width: 100%; }
+.phones figcaption { font-size: 12.5px; color: var(--muted); text-align: center; }
+.r2reco { background: var(--accent-soft); border-radius: 18px; padding: clamp(16px, 3vw, 26px); display: grid; gap: 10px; }
+.r2reco ul { margin: 0; padding-left: 20px; display: grid; gap: 4px; max-width: 72ch; }
 </style>
 
 <!-- Símbolos (viewBox 100×100). Colores por variables: --a … --f y --k (calado, el color del fondo). -->
@@ -256,6 +269,26 @@ ol.next { margin: 0; padding-left: 20px; display: grid; gap: 6px; max-width: 72c
     <symbol id="g6" viewBox="0 0 24 24"><path d="M5 17V9l7-4 7 4v8l-7 4z" fill="none" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/></symbol>
     <symbol id="g7" viewBox="0 0 24 24"><path d="M5 5h14v10H9l-4 4z" fill="none" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/></symbol>
     <symbol id="g8" viewBox="0 0 24 24"><path d="M6 19c0-4 3-6 6-6s6 2 6 6M12 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" fill="none" stroke="#fff" stroke-width="2.2"/></symbol>
+    <symbol id="s9m" viewBox="0 0 100 100">
+      <path d="M30 10H70A20 20 0 0 1 90 30V60A20 20 0 0 1 70 80H42L24 93L27 79A20 20 0 0 1 10 60V30A20 20 0 0 1 30 10Z" style="fill:var(--a)"/>
+      <path d="M50 44c8 0 15 7 16 13 1 6-4 9-9 8-3-1-4-2-7-2s-4 1-7 2c-5 1-10-2-9-8 1-6 8-13 16-13z" style="fill:var(--p)"/>
+      <circle cx="33.5" cy="40" r="5" style="fill:var(--t1)"/>
+      <circle cx="43" cy="30" r="5.5" style="fill:var(--t2)"/>
+      <circle cx="57" cy="30" r="5.5" style="fill:var(--t3)"/>
+      <circle cx="66.5" cy="40" r="5" style="fill:var(--t4)"/>
+    </symbol>
+    <clipPath id="clipBurbuja"><path d="M30 10H70A20 20 0 0 1 90 30V60A20 20 0 0 1 70 80H42L24 93L27 79A20 20 0 0 1 10 60V30A20 20 0 0 1 30 10Z"/></clipPath>
+    <symbol id="s9s" viewBox="0 0 100 100">
+      <g clip-path="url(#clipBurbuja)">
+        <rect x="0" y="0" width="31" height="100" style="fill:var(--t1)"/><rect x="31" y="0" width="23" height="100" style="fill:var(--t2)"/>
+        <rect x="54" y="0" width="23" height="100" style="fill:var(--t3)"/><rect x="77" y="0" width="23" height="100" style="fill:var(--t4)"/>
+      </g>
+      <path d="M50 44c8 0 15 7 16 13 1 6-4 9-9 8-3-1-4-2-7-2s-4 1-7 2c-5 1-10-2-9-8 1-6 8-13 16-13z" style="fill:var(--k)"/>
+      <circle cx="33.5" cy="40" r="5" style="fill:var(--k)"/>
+      <circle cx="43" cy="30" r="5.5" style="fill:var(--k)"/>
+      <circle cx="57" cy="30" r="5.5" style="fill:var(--k)"/>
+      <circle cx="66.5" cy="40" r="5" style="fill:var(--k)"/>
+    </symbol>
   </defs>
 </svg>
 
@@ -273,6 +306,17 @@ ol.next { margin: 0; padding-left: 20px; display: grid; gap: 6px; max-width: 72c
       <i style="background:var(--az)"></i><i style="background:var(--tu)"></i><i style="background:var(--am)"></i><i style="background:var(--na)"></i><i style="background:var(--co)"></i><i style="background:var(--ro)"></i><i style="background:var(--ve)"></i>
     </div>
   </header>
+
+  <section id="ronda2">
+    <div>
+      <span class="eyebrow">Ronda 2 · 01/11/2026 · pedido del dueño</span>
+      <h2>La Burbuja (09) con los colores de la Flor (10)</h2>
+    </div>
+    <p class="lead">Cuatro maneras de juntar las dos ideas: el globo de conversación con la huella, y un color por animal. Cada una con el ícono de la app a cuatro tamaños, el logotipo sobre blanco, sobre color y a una tinta, y en la pantalla del celular.</p>
+    <div class="grid" id="r2grid"></div>
+    <div class="phones" id="r2phones"></div>
+    <div class="r2reco" id="r2reco"></div>
+  </section>
 
   <section>
     <div>
@@ -516,4 +560,57 @@ document.getElementById('reco').innerHTML = `
     <li>Tipografía: Fredoka para el logotipo y los títulos; para el texto de la app, una menos redondeada (Nunito Sans o Figtree).</li>
     <li>Frase: «Cada huella cuenta».</li>
   </ul>`;
+</script>
+
+<script>
+// Ronda 2: Burbuja + paleta de la Flor. t1..t4 = dedos (perro, gato, conejo, ave), p = almohadilla, k = calado
+const dedos = { t1:C.tu, t2:C.am, t3:C.co, t4:C.ro };
+const R2 = [
+  { id:'A', nombre:'Burbuja azul, huella de colores', sym:'s9m', font:'f-nunito', wm:'side', text:'Huellitas',
+    idea:'El globo en azul intenso (confianza) y cada dedo de un color. La almohadilla blanca deja leer la huella a cualquier tamaño.',
+    v:{a:C.az, p:C.bl, ...dedos}, ic:{bg:C.no, v:{a:C.az, p:C.bl, ...dedos}}, col:{bg:C.no, fg:C.bl, v:{a:C.az, p:C.bl, ...dedos}} },
+  { id:'B', nombre:'Burbuja noche sobre amarillo', sym:'s9m', font:'f-nunito', wm:'side', text:'Huellitas',
+    idea:'El globo oscuro hace resaltar los colores de los dedos. En el celular, el fondo amarillo la vuelve la más visible de la pantalla.',
+    v:{a:C.no, p:C.bl, t1:C.tu, t2:C.am, t3:C.co, t4:C.ro}, ic:{bg:C.am, v:{a:C.no, p:C.bl, t1:C.tu, t2:C.az, t3:C.co, t4:C.ro}}, col:{bg:C.am, fg:C.no, v:{a:C.no, p:C.bl, t1:C.tu, t2:C.am, t3:C.co, t4:C.ro}} },
+  { id:'C', nombre:'Burbuja de franjas', sym:'s9s', font:'f-nunito', wm:'side', text:'Huellitas',
+    idea:'El globo mismo es de cuatro colores, como los pétalos de la Flor, y la huella va calada en blanco. La más pop; la huella se lee algo menos.',
+    v:{k:C.bl, t1:C.tu, t2:C.am, t3:C.co, t4:C.ro}, ic:{bg:C.no, v:{k:C.bl, t1:C.tu, t2:C.am, t3:C.co, t4:C.ro}}, col:{bg:C.no, fg:C.bl, v:{k:C.no, t1:C.tu, t2:C.am, t3:C.co, t4:C.ro}} },
+  { id:'D', nombre:'Burbuja turquesa, dedos de colores', sym:'s9m', font:'f-nunito', wm:'side', text:'Huellitas',
+    idea:'La 09 tal cual, con los dedos en azul, amarillo, coral y rosa. Ícono de fondo blanco: fresco, pero se pierde sobre fondos de pantalla claros.',
+    v:{a:C.tu, p:C.bl, t1:C.az, t2:C.am, t3:C.co, t4:C.ro}, ic:{bg:C.bl, borde:true, v:{a:C.tu, p:C.bl, t1:C.az, t2:C.am, t3:C.co, t4:C.ro}}, col:{bg:C.tu, fg:C.no, v:{a:C.no, p:C.bl, t1:C.tu, t2:C.am, t3:C.co, t4:C.ro}} },
+];
+const monoR2 = (q, c, k) => Object.fromEntries(Object.keys(q.v).map(key => [key, key === 'a' ? c : k]));
+const monoVars = (q, c, k) => q.sym === 's9s' ? vars({ k, t1:c, t2:c, t3:c, t4:c }) : vars(monoR2(q, c, k));
+
+document.getElementById('r2grid').innerHTML = R2.map(q => `
+  <article class="card r2 ${q.id === 'A' ? 'top3' : ''}">
+    <div class="meta"><span class="dir">Variante ${q.id}</span>${q.id === 'A' ? '<span class="badge">Mi elección</span>' : ''}</div>
+    <h3>${q.nombre}</h3>
+    <p>${q.idea}</p>
+    <div class="icons">
+      <figure>${appIcon(q, 112)}<figcaption class="lbl">112</figcaption></figure>
+      <figure>${appIcon(q, 56)}<figcaption class="lbl">56</figcaption></figure>
+      <figure>${appIcon(q, 32)}<figcaption class="lbl">32</figcaption></figure>
+      <figure>${appIcon(q, 16)}<figcaption class="lbl">16</figcaption></figure>
+    </div>
+    <div class="wms">
+      <div class="stage">${wordmark(q, vars(q.v), C.no)}</div>
+      <div class="stage" style="background:${q.col.bg};border-color:transparent">${wordmark(q, vars(q.col.v), q.col.fg)}</div>
+      <div class="stage">${wordmark(q, monoVars(q, '#111', '#fff'), '#111')}</div>
+      <div class="stage"><div class="chapita" style="width:84px">${sym(q, monoVars(q, '#4E5866', '#B9C0CA'))}</div></div>
+    </div>
+    <span class="lbl" style="font-size:12px;color:var(--muted)">Logotipo sobre blanco · sobre color · a una tinta · chapita grabada</span>
+  </article>`).join('');
+
+document.getElementById('r2phones').innerHTML = R2.map(q => `<figure>${phone(q)}<figcaption>Variante ${q.id} en la pantalla de inicio</figcaption></figure>`).join('');
+
+document.getElementById('r2reco').innerHTML = `
+  <h3>Me quedaría con la A</h3>
+  <ul>
+    <li>Mantiene el azul de confianza del brief y suma la alegría en los dedos: cada color es un animal (turquesa perro, amarillo gato, coral conejo, rosa ave).</li>
+    <li>La almohadilla blanca sostiene la lectura: a 16 px sigue siendo «un globo con una huella».</li>
+    <li>A una tinta queda igual que la 09, así que la chapita y los sellos no pierden nada.</li>
+    <li>Los cuatro colores de los dedos pueden pasar a ser los colores de las secciones de la app (por ejemplo Noticias, Mapa, Mascotas y Ayuda), sin chocar con los pines del mapa.</li>
+  </ul>
+  <p style="color:var(--muted)">A cuidar: el globo de conversación se parece al de las apps de mensajería. El arte final tiene que tener una forma de globo propia (por ejemplo, con la cola en forma de dedo o de oreja).</p>`;
 </script>
