@@ -1,0 +1,450 @@
+<title>Huellitas · Guía visual</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&display=block">
+<style>
+/* Layout: la guía se viste con su propia marca. Columna central de lectura; muestras de color, íconos y pantallas en grillas que bajan a una columna en el celular. */
+:root {
+  --marca: #1E9BD7;      /* celeste profundo: ícono, logo */
+  --primario: #126FA3;   /* barras y botones */
+  --acento: #FF6150;     /* SOS */
+  --fondo: #F2F8FC;
+  --sup: #FFFFFF;
+  --texto: #13294B;
+  --suave: #4A5B72;
+  --linea: #D9E6EF;
+  --comercio: #1F4FD1;
+  --papel: #FFFFFF;       /* fondo de las piezas «sobre blanco», igual en los dos temas */
+  --papel-texto: #13294B;
+  --f-titulo: "Nunito", "Nunito Sans", system-ui, sans-serif;
+  --f-texto: "Nunito Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --primario: #5CC8F0; --acento: #FF8A7D; --fondo: #0E1A26; --sup: #15283A;
+    --texto: #E8F1F8; --suave: #A9BCCB; --linea: #24394E; --comercio: #8FB0FF; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --primario: #5CC8F0; --acento: #FF8A7D; --fondo: #0E1A26; --sup: #15283A;
+  --texto: #E8F1F8; --suave: #A9BCCB; --linea: #24394E; --comercio: #8FB0FF; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--fondo); color: var(--texto); font-family: var(--f-texto); font-size: 16px; line-height: 1.55; }
+.wrap {
+  max-width: 1120px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 80px;
+  display: grid; gap: 64px;
+}
+h1, h2, h3 { font-family: var(--f-titulo); margin: 0; line-height: 1.15; text-wrap: balance; }
+h1 { font-weight: 900; font-size: clamp(34px, 6vw, 56px); }
+h2 { font-weight: 800; font-size: clamp(24px, 3.4vw, 30px); }
+h3 { font-weight: 700; font-size: 19px; }
+p { margin: 0; max-width: 66ch; }
+code { font-size: .88em; font-variant-numeric: tabular-nums; }
+.eti { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--suave); }
+.lead { color: var(--suave); font-size: 17px; }
+section { display: grid; gap: 22px; min-width: 0; }
+.cab { display: grid; gap: 6px; }
+.ms { font-family: "Material Symbols Rounded"; font-weight: normal; font-style: normal; line-height: 1; letter-spacing: normal; text-transform: none; white-space: nowrap; direction: ltr; -webkit-font-smoothing: antialiased; font-size: 24px; display: inline-block; }
+
+/* Portada */
+.portada { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 28px; align-items: center; }
+@media (max-width: 800px) { .portada { grid-template-columns: minmax(0, 1fr); } }
+.logo { display: inline-flex; align-items: center; gap: .22em; font-family: "Nunito", sans-serif; font-weight: 900; line-height: 1; white-space: nowrap; }
+.logo svg { width: 1.15em; height: 1.15em; flex: none; }
+.portada .logo { font-size: clamp(48px, 9vw, 84px); color: var(--texto); }
+.frase { font-family: var(--f-titulo); font-weight: 800; font-size: clamp(20px, 3vw, 26px); color: var(--primario); }
+.estado { display: flex; flex-wrap: wrap; gap: 8px; }
+.pill { font-size: 13px; font-weight: 600; padding: 4px 11px; border-radius: 999px; background: var(--sup); border: 1px solid var(--linea); }
+.pill.ok { background: var(--primario); color: var(--fondo); border-color: transparent; }
+.dupla { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.ficha { background: var(--sup); border: 1px solid var(--linea); border-radius: 22px; padding: 18px; display: grid; gap: 12px; justify-items: center; text-align: center; }
+.ficha small { color: var(--suave); font-size: 13px; }
+
+/* Ícono */
+.ic { border-radius: 22%; display: grid; place-items: center; background: #FFFFFF; box-shadow: inset 0 0 0 1px #D9E6EF; flex: none; }
+.ic svg { width: 70%; height: 70%; }
+.tamanos { display: flex; align-items: end; gap: 14px; flex-wrap: wrap; justify-content: center; }
+.tamanos figure { margin: 0; display: grid; gap: 4px; justify-items: center; font-size: 11.5px; color: var(--suave); font-variant-numeric: tabular-nums; }
+.piezas { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; }
+.pieza { display: grid; gap: 6px; min-width: 0; }
+.lienzo { border-radius: 16px; min-height: 120px; display: grid; place-items: center; padding: 18px 10px; border: 1px solid var(--linea); overflow: hidden; background: var(--papel); color: var(--papel-texto); }
+.lienzo .logo { font-size: 32px; }
+.pieza > span { font-size: 13px; color: var(--suave); }
+.chapita { width: 96px; aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; background: radial-gradient(circle at 35% 30%, #F2F4F7, #B9C0CA 70%, #9AA3AF); position: relative; }
+.chapita::before { content: ""; position: absolute; top: -9px; left: 50%; width: 18px; height: 18px; margin-left: -9px; border-radius: 50%; border: 4px solid #A3ABB6; }
+.chapita svg { width: 56%; height: 56%; }
+.reglas { margin: 0; padding-left: 20px; display: grid; gap: 6px; max-width: 72ch; }
+.no { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+.no figure { margin: 0; display: grid; gap: 6px; justify-items: center; text-align: center; font-size: 13px; color: var(--suave); }
+.no .x { position: relative; width: 84px; height: 84px; display: grid; place-items: center; background: var(--papel); border-radius: 16px; border: 1px solid var(--linea); }
+.no .x::after { content: "close"; font-family: "Material Symbols Rounded"; position: absolute; top: -8px; right: -8px; width: 26px; height: 26px; border-radius: 50%; background: #B3261E; color: #fff; display: grid; place-items: center; font-size: 18px; }
+.no .x svg { width: 60px; height: 60px; }
+
+/* Colores */
+.paleta { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (min-width: 760px) { .paleta { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.color { background: var(--sup); border: 1px solid var(--linea); border-radius: 16px; overflow: hidden; display: grid; }
+.color .m { height: 84px; display: flex; align-items: end; justify-content: space-between; padding: 10px 12px; font-family: var(--f-titulo); font-weight: 800; font-size: 15px; }
+.color .d { padding: 10px 12px 12px; display: grid; gap: 2px; }
+.color .d b { font-size: 15px; }
+.color .d code { color: var(--suave); }
+.color .d small { color: var(--suave); font-size: 13px; line-height: 1.4; }
+.tabla { overflow-x: auto; background: var(--sup); border: 1px solid var(--linea); border-radius: 16px; }
+table { border-collapse: collapse; width: 100%; min-width: 560px; font-size: 14.5px; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--linea); vertical-align: middle; }
+th { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--suave); font-weight: 700; }
+tr:last-child td { border-bottom: 0; }
+.pt { display: inline-block; width: 18px; height: 18px; border-radius: 6px; vertical-align: -3px; margin-right: 8px; border: 1px solid rgba(19,41,75,.15); }
+.apoyo { display: flex; flex-wrap: wrap; gap: 10px; }
+.apoyo div { flex: 1 1 120px; border-radius: 14px; padding: 14px 12px; color: #13294B; font-weight: 700; font-size: 14px; display: grid; gap: 2px; }
+.apoyo div code { font-weight: 400; }
+.pines { display: flex; flex-wrap: wrap; gap: 22px; }
+.pines figure { margin: 0; display: grid; gap: 6px; justify-items: center; font-size: 13px; color: var(--suave); text-align: center; }
+.pines svg { width: 44px; height: 54px; }
+
+/* Tipografía */
+.tipos { display: grid; gap: 0; background: var(--sup); border: 1px solid var(--linea); border-radius: 18px; overflow: hidden; }
+.tipo { display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 16px; padding: 14px 18px; border-bottom: 1px solid var(--linea); align-items: baseline; }
+.tipo:last-child { border-bottom: 0; }
+.tipo .q { font-size: 13px; color: var(--suave); }
+@media (max-width: 600px) { .tipo { grid-template-columns: minmax(0, 1fr); gap: 4px; } }
+
+/* Íconos */
+.iconos { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 8px; }
+.iconos figure { margin: 0; background: var(--sup); border: 1px solid var(--linea); border-radius: 14px; padding: 12px 6px; display: grid; gap: 6px; justify-items: center; text-align: center; font-size: 12.5px; color: var(--suave); }
+.iconos .ms { color: var(--texto); font-size: 28px; }
+
+/* Componentes y pantallas */
+.comp { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.btn { font: 600 16px var(--f-texto); min-height: 48px; padding: 0 20px; border-radius: 12px; display: inline-flex; align-items: center; gap: 8px; border: 0; cursor: pointer; }
+.btn:focus-visible { outline: 3px solid var(--marca); outline-offset: 2px; }
+.btn.p { background: var(--primario); color: var(--fondo); }
+.btn.s { background: transparent; color: var(--primario); box-shadow: inset 0 0 0 1.5px var(--primario); }
+.btn.sos { background: #FF6150; color: #13294B; }
+.btn.c { background: var(--comercio); color: var(--fondo); }
+.campo { min-height: 48px; border-radius: 12px; border: 1.5px solid var(--linea); background: var(--sup); padding: 0 14px; display: inline-flex; align-items: center; gap: 8px; color: var(--suave); min-width: 0; flex: 1 1 220px; }
+.chip { border-radius: 999px; padding: 6px 12px; font-size: 14px; font-weight: 600; background: var(--sup); border: 1px solid var(--linea); display: inline-flex; gap: 6px; align-items: center; }
+.chip.on { background: var(--primario); color: var(--fondo); border-color: transparent; }
+.chip .ms { font-size: 18px; }
+.estados { display: flex; flex-wrap: wrap; gap: 10px; font-size: 14px; font-weight: 700; }
+.estados span { display: inline-flex; align-items: center; gap: 6px; }
+
+.telefonos { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; justify-items: center; }
+.telefonos figure { margin: 0; display: grid; gap: 10px; justify-items: center; font-size: 13.5px; color: var(--suave); }
+.tel { width: 280px; max-width: 100%; aspect-ratio: 9 / 18.5; border-radius: 38px; padding: 10px; background: #0B1420; }
+.pant { width: 100%; height: 100%; border-radius: 30px; overflow: hidden; background: #F2F8FC; color: #13294B; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; font-family: var(--f-texto); }
+.pant .barra { padding: 30px 14px 12px; color: #fff; display: flex; align-items: center; gap: 10px; font: 800 18px var(--f-titulo); }
+.pant .barra .ms { font-size: 22px; }
+.pant .cuerpo { padding: 12px; display: grid; gap: 10px; align-content: start; overflow: hidden; }
+.tarj { background: #fff; border-radius: 16px; padding: 12px; display: grid; gap: 6px; font-size: 13px; }
+.tarj b { font: 800 15px var(--f-titulo); }
+.tarj .suave { color: #4A5B72; font-size: 12.5px; }
+.tarj .mini { font: 600 13px var(--f-texto); border-radius: 10px; padding: 7px 10px; justify-self: start; }
+.abajo { position: relative; background: #fff; height: 64px; display: grid; grid-template-columns: repeat(5, 1fr); align-items: center; justify-items: center; font-size: 10.5px; color: #4A5B72; box-shadow: 0 -1px 0 #D9E6EF; }
+.abajo div { display: grid; justify-items: center; gap: 1px; }
+.abajo .ms { font-size: 22px; }
+.abajo .sel { font-weight: 700; }
+.abajo .mapa { width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center; color: #fff; margin-top: -30px; box-shadow: 0 4px 12px rgba(19,41,75,.25); }
+.abajo .mapa .ms { font-size: 28px; }
+
+.frases { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
+.frases div { background: var(--sup); border: 1px solid var(--linea); border-radius: 14px; padding: 12px 14px; display: grid; gap: 2px; }
+.frases b { font: 800 17px var(--f-titulo); }
+.frases small { color: var(--suave); font-size: 13px; }
+.siente { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.siente div { background: var(--sup); border: 1px solid var(--linea); border-radius: 16px; padding: 14px 18px; }
+.siente ul { margin: 6px 0 0; padding-left: 20px; display: grid; gap: 3px; }
+@media (max-width: 520px) { .siente, .dupla { grid-template-columns: minmax(0, 1fr); } }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="globo" viewBox="0 0 100 100">
+      <path d="M30 10H70A20 20 0 0 1 90 30V60A20 20 0 0 1 70 80H42L24 93L27 79A20 20 0 0 1 10 60V30A20 20 0 0 1 30 10Z" style="fill:var(--g, #1E9BD7)"/>
+      <path d="M50 44c8 0 15 7 16 13 1 6-4 9-9 8-3-1-4-2-7-2s-4 1-7 2c-5 1-10-2-9-8 1-6 8-13 16-13z" style="fill:var(--h, #fff)"/>
+      <circle cx="33.5" cy="40" r="5" style="fill:var(--h, #fff)"/><circle cx="43" cy="30" r="5.5" style="fill:var(--h, #fff)"/>
+      <circle cx="57" cy="30" r="5.5" style="fill:var(--h, #fff)"/><circle cx="66.5" cy="40" r="5" style="fill:var(--h, #fff)"/>
+    </symbol>
+    <symbol id="gota" viewBox="0 0 44 54">
+      <path d="M22 2C11 2 3 10 3 21c0 13 15 26 18 30a1.4 1.4 0 0 0 2 0c3-4 18-17 18-30C41 10 33 2 22 2Z" style="fill:var(--p);stroke:#fff;stroke-width:2.5"/>
+    </symbol>
+    <symbol id="huellita" viewBox="0 0 24 24">
+      <path d="M12 11.5c2.6 0 4.8 2.3 5.1 4.2.3 1.8-1.2 2.8-2.8 2.5-1-.2-1.3-.6-2.3-.6s-1.3.4-2.3.6c-1.6.3-3.1-.7-2.8-2.5.3-1.9 2.5-4.2 5.1-4.2z"/><circle cx="6.6" cy="10" r="1.7"/><circle cx="9.7" cy="6.6" r="1.9"/><circle cx="14.3" cy="6.6" r="1.9"/><circle cx="17.4" cy="10" r="1.7"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="wrap">
+
+  <header class="portada">
+    <div style="display:grid;gap:18px;min-width:0">
+      <span class="eti">Guía visual · versión 1 · 01/11/2026</span>
+      <span class="logo"><svg aria-hidden="true"><use href="#globo"/></svg>Huellitas</span>
+      <div class="frase">La comunidad que deja huella</div>
+      <p class="lead">Todo lo que se ve en Huellitas: el ícono, el logo, los colores, la tipografía, los íconos, los componentes y el tono de los textos. Sirve para programar la app y para pasársela a un diseñador.</p>
+      <div class="estado">
+        <span class="pill ok">Aprobada por el dueño (D126)</span>
+        <span class="pill">Se aplica en la app en el paso 0.8.3c</span>
+        <span class="pill">Pendiente: arte final del globo</span>
+      </div>
+    </div>
+    <div class="dupla">
+      <div class="ficha">
+        <div class="ic" style="width:120px;height:120px"><svg aria-hidden="true"><use href="#globo"/></svg></div>
+        <b>Huellitas</b><small>App de personas · celeste <code>#1E9BD7</code></small>
+      </div>
+      <div class="ficha">
+        <div class="ic" style="width:120px;height:120px"><svg aria-hidden="true" style="--g:#1F4FD1"><use href="#globo"/></svg></div>
+        <b>Huellitas Comercios</b><small>App de comercios · azul <code>#1F4FD1</code></small>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="cab"><span class="eti">La idea</span><h2>Alegre y cercana, simple, y calma en una urgencia</h2></div>
+    <div class="siente">
+      <div><h3>Se siente</h3><ul><li>Alegre, cercana, de barrio</li><li>Simple y clara</li><li>Confiable con los datos</li><li>Calma en una urgencia</li><li>Para todos los animales</li></ul></div>
+      <div><h3>No se siente</h3><ul><li>Infantil o de dibujito</li><li>Recargada</li><li>Fría o de clínica</li><li>Alarmista</li><li>Solo perros y gatos</li></ul></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="cab"><span class="eti">Ícono y logo</span><h2>Un globo de un solo color, una huella siempre blanca</h2></div>
+    <p class="lead">El globo dice comunidad, consultas y novedades; la huella dice mascotas. Celeste para las personas, azul para los comercios.</p>
+    <div class="tamanos">
+      <figure><div class="ic" style="width:96px;height:96px"><svg><use href="#globo"/></svg></div>96</figure>
+      <figure><div class="ic" style="width:56px;height:56px"><svg><use href="#globo"/></svg></div>56</figure>
+      <figure><div class="ic" style="width:32px;height:32px"><svg><use href="#globo"/></svg></div>32</figure>
+      <figure><div class="ic" style="width:16px;height:16px"><svg><use href="#globo"/></svg></div>16</figure>
+      <figure><div class="ic" style="width:96px;height:96px"><svg style="--g:#1F4FD1"><use href="#globo"/></svg></div>96</figure>
+      <figure><div class="ic" style="width:56px;height:56px"><svg style="--g:#1F4FD1"><use href="#globo"/></svg></div>56</figure>
+      <figure><div class="ic" style="width:32px;height:32px"><svg style="--g:#1F4FD1"><use href="#globo"/></svg></div>32</figure>
+      <figure><div class="ic" style="width:16px;height:16px"><svg style="--g:#1F4FD1"><use href="#globo"/></svg></div>16</figure>
+    </div>
+    <div class="piezas">
+      <div class="pieza"><div class="lienzo"><span class="logo"><svg><use href="#globo"/></svg>Huellitas</span></div><span>Sobre blanco: globo celeste y nombre en azul noche</span></div>
+      <div class="pieza"><div class="lienzo" style="background:#126FA3;border-color:transparent;color:#fff"><span class="logo"><svg style="--g:#fff;--h:#126FA3"><use href="#globo"/></svg>Huellitas</span></div><span>Sobre el primario: globo blanco, huella calada</span></div>
+      <div class="pieza"><div class="lienzo" style="background:#1F4FD1;border-color:transparent;color:#fff"><span class="logo"><svg style="--g:#fff;--h:#1F4FD1"><use href="#globo"/></svg>Comercios</span></div><span>App de comercios, sobre azul</span></div>
+      <div class="pieza"><div class="lienzo" style="color:#111"><span class="logo"><svg style="--g:#111"><use href="#globo"/></svg>Huellitas</span></div><span>A una tinta, negro</span></div>
+      <div class="pieza"><div class="lienzo" style="background:#13294B;border-color:transparent;color:#fff"><span class="logo"><svg style="--g:#fff;--h:#13294B"><use href="#globo"/></svg>Huellitas</span></div><span>A una tinta, blanco sobre azul noche</span></div>
+      <div class="pieza"><div class="lienzo"><div class="chapita"><svg style="--g:#4E5866;--h:#B9C0CA"><use href="#globo"/></svg></div></div><span>Chapita de 25 mm grabada a una tinta</span></div>
+    </div>
+    <ul class="reglas">
+      <li>La huella va <b>siempre blanca</b>, o calada del color del fondo. Nunca de colores.</li>
+      <li>El globo va <b>siempre de un solo color</b>: celeste para personas, azul para comercios, negro o blanco a una tinta.</li>
+      <li>Lo importante queda dentro del <b>80 % central</b> del ícono: Android lo recorta en círculo.</li>
+      <li>Tamaño mínimo: <b>16 px</b> el símbolo y <b>96 px</b> de ancho el logo horizontal. Alrededor, como mínimo, el alto de un dedo de la huella libre.</li>
+      <li>Pendiente para el arte final: darle al globo una forma propia (por ejemplo la cola en forma de dedo o de oreja) para no confundirlo con las apps de mensajería.</li>
+    </ul>
+    <h3>Cómo no usarlo</h3>
+    <div class="no">
+      <figure><div class="x"><svg viewBox="0 0 100 100"><path d="M30 10H70A20 20 0 0 1 90 30V60A20 20 0 0 1 70 80H42L24 93L27 79A20 20 0 0 1 10 60V30A20 20 0 0 1 30 10Z" fill="#1E9BD7"/><path d="M50 44c8 0 15 7 16 13 1 6-4 9-9 8-3-1-4-2-7-2s-4 1-7 2c-5 1-10-2-9-8 1-6 8-13 16-13z" fill="#FFC531"/><circle cx="33.5" cy="40" r="5" fill="#FF6150"/><circle cx="43" cy="30" r="5.5" fill="#2DBE73"/><circle cx="57" cy="30" r="5.5" fill="#FF7EB3"/><circle cx="66.5" cy="40" r="5" fill="#FFC531"/></svg></div>Huella de colores</figure>
+      <figure><div class="x"><svg viewBox="0 0 100 100"><defs><linearGradient id="dg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5CC8F0"/><stop offset="1" stop-color="#7B3FE4"/></linearGradient></defs><use href="#globo" style="--g:url(#dg)"/></svg></div>Degradé o sombra</figure>
+      <figure><div class="x"><svg viewBox="0 0 100 100" style="transform:rotate(-18deg) scaleX(1.25)"><use href="#globo"/></svg></div>Girado o estirado</figure>
+      <figure><div class="x"><svg viewBox="0 0 44 54" style="--p:#1E9BD7;width:44px;height:54px"><use href="#gota"/><svg x="10" y="9" width="24" height="24" viewBox="0 0 24 24" fill="#fff"><use href="#huellita"/></svg></svg></div>Pin de mapa (se confunde con los perdidos)</figure>
+    </div>
+  </section>
+
+  <section>
+    <div class="cab"><span class="eti">Colores</span><h2>Celeste de marca, un primario que se lee y colores alegres de relleno</h2></div>
+    <p class="lead">Los contrastes están medidos (WCAG): 4,5:1 como mínimo para texto y 3:1 para íconos y texto grande. Se controlan en <code>app/test/tema_test.dart</code>.</p>
+    <h3>App de personas, modo claro</h3>
+    <div class="paleta">
+      <div class="color"><div class="m" style="background:#1E9BD7;color:#fff"><span class="ms">pets</span><span>3,1:1</span></div><div class="d"><b>Marca · celeste profundo</b><code>#1E9BD7</code><small>Ícono, logo, botón del Mapa. No para texto chico.</small></div></div>
+      <div class="color"><div class="m" style="background:#126FA3;color:#fff"><span>Aa</span><span>5,5:1</span></div><div class="d"><b>Primario · celeste oscuro</b><code>#126FA3</code><small>Barra de arriba, botones, enlaces, pestaña elegida.</small></div></div>
+      <div class="color"><div class="m" style="background:#FF6150;color:#13294B"><span>Aa</span><span>4,9:1</span></div><div class="d"><b>Acento · coral</b><code>#FF6150</code><small>Botón SOS y destacados, siempre con texto azul noche.</small></div></div>
+      <div class="color"><div class="m" style="background:#13294B;color:#fff"><span>Aa</span><span>13,6:1</span></div><div class="d"><b>Texto · azul noche</b><code>#13294B</code><small>Títulos, texto y logotipo.</small></div></div>
+      <div class="color"><div class="m" style="background:#4A5B72;color:#fff"><span>Aa</span><span>6,5:1</span></div><div class="d"><b>Texto suave</b><code>#4A5B72</code><small>Notas, ayudas y fechas.</small></div></div>
+      <div class="color"><div class="m" style="background:#F2F8FC;color:#13294B;box-shadow:inset 0 -1px 0 #D9E6EF"><span>Aa</span><span>fondo</span></div><div class="d"><b>Fondo</b><code>#F2F8FC</code><small>Fondo de las pantallas. Tarjetas en blanco <code>#FFFFFF</code>.</small></div></div>
+    </div>
+    <div class="tabla"><table>
+      <thead><tr><th>Estado</th><th>Claro</th><th>Oscuro</th><th>Dónde</th></tr></thead>
+      <tbody>
+        <tr><td><span class="pt" style="background:#B3261E"></span>Error</td><td><code>#B3261E</code> · 6,1:1</td><td><code>#FF8A80</code> · 7,7:1</td><td>Errores de formularios</td></tr>
+        <tr><td><span class="pt" style="background:#17705F"></span>Éxito</td><td><code>#17705F</code> · 5,6:1</td><td><code>#5ED3BF</code> · 9,7:1</td><td>«Abierto ahora», confirmaciones</td></tr>
+        <tr><td><span class="pt" style="background:#9A4A00"></span>Urgencias</td><td><code>#9A4A00</code> · 5,9:1</td><td><code>#FFB238</code> · 9,8:1</td><td>«Urgencias 24 h»</td></tr>
+      </tbody>
+    </table></div>
+    <h3>Modo oscuro y app de comercios</h3>
+    <div class="tabla"><table>
+      <thead><tr><th>Rol</th><th>Personas · oscuro</th><th>Comercios · claro</th><th>Comercios · oscuro</th></tr></thead>
+      <tbody>
+        <tr><td>Fondo / superficie</td><td><span class="pt" style="background:#0E1A26"></span><code>#0E1A26</code> / <code>#15283A</code></td><td>Igual que personas</td><td>Igual que personas</td></tr>
+        <tr><td>Texto / suave</td><td><span class="pt" style="background:#E8F1F8"></span><code>#E8F1F8</code> / <code>#A9BCCB</code></td><td>Igual que personas</td><td>Igual que personas</td></tr>
+        <tr><td>Primario</td><td><span class="pt" style="background:#5CC8F0"></span><code>#5CC8F0</code> con texto oscuro · 9,2:1</td><td><span class="pt" style="background:#1F4FD1"></span><code>#1F4FD1</code> con blanco · 6,8:1</td><td><span class="pt" style="background:#8FB0FF"></span><code>#8FB0FF</code> con texto oscuro · 8,2:1</td></tr>
+        <tr><td>Marca (ícono)</td><td><span class="pt" style="background:#1E9BD7"></span><code>#1E9BD7</code></td><td><span class="pt" style="background:#1F4FD1"></span><code>#1F4FD1</code></td><td><span class="pt" style="background:#1F4FD1"></span><code>#1F4FD1</code></td></tr>
+        <tr><td>Acento</td><td><span class="pt" style="background:#FF8A7D"></span><code>#FF8A7D</code> con texto oscuro · 7,7:1</td><td>Coral <code>#FF6150</code></td><td><code>#FF8A7D</code></td></tr>
+      </tbody>
+    </table></div>
+    <h3>De apoyo: solo de relleno, con texto azul noche</h3>
+    <div class="apoyo">
+      <div style="background:#12B5A5">Turquesa<code>#12B5A5</code></div>
+      <div style="background:#FFC531">Amarillo<code>#FFC531</code></div>
+      <div style="background:#FF7EB3">Rosa<code>#FF7EB3</code></div>
+      <div style="background:#2DBE73">Verde<code>#2DBE73</code></div>
+      <div style="background:#FF8A2B">Naranja<code>#FF8A2B</code></div>
+    </div>
+    <p style="color:var(--suave)">Para ilustraciones, campañas, eventos y tarjetas de noticias. Nunca como texto ni con letras blancas: al sol no se leen.</p>
+    <h3>Pines del mapa (no cambian)</h3>
+    <div class="pines">
+      <figure><svg viewBox="0 0 44 54" style="--p:#0B3D52"><use href="#gota"/><text x="22" y="27" text-anchor="middle" font-family="Material Symbols Rounded" font-size="20" fill="#fff">medical_services</text></svg>Veterinaria<br><code>#0B3D52</code></figure>
+      <figure><svg viewBox="0 0 44 54" style="--p:#D62839"><use href="#gota"/><svg x="10" y="9" width="24" height="24" viewBox="0 0 24 24" fill="#fff"><use href="#huellita"/></svg></svg>Perdido<br><code>#D62839</code></figure>
+      <figure><svg viewBox="0 0 44 54" style="--p:#1F9E8E"><use href="#gota"/><svg x="10" y="9" width="24" height="24" viewBox="0 0 24 24" fill="#fff"><use href="#huellita"/></svg></svg>Encontrado<br><code>#1F9E8E</code></figure>
+      <figure><svg viewBox="0 0 44 54" style="--p:#FFB238"><use href="#gota"/><text x="22" y="27" text-anchor="middle" font-family="Nunito, sans-serif" font-weight="900" font-size="15" fill="#13294B">24</text></svg>Urgencia 24 h<br><code>#FFB238</code></figure>
+    </div>
+    <ul class="reglas">
+      <li>Los colores vivos van de relleno con texto azul noche encima.</li>
+      <li>El rojo es solo para errores y el pin de perdido. La urgencia se transmite con calma.</li>
+      <li>El color nunca es la única señal: siempre va con un ícono o un texto.</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="cab"><span class="eti">Tipografía</span><h2>Nunito para los títulos, Nunito Sans para leer</h2></div>
+    <p class="lead">Gratuitas, con ñ, tildes, ¿ y ¡. Van incluidas en la app y respetan el tamaño de letra del sistema.</p>
+    <div class="tipos">
+      <div class="tipo"><span class="q">Logotipo · Nunito Black 900</span><span style="font:900 40px Nunito, sans-serif">Huellitas</span></div>
+      <div class="tipo"><span class="q">Título de pantalla · Nunito 800 · 22 px</span><span style="font:800 22px Nunito, sans-serif">Perdidos cerca tuyo</span></div>
+      <div class="tipo"><span class="q">Subtítulo · Nunito 700 · 18 px</span><span style="font:700 18px Nunito, sans-serif">Veterinaria San Isidro</span></div>
+      <div class="tipo"><span class="q">Texto · Nunito Sans 400 · 16 px</span><span style="font:400 16px 'Nunito Sans', sans-serif">Tocá el mapa para ver qué hay abierto ahora. Si se perdió tu mascota, avisale a los vecinos en un minuto.</span></div>
+      <div class="tipo"><span class="q">Botón · Nunito Sans 600 · 16 px</span><span style="font:600 16px 'Nunito Sans', sans-serif">Publicar aviso</span></div>
+      <div class="tipo"><span class="q">Nota · Nunito Sans 400 · 13 px</span><span style="font:400 13px 'Nunito Sans', sans-serif;color:var(--suave)">Hace 12 minutos · a 800 m · Pando</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="cab"><span class="eti">Íconos</span><h2>Material de línea, redondeados</h2></div>
+    <p class="lead">Un solo estilo y un solo trazo. Rellenos solo los que muestran un estado (favorito, estrellas, pestaña elegida). Sin emojis ni logos de otras marcas.</p>
+    <div class="iconos">
+      <figure><span class="ms">article</span>Noticias</figure>
+      <figure><span class="ms">location_on</span>SOS</figure>
+      <figure><span class="ms">map</span>Mapa</figure>
+      <figure><span class="ms">pets</span>Mascotas</figure>
+      <figure><span class="ms">help</span>Ayuda</figure>
+      <figure><span class="ms">notifications</span>Avisos</figure>
+      <figure><span class="ms">qr_code_2</span>Chapita QR</figure>
+      <figure><span class="ms">medical_services</span>Veterinaria</figure>
+      <figure><span class="ms">vaccines</span>Vacuna</figure>
+      <figure><span class="ms">medication</span>Medicación</figure>
+      <figure><span class="ms">storefront</span>Comercio</figure>
+      <figure><span class="ms">calendar_month</span>Agenda</figure>
+      <figure><span class="ms">volunteer_activism</span>Adopción</figure>
+      <figure><span class="ms">groups</span>Comunidad</figure>
+      <figure><span class="ms">chat_bubble</span>Mensaje</figure>
+      <figure><span class="ms">directions</span>Cómo llegar</figure>
+      <figure><span class="ms">share</span>Compartir</figure>
+      <figure><span class="ms">flag</span>Reportar</figure>
+    </div>
+  </section>
+
+  <section>
+    <div class="cab"><span class="eti">Componentes</span><h2>Botones, campos y estados</h2></div>
+    <div class="comp">
+      <button class="btn p" type="button" id="b1">Publicar aviso</button>
+      <button class="btn s" type="button" id="b2">Ver en el mapa</button>
+      <button class="btn sos" type="button" id="b3"><span class="ms">location_on</span>Se perdió</button>
+      <button class="btn c" type="button" id="b4">Confirmar turno</button>
+    </div>
+    <div class="comp">
+      <span class="campo"><span class="ms">search</span>Buscar veterinaria, petshop…</span>
+      <span class="chip on"><span class="ms">medical_services</span>Salud</span>
+      <span class="chip"><span class="ms">storefront</span>Tiendas</span>
+      <span class="chip"><span class="ms">pets</span>Cuidado</span>
+    </div>
+    <div class="estados">
+      <span style="color:#17705F"><span class="ms">schedule</span>Abierto ahora</span>
+      <span style="color:#9A4A00"><span class="ms">emergency</span>Urgencias 24 h</span>
+      <span style="color:#B3261E"><span class="ms">error</span>Falta la foto</span>
+    </div>
+    <div class="tabla"><table>
+      <thead><tr><th>Elemento</th><th>Regla</th></tr></thead>
+      <tbody>
+        <tr><td>Esquinas</td><td>Botones y campos 12 px · tarjetas y hojas de abajo 16 px · ícono de la app 22 %</td></tr>
+        <tr><td>Botones</td><td>Alto mínimo 48 px. Principal relleno, secundario con borde, SOS coral con texto azul noche</td></tr>
+        <tr><td>Toques</td><td>Todo lo que se toca mide al menos 48 × 48 px</td></tr>
+        <tr><td>Barra de arriba</td><td>Color primario con texto e íconos blancos, flecha para volver fuera de las pestañas</td></tr>
+        <tr><td>Movimiento</td><td>Corto y suave; se apaga si el sistema pide reducir movimiento</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <div class="cab"><span class="eti">En la pantalla</span><h2>Las dos apps, lado a lado</h2></div>
+    <div class="telefonos">
+      <figure>
+        <div class="tel"><div class="pant">
+          <div class="barra" style="background:#126FA3"><svg width="26" height="26" style="--g:#fff;--h:#126FA3"><use href="#globo"/></svg>Noticias</div>
+          <div class="cuerpo">
+            <div class="tarj"><b>Se perdió Toby</b><span class="suave">Caniche blanco · hace 20 min · a 600 m</span><span class="mini" style="background:#FF6150;color:#13294B">Lo vi</span></div>
+            <div class="tarj" style="background:#FFC531"><b>Jornada de adopción</b><span>Sábado 10 a 13 h · Plaza de Pando</span></div>
+            <div class="tarj"><b>Veterinaria San Isidro</b><span class="suave" style="color:#17705F;font-weight:700">Abierto ahora</span><span class="mini" style="background:#126FA3;color:#fff">Cómo llegar</span></div>
+          </div>
+          <div class="abajo">
+            <div class="sel" style="color:#126FA3"><span class="ms">article</span>Noticias</div>
+            <div><span class="ms">location_on</span>SOS</div>
+            <div><span class="mapa" style="background:#1E9BD7"><span class="ms">map</span></span></div>
+            <div><span class="ms">pets</span>Mascotas</div>
+            <div><span class="ms">help</span>Ayuda</div>
+          </div>
+        </div></div>
+        Huellitas · personas
+      </figure>
+      <figure>
+        <div class="tel"><div class="pant">
+          <div class="barra" style="background:#1F4FD1"><svg width="26" height="26" style="--g:#fff;--h:#1F4FD1"><use href="#globo"/></svg>Para atender</div>
+          <div class="cuerpo">
+            <div class="tarj"><b>3 pedidos nuevos</b><span class="suave">Alimento 15 kg · retiro en el local</span><span class="mini" style="background:#1F4FD1;color:#fff">Ver pedidos</span></div>
+            <div class="tarj"><b>Turno por confirmar</b><span class="suave">Mañana 10:30 · Luna (gata) · Baño y corte</span><span class="mini" style="background:#1F4FD1;color:#fff">Confirmar</span></div>
+            <div class="tarj"><b>Este mes</b><span class="suave">340 personas vieron tu ficha y 52 te contactaron</span></div>
+          </div>
+          <div class="abajo">
+            <div class="sel" style="color:#1F4FD1"><span class="ms">space_dashboard</span>Panel</div>
+            <div><span class="ms">receipt_long</span>Pedidos</div>
+            <div><span class="mapa" style="background:#1F4FD1"><span class="ms">calendar_month</span></span></div>
+            <div><span class="ms">chat_bubble</span>Chat</div>
+            <div><span class="ms">storefront</span>Mi negocio</div>
+          </div>
+        </div></div>
+        Huellitas Comercios · ejemplo de pantalla
+      </figure>
+    </div>
+    <p style="color:var(--suave)">Las pantallas son ejemplos para ver los colores juntos; los datos son inventados. La barra de abajo de la app de comercios es una idea para el paso de las dos apps (0.8.3d).</p>
+  </section>
+
+  <section>
+    <div class="cab"><span class="eti">Tono</span><h2>Voseo, frases cortas y el juego con «huella»</h2></div>
+    <p class="lead">Los botones dicen lo que pasa («Publicar aviso», no «Aceptar»). En una urgencia, calma y pasos claros: sin mayúsculas ni exclamaciones de más.</p>
+    <div class="frases">
+      <div><b>La comunidad que deja huella</b><small>Frase de la marca</small></div>
+      <div><b>Tu aviso dejó huella: lo vieron 48 vecinos</b><small>Después de publicar un SOS</small></div>
+      <div><b>Compartir también deja huella</b><small>Botón de compartir un perdido</small></div>
+      <div><b>Tu reseña deja huella para otros dueños</b><small>Al pedir una reseña</small></div>
+      <div><b>Adoptar deja la huella más grande</b><small>Ficha de adopción</small></div>
+      <div><b>Todavía no dejaste huellas acá</b><small>Estado vacío</small></div>
+      <div><b>Tus huellas: 12</b><small>Perfil: las ayudas de cada persona (idea)</small></div>
+      <div><b>Juntos dejamos huella · Dejá tu huella</b><small>Campañas</small></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="cab"><span class="eti">En el código</span><h2>Dónde vive cada cosa</h2></div>
+    <div class="tabla"><table>
+      <thead><tr><th>Qué</th><th>Archivo</th></tr></thead>
+      <tbody>
+        <tr><td>Paleta, tema e isotipo (app y portal)</td><td><code>packages/core/lib/src/tema/</code></td></tr>
+        <tr><td>Logo con textos</td><td><code>app/lib/src/widgets/logo.dart</code></td></tr>
+        <tr><td>Íconos de la app (web, Android, iPhone, PDF, web pública)</td><td><code>flutter test tool/iconos_marca_test.dart</code> desde <code>app/</code></td></tr>
+        <tr><td>Colores de los pines</td><td><code>coloresPin</code> en <code>app/lib/src/mapa/mapa_vista.dart</code></td></tr>
+        <tr><td>Web pública</td><td><code>web-publica/assets/estilo.css</code></td></tr>
+        <tr><td>Control de contraste</td><td><code>app/test/tema_test.dart</code></td></tr>
+        <tr><td>Textos</td><td><code>app/lib/l10n/app_es.arb</code></td></tr>
+        <tr><td>Esta guía en texto</td><td><code>docs/23-guia-visual.md</code> · brief del diseñador: <code>docs/20-brief-logo-iconos.md</code></td></tr>
+      </tbody>
+    </table></div>
+  </section>
+</div>

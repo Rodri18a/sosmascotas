@@ -1,7 +1,7 @@
 # 23 · Guía visual de Huellitas (look and feel)
 
 > Armada el 01/11/2026. Es la referencia para **dibujar y programar** todo lo que se ve: logo, ícono, colores, tipografía, íconos, pines, componentes y tono. Sale de la exploración de marca ([21](21-brief-huellitas.md), página «Huellitas · Exploración de marca») y de lo que ya funciona en la app.
-> Cada punto dice si está **✅ decidido** (lo eligió el dueño) o **🟡 propuesto** (a confirmar). Hasta que se aplique (paso 0.8.3c), la app sigue con la marca SOS Mascotas de la D122.
+> **Aprobada por el dueño el 01/11/2026 (D126).** Se aplica en la app en el paso 0.8.3c; hasta entonces la app sigue con la marca SOS Mascotas de la D122. Queda pendiente el **arte final** del símbolo (forma propia del globo), que puede hacer un diseñador con el [brief](20-brief-logo-iconos.md). La versión para ver en la web: `reference/identidad/huellitas-guia-visual.html`, publicada como página privada «Huellitas · Guía visual».
 > Si cambia algo de esta guía, actualizar también el brief del diseñador ([20](20-brief-logo-iconos.md)) y anotar la decisión en [12](12-decisiones.md).
 
 ## 1. La idea en una línea
@@ -21,10 +21,10 @@
 | Pieza | Cómo es | Estado |
 |---|---|---|
 | **Símbolo** | Globo de conversación de un solo color con una **huella toda blanca** adentro (almohadilla y 4 dedos) | ✅ |
-| **Ícono de la app de personas** | Globo **celeste `#1E9BD7`** con la huella blanca, sobre fondo blanco | ✅ color · 🟡 fondo |
+| **Ícono de la app de personas** | Globo **celeste `#1E9BD7`** con la huella blanca, sobre fondo blanco | ✅ |
 | **Ícono de la app de comercios** | El mismo globo en **azul `#1F4FD1`** | ✅ |
-| **Logotipo** | Símbolo a la izquierda + «Huellitas» en Nunito Black, color azul noche `#13294B` | 🟡 |
-| **Frase** | «La comunidad que deja huella» | 🟡 |
+| **Logotipo** | Símbolo a la izquierda + «Huellitas» en Nunito Black, color azul noche `#13294B` | |
+| **Frase** | «La comunidad que deja huella» | |
 
 **Reglas del símbolo:**
 
@@ -34,13 +34,13 @@
 - **Tamaño mínimo:** 16 px el símbolo (favicon); 96 px de ancho el logotipo horizontal.
 - **Área libre alrededor:** como mínimo, el alto de un dedo de la huella.
 - **A una tinta** (chapita grabada, sello, fotocopia): el globo negro y la huella calada.
-- 🟡 **Para el arte final:** darle al globo una forma propia (por ejemplo la cola en forma de dedo o de oreja) para que no se confunda con el ícono de las apps de mensajería.
+- ⏳ **Pendiente para el arte final:** darle al globo una forma propia (por ejemplo la cola en forma de dedo o de oreja) para que no se confunda con el ícono de las apps de mensajería.
 
 **Cómo no usarlo:** huella de colores, globo con degradé o sombra, el símbolo girado o deformado, el logo sobre una foto sin un fondo liso detrás, el pin de mapa como símbolo (se confunde con los pines de perdidos).
 
 ## 3. Colores
 
-### 3.1 App de personas · modo claro 🟡
+### 3.1 App de personas · modo claro
 
 | Rol | Color | HEX | Contraste | Dónde |
 |---|---|---|---|---|
@@ -55,7 +55,7 @@
 | Éxito / abierto ahora | Verde | `#17705F` | 5,6:1 | «Abierto ahora», confirmaciones |
 | Urgencias | Ámbar oscuro | `#9A4A00` | 5,9:1 | «Urgencias 24 h» |
 
-### 3.2 App de personas · modo oscuro 🟡
+### 3.2 App de personas · modo oscuro
 
 | Rol | HEX | Contraste |
 |---|---|---|
@@ -70,7 +70,7 @@
 | Éxito | `#5ED3BF` | 9,7:1 |
 | Urgencias | `#FFB238` | 9,8:1 |
 
-### 3.3 App de comercios 🟡
+### 3.3 App de comercios
 
 Igual que la de personas, cambiando **marca y primario por el azul**:
 
@@ -80,7 +80,7 @@ Igual que la de personas, cambiando **marca y primario por el azul**:
 
 Así, quien tiene las dos apps sabe en cuál está con solo mirar el color de la barra.
 
-### 3.4 Colores de apoyo 🟡
+### 3.4 Colores de apoyo
 
 Para ilustraciones, campañas, eventos y las tarjetas de noticias. **Nunca** como color de texto ni con letras blancas: van de relleno con texto azul noche encima.
 
@@ -106,7 +106,7 @@ Se distinguen también por luminosidad (daltonismo), son gotas con la punta en e
 3. El rojo es solo para errores y el pin de perdido. La urgencia se transmite con calma.
 4. El color nunca es la única señal: siempre va con un ícono o un texto.
 
-## 4. Tipografía 🟡
+## 4. Tipografía
 
 | Uso | Familia | Peso | Tamaño |
 |---|---|---|---|
@@ -124,7 +124,7 @@ Se distinguen también por luminosidad (daltonismo), son gotas con la punta en e
 ## 5. Íconos ✅
 
 - **Material de línea** (`_outlined`) en toda la app, del mismo trazo. Quedan rellenos solo los que muestran un estado (favorito, estrellas, pestaña elegida) y los de los pines.
-- 🟡 Pasar a la variante **redondeada** (`_rounded`), que acompaña mejor a Nunito y a la huella.
+- Variante **redondeada** (`_rounded`), que acompaña mejor a Nunito y a la huella.
 - Barra de abajo: **Noticias** (artículo) · **SOS** (pin) · **Mapa** (botón redondo en el medio, color de marca) · **Mascotas** (huella) · **Ayuda** (signo de pregunta).
 - Nada de emojis como íconos ni logos de otras marcas (el chat usa un globo genérico, no el de WhatsApp).
 - La lista completa de íconos que necesita la app está en el [brief del diseñador](20-brief-logo-iconos.md).
@@ -135,13 +135,13 @@ Se distinguen también por luminosidad (daltonismo), son gotas con la punta en e
 |---|---|
 | Esquinas | Botones y campos 12 px · tarjetas y hojas de abajo 16 px · ícono de la app 22 % |
 | Botones | Alto mínimo 48 px. Principal: relleno primario. Secundario: borde. SOS: relleno coral con texto azul noche |
-| Tarjetas | Superficie blanca sobre el fondo celeste muy claro 🟡 |
+| Tarjetas | Superficie blanca sobre el fondo celeste muy claro |
 | Toques | Todo lo que se toca mide al menos 48 × 48 px |
 | Barra de arriba | Color primario con texto e íconos blancos; flecha para volver en toda pantalla fuera de las pestañas |
 | Hojas de abajo | Por encima de la barra de abajo, con la manija arriba |
 | Movimiento | Corto y suave; se apaga si el sistema pide «reducir movimiento» |
 
-## 7. Ilustraciones y fotos 🟡
+## 7. Ilustraciones y fotos
 
 - **Estados vacíos** (sin mascotas, sin perdidos cerca, sin avisos, sin conexión, «¡Apareció!»): dibujos simples, planos, con 2 o 3 colores de la paleta y la huella como recurso. Sin caras con ojos grandes.
 - **Fotos:** las de las mascotas de la gente, siempre en un marco redondeado. Sin fotos de stock en la marca.
@@ -151,7 +151,7 @@ Se distinguen también por luminosidad (daltonismo), son gotas con la punta en e
 - **Español rioplatense con voseo:** «Reportá», «Avisale», «Tocá acá».
 - Frases cortas y directas. Los botones dicen lo que pasa («Publicar aviso», no «Aceptar»).
 - En una urgencia, calma y pasos claros: nada de mayúsculas ni signos de exclamación de más.
-- **El juego con «huella»** 🟡, sin abusar:
+- **El juego con «huella»**, sin abusar:
 
 | Dónde | Texto |
 |---|---|
