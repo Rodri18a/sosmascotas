@@ -12,6 +12,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get appNombre => 'Huellitas';
 
   @override
+  String get appNombreComercios => 'Huellitas Comercios';
+
+  @override
   String get logoNombre => 'Huellitas';
 
   @override
@@ -2606,6 +2609,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get volverModoDueno => 'Volver al modo dueño';
+
+  @override
+  String get irAHuellitas => 'Ir a Huellitas';
 
   @override
   String get negocioPanel => 'Panel';

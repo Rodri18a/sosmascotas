@@ -7,6 +7,7 @@ import '../../../l10n/l10n.dart';
 import '../../config/env_provider.dart';
 import '../../cuenta/perfil_repositorio.dart';
 import '../../cuenta/servicio_cuenta.dart';
+import '../../dos_apps/dos_apps.dart';
 import '../../funcionalidades/funcionalidades_activas.dart';
 import '../../metricas/metricas.dart';
 import '../../push/control_push.dart';
@@ -211,7 +212,7 @@ class _SeccionCuenta extends ConsumerWidget {
             title: Text(t.negocioMi),
             subtitle: Text(t.negocioMiAyuda),
             trailing: const Icon(Icons.chevron_right_outlined),
-            onTap: () => context.push(Rutas.negocio),
+            onTap: () => irAMiNegocio(context, ref),
           ),
         ),
         SiFuncionalidad(

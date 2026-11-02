@@ -100,6 +100,12 @@ abstract class AppLocalizations {
   /// **'Huellitas'**
   String get appNombre;
 
+  /// No description provided for @appNombreComercios.
+  ///
+  /// In es, this message translates to:
+  /// **'Huellitas Comercios'**
+  String get appNombreComercios;
+
   /// Nombre en el logo, en dos renglones (guía de marca, D122).
   ///
   /// In es, this message translates to:
@@ -4509,6 +4515,12 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Volver al modo dueño'**
   String get volverModoDueno;
+
+  /// No description provided for @irAHuellitas.
+  ///
+  /// In es, this message translates to:
+  /// **'Ir a Huellitas'**
+  String get irAHuellitas;
 
   /// No description provided for @negocioPanel.
   ///

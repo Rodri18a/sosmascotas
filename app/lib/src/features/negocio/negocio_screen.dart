@@ -11,6 +11,7 @@ import '../../comercios/comercios_repositorio.dart';
 import '../../comercios/negocios_repositorio.dart';
 import '../../comercios/textos_comercio.dart';
 import '../../config/env_provider.dart';
+import '../../dos_apps/dos_apps.dart';
 import '../../fotos/elegir_foto.dart';
 import '../../funcionalidades/funcionalidades_activas.dart';
 import '../../metricas/metricas.dart';
@@ -128,6 +129,9 @@ class _NegocioScreenState extends ConsumerState<NegocioScreen> {
             lista.where((n) => n.id == _elegido).firstOrNull ?? lista.first;
         final ancho = MediaQuery.sizeOf(context).width;
         final grande = ancho >= 900;
+        final volver = ref.watch(esAppComercioProvider)
+            ? t.irAHuellitas
+            : t.volverModoDueno;
         final secciones = [
           (Icons.insights_outlined, t.negocioPanel),
           (Icons.event_outlined, t.negocioAgenda),
@@ -141,7 +145,10 @@ class _NegocioScreenState extends ConsumerState<NegocioScreen> {
         ];
         return Scaffold(
           appBar: AppBar(
-            leading: volverSiNoHayAtras(context),
+            // En Huellitas Comercios el panel es el inicio: sin flecha.
+            leading: ref.watch(esAppComercioProvider)
+                ? null
+                : volverSiNoHayAtras(context),
             // El título es el negocio activo; con más de uno, se cambia
             // tocándolo (en el celular no entraba el título con «⇄»).
             title: lista.length > 1
@@ -173,17 +180,18 @@ class _NegocioScreenState extends ConsumerState<NegocioScreen> {
                     overflow: TextOverflow.ellipsis,
                   ),
             actions: [
+              // En Huellitas Comercios, a la app de las personas (D129).
               if (ancho >= 600)
                 TextButton.icon(
-                  onPressed: () => context.go(Rutas.inicio),
+                  onPressed: () => irAHuellitas(context, ref),
                   icon: const Icon(Icons.pets_outlined),
-                  label: Text(t.volverModoDueno),
+                  label: Text(volver),
                 )
               else
                 IconButton(
-                  onPressed: () => context.go(Rutas.inicio),
+                  onPressed: () => irAHuellitas(context, ref),
                   icon: const Icon(Icons.pets_outlined),
-                  tooltip: t.volverModoDueno,
+                  tooltip: volver,
                 ),
             ],
           ),

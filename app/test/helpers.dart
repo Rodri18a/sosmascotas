@@ -26,6 +26,7 @@ import 'package:sosmascota/src/config/supabase_providers.dart';
 import 'package:sosmascota/src/cuenta/perfil_repositorio.dart';
 import 'package:sosmascota/src/cuenta/plan_usuario_repositorio.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
+import 'package:sosmascota/src/dos_apps/dos_apps.dart';
 import 'package:sosmascota/src/eventos/eventos_repositorio.dart';
 import 'package:sosmascota/src/fotos/selector_foto.dart';
 import 'package:sosmascota/src/funcionalidades/funcionalidades_activas.dart';
@@ -152,9 +153,14 @@ Widget appDePrueba({
   // La mayoría de las pruebas se escribieron arrancando en el Mapa; las de
   // navegación arrancan donde abre la app de verdad (Rutas.inicio, D127).
   String inicio = Rutas.mapa,
+  // Huellitas Comercios (D129) y la otra app que se abrió (en la web).
+  bool appComercio = false,
+  List<String>? otraAppAbierta,
 }) => ProviderScope(
   overrides: [
     rutaInicialProvider.overrideWithValue(inicio),
+    esAppComercioProvider.overrideWithValue(appComercio),
+    abrirOtraAppProvider.overrideWithValue(otraAppAbierta?.add),
     // Por defecto, como si ya estuviera instalada: no se ofrece nada.
     servicioInstalacionProvider.overrideWithValue(
       instalacion ?? const InstalacionNoDisponible(),

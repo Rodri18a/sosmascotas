@@ -7,7 +7,7 @@
 - **Fase 2:** portal v1 con estadísticas, reporte mensual, promociones y catálogo.
 - **Fase 3:** portal completo con agenda, pedidos, socios y varios usuarios por empresa.
 
-Tecnología: **Flutter Web**, reutilizando el código del modo comercio. Se entra con la misma cuenta de la app. ✅ 2.10 (D114): el portal **es el modo comercio de la app en pantalla grande** (menú al costado, panel en dos columnas y «Para atender»), no un proyecto aparte.
+Tecnología: **Flutter Web**, reutilizando el código del modo comercio. Se entra con la misma cuenta de la app. ✅ 2.10 (D114): el portal **es el modo comercio de la app en pantalla grande** (menú al costado, panel en dos columnas y «Para atender»), no un proyecto aparte. Desde el 01/11/2026 (D129) además es una **app instalable aparte**, «Huellitas Comercios», en `/comercios/` del mismo sitio (misma cuenta y misma sesión), en azul, que abre directo en el panel del negocio.
 
 ## Funciones
 

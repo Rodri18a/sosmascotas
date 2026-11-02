@@ -1,4 +1,5 @@
-// Genera los íconos de la app desde el isotipo (guía visual de Huellitas, D126).
+// Genera los íconos de la app desde el isotipo (guía visual de Huellitas, D126),
+// también los de Huellitas Comercios (globo azul, `web_comercios/`, D129).
 // No corre con las pruebas: se usa a mano cuando cambia el logo, desde app/:
 //   flutter test tool/iconos_marca_test.dart
 import 'dart:io';
@@ -22,13 +23,19 @@ enum _Forma {
   isotipo,
 }
 
-Future<void> _escribir(String ruta, int lado, _Forma forma) async {
+Future<void> _escribir(
+  String ruta,
+  int lado,
+  _Forma forma, {
+  Color globo = ColoresLogo.globo,
+}) async {
+  final pintor = PintorIsotipo(color: globo);
   final grabador = ui.PictureRecorder();
   final lienzo = Canvas(grabador);
   final l = lado.toDouble();
   final todo = Rect.fromLTWH(0, 0, l, l);
   if (forma == _Forma.isotipo) {
-    const PintorIsotipo().paint(lienzo, todo.size);
+    pintor.paint(lienzo, todo.size);
   } else {
     final fondo = Paint()..color = _fondo;
     if (forma == _Forma.redondeado) {
@@ -44,7 +51,7 @@ Future<void> _escribir(String ruta, int lado, _Forma forma) async {
     lienzo
       ..save()
       ..translate(margen, margen);
-    const PintorIsotipo().paint(lienzo, Size.square(l - 2 * margen));
+    pintor.paint(lienzo, Size.square(l - 2 * margen));
     lienzo.restore();
   }
   final imagen = await grabador.endRecording().toImage(lado, lado);
@@ -91,6 +98,15 @@ void main() {
     ];
     for (final (ruta, lado, forma) in archivos) {
       await _escribir(ruta, lado, forma);
+      // Los mismos de la web, en azul, para Huellitas Comercios.
+      if (ruta.startsWith('web/')) {
+        await _escribir(
+          ruta.replaceFirst('web/', 'web_comercios/'),
+          lado,
+          forma,
+          globo: ColoresLogo.globoComercio,
+        );
+      }
     }
   });
 }

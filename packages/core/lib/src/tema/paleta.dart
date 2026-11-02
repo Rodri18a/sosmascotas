@@ -151,6 +151,43 @@ class Paleta {
     pesoTitulos: FontWeight.w800,
   );
 
+  /// Huellitas Comercios (D129): la de la marca con el azul de los comercios
+  /// en barras, botones y el globo. No se elige en Ajustes (no está en [todas]).
+  static const comercios = Paleta(
+    id: 'comercios',
+    claro: ColoresModo(
+      fondo: Color(0xFFF2F8FC),
+      texto: Color(0xFF13294B),
+      textoSuave: Color(0xFF4A5B72),
+      primario: Color(0xFF1F4FD1), // azul de los comercios
+      sobrePrimario: Color(0xFFFFFFFF),
+      acento: Color(0xFFFF6150),
+      sobreAcento: Color(0xFF13294B),
+      error: Color(0xFFB3261E),
+      sobreError: Color(0xFFFFFFFF),
+      exito: Color(0xFF17705F),
+      urgencia: Color(0xFF9A4A00),
+      simbolo: Color(0xFF1F4FD1),
+    ),
+    oscuro: ColoresModo(
+      fondo: Color(0xFF0E1A26),
+      texto: Color(0xFFE8F1F8),
+      textoSuave: Color(0xFFA9BCCB),
+      primario: Color(0xFF8FB0FF),
+      sobrePrimario: Color(0xFF0E1A26),
+      acento: Color(0xFFFF8A7D),
+      sobreAcento: Color(0xFF0E1A26),
+      error: Color(0xFFFF8A80),
+      sobreError: Color(0xFF0E1A26),
+      exito: Color(0xFF5ED3BF),
+      urgencia: Color(0xFFFFB238),
+      simbolo: Color(0xFF1F4FD1),
+    ),
+    fuenteTitulos: 'Nunito',
+    fuenteTexto: 'NunitoSans',
+    pesoTitulos: FontWeight.w800,
+  );
+
   /// Tema Pro A · Faro: señal de rescate (naranja y azul noche).
   static const faro = Paleta(
     id: 'faro',

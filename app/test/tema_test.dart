@@ -13,7 +13,7 @@ double contraste(Color a, Color b) {
 }
 
 void main() {
-  for (final paleta in Paleta.todas) {
+  for (final paleta in [...Paleta.todas, Paleta.comercios]) {
     final nombre = paleta.id;
     for (final brillo in Brightness.values) {
       group('$nombre ${brillo.name}', () {

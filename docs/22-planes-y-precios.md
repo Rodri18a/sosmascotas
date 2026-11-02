@@ -2,7 +2,7 @@
 
 > Armado el 01/11/2026 para explicar de forma simple qué se usa, quién paga y cuánto. Junta lo que está en [Reglas de negocio](06-reglas-negocio.md) (planes), [Portal de empresas](04-portal-empresas.md) y [Costos](10-costos.md); si algo cambia, **manda el 06** y hay que actualizar los dos.
 > Los precios son **de ejemplo, en pesos uruguayos, a validar** con usuarios y comercios. Todavía no se cobra (Fase 2; los comercios, recién al formalizar la actividad).
-> Usa los nombres de la exploración de marca HUELLITAS ([21](21-brief-huellitas.md)). La separación en **dos apps** es una propuesta del dueño del 01/11/2026, todavía sin decidir (hoy el comercio es un modo de la misma app, D114).
+> Usa los nombres de la exploración de marca HUELLITAS ([21](21-brief-huellitas.md)). La separación en **dos apps** la pidió el dueño el 01/11/2026 (D129): en la web ya son dos, Huellitas en `/` y Huellitas Comercios en `/comercios/`; en Android y iPhone, la de comercios se publica aparte cuando estén las tiendas.
 
 ## 1. En 30 segundos
 
@@ -23,7 +23,7 @@
 | **Portal de administración** | El equipo de Huellitas | Computadora | Moderación, verificación, planes y pagos, indicadores | Interno |
 
 - Las dos apps usan **la misma cuenta**: quien tiene un comercio y también mascotas entra con el mismo correo en las dos.
-- La app de comercios y la web de comercios son **lo mismo** en distinto tamaño de pantalla (hoy así funciona el modo comercio, D114).
+- La app de comercios y la web de comercios son **lo mismo** en distinto tamaño de pantalla (D114, D129): se instala desde `/comercios/` y, en la computadora, es la web de comercios.
 
 ## 3. Lo que es gratis siempre
 

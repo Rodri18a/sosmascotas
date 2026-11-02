@@ -1,6 +1,7 @@
 {
   "@@locale": "es",
   "appNombre": "Huellitas",
+  "appNombreComercios": "Huellitas Comercios",
   "@appNombre": {
     "description": "Nombre de la app (pestaña del navegador, lista de apps)."
   },
@@ -979,6 +980,7 @@
   "negocioDatosInvalidos": "Revisá los datos (teléfono, web o Instagram).",
   "modoComercio": "Modo comercio",
   "volverModoDueno": "Volver al modo dueño",
+  "irAHuellitas": "Ir a Huellitas",
   "negocioPanel": "Panel",
   "negocioAgenda": "Agenda",
   "negocioCatalogo": "Catálogo",

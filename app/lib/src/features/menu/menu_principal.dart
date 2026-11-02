@@ -6,6 +6,7 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 import '../../../l10n/l10n.dart';
 import '../../cuenta/perfil_repositorio.dart';
 import '../../cuenta/servicio_cuenta.dart';
+import '../../dos_apps/dos_apps.dart';
 import '../../funcionalidades/funcionalidades_activas.dart';
 import '../../mascotas/catalogo.dart';
 import '../../mascotas/mascota_elegida.dart';
@@ -128,7 +129,15 @@ class _MenuPrincipalState extends ConsumerState<MenuPrincipal> {
               if (activa(Funcionalidades.grupos))
                 opcion(Icons.forum_outlined, t.comunidadGrupos, Rutas.grupos),
               if (activa(Funcionalidades.comercios))
-                opcion(Icons.storefront_outlined, t.negocioMi, Rutas.negocio),
+                // En la web abre Huellitas Comercios (D129).
+                ListTile(
+                  leading: const Icon(Icons.storefront_outlined),
+                  title: Text(t.negocioMi),
+                  onTap: () {
+                    Navigator.pop(context);
+                    irAMiNegocio(context, ref);
+                  },
+                ),
             ],
             const Divider(),
             opcion(Icons.settings_outlined, t.ajustes, Rutas.ajustes),

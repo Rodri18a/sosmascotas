@@ -6,6 +6,7 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 import '../l10n/l10n.dart';
 
 import 'config/env_provider.dart';
+import 'dos_apps/dos_apps.dart';
 import 'push/servicio_push.dart';
 import 'recordatorios/avisador.dart';
 import 'router.dart';
@@ -34,7 +35,9 @@ class SosMascotaApp extends ConsumerWidget {
       ..watch(reintentarDifusionProvider);
 
     return MaterialApp.router(
-      onGenerateTitle: (context) => context.t.appNombre,
+      onGenerateTitle: (context) => ref.read(esAppComercioProvider)
+          ? context.t.appNombreComercios
+          : context.t.appNombre,
       // Español de Uruguay: fechas y números con formato local.
       locale: const Locale('es', 'UY'),
       supportedLocales: AppLocalizations.supportedLocales,

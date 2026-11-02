@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sosmascota/src/comercios/comercios_repositorio.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
+import 'package:sosmascota/src/router.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'comercios_falsos.dart';
@@ -52,6 +53,8 @@ Future<void> _abrir(
   ComerciosFalsos? comercios,
   bool prendida = true,
   List<Map<String, Object?>>? eventos,
+  bool appComercio = false,
+  List<String>? otraAppAbierta,
 }) async {
   tester.view
     ..physicalSize = const Size(1080, 2400)
@@ -60,6 +63,9 @@ Future<void> _abrir(
   await tester.pumpWidget(
     appDePrueba(
       cuenta: ServicioCuentaFalso(conectado: _ana),
+      appComercio: appComercio,
+      otraAppAbierta: otraAppAbierta,
+      inicio: appComercio ? Rutas.negocio : Rutas.mapa,
       negocios: negocios,
       comercios: comercios,
       eventos: eventos,
@@ -315,5 +321,37 @@ void main() {
     await _tocar(tester, find.text('Enviar reclamo'));
     expect(comercios.reclamos.single, ('b9', '211111110019', null));
     expect(find.textContaining('Recibimos tu reclamo'), findsOneWidget);
+  });
+
+  testWidgets('dos apps (D129): en la web, «Mi negocio» abre Huellitas '
+      'Comercios', (tester) async {
+    final abiertas = <String>[];
+    await _abrir(
+      tester,
+      negocios: NegociosFalsos([_negocio()]),
+      otraAppAbierta: abiertas,
+    );
+    await _ir(tester, '/ajustes');
+    await _tocar(tester, find.text('Mi negocio'));
+    expect(abiertas, ['/comercios/']);
+  });
+
+  testWidgets('dos apps (D129): Huellitas Comercios abre en el panel, en '
+      'azul, y vuelve a Huellitas', (tester) async {
+    final abiertas = <String>[];
+    await _abrir(
+      tester,
+      negocios: NegociosFalsos([_negocio()]),
+      appComercio: true,
+      otraAppAbierta: abiertas,
+    );
+    expect(find.widgetWithText(AppBar, 'Peluquería Luna'), findsOneWidget);
+    expect(find.byType(BackButton), findsNothing, reason: 'es el inicio');
+    expect(
+      Theme.of(tester.element(find.byType(AppBar))).colorScheme.primary,
+      Paleta.comercios.claro.primario,
+    );
+    await _tocar(tester, find.byTooltip('Ir a Huellitas'));
+    expect(abiertas, ['/']);
   });
 }
