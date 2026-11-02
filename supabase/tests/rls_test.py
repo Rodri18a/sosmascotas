@@ -206,6 +206,36 @@ def main():
              bloqueado(rest('PATCH', f"health_records?id=eq.{vacuna.get('id')}", {'name': 'X'}, b)))
         caso('B no puede borrar un registro de A',
              bloqueado(rest('DELETE', f"health_records?id=eq.{vacuna.get('id')}", quien=b)))
+        print('life_events (historial de vida, D131)')
+        pid = pet.get('id')
+        r_vida = filas(rest('POST', 'life_events', {'pet_id': pid, 'kind': 'surgery', 'title': 'Castración',
+                                                    'date': '2026-03-14', 'files': [f'{pid}/rx.pdf']}, a))
+        vida = r_vida[0] if r_vida else {}
+        caso('A carga un acontecimiento con un adjunto de su mascota', bool(vida.get('id')))
+        caso('un adjunto fuera de la carpeta de la mascota se rechaza',
+             bloqueado(rest('POST', 'life_events', {'pet_id': pid, 'kind': 'other', 'title': 'X',
+                                                    'date': '2026-03-14', 'files': ['otra/rx.pdf']}, a)))
+        caso('más de 4 adjuntos se rechaza',
+             bloqueado(rest('POST', 'life_events', {'pet_id': pid, 'kind': 'other', 'title': 'X', 'date': '2026-03-14',
+                                                    'files': [f'{pid}/{i}.pdf' for i in range(5)]}, a)))
+        caso('B no ve el historial de A', filas(rest('GET', 'life_events?select=id', quien=b)) == [])
+        caso('un visitante no ve historiales', bloqueado(rest('GET', 'life_events?select=id')))
+        caso('B no puede cargar en el historial de A',
+             bloqueado(rest('POST', 'life_events', {'pet_id': pid, 'kind': 'other', 'title': 'X',
+                                                    'date': '2026-03-14'}, b)))
+        caso('B no puede cambiar ni borrar el historial de A',
+             bloqueado(rest('PATCH', f"life_events?id=eq.{vida.get('id')}", {'title': 'X'}, b))
+             and bloqueado(rest('DELETE', f"life_events?id=eq.{vida.get('id')}", quien=b)))
+        caso('A sube un adjunto a la carpeta de su mascota',
+             subir(f'pet-records/{pid}/rls.jpg', JPEG_MINIMO, 'image/jpeg', a) == 200)
+        caso('B no puede subir a la carpeta de la mascota de A',
+             subir(f'pet-records/{pid}/rls-b.jpg', JPEG_MINIMO, 'image/jpeg', b) >= 400)
+        caso('B no puede leer los adjuntos de A',
+             pedir('GET', f'{URL}/storage/v1/object/authenticated/pet-records/{pid}/rls.jpg', headers=b)[0] >= 400)
+        caso('un visitante no puede leer adjuntos',
+             pedir('GET', f'{URL}/storage/v1/object/public/pet-records/{pid}/rls.jpg')[0] >= 400)
+        pedir('DELETE', f'{URL}/storage/v1/object/pet-records/{pid}/rls.jpg', headers=ADMIN)
+
         r_pet_b = filas(rest('POST', 'pets', {'name': 'Michi', 'species_id': 2}, b))
         caso('A no puede pasar su registro a la mascota de B',
              bloqueado(rest('PATCH', f"health_records?id=eq.{vacuna.get('id')}", {'pet_id': r_pet_b[0]['id']}, a))

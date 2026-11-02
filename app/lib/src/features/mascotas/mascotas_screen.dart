@@ -217,6 +217,13 @@ class _FilaMascota extends ConsumerWidget {
           t.atajoLibreta,
           Rutas.nuevoRegistroSalud(mascota.id),
         ),
+      if (activa(Funcionalidades.historial))
+        (
+          'historial',
+          Icons.timeline_outlined,
+          t.atajoHistorial,
+          Rutas.nuevoAcontecimiento(mascota.id),
+        ),
       if (activa(Funcionalidades.recordatorios))
         (
           'recordatorio',

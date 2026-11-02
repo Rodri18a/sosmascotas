@@ -83,6 +83,11 @@ abstract final class Eventos {
   /// Acceso directo desde la fila de una mascota en Mis mascotas (1.5):
   /// `action` = qr, libreta, recordatorio o reportar.
   static const petQuickAction = 'pet_quick_action';
+
+  /// Historial de vida (D131): se carga un acontecimiento (`kind`) o se le
+  /// suma un adjunto (`type`: photo o pdf).
+  static const lifeEventCreate = 'life_event_create';
+  static const lifeEventFileAdd = 'life_event_file_add';
   static const tabOpen = 'tab_open';
   static const tagActivate = 'tag_activate';
   static const tagUnlink = 'tag_unlink';

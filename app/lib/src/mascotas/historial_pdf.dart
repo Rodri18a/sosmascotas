@@ -13,16 +13,21 @@ typedef TextosHistorial = ({
   String Function(DateTime) fecha,
   String Function(String) proxima,
   String pie,
+  String vidaTitulo,
+  String Function(TipoAcontecimiento) tipoVida,
+  String Function(int) adjuntos,
 });
 
-/// Historial de salud en PDF (2.11, plan Pro, D112): los datos de la mascota y
-/// la libreta agrupada, en A4, para imprimir o mandar a la veterinaria.
+/// Historial de salud en PDF (2.11, plan Pro, D112): los datos de la mascota,
+/// la libreta agrupada y el historial de vida (D131; los adjuntos no van
+/// adentro, solo cuántos hay), en A4, para imprimir o mandar a la veterinaria.
 /// Se arma en el dispositivo: nada de la libreta sale a otro servidor.
 /// [normal] y [negrita]: la letra de la app (con acentos y eñe); sin ellas,
 /// la del PDF, que no los muestra bien.
 Future<Uint8List> historialSaludPdf({
   required Map<TipoRegistroSalud, List<RegistroSalud>> grupos,
   required TextosHistorial textos,
+  List<AcontecimientoVida> vida = const [],
   ByteData? normal,
   ByteData? negrita,
 }) {
@@ -97,6 +102,43 @@ Future<Uint8List> historialSaludPdf({
               ),
             ),
           pw.SizedBox(height: 10),
+        ],
+        if (vida.isNotEmpty) ...[
+          pw.Text(
+            textos.vidaTitulo,
+            style: const pw.TextStyle(
+              fontSize: 14,
+              fontWeight: pw.FontWeight.bold,
+            ),
+          ),
+          pw.SizedBox(height: 4),
+          for (final a in vida)
+            pw.Padding(
+              padding: const pw.EdgeInsets.only(bottom: 6),
+              child: pw.Column(
+                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                children: [
+                  pw.Text(
+                    [
+                      textos.fecha(a.fecha),
+                      textos.tipoVida(a.tipo),
+                      a.titulo,
+                    ].join(' · '),
+                    style: const pw.TextStyle(fontSize: 11),
+                  ),
+                  if (a.notas case final n? when n.isNotEmpty)
+                    pw.Text(
+                      n,
+                      style: const pw.TextStyle(fontSize: 9, color: gris),
+                    ),
+                  if (a.adjuntos.isNotEmpty)
+                    pw.Text(
+                      textos.adjuntos(a.adjuntos.length),
+                      style: const pw.TextStyle(fontSize: 9, color: gris),
+                    ),
+                ],
+              ),
+            ),
         ],
       ],
     ),

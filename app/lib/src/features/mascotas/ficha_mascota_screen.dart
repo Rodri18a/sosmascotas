@@ -13,6 +13,7 @@ import '../../mascotas/textos_mascota.dart';
 import '../../router.dart';
 import '../../sos/sos_repositorio.dart';
 import '../../widgets/foto_mascota.dart';
+import '../historial/historial.dart';
 import '../hogar/tareas.dart';
 import '../libreta/libreta.dart';
 import '../recordatorios/recordatorios.dart';
@@ -199,6 +200,14 @@ class _Ficha extends ConsumerWidget {
             child: Padding(
               padding: const EdgeInsets.only(top: 12),
               child: TarjetaLibreta(mascotaId: mascota.id),
+            ),
+          ),
+          // Historial de vida, junto a la libreta (D131).
+          SiFuncionalidad(
+            Funcionalidades.historial,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 12),
+              child: TarjetaHistorial(mascotaId: mascota.id),
             ),
           ),
           SiFuncionalidad(

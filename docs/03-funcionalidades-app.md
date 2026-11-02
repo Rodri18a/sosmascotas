@@ -33,6 +33,7 @@ Pantalla inicial: el logo de la marca (D122) sobre el fondo claro `#EAF4FA` (osc
 - **Microchip (Fase 0):** número de 15 dígitos, validado (ISO 11784).
 - **RENAC (Fase 1):** estado declarado (registrado / no registrado / no sé), guía "Cómo registrar a tu mascota", recordatorio si no está registrada, y botón **"Verificar en el RENAC"**, que abre la consulta pública oficial. Ver `investigacion/renac.md`.
 - **Libreta sanitaria (Fase 1):** vacunas, desparasitaciones, controles, alergias, medicación actual, veterinaria asociada.
+- **Historial de vida (D131, plan de mejoras 2.1):** operaciones, accidentes, enfermedades, tratamientos y diagnósticos con fecha, nota y hasta 4 fotos o PDF; línea de tiempo en la ficha, debajo de la libreta, y sección propia en el historial en PDF. Lo ven y lo editan el dueño y su hogar. Gratis (regla de oro).
 - Semáforo de próximos controles: rojo a 7 días o menos, amarillo hasta 30 días, verde si falta más, y "vencido" si pasó la fecha.
 
 ## 3. Chapita QR — Fase 0

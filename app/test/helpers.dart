@@ -28,6 +28,7 @@ import 'package:sosmascota/src/cuenta/plan_usuario_repositorio.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
 import 'package:sosmascota/src/dos_apps/dos_apps.dart';
 import 'package:sosmascota/src/eventos/eventos_repositorio.dart';
+import 'package:sosmascota/src/fotos/selector_documento.dart';
 import 'package:sosmascota/src/fotos/selector_foto.dart';
 import 'package:sosmascota/src/funcionalidades/funcionalidades_activas.dart';
 import 'package:sosmascota/src/hogar/hogar_repositorio.dart';
@@ -36,6 +37,7 @@ import 'package:sosmascota/src/instalar/servicio_instalacion.dart';
 import 'package:sosmascota/src/mapa/filtros_guardados.dart';
 import 'package:sosmascota/src/mapa/mapa_vista.dart';
 import 'package:sosmascota/src/mascotas/catalogo.dart';
+import 'package:sosmascota/src/mascotas/historial_repositorio.dart';
 import 'package:sosmascota/src/mascotas/libreta_repositorio.dart';
 import 'package:sosmascota/src/mascotas/mascota_elegida.dart';
 import 'package:sosmascota/src/mascotas/mascotas_repositorio.dart';
@@ -72,6 +74,7 @@ import 'equipo_falso.dart';
 import 'eventos_falsos.dart';
 import 'filtros_falsos.dart';
 import 'funcionalidades_falsas.dart';
+import 'historial_falso.dart';
 import 'hogar_falso.dart';
 import 'instalacion_falsa.dart';
 import 'libreta_falsa.dart';
@@ -108,6 +111,8 @@ Widget appDePrueba({
   List<Map<String, Object?>>? eventos,
   MascotasRepositorio? mascotas,
   LibretaRepositorio? libreta,
+  HistorialRepositorio? historial,
+  SelectorDocumento? selectorDocumento,
   RecordatoriosRepositorio? recordatorios,
   AvisadorRecordatorios? avisador,
   AlmacenRespaldo? respaldo,
@@ -209,6 +214,12 @@ Widget appDePrueba({
     catalogoRepositorioProvider.overrideWithValue(CatalogoFalso()),
     mascotasRepositorioProvider.overrideWithValue(mascotas ?? MascotasFalsas()),
     libretaRepositorioProvider.overrideWithValue(libreta ?? LibretaFalsa()),
+    historialRepositorioProvider.overrideWithValue(
+      historial ?? HistorialFalso(),
+    ),
+    selectorDocumentoProvider.overrideWithValue(
+      selectorDocumento ?? () async => null,
+    ),
     recordatoriosRepositorioProvider.overrideWithValue(
       recordatorios ?? RecordatoriosFalsos(),
     ),

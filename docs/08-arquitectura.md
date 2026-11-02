@@ -176,6 +176,7 @@ Tabla `events` (append-only), escrita por el cliente con `ref.read(metricasProvi
 | `tour_start` / `tour_finish` / `tour_skip` | recorrido guiado de una pantalla (D130): `screen`, si arrancó solo (`auto`) o con el botón ?, y en qué paso se saltó (`step`) |
 | `more_info_open` | se toca «Ver más» en una explicación corta (`item`: cuál), para saber qué explicaciones hacen falta (plan de mejoras 1.4) |
 | `pet_quick_action` | acceso directo desde la fila de una mascota en Mis mascotas (`action`: `qr`, `libreta`, `recordatorio`, `reportar`) (plan de mejoras 1.5) |
+| `life_event_create` / `life_event_file_add` | se carga un acontecimiento del historial de vida (`kind`) o se le suma un adjunto (`type`: `photo`, `pdf`) (D131) |
 | `tab_open` | se cambia de pestaña en la barra inferior, con `tab` (`noticias`, `sos`, `mapa`, `mascotas`, `ayuda`; D94) |
 | `unclaimed_open` | se abre la hoja de un lugar sin reclamar; `target_id` = una marca del grupo, `tipo` = rubro (D99) |
 | `tag_activate` / `tag_unlink` | el dueño activa una chapita física (con `origen`: `enlace` o `codigo`) o la desvincula (D95) |

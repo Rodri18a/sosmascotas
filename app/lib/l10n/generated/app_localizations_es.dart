@@ -3682,6 +3682,122 @@ class AppLocalizationsEs extends AppLocalizations {
   String get atajoRecordatorio => 'Nuevo recordatorio';
 
   @override
+  String get vidaVida => 'Historial de vida';
+
+  @override
+  String get vidaVacio =>
+      'Operaciones, accidentes, enfermedades y tratamientos, con fecha y sus estudios.';
+
+  @override
+  String get vidaAgregar => 'Agregar al historial';
+
+  @override
+  String vidaAdjuntoN(int n) {
+    return 'Adjunto $n';
+  }
+
+  @override
+  String get vidaTipoOperacion => 'Operación';
+
+  @override
+  String get vidaTipoAccidente => 'Accidente';
+
+  @override
+  String get vidaTipoEnfermedad => 'Enfermedad';
+
+  @override
+  String get vidaTipoTratamiento => 'Tratamiento';
+
+  @override
+  String get vidaTipoDiagnostico => 'Diagnóstico';
+
+  @override
+  String get vidaTipoOtro => 'Otro';
+
+  @override
+  String get vidaNuevo => 'Nuevo en el historial';
+
+  @override
+  String get vidaEditar => 'Editar del historial';
+
+  @override
+  String get vidaTipo => '¿Qué pasó?';
+
+  @override
+  String get vidaTitulo => 'Título';
+
+  @override
+  String get vidaTituloAyuda =>
+      'Por ejemplo: castración, fractura de pata, otitis.';
+
+  @override
+  String get vidaTituloFalta => 'Escribí un título.';
+
+  @override
+  String get vidaFecha => 'Fecha';
+
+  @override
+  String get vidaNotasAyuda =>
+      'Lo que quieras recordar: qué dijo la veterinaria, cómo siguió.';
+
+  @override
+  String vidaAdjuntos(int n) {
+    return 'Fotos y documentos ($n de 4)';
+  }
+
+  @override
+  String vidaAdjuntoNuevo(int n) {
+    return 'Adjunto $n (sin guardar)';
+  }
+
+  @override
+  String get vidaAgregarFoto => 'Foto';
+
+  @override
+  String get vidaAgregarPdf => 'PDF';
+
+  @override
+  String get vidaAdjuntosTope => 'Llegaste a 4: quitá uno para sumar otro.';
+
+  @override
+  String get vidaAdjuntoInvalido => 'Ese archivo no se puede usar.';
+
+  @override
+  String get vidaAdjuntoGrande => 'El PDF pesa más de 5 MB.';
+
+  @override
+  String get vidaBorrar => 'Borrar del historial';
+
+  @override
+  String vidaBorrarTitulo(String titulo) {
+    return '¿Borrar «$titulo»?';
+  }
+
+  @override
+  String get vidaBorrarExplicacion =>
+      'Se borran también sus fotos y documentos.';
+
+  @override
+  String get vidaQuitarAdjunto => 'Quitar';
+
+  @override
+  String get vidaPdfTitulo => 'Historial de vida';
+
+  @override
+  String vidaPdfAdjuntos(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n adjuntos en la app',
+      one: '1 adjunto en la app',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get atajoHistorial => 'Agregar al historial';
+
+  @override
   String atajosMas(String nombre) {
     return 'Más opciones de $nombre';
   }

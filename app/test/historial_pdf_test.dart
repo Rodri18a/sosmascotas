@@ -81,7 +81,22 @@ void main() {
         fecha: (f) => '${f.day}/${f.month}/${f.year}',
         proxima: (f) => 'Próxima: $f',
         pie: 'Hecho con Huellitas',
+        vidaTitulo: 'Historial de vida',
+        tipoVida: (t) => 'Operación',
+        adjuntos: (n) => '$n adjuntos',
       ),
+      // El historial de vida va al final (D131).
+      vida: [
+        AcontecimientoVida(
+          id: 'v1',
+          mascotaId: 'm1',
+          tipo: TipoAcontecimiento.surgery,
+          titulo: 'Castración',
+          fecha: DateTime(2025, 6, 2),
+          notas: 'Sin complicaciones',
+          adjuntos: const ['m1/a.pdf'],
+        ),
+      ],
     );
     expect(latin1.decode(bytes.sublist(0, 5)), '%PDF-');
     expect(bytes.length, greaterThan(1000));

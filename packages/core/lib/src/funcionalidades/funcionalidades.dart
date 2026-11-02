@@ -12,6 +12,9 @@ abstract final class Funcionalidades {
   /// Libreta sanitaria (paso 1.5.1, Fase 1): oculta hasta el lanzamiento de la Fase 1.
   static const libreta = 'libreta';
 
+  /// Historial de vida de cada mascota (plan de mejoras 2.1, D131).
+  static const historial = 'historial';
+
   /// Estado RENAC en la ficha y guía "Cómo registrar a tu mascota" (1.5.2b,
   /// D96).
   static const renac = 'renac';

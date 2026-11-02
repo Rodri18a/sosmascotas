@@ -9,6 +9,7 @@ import '../../cuenta/plan_usuario_repositorio.dart';
 import '../../funcionalidades/funcionalidades_activas.dart';
 import '../../mascotas/catalogo.dart';
 import '../../mascotas/historial_pdf.dart';
+import '../../mascotas/historial_repositorio.dart';
 import '../../mascotas/libreta_repositorio.dart';
 import '../../mascotas/mascotas_repositorio.dart';
 import '../../mascotas/textos_mascota.dart';
@@ -17,6 +18,7 @@ import '../../router.dart';
 import '../../utiles/descargar.dart';
 import '../../utiles/enlaces.dart';
 import '../../widgets/volver.dart';
+import '../historial/historial.dart';
 
 IconData iconoRegistro(TipoRegistroSalud tipo) => switch (tipo) {
   TipoRegistroSalud.vaccine => Icons.vaccines_outlined,
@@ -114,8 +116,19 @@ Future<void> _historial(
   final especie = (ref.read(especiesProvider).value ?? const <Especie>[])
       .where((e) => e.id == mascota.especieId)
       .firstOrNull;
+  // El historial de vida va al final (D131); sin él, el PDF sale igual.
+  var vida = const <AcontecimientoVida>[];
+  if (ref.read(funcionalidadActivaProvider(Funcionalidades.historial))) {
+    try {
+      vida = await ref.read(historialProvider(mascotaId).future);
+    } on Exception catch (e) {
+      debugPrint('Historial de vida fuera del PDF: $e');
+    }
+  }
+  if (!context.mounted) return;
   final pdf = await historialSaludPdf(
     grupos: grupos,
+    vida: vida,
     normal: await rootBundle.load('assets/fuentes/NunitoSans-Regular.ttf'),
     negrita: await rootBundle.load('assets/fuentes/NunitoSans-Bold.ttf'),
     textos: (
@@ -135,6 +148,9 @@ Future<void> _historial(
       fecha: fechas.formatMediumDate,
       proxima: t.libretaProximaEl,
       pie: t.historialPie(fechas.formatMediumDate(DateTime.now())),
+      vidaTitulo: t.vidaPdfTitulo,
+      tipoVida: (tipo) => textoAcontecimiento(t, tipo),
+      adjuntos: t.vidaPdfAdjuntos,
     ),
   );
   final ok = descargarArchivo(

@@ -6280,6 +6280,198 @@ abstract class AppLocalizations {
   /// **'Nuevo recordatorio'**
   String get atajoRecordatorio;
 
+  /// No description provided for @vidaVida.
+  ///
+  /// In es, this message translates to:
+  /// **'Historial de vida'**
+  String get vidaVida;
+
+  /// No description provided for @vidaVacio.
+  ///
+  /// In es, this message translates to:
+  /// **'Operaciones, accidentes, enfermedades y tratamientos, con fecha y sus estudios.'**
+  String get vidaVacio;
+
+  /// No description provided for @vidaAgregar.
+  ///
+  /// In es, this message translates to:
+  /// **'Agregar al historial'**
+  String get vidaAgregar;
+
+  /// No description provided for @vidaAdjuntoN.
+  ///
+  /// In es, this message translates to:
+  /// **'Adjunto {n}'**
+  String vidaAdjuntoN(int n);
+
+  /// No description provided for @vidaTipoOperacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Operación'**
+  String get vidaTipoOperacion;
+
+  /// No description provided for @vidaTipoAccidente.
+  ///
+  /// In es, this message translates to:
+  /// **'Accidente'**
+  String get vidaTipoAccidente;
+
+  /// No description provided for @vidaTipoEnfermedad.
+  ///
+  /// In es, this message translates to:
+  /// **'Enfermedad'**
+  String get vidaTipoEnfermedad;
+
+  /// No description provided for @vidaTipoTratamiento.
+  ///
+  /// In es, this message translates to:
+  /// **'Tratamiento'**
+  String get vidaTipoTratamiento;
+
+  /// No description provided for @vidaTipoDiagnostico.
+  ///
+  /// In es, this message translates to:
+  /// **'Diagnóstico'**
+  String get vidaTipoDiagnostico;
+
+  /// No description provided for @vidaTipoOtro.
+  ///
+  /// In es, this message translates to:
+  /// **'Otro'**
+  String get vidaTipoOtro;
+
+  /// No description provided for @vidaNuevo.
+  ///
+  /// In es, this message translates to:
+  /// **'Nuevo en el historial'**
+  String get vidaNuevo;
+
+  /// No description provided for @vidaEditar.
+  ///
+  /// In es, this message translates to:
+  /// **'Editar del historial'**
+  String get vidaEditar;
+
+  /// No description provided for @vidaTipo.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Qué pasó?'**
+  String get vidaTipo;
+
+  /// No description provided for @vidaTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Título'**
+  String get vidaTitulo;
+
+  /// No description provided for @vidaTituloAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Por ejemplo: castración, fractura de pata, otitis.'**
+  String get vidaTituloAyuda;
+
+  /// No description provided for @vidaTituloFalta.
+  ///
+  /// In es, this message translates to:
+  /// **'Escribí un título.'**
+  String get vidaTituloFalta;
+
+  /// No description provided for @vidaFecha.
+  ///
+  /// In es, this message translates to:
+  /// **'Fecha'**
+  String get vidaFecha;
+
+  /// No description provided for @vidaNotasAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Lo que quieras recordar: qué dijo la veterinaria, cómo siguió.'**
+  String get vidaNotasAyuda;
+
+  /// No description provided for @vidaAdjuntos.
+  ///
+  /// In es, this message translates to:
+  /// **'Fotos y documentos ({n} de 4)'**
+  String vidaAdjuntos(int n);
+
+  /// No description provided for @vidaAdjuntoNuevo.
+  ///
+  /// In es, this message translates to:
+  /// **'Adjunto {n} (sin guardar)'**
+  String vidaAdjuntoNuevo(int n);
+
+  /// No description provided for @vidaAgregarFoto.
+  ///
+  /// In es, this message translates to:
+  /// **'Foto'**
+  String get vidaAgregarFoto;
+
+  /// No description provided for @vidaAgregarPdf.
+  ///
+  /// In es, this message translates to:
+  /// **'PDF'**
+  String get vidaAgregarPdf;
+
+  /// No description provided for @vidaAdjuntosTope.
+  ///
+  /// In es, this message translates to:
+  /// **'Llegaste a 4: quitá uno para sumar otro.'**
+  String get vidaAdjuntosTope;
+
+  /// No description provided for @vidaAdjuntoInvalido.
+  ///
+  /// In es, this message translates to:
+  /// **'Ese archivo no se puede usar.'**
+  String get vidaAdjuntoInvalido;
+
+  /// No description provided for @vidaAdjuntoGrande.
+  ///
+  /// In es, this message translates to:
+  /// **'El PDF pesa más de 5 MB.'**
+  String get vidaAdjuntoGrande;
+
+  /// No description provided for @vidaBorrar.
+  ///
+  /// In es, this message translates to:
+  /// **'Borrar del historial'**
+  String get vidaBorrar;
+
+  /// No description provided for @vidaBorrarTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Borrar «{titulo}»?'**
+  String vidaBorrarTitulo(String titulo);
+
+  /// No description provided for @vidaBorrarExplicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Se borran también sus fotos y documentos.'**
+  String get vidaBorrarExplicacion;
+
+  /// No description provided for @vidaQuitarAdjunto.
+  ///
+  /// In es, this message translates to:
+  /// **'Quitar'**
+  String get vidaQuitarAdjunto;
+
+  /// No description provided for @vidaPdfTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Historial de vida'**
+  String get vidaPdfTitulo;
+
+  /// No description provided for @vidaPdfAdjuntos.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =1{1 adjunto en la app} other{{n} adjuntos en la app}}'**
+  String vidaPdfAdjuntos(int n);
+
+  /// No description provided for @atajoHistorial.
+  ///
+  /// In es, this message translates to:
+  /// **'Agregar al historial'**
+  String get atajoHistorial;
+
   /// No description provided for @atajosMas.
   ///
   /// In es, this message translates to:

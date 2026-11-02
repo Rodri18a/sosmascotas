@@ -22,6 +22,7 @@ import 'features/chat/chat_screen.dart';
 import 'features/comunidad/comunidad_screen.dart';
 import 'features/consentimiento/consentimiento_screen.dart';
 import 'features/eventos/eventos.dart';
+import 'features/historial/historial.dart';
 import 'features/hogar/hogar_screen.dart';
 import 'features/ingresar/ingresar_screen.dart';
 import 'features/legal/legal_screen.dart';
@@ -74,6 +75,7 @@ abstract final class Rutas {
   static const noDisponible = '/no-disponible';
   static const libreta = '/libreta';
   static const recordatorios = '/recordatorios';
+  static const historial = '/historial';
   static const hogar = '/hogar';
   static const unirme = '/unirme';
   static const activar = '/activar';
@@ -138,6 +140,7 @@ abstract final class Rutas {
   static const conFuncionalidad = <String, String>{
     '$libreta/': Funcionalidades.libreta,
     '$recordatorios/': Funcionalidades.recordatorios,
+    '$historial/': Funcionalidades.historial,
     hogar: Funcionalidades.hogar,
     perfil: Funcionalidades.perfil,
     chats: Funcionalidades.chat,
@@ -176,6 +179,7 @@ abstract final class Rutas {
     avisos,
     '$libreta/',
     '$recordatorios/',
+    '$historial/',
     hogar,
     '$unirme/',
     '$_equipo/',
@@ -209,6 +213,10 @@ abstract final class Rutas {
   static String qrMascota(String id) => '$mascotas/$id/qr';
   static String nuevoRegistroSalud(String mascotaId) =>
       '$libreta/$mascotaId/nuevo';
+  static String nuevoAcontecimiento(String mascotaId) =>
+      '$historial/$mascotaId/nuevo';
+  static String editarAcontecimiento(String mascotaId, String id) =>
+      '$historial/$mascotaId/$id';
   static String editarRegistroSalud(String mascotaId, String id) =>
       '$libreta/$mascotaId/$id';
   static String chat(String id) => '$chats/$id';
@@ -426,6 +434,18 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (_, state) => RegistroSaludScreen(
           mascotaId: state.pathParameters['mascota']!,
           registroId: state.pathParameters['id'],
+        ),
+      ),
+      GoRoute(
+        path: '${Rutas.historial}/:mascota/nuevo',
+        builder: (_, state) =>
+            AcontecimientoScreen(mascotaId: state.pathParameters['mascota']!),
+      ),
+      GoRoute(
+        path: '${Rutas.historial}/:mascota/:id',
+        builder: (_, state) => AcontecimientoScreen(
+          mascotaId: state.pathParameters['mascota']!,
+          acontecimientoId: state.pathParameters['id'],
         ),
       ),
       GoRoute(
