@@ -13,11 +13,11 @@ import '../../mascotas/mascota_elegida.dart';
 import '../../mascotas/mascotas_repositorio.dart';
 import '../../metricas/metricas.dart';
 import '../../noticias/noticias_repositorio.dart';
+import '../../recorrido/pasos.dart';
+import '../../recorrido/recorrido.dart';
 import '../../router.dart';
 import '../../utiles/enlaces.dart';
-import '../../widgets/boton_ajustes.dart';
-import '../../widgets/boton_avisos.dart';
-import '../../widgets/boton_mensajes.dart';
+import '../../widgets/boton_ayuda.dart';
 import '../comunidad/comunidad_screen.dart';
 import '../eventos/eventos.dart';
 import '../menu/menu_principal.dart';
@@ -89,122 +89,134 @@ class _NoticiasScreenState extends ConsumerState<NoticiasScreen> {
     final especie = _tocoChip ? _especie : ref.watch(especieElegidaProvider);
     final filtro = especie == null ? const <int>{} : {especie};
 
-    return Scaffold(
-      drawer: const MenuPrincipal(),
-      appBar: AppBar(
-        title: Text(t.noticiasTitulo),
-        actions: const [BotonMensajes(), BotonAvisos(), BotonAjustes()],
-      ),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          ref
-            ..invalidate(reaccionesProvider)
-            ..invalidate(bannersProvider);
-          if (_comunidad) {
+    return ZonaRecorrido(
+      pantalla: PantallaRecorrido.inicio,
+      pasos: PasosRecorrido.inicio,
+      child: Scaffold(
+        drawer: const MenuPrincipal(),
+        appBar: AppBar(
+          leading: botonMenu,
+          title: Text(t.noticiasTitulo),
+          actions: accionesPestana(),
+        ),
+        body: RefreshIndicator(
+          onRefresh: () async {
             ref
-              ..invalidate(novedadesProvider)
-              ..invalidate(resumenComunidadProvider)
-              ..invalidate(eventosCercanosProvider);
-            await ref.read(novedadesProvider.future);
-          } else {
-            ref.invalidate(noticiasProvider);
-            await ref.read(noticiasProvider.future);
-          }
-        },
-        child: ListView(
-          padding: const EdgeInsets.only(bottom: 24),
-          children: [
-            // Banners del carrusel, arriba de todo (D128).
-            const CarruselBanners(),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-              child: SegmentedButton<bool>(
-                segments: [
-                  ButtonSegment(
-                    value: false,
-                    icon: const Icon(Icons.newspaper_outlined),
-                    label: Text(t.noticiasSeccionNoticias),
-                  ),
-                  ButtonSegment(
-                    value: true,
-                    icon: const Icon(Icons.diversity_3_outlined),
-                    label: Text(t.noticiasSeccionComunidad),
-                  ),
-                ],
-                selected: {_comunidad},
-                onSelectionChanged: (s) => setState(() => _comunidad = s.first),
-              ),
-            ),
-            if (mias.isNotEmpty)
-              SizedBox(
-                height: 56,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 8,
-                  ),
-                  children: [
-                    ChoiceChip(
-                      label: Text(t.noticiasTodas),
-                      selected: especie == null,
-                      onSelected: (_) => setState(() {
-                        _tocoChip = true;
-                        _especie = null;
-                      }),
-                    ),
-                    for (final e in mias) ...[
-                      const SizedBox(width: 6),
-                      ChoiceChip(
-                        label: Text('${e.icono} ${e.nombre}'),
-                        selected: especie == e.id,
-                        onSelected: (_) => setState(() {
-                          _tocoChip = true;
-                          _especie = e.id;
-                        }),
+              ..invalidate(reaccionesProvider)
+              ..invalidate(bannersProvider);
+            if (_comunidad) {
+              ref
+                ..invalidate(novedadesProvider)
+                ..invalidate(resumenComunidadProvider)
+                ..invalidate(eventosCercanosProvider);
+              await ref.read(novedadesProvider.future);
+            } else {
+              ref.invalidate(noticiasProvider);
+              await ref.read(noticiasProvider.future);
+            }
+          },
+          child: ListView(
+            padding: const EdgeInsets.only(bottom: 24),
+            children: [
+              // Banners del carrusel, arriba de todo (D128).
+              const MarcaRecorrido('carrusel', child: CarruselBanners()),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                child: MarcaRecorrido(
+                  'secciones',
+                  child: SegmentedButton<bool>(
+                    segments: [
+                      ButtonSegment(
+                        value: false,
+                        icon: const Icon(Icons.newspaper_outlined),
+                        label: Text(t.noticiasSeccionNoticias),
+                      ),
+                      ButtonSegment(
+                        value: true,
+                        icon: const Icon(Icons.diversity_3_outlined),
+                        label: Text(t.noticiasSeccionComunidad),
                       ),
                     ],
-                  ],
+                    selected: {_comunidad},
+                    onSelectionChanged: (s) =>
+                        setState(() => _comunidad = s.first),
+                  ),
                 ),
               ),
-            if (_comunidad) ...[
-              // Próximos eventos de la zona, arriba de las novedades (D94).
-              const Padding(
-                padding: EdgeInsets.fromLTRB(16, 8, 16, 0),
-                child: SeccionEventos(),
-              ),
-              _Comunidad(filtro: filtro),
-            ] else
-              switch (ref.watch(noticiasProvider)) {
-                AsyncData(:final value) => () {
-                  final lista = [
-                    for (final n in value)
-                      if (n.esPara(filtro)) n,
-                  ];
-                  return lista.isEmpty
-                      ? Padding(
-                          padding: const EdgeInsets.all(32),
-                          child: Text(
-                            t.noticiasVacio,
-                            textAlign: TextAlign.center,
-                          ),
-                        )
-                      : Column(
-                          children: [
-                            for (final n in lista) TarjetaNoticia(noticia: n),
-                          ],
-                        );
-                }(),
-                AsyncError() => Padding(
-                  padding: const EdgeInsets.all(32),
-                  child: Text(t.errorSinConexion, textAlign: TextAlign.center),
+              if (mias.isNotEmpty)
+                SizedBox(
+                  height: 56,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
+                    children: [
+                      ChoiceChip(
+                        label: Text(t.noticiasTodas),
+                        selected: especie == null,
+                        onSelected: (_) => setState(() {
+                          _tocoChip = true;
+                          _especie = null;
+                        }),
+                      ),
+                      for (final e in mias) ...[
+                        const SizedBox(width: 6),
+                        ChoiceChip(
+                          label: Text('${e.icono} ${e.nombre}'),
+                          selected: especie == e.id,
+                          onSelected: (_) => setState(() {
+                            _tocoChip = true;
+                            _especie = e.id;
+                          }),
+                        ),
+                      ],
+                    ],
+                  ),
                 ),
-                _ => const Padding(
-                  padding: EdgeInsets.all(32),
-                  child: Center(child: CircularProgressIndicator()),
+              if (_comunidad) ...[
+                // Próximos eventos de la zona, arriba de las novedades (D94).
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(16, 8, 16, 0),
+                  child: SeccionEventos(),
                 ),
-              },
-          ],
+                _Comunidad(filtro: filtro),
+              ] else
+                switch (ref.watch(noticiasProvider)) {
+                  AsyncData(:final value) => () {
+                    final lista = [
+                      for (final n in value)
+                        if (n.esPara(filtro)) n,
+                    ];
+                    return lista.isEmpty
+                        ? Padding(
+                            padding: const EdgeInsets.all(32),
+                            child: Text(
+                              t.noticiasVacio,
+                              textAlign: TextAlign.center,
+                            ),
+                          )
+                        : Column(
+                            children: [
+                              for (final n in lista) TarjetaNoticia(noticia: n),
+                            ],
+                          );
+                  }(),
+                  AsyncError() => Padding(
+                    padding: const EdgeInsets.all(32),
+                    child: Text(
+                      t.errorSinConexion,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  _ => const Padding(
+                    padding: EdgeInsets.all(32),
+                    child: Center(child: CircularProgressIndicator()),
+                  ),
+                },
+            ],
+          ),
         ),
       ),
     );

@@ -5,12 +5,12 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
 import '../../cuenta/con_cuenta.dart';
+import '../../recorrido/pasos.dart';
+import '../../recorrido/recorrido.dart';
 import '../../router.dart';
 import '../../sos/sos_repositorio.dart';
 import '../../utiles/tiempo.dart';
-import '../../widgets/boton_ajustes.dart';
-import '../../widgets/boton_avisos.dart';
-import '../../widgets/boton_mensajes.dart';
+import '../../widgets/boton_ayuda.dart';
 import '../menu/menu_principal.dart';
 
 /// Pestaña SOS: reportes activos ordenados por cercanía, y botón para reportar.
@@ -28,64 +28,78 @@ class _SosScreenState extends ConsumerState<SosScreen> {
   Widget build(BuildContext context) {
     final t = context.t;
     final reportes = ref.watch(sosCercanosProvider);
-    return Scaffold(
-      drawer: const MenuPrincipal(),
-      appBar: AppBar(
-        title: Text(t.pestanaSos),
-        actions: const [BotonMensajes(), BotonAvisos(), BotonAjustes()],
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: context.marca.acento,
-        foregroundColor: context.marca.sobreAcento,
-        onPressed: () => abrirConCuenta(
-          context,
-          ref,
-          destino: Rutas.sosNuevo,
-          motivo: t.sosMotivoCuenta,
+    return ZonaRecorrido(
+      pantalla: PantallaRecorrido.sos,
+      pasos: PasosRecorrido.sos,
+      child: Scaffold(
+        drawer: const MenuPrincipal(),
+        appBar: AppBar(
+          leading: botonMenu,
+          title: Text(t.pestanaSos),
+          actions: accionesPestana(),
         ),
-        icon: const Icon(Icons.add_outlined),
-        label: Text(t.sosReportar),
-      ),
-      body: RefreshIndicator(
-        onRefresh: () => ref.refresh(sosCercanosProvider.future),
-        child: ListView(
-          padding: const EdgeInsets.only(bottom: 96),
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-              child: Wrap(
-                spacing: 8,
-                children: [
-                  for (final (valor, etiqueta) in [
-                    (null, t.sosFiltroTodos),
-                    (TipoSos.perdida, t.sosFiltroPerdidas),
-                    (TipoSos.encontrada, t.sosFiltroEncontradas),
-                  ])
-                    ChoiceChip(
-                      label: Text(etiqueta),
-                      selected: _filtro == valor,
-                      onSelected: (_) => setState(() => _filtro = valor),
-                    ),
-                ],
-              ),
+        floatingActionButton: MarcaRecorrido(
+          'reportar',
+          child: FloatingActionButton.extended(
+            backgroundColor: context.marca.acento,
+            foregroundColor: context.marca.sobreAcento,
+            onPressed: () => abrirConCuenta(
+              context,
+              ref,
+              destino: Rutas.sosNuevo,
+              motivo: t.sosMotivoCuenta,
             ),
-            const _MisReportes(),
-            ...switch (reportes) {
-              AsyncData(value: final lista) => _tarjetas(context, lista),
-              AsyncError() => [
-                Padding(
-                  padding: const EdgeInsets.all(32),
-                  child: Text(t.errorSinConexion, textAlign: TextAlign.center),
+            icon: const Icon(Icons.add_outlined),
+            label: Text(t.sosReportar),
+          ),
+        ),
+        body: RefreshIndicator(
+          onRefresh: () => ref.refresh(sosCercanosProvider.future),
+          child: ListView(
+            padding: const EdgeInsets.only(bottom: 96),
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                child: MarcaRecorrido(
+                  'filtros',
+                  child: Wrap(
+                    spacing: 8,
+                    children: [
+                      for (final (valor, etiqueta) in [
+                        (null, t.sosFiltroTodos),
+                        (TipoSos.perdida, t.sosFiltroPerdidas),
+                        (TipoSos.encontrada, t.sosFiltroEncontradas),
+                      ])
+                        ChoiceChip(
+                          label: Text(etiqueta),
+                          selected: _filtro == valor,
+                          onSelected: (_) => setState(() => _filtro = valor),
+                        ),
+                    ],
+                  ),
                 ),
-              ],
-              _ => const [
-                Padding(
-                  padding: EdgeInsets.all(32),
-                  child: Center(child: CircularProgressIndicator()),
-                ),
-              ],
-            },
-          ],
+              ),
+              const _MisReportes(),
+              ...switch (reportes) {
+                AsyncData(value: final lista) => _tarjetas(context, lista),
+                AsyncError() => [
+                  Padding(
+                    padding: const EdgeInsets.all(32),
+                    child: Text(
+                      t.errorSinConexion,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+                _ => const [
+                  Padding(
+                    padding: EdgeInsets.all(32),
+                    child: Center(child: CircularProgressIndicator()),
+                  ),
+                ],
+              },
+            ],
+          ),
         ),
       ),
     );

@@ -90,7 +90,7 @@ void main() {
     await tester.pumpAndSettle();
     await _tocarPestana(tester, 'Urgencias');
 
-    await tester.tap(find.byTooltip('Ajustes'));
+    await abrirAjustesDesdeMenu(tester);
     await tester.pumpAndSettle();
     expect(find.widgetWithText(AppBar, 'Ajustes'), findsOneWidget);
     expect(find.byType(BarraInferior), findsNothing);

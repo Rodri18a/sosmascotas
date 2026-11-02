@@ -70,6 +70,12 @@ abstract final class Eventos {
 
   /// Opción tocada en el menú ☰ (`item`: cuál), para ver qué se usa.
   static const menuItemOpen = 'menu_item_open';
+
+  /// Recorrido guiado de una pantalla (D130): `screen`, y si arrancó solo
+  /// (`auto`) o desde el botón ?. Al saltarlo se anota en qué paso (`step`).
+  static const tourStart = 'tour_start';
+  static const tourFinish = 'tour_finish';
+  static const tourSkip = 'tour_skip';
   static const tabOpen = 'tab_open';
   static const tagActivate = 'tag_activate';
   static const tagUnlink = 'tag_unlink';

@@ -5,6 +5,7 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
 import '../../metricas/metricas.dart';
+import '../../recorrido/recorrido.dart';
 
 /// Pestañas de la barra inferior, en el orden de las ramas del router (D94).
 enum Pestana { noticias, sos, mapa, mascotas, ayuda }
@@ -17,20 +18,26 @@ class AppShell extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      body: navigationShell,
-      bottomNavigationBar: BarraInferior(
-        actual: Pestana.values[navigationShell.currentIndex],
-        onElegir: (p) {
-          final misma = p.index == navigationShell.currentIndex;
-          if (!misma) {
-            ref
-                .read(metricasProvider)
-                .track(Eventos.tabOpen, props: {'tab': p.name});
-          }
-          // Tocar la pestaña activa vuelve a su pantalla inicial.
-          navigationShell.goBranch(p.index, initialLocation: misma);
-        },
+    // Zona del recorrido de afuera: la barra la comparten todas las pestañas.
+    return ZonaRecorrido(
+      child: Scaffold(
+        body: navigationShell,
+        bottomNavigationBar: MarcaRecorrido(
+          'barra',
+          child: BarraInferior(
+            actual: Pestana.values[navigationShell.currentIndex],
+            onElegir: (p) {
+              final misma = p.index == navigationShell.currentIndex;
+              if (!misma) {
+                ref
+                    .read(metricasProvider)
+                    .track(Eventos.tabOpen, props: {'tab': p.name});
+              }
+              // Tocar la pestaña activa vuelve a su pantalla inicial.
+              navigationShell.goBranch(p.index, initialLocation: misma);
+            },
+          ),
+        ),
       ),
     );
   }

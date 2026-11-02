@@ -3486,6 +3486,190 @@ class AppLocalizationsEs extends AppLocalizations {
   String get menuGrupoCuenta => 'Mi cuenta';
 
   @override
+  String get recorridoBoton => 'Cómo funciona esta pantalla';
+
+  @override
+  String get recorridoSiguiente => 'Siguiente';
+
+  @override
+  String get recorridoAtras => 'Atrás';
+
+  @override
+  String get recorridoSaltar => 'Saltar';
+
+  @override
+  String get recorridoListo => 'Listo';
+
+  @override
+  String recorridoPaso(int actual, int total) {
+    return 'Paso $actual de $total';
+  }
+
+  @override
+  String get recInicioTitulo => '¡Te damos la bienvenida a Huellitas!';
+
+  @override
+  String get recInicioTexto => 'En pocos pasos te mostramos cómo se usa.';
+
+  @override
+  String get recMenuTitulo => 'El menú';
+
+  @override
+  String get recMenuTexto =>
+      'Todas las secciones: tus mascotas, adopción, turnos, tu cuenta y más.';
+
+  @override
+  String get recAvisosTitulo => 'Mensajes y avisos';
+
+  @override
+  String get recAvisosTexto =>
+      'Acá te llegan los mensajes y los avisos, por ejemplo si alguien escanea la chapita QR de tu mascota.';
+
+  @override
+  String get recCarruselTitulo => 'Destacados';
+
+  @override
+  String get recCarruselTexto =>
+      'Novedades y promociones de la zona. Tocá una para ver más.';
+
+  @override
+  String get recSeccionesTitulo => 'Noticias y Comunidad';
+
+  @override
+  String get recSeccionesTexto =>
+      'Noticias para cuidar a tu mascota, y lo que pasa cerca: eventos, perdidos y reencuentros.';
+
+  @override
+  String get recBarraTitulo => 'Lo principal, abajo';
+
+  @override
+  String get recBarraTexto =>
+      'SOS para perdidos y encontrados, el Mapa en el medio, tus mascotas y Urgencias.';
+
+  @override
+  String get recAyudaTitulo => '¿Alguna duda?';
+
+  @override
+  String get recAyudaTexto =>
+      'Tocá ? en cualquier pantalla para ver de nuevo cómo funciona.';
+
+  @override
+  String get recSosTitulo => 'Perdidos y encontrados';
+
+  @override
+  String get recSosTexto =>
+      'Las mascotas perdidas y encontradas cerca tuyo, de la más cercana a la más lejana.';
+
+  @override
+  String get recSosFiltrosTitulo => 'Filtrá';
+
+  @override
+  String get recSosFiltrosTexto =>
+      'Mirá solo las perdidas o solo las encontradas.';
+
+  @override
+  String get recSosReportarTitulo => 'Reportá';
+
+  @override
+  String get recSosReportarTexto =>
+      'Si se perdió la tuya o encontraste una, publicalo acá. Tu teléfono y tu casa nunca se muestran: quien la vea te deja sus datos.';
+
+  @override
+  String get recMapaTitulo => 'El mapa';
+
+  @override
+  String get recMapaTexto =>
+      'Veterinarias, tiendas, servicios y lugares que aceptan mascotas, cerca tuyo.';
+
+  @override
+  String get recMapaVistasTitulo => 'Mapa o lista';
+
+  @override
+  String get recMapaVistasTexto =>
+      'Pasá a una lista, o mirá los servicios sin local que van a tu casa.';
+
+  @override
+  String get recMapaFiltrosTitulo => 'Qué ver';
+
+  @override
+  String get recMapaFiltrosTexto =>
+      'Elegí los rubros: salud, tiendas, cuidado, salidas o refugios.';
+
+  @override
+  String get recMapaBuscarTitulo => 'Buscar';
+
+  @override
+  String get recMapaBuscarTexto =>
+      'Encontrá un lugar por su nombre o por su rubro.';
+
+  @override
+  String get recMapaMarcarTitulo => '¿Falta un lugar?';
+
+  @override
+  String get recMapaMarcarTexto => 'Marcalo en el mapa y lo sumamos.';
+
+  @override
+  String get recMascotasTitulo => 'Tus mascotas';
+
+  @override
+  String get recMascotasTexto =>
+      'Su ficha, la libreta de salud, los recordatorios y la chapita QR, todo junto.';
+
+  @override
+  String get recMascotasListaTitulo => 'Su ficha';
+
+  @override
+  String get recMascotasListaTexto =>
+      'Tocá una mascota para ver su ficha, sus vacunas y su chapita QR.';
+
+  @override
+  String get recMascotasAgregarTitulo => 'Agregá una mascota';
+
+  @override
+  String get recMascotasAgregarTexto => 'Con una foto y sus datos. Es gratis.';
+
+  @override
+  String get recUrgenciasTitulo => 'Urgencias';
+
+  @override
+  String get recUrgenciasTexto => 'Para cuando hace falta ayuda ya.';
+
+  @override
+  String get recUrgencias911Titulo => 'Si hay una persona en riesgo';
+
+  @override
+  String get recUrgencias911Texto =>
+      'Llamá al 911. Huellitas es solo para animales.';
+
+  @override
+  String get recUrgenciasGuardiaTitulo => 'Veterinarias de urgencia';
+
+  @override
+  String get recUrgenciasGuardiaTexto =>
+      'Las que atienden urgencias cerca tuyo. Más abajo, refugios y organismos.';
+
+  @override
+  String get recNegocioTitulo => 'Tu negocio en Huellitas';
+
+  @override
+  String get recNegocioTexto =>
+      'Desde acá manejás tu ficha, tu agenda, tu catálogo y tus pedidos.';
+
+  @override
+  String get recNegocioSeccionesTitulo => 'Las secciones';
+
+  @override
+  String get recNegocioSeccionesTexto =>
+      'Panel con tus números, Agenda de turnos, Catálogo, Pedidos y la Ficha del negocio.';
+
+  @override
+  String get recNegocioVolverTitulo => 'Volver a Huellitas';
+
+  @override
+  String get recNegocioVolverTexto =>
+      'Para usar la app como dueño o dueña de mascotas.';
+
+  @override
   String get menuReportarPerdida => 'Reportar que se perdió';
 
   @override

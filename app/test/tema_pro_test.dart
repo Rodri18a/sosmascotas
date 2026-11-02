@@ -28,7 +28,7 @@ Color _primario(WidgetTester tester) =>
 
 Future<void> _abrirAjustes(WidgetTester tester) async {
   await tester.pumpAndSettle();
-  await tester.tap(find.byTooltip('Ajustes'));
+  await abrirAjustesDesdeMenu(tester);
   await tester.pumpAndSettle();
 }
 

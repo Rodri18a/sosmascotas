@@ -11,10 +11,10 @@ import '../../mascotas/catalogo.dart';
 import '../../mascotas/mascota_activa.dart';
 import '../../mascotas/mascotas_repositorio.dart';
 import '../../mascotas/textos_mascota.dart';
+import '../../recorrido/pasos.dart';
+import '../../recorrido/recorrido.dart';
 import '../../router.dart';
-import '../../widgets/boton_ajustes.dart';
-import '../../widgets/boton_avisos.dart';
-import '../../widgets/boton_mensajes.dart';
+import '../../widgets/boton_ayuda.dart';
 import '../../widgets/en_construccion.dart';
 import '../../widgets/foto_mascota.dart';
 import '../menu/menu_principal.dart';
@@ -28,15 +28,18 @@ class MascotasScreen extends ConsumerWidget {
     final conectado = ref.watch(conectadoProvider);
     final mascotas = ref.watch(misMascotasProvider);
 
-    Widget agregar() => FilledButton.icon(
-      onPressed: () => abrirConCuenta(
-        context,
-        ref,
-        destino: Rutas.mascotaNueva,
-        motivo: t.mascotasMotivoCuenta,
+    Widget agregar() => MarcaRecorrido(
+      'agregar',
+      child: FilledButton.icon(
+        onPressed: () => abrirConCuenta(
+          context,
+          ref,
+          destino: Rutas.mascotaNueva,
+          motivo: t.mascotasMotivoCuenta,
+        ),
+        icon: const Icon(Icons.add_outlined),
+        label: Text(t.mascotasAgregar),
       ),
-      icon: const Icon(Icons.add_outlined),
-      label: Text(t.mascotasAgregar),
     );
 
     final cuerpo = switch (mascotas) {
@@ -56,20 +59,28 @@ class MascotasScreen extends ConsumerWidget {
     };
 
     final hayLista = conectado && (mascotas.value?.isNotEmpty ?? false);
-    return Scaffold(
-      drawer: const MenuPrincipal(),
-      appBar: AppBar(
-        title: Text(t.pestanaMascotas),
-        actions: const [BotonMensajes(), BotonAvisos(), BotonAjustes()],
+    return ZonaRecorrido(
+      pantalla: PantallaRecorrido.mascotas,
+      pasos: PasosRecorrido.mascotas,
+      child: Scaffold(
+        drawer: const MenuPrincipal(),
+        appBar: AppBar(
+          leading: botonMenu,
+          title: Text(t.pestanaMascotas),
+          actions: accionesPestana(),
+        ),
+        body: cuerpo,
+        floatingActionButton: hayLista
+            ? MarcaRecorrido(
+                'agregar',
+                child: FloatingActionButton.extended(
+                  onPressed: () => context.push(Rutas.mascotaNueva),
+                  icon: const Icon(Icons.add_outlined),
+                  label: Text(t.mascotasAgregar),
+                ),
+              )
+            : null,
       ),
-      body: cuerpo,
-      floatingActionButton: hayLista
-          ? FloatingActionButton.extended(
-              onPressed: () => context.push(Rutas.mascotaNueva),
-              icon: const Icon(Icons.add_outlined),
-              label: Text(t.mascotasAgregar),
-            )
-          : null,
     );
   }
 }
@@ -86,15 +97,18 @@ class _Lista extends ConsumerWidget {
       padding: const EdgeInsets.only(bottom: 96),
       children: [
         // Fila superior: elegir la mascota activa con un toque.
-        SizedBox(
-          height: 104,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            children: [
-              for (final m in mascotas)
-                _AvatarActivo(mascota: m, activa: m.id == activa?.id),
-            ],
+        MarcaRecorrido(
+          'lista',
+          child: SizedBox(
+            height: 104,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              children: [
+                for (final m in mascotas)
+                  _AvatarActivo(mascota: m, activa: m.id == activa?.id),
+              ],
+            ),
           ),
         ),
         const Divider(height: 1),

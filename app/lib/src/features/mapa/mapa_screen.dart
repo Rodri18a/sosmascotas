@@ -19,12 +19,12 @@ import '../../mapa/mapa_vista.dart';
 import '../../mascotas/mascota_activa.dart';
 import '../../mascotas/mascotas_repositorio.dart';
 import '../../metricas/metricas.dart';
+import '../../recorrido/pasos.dart';
+import '../../recorrido/recorrido.dart';
 import '../../router.dart';
 import '../../sos/sos_repositorio.dart';
 import '../../utiles/enlaces.dart';
-import '../../widgets/boton_ajustes.dart';
-import '../../widgets/boton_avisos.dart';
-import '../../widgets/boton_mensajes.dart';
+import '../../widgets/boton_ayuda.dart';
 import '../eventos/eventos.dart';
 import '../instalar/instalar.dart';
 import '../menu/menu_principal.dart';
@@ -257,15 +257,18 @@ class _MapaScreenState extends ConsumerState<MapaScreen> {
           Positioned(
             right: 12,
             bottom: 12,
-            child: FloatingActionButton.extended(
-              heroTag: 'marcar-lugar',
-              onPressed: () async {
-                final marcado = await context.push<bool>(Rutas.marcarLugar);
-                // Para ver la marca nueva se vuelve a traer la zona.
-                if (marcado ?? false) setState(() => _cargado = null);
-              },
-              icon: const Icon(Icons.add_location_alt_outlined),
-              label: Text(t.marcarLugar),
+            child: MarcaRecorrido(
+              'marcar',
+              child: FloatingActionButton.extended(
+                heroTag: 'marcar-lugar',
+                onPressed: () async {
+                  final marcado = await context.push<bool>(Rutas.marcarLugar);
+                  // Para ver la marca nueva se vuelve a traer la zona.
+                  if (marcado ?? false) setState(() => _cargado = null);
+                },
+                icon: const Icon(Icons.add_location_alt_outlined),
+                label: Text(t.marcarLugar),
+              ),
             ),
           ),
         const Positioned(
@@ -277,83 +280,98 @@ class _MapaScreenState extends ConsumerState<MapaScreen> {
       ],
     );
 
-    return Scaffold(
-      drawer: const MenuPrincipal(),
-      appBar: AppBar(
-        title: Text(t.pestanaMapa),
-        actions: [
-          SiFuncionalidad(
-            Funcionalidades.busqueda,
-            child: IconButton(
-              tooltip: t.buscarLugares,
-              icon: const Icon(Icons.search_outlined),
-              onPressed: () => context.push(
-                Rutas.buscar(_visible?.centro ?? ref.read(miZonaProvider)),
+    return ZonaRecorrido(
+      pantalla: PantallaRecorrido.mapa,
+      pasos: PasosRecorrido.mapa,
+      child: Scaffold(
+        drawer: const MenuPrincipal(),
+        appBar: AppBar(
+          leading: botonMenu,
+          title: Text(t.pestanaMapa),
+          actions: accionesPestana(
+            antes: [
+              SiFuncionalidad(
+                Funcionalidades.busqueda,
+                child: MarcaRecorrido(
+                  'buscar',
+                  child: IconButton(
+                    tooltip: t.buscarLugares,
+                    icon: const Icon(Icons.search_outlined),
+                    onPressed: () => context.push(
+                      Rutas.buscar(
+                        _visible?.centro ?? ref.read(miZonaProvider),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+              child: MarcaRecorrido(
+                'vistas',
+                child: SegmentedButton<_Vista>(
+                  segments: [
+                    ButtonSegment(
+                      value: _Vista.mapa,
+                      icon: const Icon(Icons.map_outlined),
+                      label: Text(t.mapaVistaMapa),
+                    ),
+                    ButtonSegment(
+                      value: _Vista.lista,
+                      icon: const Icon(Icons.list_outlined),
+                      label: Text(t.mapaVistaLista),
+                    ),
+                    ButtonSegment(
+                      value: _Vista.sinLocal,
+                      icon: const Icon(Icons.local_shipping_outlined),
+                      label: Text(t.mapaVistaSinLocal),
+                    ),
+                  ],
+                  selected: {_vista},
+                  onSelectionChanged: (s) => _cambiarVista(s.first),
+                ),
               ),
             ),
-          ),
-          const BotonMensajes(),
-          const BotonAvisos(),
-          const BotonAjustes(),
-        ],
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
-            child: SegmentedButton<_Vista>(
-              segments: [
-                ButtonSegment(
-                  value: _Vista.mapa,
-                  icon: const Icon(Icons.map_outlined),
-                  label: Text(t.mapaVistaMapa),
-                ),
-                ButtonSegment(
-                  value: _Vista.lista,
-                  icon: const Icon(Icons.list_outlined),
-                  label: Text(t.mapaVistaLista),
-                ),
-                ButtonSegment(
-                  value: _Vista.sinLocal,
-                  icon: const Icon(Icons.local_shipping_outlined),
-                  label: Text(t.mapaVistaSinLocal),
-                ),
-              ],
-              selected: {_vista},
-              onSelectionChanged: (s) => _cambiarVista(s.first),
+            MarcaRecorrido(
+              'filtros',
+              child: _BarraFiltros(
+                filtros: _filtros,
+                sinLocal: _vista == _Vista.sinLocal,
+                onCambiar: (f) => setState(() => _filtros = f),
+                onMasFiltros: _abrirFiltros,
+              ),
             ),
-          ),
-          _BarraFiltros(
-            filtros: _filtros,
-            sinLocal: _vista == _Vista.sinLocal,
-            onCambiar: (f) => setState(() => _filtros = f),
-            onMasFiltros: _abrirFiltros,
-          ),
-          Expanded(
-            // El mapa queda creado aunque se vea la lista: se crea una
-            // sola vez por sesión (regla de costo 5).
-            child: IndexedStack(
-              index: _vista.index,
-              children: [
-                mapa,
-                _Lista(
-                  sos: _sosFiltrados(),
-                  comercios: ordenarParaLista(
-                    _filtrados(),
-                    ahora: ref.watch(relojProvider)(),
+            Expanded(
+              // El mapa queda creado aunque se vea la lista: se crea una
+              // sola vez por sesión (regla de costo 5).
+              child: IndexedStack(
+                index: _vista.index,
+                children: [
+                  mapa,
+                  _Lista(
+                    sos: _sosFiltrados(),
+                    comercios: ordenarParaLista(
+                      _filtrados(),
+                      ahora: ref.watch(relojProvider)(),
+                      desde: _visible?.centro,
+                    ),
                     desde: _visible?.centro,
                   ),
-                  desde: _visible?.centro,
-                ),
-                // Se arma (y consulta) solo al abrirla.
-                if (_vista == _Vista.sinLocal)
-                  _SinLocal(filtros: _filtros, especies: _especies())
-                else
-                  const SizedBox.shrink(),
-              ],
+                  // Se arma (y consulta) solo al abrirla.
+                  if (_vista == _Vista.sinLocal)
+                    _SinLocal(filtros: _filtros, especies: _especies())
+                  else
+                    const SizedBox.shrink(),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -6,7 +6,7 @@ import 'cuenta_falsa.dart';
 import 'helpers.dart';
 
 Future<void> _irAIngresarDesdeAjustes(WidgetTester tester) async {
-  await tester.tap(find.byTooltip('Ajustes'));
+  await abrirAjustesDesdeMenu(tester);
   await tester.pumpAndSettle();
   await tester.tap(find.text('Ingresar o crear cuenta'));
   await tester.pumpAndSettle();
@@ -88,7 +88,7 @@ void main() {
     );
     await tester.pumpWidget(appDePrueba(cuenta: cuenta));
     await tester.pumpAndSettle();
-    await tester.tap(find.byTooltip('Ajustes'));
+    await abrirAjustesDesdeMenu(tester);
     await tester.pumpAndSettle();
 
     await tester.tap(find.text('Cerrar sesión'));
@@ -96,7 +96,7 @@ void main() {
 
     // Se descarta la navegación y arranca de nuevo en el Mapa (CU-07).
     expect(find.widgetWithText(AppBar, 'Mapa'), findsOneWidget);
-    await tester.tap(find.byTooltip('Ajustes'));
+    await abrirAjustesDesdeMenu(tester);
     await tester.pumpAndSettle();
     expect(find.text('Ingresar o crear cuenta'), findsOneWidget);
   });

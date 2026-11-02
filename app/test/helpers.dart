@@ -46,6 +46,7 @@ import 'package:sosmascota/src/qr/pedidos_chapita_repositorio.dart';
 import 'package:sosmascota/src/qr/qr_repositorio.dart';
 import 'package:sosmascota/src/recordatorios/avisador.dart';
 import 'package:sosmascota/src/recordatorios/recordatorios_repositorio.dart';
+import 'package:sosmascota/src/recorrido/recorrido.dart';
 import 'package:sosmascota/src/router.dart';
 import 'package:sosmascota/src/sos/sos_repositorio.dart';
 import 'package:sosmascota/src/theme/tema_elegido.dart';
@@ -156,6 +157,8 @@ Widget appDePrueba({
   // Huellitas Comercios (D129) y la otra app que se abrió (en la web).
   bool appComercio = false,
   List<String>? otraAppAbierta,
+  // Recorridos guiados (D130): por defecto ya vistos, para que no salgan solos.
+  AlmacenRecorridos? recorridos,
 }) => ProviderScope(
   overrides: [
     rutaInicialProvider.overrideWithValue(inicio),
@@ -178,6 +181,9 @@ Widget appDePrueba({
       almacenMascotaElegida ?? AlmacenMascotaElegidaFalso(),
     ),
     almacenTemaProvider.overrideWithValue(almacenTema ?? AlmacenTemaFalso()),
+    almacenRecorridosProvider.overrideWithValue(
+      recorridos ?? AlmacenRecorridosFalso(todosVistos: true),
+    ),
     cargadorFuentesProvider.overrideWithValue(const FuentesFalsas()),
     sosRepositorioProvider.overrideWithValue(sos ?? SosFalso()),
     abrirEnlaceProvider.overrideWithValue((enlace) async {
@@ -306,5 +312,33 @@ Future<void> bajarEnMenu(WidgetTester tester, Finder objetivo) async {
       matching: find.byType(Scrollable),
     ),
   );
+  await tester.pumpAndSettle();
+}
+
+/// Recorridos vistos, en memoria.
+class AlmacenRecorridosFalso implements AlmacenRecorridos {
+  AlmacenRecorridosFalso({this.todosVistos = false});
+
+  final bool todosVistos;
+  final vistos = <PantallaRecorrido>{};
+
+  @override
+  Future<bool> visto(PantallaRecorrido pantalla) async =>
+      todosVistos || vistos.contains(pantalla);
+
+  @override
+  Future<void> marcarVisto(PantallaRecorrido pantalla) async =>
+      vistos.add(pantalla);
+}
+
+/// Abre Ajustes desde el menú ☰ (arriba a la derecha va el botón ?, D130).
+Future<void> abrirAjustesDesdeMenu(WidgetTester tester) async {
+  await abrirMenu(tester);
+  final ajustes = find.descendant(
+    of: find.byType(Drawer),
+    matching: find.text('Ajustes'),
+  );
+  await bajarEnMenu(tester, ajustes);
+  await tester.tap(ajustes);
   await tester.pumpAndSettle();
 }

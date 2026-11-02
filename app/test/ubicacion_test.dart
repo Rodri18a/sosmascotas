@@ -21,6 +21,8 @@ void _pantallaDeCelular(WidgetTester tester) {
 
 Future<void> _abrir(WidgetTester tester, String tooltip) async {
   await tester.pumpAndSettle();
+  // Ajustes ya no está arriba: se abre desde el menú ☰ (D130).
+  if (tooltip == 'Ajustes') return abrirAjustesDesdeMenu(tester);
   await tester.tap(find.byTooltip(tooltip));
   await tester.pumpAndSettle();
 }

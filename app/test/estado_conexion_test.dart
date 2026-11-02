@@ -8,7 +8,7 @@ import 'helpers.dart';
 Future<void> _abrirAjustes(WidgetTester tester, Widget app) async {
   await tester.pumpWidget(app);
   await tester.pumpAndSettle();
-  await tester.tap(find.byTooltip('Ajustes'));
+  await abrirAjustesDesdeMenu(tester);
   await tester.pumpAndSettle();
 }
 

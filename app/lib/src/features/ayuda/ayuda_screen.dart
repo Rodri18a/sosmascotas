@@ -7,11 +7,11 @@ import '../../../l10n/l10n.dart';
 import '../../ayuda/ayuda_repositorio.dart';
 import '../../funcionalidades/funcionalidades_activas.dart';
 import '../../metricas/metricas.dart';
+import '../../recorrido/pasos.dart';
+import '../../recorrido/recorrido.dart';
 import '../../router.dart';
 import '../../utiles/enlaces.dart';
-import '../../widgets/boton_ajustes.dart';
-import '../../widgets/boton_avisos.dart';
-import '../../widgets/boton_mensajes.dart';
+import '../../widgets/boton_ayuda.dart';
 import '../mapa/ficha_comercio.dart';
 import '../menu/menu_principal.dart';
 
@@ -32,73 +32,78 @@ class AyudaScreen extends ConsumerWidget {
       (t.ayudaOrganismos, [TipoAyuda.organismo]),
     ];
 
-    return Scaffold(
-      drawer: const MenuPrincipal(),
-      appBar: AppBar(
-        title: Text(t.pestanaAyuda),
-        actions: const [BotonMensajes(), BotonAvisos(), BotonAjustes()],
-      ),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          ref
-            ..invalidate(directorioAyudaProvider)
-            ..invalidate(veterinariasUrgenciaProvider);
-          await ref.read(directorioAyudaProvider.future);
-        },
-        child: ListView(
-          padding: const EdgeInsets.all(16),
-          children: [
-            const _Tarjeta911(),
-            const SizedBox(height: 16),
-            // Denuncias de maltrato (2.7, D80). Los próximos eventos están en
-            // Noticias → Comunidad (D94).
-            SiFuncionalidad(
-              Funcionalidades.eventos,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Card(
-                    child: ListTile(
-                      leading: const Icon(Icons.report_outlined),
-                      title: Text(t.denunciaTitulo),
-                      subtitle: Text(t.denunciaEntradaAyuda),
-                      trailing: const Icon(Icons.chevron_right_outlined),
-                      onTap: () => context.push(Rutas.denuncia),
+    return ZonaRecorrido(
+      pantalla: PantallaRecorrido.urgencias,
+      pasos: PasosRecorrido.urgencias,
+      child: Scaffold(
+        drawer: const MenuPrincipal(),
+        appBar: AppBar(
+          leading: botonMenu,
+          title: Text(t.pestanaAyuda),
+          actions: accionesPestana(),
+        ),
+        body: RefreshIndicator(
+          onRefresh: () async {
+            ref
+              ..invalidate(directorioAyudaProvider)
+              ..invalidate(veterinariasUrgenciaProvider);
+            await ref.read(directorioAyudaProvider.future);
+          },
+          child: ListView(
+            padding: const EdgeInsets.all(16),
+            children: [
+              const MarcaRecorrido('911', child: _Tarjeta911()),
+              const SizedBox(height: 16),
+              // Denuncias de maltrato (2.7, D80). Los próximos eventos están en
+              // Noticias → Comunidad (D94).
+              SiFuncionalidad(
+                Funcionalidades.eventos,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Card(
+                      child: ListTile(
+                        leading: const Icon(Icons.report_outlined),
+                        title: Text(t.denunciaTitulo),
+                        subtitle: Text(t.denunciaEntradaAyuda),
+                        trailing: const Icon(Icons.chevron_right_outlined),
+                        onTap: () => context.push(Rutas.denuncia),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 16),
-                ],
+                    const SizedBox(height: 16),
+                  ],
+                ),
               ),
-            ),
-            // Noticias es pestaña (D94) y Adopción se abre desde el menú ☰
-            // (D88): Ayuda queda para urgencias.
-            _Titulo(t.ayudaUrgencias),
-            switch (urgencias) {
-              AsyncData(value: final lista) when lista.isEmpty => Text(
-                t.ayudaSinUrgencias,
-              ),
-              AsyncData(value: final lista) => Column(
-                children: [for (final c in lista) _FilaUrgencia(comercio: c)],
-              ),
-              AsyncError() => Text(t.errorSinConexion),
-              _ => const LinearProgressIndicator(),
-            },
-            const SizedBox(height: 16),
-            if (directorio.hasError)
-              Text(t.errorSinConexion)
-            else if (directorio.isLoading)
-              const LinearProgressIndicator()
-            else if (entradas.isEmpty)
-              Text(t.ayudaDirectorioVacio)
-            else
-              for (final (titulo, tipos) in secciones)
-                if (entradas.any((e) => tipos.contains(e.tipo))) ...[
-                  _Titulo(titulo),
-                  for (final e in entradas)
-                    if (tipos.contains(e.tipo)) _FilaAyuda(entrada: e),
-                  const SizedBox(height: 16),
-                ],
-          ],
+              // Noticias es pestaña (D94) y Adopción se abre desde el menú ☰
+              // (D88): Ayuda queda para urgencias.
+              MarcaRecorrido('guardia', child: _Titulo(t.ayudaUrgencias)),
+              switch (urgencias) {
+                AsyncData(value: final lista) when lista.isEmpty => Text(
+                  t.ayudaSinUrgencias,
+                ),
+                AsyncData(value: final lista) => Column(
+                  children: [for (final c in lista) _FilaUrgencia(comercio: c)],
+                ),
+                AsyncError() => Text(t.errorSinConexion),
+                _ => const LinearProgressIndicator(),
+              },
+              const SizedBox(height: 16),
+              if (directorio.hasError)
+                Text(t.errorSinConexion)
+              else if (directorio.isLoading)
+                const LinearProgressIndicator()
+              else if (entradas.isEmpty)
+                Text(t.ayudaDirectorioVacio)
+              else
+                for (final (titulo, tipos) in secciones)
+                  if (entradas.any((e) => tipos.contains(e.tipo))) ...[
+                    _Titulo(titulo),
+                    for (final e in entradas)
+                      if (tipos.contains(e.tipo)) _FilaAyuda(entrada: e),
+                    const SizedBox(height: 16),
+                  ],
+            ],
+          ),
         ),
       ),
     );

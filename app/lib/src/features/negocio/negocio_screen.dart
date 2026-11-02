@@ -15,10 +15,13 @@ import '../../dos_apps/dos_apps.dart';
 import '../../fotos/elegir_foto.dart';
 import '../../funcionalidades/funcionalidades_activas.dart';
 import '../../metricas/metricas.dart';
+import '../../recorrido/pasos.dart';
+import '../../recorrido/recorrido.dart';
 import '../../router.dart';
 import '../../tienda/tienda_repositorio.dart';
 import '../../utiles/enlaces.dart';
 import '../../veterinarias/veterinarias_repositorio.dart';
+import '../../widgets/boton_ayuda.dart';
 import '../../widgets/volver.dart';
 import '../adopcion/apadrinamiento_screen.dart';
 import '../adopcion/pack_screen.dart';
@@ -143,128 +146,144 @@ class _NegocioScreenState extends ConsumerState<NegocioScreen> {
           else
             (Icons.badge_outlined, t.equipoTitulo),
         ];
-        return Scaffold(
-          appBar: AppBar(
-            // En Huellitas Comercios el panel es el inicio: sin flecha.
-            leading: ref.watch(esAppComercioProvider)
-                ? null
-                : volverSiNoHayAtras(context),
-            // El título es el negocio activo; con más de uno, se cambia
-            // tocándolo (en el celular no entraba el título con «⇄»).
-            title: lista.length > 1
-                ? PopupMenuButton<String>(
-                    tooltip: t.modoComercio,
-                    onSelected: (id) => setState(() => _elegido = id),
-                    itemBuilder: (_) => [
-                      for (final n in lista)
-                        PopupMenuItem(
-                          value: n.id,
-                          child: Text(n.comercio.nombre),
-                        ),
-                    ],
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Flexible(
-                          child: Text(
-                            negocio.comercio.nombre,
-                            overflow: TextOverflow.ellipsis,
+        return ZonaRecorrido(
+          pantalla: PantallaRecorrido.negocio,
+          pasos: PasosRecorrido.negocio,
+          child: Scaffold(
+            appBar: AppBar(
+              // En Huellitas Comercios el panel es el inicio: sin flecha.
+              leading: ref.watch(esAppComercioProvider)
+                  ? null
+                  : volverSiNoHayAtras(context),
+              // El título es el negocio activo; con más de uno, se cambia
+              // tocándolo (en el celular no entraba el título con «⇄»).
+              title: lista.length > 1
+                  ? PopupMenuButton<String>(
+                      tooltip: t.modoComercio,
+                      onSelected: (id) => setState(() => _elegido = id),
+                      itemBuilder: (_) => [
+                        for (final n in lista)
+                          PopupMenuItem(
+                            value: n.id,
+                            child: Text(n.comercio.nombre),
                           ),
+                      ],
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Flexible(
+                            child: Text(
+                              negocio.comercio.nombre,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          const Icon(Icons.arrow_drop_down_outlined),
+                        ],
+                      ),
+                    )
+                  : Text(
+                      negocio.comercio.nombre,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+              actions: [
+                // En Huellitas Comercios, a la app de las personas (D129).
+                MarcaRecorrido(
+                  'volver',
+                  child: ancho >= 600
+                      ? TextButton.icon(
+                          onPressed: () => irAHuellitas(context, ref),
+                          icon: const Icon(Icons.pets_outlined),
+                          label: Text(volver),
+                        )
+                      : IconButton(
+                          onPressed: () => irAHuellitas(context, ref),
+                          icon: const Icon(Icons.pets_outlined),
+                          tooltip: volver,
                         ),
-                        const Icon(Icons.arrow_drop_down_outlined),
+                ),
+                const BotonAyuda(),
+              ],
+            ),
+            body: () {
+              final contenido = Column(
+                children: [
+                  _Cabecera(negocio: negocio),
+                  const Divider(height: 1),
+                  Expanded(
+                    child: switch (_seccion) {
+                      _Seccion.panel => _Panel(
+                        negocio: negocio,
+                        onIr: (s) => setState(() => _seccion = s),
+                      ),
+                      _Seccion.agenda => _Agenda(negocio: negocio),
+                      _Seccion.catalogo => _Tienda(negocio: negocio),
+                      _Seccion.pedidos => _Tienda(
+                        negocio: negocio,
+                        pedidos: true,
+                      ),
+                      _Seccion.negocio when !negocio.esTitular => ListaEquipo(
+                        negocioId: negocio.id,
+                      ),
+                      _Seccion.negocio => _Ficha(negocio: negocio),
+                    },
+                  ),
+                ],
+              );
+              if (!grande) return contenido;
+              // Portal web de empresas v1 (2.10, D114): en la computadora, el
+              // mismo modo comercio con el menú al costado.
+              return Row(
+                children: [
+                  MarcaRecorrido(
+                    'secciones',
+                    child: NavigationRail(
+                      selectedIndex: _seccion.index,
+                      extended: ancho >= 1200,
+                      labelType: ancho >= 1200
+                          ? NavigationRailLabelType.none
+                          : NavigationRailLabelType.all,
+                      onDestinationSelected: (i) =>
+                          setState(() => _seccion = _Seccion.values[i]),
+                      destinations: [
+                        for (final (icono, texto) in secciones)
+                          NavigationRailDestination(
+                            icon: Icon(icono),
+                            label: Text(texto),
+                          ),
                       ],
                     ),
-                  )
-                : Text(
-                    negocio.comercio.nombre,
-                    overflow: TextOverflow.ellipsis,
                   ),
-            actions: [
-              // En Huellitas Comercios, a la app de las personas (D129).
-              if (ancho >= 600)
-                TextButton.icon(
-                  onPressed: () => irAHuellitas(context, ref),
-                  icon: const Icon(Icons.pets_outlined),
-                  label: Text(volver),
-                )
-              else
-                IconButton(
-                  onPressed: () => irAHuellitas(context, ref),
-                  icon: const Icon(Icons.pets_outlined),
-                  tooltip: volver,
-                ),
-            ],
-          ),
-          body: () {
-            final contenido = Column(
-              children: [
-                _Cabecera(negocio: negocio),
-                const Divider(height: 1),
-                Expanded(
-                  child: switch (_seccion) {
-                    _Seccion.panel => _Panel(
-                      negocio: negocio,
-                      onIr: (s) => setState(() => _seccion = s),
-                    ),
-                    _Seccion.agenda => _Agenda(negocio: negocio),
-                    _Seccion.catalogo => _Tienda(negocio: negocio),
-                    _Seccion.pedidos => _Tienda(
-                      negocio: negocio,
-                      pedidos: true,
-                    ),
-                    _Seccion.negocio when !negocio.esTitular => ListaEquipo(
-                      negocioId: negocio.id,
-                    ),
-                    _Seccion.negocio => _Ficha(negocio: negocio),
-                  },
-                ),
-              ],
-            );
-            if (!grande) return contenido;
-            // Portal web de empresas v1 (2.10, D114): en la computadora, el
-            // mismo modo comercio con el menú al costado.
-            return Row(
-              children: [
-                NavigationRail(
-                  selectedIndex: _seccion.index,
-                  extended: ancho >= 1200,
-                  labelType: ancho >= 1200
-                      ? NavigationRailLabelType.none
-                      : NavigationRailLabelType.all,
-                  onDestinationSelected: (i) =>
-                      setState(() => _seccion = _Seccion.values[i]),
-                  destinations: [
-                    for (final (icono, texto) in secciones)
-                      NavigationRailDestination(
-                        icon: Icon(icono),
-                        label: Text(texto),
+                  const VerticalDivider(width: 1),
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.topCenter,
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 1200),
+                        child: contenido,
                       ),
-                  ],
-                ),
-                const VerticalDivider(width: 1),
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.topCenter,
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(maxWidth: 1200),
-                      child: contenido,
                     ),
                   ),
-                ),
-              ],
-            );
-          }(),
-          bottomNavigationBar: grande
-              ? null
-              : NavigationBar(
-                  selectedIndex: _seccion.index,
-                  onDestinationSelected: (i) =>
-                      setState(() => _seccion = _Seccion.values[i]),
-                  destinations: [
-                    for (final (icono, texto) in secciones)
-                      NavigationDestination(icon: Icon(icono), label: texto),
-                  ],
-                ),
+                ],
+              );
+            }(),
+            bottomNavigationBar: grande
+                ? null
+                : MarcaRecorrido(
+                    'secciones',
+                    child: NavigationBar(
+                      selectedIndex: _seccion.index,
+                      onDestinationSelected: (i) =>
+                          setState(() => _seccion = _Seccion.values[i]),
+                      destinations: [
+                        for (final (icono, texto) in secciones)
+                          NavigationDestination(
+                            icon: Icon(icono),
+                            label: texto,
+                          ),
+                      ],
+                    ),
+                  ),
+          ),
         );
       }(),
       AsyncLoading() => const Scaffold(
