@@ -35,7 +35,7 @@ Cada paso es chico y se prueba antes de pasar al siguiente.
 
 | Paso | Qué | Resultado que se puede comprobar |
 |---|---|---|
-| 1.1 | **El muro como inicio:** la app abre en «Inicio» (hoy Noticias); la pestaña se renombra; el muro mezcla noticias, eventos de la zona, jornadas de adopción y campañas, con filtros simples arriba (Todo · Eventos · Adopción · Promos) | Al abrir la app se ve el muro con contenido |
+| 1.1 | **El muro como inicio:** la app abre en «Inicio» (hoy Noticias); la pestaña se renombra; el muro mezcla noticias, eventos de la zona, jornadas de adopción y campañas, con filtros simples arriba (Todo · Eventos · Adopción · Promos). ✅ Abre en Inicio (D127) y tiene un carrusel de banners arriba (D128) | Al abrir la app se ve el muro con contenido |
 | 1.2 | **Menú ☰ ordenado:** todas las funciones en grupos con ícono y nombre corto (Mis mascotas · Mapa y lugares · Comunidad · Adopción · Eventos · Turnos y pedidos · Mi negocio · Ajustes) | Cualquier función está a 2 toques como máximo |
 | 1.3 | **Botón de ayuda** arriba a la derecha de cada pantalla (en las pestañas, en lugar del ícono de Ajustes), con una hoja corta: para qué sirve, qué significa cada opción, qué pasa al confirmar. Textos en `app_es.arb` | Mismo botón, mismo lugar, en todas las pantallas principales |
 | 1.4 | **Textos más cortos:** las explicaciones largas fijas pasan a la ayuda; en pantalla queda una línea | Revisión pantalla por pantalla |

@@ -10,6 +10,9 @@ abstract interface class NoticiasRepositorio {
   /// Las publicadas, de la más nueva a la más vieja (también visitantes).
   Future<List<Noticia>> noticias();
 
+  /// Banners del carrusel de Inicio (D128), en su orden (también visitantes).
+  Future<List<BannerInicio>> banners();
+
   /// Novedades de la comunidad (D86), de la más nueva a la más vieja.
   Future<List<Novedad>> novedades();
 
@@ -46,6 +49,15 @@ class SupabaseNoticiasRepositorio implements NoticiasRepositorio {
     return [
       for (final f in filas)
         Noticia.fromJson((f as Map).cast<String, Object?>()),
+    ];
+  }
+
+  @override
+  Future<List<BannerInicio>> banners() async {
+    final filas = await _cliente.rpc<List<dynamic>>('banners');
+    return [
+      for (final f in filas)
+        BannerInicio.fromJson((f as Map).cast<String, Object?>()),
     ];
   }
 
@@ -128,6 +140,9 @@ class NoticiasSinConfigurar implements NoticiasRepositorio {
   Future<List<Noticia>> noticias() async => const [];
 
   @override
+  Future<List<BannerInicio>> banners() async => const [];
+
+  @override
   Future<List<Novedad>> novedades() async => const [];
 
   @override
@@ -165,6 +180,10 @@ final noticiasRepositorioProvider = Provider<NoticiasRepositorio>((ref) {
 
 final noticiasProvider = FutureProvider<List<Noticia>>(
   (ref) => ref.watch(noticiasRepositorioProvider).noticias(),
+);
+
+final bannersProvider = FutureProvider<List<BannerInicio>>(
+  (ref) => ref.watch(noticiasRepositorioProvider).banners(),
 );
 
 final novedadesProvider = FutureProvider<List<Novedad>>(

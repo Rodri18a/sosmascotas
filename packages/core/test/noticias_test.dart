@@ -37,4 +37,22 @@ void main() {
     expect(n.resumen.length, 138);
     expect(n.resumen.endsWith('…'), isTrue);
   });
+
+  test('banner: se lee de la base, con su enlace o su noticia', () {
+    final b = BannerInicio.fromJson({
+      'id': 'b1',
+      'title': 'Jornada de adopción',
+      'image_path': 'banner-1.jpg',
+      'link': null,
+      'news_id': 'n1',
+      'sponsored': true,
+      'sponsor_name': 'Marca',
+    });
+    expect(b.titulo, 'Jornada de adopción');
+    expect(b.imagen, 'banner-1.jpg');
+    expect(b.enlace, isNull);
+    expect(b.noticiaId, 'n1');
+    expect(b.patrocinado, isTrue);
+    expect(b.marca, 'Marca');
+  });
 }

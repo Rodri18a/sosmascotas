@@ -302,6 +302,45 @@ abstract final class T {
   static const patrocinada = 'Patrocinada (se ve "Promocionado · marca")';
   static const marca = 'Marca';
   static const faltaMarca = 'Una noticia patrocinada necesita la marca.';
+  // Banners del carrusel de Inicio (D128)
+  static const banners = 'Banners';
+  static const nuevoBanner = 'Nuevo banner';
+  static const editarBanner = 'Editar banner';
+  static const sinBanners =
+      'Todavía no hay banners. Se ven en un carrusel arriba del Inicio de la app.';
+  static const ayudaBanners =
+      'Pasan solos cada 3 segundos, en el orden de abajo. Imagen apaisada 2:1 '
+      '(por ejemplo 1200 × 600), PNG, JPG o WebP de hasta 1 MB.';
+  static const tituloBanner = 'Título (también lo lee el lector de pantalla)';
+  static const elegirImagenBanner = 'Elegir imagen';
+  static const cambiarImagenBanner = 'Cambiar imagen';
+  static const sinImagenBanner = 'Falta la imagen.';
+  static const imagenBannerLista = 'Imagen lista';
+  static const imagenBannerGrande =
+      'La imagen tiene que ser PNG, JPG o WebP de hasta 1 MB.';
+  static const estadosBanner = {
+    'draft': 'Borrador',
+    'published': 'Publicado',
+    'hidden': 'Oculto',
+  };
+  static const destinoBanner = 'Al tocarlo';
+  static const destinosBanner = {
+    'nada': 'No hace nada',
+    'enlace': 'Abre un enlace',
+    'noticia': 'Abre una noticia',
+  };
+  static const noticiaBanner = 'Noticia publicada';
+  static const enlaceBanner = 'Enlace (https://…)';
+  static const faltaDestinoBanner =
+      'Elegí la noticia o poné un enlace que empiece con https://.';
+  static const ordenBanner = 'Orden (el más bajo va primero)';
+  static const desde = 'Desde';
+  static const hasta = 'Hasta';
+  static const sinFin = 'sin fecha de fin';
+  static const patrocinado = 'Patrocinado (se ve "Promocionado · marca")';
+  static const faltaMarcaBanner = 'Un banner patrocinado necesita la marca.';
+  static String resumenBanner(String estado, int orden, String fechas) =>
+      '$estado · orden $orden · $fechas';
   // Novedades de la comunidad (D86)
   static const comunidad = 'Comunidad';
   static const sinNovedades = 'Todavía no hay novedades de la comunidad.';

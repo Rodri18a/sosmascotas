@@ -1502,6 +1502,36 @@ def main():
             caso('a un borrador no', rest('POST', 'rpc/reaccionar', {'p_id': nt_b, 'p_tipo': 'gracias'}, a)[0] >= 400)
             rest('POST', 'rpc/admin_guardar_noticia', {'p': {**noticia, 'id': nt, 'status': 'hidden'}}, x)
             caso('oculta, ya no aparece', all(n['id'] != nt for n in filas(rest('POST', 'rpc/noticias', {}))))
+
+            print('banners del carrusel de Inicio (D128)')
+            banner = {'title': 'Prueba RLS: adopción', 'image_path': 'banner-rls.jpg',
+                      'link': 'https://huellitas.uy', 'status': 'published'}
+            caso('A no carga banners', rest('POST', 'rpc/admin_guardar_banner', {'p': banner}, a)[0] >= 400)
+            caso('nadie lee ni escribe la tabla directo',
+                 bloqueado(rest('POST', 'banners', banner, a)) and bloqueado(rest('GET', 'banners?select=id'))
+                 and bloqueado(rest('GET', 'banners?select=id', quien=x)))
+            caso('A no sube imágenes de banners', subir('banners/banner-rls.jpg', JPEG_MINIMO, 'image/jpeg', a) != 200)
+            caso('X sube la imagen', subir('banners/banner-rls.jpg', JPEG_MINIMO, 'image/jpeg', x) == 200)
+            caso('un enlace que no es https no se acepta', rest('POST', 'rpc/admin_guardar_banner', {'p': {
+                **banner, 'link': 'http://huellitas.uy'}}, x)[0] >= 400)
+            caso('una ruta de imagen rara no se acepta', rest('POST', 'rpc/admin_guardar_banner', {'p': {
+                **banner, 'image_path': '../x.svg'}}, x)[0] >= 400)
+            caso('un patrocinado sin marca no se acepta', rest('POST', 'rpc/admin_guardar_banner', {'p': {
+                **banner, 'sponsored': True}}, x)[0] >= 400)
+            s_bn, bn = rest('POST', 'rpc/admin_guardar_banner', {'p': banner}, x)
+            caso('X carga un banner', s_bn == 200)
+            _, bn_b = rest('POST', 'rpc/admin_guardar_banner', {'p': {**banner, 'title': 'Prueba RLS: borrador', 'status': 'draft'}}, x)
+            _, bn_v = rest('POST', 'rpc/admin_guardar_banner', {'p': {
+                **banner, 'title': 'Prueba RLS: vencido', 'starts_at': '2026-01-01T00:00:00Z', 'ends_at': '2026-01-31T00:00:00Z'}}, x)
+            _, bn_n = rest('POST', 'rpc/admin_guardar_banner', {'p': {
+                **banner, 'title': 'Prueba RLS: con noticia', 'link': None, 'news_id': nt}}, x)
+            visibles = {b['id']: b for b in filas(rest('POST', 'rpc/banners', {}))}
+            caso('un visitante ve el publicado', bn in visibles and visibles[bn]['link'] == 'https://huellitas.uy')
+            caso('no ve borradores ni vencidos', bn_b not in visibles and bn_v not in visibles)
+            caso('la noticia oculta no se ofrece', bn_n in visibles and visibles[bn_n]['news_id'] is None)
+            caso('A no ve la lista de administración', rest('POST', 'rpc/admin_banners', {}, a)[0] >= 400)
+            pedir('DELETE', f'{URL}/rest/v1/banners?title=like.Prueba%20RLS*', headers=ADMIN)
+            pedir('DELETE', f'{URL}/storage/v1/object/banners', {'prefixes': ['banner-rls.jpg']}, ADMIN)
             pedir('DELETE', f'{URL}/rest/v1/news?title=like.Prueba%20RLS*', headers=ADMIN)
 
             print('novedades de la comunidad: generadas solas y moderación (D86)')

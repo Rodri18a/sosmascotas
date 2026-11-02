@@ -7,17 +7,22 @@ class NoticiasFalsas implements NoticiasRepositorio {
     this.lista = const [],
     this.lasNovedades = const [],
     this.elResumen = const ResumenComunidad(),
+    this.losBanners = const [],
   ]);
 
   final List<Noticia> lista;
   final List<Novedad> lasNovedades;
   final ResumenComunidad elResumen;
+  final List<BannerInicio> losBanners;
 
   /// Reencuentros compartidos (ids de SOS).
   final compartidos = <String>{};
 
   @override
   Future<List<Noticia>> noticias() async => lista;
+
+  @override
+  Future<List<BannerInicio>> banners() async => losBanners;
 
   @override
   Future<List<Novedad>> novedades() async => lasNovedades;

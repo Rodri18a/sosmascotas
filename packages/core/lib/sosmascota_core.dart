@@ -38,6 +38,7 @@ export 'src/mascotas/recordatorio.dart';
 export 'src/mascotas/registro_salud.dart';
 export 'src/metricas/anon_id.dart';
 export 'src/metricas/eventos.dart';
+export 'src/noticias/banner_inicio.dart';
 export 'src/noticias/noticia.dart';
 export 'src/noticias/novedad.dart';
 export 'src/qr/pedido_chapita.dart';

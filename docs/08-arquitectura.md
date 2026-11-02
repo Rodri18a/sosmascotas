@@ -170,6 +170,7 @@ Tabla `events` (append-only), escrita por el cliente con `ref.read(metricasProvi
 | `event_publish` / `event_open` / `abuse_report` | tipo de evento o target_id; la denuncia sin datos (D80) |
 | `module_toggle` / `vet_share` / `vet_remind` / `vet_search_opt_in` / `vet_search_snooze` / `vet_proposal_send` / `vet_proposal_answer` | socios y "Busco veterinaria", sin datos de la mascota ni del dueño (D81) |
 | `news_open` / `news_link` | abrir una noticia y tocar "Leer más", con `patrocinada` (D83) |
+| `banner_open` | tocar un banner del carrusel de Inicio, con `patrocinado` (D128) |
 | `menu_open` / `pet_select` | se abre el menú ☰; se elige una mascota o "Todas" para filtrar (D88) |
 | `tab_open` | se cambia de pestaña en la barra inferior, con `tab` (`noticias`, `sos`, `mapa`, `mascotas`, `ayuda`; D94) |
 | `unclaimed_open` | se abre la hoja de un lugar sin reclamar; `target_id` = una marca del grupo, `tipo` = rubro (D99) |

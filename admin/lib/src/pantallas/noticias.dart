@@ -3,23 +3,30 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../repositorio.dart';
 import '../textos.dart';
+import 'banners.dart';
 
-/// Noticias de la app (2.8, D83) y novedades de la comunidad (D86).
+/// Noticias de la app (2.8, D83), banners del carrusel de Inicio (D128) y
+/// novedades de la comunidad (D86).
 class NoticiasScreen extends StatelessWidget {
   const NoticiasScreen({super.key});
 
   @override
   Widget build(BuildContext context) => const DefaultTabController(
-    length: 2,
+    length: 3,
     child: Column(
       children: [
         TabBar(
           tabs: [
             Tab(text: T.noticias),
+            Tab(text: T.banners),
             Tab(text: T.comunidad),
           ],
         ),
-        Expanded(child: TabBarView(children: [_Noticias(), _Comunidad()])),
+        Expanded(
+          child: TabBarView(
+            children: [_Noticias(), BannersSeccion(), _Comunidad()],
+          ),
+        ),
       ],
     ),
   );

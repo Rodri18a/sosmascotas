@@ -140,6 +140,18 @@ abstract interface class AdminRepositorio {
   /// Crea (sin `id`) o actualiza una noticia.
   Future<void> guardarNoticia(Map<String, Object?> datos);
 
+  /// Banners del carrusel de Inicio (D128): todos, también borradores y ocultos.
+  Future<List<Map<String, Object?>>> banners();
+
+  /// Crea (sin `id`) o actualiza un banner.
+  Future<void> guardarBanner(Map<String, Object?> datos);
+
+  /// Sube la imagen de un banner al bucket público y devuelve su ruta.
+  Future<String> subirBanner(Uint8List bytes, String tipo);
+
+  /// Enlace público de la imagen de un banner.
+  String urlBanner(String ruta);
+
   /// Novedades de la comunidad (D86): las que se generan solas.
   Future<List<Map<String, Object?>>> novedades();
 
@@ -544,6 +556,33 @@ class SupabaseAdminRepositorio implements AdminRepositorio {
       _cliente.rpc<String>('admin_guardar_noticia', params: {'p': datos});
 
   @override
+  Future<List<Map<String, Object?>>> banners() async =>
+      _filas(await _cliente.rpc<List<dynamic>>('admin_banners'));
+
+  @override
+  Future<void> guardarBanner(Map<String, Object?> datos) =>
+      _cliente.rpc<String>('admin_guardar_banner', params: {'p': datos});
+
+  @override
+  Future<String> subirBanner(Uint8List bytes, String tipo) async {
+    final ruta =
+        'banner-${DateTime.now().millisecondsSinceEpoch}.'
+        '${switch (tipo) {
+          'image/png' => 'png',
+          'image/webp' => 'webp',
+          _ => 'jpg',
+        }}';
+    await _cliente.storage
+        .from('banners')
+        .uploadBinary(ruta, bytes, fileOptions: FileOptions(contentType: tipo));
+    return ruta;
+  }
+
+  @override
+  String urlBanner(String ruta) =>
+      _cliente.storage.from('banners').getPublicUrl(ruta);
+
+  @override
   Future<List<Map<String, Object?>>> novedades() async =>
       _filas(await _cliente.rpc<List<dynamic>>('admin_novedades'));
 
@@ -829,6 +868,10 @@ final denunciasProvider = FutureProvider<List<Map<String, Object?>>>(
 
 final noticiasProvider = FutureProvider<List<Map<String, Object?>>>(
   (ref) => ref.watch(adminRepositorioProvider).noticias(),
+);
+
+final bannersProvider = FutureProvider<List<Map<String, Object?>>>(
+  (ref) => ref.watch(adminRepositorioProvider).banners(),
 );
 
 final novedadesProvider = FutureProvider<List<Map<String, Object?>>>(

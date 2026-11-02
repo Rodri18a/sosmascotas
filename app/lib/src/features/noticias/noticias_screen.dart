@@ -22,6 +22,7 @@ import '../comunidad/comunidad_screen.dart';
 import '../eventos/eventos.dart';
 import '../menu/menu_principal.dart';
 import '../sos/sos_detalle_screen.dart';
+import 'carrusel_banners.dart';
 
 /// Noticias (2.8, D83): filtradas por las especies de mis mascotas, con las
 /// patrocinadas siempre marcadas "Promocionado · «marca»". La sección
@@ -86,7 +87,9 @@ class _NoticiasScreenState extends ConsumerState<NoticiasScreen> {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          ref.invalidate(reaccionesProvider);
+          ref
+            ..invalidate(reaccionesProvider)
+            ..invalidate(bannersProvider);
           if (_comunidad) {
             ref
               ..invalidate(novedadesProvider)
@@ -101,6 +104,8 @@ class _NoticiasScreenState extends ConsumerState<NoticiasScreen> {
         child: ListView(
           padding: const EdgeInsets.only(bottom: 24),
           children: [
+            // Banners del carrusel, arriba de todo (D128).
+            const CarruselBanners(),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
               child: SegmentedButton<bool>(

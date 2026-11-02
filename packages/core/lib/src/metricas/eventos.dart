@@ -62,6 +62,7 @@ abstract final class Eventos {
   static const vetProposalAnswer = 'vet_proposal_answer';
   static const newsOpen = 'news_open';
   static const newsLink = 'news_link';
+  static const bannerOpen = 'banner_open';
   static const communityShare = 'community_share';
   static const communityUnshare = 'community_unshare';
   static const newsReaction = 'news_reaction';

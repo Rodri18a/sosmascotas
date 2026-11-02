@@ -416,6 +416,36 @@ class RepoFalso implements AdminRepositorio {
     ...noticiasGuardadas,
   ];
 
+  final bannersGuardados = <Map<String, Object?>>[];
+  final bannersSubidos = <(int, String)>[];
+
+  @override
+  Future<List<Map<String, Object?>>> banners() async => [
+    {
+      'id': 'b1',
+      'title': 'Jornada de adopción',
+      'image_path': 'banner-1.jpg',
+      'status': 'published',
+      'sort_order': 0,
+      'sponsored': false,
+      'starts_at': '2026-11-01T03:00:00+00:00',
+    },
+    ...bannersGuardados,
+  ];
+
+  @override
+  Future<void> guardarBanner(Map<String, Object?> datos) async =>
+      bannersGuardados.add({...datos, 'id': 'b${bannersGuardados.length + 2}'});
+
+  @override
+  Future<String> subirBanner(Uint8List bytes, String tipo) async {
+    bannersSubidos.add((bytes.length, tipo));
+    return 'banner-2.jpg';
+  }
+
+  @override
+  String urlBanner(String ruta) => 'https://ejemplo.invalid/$ruta';
+
   final novedadesCambiadas = <(String, bool)>[];
 
   @override
@@ -1165,6 +1195,63 @@ void main() {
     expect(find.text('Perro atado sin agua'), findsOneWidget);
     await _tocar(tester, find.text('Derivada al INBA o la policía'));
     expect(repo.estadosDenuncia.single, ('d1', 'referred'));
+  });
+
+  testWidgets('banners: imagen, enlace https y orden', (tester) async {
+    _pantallaGrande(tester);
+    final repo = RepoFalso();
+    await tester.pumpWidget(
+      _portal(sesion: SesionFalsa('admin@x.uy'), repo: repo),
+    );
+    await tester.pumpAndSettle();
+    await _tocar(tester, find.text('Noticias'));
+    await tester.tap(find.widgetWithText(Tab, 'Banners'));
+    await tester.pumpAndSettle();
+    expect(find.text('Jornada de adopción'), findsOneWidget);
+    expect(find.textContaining('Publicado · orden 0'), findsOneWidget);
+
+    await tester.tap(find.text('Nuevo banner'));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.widgetWithText(
+        TextField,
+        'Título (también lo lee el lector de pantalla)',
+      ),
+      'Baño y corte',
+    );
+    await _tocar(tester, find.text('Guardar'));
+    expect(find.text('Falta la imagen.'), findsWidgets);
+    expect(repo.bannersGuardados, isEmpty);
+
+    await _tocar(tester, find.text('Elegir imagen'));
+    expect(find.text('Imagen lista'), findsOneWidget);
+    await _tocar(tester, find.text('No hace nada'));
+    await _tocar(tester, find.text('Abre un enlace').last);
+    await tester.enterText(
+      find.widgetWithText(TextField, 'Enlace (https://…)'),
+      'http://x.uy',
+    );
+    await _tocar(tester, find.text('Guardar'));
+    expect(
+      find.text('Elegí la noticia o poné un enlace que empiece con https://.'),
+      findsOneWidget,
+    );
+    await tester.enterText(
+      find.widgetWithText(TextField, 'Enlace (https://…)'),
+      'https://petpando.uy',
+    );
+    await tester.enterText(
+      find.widgetWithText(TextField, 'Orden (el más bajo va primero)'),
+      '2',
+    );
+    await _tocar(tester, find.text('Guardar'));
+    expect(repo.bannersSubidos.single, (2048, 'image/png'));
+    final guardado = repo.bannersGuardados.single;
+    expect(guardado['image_path'], 'banner-2.jpg');
+    expect(guardado['link'], 'https://petpando.uy');
+    expect(guardado['news_id'], isNull);
+    expect(guardado['sort_order'], 2);
+    expect(guardado['status'], 'draft');
   });
 
   testWidgets('noticias: una patrocinada necesita la marca', (tester) async {

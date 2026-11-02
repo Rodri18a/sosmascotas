@@ -55,11 +55,15 @@ Future<void> _abrir(
   ResumenComunidad resumen = const ResumenComunidad(),
   NoticiasFalsas? repo,
   bool visitante = false,
+  bool menosMovimiento = false,
 }) async {
   tester.view
     ..physicalSize = const Size(1080, 2400)
     ..devicePixelRatio = 3;
   addTearDown(tester.view.reset);
+  tester.platformDispatcher.accessibilityFeaturesTestValue =
+      FakeAccessibilityFeatures(disableAnimations: menosMovimiento);
+  addTearDown(tester.platformDispatcher.clearAccessibilityFeaturesTestValue);
   await tester.pumpWidget(
     appDePrueba(
       inicio: Rutas.inicio,
@@ -81,7 +85,81 @@ Future<void> _abrir(
   await tester.pumpAndSettle();
 }
 
+const _bannerAdopcion = BannerInicio(
+  id: 'b1',
+  titulo: 'Jornada de adopción',
+  imagen: 'b1.jpg',
+  enlace: 'https://huellitas.uy/adopcion',
+);
+const _bannerPromo = BannerInicio(
+  id: 'b2',
+  titulo: 'Baño y corte',
+  imagen: 'b2.jpg',
+  noticiaId: 'n2',
+  patrocinado: true,
+  marca: 'Pet Pando',
+);
+
 void main() {
+  testWidgets('carrusel: arriba del Inicio, pasa solo cada 3 segundos y '
+      'abre su enlace o su noticia', (tester) async {
+    final enlaces = <Uri>[];
+    final metricas = <Map<String, Object?>>[];
+    await _abrir(
+      tester,
+      enlaces: enlaces,
+      metricas: metricas,
+      repo: NoticiasFalsas(
+        [_paraGatos, _paraTodas],
+        const [],
+        const ResumenComunidad(),
+        const [_bannerAdopcion, _bannerPromo],
+      ),
+    );
+    expect(find.text('Jornada de adopción'), findsOneWidget);
+    expect(find.text('Baño y corte'), findsNothing);
+    expect(
+      tester.getTopLeft(find.text('Jornada de adopción')).dy,
+      lessThan(tester.getTopLeft(find.text('Comunidad')).dy),
+      reason: 'va arriba de Noticias · Comunidad',
+    );
+
+    await tester.tap(find.text('Jornada de adopción'));
+    await tester.pumpAndSettle();
+    expect(enlaces, [Uri.parse('https://huellitas.uy/adopcion')]);
+
+    await tester.pump(const Duration(seconds: 3));
+    await tester.pumpAndSettle();
+    expect(find.text('Baño y corte'), findsOneWidget);
+    expect(find.text('Promocionado · Pet Pando'), findsOneWidget);
+
+    await tester.tap(find.text('Baño y corte'));
+    await tester.pumpAndSettle();
+    expect(find.text('Llevá la libreta sanitaria.'), findsWidgets);
+    expect(metricas.where((e) => e['name'] == 'banner_open'), hasLength(2));
+  });
+
+  testWidgets('carrusel: sin banners no ocupa lugar; con menos movimiento '
+      'no pasa solo', (tester) async {
+    await _abrir(tester);
+    expect(find.byType(PageView), findsNothing);
+
+    await tester.pumpWidget(const SizedBox());
+    await _abrir(
+      tester,
+      repo: NoticiasFalsas(
+        [_paraTodas],
+        const [],
+        const ResumenComunidad(),
+        const [_bannerAdopcion, _bannerPromo],
+      ),
+      menosMovimiento: true,
+    );
+    await tester.pump(const Duration(seconds: 4));
+    await tester.pumpAndSettle();
+    expect(find.text('Jornada de adopción'), findsOneWidget);
+  });
+
   testWidgets('desde la barra, también un visitante: todas, con la '
       'patrocinada marcada', (tester) async {
     await _abrir(tester, visitante: true);
