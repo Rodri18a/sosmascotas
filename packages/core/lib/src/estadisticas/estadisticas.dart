@@ -17,6 +17,10 @@ abstract final class MetricasComercio {
   static const pagina = 'business_page_open';
   static const resenas = 'review_create';
 
+  /// Promociones en el muro (D136).
+  static const promoVistas = 'promo_view';
+  static const promoToques = 'promo_click';
+
   /// Clics de la ficha: `place_click:<tipo>`.
   static const clic = 'place_click:';
 }

@@ -35,6 +35,7 @@ import '../tienda/pedidos.dart';
 import 'descuentos_screen.dart';
 import 'equipo_screen.dart';
 import 'formulario_negocio.dart';
+import 'promociones_negocio.dart';
 
 /// Alta de un negocio (1.3.3, opción C).
 class AltaNegocioScreen extends ConsumerWidget {
@@ -955,6 +956,9 @@ class _Ficha extends ConsumerWidget {
               label: Text(t.eventoPublicar),
             ),
           ),
+        // Promoción en el muro (3.1, D136): Destacado y Plus.
+        if (ref.watch(funcionalidadActivaProvider(Funcionalidades.promociones)))
+          SeccionPromociones(negocio: negocio),
         // Página pública (2.10b, D90): solo con plan Plus.
         if (c.plan == PlanComercio.plus &&
             ref.watch(funcionalidadActivaProvider(Funcionalidades.catalogo)))

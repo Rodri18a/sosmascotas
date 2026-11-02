@@ -289,6 +289,20 @@ def main():
              filas(rest('POST', 'rpc/mis_veterinarias_verificadas', {}, b)) == [])
         rest('POST', 'rpc/borrar_de_comunidad', {'p_tipo': 'post', 'p_id': q_id}, a)
 
+        print('promotions (promociones en el muro, D136)')
+        caso('nadie lee ni escribe la tabla de promociones directo',
+             rechazado(rest('GET', 'promotions?select=id', quien=a))
+             and rechazado(rest('POST', 'promotions', {'title': 'x'}, a)))
+        caso('quien no tiene un negocio no publica promociones',
+             rechazado(rest('POST', 'rpc/guardar_promocion',
+                            {'p': {'business_id': '00000000-0000-0000-0000-000000000000',
+                                   'title': 'Promo', 'body': 'Detalle', 'dias': 7}}, a)))
+        caso('un visitante ve las promociones cerca (sin datos de nadie)',
+             rest('POST', 'rpc/promociones_cerca', {'p_lat': -34.72, 'p_lng': -55.96})[0] == 200)
+        caso('un visitante no puede reportar promociones',
+             rechazado(rest('POST', 'flags', {'target_type': 'promo',
+                                              'target_id': '00000000-0000-0000-0000-000000000000'})))
+
         print('pet_transfers (pasar una mascota, D132)')
         r_t = filas(rest('POST', 'pets', {'name': 'Pasable', 'species_id': 1}, a))
         tid = r_t[0]['id'] if r_t else None

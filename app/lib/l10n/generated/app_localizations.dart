@@ -6868,6 +6868,162 @@ abstract class AppLocalizations {
   /// **'Responde una veterinaria'**
   String get preguntasConProfesional;
 
+  /// No description provided for @promoEtiqueta.
+  ///
+  /// In es, this message translates to:
+  /// **'Promocionado · {negocio}'**
+  String promoEtiqueta(String negocio);
+
+  /// No description provided for @promoReportarTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Reportar esta promoción'**
+  String get promoReportarTitulo;
+
+  /// No description provided for @promoReportarCuenta.
+  ///
+  /// In es, this message translates to:
+  /// **'Para reportar necesitás una cuenta.'**
+  String get promoReportarCuenta;
+
+  /// No description provided for @promoMotivoEngano.
+  ///
+  /// In es, this message translates to:
+  /// **'Es engañosa'**
+  String get promoMotivoEngano;
+
+  /// No description provided for @promoMotivoAnimales.
+  ///
+  /// In es, this message translates to:
+  /// **'Vende o cruza animales'**
+  String get promoMotivoAnimales;
+
+  /// No description provided for @promoMotivoOtro.
+  ///
+  /// In es, this message translates to:
+  /// **'Otro motivo'**
+  String get promoMotivoOtro;
+
+  /// No description provided for @promoReportada.
+  ///
+  /// In es, this message translates to:
+  /// **'Gracias, la vamos a revisar.'**
+  String get promoReportada;
+
+  /// No description provided for @promoPanelTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Promoción en el muro'**
+  String get promoPanelTitulo;
+
+  /// No description provided for @promoSoloPlanes.
+  ///
+  /// In es, this message translates to:
+  /// **'Con Destacado o Plus, tu promoción sale en el Inicio de quienes están cerca, marcada «Promocionado».'**
+  String get promoSoloPlanes;
+
+  /// No description provided for @promoPanelAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =1{Sale en el Inicio de quienes están cerca. Tenés 1 vigente.} other{Sale en el Inicio de quienes están cerca. Tenés hasta {n} vigentes.}}'**
+  String promoPanelAyuda(int n);
+
+  /// No description provided for @promoHasta.
+  ///
+  /// In es, this message translates to:
+  /// **'Hasta el {fecha}'**
+  String promoHasta(String fecha);
+
+  /// No description provided for @promoTerminar.
+  ///
+  /// In es, this message translates to:
+  /// **'Terminar'**
+  String get promoTerminar;
+
+  /// No description provided for @promoNueva.
+  ///
+  /// In es, this message translates to:
+  /// **'Nueva promoción'**
+  String get promoNueva;
+
+  /// No description provided for @promoEditar.
+  ///
+  /// In es, this message translates to:
+  /// **'Editar promoción'**
+  String get promoEditar;
+
+  /// No description provided for @promoTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Título (por ejemplo: 10% en alimento)'**
+  String get promoTitulo;
+
+  /// No description provided for @promoTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Detalle'**
+  String get promoTexto;
+
+  /// No description provided for @promoDuracion.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Cuánto dura?'**
+  String get promoDuracion;
+
+  /// No description provided for @promoDias.
+  ///
+  /// In es, this message translates to:
+  /// **'{dias} días'**
+  String promoDias(int dias);
+
+  /// No description provided for @promoFoto.
+  ///
+  /// In es, this message translates to:
+  /// **'Foto de tu ficha'**
+  String get promoFoto;
+
+  /// No description provided for @promoSinFoto.
+  ///
+  /// In es, this message translates to:
+  /// **'Sin foto'**
+  String get promoSinFoto;
+
+  /// No description provided for @promoFotoN.
+  ///
+  /// In es, this message translates to:
+  /// **'Foto {n}'**
+  String promoFotoN(int n);
+
+  /// No description provided for @promoFaltan.
+  ///
+  /// In es, this message translates to:
+  /// **'Completá el título y el detalle.'**
+  String get promoFaltan;
+
+  /// No description provided for @promoTope.
+  ///
+  /// In es, this message translates to:
+  /// **'Ya tenés las promociones que permite tu plan. Terminá una para publicar otra.'**
+  String get promoTope;
+
+  /// No description provided for @promoPublicar.
+  ///
+  /// In es, this message translates to:
+  /// **'Publicar'**
+  String get promoPublicar;
+
+  /// No description provided for @estadisticasPromoVistas.
+  ///
+  /// In es, this message translates to:
+  /// **'Vistas de tu promoción'**
+  String get estadisticasPromoVistas;
+
+  /// No description provided for @estadisticasPromoToques.
+  ///
+  /// In es, this message translates to:
+  /// **'Toques en tu promoción'**
+  String get estadisticasPromoToques;
+
   /// No description provided for @atajosMas.
   ///
   /// In es, this message translates to:

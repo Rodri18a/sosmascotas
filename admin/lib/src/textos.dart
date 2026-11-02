@@ -73,6 +73,7 @@ abstract final class T {
   static const resena = 'Reseña';
   static const publicacion = 'Publicación de un grupo';
   static const comentario = 'Comentario de un grupo';
+  static const promocionMuro = 'Promoción del muro';
 
   // Grupos de la comunidad (3.4, D116)
   static const grupos = 'Grupos';

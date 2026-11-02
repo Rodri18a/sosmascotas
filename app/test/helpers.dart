@@ -19,6 +19,7 @@ import 'package:sosmascota/src/comercios/descuentos_repositorio.dart';
 import 'package:sosmascota/src/comercios/equipo_repositorio.dart';
 import 'package:sosmascota/src/comercios/mis_lugares.dart';
 import 'package:sosmascota/src/comercios/negocios_repositorio.dart';
+import 'package:sosmascota/src/comercios/promociones_repositorio.dart';
 import 'package:sosmascota/src/comercios/resenas_repositorio.dart';
 import 'package:sosmascota/src/comunidad/comunidad_repositorio.dart';
 import 'package:sosmascota/src/config/env_provider.dart';
@@ -89,6 +90,7 @@ import 'pack_falso.dart';
 import 'pedidos_chapita_falsos.dart';
 import 'perfil_falso.dart';
 import 'plan_usuario_falso.dart';
+import 'promociones_falsas.dart';
 import 'qr_falso.dart';
 import 'recordatorios_falsos.dart';
 import 'resenas_falsas.dart';
@@ -118,6 +120,7 @@ Widget appDePrueba({
   HistorialRepositorio? historial,
   TransferenciasRepositorio? transferencias,
   EnlacesHistorialRepositorio? enlacesHistorial,
+  PromocionesRepositorio? promociones,
   SelectorDocumento? selectorDocumento,
   RecordatoriosRepositorio? recordatorios,
   AvisadorRecordatorios? avisador,
@@ -222,6 +225,9 @@ Widget appDePrueba({
     libretaRepositorioProvider.overrideWithValue(libreta ?? LibretaFalsa()),
     historialRepositorioProvider.overrideWithValue(
       historial ?? HistorialFalso(),
+    ),
+    promocionesRepositorioProvider.overrideWithValue(
+      promociones ?? PromocionesFalsas(),
     ),
     enlacesHistorialRepositorioProvider.overrideWithValue(
       enlacesHistorial ?? EnlacesHistorialFalsos(),

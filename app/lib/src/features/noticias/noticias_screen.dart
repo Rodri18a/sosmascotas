@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
+import '../../comercios/promociones_repositorio.dart';
 import '../../comercios/textos_comercio.dart';
 import '../../cuenta/con_cuenta.dart';
 import '../../cuenta/servicio_cuenta.dart';
@@ -24,6 +25,7 @@ import '../eventos/eventos.dart';
 import '../menu/menu_principal.dart';
 import '../sos/sos_detalle_screen.dart';
 import 'carrusel_banners.dart';
+import 'tarjeta_promocion.dart';
 
 /// Noticias (2.8, D83): filtradas por las especies de mis mascotas, con las
 /// patrocinadas siempre marcadas "Promocionado · «marca»". La sección
@@ -104,7 +106,8 @@ class _NoticiasScreenState extends ConsumerState<NoticiasScreen> {
           onRefresh: () async {
             ref
               ..invalidate(reaccionesProvider)
-              ..invalidate(bannersProvider);
+              ..invalidate(bannersProvider)
+              ..invalidate(promocionesCercaProvider);
             if (_comunidad) {
               ref
                 ..invalidate(novedadesProvider)
@@ -200,7 +203,29 @@ class _NoticiasScreenState extends ConsumerState<NoticiasScreen> {
                           )
                         : Column(
                             children: [
-                              for (final n in lista) TarjetaNoticia(noticia: n),
+                              // Promociones de comercios cercanos, una cada 4
+                              // noticias (3.1, D136). Nunca en SOS ni en el QR.
+                              for (final x in intercalarPromociones(
+                                lista,
+                                ref.watch(
+                                      funcionalidadActivaProvider(
+                                        Funcionalidades.promociones,
+                                      ),
+                                    )
+                                    ? ref
+                                              .watch(promocionesCercaProvider)
+                                              .value ??
+                                          const <Promocion>[]
+                                    : const <Promocion>[],
+                              ))
+                                switch (x) {
+                                  final Promocion p => TarjetaPromocion(
+                                    key: ValueKey('promo-${p.id}'),
+                                    promocion: p,
+                                  ),
+                                  final Noticia n => TarjetaNoticia(noticia: n),
+                                  _ => const SizedBox.shrink(),
+                                },
                             ],
                           );
                   }(),

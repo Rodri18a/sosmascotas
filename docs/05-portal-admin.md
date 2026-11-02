@@ -26,6 +26,7 @@ Acceso: solo usuarios con rol `admin`, verificado en el servidor (RLS y claims),
 
 ### 2. Moderación — Fase 1
 - Cola de contenido reportado y **oculto automáticamente** (3 reportes de usuarios distintos).
+- Incluye las **promociones del muro** (D136): aprobar la vuelve a mostrar; eliminar la termina.
 - Acciones: aprobar (vuelve a mostrarse), eliminar, advertir, bloquear al usuario.
 - Historial de cada usuario (reportes recibidos, sanciones).
 

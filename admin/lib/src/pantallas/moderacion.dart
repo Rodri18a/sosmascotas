@@ -177,6 +177,7 @@ class _Tarjeta extends ConsumerWidget {
                     'review' => T.resena,
                     'post' => T.publicacion,
                     'comment' => T.comentario,
+                    'promo' => T.promocionMuro,
                     _ => T.mensaje,
                   }),
                 ),

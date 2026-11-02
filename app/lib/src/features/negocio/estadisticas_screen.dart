@@ -83,6 +83,8 @@ class EstadisticasScreen extends ConsumerWidget {
           (MetricasComercio.pedidos, t.estadisticasPedidos),
           (MetricasComercio.pagina, t.estadisticasPagina),
           (MetricasComercio.resenas, t.estadisticasResenas),
+          (MetricasComercio.promoVistas, t.estadisticasPromoVistas),
+          (MetricasComercio.promoToques, t.estadisticasPromoToques),
         ])
           (texto, mes[metrica], antes?[metrica] ?? 0),
       ],
@@ -194,6 +196,17 @@ class _Contenido extends StatelessWidget {
               MetricasComercio.resenas,
               Icons.star_outline,
               t.estadisticasResenas,
+            ),
+            // Promoción en el muro (D136).
+            (
+              MetricasComercio.promoVistas,
+              Icons.campaign_outlined,
+              t.estadisticasPromoVistas,
+            ),
+            (
+              MetricasComercio.promoToques,
+              Icons.touch_app_outlined,
+              t.estadisticasPromoToques,
             ),
           ])
             // Lo que nunca tuvo movimiento no ocupa lugar.

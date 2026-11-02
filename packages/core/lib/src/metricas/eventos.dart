@@ -107,6 +107,13 @@ abstract final class Eventos {
 
   /// Una veterinaria verificada firma su respuesta (D135).
   static const professionalAnswerMark = 'professional_answer_mark';
+
+  /// Promociones en el muro (D136), con `business_id` para sus estadísticas:
+  /// se vio (una vez por sesión), se tocó, el comercio la publicó o la reportaron.
+  static const promoView = 'promo_view';
+  static const promoClick = 'promo_click';
+  static const promoCreate = 'promo_create';
+  static const promoReport = 'promo_report';
   static const tabOpen = 'tab_open';
   static const tagActivate = 'tag_activate';
   static const tagUnlink = 'tag_unlink';

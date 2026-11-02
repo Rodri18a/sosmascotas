@@ -68,6 +68,7 @@ Regla de oro: **lo que hace a la seguridad y la salud del animal no se cobra.**
 | Estadísticas | Resumen | Completas y reporte mensual | Completas y reporte mensual |
 | Pin de color y primero en el mapa y en las búsquedas | | ✅ | ✅ |
 | Promociones, web, Instagram, Facebook y WhatsApp a la vista | | ✅ | ✅ |
+| Promoción en el muro de Inicio, por zona, con vistas y toques (D136) | | 1 vigente | 2 vigentes |
 | Catálogo y pedidos | | | ✅ (según el rubro) |
 | Agenda de turnos, paseos y estadías | | | ✅ (según el rubro) |
 | Socios y recordatorios a sus clientes | | | ✅ (veterinarias) |

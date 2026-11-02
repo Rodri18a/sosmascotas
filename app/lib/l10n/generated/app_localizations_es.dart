@@ -4046,6 +4046,103 @@ class AppLocalizationsEs extends AppLocalizations {
   String get preguntasConProfesional => 'Responde una veterinaria';
 
   @override
+  String promoEtiqueta(String negocio) {
+    return 'Promocionado · $negocio';
+  }
+
+  @override
+  String get promoReportarTitulo => 'Reportar esta promoción';
+
+  @override
+  String get promoReportarCuenta => 'Para reportar necesitás una cuenta.';
+
+  @override
+  String get promoMotivoEngano => 'Es engañosa';
+
+  @override
+  String get promoMotivoAnimales => 'Vende o cruza animales';
+
+  @override
+  String get promoMotivoOtro => 'Otro motivo';
+
+  @override
+  String get promoReportada => 'Gracias, la vamos a revisar.';
+
+  @override
+  String get promoPanelTitulo => 'Promoción en el muro';
+
+  @override
+  String get promoSoloPlanes =>
+      'Con Destacado o Plus, tu promoción sale en el Inicio de quienes están cerca, marcada «Promocionado».';
+
+  @override
+  String promoPanelAyuda(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other:
+          'Sale en el Inicio de quienes están cerca. Tenés hasta $n vigentes.',
+      one: 'Sale en el Inicio de quienes están cerca. Tenés 1 vigente.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String promoHasta(String fecha) {
+    return 'Hasta el $fecha';
+  }
+
+  @override
+  String get promoTerminar => 'Terminar';
+
+  @override
+  String get promoNueva => 'Nueva promoción';
+
+  @override
+  String get promoEditar => 'Editar promoción';
+
+  @override
+  String get promoTitulo => 'Título (por ejemplo: 10% en alimento)';
+
+  @override
+  String get promoTexto => 'Detalle';
+
+  @override
+  String get promoDuracion => '¿Cuánto dura?';
+
+  @override
+  String promoDias(int dias) {
+    return '$dias días';
+  }
+
+  @override
+  String get promoFoto => 'Foto de tu ficha';
+
+  @override
+  String get promoSinFoto => 'Sin foto';
+
+  @override
+  String promoFotoN(int n) {
+    return 'Foto $n';
+  }
+
+  @override
+  String get promoFaltan => 'Completá el título y el detalle.';
+
+  @override
+  String get promoTope =>
+      'Ya tenés las promociones que permite tu plan. Terminá una para publicar otra.';
+
+  @override
+  String get promoPublicar => 'Publicar';
+
+  @override
+  String get estadisticasPromoVistas => 'Vistas de tu promoción';
+
+  @override
+  String get estadisticasPromoToques => 'Toques en tu promoción';
+
+  @override
   String atajosMas(String nombre) {
     return 'Más opciones de $nombre';
   }

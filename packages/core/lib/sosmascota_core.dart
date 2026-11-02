@@ -42,6 +42,7 @@ export 'src/metricas/eventos.dart';
 export 'src/noticias/banner_inicio.dart';
 export 'src/noticias/noticia.dart';
 export 'src/noticias/novedad.dart';
+export 'src/promociones/promocion.dart';
 export 'src/qr/pedido_chapita.dart';
 export 'src/qr/qr_tag.dart';
 export 'src/sos/sos.dart';

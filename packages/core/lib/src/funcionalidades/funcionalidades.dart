@@ -24,6 +24,9 @@ abstract final class Funcionalidades {
   /// Preguntas de la comunidad con temas y buscador (2.3, D134).
   static const preguntas = 'preguntas';
 
+  /// Promociones de comercios Destacado y Plus en el muro (3.1, D136).
+  static const promociones = 'promociones';
+
   /// Estado RENAC en la ficha y guía "Cómo registrar a tu mascota" (1.5.2b,
   /// D96).
   static const renac = 'renac';
