@@ -6268,6 +6268,24 @@ abstract class AppLocalizations {
   /// **'Ver menos'**
   String get explicacionVerMenos;
 
+  /// No description provided for @atajoLibreta.
+  ///
+  /// In es, this message translates to:
+  /// **'Agregar a la libreta'**
+  String get atajoLibreta;
+
+  /// No description provided for @atajoRecordatorio.
+  ///
+  /// In es, this message translates to:
+  /// **'Nuevo recordatorio'**
+  String get atajoRecordatorio;
+
+  /// No description provided for @atajosMas.
+  ///
+  /// In es, this message translates to:
+  /// **'Más opciones de {nombre}'**
+  String atajosMas(String nombre);
+
   /// No description provided for @hogarExplicacionCorta.
   ///
   /// In es, this message translates to:

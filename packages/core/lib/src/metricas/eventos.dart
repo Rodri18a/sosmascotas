@@ -79,6 +79,10 @@ abstract final class Eventos {
 
   /// «Ver más» de una explicación corta (plan de mejoras 1.4): `item`, cuál.
   static const moreInfoOpen = 'more_info_open';
+
+  /// Acceso directo desde la fila de una mascota en Mis mascotas (1.5):
+  /// `action` = qr, libreta, recordatorio o reportar.
+  static const petQuickAction = 'pet_quick_action';
   static const tabOpen = 'tab_open';
   static const tagActivate = 'tag_activate';
   static const tagUnlink = 'tag_unlink';

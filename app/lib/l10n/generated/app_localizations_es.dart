@@ -3676,6 +3676,17 @@ class AppLocalizationsEs extends AppLocalizations {
   String get explicacionVerMenos => 'Ver menos';
 
   @override
+  String get atajoLibreta => 'Agregar a la libreta';
+
+  @override
+  String get atajoRecordatorio => 'Nuevo recordatorio';
+
+  @override
+  String atajosMas(String nombre) {
+    return 'Más opciones de $nombre';
+  }
+
+  @override
   String get hogarExplicacionCorta =>
       'Compartí tus mascotas con tu familia: hasta 5 personas.';
 

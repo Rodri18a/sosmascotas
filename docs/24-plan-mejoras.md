@@ -39,7 +39,27 @@ Cada paso es chico y se prueba antes de pasar al siguiente.
 | 1.2 | **Menú ☰ ordenado:** todas las funciones en grupos con ícono y nombre corto (Mis mascotas · Mapa y lugares · Comunidad · Adopción · Eventos · Turnos y pedidos · Mi negocio · Ajustes). ✅ 02/11/2026: seis grupos con título: **Mis mascotas** (con la mascota elegida y su ficha, QR y «Se perdió») · **Mapa y lugares** (Mapa, Buscar lugares, Marcar un lugar) · **Comunidad** (Inicio, Próximos eventos, Grupos, Mensajes, Avisos) · **Adopción** (y Hogar de tránsito) · **Turnos y pedidos** · **Mi cuenta** (Mi negocio, Mi plan, Mi hogar, Ajustes). Eventos va dentro de Comunidad (crear un evento es solo de los comercios verificados, desde su panel) y Mi negocio dentro de Mi cuenta, para no tener grupos de una sola opción. Libreta y recordatorios siguen en la ficha de cada mascota. Métrica `menu_item_open` | Cualquier función está a 2 toques como máximo |
 | 1.3 | **Botón de ayuda** arriba a la derecha de cada pantalla (en las pestañas, en lugar del ícono de Ajustes), con una hoja corta: para qué sirve, qué significa cada opción, qué pasa al confirmar. Textos en `app_es.arb`. ✅ 02/11/2026, **como recorrido guiado** (D130, pedido del dueño): ilumina cada parte de la pantalla y la explica en una línea; sale solo la primera vez y se repite con el ? (Inicio, SOS, Mapa, Mis mascotas, Urgencias y el panel del negocio) | Mismo botón, mismo lugar, en todas las pantallas principales |
 | 1.4 | **Textos más cortos:** las explicaciones largas fijas pasan a la ayuda; en pantalla queda una línea. ✅ 02/11/2026: 23 explicaciones fijas quedan en **una línea con «Ver más»**, que despliega el texto completo en el mismo lugar (`ExplicacionCorta`; Hogar, Hogar de tránsito, Equipo, adopción, chapita QR, marcar un lugar, Temas, Descuentos, Servicios, planilla, Apadrinar, Pack, Socios, veterinaria…). **No se acortan** los avisos de seguridad y privacidad (anti-estafas, chat, SOS, WhatsApp), las ventanas que salen al tocar algo, el consentimiento ni la guía del RENAC. Métrica `more_info_open` | Revisión pantalla por pantalla |
-| 1.5 | **Pestaña Urgencias** (hoy «Ayuda») y revisión de caminos largos | Prueba con 3 personas: llegar a 5 funciones sin ayuda |
+| 1.5 | **Pestaña Urgencias** (hoy «Ayuda») y revisión de caminos largos. ✅ Urgencias (D127); caminos medidos (tabla de abajo), con accesos directos en la fila de cada mascota (chapita QR, libreta, recordatorio). **Falta:** la prueba con 3 personas ([guía](guias/prueba-5-funciones.md)) | Prueba con 3 personas: llegar a 5 funciones sin ayuda |
+
+#### Caminos: toques desde que se abre la app (1.5, 02/11/2026)
+
+| Función | Camino | Toques |
+|---|---|---|
+| Reportar una mascota perdida | SOS → Reportar | 2 |
+| Ver la ficha de una mascota | Mascotas → la mascota | 2 |
+| Chapita QR | Mascotas → ícono QR de la fila (antes: entrar a la ficha) | 2 |
+| Agregar una vacuna o un registro de salud | Mascotas → ⋮ de la fila → Agregar a la libreta (antes: ficha y bajar) | 3 |
+| Crear un recordatorio | Mascotas → ⋮ de la fila → Nuevo recordatorio (antes: ficha y bajar) | 3 |
+| Veterinaria de urgencia | Urgencias | 1 |
+| Buscar una veterinaria | Mapa → filtro Salud (o Buscar) | 2 |
+| Pedir un turno | Mapa → el lugar → Reservar turno | 3 |
+| Avisar que viste una perdida | SOS → el reporte → avisar | 3 |
+| Adoptar | ☰ → Adopción | 2 |
+| Mensajes / Avisos | ícono de arriba | 1 |
+| Denunciar maltrato | Urgencias → Denuncia | 2 |
+| Mi negocio · Ajustes | ☰ → Mi cuenta | 2 |
+
+Ninguna función pasa de 3 toques. La prueba con 3 personas está en [la guía](guias/prueba-5-funciones.md).
 
 ### Etapa 2 · Funciones principales
 

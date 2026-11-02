@@ -8,6 +8,7 @@ import 'package:sosmascota/src/features/shell/app_shell.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'cuenta_falsa.dart';
+import 'funcionalidades_falsas.dart';
 import 'helpers.dart';
 import 'mascotas_falsas.dart';
 
@@ -285,5 +286,43 @@ void main() {
 
     expect(find.text('Agregar mascota'), findsOneWidget);
     expect(find.byType(FloatingActionButton), findsNothing);
+  });
+
+  testWidgets('accesos directos en la fila: chapita QR y nuevo recordatorio', (
+    tester,
+  ) async {
+    _pantallaDeCelular(tester);
+    final eventos = <Map<String, Object?>>[];
+    await tester.pumpWidget(
+      appDePrueba(
+        cuenta: ServicioCuentaFalso(conectado: _ana),
+        mascotas: MascotasFalsas([_luna]),
+        eventos: eventos,
+        funcionalidades: FuncionalidadesFalsas({
+          Funcionalidades.libreta,
+          Funcionalidades.recordatorios,
+        }),
+      ),
+    );
+    await _irAMisMascotas(tester);
+
+    await tester.tap(find.byTooltip('Más opciones de Luna'));
+    await tester.pumpAndSettle();
+    expect(find.text('Agregar a la libreta'), findsOneWidget);
+    await tester.tap(find.text('Nuevo recordatorio'));
+    await tester.pumpAndSettle();
+    expect(find.widgetWithText(AppBar, 'Nuevo recordatorio'), findsOneWidget);
+
+    await tester.binding.handlePopRoute();
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('Chapita QR'));
+    await tester.pumpAndSettle();
+    expect(find.widgetWithText(AppBar, 'Chapita QR'), findsWidgets);
+    expect(
+      eventos
+          .where((e) => e['name'] == 'pet_quick_action')
+          .map((e) => (e['props']! as Map)['action']),
+      ['recordatorio', 'qr'],
+    );
   });
 }

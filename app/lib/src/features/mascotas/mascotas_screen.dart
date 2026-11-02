@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -6,11 +8,13 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 import '../../../l10n/l10n.dart';
 import '../../cuenta/con_cuenta.dart';
 import '../../cuenta/servicio_cuenta.dart';
+import '../../funcionalidades/funcionalidades_activas.dart';
 import '../../hogar/hogar_repositorio.dart';
 import '../../mascotas/catalogo.dart';
 import '../../mascotas/mascota_activa.dart';
 import '../../mascotas/mascotas_repositorio.dart';
 import '../../mascotas/textos_mascota.dart';
+import '../../metricas/metricas.dart';
 import '../../recorrido/pasos.dart';
 import '../../recorrido/recorrido.dart';
 import '../../router.dart';
@@ -195,11 +199,71 @@ class _FilaMascota extends ConsumerWidget {
         },
     ].join(' · ');
 
+    bool activa(String clave) => ref.watch(funcionalidadActivaProvider(clave));
+    // Accesos directos (plan de mejoras 1.5): lo más usado sin entrar a la
+    // ficha ni bajar hasta la libreta.
+    void ir(String accion, String ruta) {
+      ref
+          .read(metricasProvider)
+          .track(Eventos.petQuickAction, props: {'action': accion});
+      unawaited(context.push(ruta));
+    }
+
+    final atajos = <(String, IconData, String, String)>[
+      if (activa(Funcionalidades.libreta))
+        (
+          'libreta',
+          Icons.medical_services_outlined,
+          t.atajoLibreta,
+          Rutas.nuevoRegistroSalud(mascota.id),
+        ),
+      if (activa(Funcionalidades.recordatorios))
+        (
+          'recordatorio',
+          Icons.alarm_add_outlined,
+          t.atajoRecordatorio,
+          Rutas.nuevoRecordatorio(mascota.id),
+        ),
+      if (mascota.esDe(yo))
+        (
+          'reportar',
+          Icons.sos_outlined,
+          t.menuReportarPerdida,
+          Rutas.reportarMascota(mascota.id),
+        ),
+    ];
+
     return ListTile(
       leading: FotoMascota(ruta: mascota.fotoPath, icono: especie?.icono),
       title: Text(mascota.nombre),
       subtitle: detalle.isEmpty ? null : Text(detalle),
-      trailing: const Icon(Icons.chevron_right_outlined),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          IconButton(
+            tooltip: t.fichaQrTitulo,
+            icon: const Icon(Icons.qr_code_2_outlined),
+            onPressed: () => ir('qr', Rutas.qrMascota(mascota.id)),
+          ),
+          if (atajos.isNotEmpty)
+            PopupMenuButton<(String, String)>(
+              tooltip: t.atajosMas(mascota.nombre),
+              icon: const Icon(Icons.more_vert),
+              onSelected: (a) => ir(a.$1, a.$2),
+              itemBuilder: (_) => [
+                for (final (accion, icono, texto, ruta) in atajos)
+                  PopupMenuItem(
+                    value: (accion, ruta),
+                    child: ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: Icon(icono),
+                      title: Text(texto),
+                    ),
+                  ),
+              ],
+            ),
+        ],
+      ),
       onTap: () => context.push(Rutas.fichaMascota(mascota.id)),
     );
   }
