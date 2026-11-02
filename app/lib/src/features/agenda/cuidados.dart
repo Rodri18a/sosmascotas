@@ -130,6 +130,9 @@ class _PedirCuidadoState extends ConsumerState<PedirCuidadoScreen> {
     if (c.maximoDias == 1) {
       final dia = await showDatePicker(
         context: context,
+        // Arranca en el día del reloj de la app (no en DateTime.now()).
+        initialDate: hoy,
+        currentDate: ahora,
         firstDate: hoy,
         lastDate: ultimo,
         helpText: t.cuidadoFechas,
@@ -141,6 +144,7 @@ class _PedirCuidadoState extends ConsumerState<PedirCuidadoScreen> {
     }
     final rango = await showDateRangePicker(
       context: context,
+      currentDate: ahora,
       firstDate: hoy,
       lastDate: ultimo,
       helpText: t.cuidadoFechas,
