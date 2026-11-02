@@ -6472,6 +6472,126 @@ abstract class AppLocalizations {
   /// **'Agregar al historial'**
   String get atajoHistorial;
 
+  /// No description provided for @pasarTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Pasar a otra persona'**
+  String get pasarTitulo;
+
+  /// No description provided for @pasarSubtitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Con su libreta, su historial y su chapita QR.'**
+  String get pasarSubtitulo;
+
+  /// No description provided for @pasarHojaTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Pasar a {nombre}'**
+  String pasarHojaTitulo(String nombre);
+
+  /// No description provided for @pasarExplicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Generá un código y mandáselo a la persona que la va a cuidar. Cuando lo acepte, la mascota pasa a su cuenta con todo su historial y deja de estar en la tuya. El código vence en 7 días y sirve una sola vez.'**
+  String get pasarExplicacion;
+
+  /// No description provided for @pasarGenerar.
+  ///
+  /// In es, this message translates to:
+  /// **'Generar código'**
+  String get pasarGenerar;
+
+  /// No description provided for @pasarVence.
+  ///
+  /// In es, this message translates to:
+  /// **'Vence el {fecha}'**
+  String pasarVence(String fecha);
+
+  /// No description provided for @pasarCopiar.
+  ///
+  /// In es, this message translates to:
+  /// **'Copiar para mandar'**
+  String get pasarCopiar;
+
+  /// No description provided for @pasarCopiado.
+  ///
+  /// In es, this message translates to:
+  /// **'Copiado. Pegalo en un mensaje.'**
+  String get pasarCopiado;
+
+  /// No description provided for @pasarMensaje.
+  ///
+  /// In es, this message translates to:
+  /// **'Te paso a {nombre} en Huellitas. En Mis mascotas tocá «Tengo un código» y escribí: {codigo}'**
+  String pasarMensaje(String nombre, String codigo);
+
+  /// No description provided for @pasarCancelar.
+  ///
+  /// In es, this message translates to:
+  /// **'Cancelar el código'**
+  String get pasarCancelar;
+
+  /// No description provided for @pasarSosAbierto.
+  ///
+  /// In es, this message translates to:
+  /// **'Tiene un SOS abierto: cerralo antes de pasarla.'**
+  String get pasarSosAbierto;
+
+  /// No description provided for @pasarCodigoInvalido.
+  ///
+  /// In es, this message translates to:
+  /// **'El código no es válido, venció o ya se usó.'**
+  String get pasarCodigoInvalido;
+
+  /// No description provided for @pasarTengoCodigo.
+  ///
+  /// In es, this message translates to:
+  /// **'Tengo un código'**
+  String get pasarTengoCodigo;
+
+  /// No description provided for @pasarRecibirTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Recibir una mascota'**
+  String get pasarRecibirTitulo;
+
+  /// No description provided for @pasarRecibirExplicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Escribí el código que te pasaron.'**
+  String get pasarRecibirExplicacion;
+
+  /// No description provided for @pasarCodigo.
+  ///
+  /// In es, this message translates to:
+  /// **'Código'**
+  String get pasarCodigo;
+
+  /// No description provided for @pasarBuscar.
+  ///
+  /// In es, this message translates to:
+  /// **'Buscar'**
+  String get pasarBuscar;
+
+  /// No description provided for @pasarRecibirConfirmar.
+  ///
+  /// In es, this message translates to:
+  /// **'Pasa a tu cuenta con todo su historial.'**
+  String get pasarRecibirConfirmar;
+
+  /// No description provided for @pasarAceptar.
+  ///
+  /// In es, this message translates to:
+  /// **'Aceptar'**
+  String get pasarAceptar;
+
+  /// No description provided for @pasarRecibida.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Listo! Ya está en tus mascotas.'**
+  String get pasarRecibida;
+
   /// No description provided for @atajosMas.
   ///
   /// In es, this message translates to:

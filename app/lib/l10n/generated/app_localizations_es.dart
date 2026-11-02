@@ -3798,6 +3798,75 @@ class AppLocalizationsEs extends AppLocalizations {
   String get atajoHistorial => 'Agregar al historial';
 
   @override
+  String get pasarTitulo => 'Pasar a otra persona';
+
+  @override
+  String get pasarSubtitulo => 'Con su libreta, su historial y su chapita QR.';
+
+  @override
+  String pasarHojaTitulo(String nombre) {
+    return 'Pasar a $nombre';
+  }
+
+  @override
+  String get pasarExplicacion =>
+      'Generá un código y mandáselo a la persona que la va a cuidar. Cuando lo acepte, la mascota pasa a su cuenta con todo su historial y deja de estar en la tuya. El código vence en 7 días y sirve una sola vez.';
+
+  @override
+  String get pasarGenerar => 'Generar código';
+
+  @override
+  String pasarVence(String fecha) {
+    return 'Vence el $fecha';
+  }
+
+  @override
+  String get pasarCopiar => 'Copiar para mandar';
+
+  @override
+  String get pasarCopiado => 'Copiado. Pegalo en un mensaje.';
+
+  @override
+  String pasarMensaje(String nombre, String codigo) {
+    return 'Te paso a $nombre en Huellitas. En Mis mascotas tocá «Tengo un código» y escribí: $codigo';
+  }
+
+  @override
+  String get pasarCancelar => 'Cancelar el código';
+
+  @override
+  String get pasarSosAbierto =>
+      'Tiene un SOS abierto: cerralo antes de pasarla.';
+
+  @override
+  String get pasarCodigoInvalido =>
+      'El código no es válido, venció o ya se usó.';
+
+  @override
+  String get pasarTengoCodigo => 'Tengo un código';
+
+  @override
+  String get pasarRecibirTitulo => 'Recibir una mascota';
+
+  @override
+  String get pasarRecibirExplicacion => 'Escribí el código que te pasaron.';
+
+  @override
+  String get pasarCodigo => 'Código';
+
+  @override
+  String get pasarBuscar => 'Buscar';
+
+  @override
+  String get pasarRecibirConfirmar => 'Pasa a tu cuenta con todo su historial.';
+
+  @override
+  String get pasarAceptar => 'Aceptar';
+
+  @override
+  String get pasarRecibida => '¡Listo! Ya está en tus mascotas.';
+
+  @override
   String atajosMas(String nombre) {
     return 'Más opciones de $nombre';
   }

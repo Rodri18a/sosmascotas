@@ -41,6 +41,7 @@ import 'package:sosmascota/src/mascotas/historial_repositorio.dart';
 import 'package:sosmascota/src/mascotas/libreta_repositorio.dart';
 import 'package:sosmascota/src/mascotas/mascota_elegida.dart';
 import 'package:sosmascota/src/mascotas/mascotas_repositorio.dart';
+import 'package:sosmascota/src/mascotas/transferencias_repositorio.dart';
 import 'package:sosmascota/src/metricas/metricas.dart';
 import 'package:sosmascota/src/noticias/noticias_repositorio.dart';
 import 'package:sosmascota/src/push/servicio_push.dart';
@@ -94,6 +95,7 @@ import 'sos_falso.dart';
 import 'tareas_falsas.dart';
 import 'tema_falso.dart';
 import 'tienda_falsa.dart';
+import 'transferencias_falsas.dart';
 import 'transito_falso.dart';
 import 'veterinarias_falsas.dart';
 
@@ -112,6 +114,7 @@ Widget appDePrueba({
   MascotasRepositorio? mascotas,
   LibretaRepositorio? libreta,
   HistorialRepositorio? historial,
+  TransferenciasRepositorio? transferencias,
   SelectorDocumento? selectorDocumento,
   RecordatoriosRepositorio? recordatorios,
   AvisadorRecordatorios? avisador,
@@ -216,6 +219,9 @@ Widget appDePrueba({
     libretaRepositorioProvider.overrideWithValue(libreta ?? LibretaFalsa()),
     historialRepositorioProvider.overrideWithValue(
       historial ?? HistorialFalso(),
+    ),
+    transferenciasRepositorioProvider.overrideWithValue(
+      transferencias ?? TransferenciasFalsas(),
     ),
     selectorDocumentoProvider.overrideWithValue(
       selectorDocumento ?? () async => null,

@@ -19,6 +19,7 @@ import '../libreta/libreta.dart';
 import '../recordatorios/recordatorios.dart';
 import '../renac/renac.dart';
 import '../veterinarias/tarjeta_veterinaria.dart';
+import 'pasar_mascota.dart';
 
 /// Ficha de una mascota propia.
 class FichaMascotaScreen extends ConsumerWidget {
@@ -232,6 +233,15 @@ class _Ficha extends ConsumerWidget {
               child: Padding(
                 padding: const EdgeInsets.only(top: 12),
                 child: TarjetaVeterinaria(mascota: mascota),
+              ),
+            ),
+          // Pasarla a otra persona con todo su historial (D132): solo el dueño.
+          if (esDueno)
+            SiFuncionalidad(
+              Funcionalidades.pasarMascota,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 12),
+                child: TarjetaPasarMascota(mascota: mascota),
               ),
             ),
         ],

@@ -22,6 +22,7 @@ import '../../widgets/boton_ayuda.dart';
 import '../../widgets/en_construccion.dart';
 import '../../widgets/foto_mascota.dart';
 import '../menu/menu_principal.dart';
+import 'pasar_mascota.dart';
 
 class MascotasScreen extends ConsumerWidget {
   const MascotasScreen({super.key});
@@ -55,7 +56,21 @@ class MascotasScreen extends ConsumerWidget {
       AsyncData(value: final lista) when lista.isEmpty => EnConstruccion.vacio(
         icono: Icons.pets_outlined,
         descripcion: t.mascotasVacio,
-        accion: agregar(),
+        accion: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            agregar(),
+            // Recibir una mascota que me pasaron (D132).
+            if (ref.watch(
+              funcionalidadActivaProvider(Funcionalidades.pasarMascota),
+            ))
+              TextButton.icon(
+                onPressed: () => recibirMascota(context, ref),
+                icon: const Icon(Icons.key_outlined),
+                label: Text(t.pasarTengoCodigo),
+              ),
+          ],
+        ),
       ),
       AsyncData(value: final lista) => _Lista(mascotas: lista),
       AsyncError() => Center(child: Text(t.errorSinConexion)),
@@ -117,6 +132,15 @@ class _Lista extends ConsumerWidget {
         ),
         const Divider(height: 1),
         for (final m in mascotas) _FilaMascota(mascota: m),
+        // Recibir una mascota que me pasaron (D132).
+        if (ref.watch(
+          funcionalidadActivaProvider(Funcionalidades.pasarMascota),
+        ))
+          ListTile(
+            leading: const Icon(Icons.key_outlined),
+            title: Text(context.t.pasarTengoCodigo),
+            onTap: () => recibirMascota(context, ref),
+          ),
       ],
     );
   }

@@ -88,6 +88,10 @@ abstract final class Eventos {
   /// suma un adjunto (`type`: photo o pdf).
   static const lifeEventCreate = 'life_event_create';
   static const lifeEventFileAdd = 'life_event_file_add';
+
+  /// Pasar una mascota a otra persona (D132): se genera el código y se acepta.
+  static const petTransferCreate = 'pet_transfer_create';
+  static const petTransferAccept = 'pet_transfer_accept';
   static const tabOpen = 'tab_open';
   static const tagActivate = 'tag_activate';
   static const tagUnlink = 'tag_unlink';

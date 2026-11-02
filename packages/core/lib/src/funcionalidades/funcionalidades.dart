@@ -15,6 +15,9 @@ abstract final class Funcionalidades {
   /// Historial de vida de cada mascota (plan de mejoras 2.1, D131).
   static const historial = 'historial';
 
+  /// Pasar una mascota a otra persona con su historial (2.2, D132).
+  static const pasarMascota = 'pasar_mascota';
+
   /// Estado RENAC en la ficha y guía "Cómo registrar a tu mascota" (1.5.2b,
   /// D96).
   static const renac = 'renac';

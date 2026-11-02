@@ -116,6 +116,11 @@ def bloqueado(resp):
     return s in (401, 403) or (s in (200, 201) and d == [])
 
 
+def rechazado(resp):
+    """La base no lo dejó: un error de permisos o de validación (4xx)."""
+    return 400 <= resp[0] < 500
+
+
 # Ids de objetivos usados en las pruebas: sus eventos de métricas se borran al final.
 OBJETIVOS_DE_PRUEBA = []
 
@@ -213,10 +218,10 @@ def main():
         vida = r_vida[0] if r_vida else {}
         caso('A carga un acontecimiento con un adjunto de su mascota', bool(vida.get('id')))
         caso('un adjunto fuera de la carpeta de la mascota se rechaza',
-             bloqueado(rest('POST', 'life_events', {'pet_id': pid, 'kind': 'other', 'title': 'X',
+             rechazado(rest('POST', 'life_events', {'pet_id': pid, 'kind': 'other', 'title': 'X',
                                                     'date': '2026-03-14', 'files': ['otra/rx.pdf']}, a)))
         caso('más de 4 adjuntos se rechaza',
-             bloqueado(rest('POST', 'life_events', {'pet_id': pid, 'kind': 'other', 'title': 'X', 'date': '2026-03-14',
+             rechazado(rest('POST', 'life_events', {'pet_id': pid, 'kind': 'other', 'title': 'X', 'date': '2026-03-14',
                                                     'files': [f'{pid}/{i}.pdf' for i in range(5)]}, a)))
         caso('B no ve el historial de A', filas(rest('GET', 'life_events?select=id', quien=b)) == [])
         caso('un visitante no ve historiales', bloqueado(rest('GET', 'life_events?select=id')))
@@ -235,6 +240,30 @@ def main():
         caso('un visitante no puede leer adjuntos',
              pedir('GET', f'{URL}/storage/v1/object/public/pet-records/{pid}/rls.jpg')[0] >= 400)
         pedir('DELETE', f'{URL}/storage/v1/object/pet-records/{pid}/rls.jpg', headers=ADMIN)
+
+        print('pet_transfers (pasar una mascota, D132)')
+        r_t = filas(rest('POST', 'pets', {'name': 'Pasable', 'species_id': 1}, a))
+        tid = r_t[0]['id'] if r_t else None
+        caso('B no puede generar un código para la mascota de A',
+             rechazado(rest('POST', 'rpc/crear_transferencia', {'p_pet': tid}, b)))
+        caso('un visitante no puede generar códigos',
+             rechazado(rest('POST', 'rpc/crear_transferencia', {'p_pet': tid})))
+        st, codigo = rest('POST', 'rpc/crear_transferencia', {'p_pet': tid}, a)
+        caso('A genera un código de 10 letras', st == 200 and isinstance(codigo, str) and len(codigo) == 10)
+        caso('A no puede cambiar el dueño directo',
+             filas(rest('PATCH', f'pets?id=eq.{tid}', {'owner_id': b_id}, a)) == [])
+        caso('B no ve los códigos de A', filas(rest('GET', 'pet_transfers?select=id', quien=b)) == [])
+        caso('A no puede aceptar su propio código',
+             rechazado(rest('POST', 'rpc/aceptar_transferencia', {'p_code': codigo}, a)))
+        caso('B acepta y la mascota pasa a su cuenta',
+             rest('POST', 'rpc/aceptar_transferencia', {'p_code': codigo}, b)[0] == 200
+             and [p['id'] for p in filas(rest('GET', f'pets?select=id&id=eq.{tid}', quien=b))] == [tid])
+        caso('A ya no la ve', filas(rest('GET', f'pets?select=id&id=eq.{tid}', quien=a)) == [])
+        caso('el código no sirve dos veces',
+             rechazado(rest('POST', 'rpc/aceptar_transferencia', {'p_code': codigo}, b)))
+        if tid:
+            pedir('DELETE', f"{URL}/rest/v1/qr_tags?pet_id=eq.{tid}", headers=ADMIN)
+            pedir('DELETE', f"{URL}/rest/v1/pets?id=eq.{tid}", headers=ADMIN)
 
         r_pet_b = filas(rest('POST', 'pets', {'name': 'Michi', 'species_id': 2}, b))
         caso('A no puede pasar su registro a la mascota de B',
