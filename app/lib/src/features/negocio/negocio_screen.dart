@@ -22,6 +22,7 @@ import '../../tienda/tienda_repositorio.dart';
 import '../../utiles/enlaces.dart';
 import '../../veterinarias/veterinarias_repositorio.dart';
 import '../../widgets/boton_ayuda.dart';
+import '../../widgets/explicacion_corta.dart';
 import '../../widgets/volver.dart';
 import '../adopcion/apadrinamiento_screen.dart';
 import '../adopcion/pack_screen.dart';
@@ -928,7 +929,12 @@ class _Ficha extends ConsumerWidget {
         if (c.categoria == Categoria.vet && !c.operadorRenac)
           Padding(
             padding: const EdgeInsets.only(top: 4),
-            child: Text(t.negocioRenacTexto, style: tema.textTheme.bodySmall),
+            child: ExplicacionCorta(
+              id: 'negocio_renac_texto',
+              corta: t.negocioRenacTextoCorta,
+              larga: t.negocioRenacTexto,
+              estilo: tema.textTheme.bodySmall,
+            ),
           ),
         if (negocio.verificacion == Verificacion.verified &&
             ref.watch(funcionalidadActivaProvider(Funcionalidades.eventos)))

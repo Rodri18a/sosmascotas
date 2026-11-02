@@ -10,6 +10,7 @@ import '../../mascotas/mascotas_repositorio.dart';
 import '../../metricas/metricas.dart';
 import '../../qr/pedidos_chapita_repositorio.dart';
 import '../../router.dart';
+import '../../widgets/explicacion_corta.dart';
 import '../../widgets/volver.dart';
 
 String textoErrorPedido(AppLocalizations t, ErrorPedidoChapita e) =>
@@ -176,7 +177,11 @@ class _PedirChapitaState extends ConsumerState<PedirChapitaScreen> {
           : ListView(
               padding: const EdgeInsets.all(16),
               children: [
-                Text(t.pedidoChapitaExplicacion(mascota.nombre)),
+                ExplicacionCorta(
+                  id: 'pedido_chapita_explicacion',
+                  corta: t.pedidoChapitaExplicacionCorta,
+                  larga: t.pedidoChapitaExplicacion(mascota.nombre),
+                ),
                 const SizedBox(height: 8),
                 Text(t.pedidoChapitaPrecio, style: tema.textTheme.bodySmall),
                 const SizedBox(height: 16),

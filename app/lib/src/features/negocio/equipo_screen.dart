@@ -10,6 +10,7 @@ import '../../comercios/negocios_repositorio.dart';
 import '../../hogar/hogar_repositorio.dart';
 import '../../metricas/metricas.dart';
 import '../../router.dart';
+import '../../widgets/explicacion_corta.dart';
 import '../../widgets/volver.dart';
 
 /// `https://…/equipo/<código>`: abre [UnirmeEquipoScreen].
@@ -197,9 +198,13 @@ class ListaEquipo extends ConsumerWidget {
       AsyncData(value: final e) => ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          Text(
-            e.soyTitular ? t.equipoAyudaDuenio : t.equipoAyudaEmpleado,
-            style: tema.textTheme.bodySmall,
+          ExplicacionCorta(
+            id: e.soyTitular ? 'equipo_ayuda_duenio' : 'equipo_ayuda_empleado',
+            corta: e.soyTitular
+                ? t.equipoAyudaDuenioCorta
+                : t.equipoAyudaEmpleadoCorta,
+            larga: e.soyTitular ? t.equipoAyudaDuenio : t.equipoAyudaEmpleado,
+            estilo: tema.textTheme.bodySmall,
           ),
           const SizedBox(height: 16),
           if (e.soyTitular) ...[
@@ -356,7 +361,11 @@ class _UnirmeEquipoState extends ConsumerState<UnirmeEquipoScreen> {
         children: [
           const Icon(Icons.storefront_outlined, size: 64),
           const SizedBox(height: 16),
-          Text(t.unirmeEquipoTexto),
+          ExplicacionCorta(
+            id: 'unirme_equipo_texto',
+            corta: t.unirmeEquipoTextoCorta,
+            larga: t.unirmeEquipoTexto,
+          ),
           const SizedBox(height: 24),
           if (codigo == null)
             Text(

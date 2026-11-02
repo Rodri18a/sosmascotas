@@ -15,6 +15,7 @@ import '../../metricas/metricas.dart';
 import '../../qr/cartel_qr.dart';
 import '../../qr/qr_repositorio.dart';
 import '../../utiles/descargar.dart';
+import '../../widgets/explicacion_corta.dart';
 import '../chapitas/pedido_chapita.dart';
 
 /// QR de la mascota: verlo, descargarlo para imprimir, la nota pública y
@@ -227,7 +228,12 @@ class _ContenidoState extends ConsumerState<_Contenido> {
         const Divider(height: 32),
         _Chapitas(mascota: widget.mascota, esDueno: esDueno),
         const Divider(height: 32),
-        Text(t.qrConsejoChapita, style: tema.textTheme.bodySmall),
+        ExplicacionCorta(
+          id: 'qr_consejo_chapita',
+          corta: t.qrConsejoChapitaCorta,
+          larga: t.qrConsejoChapita,
+          estilo: tema.textTheme.bodySmall,
+        ),
         // Cambiar el QR (deja inservible la chapita) es solo del dueño (D69).
         if (esDueno) ...[
           const SizedBox(height: 8),
@@ -358,7 +364,11 @@ class _Chapitas extends ConsumerWidget {
         Text(t.chapitasTitulo, style: tema.textTheme.titleMedium),
         if (esDueno) ...[
           const SizedBox(height: 4),
-          Text(t.chapitasExplicacion(mascota.nombre)),
+          ExplicacionCorta(
+            id: 'chapitas_explicacion',
+            corta: t.chapitasExplicacionCorta(mascota.nombre),
+            larga: t.chapitasExplicacion(mascota.nombre),
+          ),
         ],
         if (chapitas.isEmpty)
           Padding(

@@ -3670,6 +3670,101 @@ class AppLocalizationsEs extends AppLocalizations {
       'Para usar la app como dueño o dueña de mascotas.';
 
   @override
+  String get explicacionVerMas => 'Ver más';
+
+  @override
+  String get explicacionVerMenos => 'Ver menos';
+
+  @override
+  String get hogarExplicacionCorta =>
+      'Compartí tus mascotas con tu familia: hasta 5 personas.';
+
+  @override
+  String get unirmeTextoCorta => 'Te invitaron a cuidar mascotas en Huellitas.';
+
+  @override
+  String get transitoIntroCorta =>
+      'Cuidá un animal de un refugio hasta que encuentre familia.';
+
+  @override
+  String get equipoAyudaDuenioCorta =>
+      'Tu equipo atiende pedidos, turnos y el catálogo. Lo demás es tuyo.';
+
+  @override
+  String get equipoAyudaEmpleadoCorta =>
+      'Atendés los pedidos, los turnos y el catálogo de este negocio.';
+
+  @override
+  String get unirmeEquipoTextoCorta =>
+      'Te invitaron al equipo de un negocio en Huellitas.';
+
+  @override
+  String get planillaAyudaCorta =>
+      'Pegá las filas de tu planilla: nombre, descripción, precio, disponible.';
+
+  @override
+  String get qrConsejoChapitaCorta =>
+      'Imprimilo en papel adhesivo y protegelo con cinta.';
+
+  @override
+  String chapitasExplicacionCorta(String nombre) {
+    return '¿Tenés una chapita de Huellitas? Vinculala con $nombre.';
+  }
+
+  @override
+  String get marcarExplicacionCorta => 'Elegí el rubro y tocá dónde queda.';
+
+  @override
+  String get temaExplicacionCorta =>
+      'Cambia los colores solo en este dispositivo.';
+
+  @override
+  String get publicarExplicacionCorta => 'Es gratis y nunca es una venta.';
+
+  @override
+  String get calcExplicacionCorta =>
+      'Poné cuánto pensás gastar y la app te da el total.';
+
+  @override
+  String get apadrinarAyudaCorta =>
+      'Elegí un refugio de tu zona y contá qué aportás.';
+
+  @override
+  String get apadrinarRefugioAyudaCorta =>
+      'Si aceptás, tu ficha muestra «Apadrinado por».';
+
+  @override
+  String get descuentosNegocioAyudaCorta =>
+      'Quien tiene Pro te muestra su código. Es gratis para vos.';
+
+  @override
+  String get serviciosAyudaCorta => 'Se ven en tu ficha, con «Consultar».';
+
+  @override
+  String get pedidoChapitaExplicacionCorta =>
+      'La retirás en una veterinaria y queda vinculada sola.';
+
+  @override
+  String get cuidadorExplicacionCorta =>
+      'Ve solo las mascotas que elijas, los días que digas.';
+
+  @override
+  String get vetBuscasAyudaCorta =>
+      'Las veterinarias cercanas te mandan propuestas, sin saber quién sos.';
+
+  @override
+  String get packNegocioAyudaCorta =>
+      'Quien adoptó por la app te trae su código.';
+
+  @override
+  String get demandaAyudaCorta =>
+      'Dueños cerca que buscan veterinaria, sin saber quiénes son.';
+
+  @override
+  String get negocioRenacTextoCorta =>
+      'Si colocás microchip y estás en el listado del MGAP, sale la insignia.';
+
+  @override
   String get menuReportarPerdida => 'Reportar que se perdió';
 
   @override

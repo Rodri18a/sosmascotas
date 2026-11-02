@@ -11,6 +11,7 @@ import '../../hogar/hogar_repositorio.dart';
 import '../../mascotas/mascotas_repositorio.dart';
 import '../../metricas/metricas.dart';
 import '../../router.dart';
+import '../../widgets/explicacion_corta.dart';
 import '../../widgets/volver.dart';
 
 String nombreIntegrante(AppLocalizations t, Integrante i) =>
@@ -66,7 +67,11 @@ class _Contenido extends ConsumerWidget {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        Text(t.hogarExplicacion),
+        ExplicacionCorta(
+          id: 'hogar_explicacion',
+          corta: t.hogarExplicacionCorta,
+          larga: t.hogarExplicacion,
+        ),
         const SizedBox(height: 16),
         Text(t.hogarMio, style: tema.textTheme.titleMedium),
         if (mios.where((i) => !i.esDueno).isEmpty)
@@ -381,7 +386,11 @@ class _UnirmeScreenState extends ConsumerState<UnirmeScreen> {
         children: [
           const Icon(Icons.family_restroom_outlined, size: 64),
           const SizedBox(height: 16),
-          Text(t.unirmeTexto),
+          ExplicacionCorta(
+            id: 'unirme_texto',
+            corta: t.unirmeTextoCorta,
+            larga: t.unirmeTexto,
+          ),
           const SizedBox(height: 24),
           if (!valido)
             Text(
@@ -431,7 +440,11 @@ class _FormularioCuidadorState extends State<_FormularioCuidador> {
           children: [
             Text(t.cuidadorTitulo, style: tema.textTheme.titleLarge),
             const SizedBox(height: 8),
-            Text(t.cuidadorExplicacion),
+            ExplicacionCorta(
+              id: 'cuidador_explicacion',
+              corta: t.cuidadorExplicacionCorta,
+              larga: t.cuidadorExplicacion,
+            ),
             const SizedBox(height: 16),
             Text(t.cuidadorMascotas, style: tema.textTheme.titleSmall),
             if (widget.mascotas.isEmpty)

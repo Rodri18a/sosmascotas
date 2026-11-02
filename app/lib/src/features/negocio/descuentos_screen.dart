@@ -8,6 +8,7 @@ import '../../comercios/descuentos_repositorio.dart';
 import '../../comercios/negocios_repositorio.dart';
 import '../../metricas/metricas.dart';
 import '../../router.dart';
+import '../../widgets/explicacion_corta.dart';
 import '../../widgets/volver.dart';
 
 String textoErrorDescuento(AppLocalizations t, ErrorDescuento e) => switch (e) {
@@ -228,7 +229,12 @@ class _DescuentosNegocioState extends ConsumerState<DescuentosNegocioScreen> {
         AsyncData(value: (:final puede, :final descuentos)) => ListView(
           padding: const EdgeInsets.all(16),
           children: [
-            Text(t.descuentosNegocioAyuda, style: tema.textTheme.bodySmall),
+            ExplicacionCorta(
+              id: 'descuentos_negocio_ayuda',
+              corta: t.descuentosNegocioAyudaCorta,
+              larga: t.descuentosNegocioAyuda,
+              estilo: tema.textTheme.bodySmall,
+            ),
             const SizedBox(height: 12),
             Text(t.packCanjear, style: tema.textTheme.titleMedium),
             TextField(

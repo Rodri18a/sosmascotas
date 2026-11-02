@@ -9,6 +9,7 @@ import '../../adopcion/transito_repositorio.dart';
 import '../../mascotas/catalogo.dart';
 import '../../metricas/metricas.dart';
 import '../../router.dart';
+import '../../widgets/explicacion_corta.dart';
 import '../../widgets/volver.dart';
 
 String _textoTamano(AppLocalizations t, String v) => switch (v) {
@@ -196,7 +197,11 @@ class _HogarTransitoState extends ConsumerState<HogarTransitoScreen> {
           : ListView(
               padding: const EdgeInsets.all(16),
               children: [
-                Text(t.transitoIntro),
+                ExplicacionCorta(
+                  id: 'transito_intro',
+                  corta: t.transitoIntroCorta,
+                  larga: t.transitoIntro,
+                ),
                 const SizedBox(height: 8),
                 Text(t.transitoPrivacidad, style: tema.textTheme.bodySmall),
                 if (pedidos.isNotEmpty) ...[

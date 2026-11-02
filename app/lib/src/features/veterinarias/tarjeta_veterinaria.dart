@@ -5,6 +5,7 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 import '../../../l10n/l10n.dart';
 import '../../metricas/metricas.dart';
 import '../../veterinarias/veterinarias_repositorio.dart';
+import '../../widgets/explicacion_corta.dart';
 
 /// En la ficha de la mascota (dueño, 2.6, D81): compartirla con su
 /// veterinaria y "Busco veterinaria" con sus propuestas.
@@ -83,7 +84,12 @@ class TarjetaVeterinaria extends ConsumerWidget {
                       t.vetBuscasPregunta(mascota.nombre),
                       style: tema.textTheme.titleSmall,
                     ),
-                    Text(t.vetBuscasAyuda, style: tema.textTheme.bodySmall),
+                    ExplicacionCorta(
+                      id: 'vet_buscas_ayuda',
+                      corta: t.vetBuscasAyudaCorta,
+                      larga: t.vetBuscasAyuda,
+                      estilo: tema.textTheme.bodySmall,
+                    ),
                     const SizedBox(height: 8),
                     Wrap(
                       spacing: 8,

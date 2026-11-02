@@ -7,6 +7,7 @@ import '../../comercios/negocios_repositorio.dart';
 import '../../metricas/metricas.dart';
 import '../../router.dart';
 import '../../tienda/tienda_repositorio.dart';
+import '../../widgets/explicacion_corta.dart';
 import '../../widgets/volver.dart';
 import 'catalogo_screen.dart';
 
@@ -131,7 +132,13 @@ class ServiciosNegocioScreen extends ConsumerWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(16),
-            child: Text(esPlus ? t.serviciosAyuda : t.serviciosSoloPlus),
+            child: esPlus
+                ? ExplicacionCorta(
+                    id: 'servicios_ayuda',
+                    corta: t.serviciosAyudaCorta,
+                    larga: t.serviciosAyuda,
+                  )
+                : Text(t.serviciosSoloPlus),
           ),
           const Divider(height: 1),
           switch (ref.watch(misServiciosProvider(negocioId))) {

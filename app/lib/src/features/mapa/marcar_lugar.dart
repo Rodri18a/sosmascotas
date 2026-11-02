@@ -13,6 +13,7 @@ import '../../metricas/metricas.dart';
 import '../../router.dart';
 import '../../sos/sos_repositorio.dart';
 import '../../utiles/enlaces.dart';
+import '../../widgets/explicacion_corta.dart';
 import '../../widgets/volver.dart';
 
 /// Marcar un lugar que no está en el mapa (1.3.2): solo el rubro y el punto.
@@ -94,7 +95,11 @@ class _MarcarLugarScreenState extends ConsumerState<MarcarLugarScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(t.marcarExplicacion),
+            ExplicacionCorta(
+              id: 'marcar_explicacion',
+              corta: t.marcarExplicacionCorta,
+              larga: t.marcarExplicacion,
+            ),
             const SizedBox(height: 16),
             Text(t.marcarRubro, style: tema.textTheme.titleSmall),
             const SizedBox(height: 8),

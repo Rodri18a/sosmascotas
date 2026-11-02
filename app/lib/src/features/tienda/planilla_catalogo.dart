@@ -8,6 +8,7 @@ import '../../../l10n/l10n.dart';
 import '../../metricas/metricas.dart';
 import '../../tienda/tienda_repositorio.dart';
 import '../../utiles/descargar.dart';
+import '../../widgets/explicacion_corta.dart';
 
 String _textoError(AppLocalizations t, ErrorFilaCatalogo e) => switch (e) {
   ErrorFilaCatalogo.sinNombre => t.planillaSinNombre,
@@ -130,7 +131,12 @@ class _CargaPlanillaState extends ConsumerState<CargaPlanilla> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(t.planillaAyuda, style: tema.textTheme.bodySmall),
+              ExplicacionCorta(
+                id: 'planilla_ayuda',
+                corta: t.planillaAyudaCorta,
+                larga: t.planillaAyuda,
+                estilo: tema.textTheme.bodySmall,
+              ),
               TextButton.icon(
                 onPressed: _descargarModelo,
                 icon: const Icon(Icons.download_outlined),

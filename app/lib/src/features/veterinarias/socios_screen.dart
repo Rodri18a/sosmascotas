@@ -8,6 +8,7 @@ import '../../mascotas/catalogo.dart';
 import '../../metricas/metricas.dart';
 import '../../utiles/enlaces.dart';
 import '../../veterinarias/veterinarias_repositorio.dart';
+import '../../widgets/explicacion_corta.dart';
 
 /// Modo comercio de una veterinaria (2.6, D81): el módulo Socios (plan Plus),
 /// sus mascotas socias con "Recordar" y "Busco veterinaria".
@@ -343,7 +344,12 @@ class _DemandaState extends ConsumerState<_Demanda> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(t.demandaTitulo, style: tema.textTheme.titleMedium),
-            Text(t.demandaAyuda, style: tema.textTheme.bodySmall),
+            ExplicacionCorta(
+              id: 'demanda_ayuda',
+              corta: t.demandaAyudaCorta,
+              larga: t.demandaAyuda,
+              estilo: tema.textTheme.bodySmall,
+            ),
             const SizedBox(height: 8),
             if (demanda.isEmpty) Text(t.demandaVacia),
             for (final d in demanda)

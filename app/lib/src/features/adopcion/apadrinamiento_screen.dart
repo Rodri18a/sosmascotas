@@ -7,6 +7,7 @@ import '../../../l10n/l10n.dart';
 import '../../adopcion/apadrinamiento_repositorio.dart';
 import '../../metricas/metricas.dart';
 import '../../router.dart';
+import '../../widgets/explicacion_corta.dart';
 import '../../widgets/volver.dart';
 
 String textoErrorApadrinamiento(AppLocalizations t, ErrorApadrinamiento e) =>
@@ -147,7 +148,12 @@ class _ApadrinamientoState extends ConsumerState<ApadrinamientoScreen> {
         AsyncData(value: final d) when d.esRefugio => ListView(
           padding: const EdgeInsets.all(16),
           children: [
-            Text(t.apadrinarRefugioAyuda, style: tema.textTheme.bodySmall),
+            ExplicacionCorta(
+              id: 'apadrinar_refugio_ayuda',
+              corta: t.apadrinarRefugioAyudaCorta,
+              larga: t.apadrinarRefugioAyuda,
+              estilo: tema.textTheme.bodySmall,
+            ),
             if (d.recibidos.isEmpty)
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
@@ -159,7 +165,12 @@ class _ApadrinamientoState extends ConsumerState<ApadrinamientoScreen> {
         AsyncData(value: final d) => ListView(
           padding: const EdgeInsets.all(16),
           children: [
-            Text(t.apadrinarAyuda, style: tema.textTheme.bodySmall),
+            ExplicacionCorta(
+              id: 'apadrinar_ayuda',
+              corta: t.apadrinarAyudaCorta,
+              larga: t.apadrinarAyuda,
+              estilo: tema.textTheme.bodySmall,
+            ),
             if (!d.puedeOfrecer)
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),

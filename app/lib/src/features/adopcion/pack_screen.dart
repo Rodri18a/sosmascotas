@@ -8,6 +8,7 @@ import '../../adopcion/pack_repositorio.dart';
 import '../../comercios/negocios_repositorio.dart';
 import '../../metricas/metricas.dart';
 import '../../router.dart';
+import '../../widgets/explicacion_corta.dart';
 import '../../widgets/volver.dart';
 
 String textoErrorPack(AppLocalizations t, ErrorPack e) => switch (e) {
@@ -220,7 +221,12 @@ class _PackNegocioState extends ConsumerState<PackNegocioScreen> {
         AsyncData(value: (:final puede, :final beneficios)) => ListView(
           padding: const EdgeInsets.all(16),
           children: [
-            Text(t.packNegocioAyuda, style: tema.textTheme.bodySmall),
+            ExplicacionCorta(
+              id: 'pack_negocio_ayuda',
+              corta: t.packNegocioAyudaCorta,
+              larga: t.packNegocioAyuda,
+              estilo: tema.textTheme.bodySmall,
+            ),
             const SizedBox(height: 12),
             Text(t.packCanjear, style: tema.textTheme.titleMedium),
             TextField(

@@ -4,6 +4,7 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
 import '../../theme/tema_elegido.dart';
+import '../../widgets/explicacion_corta.dart';
 
 /// Fila "Tema de colores" de Ajustes (solo con plan Pro o Familia, D62).
 class TileTema extends ConsumerWidget {
@@ -61,9 +62,11 @@ class _SelectorTema extends ConsumerWidget {
           children: [
             Text(t.temaElegirTitulo, style: tema.textTheme.titleLarge),
             const SizedBox(height: 4),
-            Text(
-              t.temaExplicacion,
-              style: tema.textTheme.bodyMedium?.copyWith(
+            ExplicacionCorta(
+              id: 'tema_explicacion',
+              corta: t.temaExplicacionCorta,
+              larga: t.temaExplicacion,
+              estilo: tema.textTheme.bodyMedium?.copyWith(
                 color: tema.colorScheme.onSurfaceVariant,
               ),
             ),

@@ -14,6 +14,7 @@ import '../../metricas/metricas.dart';
 import '../../recordatorios/recordatorios_repositorio.dart';
 import '../../router.dart';
 import '../../utiles/enlaces.dart';
+import '../../widgets/explicacion_corta.dart';
 import '../../widgets/volver.dart';
 import '../legal/legal_screen.dart';
 import 'pack_screen.dart';
@@ -997,7 +998,11 @@ class _CalculadoraCostosState extends State<CalculadoraCostosScreen> {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          Text(t.calcExplicacion),
+          ExplicacionCorta(
+            id: 'calc_explicacion',
+            corta: t.calcExplicacionCorta,
+            larga: t.calcExplicacion,
+          ),
           const SizedBox(height: 12),
           for (final (clave, _) in _items)
             Padding(
@@ -1137,7 +1142,11 @@ class _PublicarAdopcionScreenState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(t.publicarExplicacion),
+            ExplicacionCorta(
+              id: 'publicar_explicacion',
+              corta: t.publicarExplicacionCorta,
+              larga: t.publicarExplicacion,
+            ),
             for (final (i, b) in _animales.indexed) ...[
               const SizedBox(height: 16),
               Text(t.publicarAnimal(i + 1), style: tema.textTheme.titleMedium),

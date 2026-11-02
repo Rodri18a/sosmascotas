@@ -76,6 +76,9 @@ abstract final class Eventos {
   static const tourStart = 'tour_start';
   static const tourFinish = 'tour_finish';
   static const tourSkip = 'tour_skip';
+
+  /// «Ver más» de una explicación corta (plan de mejoras 1.4): `item`, cuál.
+  static const moreInfoOpen = 'more_info_open';
   static const tabOpen = 'tab_open';
   static const tagActivate = 'tag_activate';
   static const tagUnlink = 'tag_unlink';

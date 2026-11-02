@@ -6256,6 +6256,156 @@ abstract class AppLocalizations {
   /// **'Para usar la app como dueño o dueña de mascotas.'**
   String get recNegocioVolverTexto;
 
+  /// No description provided for @explicacionVerMas.
+  ///
+  /// In es, this message translates to:
+  /// **'Ver más'**
+  String get explicacionVerMas;
+
+  /// No description provided for @explicacionVerMenos.
+  ///
+  /// In es, this message translates to:
+  /// **'Ver menos'**
+  String get explicacionVerMenos;
+
+  /// No description provided for @hogarExplicacionCorta.
+  ///
+  /// In es, this message translates to:
+  /// **'Compartí tus mascotas con tu familia: hasta 5 personas.'**
+  String get hogarExplicacionCorta;
+
+  /// No description provided for @unirmeTextoCorta.
+  ///
+  /// In es, this message translates to:
+  /// **'Te invitaron a cuidar mascotas en Huellitas.'**
+  String get unirmeTextoCorta;
+
+  /// No description provided for @transitoIntroCorta.
+  ///
+  /// In es, this message translates to:
+  /// **'Cuidá un animal de un refugio hasta que encuentre familia.'**
+  String get transitoIntroCorta;
+
+  /// No description provided for @equipoAyudaDuenioCorta.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu equipo atiende pedidos, turnos y el catálogo. Lo demás es tuyo.'**
+  String get equipoAyudaDuenioCorta;
+
+  /// No description provided for @equipoAyudaEmpleadoCorta.
+  ///
+  /// In es, this message translates to:
+  /// **'Atendés los pedidos, los turnos y el catálogo de este negocio.'**
+  String get equipoAyudaEmpleadoCorta;
+
+  /// No description provided for @unirmeEquipoTextoCorta.
+  ///
+  /// In es, this message translates to:
+  /// **'Te invitaron al equipo de un negocio en Huellitas.'**
+  String get unirmeEquipoTextoCorta;
+
+  /// No description provided for @planillaAyudaCorta.
+  ///
+  /// In es, this message translates to:
+  /// **'Pegá las filas de tu planilla: nombre, descripción, precio, disponible.'**
+  String get planillaAyudaCorta;
+
+  /// No description provided for @qrConsejoChapitaCorta.
+  ///
+  /// In es, this message translates to:
+  /// **'Imprimilo en papel adhesivo y protegelo con cinta.'**
+  String get qrConsejoChapitaCorta;
+
+  /// No description provided for @chapitasExplicacionCorta.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Tenés una chapita de Huellitas? Vinculala con {nombre}.'**
+  String chapitasExplicacionCorta(String nombre);
+
+  /// No description provided for @marcarExplicacionCorta.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegí el rubro y tocá dónde queda.'**
+  String get marcarExplicacionCorta;
+
+  /// No description provided for @temaExplicacionCorta.
+  ///
+  /// In es, this message translates to:
+  /// **'Cambia los colores solo en este dispositivo.'**
+  String get temaExplicacionCorta;
+
+  /// No description provided for @publicarExplicacionCorta.
+  ///
+  /// In es, this message translates to:
+  /// **'Es gratis y nunca es una venta.'**
+  String get publicarExplicacionCorta;
+
+  /// No description provided for @calcExplicacionCorta.
+  ///
+  /// In es, this message translates to:
+  /// **'Poné cuánto pensás gastar y la app te da el total.'**
+  String get calcExplicacionCorta;
+
+  /// No description provided for @apadrinarAyudaCorta.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegí un refugio de tu zona y contá qué aportás.'**
+  String get apadrinarAyudaCorta;
+
+  /// No description provided for @apadrinarRefugioAyudaCorta.
+  ///
+  /// In es, this message translates to:
+  /// **'Si aceptás, tu ficha muestra «Apadrinado por».'**
+  String get apadrinarRefugioAyudaCorta;
+
+  /// No description provided for @descuentosNegocioAyudaCorta.
+  ///
+  /// In es, this message translates to:
+  /// **'Quien tiene Pro te muestra su código. Es gratis para vos.'**
+  String get descuentosNegocioAyudaCorta;
+
+  /// No description provided for @serviciosAyudaCorta.
+  ///
+  /// In es, this message translates to:
+  /// **'Se ven en tu ficha, con «Consultar».'**
+  String get serviciosAyudaCorta;
+
+  /// No description provided for @pedidoChapitaExplicacionCorta.
+  ///
+  /// In es, this message translates to:
+  /// **'La retirás en una veterinaria y queda vinculada sola.'**
+  String get pedidoChapitaExplicacionCorta;
+
+  /// No description provided for @cuidadorExplicacionCorta.
+  ///
+  /// In es, this message translates to:
+  /// **'Ve solo las mascotas que elijas, los días que digas.'**
+  String get cuidadorExplicacionCorta;
+
+  /// No description provided for @vetBuscasAyudaCorta.
+  ///
+  /// In es, this message translates to:
+  /// **'Las veterinarias cercanas te mandan propuestas, sin saber quién sos.'**
+  String get vetBuscasAyudaCorta;
+
+  /// No description provided for @packNegocioAyudaCorta.
+  ///
+  /// In es, this message translates to:
+  /// **'Quien adoptó por la app te trae su código.'**
+  String get packNegocioAyudaCorta;
+
+  /// No description provided for @demandaAyudaCorta.
+  ///
+  /// In es, this message translates to:
+  /// **'Dueños cerca que buscan veterinaria, sin saber quiénes son.'**
+  String get demandaAyudaCorta;
+
+  /// No description provided for @negocioRenacTextoCorta.
+  ///
+  /// In es, this message translates to:
+  /// **'Si colocás microchip y estás en el listado del MGAP, sale la insignia.'**
+  String get negocioRenacTextoCorta;
+
   /// No description provided for @menuReportarPerdida.
   ///
   /// In es, this message translates to:
