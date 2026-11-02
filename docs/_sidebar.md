@@ -41,6 +41,7 @@
 - **Proyecto**
   - [Casos de prueba a validar](19-casos-de-prueba.md)
   - [Pruebas paso a paso (dos teléfonos)](guias/pruebas-paso-a-paso.md)
+  - [Pruebas del plan de mejoras (etapas 1 a 3)](guias/pruebas-plan-mejoras.md)
   - [Prueba con 3 personas: 5 funciones sin ayuda](guias/prueba-5-funciones.md)
   - [Publicación de esta web](PUBLICACION.md)
   - [Guía: login con Google](guias/login-google.md)
