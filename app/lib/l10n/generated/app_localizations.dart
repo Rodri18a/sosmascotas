@@ -6838,6 +6838,36 @@ abstract class AppLocalizations {
   /// **'Unirme al grupo para responder'**
   String get preguntasUnirmeResponder;
 
+  /// No description provided for @profesionalRespuesta.
+  ///
+  /// In es, this message translates to:
+  /// **'Respuesta de profesional · {veterinaria}'**
+  String profesionalRespuesta(String veterinaria);
+
+  /// No description provided for @profesionalFirmar.
+  ///
+  /// In es, this message translates to:
+  /// **'Firmar como profesional'**
+  String get profesionalFirmar;
+
+  /// No description provided for @profesionalQuitar.
+  ///
+  /// In es, this message translates to:
+  /// **'Quitar firma'**
+  String get profesionalQuitar;
+
+  /// No description provided for @profesionalElegir.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Con qué veterinaria firmás?'**
+  String get profesionalElegir;
+
+  /// No description provided for @preguntasConProfesional.
+  ///
+  /// In es, this message translates to:
+  /// **'Responde una veterinaria'**
+  String get preguntasConProfesional;
+
   /// No description provided for @atajosMas.
   ///
   /// In es, this message translates to:

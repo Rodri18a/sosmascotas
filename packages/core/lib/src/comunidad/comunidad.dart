@@ -97,6 +97,7 @@ class Comentario {
     required this.creado,
     this.autor,
     this.esMio = false,
+    this.profesional,
   });
 
   factory Comentario.fromJson(Map<String, Object?> json) => Comentario(
@@ -105,6 +106,7 @@ class Comentario {
     autor: json['autor'] as String?,
     esMio: json['es_mio'] as bool? ?? false,
     creado: _momento(json['created_at']),
+    profesional: json['profesional'] as String?,
   );
 
   final String id;
@@ -114,6 +116,9 @@ class Comentario {
   final String? autor;
   final bool esMio;
   final DateTime creado;
+
+  /// La veterinaria verificada que firma la respuesta (D135), si la marcó.
+  final String? profesional;
 }
 
 class Publicacion {
@@ -133,6 +138,7 @@ class Publicacion {
     this.tema,
     this.respuestaMarcadaId,
     this.resuelta = false,
+    this.conProfesional = false,
   });
 
   /// De `publicaciones_de()` o `preguntas()` (listas) o de `publicacion()`
@@ -162,6 +168,9 @@ class Publicacion {
       tema: TemaPregunta.desdeBase(json['topic']),
       respuestaMarcadaId: json['solved_comment_id'] as String?,
       resuelta: json['resuelta'] as bool? ?? json['solved_comment_id'] != null,
+      conProfesional:
+          json['con_profesional'] as bool? ??
+          comentarios.any((c) => c.profesional != null),
     );
   }
 
@@ -188,6 +197,9 @@ class Publicacion {
   /// La respuesta que quien preguntó marcó con «Me sirvió» (solo en el detalle).
   final String? respuestaMarcadaId;
   final bool resuelta;
+
+  /// Tiene una respuesta de una veterinaria verificada (D135).
+  final bool conProfesional;
 }
 
 enum EstadoSaludo {

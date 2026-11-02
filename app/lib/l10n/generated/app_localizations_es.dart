@@ -4029,6 +4029,23 @@ class AppLocalizationsEs extends AppLocalizations {
   String get preguntasUnirmeResponder => 'Unirme al grupo para responder';
 
   @override
+  String profesionalRespuesta(String veterinaria) {
+    return 'Respuesta de profesional · $veterinaria';
+  }
+
+  @override
+  String get profesionalFirmar => 'Firmar como profesional';
+
+  @override
+  String get profesionalQuitar => 'Quitar firma';
+
+  @override
+  String get profesionalElegir => '¿Con qué veterinaria firmás?';
+
+  @override
+  String get preguntasConProfesional => 'Responde una veterinaria';
+
+  @override
   String atajosMas(String nombre) {
     return 'Más opciones de $nombre';
   }

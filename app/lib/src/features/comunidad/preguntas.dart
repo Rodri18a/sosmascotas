@@ -185,6 +185,7 @@ class _PreguntasScreenState extends ConsumerState<PreguntasScreen> {
                           if (p.tema case final tm?) textoTema(t, tm),
                           t.preguntasRespuestas(p.cantidadComentarios),
                           if (p.resuelta) '✓ ${t.preguntasResuelta}',
+                          if (p.conProfesional) t.preguntasConProfesional,
                         ].join(' · '),
                       ),
                       onTap: () =>

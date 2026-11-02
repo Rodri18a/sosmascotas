@@ -193,4 +193,90 @@ void main() {
     await _tocar(tester, find.text('Unirme al grupo para responder'));
     expect(comunidad.uniones, [('g1', true)]);
   });
+
+  testWidgets('una veterinaria verificada firma su respuesta (2.4)', (
+    tester,
+  ) async {
+    final comunidad = ComunidadFalsa()
+      ..veterinarias = const [
+        (id: 'v1', nombre: 'Veterinaria Pando'),
+        (id: 'v2', nombre: 'Clínica Sur'),
+      ]
+      ..detalle = Publicacion(
+        id: 'q1',
+        tipo: TipoPublicacion.pregunta,
+        texto: '¿Cada cuánto se desparasita?',
+        creada: DateTime(2026, 11, 1),
+        tema: TemaPregunta.salud,
+        soyMiembro: true,
+        grupoId: 'g1',
+        comentarios: [
+          Comentario(
+            id: 'c1',
+            texto: 'Cada tres meses.',
+            autor: 'Ana',
+            esMio: true,
+            creado: DateTime(2026, 11, 1, 10),
+          ),
+          Comentario(
+            id: 'c2',
+            texto: 'A la mía cada seis.',
+            autor: 'Leo',
+            creado: DateTime(2026, 11, 1, 11),
+          ),
+        ],
+      );
+    final eventos = await _abrir(
+      tester,
+      comunidad,
+      inicio: Rutas.publicacionComunidad('q1'),
+    );
+    // Solo en la respuesta propia.
+    expect(find.text('Firmar como profesional'), findsOneWidget);
+    await _tocar(tester, find.text('Firmar como profesional'));
+    expect(find.text('¿Con qué veterinaria firmás?'), findsOneWidget);
+    await _tocar(tester, find.text('Clínica Sur'));
+    expect(comunidad.firmadas, [('c1', 'v2')]);
+    expect(eventos.map((e) => e['name']), contains('professional_answer_mark'));
+  });
+
+  testWidgets('la firma se ve en la respuesta y en la lista', (tester) async {
+    final comunidad =
+        ComunidadFalsa(
+            publicaciones: [
+              Publicacion(
+                id: 'q1',
+                tipo: TipoPublicacion.pregunta,
+                texto: '¿Cada cuánto se desparasita?',
+                creada: DateTime(2026, 11, 1),
+                tema: TemaPregunta.salud,
+                conProfesional: true,
+              ),
+            ],
+          )
+          ..detalle = Publicacion(
+            id: 'q1',
+            tipo: TipoPublicacion.pregunta,
+            texto: '¿Cada cuánto se desparasita?',
+            creada: DateTime(2026, 11, 1),
+            grupoId: 'g1',
+            comentarios: [
+              Comentario(
+                id: 'c1',
+                texto: 'Cada tres meses.',
+                autor: 'Ana',
+                profesional: 'Veterinaria Pando',
+                creado: DateTime(2026, 11, 1, 10),
+              ),
+            ],
+          );
+    await _abrir(tester, comunidad);
+    expect(find.textContaining('Responde una veterinaria'), findsOneWidget);
+    await _tocar(tester, find.text('¿Cada cuánto se desparasita?'));
+    expect(
+      find.text('Respuesta de profesional · Veterinaria Pando'),
+      findsOneWidget,
+    );
+    expect(find.text('Firmar como profesional'), findsNothing);
+  });
 }

@@ -68,7 +68,7 @@ Ninguna función pasa de 3 toques. La prueba con 3 personas está en [la guía](
 | 2.1 | **Historial de vida:** acontecimientos con fecha y tipo (operación, accidente, enfermedad, tratamiento, diagnóstico, alergia, otro), nota y hasta 4 fotos o documentos; línea de tiempo en la ficha junto con la libreta; entra en el PDF. ✅ 02/11/2026 (D131): en la ficha, debajo de la libreta, con acceso directo en la fila de la mascota; las alergias siguen en la libreta |
 | 2.2 | **Pasar o compartir el historial:** al transferir la mascota a otra persona (no solo por adopción) va con todo su historial; compartir de solo lectura con una veterinaria o un cuidador por un enlace que vence. ✅ 02/11/2026: pasar la mascota con un código de 7 días (D132) y enlace de solo lectura de 1, 7 o 30 días en `/h/` de la web pública (D133). **Falta:** mostrar los adjuntos en el enlace (Edge Function, con el token nuevo) |
 | 2.3 | **Consultas:** sección «Preguntas» en Comunidad con categorías (Viajes · Salud · Alimentación · Adopción · Trámites · Otros), buscador y respuestas; se apoya en los grupos (D116). ✅ 02/11/2026 (D134): sección «Preguntas» con temas, buscador sin tildes y «Me sirvió»; usa los grupos y sus reglas |
-| 2.4 | **Respuestas verificadas:** una veterinaria verificada puede marcar su respuesta como «Respuesta de profesional» |
+| 2.4 | **Respuestas verificadas:** una veterinaria verificada puede marcar su respuesta como «Respuesta de profesional». ✅ 02/11/2026 (D135): la firma la pone quien responde, titular o equipo de una veterinaria verificada |
 
 ### Etapa 3 · Recurrencia y monetización
 

@@ -617,6 +617,48 @@ class _PublicacionScreenState extends ConsumerState<PublicacionScreen> {
     }
   }
 
+  /// Firmo (o dejo de firmar) mi respuesta como profesional (D135). Con más
+  /// de una veterinaria verificada, elijo cuál.
+  Future<void> _firmar(
+    Publicacion p,
+    Comentario c,
+    List<({String id, String nombre})> veterinarias,
+  ) async {
+    final t = context.t;
+    final mensajes = ScaffoldMessenger.of(context);
+    String? negocio;
+    if (c.profesional == null) {
+      negocio = veterinarias.length == 1
+          ? veterinarias.single.id
+          : await showDialog<String>(
+              context: context,
+              builder: (context) => SimpleDialog(
+                title: Text(t.profesionalElegir),
+                children: [
+                  for (final v in veterinarias)
+                    SimpleDialogOption(
+                      onPressed: () => Navigator.pop(context, v.id),
+                      child: Text(v.nombre),
+                    ),
+                ],
+              ),
+            );
+      if (negocio == null) return;
+    }
+    try {
+      await ref
+          .read(comunidadRepositorioProvider)
+          .marcarProfesional(c.id, negocio);
+      if (negocio != null) {
+        ref.read(metricasProvider).track(Eventos.professionalAnswerMark);
+      }
+      _recargar(p.grupoId);
+      ref.invalidate(preguntasProvider);
+    } on Object catch (e) {
+      mensajes.showSnackBar(SnackBar(content: Text(textoErrorComunidad(t, e))));
+    }
+  }
+
   /// En una pregunta, unirse al grupo para responder sin salir (D134).
   Future<void> _unirmeYResponder(Publicacion p) async {
     final t = context.t;
@@ -645,6 +687,10 @@ class _PublicacionScreenState extends ConsumerState<PublicacionScreen> {
     final t = context.t;
     final tema = Theme.of(context);
     final conectado = ref.watch(usuarioActualProvider).value != null;
+    final veterinarias = conectado
+        ? ref.watch(misVeterinariasVerificadasProvider).value ??
+              const <({String id, String nombre})>[]
+        : const <({String id, String nombre})>[];
     return Scaffold(
       appBar: AppBar(
         leading: volverSiNoHayAtras(context),
@@ -713,42 +759,85 @@ class _PublicacionScreenState extends ConsumerState<PublicacionScreen> {
                             )
                           : null,
                       title: Text(c.texto),
-                      subtitle: Text(
-                        [
-                          c.autor ?? t.comunidadAlguien,
-                          _cuando(context, c.creado),
-                          if (c.id == p.respuestaMarcadaId) t.preguntasLeSirvio,
-                        ].join(' · '),
-                      ),
-                      trailing: conectado
-                          ? Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                // Solo quien preguntó, en las respuestas de otros.
-                                if (p.esMia &&
-                                    p.tipo == TipoPublicacion.pregunta &&
-                                    !c.esMio)
-                                  TextButton(
-                                    onPressed: () => _marcar(p, c),
-                                    child: Text(
-                                      c.id == p.respuestaMarcadaId
-                                          ? t.preguntasDesmarcar
-                                          : t.preguntasMeSirvio,
-                                    ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            [
+                              c.autor ?? t.comunidadAlguien,
+                              _cuando(context, c.creado),
+                              if (c.id == p.respuestaMarcadaId)
+                                t.preguntasLeSirvio,
+                            ].join(' · '),
+                          ),
+                          // Acciones de las preguntas, abajo de la respuesta
+                          // (a la derecha no entran en un celular).
+                          Wrap(
+                            spacing: 8,
+                            children: [
+                              // Quien atiende una veterinaria verificada firma
+                              // su propia respuesta (D135).
+                              if (conectado &&
+                                  c.esMio &&
+                                  p.tipo == TipoPublicacion.pregunta &&
+                                  veterinarias.isNotEmpty)
+                                TextButton(
+                                  onPressed: () => _firmar(p, c, veterinarias),
+                                  child: Text(
+                                    c.profesional == null
+                                        ? t.profesionalFirmar
+                                        : t.profesionalQuitar,
                                   ),
-                                IconButton(
-                                  tooltip: t.comunidadOpciones,
-                                  icon: const Icon(Icons.more_vert_outlined),
-                                  onPressed: () => _acciones(
-                                    context,
-                                    ref,
-                                    tipo: 'comment',
-                                    id: c.id,
-                                    esMio: c.esMio,
-                                    despues: () => _recargar(p.grupoId),
+                                ),
+                              // Solo quien preguntó, en las respuestas de otros.
+                              if (p.esMia &&
+                                  p.tipo == TipoPublicacion.pregunta &&
+                                  !c.esMio)
+                                TextButton(
+                                  onPressed: () => _marcar(p, c),
+                                  child: Text(
+                                    c.id == p.respuestaMarcadaId
+                                        ? t.preguntasDesmarcar
+                                        : t.preguntasMeSirvio,
+                                  ),
+                                ),
+                            ],
+                          ),
+                          // Firmada por una veterinaria verificada (D135).
+                          if (c.profesional case final vet?)
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.verified_outlined,
+                                  size: 16,
+                                  color: tema.colorScheme.primary,
+                                ),
+                                const SizedBox(width: 4),
+                                Flexible(
+                                  child: Text(
+                                    t.profesionalRespuesta(vet),
+                                    style: TextStyle(
+                                      color: tema.colorScheme.primary,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
                                 ),
                               ],
+                            ),
+                        ],
+                      ),
+                      trailing: conectado
+                          ? IconButton(
+                              tooltip: t.comunidadOpciones,
+                              icon: const Icon(Icons.more_vert_outlined),
+                              onPressed: () => _acciones(
+                                context,
+                                ref,
+                                tipo: 'comment',
+                                id: c.id,
+                                esMio: c.esMio,
+                                despues: () => _recargar(p.grupoId),
+                              ),
                             )
                           : null,
                     ),

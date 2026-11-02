@@ -279,6 +279,14 @@ def main():
              rechazado(rest('POST', 'rpc/marcar_respuesta', {'p_post': q_id, 'p_comentario': None}, b)))
         caso('nadie escribe el tema directo',
              bloqueado(rest('PATCH', f'community_posts?id=eq.{q_id}', {'topic': 'travel'}, a)))
+        caso('sin veterinaria verificada no se puede firmar como profesional',
+             rechazado(rest('POST', 'rpc/marcar_profesional',
+                            {'p_comentario': '00000000-0000-0000-0000-000000000000',
+                             'p_negocio': '00000000-0000-0000-0000-000000000000'}, a)))
+        caso('un visitante no ve veterinarias para firmar',
+             rechazado(rest('POST', 'rpc/mis_veterinarias_verificadas', {})))
+        caso('quien no atiende veterinarias no tiene con cuál firmar',
+             filas(rest('POST', 'rpc/mis_veterinarias_verificadas', {}, b)) == [])
         rest('POST', 'rpc/borrar_de_comunidad', {'p_tipo': 'post', 'p_id': q_id}, a)
 
         print('pet_transfers (pasar una mascota, D132)')

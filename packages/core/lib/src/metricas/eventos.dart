@@ -104,6 +104,9 @@ abstract final class Eventos {
   static const questionSearch = 'question_search';
   static const questionAnswer = 'question_answer';
   static const questionSolved = 'question_solved';
+
+  /// Una veterinaria verificada firma su respuesta (D135).
+  static const professionalAnswerMark = 'professional_answer_mark';
   static const tabOpen = 'tab_open';
   static const tagActivate = 'tag_activate';
   static const tagUnlink = 'tag_unlink';

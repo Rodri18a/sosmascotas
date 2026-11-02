@@ -54,6 +54,12 @@ abstract interface class ComunidadRepositorio {
   /// Quien preguntó marca (o desmarca, con `null`) la respuesta que le sirvió.
   Future<void> marcarRespuesta(String preguntaId, String? comentarioId);
 
+  /// Las veterinarias verificadas que atiendo (titular o equipo, D135).
+  Future<List<({String id, String nombre})>> misVeterinariasVerificadas();
+
+  /// Firmo (o dejo de firmar, con `null`) mi respuesta como profesional.
+  Future<void> marcarProfesional(String comentarioId, String? negocioId);
+
   /// [tipo]: `post` o `comment`.
   Future<void> borrar(String tipo, String id);
 
@@ -197,6 +203,24 @@ class SupabaseComunidadRepositorio implements ComunidadRepositorio {
       );
 
   @override
+  Future<List<({String id, String nombre})>>
+  misVeterinariasVerificadas() async => [
+    for (final f in _filas(
+      await _cliente.rpc<List<dynamic>>('mis_veterinarias_verificadas'),
+    ))
+      (id: f['id']! as String, nombre: f['name']! as String),
+  ];
+
+  @override
+  Future<void> marcarProfesional(String comentarioId, String? negocioId) =>
+      _traducir(
+        () => _cliente.rpc<void>(
+          'marcar_profesional',
+          params: {'p_comentario': comentarioId, 'p_negocio': negocioId},
+        ),
+      );
+
+  @override
   Future<void> borrar(String tipo, String id) => _traducir(
     () => _cliente.rpc<void>(
       'borrar_de_comunidad',
@@ -307,6 +331,16 @@ class ComunidadSinConfigurar implements ComunidadRepositorio {
   Future<void> marcarRespuesta(String preguntaId, String? comentarioId) async {}
 
   @override
+  Future<List<({String id, String nombre})>>
+  misVeterinariasVerificadas() async => const [];
+
+  @override
+  Future<void> marcarProfesional(
+    String comentarioId,
+    String? negocioId,
+  ) async {}
+
+  @override
   Future<void> borrar(String tipo, String id) async {}
 
   @override
@@ -357,6 +391,13 @@ final publicacionProvider = FutureProvider.family<Publicacion?, String>((
   ref.watch(usuarioActualProvider);
   return ref.watch(comunidadRepositorioProvider).publicacion(id);
 });
+
+/// Veterinarias con las que puedo firmar respuestas (D135).
+final misVeterinariasVerificadasProvider =
+    FutureProvider<List<({String id, String nombre})>>(
+      (ref) =>
+          ref.watch(comunidadRepositorioProvider).misVeterinariasVerificadas(),
+    );
 
 final misSaludosProvider = FutureProvider<List<Saludo>>((ref) {
   if (ref.watch(usuarioActualProvider).value == null) return const [];

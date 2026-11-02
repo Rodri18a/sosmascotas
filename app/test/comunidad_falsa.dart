@@ -104,6 +104,20 @@ class ComunidadFalsa implements ComunidadRepositorio {
   Future<void> marcarRespuesta(String preguntaId, String? comentarioId) async =>
       marcadas.add((preguntaId, comentarioId));
 
+  /// Las veterinarias verificadas de quien usa la app en la prueba.
+  List<({String id, String nombre})> veterinarias = const [];
+  final firmadas = <(String, String?)>[];
+
+  @override
+  Future<List<({String id, String nombre})>>
+  misVeterinariasVerificadas() async => veterinarias;
+
+  @override
+  Future<void> marcarProfesional(
+    String comentarioId,
+    String? negocioId,
+  ) async => firmadas.add((comentarioId, negocioId));
+
   @override
   Future<void> borrar(String tipo, String id) async => borrados.add((tipo, id));
 
