@@ -87,6 +87,12 @@ Future<void> _abrirFichaYQr(WidgetTester tester) async {
   await tester.pumpAndSettle();
   expect(find.text('Antirrábica'), findsOneWidget);
   expect(find.text('Antibiótico'), findsOneWidget);
+  // La ficha es larga: se vuelve a subir hasta la chapita.
+  await tester.scrollUntilVisible(
+    find.text('Chapita QR'),
+    -300,
+    scrollable: find.byType(Scrollable).last,
+  );
   await _tocar(tester, find.text('Chapita QR'));
   expect(find.text('K7M2QX9P'), findsOneWidget);
 }

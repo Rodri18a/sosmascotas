@@ -241,6 +241,31 @@ def main():
              pedir('GET', f'{URL}/storage/v1/object/public/pet-records/{pid}/rls.jpg')[0] >= 400)
         pedir('DELETE', f'{URL}/storage/v1/object/pet-records/{pid}/rls.jpg', headers=ADMIN)
 
+        print('pet_shares (historial compartido, D133)')
+        st, tok = rest('POST', 'rpc/crear_enlace_historial', {'p_pet': pid, 'p_dias': 7}, a)
+        caso('A crea un enlace de 7 días', st == 200 and isinstance(tok, str) and len(tok) == 22)
+        caso('una duración que no es 1, 7 o 30 se rechaza',
+             rechazado(rest('POST', 'rpc/crear_enlace_historial', {'p_pet': pid, 'p_dias': 5}, a)))
+        caso('B no puede crear enlaces de la mascota de A',
+             rechazado(rest('POST', 'rpc/crear_enlace_historial', {'p_pet': pid, 'p_dias': 7}, b)))
+        caso('un visitante no ve la tabla de enlaces', bloqueado(rest('GET', 'pet_shares?select=id')))
+        caso('B no ve los enlaces de A', filas(rest('GET', 'pet_shares?select=id', quien=b)) == [])
+        st_v, vista = rest('POST', 'rpc/historial_compartido', {'p_token': tok})
+        caso('un visitante con el enlace ve la mascota y su historial',
+             st_v == 200 and isinstance(vista, dict) and vista.get('pet', {}).get('name') == pet.get('name')
+             and isinstance(vista.get('life'), list))
+        caso('la página compartida no trae datos del dueño',
+             isinstance(vista, dict) and 'owner' not in json.dumps(vista) and '@' not in json.dumps(vista))
+        caso('un enlace inventado no devuelve nada',
+             rest('POST', 'rpc/historial_compartido', {'p_token': 'x' * 22})[1] is None)
+        enlace_id = (filas(rest('GET', f'pet_shares?select=id&token=eq.{tok}', quien=a)) or [{}])[0].get('id')
+        rest('POST', 'rpc/cortar_enlace_historial', {'p_id': enlace_id}, b)
+        caso('B no puede cortar el enlace de A',
+             rest('POST', 'rpc/historial_compartido', {'p_token': tok})[1] is not None)
+        rest('POST', 'rpc/cortar_enlace_historial', {'p_id': enlace_id}, a)
+        caso('cortado, el enlace deja de funcionar',
+             rest('POST', 'rpc/historial_compartido', {'p_token': tok})[1] is None)
+
         print('pet_transfers (pasar una mascota, D132)')
         r_t = filas(rest('POST', 'pets', {'name': 'Pasable', 'species_id': 1}, a))
         tid = r_t[0]['id'] if r_t else None

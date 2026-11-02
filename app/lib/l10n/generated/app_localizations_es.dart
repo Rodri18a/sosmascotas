@@ -3867,6 +3867,67 @@ class AppLocalizationsEs extends AppLocalizations {
   String get pasarRecibida => '¡Listo! Ya está en tus mascotas.';
 
   @override
+  String get compartirHistorialTitulo => 'Compartir historial';
+
+  @override
+  String get compartirHistorialSubtitulo =>
+      'Con su veterinaria o quien la cuide, solo para leer.';
+
+  @override
+  String compartirHistorialHoja(String nombre) {
+    return 'Compartir el historial de $nombre';
+  }
+
+  @override
+  String get compartirHistorialExplicacion =>
+      'Se crea un enlace que muestra sus datos, la libreta y el historial de vida, sin tu teléfono ni tu dirección. Quien lo abre no puede cambiar nada. Lo podés cortar cuando quieras.';
+
+  @override
+  String get compartirHistorialDuracion => '¿Por cuánto tiempo?';
+
+  @override
+  String compartirHistorialDias(int dias) {
+    String _temp0 = intl.Intl.pluralLogic(
+      dias,
+      locale: localeName,
+      other: '$dias días',
+      one: '1 día',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get compartirHistorialCrear => 'Crear y copiar el enlace';
+
+  @override
+  String get compartirHistorialCopiado =>
+      'Enlace copiado. Pegalo en un mensaje.';
+
+  @override
+  String get compartirHistorialVigentes =>
+      'Enlaces vigentes (tocá uno para copiarlo)';
+
+  @override
+  String compartirHistorialVence(String fecha) {
+    return 'Vence el $fecha';
+  }
+
+  @override
+  String compartirHistorialVistas(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Se abrió $n veces',
+      one: 'Se abrió 1 vez',
+      zero: 'Nadie lo abrió todavía',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get compartirHistorialCortar => 'Cortar';
+
+  @override
   String atajosMas(String nombre) {
     return 'Más opciones de $nombre';
   }

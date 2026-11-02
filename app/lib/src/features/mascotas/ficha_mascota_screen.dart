@@ -13,6 +13,7 @@ import '../../mascotas/textos_mascota.dart';
 import '../../router.dart';
 import '../../sos/sos_repositorio.dart';
 import '../../widgets/foto_mascota.dart';
+import '../historial/compartir_historial.dart';
 import '../historial/historial.dart';
 import '../hogar/tareas.dart';
 import '../libreta/libreta.dart';
@@ -233,6 +234,15 @@ class _Ficha extends ConsumerWidget {
               child: Padding(
                 padding: const EdgeInsets.only(top: 12),
                 child: TarjetaVeterinaria(mascota: mascota),
+              ),
+            ),
+          // Compartir el historial de solo lectura (D133): solo el dueño.
+          if (esDueno)
+            SiFuncionalidad(
+              Funcionalidades.compartirHistorial,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 12),
+                child: TarjetaCompartirHistorial(mascota: mascota),
               ),
             ),
           // Pasarla a otra persona con todo su historial (D132): solo el dueño.

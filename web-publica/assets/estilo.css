@@ -96,3 +96,7 @@ h2 { font-family: "Nunito", sans-serif; font-weight: 800; font-size: 20px; margi
 .horario td { text-align: right; padding: 4px 0; }
 .sponsor { display: flex; align-items: center; justify-content: center; gap: 8px; color: var(--suave); font-size: 13px; margin: 8px 0 0; }
 .sponsor-logo { max-height: 28px; max-width: 120px; object-fit: contain; }
+/* Historial compartido (h.html, D133) */
+h3 { font-size: 15px; margin: 12px 0 4px; color: var(--primario); }
+.renglon { border-top: 1px solid var(--borde); padding: 8px 0; }
+.renglon p { margin: 2px 0 0; }

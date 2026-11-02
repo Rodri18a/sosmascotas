@@ -6592,6 +6592,78 @@ abstract class AppLocalizations {
   /// **'¡Listo! Ya está en tus mascotas.'**
   String get pasarRecibida;
 
+  /// No description provided for @compartirHistorialTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Compartir historial'**
+  String get compartirHistorialTitulo;
+
+  /// No description provided for @compartirHistorialSubtitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Con su veterinaria o quien la cuide, solo para leer.'**
+  String get compartirHistorialSubtitulo;
+
+  /// No description provided for @compartirHistorialHoja.
+  ///
+  /// In es, this message translates to:
+  /// **'Compartir el historial de {nombre}'**
+  String compartirHistorialHoja(String nombre);
+
+  /// No description provided for @compartirHistorialExplicacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Se crea un enlace que muestra sus datos, la libreta y el historial de vida, sin tu teléfono ni tu dirección. Quien lo abre no puede cambiar nada. Lo podés cortar cuando quieras.'**
+  String get compartirHistorialExplicacion;
+
+  /// No description provided for @compartirHistorialDuracion.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Por cuánto tiempo?'**
+  String get compartirHistorialDuracion;
+
+  /// No description provided for @compartirHistorialDias.
+  ///
+  /// In es, this message translates to:
+  /// **'{dias, plural, =1{1 día} other{{dias} días}}'**
+  String compartirHistorialDias(int dias);
+
+  /// No description provided for @compartirHistorialCrear.
+  ///
+  /// In es, this message translates to:
+  /// **'Crear y copiar el enlace'**
+  String get compartirHistorialCrear;
+
+  /// No description provided for @compartirHistorialCopiado.
+  ///
+  /// In es, this message translates to:
+  /// **'Enlace copiado. Pegalo en un mensaje.'**
+  String get compartirHistorialCopiado;
+
+  /// No description provided for @compartirHistorialVigentes.
+  ///
+  /// In es, this message translates to:
+  /// **'Enlaces vigentes (tocá uno para copiarlo)'**
+  String get compartirHistorialVigentes;
+
+  /// No description provided for @compartirHistorialVence.
+  ///
+  /// In es, this message translates to:
+  /// **'Vence el {fecha}'**
+  String compartirHistorialVence(String fecha);
+
+  /// No description provided for @compartirHistorialVistas.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =0{Nadie lo abrió todavía} =1{Se abrió 1 vez} other{Se abrió {n} veces}}'**
+  String compartirHistorialVistas(int n);
+
+  /// No description provided for @compartirHistorialCortar.
+  ///
+  /// In es, this message translates to:
+  /// **'Cortar'**
+  String get compartirHistorialCortar;
+
   /// No description provided for @atajosMas.
   ///
   /// In es, this message translates to:

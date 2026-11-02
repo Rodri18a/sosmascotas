@@ -18,6 +18,9 @@ abstract final class Funcionalidades {
   /// Pasar una mascota a otra persona con su historial (2.2, D132).
   static const pasarMascota = 'pasar_mascota';
 
+  /// Compartir el historial de solo lectura con un enlace que vence (D133).
+  static const compartirHistorial = 'compartir_historial';
+
   /// Estado RENAC en la ficha y guía "Cómo registrar a tu mascota" (1.5.2b,
   /// D96).
   static const renac = 'renac';

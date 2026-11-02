@@ -2,7 +2,8 @@
   "rewrites": [
     { "source": "/m/:codigo", "destination": "/m.html" },
     { "source": "/s/:id", "destination": "/s.html" },
-    { "source": "/n/:id", "destination": "/n.html" }
+    { "source": "/n/:id", "destination": "/n.html" },
+    { "source": "/h/:token", "destination": "/h.html" }
   ],
   "headers": [
     {

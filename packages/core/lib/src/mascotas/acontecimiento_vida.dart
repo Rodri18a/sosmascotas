@@ -1,3 +1,4 @@
+import '../qr/qr_tag.dart';
 import 'mascota.dart';
 
 /// Tipo de acontecimiento del historial de vida (valores iguales a la base:
@@ -114,6 +115,12 @@ ValidacionAcontecimiento validarAcontecimiento({
   }
   return ValidacionAcontecimiento.valido;
 }
+
+/// Enlace público de solo lectura al historial: `<base>/h/<token>` (D133).
+String urlHistorialCompartido(
+  String token, {
+  String base = urlPublicaPorDefecto,
+}) => '${base.replaceAll(RegExp(r'/+$'), '')}/h/$token';
 
 /// El historial de una mascota, de lo más nuevo a lo más viejo.
 List<AcontecimientoVida> ordenarHistorial(List<AcontecimientoVida> lista) =>

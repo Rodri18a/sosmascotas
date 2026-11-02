@@ -35,6 +35,7 @@ Pantalla inicial: el logo de la marca (D122) sobre el fondo claro `#EAF4FA` (osc
 - **Libreta sanitaria (Fase 1):** vacunas, desparasitaciones, controles, alergias, medicación actual, veterinaria asociada.
 - **Historial de vida (D131, plan de mejoras 2.1):** operaciones, accidentes, enfermedades, tratamientos y diagnósticos con fecha, nota y hasta 4 fotos o PDF; línea de tiempo en la ficha, debajo de la libreta, y sección propia en el historial en PDF. Lo ven y lo editan el dueño y su hogar. Gratis (regla de oro).
 - **Pasar una mascota a otra persona (D132, plan de mejoras 2.2):** el dueño genera en la ficha un código que vence en 7 días; quien lo recibe toca «Tengo un código» en Mis mascotas y la mascota pasa a su cuenta con la libreta, el historial de vida, los recordatorios y la chapita QR. No se puede con un SOS abierto. Gratis.
+- **Compartir el historial (D133, plan de mejoras 2.2):** el dueño crea en la ficha un enlace de solo lectura que vence en 1, 7 o 30 días (lo copia y lo manda) y ve los vigentes con cuántas veces se abrieron, para cortarlos. Abre `/h/<token>` en la web pública: datos de la mascota, libreta e historial de vida, sin el teléfono ni la dirección del dueño. Los adjuntos todavía no (solo cuántos hay): falta una Edge Function que los firme. Gratis.
 - Semáforo de próximos controles: rojo a 7 días o menos, amarillo hasta 30 días, verde si falta más, y "vencido" si pasó la fecha.
 
 ## 3. Chapita QR — Fase 0

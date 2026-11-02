@@ -92,6 +92,11 @@ abstract final class Eventos {
   /// Pasar una mascota a otra persona (D132): se genera el código y se acepta.
   static const petTransferCreate = 'pet_transfer_create';
   static const petTransferAccept = 'pet_transfer_accept';
+
+  /// Historial compartido (D133): se crea el enlace (`days`) y se abre la
+  /// página (desde la web pública).
+  static const historyShareCreate = 'history_share_create';
+  static const historyShareOpen = 'history_share_open';
   static const tabOpen = 'tab_open';
   static const tagActivate = 'tag_activate';
   static const tagUnlink = 'tag_unlink';

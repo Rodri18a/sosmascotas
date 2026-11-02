@@ -78,4 +78,11 @@ void main() {
     ]);
     expect(lista.map((a) => a.id), ['nuevo', 'medio', 'viejo']);
   });
+
+  test('el enlace compartido va a /h/ de la web pública', () {
+    expect(
+      urlHistorialCompartido('abc_DEF-123', base: 'https://web.uy/'),
+      'https://web.uy/h/abc_DEF-123',
+    );
+  });
 }
