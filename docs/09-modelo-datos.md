@@ -68,6 +68,7 @@ Propuesta inicial. Se ajusta al implementar cada fase. **RLS activado en todas l
 | `user_places` | user_id, business_id, favorite, visited_at, is_my_vet (una por persona, solo veterinarias; trigger), updated_at. Privada (D75) | 1 |
 | `reviews` | id, business_id, user_id, rating (1–5), comment, reply (una vez), reply_at, status (`active`, `hidden` con 3 reportes). Única por persona y comercio. Sin acceso directo: `guardar_resena()` (con contacto real), `responder_resena()`, `resenas_de()` (D78) | 1 |
 | `promotions` | id, business_id, title, body, starts_at, ends_at, species_ids[], code | 2 |
+| Tus huellas (D138) | Sin tablas: `mis_huellas()` (solo con sesión, solo lo propio) calcula las ayudas (`owner_alerts` enviados sin estafa + comentarios activos + eventos `sos_share`/`sos_poster`) y seis insignias con `profiles`, `pets`, `health_records`, `qr_tags` (chapita física vinculada), `community_posts.solved_comment_id`, `owner_alerts` y `sos_reports` (reencuentro: SOS resuelto o aviso del QR respondido) | 3 |
 | `pet_friendly_places` | se modelan como `businesses` con business_type `pet_friendly` | 2 |
 
 ## Chat

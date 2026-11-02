@@ -4137,6 +4137,70 @@ class AppLocalizationsEs extends AppLocalizations {
   String get promoPublicar => 'Publicar';
 
   @override
+  String get huellasTitulo => 'Tus huellas';
+
+  @override
+  String get huellasSinAyudas =>
+      'Todavía no ayudaste a nadie en la app. ¡Ya va a llegar!';
+
+  @override
+  String huellasAyudas(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Ayudaste $n veces: avisos, respuestas y difusión.',
+      one: 'Ayudaste 1 vez: avisos, respuestas y difusión.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get huellasPrivadas => 'Solo vos ves tus huellas. No hay rankings.';
+
+  @override
+  String get huellaGanada => '¡Ganada!';
+
+  @override
+  String get huellaPerfil => 'Perfil completo';
+
+  @override
+  String get huellaPerfilComo =>
+      'Poné tu nombre, tu zona y una mascota con foto.';
+
+  @override
+  String get huellaLibreta => 'Libreta al día';
+
+  @override
+  String get huellaLibretaComo =>
+      'Cargá las vacunas y que ninguna esté vencida.';
+
+  @override
+  String get huellaChapita => 'Chapita activa';
+
+  @override
+  String get huellaChapitaComo => 'Vinculá una chapita QR a tu mascota.';
+
+  @override
+  String get huellaDifusor => 'Difusor';
+
+  @override
+  String get huellaDifusorComo => 'Compartí el aviso de una mascota perdida.';
+
+  @override
+  String get huellaRespuesta => 'Buena respuesta';
+
+  @override
+  String get huellaRespuestaComo =>
+      'Respondé una pregunta y que a alguien le sirva.';
+
+  @override
+  String get huellaReencuentro => 'Reencuentro';
+
+  @override
+  String get huellaReencuentroComo =>
+      'Avisale a una familia y ayudá a que su mascota vuelva.';
+
+  @override
   String get estadisticasPromoVistas => 'Vistas de tu promoción';
 
   @override

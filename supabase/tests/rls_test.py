@@ -305,6 +305,13 @@ def main():
              rechazado(rest('POST', 'flags', {'target_type': 'promo',
                                               'target_id': '00000000-0000-0000-0000-000000000000'})))
 
+        print('mis_huellas (D138)')
+        caso('un visitante no tiene huellas', rechazado(rest('POST', 'rpc/mis_huellas', {})))
+        st_h, h = rest('POST', 'rpc/mis_huellas', {}, a)
+        caso('A ve las suyas: ayudas e insignias (sin datos de nadie más)',
+             st_h == 200 and isinstance(h, dict) and set(h.get('insignias', {})) ==
+             {'perfil', 'libreta', 'chapita', 'difusor', 'respuesta', 'reencuentro'})
+
         print('pet_transfers (pasar una mascota, D132)')
         r_t = filas(rest('POST', 'pets', {'name': 'Pasable', 'species_id': 1}, a))
         tid = r_t[0]['id'] if r_t else None

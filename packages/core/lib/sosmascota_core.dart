@@ -30,6 +30,7 @@ export 'src/estadisticas/estadisticas.dart';
 export 'src/eventos/evento.dart';
 export 'src/fotos/preparar_foto.dart';
 export 'src/funcionalidades/funcionalidades.dart';
+export 'src/huellas/huellas.dart';
 export 'src/mapa/mapa.dart';
 export 'src/mapa/zona.dart';
 export 'src/mascotas/acontecimiento_vida.dart';

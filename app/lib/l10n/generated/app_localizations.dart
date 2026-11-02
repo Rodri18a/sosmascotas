@@ -7012,6 +7012,108 @@ abstract class AppLocalizations {
   /// **'Publicar'**
   String get promoPublicar;
 
+  /// No description provided for @huellasTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Tus huellas'**
+  String get huellasTitulo;
+
+  /// No description provided for @huellasSinAyudas.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no ayudaste a nadie en la app. ¡Ya va a llegar!'**
+  String get huellasSinAyudas;
+
+  /// No description provided for @huellasAyudas.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =1{Ayudaste 1 vez: avisos, respuestas y difusión.} other{Ayudaste {n} veces: avisos, respuestas y difusión.}}'**
+  String huellasAyudas(int n);
+
+  /// No description provided for @huellasPrivadas.
+  ///
+  /// In es, this message translates to:
+  /// **'Solo vos ves tus huellas. No hay rankings.'**
+  String get huellasPrivadas;
+
+  /// No description provided for @huellaGanada.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Ganada!'**
+  String get huellaGanada;
+
+  /// No description provided for @huellaPerfil.
+  ///
+  /// In es, this message translates to:
+  /// **'Perfil completo'**
+  String get huellaPerfil;
+
+  /// No description provided for @huellaPerfilComo.
+  ///
+  /// In es, this message translates to:
+  /// **'Poné tu nombre, tu zona y una mascota con foto.'**
+  String get huellaPerfilComo;
+
+  /// No description provided for @huellaLibreta.
+  ///
+  /// In es, this message translates to:
+  /// **'Libreta al día'**
+  String get huellaLibreta;
+
+  /// No description provided for @huellaLibretaComo.
+  ///
+  /// In es, this message translates to:
+  /// **'Cargá las vacunas y que ninguna esté vencida.'**
+  String get huellaLibretaComo;
+
+  /// No description provided for @huellaChapita.
+  ///
+  /// In es, this message translates to:
+  /// **'Chapita activa'**
+  String get huellaChapita;
+
+  /// No description provided for @huellaChapitaComo.
+  ///
+  /// In es, this message translates to:
+  /// **'Vinculá una chapita QR a tu mascota.'**
+  String get huellaChapitaComo;
+
+  /// No description provided for @huellaDifusor.
+  ///
+  /// In es, this message translates to:
+  /// **'Difusor'**
+  String get huellaDifusor;
+
+  /// No description provided for @huellaDifusorComo.
+  ///
+  /// In es, this message translates to:
+  /// **'Compartí el aviso de una mascota perdida.'**
+  String get huellaDifusorComo;
+
+  /// No description provided for @huellaRespuesta.
+  ///
+  /// In es, this message translates to:
+  /// **'Buena respuesta'**
+  String get huellaRespuesta;
+
+  /// No description provided for @huellaRespuestaComo.
+  ///
+  /// In es, this message translates to:
+  /// **'Respondé una pregunta y que a alguien le sirva.'**
+  String get huellaRespuestaComo;
+
+  /// No description provided for @huellaReencuentro.
+  ///
+  /// In es, this message translates to:
+  /// **'Reencuentro'**
+  String get huellaReencuentro;
+
+  /// No description provided for @huellaReencuentroComo.
+  ///
+  /// In es, this message translates to:
+  /// **'Avisale a una familia y ayudá a que su mascota vuelva.'**
+  String get huellaReencuentroComo;
+
   /// No description provided for @estadisticasPromoVistas.
   ///
   /// In es, this message translates to:

@@ -53,6 +53,7 @@ class _Detalle extends ConsumerWidget {
 
   Future<void> _compartir(BuildContext context, WidgetRef ref) async {
     await Clipboard.setData(ClipboardData(text: _url(ref)));
+    ref.read(metricasProvider).track(Eventos.sosShare, targetId: detalle.id);
     if (context.mounted) {
       ScaffoldMessenger.of(
         context,

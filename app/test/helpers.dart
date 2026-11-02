@@ -24,6 +24,7 @@ import 'package:sosmascota/src/comercios/resenas_repositorio.dart';
 import 'package:sosmascota/src/comunidad/comunidad_repositorio.dart';
 import 'package:sosmascota/src/config/env_provider.dart';
 import 'package:sosmascota/src/config/supabase_providers.dart';
+import 'package:sosmascota/src/cuenta/huellas_repositorio.dart';
 import 'package:sosmascota/src/cuenta/perfil_repositorio.dart';
 import 'package:sosmascota/src/cuenta/plan_usuario_repositorio.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
@@ -121,6 +122,7 @@ Widget appDePrueba({
   TransferenciasRepositorio? transferencias,
   EnlacesHistorialRepositorio? enlacesHistorial,
   PromocionesRepositorio? promociones,
+  Huellas? huellas,
   SelectorDocumento? selectorDocumento,
   RecordatoriosRepositorio? recordatorios,
   AvisadorRecordatorios? avisador,
@@ -225,6 +227,9 @@ Widget appDePrueba({
     libretaRepositorioProvider.overrideWithValue(libreta ?? LibretaFalsa()),
     historialRepositorioProvider.overrideWithValue(
       historial ?? HistorialFalso(),
+    ),
+    cargarHuellasProvider.overrideWithValue(
+      () async => huellas ?? const Huellas(),
     ),
     promocionesRepositorioProvider.overrideWithValue(
       promociones ?? PromocionesFalsas(),

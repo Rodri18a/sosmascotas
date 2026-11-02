@@ -33,6 +33,12 @@ abstract final class Eventos {
   static const chatBlock = 'chat_block';
   static const sosFollow = 'sos_follow';
   static const sosPoster = 'sos_poster';
+
+  /// Se copió el enlace de un SOS para compartirlo (`target_id`, D138).
+  static const sosShare = 'sos_share';
+
+  /// Se abrió «Tus huellas» (D138).
+  static const huellasOpen = 'huellas_open';
   static const favoriteAdd = 'favorite_add';
   static const placeVisit = 'place_visit';
   static const myVetSet = 'my_vet_set';

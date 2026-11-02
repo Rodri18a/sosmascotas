@@ -14,6 +14,7 @@ import '../../widgets/foto_mascota.dart';
 import '../../widgets/volver.dart';
 import '../ajustes/ajustes_screen.dart';
 import '../hogar/hogar_screen.dart';
+import 'tarjeta_huellas.dart';
 
 /// "Mi perfil" (D70): quién soy en la app, qué mascotas tengo a cargo y con
 /// quién comparto el cuidado. Solo lo ve la propia persona.
@@ -76,6 +77,13 @@ class PerfilScreen extends ConsumerWidget {
           if (usuario?.email case final email?)
             Center(child: Text(email, style: tema.textTheme.bodySmall)),
           const SizedBox(height: 16),
+          // «Tus huellas» (3.3, D138): solo las ve la propia persona.
+          if (ref.watch(
+            funcionalidadActivaProvider(Funcionalidades.huellas),
+          )) ...[
+            const TarjetaHuellas(),
+            const SizedBox(height: 16),
+          ],
           Card(
             child: Column(
               children: [

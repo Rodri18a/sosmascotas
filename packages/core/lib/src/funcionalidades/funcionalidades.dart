@@ -27,6 +27,9 @@ abstract final class Funcionalidades {
   /// Promociones de comercios Destacado y Plus en el muro (3.1, D136).
   static const promociones = 'promociones';
 
+  /// «Tus huellas»: insignias por cuidar y ayudar, sin rankings (3.3, D138).
+  static const huellas = 'huellas';
+
   /// Estado RENAC en la ficha y guía "Cómo registrar a tu mascota" (1.5.2b,
   /// D96).
   static const renac = 'renac';
