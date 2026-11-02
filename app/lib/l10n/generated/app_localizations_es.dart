@@ -3928,6 +3928,107 @@ class AppLocalizationsEs extends AppLocalizations {
   String get compartirHistorialCortar => 'Cortar';
 
   @override
+  String get temaViajes => 'Viajes';
+
+  @override
+  String get temaSalud => 'Salud';
+
+  @override
+  String get temaAlimentacion => 'Alimentación';
+
+  @override
+  String get temaAdopcion => 'Adopción';
+
+  @override
+  String get temaTramites => 'Trámites';
+
+  @override
+  String get temaOtros => 'Otros';
+
+  @override
+  String get preguntasTitulo => 'Preguntas';
+
+  @override
+  String get preguntasTarjeta => '¿Tenés una duda?';
+
+  @override
+  String get preguntasTarjetaAyuda =>
+      'Preguntale a la comunidad o buscá si ya la respondieron.';
+
+  @override
+  String get preguntasPreguntar => 'Preguntar';
+
+  @override
+  String get preguntasMotivoCuenta =>
+      'Para preguntar o responder necesitás una cuenta.';
+
+  @override
+  String get preguntasBuscar => 'Buscar en las preguntas…';
+
+  @override
+  String get preguntasTodas => 'Todas';
+
+  @override
+  String get preguntasVacio =>
+      'Todavía no hay preguntas de este tema. ¡Hacé la primera!';
+
+  @override
+  String get preguntasSinResultados =>
+      'No encontramos preguntas con eso. Probá con otras palabras o hacé la tuya.';
+
+  @override
+  String preguntasRespuestas(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n respuestas',
+      one: '1 respuesta',
+      zero: 'Sin respuestas',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get preguntasResuelta => 'Resuelta';
+
+  @override
+  String get preguntasNueva => 'Nueva pregunta';
+
+  @override
+  String get preguntasTema => '¿De qué es?';
+
+  @override
+  String get preguntasTexto => 'Tu pregunta';
+
+  @override
+  String get preguntasTextoAyuda =>
+      'Contá lo necesario. No pongas tu teléfono ni tu dirección.';
+
+  @override
+  String get preguntasDonde => '¿Dónde la publicás?';
+
+  @override
+  String get preguntasGenerales => 'Preguntas generales';
+
+  @override
+  String get preguntasFaltan => 'Elegí un tema y escribí tu pregunta.';
+
+  @override
+  String get preguntasPublicar => 'Publicar pregunta';
+
+  @override
+  String get preguntasMeSirvio => 'Me sirvió';
+
+  @override
+  String get preguntasDesmarcar => 'Quitar';
+
+  @override
+  String get preguntasLeSirvio => 'Le sirvió a quien preguntó';
+
+  @override
+  String get preguntasUnirmeResponder => 'Unirme al grupo para responder';
+
+  @override
   String atajosMas(String nombre) {
     return 'Más opciones de $nombre';
   }

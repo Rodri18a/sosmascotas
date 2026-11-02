@@ -6664,6 +6664,180 @@ abstract class AppLocalizations {
   /// **'Cortar'**
   String get compartirHistorialCortar;
 
+  /// No description provided for @temaViajes.
+  ///
+  /// In es, this message translates to:
+  /// **'Viajes'**
+  String get temaViajes;
+
+  /// No description provided for @temaSalud.
+  ///
+  /// In es, this message translates to:
+  /// **'Salud'**
+  String get temaSalud;
+
+  /// No description provided for @temaAlimentacion.
+  ///
+  /// In es, this message translates to:
+  /// **'Alimentación'**
+  String get temaAlimentacion;
+
+  /// No description provided for @temaAdopcion.
+  ///
+  /// In es, this message translates to:
+  /// **'Adopción'**
+  String get temaAdopcion;
+
+  /// No description provided for @temaTramites.
+  ///
+  /// In es, this message translates to:
+  /// **'Trámites'**
+  String get temaTramites;
+
+  /// No description provided for @temaOtros.
+  ///
+  /// In es, this message translates to:
+  /// **'Otros'**
+  String get temaOtros;
+
+  /// No description provided for @preguntasTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Preguntas'**
+  String get preguntasTitulo;
+
+  /// No description provided for @preguntasTarjeta.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Tenés una duda?'**
+  String get preguntasTarjeta;
+
+  /// No description provided for @preguntasTarjetaAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Preguntale a la comunidad o buscá si ya la respondieron.'**
+  String get preguntasTarjetaAyuda;
+
+  /// No description provided for @preguntasPreguntar.
+  ///
+  /// In es, this message translates to:
+  /// **'Preguntar'**
+  String get preguntasPreguntar;
+
+  /// No description provided for @preguntasMotivoCuenta.
+  ///
+  /// In es, this message translates to:
+  /// **'Para preguntar o responder necesitás una cuenta.'**
+  String get preguntasMotivoCuenta;
+
+  /// No description provided for @preguntasBuscar.
+  ///
+  /// In es, this message translates to:
+  /// **'Buscar en las preguntas…'**
+  String get preguntasBuscar;
+
+  /// No description provided for @preguntasTodas.
+  ///
+  /// In es, this message translates to:
+  /// **'Todas'**
+  String get preguntasTodas;
+
+  /// No description provided for @preguntasVacio.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no hay preguntas de este tema. ¡Hacé la primera!'**
+  String get preguntasVacio;
+
+  /// No description provided for @preguntasSinResultados.
+  ///
+  /// In es, this message translates to:
+  /// **'No encontramos preguntas con eso. Probá con otras palabras o hacé la tuya.'**
+  String get preguntasSinResultados;
+
+  /// No description provided for @preguntasRespuestas.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =0{Sin respuestas} =1{1 respuesta} other{{n} respuestas}}'**
+  String preguntasRespuestas(int n);
+
+  /// No description provided for @preguntasResuelta.
+  ///
+  /// In es, this message translates to:
+  /// **'Resuelta'**
+  String get preguntasResuelta;
+
+  /// No description provided for @preguntasNueva.
+  ///
+  /// In es, this message translates to:
+  /// **'Nueva pregunta'**
+  String get preguntasNueva;
+
+  /// No description provided for @preguntasTema.
+  ///
+  /// In es, this message translates to:
+  /// **'¿De qué es?'**
+  String get preguntasTema;
+
+  /// No description provided for @preguntasTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu pregunta'**
+  String get preguntasTexto;
+
+  /// No description provided for @preguntasTextoAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Contá lo necesario. No pongas tu teléfono ni tu dirección.'**
+  String get preguntasTextoAyuda;
+
+  /// No description provided for @preguntasDonde.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Dónde la publicás?'**
+  String get preguntasDonde;
+
+  /// No description provided for @preguntasGenerales.
+  ///
+  /// In es, this message translates to:
+  /// **'Preguntas generales'**
+  String get preguntasGenerales;
+
+  /// No description provided for @preguntasFaltan.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegí un tema y escribí tu pregunta.'**
+  String get preguntasFaltan;
+
+  /// No description provided for @preguntasPublicar.
+  ///
+  /// In es, this message translates to:
+  /// **'Publicar pregunta'**
+  String get preguntasPublicar;
+
+  /// No description provided for @preguntasMeSirvio.
+  ///
+  /// In es, this message translates to:
+  /// **'Me sirvió'**
+  String get preguntasMeSirvio;
+
+  /// No description provided for @preguntasDesmarcar.
+  ///
+  /// In es, this message translates to:
+  /// **'Quitar'**
+  String get preguntasDesmarcar;
+
+  /// No description provided for @preguntasLeSirvio.
+  ///
+  /// In es, this message translates to:
+  /// **'Le sirvió a quien preguntó'**
+  String get preguntasLeSirvio;
+
+  /// No description provided for @preguntasUnirmeResponder.
+  ///
+  /// In es, this message translates to:
+  /// **'Unirme al grupo para responder'**
+  String get preguntasUnirmeResponder;
+
   /// No description provided for @atajosMas.
   ///
   /// In es, this message translates to:

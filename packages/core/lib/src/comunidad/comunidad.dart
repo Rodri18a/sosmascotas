@@ -73,6 +73,23 @@ enum TipoPublicacion {
       values.firstWhere((e) => e.base == v, orElse: () => pregunta);
 }
 
+/// Tema de una pregunta (2.3, D134): valores iguales a la base.
+enum TemaPregunta {
+  viajes('travel'),
+  salud('health'),
+  alimentacion('food'),
+  adopcion('adoption'),
+  tramites('paperwork'),
+  otros('other');
+
+  const TemaPregunta(this.base);
+
+  final String base;
+
+  static TemaPregunta? desdeBase(Object? v) =>
+      values.where((e) => e.base == v).firstOrNull;
+}
+
 class Comentario {
   const Comentario({
     required this.id,
@@ -113,9 +130,13 @@ class Publicacion {
     this.grupoNombre,
     this.soyMiembro = false,
     this.comentarios = const [],
+    this.tema,
+    this.respuestaMarcadaId,
+    this.resuelta = false,
   });
 
-  /// De `publicaciones_de()` (lista) o de `publicacion()` (con comentarios).
+  /// De `publicaciones_de()` o `preguntas()` (listas) o de `publicacion()`
+  /// (con comentarios).
   factory Publicacion.fromJson(Map<String, Object?> json) {
     final comentarios = [
       if (json['comentarios'] case final List<Object?> lista)
@@ -129,7 +150,7 @@ class Publicacion {
       autor: json['autor'] as String?,
       esMia: (json['es_mio'] as bool?) ?? false,
       // En la lista es un número; en el detalle, la lista de comentarios.
-      cantidadComentarios: switch (json['comentarios']) {
+      cantidadComentarios: switch (json['comentarios'] ?? json['respuestas']) {
         final num n => n.toInt(),
         _ => comentarios.length,
       },
@@ -138,6 +159,9 @@ class Publicacion {
       grupoNombre: json['group_name'] as String?,
       soyMiembro: json['soy_miembro'] as bool? ?? false,
       comentarios: comentarios,
+      tema: TemaPregunta.desdeBase(json['topic']),
+      respuestaMarcadaId: json['solved_comment_id'] as String?,
+      resuelta: json['resuelta'] as bool? ?? json['solved_comment_id'] != null,
     );
   }
 
@@ -157,6 +181,13 @@ class Publicacion {
   final String? grupoNombre;
   final bool soyMiembro;
   final List<Comentario> comentarios;
+
+  /// Solo en las preguntas (D134).
+  final TemaPregunta? tema;
+
+  /// La respuesta que quien preguntó marcó con «Me sirvió» (solo en el detalle).
+  final String? respuestaMarcadaId;
+  final bool resuelta;
 }
 
 enum EstadoSaludo {

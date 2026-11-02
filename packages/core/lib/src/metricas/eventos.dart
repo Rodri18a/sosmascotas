@@ -97,6 +97,13 @@ abstract final class Eventos {
   /// página (desde la web pública).
   static const historyShareCreate = 'history_share_create';
   static const historyShareOpen = 'history_share_open';
+
+  /// Preguntas (D134): se pregunta (`topic`), se busca, se responde y quien
+  /// preguntó marca la respuesta que le sirvió.
+  static const questionCreate = 'question_create';
+  static const questionSearch = 'question_search';
+  static const questionAnswer = 'question_answer';
+  static const questionSolved = 'question_solved';
   static const tabOpen = 'tab_open';
   static const tagActivate = 'tag_activate';
   static const tagUnlink = 'tag_unlink';

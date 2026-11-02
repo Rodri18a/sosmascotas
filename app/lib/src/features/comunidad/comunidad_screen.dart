@@ -13,6 +13,7 @@ import '../../mascotas/mascotas_repositorio.dart';
 import '../../metricas/metricas.dart';
 import '../../router.dart';
 import '../../widgets/volver.dart';
+import 'preguntas.dart';
 
 String textoTipoPublicacion(AppLocalizations t, TipoPublicacion x) =>
     switch (x) {
@@ -587,12 +588,55 @@ class _PublicacionScreenState extends ConsumerState<PublicacionScreen> {
     try {
       await ref.read(comunidadRepositorioProvider).comentar(p.id, texto);
       ref.read(metricasProvider).track(Eventos.commentCreate);
+      if (p.tipo == TipoPublicacion.pregunta) {
+        ref.read(metricasProvider).track(Eventos.questionAnswer);
+      }
       _comentario.clear();
       _recargar(p.grupoId);
     } on Object catch (e) {
       mensajes.showSnackBar(SnackBar(content: Text(textoErrorComunidad(t, e))));
     } finally {
       if (mounted) setState(() => _enviando = false);
+    }
+  }
+
+  /// Quien preguntó marca (o desmarca) la respuesta que le sirvió (D134).
+  Future<void> _marcar(Publicacion p, Comentario c) async {
+    final t = context.t;
+    final mensajes = ScaffoldMessenger.of(context);
+    final marcar = p.respuestaMarcadaId != c.id;
+    try {
+      await ref
+          .read(comunidadRepositorioProvider)
+          .marcarRespuesta(p.id, marcar ? c.id : null);
+      if (marcar) ref.read(metricasProvider).track(Eventos.questionSolved);
+      _recargar(p.grupoId);
+      ref.invalidate(preguntasProvider);
+    } on Object catch (e) {
+      mensajes.showSnackBar(SnackBar(content: Text(textoErrorComunidad(t, e))));
+    }
+  }
+
+  /// En una pregunta, unirse al grupo para responder sin salir (D134).
+  Future<void> _unirmeYResponder(Publicacion p) async {
+    final t = context.t;
+    final mensajes = ScaffoldMessenger.of(context);
+    if (!await hayCuenta(
+      context,
+      ref,
+      volverA: Rutas.publicacionComunidad(p.id),
+      motivo: t.preguntasMotivoCuenta,
+    )) {
+      return;
+    }
+    try {
+      await ref
+          .read(comunidadRepositorioProvider)
+          .unirme(p.grupoId!, unirme: true);
+      ref.invalidate(gruposProvider);
+      _recargar(p.grupoId);
+    } on Object catch (e) {
+      mensajes.showSnackBar(SnackBar(content: Text(textoErrorComunidad(t, e))));
     }
   }
 
@@ -620,6 +664,21 @@ class _PublicacionScreenState extends ConsumerState<PublicacionScreen> {
                 padding: const EdgeInsets.all(16),
                 children: [
                   TarjetaPublicacion(publicacion: p, completa: true),
+                  if (p.tema case final tm?)
+                    Wrap(
+                      spacing: 8,
+                      children: [
+                        Chip(
+                          avatar: Icon(iconoTema(tm), size: 18),
+                          label: Text(textoTema(t, tm)),
+                        ),
+                        if (p.resuelta)
+                          Chip(
+                            avatar: const Icon(Icons.check_circle_outline),
+                            label: Text(t.preguntasResuelta),
+                          ),
+                      ],
+                    ),
                   if (conectado)
                     Align(
                       alignment: Alignment.centerRight,
@@ -646,23 +705,50 @@ class _PublicacionScreenState extends ConsumerState<PublicacionScreen> {
                   for (final c in p.comentarios)
                     ListTile(
                       contentPadding: EdgeInsets.zero,
+                      leading: c.id == p.respuestaMarcadaId
+                          ? Icon(
+                              Icons.check_circle,
+                              color: tema.colorScheme.primary,
+                              semanticLabel: t.preguntasLeSirvio,
+                            )
+                          : null,
                       title: Text(c.texto),
                       subtitle: Text(
-                        '${c.autor ?? t.comunidadAlguien} · '
-                        '${_cuando(context, c.creado)}',
+                        [
+                          c.autor ?? t.comunidadAlguien,
+                          _cuando(context, c.creado),
+                          if (c.id == p.respuestaMarcadaId) t.preguntasLeSirvio,
+                        ].join(' · '),
                       ),
                       trailing: conectado
-                          ? IconButton(
-                              tooltip: t.comunidadOpciones,
-                              icon: const Icon(Icons.more_vert_outlined),
-                              onPressed: () => _acciones(
-                                context,
-                                ref,
-                                tipo: 'comment',
-                                id: c.id,
-                                esMio: c.esMio,
-                                despues: () => _recargar(p.grupoId),
-                              ),
+                          ? Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                // Solo quien preguntó, en las respuestas de otros.
+                                if (p.esMia &&
+                                    p.tipo == TipoPublicacion.pregunta &&
+                                    !c.esMio)
+                                  TextButton(
+                                    onPressed: () => _marcar(p, c),
+                                    child: Text(
+                                      c.id == p.respuestaMarcadaId
+                                          ? t.preguntasDesmarcar
+                                          : t.preguntasMeSirvio,
+                                    ),
+                                  ),
+                                IconButton(
+                                  tooltip: t.comunidadOpciones,
+                                  icon: const Icon(Icons.more_vert_outlined),
+                                  onPressed: () => _acciones(
+                                    context,
+                                    ref,
+                                    tipo: 'comment',
+                                    id: c.id,
+                                    esMio: c.esMio,
+                                    despues: () => _recargar(p.grupoId),
+                                  ),
+                                ),
+                              ],
                             )
                           : null,
                     ),
@@ -694,6 +780,12 @@ class _PublicacionScreenState extends ConsumerState<PublicacionScreen> {
                             icon: const Icon(Icons.send_outlined),
                           ),
                         ],
+                      )
+                    : p.tipo == TipoPublicacion.pregunta && p.grupoId != null
+                    // En las preguntas se responde sin salir (D134).
+                    ? OutlinedButton(
+                        onPressed: () => _unirmeYResponder(p),
+                        child: Text(t.preguntasUnirmeResponder),
                       )
                     : OutlinedButton(
                         onPressed: p.grupoId == null

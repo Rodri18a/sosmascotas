@@ -21,6 +21,9 @@ abstract final class Funcionalidades {
   /// Compartir el historial de solo lectura con un enlace que vence (D133).
   static const compartirHistorial = 'compartir_historial';
 
+  /// Preguntas de la comunidad con temas y buscador (2.3, D134).
+  static const preguntas = 'preguntas';
+
   /// Estado RENAC en la ficha y guía "Cómo registrar a tu mascota" (1.5.2b,
   /// D96).
   static const renac = 'renac';

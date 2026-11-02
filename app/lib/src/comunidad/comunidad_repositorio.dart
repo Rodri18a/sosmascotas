@@ -41,6 +41,19 @@ abstract interface class ComunidadRepositorio {
 
   Future<void> comentar(String publicacionId, String texto);
 
+  /// Preguntas de todos los grupos (D134), con filtro de tema y búsqueda.
+  Future<List<Publicacion>> preguntas({TemaPregunta? tema, String? buscar});
+
+  /// Pregunta en [grupoId] (o en «Preguntas generales»); me suma si hace falta.
+  Future<String> preguntar({
+    required TemaPregunta tema,
+    required String texto,
+    String? grupoId,
+  });
+
+  /// Quien preguntó marca (o desmarca, con `null`) la respuesta que le sirvió.
+  Future<void> marcarRespuesta(String preguntaId, String? comentarioId);
+
   /// [tipo]: `post` o `comment`.
   Future<void> borrar(String tipo, String id);
 
@@ -152,6 +165,38 @@ class SupabaseComunidadRepositorio implements ComunidadRepositorio {
   );
 
   @override
+  Future<List<Publicacion>> preguntas({
+    TemaPregunta? tema,
+    String? buscar,
+  }) async => _filas(
+    await _cliente.rpc<List<dynamic>>(
+      'preguntas',
+      params: {'p_tema': tema?.base, 'p_buscar': buscar},
+    ),
+  ).map((f) => Publicacion.fromJson({...f, 'kind': 'question'})).toList();
+
+  @override
+  Future<String> preguntar({
+    required TemaPregunta tema,
+    required String texto,
+    String? grupoId,
+  }) => _traducir(
+    () => _cliente.rpc<String>(
+      'preguntar',
+      params: {'p_tema': tema.base, 'p_texto': texto, 'p_grupo': grupoId},
+    ),
+  );
+
+  @override
+  Future<void> marcarRespuesta(String preguntaId, String? comentarioId) =>
+      _traducir(
+        () => _cliente.rpc<void>(
+          'marcar_respuesta',
+          params: {'p_post': preguntaId, 'p_comentario': comentarioId},
+        ),
+      );
+
+  @override
   Future<void> borrar(String tipo, String id) => _traducir(
     () => _cliente.rpc<void>(
       'borrar_de_comunidad',
@@ -244,6 +289,22 @@ class ComunidadSinConfigurar implements ComunidadRepositorio {
 
   @override
   Future<void> comentar(String publicacionId, String texto) async {}
+
+  @override
+  Future<List<Publicacion>> preguntas({
+    TemaPregunta? tema,
+    String? buscar,
+  }) async => const [];
+
+  @override
+  Future<String> preguntar({
+    required TemaPregunta tema,
+    required String texto,
+    String? grupoId,
+  }) => throw const ComunidadException(ErrorComunidad.otro);
+
+  @override
+  Future<void> marcarRespuesta(String preguntaId, String? comentarioId) async {}
 
   @override
   Future<void> borrar(String tipo, String id) async {}

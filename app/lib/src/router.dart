@@ -20,6 +20,7 @@ import 'features/ayuda/ayuda_screen.dart';
 import 'features/chapitas/pedido_chapita.dart';
 import 'features/chat/chat_screen.dart';
 import 'features/comunidad/comunidad_screen.dart';
+import 'features/comunidad/preguntas.dart';
 import 'features/consentimiento/consentimiento_screen.dart';
 import 'features/eventos/eventos.dart';
 import 'features/historial/historial.dart';
@@ -97,6 +98,8 @@ abstract final class Rutas {
       '$misTurnos/reservar/$negocioId';
   static const misCuidados = '/cuidados';
   static const grupos = '/grupos';
+  static const preguntas = '/preguntas';
+  static const nuevaPregunta = '$preguntas/nueva';
   static String grupo(String id) => '$grupos/$id';
   static String publicarEnGrupo(String id) => '$grupos/$id/publicar';
   static const _publicacion = '/publicacion';
@@ -167,6 +170,7 @@ abstract final class Rutas {
     misTurnos: Funcionalidades.agenda,
     misCuidados: Funcionalidades.cuidados,
     grupos: Funcionalidades.grupos,
+    preguntas: Funcionalidades.preguntas,
     '$_publicacion/': Funcionalidades.grupos,
     saludos: Funcionalidades.grupos,
     miPlan: Funcionalidades.planesUsuario,
@@ -200,6 +204,7 @@ abstract final class Rutas {
     misTurnos,
     misCuidados,
     saludos,
+    nuevaPregunta,
     miPlan,
   ];
 
@@ -626,6 +631,16 @@ final routerProvider = Provider<GoRouter>((ref) {
                 ),
               ),
             ],
+          ),
+        ],
+      ),
+      GoRoute(
+        path: Rutas.preguntas,
+        builder: (_, _) => const PreguntasScreen(),
+        routes: [
+          GoRoute(
+            path: 'nueva',
+            builder: (_, _) => const NuevaPreguntaScreen(),
           ),
         ],
       ),

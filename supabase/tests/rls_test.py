@@ -266,6 +266,21 @@ def main():
         caso('cortado, el enlace deja de funcionar',
              rest('POST', 'rpc/historial_compartido', {'p_token': tok})[1] is None)
 
+        print('preguntas (D134)')
+        st_q, q_id = rest('POST', 'rpc/preguntar', {'p_tema': 'health', 'p_texto': 'Prueba RLS: ¿cada cuánto se vacuna?'}, a)
+        caso('A pregunta (y queda en «Preguntas generales»)', st_q == 200 and isinstance(q_id, str))
+        caso('un visitante no puede preguntar',
+             rechazado(rest('POST', 'rpc/preguntar', {'p_tema': 'health', 'p_texto': 'x'})))
+        caso('un tema inventado se rechaza',
+             rechazado(rest('POST', 'rpc/preguntar', {'p_tema': 'nada', 'p_texto': 'x'}, a)))
+        caso('un visitante lee las preguntas y busca sin tildes',
+             q_id in [f['id'] for f in filas(rest('POST', 'rpc/preguntas', {'p_buscar': 'CADA CUANTO'}))])
+        caso('B no puede marcar la respuesta de la pregunta de A',
+             rechazado(rest('POST', 'rpc/marcar_respuesta', {'p_post': q_id, 'p_comentario': None}, b)))
+        caso('nadie escribe el tema directo',
+             bloqueado(rest('PATCH', f'community_posts?id=eq.{q_id}', {'topic': 'travel'}, a)))
+        rest('POST', 'rpc/borrar_de_comunidad', {'p_tipo': 'post', 'p_id': q_id}, a)
+
         print('pet_transfers (pasar una mascota, D132)')
         r_t = filas(rest('POST', 'pets', {'name': 'Pasable', 'species_id': 1}, a))
         tid = r_t[0]['id'] if r_t else None

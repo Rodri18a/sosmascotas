@@ -146,6 +146,13 @@ class _MenuPrincipalState extends ConsumerState<MenuPrincipal> {
               t.eventosProximos,
               Rutas.comunidad,
             ),
+          if (activa(Funcionalidades.preguntas))
+            pantalla(
+              'preguntas',
+              Icons.contact_support_outlined,
+              t.preguntasTitulo,
+              Rutas.preguntas,
+            ),
           if (activa(Funcionalidades.grupos))
             pantalla(
               'grupos',

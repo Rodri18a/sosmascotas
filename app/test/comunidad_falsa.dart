@@ -69,6 +69,41 @@ class ComunidadFalsa implements ComunidadRepositorio {
   Future<void> comentar(String publicacionId, String texto) async =>
       comentarios.add((publicacionId, texto));
 
+  final busquedas = <(TemaPregunta?, String?)>[];
+  final preguntadas = <(TemaPregunta, String, String?)>[];
+  final marcadas = <(String, String?)>[];
+
+  @override
+  Future<List<Publicacion>> preguntas({
+    TemaPregunta? tema,
+    String? buscar,
+  }) async {
+    busquedas.add((tema, buscar));
+    final texto = buscar?.trim().toLowerCase() ?? '';
+    return [
+      for (final p in lista)
+        if (p.tipo == TipoPublicacion.pregunta &&
+            (tema == null || p.tema == tema) &&
+            p.texto.toLowerCase().contains(texto))
+          p,
+    ];
+  }
+
+  @override
+  Future<String> preguntar({
+    required TemaPregunta tema,
+    required String texto,
+    String? grupoId,
+  }) async {
+    if (fallar case final f?) throw f;
+    preguntadas.add((tema, texto, grupoId));
+    return 'q${preguntadas.length}';
+  }
+
+  @override
+  Future<void> marcarRespuesta(String preguntaId, String? comentarioId) async =>
+      marcadas.add((preguntaId, comentarioId));
+
   @override
   Future<void> borrar(String tipo, String id) async => borrados.add((tipo, id));
 

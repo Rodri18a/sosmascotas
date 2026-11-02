@@ -19,6 +19,7 @@ import '../../router.dart';
 import '../../utiles/enlaces.dart';
 import '../../widgets/boton_ayuda.dart';
 import '../comunidad/comunidad_screen.dart';
+import '../comunidad/preguntas.dart';
 import '../eventos/eventos.dart';
 import '../menu/menu_principal.dart';
 import '../sos/sos_detalle_screen.dart';
@@ -396,6 +397,9 @@ class _Comunidad extends ConsumerWidget {
           padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
           child: Text(t.comunidadExplicacion, style: tema.textTheme.bodySmall),
         ),
+        // Preguntas de la comunidad (2.3, D134).
+        if (ref.watch(funcionalidadActivaProvider(Funcionalidades.preguntas)))
+          const TarjetaPreguntas(),
         // Grupos por raza y especie (3.4, D116).
         if (ref.watch(funcionalidadActivaProvider(Funcionalidades.grupos)))
           const TarjetaGrupos(),

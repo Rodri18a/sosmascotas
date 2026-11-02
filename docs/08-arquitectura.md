@@ -179,6 +179,7 @@ Tabla `events` (append-only), escrita por el cliente con `ref.read(metricasProvi
 | `life_event_create` / `life_event_file_add` | se carga un acontecimiento del historial de vida (`kind`) o se le suma un adjunto (`type`: `photo`, `pdf`) (D131) |
 | `pet_transfer_create` / `pet_transfer_accept` | se genera el código para pasar una mascota y se acepta (D132) |
 | `history_share_create` / `history_share_open` | se crea un enlace del historial (`days`) y se abre la página compartida en la web pública (D133) |
+| `question_create` / `question_search` / `question_answer` / `question_solved` | se hace una pregunta (`topic`), se busca (`topic` si hay filtro), se responde y quien preguntó marca la respuesta que le sirvió (D134) |
 | `tab_open` | se cambia de pestaña en la barra inferior, con `tab` (`noticias`, `sos`, `mapa`, `mascotas`, `ayuda`; D94) |
 | `unclaimed_open` | se abre la hoja de un lugar sin reclamar; `target_id` = una marca del grupo, `tipo` = rubro (D99) |
 | `tag_activate` / `tag_unlink` | el dueño activa una chapita física (con `origen`: `enlace` o `codigo`) o la desvincula (D95) |
