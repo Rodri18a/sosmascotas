@@ -423,6 +423,10 @@ verify_jwt = false
 [functions.owner-alert]
 verify_jwt = false
 
+# Adjuntos del historial compartido (D133): lo abre un visitante con el enlace.
+[functions.historial-adjuntos]
+verify_jwt = false
+
 # Paso 0.6.3: la llama la app al publicar un SOS. Valida la sesión por su cuenta.
 [functions.sos-zone-alert]
 verify_jwt = false

@@ -42,7 +42,52 @@ function renglon(titulo, ...extras) {
   return div;
 }
 
-function mostrar(h) {
+/** Fotos (miniatura) y PDF (enlace) de un acontecimiento, ya firmados. */
+function adjuntos(rutas, urls) {
+  const div = el('div', null, 'adjuntos');
+  let n = 0;
+  let fotos = 0;
+  let documentos = 0;
+  for (const ruta of rutas || []) {
+    const url = urls[ruta];
+    if (!url) continue;
+    n += 1;
+    const a = el('a', null, 'adjunto');
+    a.href = url;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    if (ruta.toLowerCase().endsWith('.pdf')) {
+      documentos += 1;
+      a.textContent = `📄 Documento ${documentos} (PDF)`;
+    } else {
+      const img = el('img');
+      img.src = url;
+      fotos += 1;
+      img.alt = `Foto ${fotos}`;
+      img.loading = 'lazy';
+      a.append(img);
+    }
+    div.append(a);
+  }
+  return n ? div : null;
+}
+
+/** Enlaces firmados de 1 hora para los adjuntos (Edge Function, D133). */
+async function urlsDeAdjuntos(token) {
+  try {
+    const r = await fetch(`${CONF.supabaseUrl}/functions/v1/historial-adjuntos`, {
+      method: 'POST',
+      headers: { apikey: CONF.supabaseKey, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token }),
+    });
+    if (!r.ok) return {};
+    return (await r.json()).urls || {};
+  } catch (_) {
+    return {};
+  }
+}
+
+function mostrar(h, urls) {
   const p = h.pet;
   document.title = `Historial de ${p.name} · Huellitas`;
   const foto = urlFoto('pet-photos', p.photo_path);
@@ -82,11 +127,15 @@ function mostrar(h) {
   const vida = document.getElementById('vida');
   if (!h.life.length) vida.append(el('p', 'Sin acontecimientos.', 'ayuda'));
   for (const e of h.life) {
-    vida.append(renglon(
-      `${fecha(e.date)} · ${TIPOS_VIDA[e.kind] || 'Otro'} · ${e.title}`,
-      e.notes,
-      e.files ? `${e.files === 1 ? '1 adjunto' : `${e.files} adjuntos`}: pedíselos a la familia.` : null,
-    ));
+    const fila = renglon(`${fecha(e.date)} · ${TIPOS_VIDA[e.kind] || 'Otro'} · ${e.title}`, e.notes);
+    const extra = adjuntos(e.paths, urls);
+    if (extra) {
+      fila.append(extra);
+    } else if (e.files) {
+      // Sin los enlaces (por ejemplo, sin conexión a la función): se avisa.
+      fila.append(el('p', `${e.files === 1 ? '1 adjunto' : `${e.files} adjuntos`}: pedíselos a la familia.`, 'ayuda'));
+    }
+    vida.append(fila);
   }
   document.getElementById('historial').hidden = false;
 }
@@ -118,7 +167,8 @@ async function iniciarHistorial() {
     if (!/^[A-Za-z0-9_-]{22}$/.test(token)) throw new Error('no_encontrado');
     const h = await rpc('historial_compartido', { p_token: token });
     if (!h) throw new Error('no_encontrado');
-    mostrar(h);
+    const conAdjuntos = h.life.some((e) => e.files);
+    mostrar(h, conAdjuntos ? await urlsDeAdjuntos(token) : {});
     registrarApertura();
   } catch (e) {
     if (e.message === 'no_encontrado') {

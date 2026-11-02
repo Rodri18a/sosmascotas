@@ -100,6 +100,7 @@ Páginas livianas en **HTML + JavaScript sin frameworks** (cargan rápido en cua
 | `order-status-alert` | Pedidos (3.2, D100): la app la llama después de pedir o de cambiar el estado; push a la otra parte según `avisar_pedido()` (una por pedido y estado). Valida la sesión. Registra `order_push` | 3.2 |
 | `care-alert` | Paseos y estadías (3.3, D115): la app la llama después de pedir, responder o cambiar el estado; push a la otra parte según `avisar_cuidado()` (una por pedido y estado; abre `/cuidados` o `/negocio?seccion=agenda`) | 3.3 ✅ |
 | `owner-alert` | Contacto inverso: aviso al dueño desde el QR o un SOS, con push "💬 …te dejó un mensaje" (abre `/avisos`; si la push no sale, el aviso queda igual en la bandeja). Con sesión (desde la app) no pide anti-bots; sin sesión, Turnstile (secreto `TURNSTILE_SECRET`; en dev, la clave de prueba de Cloudflare), límites 5/h por dispositivo y 10/h por destino, remitentes bloqueados | 0.4.4 ✅ |
+| `historial-adjuntos` | Historial compartido (D133): con un enlace vigente de `pet_shares`, devuelve enlaces firmados de 1 hora para los adjuntos del historial de vida de esa mascota (bucket privado `pet-records`). Sin sesión (`verify_jwt = false`); el token de 128 bits es la llave | 2.2 ✅ |
 
 ### Comercios cargados a mano (Fase 0)
 

@@ -100,3 +100,6 @@ h2 { font-family: "Nunito", sans-serif; font-weight: 800; font-size: 20px; margi
 h3 { font-size: 15px; margin: 12px 0 4px; color: var(--primario); }
 .renglon { border-top: 1px solid var(--borde); padding: 8px 0; }
 .renglon p { margin: 2px 0 0; }
+.adjuntos { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.adjunto { color: var(--primario); font-weight: 600; }
+.adjunto img { width: 96px; height: 96px; object-fit: cover; border-radius: 8px; display: block; }
