@@ -172,6 +172,7 @@ Tabla `events` (append-only), escrita por el cliente con `ref.read(metricasProvi
 | `news_open` / `news_link` | abrir una noticia y tocar "Leer más", con `patrocinada` (D83) |
 | `banner_open` | tocar un banner del carrusel de Inicio, con `patrocinado` (D128) |
 | `menu_open` / `pet_select` | se abre el menú ☰; se elige una mascota o "Todas" para filtrar (D88) |
+| `menu_item_open` | se toca una opción del menú ☰ (`item`: `mapa`, `adopcion`, `pedidos`…), para ver qué se usa (plan de mejoras 1.2) |
 | `tab_open` | se cambia de pestaña en la barra inferior, con `tab` (`noticias`, `sos`, `mapa`, `mascotas`, `ayuda`; D94) |
 | `unclaimed_open` | se abre la hoja de un lugar sin reclamar; `target_id` = una marca del grupo, `tipo` = rubro (D99) |
 | `tag_activate` / `tag_unlink` | el dueño activa una chapita física (con `origen`: `enlace` o `codigo`) o la desvincula (D95) |

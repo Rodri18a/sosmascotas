@@ -67,6 +67,9 @@ abstract final class Eventos {
   static const communityUnshare = 'community_unshare';
   static const newsReaction = 'news_reaction';
   static const menuOpen = 'menu_open';
+
+  /// Opción tocada en el menú ☰ (`item`: cuál), para ver qué se usa.
+  static const menuItemOpen = 'menu_item_open';
   static const tabOpen = 'tab_open';
   static const tagActivate = 'tag_activate';
   static const tagUnlink = 'tag_unlink';

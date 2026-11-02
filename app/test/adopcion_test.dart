@@ -85,6 +85,7 @@ void main() {
   ) async {
     await _abrir(tester, AdopcionFalsa(animales: const [_pelusa]));
     await abrirMenu(tester);
+    await bajarEnMenu(tester, find.text('Adoptar o dar en adopción'));
     await _tocar(tester, find.text('Adoptar o dar en adopción'));
     expect(find.text('Pelusa'), findsOneWidget);
     expect(

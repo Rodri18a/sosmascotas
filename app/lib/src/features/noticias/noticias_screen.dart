@@ -31,7 +31,10 @@ import 'carrusel_banners.dart';
 /// noticias y novedades se puede reaccionar (D87). Es la primera pestaña y
 /// la ve cualquiera; reaccionar pide ingresar (D94).
 class NoticiasScreen extends ConsumerStatefulWidget {
-  const NoticiasScreen({super.key});
+  const NoticiasScreen({super.key, this.comunidad = false});
+
+  /// Abre en Comunidad (con los próximos eventos), p. ej. desde el menú ☰.
+  final bool comunidad;
 
   @override
   ConsumerState<NoticiasScreen> createState() => _NoticiasScreenState();
@@ -43,7 +46,14 @@ class _NoticiasScreenState extends ConsumerState<NoticiasScreen> {
   int? _especie;
   bool _tocoChip = false;
 
-  bool _comunidad = false;
+  late bool _comunidad = widget.comunidad;
+
+  @override
+  void didUpdateWidget(NoticiasScreen anterior) {
+    super.didUpdateWidget(anterior);
+    // La pestaña queda armada: si se vuelve a entrar pidiendo Comunidad, se cambia.
+    if (widget.comunidad && !anterior.comunidad) _comunidad = true;
+  }
 
   @override
   void initState() {

@@ -5896,6 +5896,42 @@ abstract class AppLocalizations {
   /// **'Ver su ficha'**
   String get menuFicha;
 
+  /// No description provided for @menuGrupoMascotas.
+  ///
+  /// In es, this message translates to:
+  /// **'Mis mascotas'**
+  String get menuGrupoMascotas;
+
+  /// No description provided for @menuGrupoMapa.
+  ///
+  /// In es, this message translates to:
+  /// **'Mapa y lugares'**
+  String get menuGrupoMapa;
+
+  /// No description provided for @menuGrupoComunidad.
+  ///
+  /// In es, this message translates to:
+  /// **'Comunidad'**
+  String get menuGrupoComunidad;
+
+  /// No description provided for @menuGrupoAdopcion.
+  ///
+  /// In es, this message translates to:
+  /// **'Adopción'**
+  String get menuGrupoAdopcion;
+
+  /// No description provided for @menuGrupoTurnos.
+  ///
+  /// In es, this message translates to:
+  /// **'Turnos y pedidos'**
+  String get menuGrupoTurnos;
+
+  /// No description provided for @menuGrupoCuenta.
+  ///
+  /// In es, this message translates to:
+  /// **'Mi cuenta'**
+  String get menuGrupoCuenta;
+
   /// No description provided for @menuReportarPerdida.
   ///
   /// In es, this message translates to:

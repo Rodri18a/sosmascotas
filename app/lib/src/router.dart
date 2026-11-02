@@ -85,6 +85,9 @@ abstract final class Rutas {
 
   /// Donde abre la app y adonde se vuelve si no hay nada atrás: el muro (D127).
   static const inicio = noticias;
+
+  /// Inicio abierto en Comunidad, con los próximos eventos.
+  static const comunidad = '$noticias?seccion=comunidad';
   static const misPedidos = '/pedidos';
   static const miPlan = '/mi-plan';
   static const misTurnos = '/turnos';
@@ -313,7 +316,13 @@ final routerProvider = Provider<GoRouter>((ref) {
           // El orden es el de `Pestana` en la barra inferior (D94).
           StatefulShellBranch(
             routes: [
-              _pestana(Rutas.noticias, (_, _) => const NoticiasScreen()),
+              _pestana(
+                Rutas.noticias,
+                (_, state) => NoticiasScreen(
+                  comunidad:
+                      state.uri.queryParameters['seccion'] == 'comunidad',
+                ),
+              ),
             ],
           ),
           StatefulShellBranch(

@@ -16,9 +16,10 @@ import '../../router.dart';
 import '../../widgets/foto_mascota.dart';
 import '../../widgets/logo.dart';
 
-/// Menú ☰ de las pestañas (D88): mis datos, la mascota elegida (filtra
-/// Noticias, Comunidad y Adopción por su especie, con accesos a lo suyo) y
-/// el resto de las secciones. Cada opción respeta su funcionalidad gradual.
+/// Menú ☰ de las pestañas (D88): mis datos y todas las secciones en grupos
+/// con título (plan de mejoras 1.2). En Mis mascotas está la mascota elegida
+/// (filtra Noticias, Comunidad y Adopción por su especie, con accesos a lo
+/// suyo). Cada opción respeta su funcionalidad gradual.
 class MenuPrincipal extends ConsumerStatefulWidget {
   const MenuPrincipal({super.key});
 
@@ -34,11 +35,17 @@ class _MenuPrincipalState extends ConsumerState<MenuPrincipal> {
     ref.read(metricasProvider).track(Eventos.menuOpen);
   }
 
-  /// Cierra el menú y abre [ruta] encima de la pestaña.
-  void _ir(String ruta) {
+  /// Cierra el menú, anota qué se tocó y hace [accion].
+  void _tocar(String item, void Function() accion) {
+    ref
+        .read(metricasProvider)
+        .track(Eventos.menuItemOpen, props: {'item': item});
     Navigator.pop(context);
-    context.push(ruta);
+    accion();
   }
+
+  /// Abre [ruta] encima de la pestaña.
+  void _ir(String ruta) => context.push(ruta);
 
   @override
   Widget build(BuildContext context) {
@@ -50,11 +57,197 @@ class _MenuPrincipalState extends ConsumerState<MenuPrincipal> {
         : const <Mascota>[];
     final elegida = ref.watch(mascotaElegidaProvider);
 
-    Widget opcion(IconData icono, String texto, String ruta) => ListTile(
+    Widget opcion(
+      String item,
+      IconData icono,
+      String texto,
+      void Function() accion,
+    ) => ListTile(
       leading: Icon(icono),
       title: Text(texto),
-      onTap: () => _ir(ruta),
+      onTap: () => _tocar(item, accion),
     );
+    // Las pestañas se cambian; el resto se abre encima.
+    Widget pestana(String item, IconData icono, String texto, String ruta) =>
+        opcion(item, icono, texto, () => context.go(ruta));
+    Widget pantalla(String item, IconData icono, String texto, String ruta) =>
+        opcion(item, icono, texto, () => _ir(ruta));
+
+    // Grupos con título (paso 1.2 del plan de mejoras): todo a 2 toques.
+    // Un grupo sin opciones prendidas no se muestra.
+    final grupos = <(String, List<Widget>)>[
+      (
+        t.menuGrupoMascotas,
+        [
+          pestana(
+            'mascotas',
+            Icons.pets_outlined,
+            t.pestanaMascotas,
+            Rutas.mascotas,
+          ),
+          if (mascotas.isNotEmpty)
+            _ElegirMascota(mascotas: mascotas, elegida: elegida),
+          if (elegida != null) ...[
+            pantalla(
+              'ficha',
+              Icons.badge_outlined,
+              t.menuFicha,
+              Rutas.fichaMascota(elegida.id),
+            ),
+            pantalla(
+              'qr',
+              Icons.qr_code_2_outlined,
+              t.fichaQrTitulo,
+              Rutas.qrMascota(elegida.id),
+            ),
+            if (elegida.esDe(ref.watch(usuarioActualProvider).value?.id))
+              pantalla(
+                'reportar',
+                Icons.sos_outlined,
+                t.menuReportarPerdida,
+                Rutas.reportarMascota(elegida.id),
+              ),
+          ],
+        ],
+      ),
+      (
+        t.menuGrupoMapa,
+        [
+          pestana('mapa', Icons.map_outlined, t.pestanaMapa, Rutas.mapa),
+          if (activa(Funcionalidades.busqueda))
+            pantalla(
+              'buscar',
+              Icons.search_outlined,
+              t.buscarLugares,
+              Rutas.buscarLugares,
+            ),
+          if (conectado && activa(Funcionalidades.comercios))
+            pantalla(
+              'marcar_lugar',
+              Icons.add_location_alt_outlined,
+              t.marcarLugar,
+              Rutas.marcarLugar,
+            ),
+        ],
+      ),
+      (
+        t.menuGrupoComunidad,
+        [
+          pestana(
+            'inicio',
+            Icons.home_outlined,
+            t.noticiasTitulo,
+            Rutas.inicio,
+          ),
+          if (activa(Funcionalidades.eventos))
+            pestana(
+              'eventos',
+              Icons.event_outlined,
+              t.eventosProximos,
+              Rutas.comunidad,
+            ),
+          if (activa(Funcionalidades.grupos))
+            pantalla(
+              'grupos',
+              Icons.forum_outlined,
+              t.comunidadGrupos,
+              Rutas.grupos,
+            ),
+          if (conectado && activa(Funcionalidades.chat))
+            pantalla(
+              'mensajes',
+              Icons.chat_bubble_outline,
+              t.chatMensajes,
+              Rutas.chats,
+            ),
+          if (conectado)
+            pantalla(
+              'avisos',
+              Icons.notifications_outlined,
+              t.avisosTitulo,
+              Rutas.avisos,
+            ),
+        ],
+      ),
+      if (activa(Funcionalidades.adopcion))
+        (
+          t.menuGrupoAdopcion,
+          [
+            pantalla(
+              'adopcion',
+              Icons.volunteer_activism_outlined,
+              t.adopcionEntrada,
+              Rutas.adopcion,
+            ),
+            if (conectado)
+              pantalla(
+                'transito',
+                Icons.night_shelter_outlined,
+                t.transitoTitulo,
+                Rutas.hogarTransito,
+              ),
+          ],
+        ),
+      if (conectado)
+        (
+          t.menuGrupoTurnos,
+          [
+            if (activa(Funcionalidades.agenda))
+              pantalla(
+                'turnos',
+                Icons.event_available_outlined,
+                t.misTurnos,
+                Rutas.misTurnos,
+              ),
+            pantalla(
+              'pedidos',
+              Icons.shopping_bag_outlined,
+              t.misPedidos,
+              Rutas.misPedidos,
+            ),
+            if (activa(Funcionalidades.cuidados))
+              pantalla(
+                'cuidados',
+                Icons.directions_walk_outlined,
+                t.misCuidados,
+                Rutas.misCuidados,
+              ),
+          ],
+        ),
+      (
+        t.menuGrupoCuenta,
+        [
+          if (conectado && activa(Funcionalidades.comercios))
+            // En la web abre Huellitas Comercios (D129).
+            opcion(
+              'negocio',
+              Icons.storefront_outlined,
+              t.negocioMi,
+              () => irAMiNegocio(context, ref),
+            ),
+          if (conectado && activa(Funcionalidades.planesUsuario))
+            pantalla(
+              'mi_plan',
+              Icons.workspace_premium_outlined,
+              t.miPlanTitulo,
+              Rutas.miPlan,
+            ),
+          if (conectado && activa(Funcionalidades.hogar))
+            pantalla(
+              'hogar',
+              Icons.family_restroom_outlined,
+              t.ajustesHogar,
+              Rutas.hogar,
+            ),
+          pantalla(
+            'ajustes',
+            Icons.settings_outlined,
+            t.ajustes,
+            Rutas.ajustes,
+          ),
+        ],
+      ),
+    ];
 
     return Drawer(
       child: SafeArea(
@@ -69,79 +262,34 @@ class _MenuPrincipalState extends ConsumerState<MenuPrincipal> {
                 child: LogoHuellitas(horizontal: true, alto: 22),
               ),
             ),
-            _Cabecera(onIr: _ir),
-            if (mascotas.isNotEmpty) ...[
-              const Divider(),
-              _ElegirMascota(mascotas: mascotas, elegida: elegida),
-              if (elegida != null) ...[
-                opcion(
-                  Icons.badge_outlined,
-                  t.menuFicha,
-                  Rutas.fichaMascota(elegida.id),
-                ),
-                opcion(
-                  Icons.qr_code_2_outlined,
-                  t.fichaQrTitulo,
-                  Rutas.qrMascota(elegida.id),
-                ),
-                if (elegida.esDe(ref.watch(usuarioActualProvider).value?.id))
-                  opcion(
-                    Icons.sos_outlined,
-                    t.menuReportarPerdida,
-                    Rutas.reportarMascota(elegida.id),
-                  ),
+            _Cabecera(onIr: (ruta) => _tocar('perfil', () => _ir(ruta))),
+            for (final (titulo, opciones) in grupos)
+              if (opciones.isNotEmpty) ...[
+                const Divider(),
+                _TituloGrupo(titulo),
+                ...opciones,
               ],
-            ],
-            const Divider(),
-            if (activa(Funcionalidades.adopcion))
-              opcion(
-                Icons.volunteer_activism_outlined,
-                t.adopcionEntrada,
-                Rutas.adopcion,
-              ),
-            if (conectado) ...[
-              if (activa(Funcionalidades.chat))
-                opcion(Icons.chat_bubble_outline, t.chatMensajes, Rutas.chats),
-              opcion(
-                Icons.notifications_outlined,
-                t.avisosTitulo,
-                Rutas.avisos,
-              ),
-              if (activa(Funcionalidades.hogar))
-                opcion(
-                  Icons.family_restroom_outlined,
-                  t.ajustesHogar,
-                  Rutas.hogar,
-                ),
-              opcion(
-                Icons.shopping_bag_outlined,
-                t.misPedidos,
-                Rutas.misPedidos,
-              ),
-              if (activa(Funcionalidades.agenda))
-                opcion(
-                  Icons.event_available_outlined,
-                  t.misTurnos,
-                  Rutas.misTurnos,
-                ),
-              if (activa(Funcionalidades.cuidados))
-                opcion(Icons.pets_outlined, t.misCuidados, Rutas.misCuidados),
-              if (activa(Funcionalidades.grupos))
-                opcion(Icons.forum_outlined, t.comunidadGrupos, Rutas.grupos),
-              if (activa(Funcionalidades.comercios))
-                // En la web abre Huellitas Comercios (D129).
-                ListTile(
-                  leading: const Icon(Icons.storefront_outlined),
-                  title: Text(t.negocioMi),
-                  onTap: () {
-                    Navigator.pop(context);
-                    irAMiNegocio(context, ref);
-                  },
-                ),
-            ],
-            const Divider(),
-            opcion(Icons.settings_outlined, t.ajustes, Rutas.ajustes),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _TituloGrupo extends StatelessWidget {
+  const _TituloGrupo(this.texto);
+
+  final String texto;
+
+  @override
+  Widget build(BuildContext context) {
+    final tema = Theme.of(context);
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
+      child: Text(
+        texto,
+        style: tema.textTheme.titleSmall?.copyWith(
+          color: tema.colorScheme.primary,
         ),
       ),
     );

@@ -294,3 +294,17 @@ Future<void> abrirMenu(WidgetTester tester) async {
   await tester.tap(find.byIcon(Icons.menu).last);
   await tester.pumpAndSettle();
 }
+
+/// Baja en el menú ☰ hasta que se vea [objetivo] (el menú es largo: las
+/// opciones de abajo se arman recién al llegar).
+Future<void> bajarEnMenu(WidgetTester tester, Finder objetivo) async {
+  await tester.scrollUntilVisible(
+    objetivo,
+    200,
+    scrollable: find.descendant(
+      of: find.byType(Drawer),
+      matching: find.byType(Scrollable),
+    ),
+  );
+  await tester.pumpAndSettle();
+}

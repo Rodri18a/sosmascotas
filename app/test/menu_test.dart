@@ -77,9 +77,9 @@ void main() {
       findsNothing,
       reason: 'es una pestaña (D94)',
     );
-    expect(find.text('Adoptar o dar en adopción'), findsOneWidget);
+    await bajarEnMenu(tester, find.text('Adoptar o dar en adopción'));
     expect(find.text('Avisos'), findsNothing, reason: 'necesita cuenta');
-    expect(find.text('Ajustes'), findsWidgets);
+    await bajarEnMenu(tester, find.text('Ajustes'));
   });
 
   testWidgets('con cuenta: mis datos y elegir una mascota', (tester) async {
@@ -136,5 +136,60 @@ void main() {
     await _tocar(tester, find.text('Ver su ficha'));
     expect(find.byType(Drawer), findsNothing);
     expect(find.text('Toby'), findsWidgets);
+  });
+
+  testWidgets('las secciones van en grupos con título (1.2)', (tester) async {
+    await _abrir(tester);
+    final enMenu = find.descendant(
+      of: find.byType(Drawer),
+      matching: find.text('Mapa'),
+    );
+    expect(enMenu, findsOneWidget);
+    for (final texto in [
+      'Mapa y lugares',
+      'Comunidad',
+      'Adopción',
+      'Hogar de tránsito',
+      'Turnos y pedidos',
+      'Mis pedidos',
+      'Mi cuenta',
+    ]) {
+      await bajarEnMenu(
+        tester,
+        find.descendant(of: find.byType(Drawer), matching: find.text(texto)),
+      );
+    }
+    expect(
+      find.text('Próximos eventos'),
+      findsNothing,
+      reason: 'la funcionalidad de eventos está apagada',
+    );
+  });
+
+  testWidgets('un visitante no ve los grupos que piden cuenta', (tester) async {
+    await _abrir(tester, visitante: true);
+    await bajarEnMenu(tester, find.text('Ajustes'));
+    expect(find.text('Mi cuenta'), findsOneWidget, reason: 'tiene Ajustes');
+    expect(find.text('Turnos y pedidos'), findsNothing);
+    expect(find.text('Hogar de tránsito'), findsNothing);
+    expect(find.text('Mensajes'), findsNothing);
+  });
+
+  testWidgets('tocar Mapa cambia de pestaña y anota la opción', (tester) async {
+    final metricas = <Map<String, Object?>>[];
+    await _abrir(tester, metricas: metricas);
+    await _tocar(
+      tester,
+      find.descendant(of: find.byType(Drawer), matching: find.text('Mapa')),
+    );
+    expect(find.byType(Drawer), findsNothing);
+    expect(
+      metricas
+          .where((e) => e['name'] == 'menu_item_open')
+          .map((e) => e['props']),
+      [
+        {'item': 'mapa'},
+      ],
+    );
   });
 }
