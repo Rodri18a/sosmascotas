@@ -419,6 +419,35 @@ class RepoFalso implements AdminRepositorio {
   final bannersGuardados = <Map<String, Object?>>[];
   final bannersSubidos = <(int, String)>[];
 
+  final espaciosPedidos = <int>[];
+
+  @override
+  Future<List<Map<String, Object?>>> espacios(int dias) async {
+    espaciosPedidos.add(dias);
+    return [
+      {
+        'tipo': 'promo',
+        'id': 'p1',
+        'titulo': '10% en alimento',
+        'de_quien': 'Pet Shop Pando',
+        'estado': 'active',
+        'vistas': 200,
+        'personas': 150,
+        'toques': 12,
+      },
+      {
+        'tipo': 'banner',
+        'id': 'b1',
+        'titulo': 'Jornada de adopción',
+        'de_quien': null,
+        'estado': 'published',
+        'vistas': 0,
+        'personas': 0,
+        'toques': 0,
+      },
+    ];
+  }
+
   @override
   Future<List<Map<String, Object?>>> banners() async => [
     {
@@ -1714,5 +1743,22 @@ void main() {
     );
     await _tocar(tester, find.text('Ver en Google Maps'));
     expect(enlaces.single, contains('query=-34.72%2C-55.95'));
+  });
+
+  testWidgets('espacios: vistas y toques de promociones y banners (3.2)', (
+    tester,
+  ) async {
+    _pantallaGrande(tester);
+    final repo = RepoFalso();
+    await tester.pumpWidget(
+      _portal(sesion: SesionFalsa('admin@x.uy'), repo: repo),
+    );
+    await _tocar(tester, find.text('Espacios'));
+    expect(find.text('10% en alimento'), findsOneWidget);
+    expect(find.text('Pet Shop Pando'), findsOneWidget);
+    expect(find.text('6.0 %'), findsOneWidget);
+    expect(find.text('Jornada de adopción'), findsOneWidget);
+    await _tocar(tester, find.text('90 días'));
+    expect(repo.espaciosPedidos, [30, 90]);
   });
 }

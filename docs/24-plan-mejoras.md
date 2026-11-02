@@ -75,7 +75,7 @@ Ninguna función pasa de 3 toques. La prueba con 3 personas está en [la guía](
 | Paso | Qué |
 |---|---|
 | 3.1 | **Promociones en el muro:** los comercios Destacado y Plus publican su promo, que aparece marcada «Promocionado» y por zona; se miden vistas y toques en las estadísticas del comercio. ✅ 02/11/2026 (D136): una cada 4 noticias, hasta 3, a 15 km, rotando; panel → Negocio y Estadísticas |
-| 3.2 | **Espacios de publicidad:** una tarjeta promocionada cada tantas publicaciones; nunca en las pantallas de SOS ni en la página del QR |
+| 3.2 | **Espacios de publicidad:** una tarjeta promocionada cada tantas publicaciones; nunca en las pantallas de SOS ni en la página del QR. ✅ 02/11/2026 (D137): también en Comunidad y Preguntas, banners con vistas y portal → Espacios |
 | 3.3 | **Gamificación simple:** «Tus huellas» (contador de ayudas e insignias por perfil completo, libreta al día, avisos compartidos, respuestas útiles), sin rankings públicos de personas |
 
 ### Etapa 4 · Servicios avanzados (Fase 4)

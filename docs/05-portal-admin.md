@@ -30,6 +30,9 @@ Acceso: solo usuarios con rol `admin`, verificado en el servidor (RLS y claims),
 - Acciones: aprobar (vuelve a mostrarse), eliminar, advertir, bloquear al usuario.
 - Historial de cada usuario (reportes recibidos, sanciones).
 
+### Espacios de publicidad (3.2, D137)
+- Sección **Espacios** (administración y ventas): vistas, personas y toques de cada promoción del muro y de cada banner del carrusel en los últimos 7, 30 o 90 días, con la tasa de toques. Sirve para vender y para rendirle cuentas a cada patrocinador (`admin_espacios(dias)`).
+
 ### 3. Empresas — Fase 1
 - Solicitudes de **verificación** (RUT y comprobante) → otorgar o quitar la insignia ✔️.
 - **Reclamos** de lugares sin reclamar: aprobar o rechazar.

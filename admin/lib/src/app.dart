@@ -8,6 +8,7 @@ import 'pantallas/chapitas.dart';
 import 'pantallas/comercios.dart';
 import 'pantallas/denuncias.dart';
 import 'pantallas/equipo.dart';
+import 'pantallas/espacios.dart';
 import 'pantallas/grupos.dart';
 import 'pantallas/ingreso.dart';
 import 'pantallas/lugares.dart';
@@ -133,6 +134,7 @@ class _PortalState extends ConsumerState<Portal> {
     (Icons.verified_outlined, T.comercios, ComerciosScreen(), {}),
     (Icons.handshake_outlined, T.prospectos, ProspectosScreen(), {'sales'}),
     (Icons.description_outlined, T.propuestas, PropuestasScreen(), {'sales'}),
+    (Icons.campaign_outlined, T.espacios, EspaciosScreen(), {'sales'}),
     (Icons.payments_outlined, T.planesCobros, PlanesScreen(), {}),
     (Icons.volunteer_activism_outlined, T.ayuda, AyudaScreen(), {}),
     (Icons.newspaper_outlined, T.noticias, NoticiasScreen(), {}),

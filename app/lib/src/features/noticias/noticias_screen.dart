@@ -476,7 +476,27 @@ class _Comunidad extends ConsumerWidget {
                   )
                 : Column(
                     children: [
-                      for (final n in lista) TarjetaNovedad(novedad: n),
+                      // Una promoción cada 6 novedades (3.2, D137).
+                      for (final x in intercalarPromociones(
+                        lista,
+                        ref.watch(
+                              funcionalidadActivaProvider(
+                                Funcionalidades.promociones,
+                              ),
+                            )
+                            ? ref.watch(promocionesCercaProvider).value ??
+                                  const <Promocion>[]
+                            : const <Promocion>[],
+                        cada: 6,
+                      ))
+                        switch (x) {
+                          final Promocion p => TarjetaPromocion(
+                            key: ValueKey('promo-c-${p.id}'),
+                            promocion: p,
+                          ),
+                          final Novedad n => TarjetaNovedad(novedad: n),
+                          _ => const SizedBox.shrink(),
+                        },
                     ],
                   );
           }(),

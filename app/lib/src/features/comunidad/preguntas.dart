@@ -4,11 +4,14 @@ import 'package:go_router/go_router.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
+import '../../comercios/promociones_repositorio.dart';
 import '../../comunidad/comunidad_repositorio.dart';
 import '../../cuenta/con_cuenta.dart';
+import '../../funcionalidades/funcionalidades_activas.dart';
 import '../../metricas/metricas.dart';
 import '../../router.dart';
 import '../../widgets/volver.dart';
+import '../noticias/tarjeta_promocion.dart';
 import 'comunidad_screen.dart' show textoErrorComunidad;
 
 String textoTema(AppLocalizations t, TemaPregunta tema) => switch (tema) {
@@ -169,28 +172,46 @@ class _PreguntasScreenState extends ConsumerState<PreguntasScreen> {
               ),
               AsyncData(value: final ps) => Column(
                 children: [
-                  for (final p in ps)
-                    ListTile(
-                      leading: Icon(
-                        iconoTema(p.tema ?? TemaPregunta.otros),
-                        color: tema.colorScheme.primary,
+                  // Una promoción cada 8 preguntas (3.2, D137).
+                  for (final x in intercalarPromociones(
+                    ps,
+                    ref.watch(
+                          funcionalidadActivaProvider(
+                            Funcionalidades.promociones,
+                          ),
+                        )
+                        ? ref.watch(promocionesCercaProvider).value ??
+                              const <Promocion>[]
+                        : const <Promocion>[],
+                    cada: 8,
+                  ))
+                    if (x case final Promocion promo)
+                      TarjetaPromocion(
+                        key: ValueKey('promo-p-${promo.id}'),
+                        promocion: promo,
+                      )
+                    else if (x case final Publicacion p)
+                      ListTile(
+                        leading: Icon(
+                          iconoTema(p.tema ?? TemaPregunta.otros),
+                          color: tema.colorScheme.primary,
+                        ),
+                        title: Text(
+                          p.texto,
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        subtitle: Text(
+                          [
+                            if (p.tema case final tm?) textoTema(t, tm),
+                            t.preguntasRespuestas(p.cantidadComentarios),
+                            if (p.resuelta) '✓ ${t.preguntasResuelta}',
+                            if (p.conProfesional) t.preguntasConProfesional,
+                          ].join(' · '),
+                        ),
+                        onTap: () =>
+                            context.push(Rutas.publicacionComunidad(p.id)),
                       ),
-                      title: Text(
-                        p.texto,
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      subtitle: Text(
-                        [
-                          if (p.tema case final tm?) textoTema(t, tm),
-                          t.preguntasRespuestas(p.cantidadComentarios),
-                          if (p.resuelta) '✓ ${t.preguntasResuelta}',
-                          if (p.conProfesional) t.preguntasConProfesional,
-                        ].join(' · '),
-                      ),
-                      onTap: () =>
-                          context.push(Rutas.publicacionComunidad(p.id)),
-                    ),
                 ],
               ),
               AsyncError() => Padding(

@@ -5,6 +5,7 @@ import 'package:sosmascota/src/router.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'comercios_falsos.dart';
+import 'comunidad_falsa.dart';
 import 'cuenta_falsa.dart';
 import 'funcionalidades_falsas.dart';
 import 'helpers.dart';
@@ -194,5 +195,77 @@ void main() {
     );
     expect(find.textContaining('Con Destacado o Plus'), findsOneWidget);
     expect(find.text('Nueva promoción'), findsNothing);
+  });
+
+  testWidgets('en Preguntas sale una cada 8 (3.2)', (tester) async {
+    tester.view
+      ..physicalSize = const Size(1080, 2400)
+      ..devicePixelRatio = 3;
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(
+      appDePrueba(
+        inicio: Rutas.preguntas,
+        cuenta: ServicioCuentaFalso(conectado: _ana),
+        promociones: PromocionesFalsas(cerca: [_promo]),
+        comunidad: ComunidadFalsa(
+          publicaciones: [
+            for (var i = 0; i < 9; i++)
+              Publicacion(
+                id: 'q$i',
+                tipo: TipoPublicacion.pregunta,
+                texto: 'Pregunta $i',
+                creada: DateTime(2026, 11, 1, 10 - i),
+                tema: TemaPregunta.salud,
+              ),
+          ],
+        ),
+        funcionalidades: FuncionalidadesFalsas({
+          Funcionalidades.grupos,
+          Funcionalidades.preguntas,
+          Funcionalidades.promociones,
+        }),
+      ),
+    );
+    await tester.pumpAndSettle();
+    final etiqueta = find.text('Promocionado · Pet Shop Pando');
+    await tester.scrollUntilVisible(
+      etiqueta,
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
+    expect(etiqueta, findsOneWidget);
+    expect(
+      tester.getTopLeft(etiqueta).dy,
+      greaterThan(tester.getTopLeft(find.text('Pregunta 7')).dy),
+    );
+  });
+
+  testWidgets('la vista de un banner se cuenta una vez, con su id (3.2)', (
+    tester,
+  ) async {
+    tester.view
+      ..physicalSize = const Size(1080, 2400)
+      ..devicePixelRatio = 3;
+    addTearDown(tester.view.reset);
+    final eventos = <Map<String, Object?>>[];
+    await tester.pumpWidget(
+      appDePrueba(
+        inicio: Rutas.inicio,
+        noticias: NoticiasFalsas(
+          _noticias,
+          const [],
+          const ResumenComunidad(),
+          const [BannerInicio(id: 'bn1', titulo: 'Jornada', imagen: 'a.png')],
+        ),
+        eventos: eventos,
+        funcionalidades: FuncionalidadesFalsas({Funcionalidades.noticias}),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.pump(const Duration(seconds: 4));
+    await tester.pumpAndSettle();
+    final vistas = eventos.where((e) => e['name'] == 'banner_view').toList();
+    expect(vistas, hasLength(1));
+    expect(vistas.single['target_id'], 'bn1');
   });
 }

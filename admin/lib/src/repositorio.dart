@@ -143,6 +143,9 @@ abstract interface class AdminRepositorio {
   /// Banners del carrusel de Inicio (D128): todos, también borradores y ocultos.
   Future<List<Map<String, Object?>>> banners();
 
+  /// Vistas y toques de promociones y banners (3.2, D137).
+  Future<List<Map<String, Object?>>> espacios(int dias);
+
   /// Crea (sin `id`) o actualiza un banner.
   Future<void> guardarBanner(Map<String, Object?> datos);
 
@@ -560,6 +563,14 @@ class SupabaseAdminRepositorio implements AdminRepositorio {
       _filas(await _cliente.rpc<List<dynamic>>('admin_banners'));
 
   @override
+  Future<List<Map<String, Object?>>> espacios(int dias) async => _filas(
+    await _cliente.rpc<List<dynamic>>(
+      'admin_espacios',
+      params: {'p_dias': dias},
+    ),
+  );
+
+  @override
   Future<void> guardarBanner(Map<String, Object?> datos) =>
       _cliente.rpc<String>('admin_guardar_banner', params: {'p': datos});
 
@@ -868,6 +879,10 @@ final denunciasProvider = FutureProvider<List<Map<String, Object?>>>(
 
 final noticiasProvider = FutureProvider<List<Map<String, Object?>>>(
   (ref) => ref.watch(adminRepositorioProvider).noticias(),
+);
+
+final espaciosProvider = FutureProvider.family<List<Map<String, Object?>>, int>(
+  (ref, dias) => ref.watch(adminRepositorioProvider).espacios(dias),
 );
 
 final bannersProvider = FutureProvider<List<Map<String, Object?>>>(

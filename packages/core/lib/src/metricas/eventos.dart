@@ -63,6 +63,9 @@ abstract final class Eventos {
   static const newsOpen = 'news_open';
   static const newsLink = 'news_link';
   static const bannerOpen = 'banner_open';
+
+  /// Un banner del carrusel se vio (una vez por sesión, `target_id`, D137).
+  static const bannerView = 'banner_view';
   static const communityShare = 'community_share';
   static const communityUnshare = 'community_unshare';
   static const newsReaction = 'news_reaction';

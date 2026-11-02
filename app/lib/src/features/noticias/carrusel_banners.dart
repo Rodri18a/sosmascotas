@@ -32,6 +32,9 @@ class CarruselBanners extends ConsumerWidget {
       };
 }
 
+/// Banners ya vistos en esta sesión (la vista se cuenta una sola vez).
+final bannersVistosProvider = Provider<Set<String>>((ref) => <String>{});
+
 class _Carrusel extends ConsumerStatefulWidget {
   const _Carrusel({required this.banners});
 
@@ -59,6 +62,22 @@ class _CarruselState extends ConsumerState<_Carrusel> {
   void initState() {
     super.initState();
     _timer = Timer.periodic(intervalo, (_) => _pasar());
+    _visto(0);
+  }
+
+  /// Una vista por sesión y por banner, para el informe de Espacios (D137).
+  void _visto(int indice) {
+    if (_cantidad == 0) return;
+    final b = widget.banners[indice % _cantidad];
+    if (ref.read(bannersVistosProvider).add(b.id)) {
+      ref
+          .read(metricasProvider)
+          .track(
+            Eventos.bannerView,
+            targetId: b.id,
+            props: {'patrocinado': b.patrocinado},
+          );
+    }
   }
 
   @override
@@ -86,7 +105,11 @@ class _CarruselState extends ConsumerState<_Carrusel> {
   Future<void> _abrir(BannerInicio b) async {
     ref
         .read(metricasProvider)
-        .track(Eventos.bannerOpen, props: {'patrocinado': b.patrocinado});
+        .track(
+          Eventos.bannerOpen,
+          targetId: b.id,
+          props: {'patrocinado': b.patrocinado},
+        );
     if (b.enlace case final enlace?) {
       await ref.read(abrirEnlaceProvider)(Uri.parse(enlace));
       return;
@@ -118,7 +141,10 @@ class _CarruselState extends ConsumerState<_Carrusel> {
               borderRadius: BorderRadius.circular(16),
               child: PageView.builder(
                 controller: _paginas,
-                onPageChanged: (i) => setState(() => _actual = i % _cantidad),
+                onPageChanged: (i) {
+                  setState(() => _actual = i % _cantidad);
+                  _visto(i);
+                },
                 // Con uno solo no se desliza.
                 itemCount: _cantidad < 2 ? 1 : null,
                 itemBuilder: (context, i) {

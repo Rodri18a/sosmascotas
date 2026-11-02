@@ -299,6 +299,8 @@ def main():
                                    'title': 'Promo', 'body': 'Detalle', 'dias': 7}}, a)))
         caso('un visitante ve las promociones cerca (sin datos de nadie)',
              rest('POST', 'rpc/promociones_cerca', {'p_lat': -34.72, 'p_lng': -55.96})[0] == 200)
+        caso('A no ve el informe de espacios (solo ventas y administración)',
+             rechazado(rest('POST', 'rpc/admin_espacios', {'p_dias': 30}, a)))
         caso('un visitante no puede reportar promociones',
              rechazado(rest('POST', 'flags', {'target_type': 'promo',
                                               'target_id': '00000000-0000-0000-0000-000000000000'})))

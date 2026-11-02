@@ -183,6 +183,7 @@ Tabla `events` (append-only), escrita por el cliente con `ref.read(metricasProvi
 | `question_create` / `question_search` / `question_answer` / `question_solved` | se hace una pregunta (`topic`), se busca (`topic` si hay filtro), se responde y quien preguntó marca la respuesta que le sirvió (D134) |
 | `professional_answer_mark` | una veterinaria verificada firma su respuesta (D135) |
 | `promo_view` / `promo_click` / `promo_create` / `promo_report` | promoción del muro: se vio (una vez por sesión), se tocó, el comercio la publicó, la reportaron; con `business_id` y `target_id`, y las dos primeras suman a `daily_stats` (D136) |
+| `banner_view` | un banner del carrusel se vio (una vez por sesión, `target_id` = banner; `banner_open` también lleva el `target_id`) (D137) |
 | `tab_open` | se cambia de pestaña en la barra inferior, con `tab` (`noticias`, `sos`, `mapa`, `mascotas`, `ayuda`; D94) |
 | `unclaimed_open` | se abre la hoja de un lugar sin reclamar; `target_id` = una marca del grupo, `tipo` = rubro (D99) |
 | `tag_activate` / `tag_unlink` | el dueño activa una chapita física (con `origen`: `enlace` o `codigo`) o la desvincula (D95) |

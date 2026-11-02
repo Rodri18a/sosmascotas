@@ -75,6 +75,29 @@ abstract final class T {
   static const comentario = 'Comentario de un grupo';
   static const promocionMuro = 'Promoción del muro';
 
+  // Espacios de publicidad (3.2, D137).
+  static const espacios = 'Espacios';
+  static const espaciosAyuda =
+      'Vistas, personas y toques de las promociones del muro y de los banners del carrusel. '
+      'Una vista se cuenta una vez por sesión. Sirve para vender y para rendirle cuentas a cada patrocinador.';
+  static String ultimosDias(int d) => '$d días';
+  static const sinEspacios =
+      'Todavía no hay promociones ni banners en este período.';
+  static const tituloEspacio = 'Título';
+  static const deQuien = 'Comercio o marca';
+  static const vistas = 'Vistas';
+  static const personas = 'Personas';
+  static const toques = 'Toques';
+  static const tasaToques = 'Toques / vistas';
+  static const banner = 'Banner';
+  static const estadosEspacio = {
+    'active': 'Vigente',
+    'published': 'Publicado',
+    'ended': 'Terminada',
+    'hidden': 'Oculta',
+    'draft': 'Borrador',
+  };
+
   // Grupos de la comunidad (3.4, D116)
   static const grupos = 'Grupos';
   static const nuevoGrupo = 'Nuevo grupo';
