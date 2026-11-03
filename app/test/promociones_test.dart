@@ -24,6 +24,17 @@ final _noticias = [
     ),
 ];
 
+final _novedades = [
+  for (var i = 0; i < 7; i++)
+    Novedad(
+      id: 'c$i',
+      tipo: TipoNovedad.comercio,
+      fecha: DateTime(2026, 11, 1, 10 - i),
+      nombre: 'Lugar $i',
+      detalle: 'vet',
+    ),
+];
+
 const _promo = Promocion(
   id: 'p1',
   negocioId: 'b9',
@@ -61,7 +72,7 @@ Future<List<Map<String, Object?>>> _abrir(
     appDePrueba(
       inicio: inicio,
       cuenta: ServicioCuentaFalso(conectado: _ana),
-      noticias: NoticiasFalsas(_noticias),
+      noticias: NoticiasFalsas(_noticias, _novedades),
       promociones: promociones,
       negocios: negocios,
       eventos: eventos,
@@ -106,10 +117,12 @@ void main() {
     );
     expect(etiqueta, findsOneWidget);
     expect(find.text('10% en alimento'), findsOneWidget);
-    // Va después de la cuarta noticia.
+    // En Inicio va después de la sexta novedad de la Comunidad (D139).
     expect(
       tester.getTopLeft(etiqueta).dy,
-      greaterThan(tester.getTopLeft(find.text('Noticia 3')).dy),
+      greaterThan(
+        tester.getTopLeft(find.text('Nuevo lugar verificado: Lugar 5')).dy,
+      ),
     );
     final vistas = eventos.where((e) => e['name'] == 'promo_view').toList();
     expect(vistas, hasLength(1));

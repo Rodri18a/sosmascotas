@@ -331,10 +331,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               _pestana(
                 Rutas.noticias,
-                (_, state) => NoticiasScreen(
-                  comunidad:
-                      state.uri.queryParameters['seccion'] == 'comunidad',
-                ),
+                (_, _) => const NoticiasScreen(),
               ),
             ],
           ),

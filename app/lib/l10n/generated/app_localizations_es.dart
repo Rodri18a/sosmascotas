@@ -3461,7 +3461,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String menuElegidaAyuda(String nombre) {
-    return 'Noticias y adopción se muestran para la especie de $nombre.';
+    return 'La adopción se muestra para la especie de $nombre.';
   }
 
   @override
@@ -3530,14 +3530,14 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get recCarruselTexto =>
-      'Novedades y promociones de la zona. Tocá una para ver más.';
+      'Noticias y promociones de la zona. Tocá una para ver más.';
 
   @override
-  String get recSeccionesTitulo => 'Noticias y Comunidad';
+  String get recSeccionesTitulo => 'Comunidad';
 
   @override
   String get recSeccionesTexto =>
-      'Noticias para cuidar a tu mascota, y lo que pasa cerca: eventos, perdidos y reencuentros.';
+      'Lo que pasa cerca: reencuentros, adopciones, perdidos que se siguen buscando y lugares nuevos.';
 
   @override
   String get recBarraTitulo => 'Lo principal, abajo';

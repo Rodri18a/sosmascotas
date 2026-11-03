@@ -75,7 +75,7 @@ void main() {
     expect(find.text('Cómo llegar'), findsOneWidget);
   });
 
-  testWidgets('Noticias → Comunidad: próximos eventos, para todos', (
+  testWidgets('Inicio: próximos eventos, para todos', (
     tester,
   ) async {
     tester.view
@@ -89,7 +89,6 @@ void main() {
     await _ir(tester, '/ayuda');
     expect(find.text('Próximos eventos'), findsNothing, reason: 'D94');
     await _ir(tester, '/noticias');
-    await _tocar(tester, find.text('Comunidad'));
     expect(find.text('Próximos eventos'), findsOneWidget);
     await _tocar(tester, find.text('Jornada de castración'));
     expect(find.text('Organiza: Veterinaria Centro'), findsOneWidget);

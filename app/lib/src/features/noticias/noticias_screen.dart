@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
@@ -9,9 +11,6 @@ import '../../cuenta/con_cuenta.dart';
 import '../../cuenta/servicio_cuenta.dart';
 import '../../eventos/eventos_repositorio.dart';
 import '../../funcionalidades/funcionalidades_activas.dart';
-import '../../mascotas/catalogo.dart';
-import '../../mascotas/mascota_elegida.dart';
-import '../../mascotas/mascotas_repositorio.dart';
 import '../../metricas/metricas.dart';
 import '../../noticias/noticias_repositorio.dart';
 import '../../recorrido/pasos.dart';
@@ -27,71 +26,38 @@ import '../sos/sos_detalle_screen.dart';
 import 'carrusel_banners.dart';
 import 'tarjeta_promocion.dart';
 
-/// Noticias (2.8, D83): filtradas por las especies de mis mascotas, con las
-/// patrocinadas siempre marcadas "Promocionado · «marca»". La sección
-/// Comunidad (D86) muestra lo que pasa en la app: reencuentros, adopciones,
-/// lugares verificados, eventos y las perdidas que se siguen buscando. A las
-/// noticias y novedades se puede reaccionar (D87). Es la primera pestaña y
-/// la ve cualquiera; reaccionar pide ingresar (D94).
+/// Inicio (D139): arriba, el carrusel de banners que maneja la
+/// administración (D128; un banner puede abrir una noticia) y, abajo, la
+/// Comunidad (D86): próximos eventos, el resumen de los últimos 30 días y lo
+/// que pasa en la app (reencuentros, adopciones, lugares verificados, eventos
+/// y las perdidas que se siguen buscando), sin filtros. A las novedades se
+/// puede reaccionar (D87). Es la primera pestaña y la ve cualquiera;
+/// reaccionar pide ingresar (D94).
 class NoticiasScreen extends ConsumerStatefulWidget {
-  const NoticiasScreen({super.key, this.comunidad = false});
-
-  /// Abre en Comunidad (con los próximos eventos), p. ej. desde el menú ☰.
-  final bool comunidad;
+  const NoticiasScreen({super.key});
 
   @override
   ConsumerState<NoticiasScreen> createState() => _NoticiasScreenState();
 }
 
 class _NoticiasScreenState extends ConsumerState<NoticiasScreen> {
-  /// Especie elegida en los chips; `null` = "Todas". Hasta tocar uno, manda
-  /// la mascota elegida en el menú (D88).
-  int? _especie;
-  bool _tocoChip = false;
-
-  late bool _comunidad = widget.comunidad;
-
-  @override
-  void didUpdateWidget(NoticiasScreen anterior) {
-    super.didUpdateWidget(anterior);
-    // La pestaña queda armada: si se vuelve a entrar pidiendo Comunidad, se cambia.
-    if (widget.comunidad && !anterior.comunidad) _comunidad = true;
-  }
-
   @override
   void initState() {
     super.initState();
-    // Los totales de reacciones se traen de a tanda, al llegar cada lista.
-    ref
-      ..listenManual(noticiasProvider, (_, s) {
-        if (s.value case final lista?) {
-          ref.read(reaccionesProvider.notifier).cargar([
-            for (final n in lista) n.id,
-          ]);
-        }
-      }, fireImmediately: true)
-      ..listenManual(novedadesProvider, (_, s) {
-        if (s.value case final lista?) {
-          ref.read(reaccionesProvider.notifier).cargar([
-            for (final n in lista)
-              if (n.admiteReacciones) n.id,
-          ]);
-        }
-      }, fireImmediately: true);
+    // Los totales de reacciones se traen de a tanda, al llegar la lista.
+    ref.listenManual(novedadesProvider, (_, s) {
+      if (s.value case final lista?) {
+        ref.read(reaccionesProvider.notifier).cargar([
+          for (final n in lista)
+            if (n.admiteReacciones) n.id,
+        ]);
+      }
+    }, fireImmediately: true);
   }
 
   @override
   Widget build(BuildContext context) {
     final t = context.t;
-    final mascotas = ref.watch(misMascotasProvider).value ?? const <Mascota>[];
-    final especies = ref.watch(especiesProvider).value ?? const <Especie>[];
-    final mias = [
-      for (final e in especies)
-        if (mascotas.any((m) => m.especieId == e.id)) e,
-    ];
-    final especie = _tocoChip ? _especie : ref.watch(especieElegidaProvider);
-    final filtro = especie == null ? const <int>{} : {especie};
-
     return ZonaRecorrido(
       pantalla: PantallaRecorrido.inicio,
       pasos: PasosRecorrido.inicio,
@@ -107,140 +73,23 @@ class _NoticiasScreenState extends ConsumerState<NoticiasScreen> {
             ref
               ..invalidate(reaccionesProvider)
               ..invalidate(bannersProvider)
-              ..invalidate(promocionesCercaProvider);
-            if (_comunidad) {
-              ref
-                ..invalidate(novedadesProvider)
-                ..invalidate(resumenComunidadProvider)
-                ..invalidate(eventosCercanosProvider);
-              await ref.read(novedadesProvider.future);
-            } else {
-              ref.invalidate(noticiasProvider);
-              await ref.read(noticiasProvider.future);
-            }
+              ..invalidate(promocionesCercaProvider)
+              ..invalidate(novedadesProvider)
+              ..invalidate(resumenComunidadProvider)
+              ..invalidate(eventosCercanosProvider);
+            await ref.read(novedadesProvider.future);
           },
           child: ListView(
             padding: const EdgeInsets.only(bottom: 24),
-            children: [
+            children: const [
               // Banners del carrusel, arriba de todo (D128).
-              const MarcaRecorrido('carrusel', child: CarruselBanners()),
+              MarcaRecorrido('carrusel', child: CarruselBanners()),
+              // Próximos eventos de la zona, arriba de las novedades (D94).
               Padding(
-                padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-                child: MarcaRecorrido(
-                  'secciones',
-                  child: SegmentedButton<bool>(
-                    segments: [
-                      ButtonSegment(
-                        value: false,
-                        icon: const Icon(Icons.newspaper_outlined),
-                        label: Text(t.noticiasSeccionNoticias),
-                      ),
-                      ButtonSegment(
-                        value: true,
-                        icon: const Icon(Icons.diversity_3_outlined),
-                        label: Text(t.noticiasSeccionComunidad),
-                      ),
-                    ],
-                    selected: {_comunidad},
-                    onSelectionChanged: (s) =>
-                        setState(() => _comunidad = s.first),
-                  ),
-                ),
+                padding: EdgeInsets.fromLTRB(16, 8, 16, 0),
+                child: SeccionEventos(),
               ),
-              if (mias.isNotEmpty)
-                SizedBox(
-                  height: 56,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 8,
-                    ),
-                    children: [
-                      ChoiceChip(
-                        label: Text(t.noticiasTodas),
-                        selected: especie == null,
-                        onSelected: (_) => setState(() {
-                          _tocoChip = true;
-                          _especie = null;
-                        }),
-                      ),
-                      for (final e in mias) ...[
-                        const SizedBox(width: 6),
-                        ChoiceChip(
-                          label: Text('${e.icono} ${e.nombre}'),
-                          selected: especie == e.id,
-                          onSelected: (_) => setState(() {
-                            _tocoChip = true;
-                            _especie = e.id;
-                          }),
-                        ),
-                      ],
-                    ],
-                  ),
-                ),
-              if (_comunidad) ...[
-                // Próximos eventos de la zona, arriba de las novedades (D94).
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(16, 8, 16, 0),
-                  child: SeccionEventos(),
-                ),
-                _Comunidad(filtro: filtro),
-              ] else
-                switch (ref.watch(noticiasProvider)) {
-                  AsyncData(:final value) => () {
-                    final lista = [
-                      for (final n in value)
-                        if (n.esPara(filtro)) n,
-                    ];
-                    return lista.isEmpty
-                        ? Padding(
-                            padding: const EdgeInsets.all(32),
-                            child: Text(
-                              t.noticiasVacio,
-                              textAlign: TextAlign.center,
-                            ),
-                          )
-                        : Column(
-                            children: [
-                              // Promociones de comercios cercanos, una cada 4
-                              // noticias (3.1, D136). Nunca en SOS ni en el QR.
-                              for (final x in intercalarPromociones(
-                                lista,
-                                ref.watch(
-                                      funcionalidadActivaProvider(
-                                        Funcionalidades.promociones,
-                                      ),
-                                    )
-                                    ? ref
-                                              .watch(promocionesCercaProvider)
-                                              .value ??
-                                          const <Promocion>[]
-                                    : const <Promocion>[],
-                              ))
-                                switch (x) {
-                                  final Promocion p => TarjetaPromocion(
-                                    key: ValueKey('promo-${p.id}'),
-                                    promocion: p,
-                                  ),
-                                  final Noticia n => TarjetaNoticia(noticia: n),
-                                  _ => const SizedBox.shrink(),
-                                },
-                            ],
-                          );
-                  }(),
-                  AsyncError() => Padding(
-                    padding: const EdgeInsets.all(32),
-                    child: Text(
-                      t.errorSinConexion,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  _ => const Padding(
-                    padding: EdgeInsets.all(32),
-                    child: Center(child: CircularProgressIndicator()),
-                  ),
-                },
+              MarcaRecorrido('secciones', child: _Comunidad()),
             ],
           ),
         ),
@@ -319,6 +168,8 @@ Future<void> abrirNoticia(BuildContext context, WidgetRef ref, Noticia n) {
   ref
       .read(metricasProvider)
       .track(Eventos.newsOpen, props: {'patrocinada': n.patrocinada});
+  // Se abre desde un banner: los totales de reacciones se traen acá.
+  unawaited(ref.read(reaccionesProvider.notifier).cargar([n.id]));
   return showModalBottomSheet<void>(
     context: context,
     useRootNavigator: true,
@@ -381,9 +232,7 @@ Future<void> abrirNoticia(BuildContext context, WidgetRef ref, Noticia n) {
 
 /// Sección Comunidad (D86): resumen de los últimos 30 días y novedades.
 class _Comunidad extends ConsumerWidget {
-  const _Comunidad({required this.filtro});
-
-  final Set<int> filtro;
+  const _Comunidad();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -464,11 +313,7 @@ class _Comunidad extends ConsumerWidget {
             ),
           ),
         switch (ref.watch(novedadesProvider)) {
-          AsyncData(:final value) => () {
-            final lista = [
-              for (final n in value)
-                if (n.esPara(filtro)) n,
-            ];
+          AsyncData(value: final lista) => () {
             return lista.isEmpty
                 ? Padding(
                     padding: const EdgeInsets.all(32),

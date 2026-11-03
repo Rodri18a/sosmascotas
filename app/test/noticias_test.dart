@@ -120,8 +120,10 @@ void main() {
     expect(find.text('Baño y corte'), findsNothing);
     expect(
       tester.getTopLeft(find.text('Jornada de adopción')).dy,
-      lessThan(tester.getTopLeft(find.text('Comunidad')).dy),
-      reason: 'va arriba de Noticias · Comunidad',
+      lessThan(
+        tester.getTopLeft(find.textContaining('Todavía no hay novedades')).dy,
+      ),
+      reason: 'va arriba de la Comunidad',
     );
 
     await tester.tap(find.text('Jornada de adopción'));
@@ -160,50 +162,45 @@ void main() {
     expect(find.text('Jornada de adopción'), findsOneWidget);
   });
 
-  testWidgets('desde la barra, también un visitante: todas, con la '
-      'patrocinada marcada', (tester) async {
-    await _abrir(tester, visitante: true);
-    await _tocar(tester, find.text('Noticias'));
-    expect(find.text('Gatos y el calor'), findsOneWidget);
-    expect(find.text('Campaña de vacunación'), findsOneWidget);
-    expect(find.text('Alimento para cachorros'), findsOneWidget);
-    expect(find.text('Promocionado · Marca Perruna'), findsOneWidget);
-  });
-
-  testWidgets('los chips filtran por la especie de mis mascotas', (
-    tester,
-  ) async {
+  testWidgets('Inicio (D139): sin Noticias · Comunidad ni chips de especie; '
+      'las noticias solo llegan por el carrusel', (tester) async {
     await _abrir(
       tester,
       mascotas: const [Mascota(id: 'm1', nombre: 'Luna', especieId: 2)],
     );
-    await _tocar(tester, find.text('Noticias'));
-    await _tocar(tester, find.text('🐱 Gato'));
-    expect(find.text('Gatos y el calor'), findsOneWidget);
-    expect(find.text('Campaña de vacunación'), findsOneWidget, reason: 'todas');
-    expect(find.text('Alimento para cachorros'), findsNothing);
-    await _tocar(tester, find.text('Todas'));
-    expect(find.text('Alimento para cachorros'), findsOneWidget);
+    expect(find.byType(SegmentedButton<bool>), findsNothing);
+    expect(find.byType(ChoiceChip), findsNothing);
+    expect(find.text('Gatos y el calor'), findsNothing);
+    expect(find.text('Campaña de vacunación'), findsNothing);
+    expect(find.textContaining('Todavía no hay novedades'), findsOneWidget);
   });
 
-  testWidgets('abrir una noticia y "Leer más" registran la métrica', (
-    tester,
-  ) async {
+  testWidgets('una noticia abierta desde un banner: "Leer más" registra la '
+      'métrica', (tester) async {
     final enlaces = <Uri>[];
     final metricas = <Map<String, Object?>>[];
-    await _abrir(tester, enlaces: enlaces, metricas: metricas);
-    await _tocar(tester, find.text('Noticias'));
-    await _tocar(tester, find.text('Campaña de vacunación'));
+    await _abrir(
+      tester,
+      enlaces: enlaces,
+      metricas: metricas,
+      repo: NoticiasFalsas(
+        [_paraTodas],
+        const [],
+        const ResumenComunidad(),
+        const [_bannerPromo],
+      ),
+    );
+    await _tocar(tester, find.text('Baño y corte'));
     expect(find.text('Llevá la libreta sanitaria.'), findsWidgets);
     await _tocar(tester, find.text('Leer más'));
     expect(enlaces, [Uri.parse('https://www.gub.uy/')]);
     expect(
       metricas.map((e) => e['name']),
-      containsAll(['news_open', 'news_link']),
+      containsAll(['banner_open', 'news_open', 'news_link']),
     );
   });
 
-  testWidgets('Comunidad: resumen y novedades, filtradas por especie', (
+  testWidgets('Comunidad: resumen y novedades de todas las especies', (
     tester,
   ) async {
     await _abrir(
@@ -243,8 +240,6 @@ void main() {
         ),
       ],
     );
-    await _tocar(tester, find.text('Noticias'));
-    await _tocar(tester, find.text('Comunidad'));
 
     expect(find.text('Últimos 30 días en la comunidad'), findsOneWidget);
     expect(find.text('2 mascotas volvieron a casa'), findsOneWidget);
@@ -259,17 +254,11 @@ void main() {
     );
     expect(find.text('3 mascotas encontraron un hogar 💛'), findsOneWidget);
     expect(find.text('Nuevo lugar verificado: Vet Pando'), findsOneWidget);
-    expect(find.text('Gatos y el calor'), findsNothing, reason: 'otra sección');
-
-    await _tocar(tester, find.text('🐱 Gato'));
-    expect(find.text('¡Lola volvió a casa! 🎉'), findsNothing);
-    expect(find.text('Nuevo lugar verificado: Vet Pando'), findsOneWidget);
+    expect(find.text('Gatos y el calor'), findsNothing, reason: 'sin noticias');
   });
 
   testWidgets('Comunidad vacía explica qué va a aparecer', (tester) async {
     await _abrir(tester);
-    await _tocar(tester, find.text('Noticias'));
-    await _tocar(tester, find.text('Comunidad'));
     expect(find.textContaining('Todavía no hay novedades'), findsOneWidget);
     expect(find.text('Últimos 30 días en la comunidad'), findsNothing);
   });
@@ -277,15 +266,17 @@ void main() {
   testWidgets('reaccionar a una noticia: poner, cambiar y quitar', (
     tester,
   ) async {
-    final repo = NoticiasFalsas([_paraTodas]);
+    final repo = NoticiasFalsas(
+      [_paraTodas],
+      const [],
+      const ResumenComunidad(),
+      const [_bannerPromo],
+    );
     repo.reaccionesGuardadas['n2'] = const Reacciones(
       totales: {Reaccion.alegra: 2},
     );
     await _abrir(tester, repo: repo);
-    await _tocar(tester, find.text('Noticias'));
-    expect(find.text('❤️ 2'), findsOneWidget, reason: 'totales en la tarjeta');
-
-    await _tocar(tester, find.text('Campaña de vacunación'));
+    await _tocar(tester, find.text('Baño y corte'));
     expect(find.text('❤️ Me alegra · 2'), findsOneWidget);
     await _tocar(tester, find.text('🎉 ¡Qué bueno!'));
     expect(find.text('🎉 ¡Qué bueno! · 1'), findsOneWidget);
@@ -304,10 +295,14 @@ void main() {
   testWidgets('un visitante tiene que ingresar para reaccionar', (
     tester,
   ) async {
-    final repo = NoticiasFalsas([_paraTodas]);
+    final repo = NoticiasFalsas(
+      [_paraTodas],
+      const [],
+      const ResumenComunidad(),
+      const [_bannerPromo],
+    );
     await _abrir(tester, repo: repo, visitante: true);
-    await _tocar(tester, find.text('Noticias'));
-    await _tocar(tester, find.text('Campaña de vacunación'));
+    await _tocar(tester, find.text('Baño y corte'));
     await _tocar(tester, find.text('❤️ Me alegra'));
     expect(
       find.text('Para reaccionar a las noticias necesitás una cuenta.'),
@@ -329,8 +324,6 @@ void main() {
       ),
     ]);
     await _abrir(tester, repo: repo);
-    await _tocar(tester, find.text('Noticias'));
-    await _tocar(tester, find.text('Comunidad'));
     await _tocar(tester, find.text('¡Lola volvió a casa! 🎉'));
     await _tocar(tester, find.text('🙏 Gracias'));
     expect(repo.reaccionesEnviadas, [('r1', Reaccion.gracias)]);
@@ -350,8 +343,6 @@ void main() {
       ),
     ]);
     await _abrir(tester, repo: repo);
-    await _tocar(tester, find.text('Noticias'));
-    await _tocar(tester, find.text('Comunidad'));
     expect(find.text('Se busca a Toby'), findsOneWidget);
     expect(find.textContaining('Lleva 2 días perdida.'), findsOneWidget);
     await _tocar(tester, find.text('Se busca a Toby'));

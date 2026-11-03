@@ -5887,7 +5887,7 @@ abstract class AppLocalizations {
   /// No description provided for @menuElegidaAyuda.
   ///
   /// In es, this message translates to:
-  /// **'Noticias y adopción se muestran para la especie de {nombre}.'**
+  /// **'La adopción se muestra para la especie de {nombre}.'**
   String menuElegidaAyuda(String nombre);
 
   /// No description provided for @menuFicha.
@@ -6013,19 +6013,19 @@ abstract class AppLocalizations {
   /// No description provided for @recCarruselTexto.
   ///
   /// In es, this message translates to:
-  /// **'Novedades y promociones de la zona. Tocá una para ver más.'**
+  /// **'Noticias y promociones de la zona. Tocá una para ver más.'**
   String get recCarruselTexto;
 
   /// No description provided for @recSeccionesTitulo.
   ///
   /// In es, this message translates to:
-  /// **'Noticias y Comunidad'**
+  /// **'Comunidad'**
   String get recSeccionesTitulo;
 
   /// No description provided for @recSeccionesTexto.
   ///
   /// In es, this message translates to:
-  /// **'Noticias para cuidar a tu mascota, y lo que pasa cerca: eventos, perdidos y reencuentros.'**
+  /// **'Lo que pasa cerca: reencuentros, adopciones, perdidos que se siguen buscando y lugares nuevos.'**
   String get recSeccionesTexto;
 
   /// No description provided for @recBarraTitulo.

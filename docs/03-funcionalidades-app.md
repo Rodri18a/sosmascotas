@@ -10,7 +10,7 @@ Barra inferior: **Explorar** (mapa) · **Noticias** · **SOS** (en rojo) · **Ma
 
 **Hecho hasta ahora (D88, D94):** la barra inferior es **Noticias · SOS · (Mapa) · Mascotas · Ayuda**. El Mapa va en el medio, como un botón redondo que sobresale de la barra (que se curva para dejarle lugar), y es donde abre la app. La barra reserva el lugar del botón, así que nunca tapa el contenido, y las hojas que se abren desde abajo quedan por encima de la barra. Cada pestaña tiene un **menú ☰** con:
 - **Mis datos** (nombre, correo; abre Mi perfil o Ajustes) o "Ingresá o creá tu cuenta" para un visitante.
-- **Ver todo para:** "Todas" o una de mis mascotas. La elegida filtra Noticias, Comunidad y Adopción por su especie (los chips de cada pantalla la pueden cambiar) y suma accesos a su ficha, su chapita QR y "Reportar que se perdió". Se recuerda en el dispositivo, por cuenta.
+- **Ver todo para:** "Todas" o una de mis mascotas. La elegida filtra Adopción por su especie (desde D139, Inicio ya no se filtra) y suma accesos a su ficha, su chapita QR y "Reportar que se perdió". Se recuerda en el dispositivo, por cuenta.
 - **Secciones:** Adopción, Mensajes, Avisos, Mi hogar, Mis pedidos, Mi negocio y Ajustes, cada una según su funcionalidad gradual y si hace falta cuenta.
 Ayuda queda para urgencias (911, guardias, refugios y denuncias). Los **próximos eventos** de la zona están arriba de Noticias → Comunidad (D94).
 
@@ -128,6 +128,8 @@ Pantalla inicial: el logo de la marca (D122) sobre el fondo claro `#EAF4FA` (osc
 - La empresa responde una vez y en público. No puede borrar reseñas, pero sí reportarlas.
 
 ## 10. Noticias — desde el lanzamiento (patrocinadas: Fase 2)
+
+**Desde el 03/11/2026 (D139):** Inicio no tiene más el selector Noticias · Comunidad ni los chips de especie. Arriba va el **carrusel de banners** (D128), que maneja la administración: las noticias se muestran ahí, con un banner que abre la noticia. Abajo, **Comunidad** sin filtros: próximos eventos, el resumen de los últimos 30 días y las novedades (con una promoción cada 6). Lo que sigue describe cómo era antes.
 
 - Grilla de tarjetas filtrada por la especie de la mascota activa.
 - Mezcla novedades de la comunidad, eventos y **promociones de marcas** con la etiqueta "Promocionado".

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
-import 'package:sosmascota/src/features/shell/app_shell.dart';
 import 'package:sosmascota/src/router.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
@@ -101,22 +100,6 @@ void main() {
       containsAll(['menu_open', 'pet_select']),
     );
 
-    // Inicio (en la barra) se abre filtrado por gatos.
-    await tester.tapAt(const Offset(345, 300)); // cierra el menú (fuera de él)
-    await tester.pumpAndSettle();
-    expect(find.byType(Drawer), findsNothing);
-    await _tocar(
-      tester,
-      find.descendant(
-        of: find.byType(BarraInferior),
-        matching: find.text('Inicio'),
-      ),
-    );
-    expect(find.text('Gatos y el calor'), findsOneWidget);
-    expect(find.text('Paseos con calor'), findsNothing);
-    // Los chips la pueden cambiar.
-    await _tocar(tester, find.widgetWithText(ChoiceChip, 'Todas'));
-    expect(find.text('Paseos con calor'), findsOneWidget);
   });
 
   testWidgets('la elegida se recuerda al volver a abrir', (tester) async {
@@ -160,7 +143,10 @@ void main() {
       );
     }
     expect(
-      find.text('Próximos eventos'),
+      find.descendant(
+        of: find.byType(Drawer),
+        matching: find.text('Próximos eventos'),
+      ),
       findsNothing,
       reason: 'la funcionalidad de eventos está apagada',
     );
