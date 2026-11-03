@@ -3304,10 +3304,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get noticiasSeccionComunidad => 'Comunidad';
 
   @override
-  String get comunidadExplicacion =>
-      'Se arma sola con lo que pasa en la app. Nunca mostramos ubicaciones ni datos de personas.';
-
-  @override
   String get comunidadVacio =>
       'Todavía no hay novedades. Cuando una mascota vuelva a casa o haya un evento cerca, lo vas a ver acá.';
 

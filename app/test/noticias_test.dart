@@ -175,6 +175,35 @@ void main() {
     expect(find.textContaining('Todavía no hay novedades'), findsOneWidget);
   });
 
+  testWidgets('Inicio (D140): eventos, después el resumen y después las '
+      'preguntas; sin la explicación de la Comunidad', (tester) async {
+    tester.view
+      ..physicalSize = const Size(1080, 2400)
+      ..devicePixelRatio = 3;
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(
+      appDePrueba(
+        inicio: Rutas.inicio,
+        cuenta: ServicioCuentaFalso(conectado: _ana),
+        noticias: NoticiasFalsas(
+          const [],
+          const [],
+          const ResumenComunidad(reencuentros: 2),
+        ),
+        funcionalidades: FuncionalidadesFalsas({Funcionalidades.preguntas}),
+      ),
+    );
+    await tester.pumpAndSettle();
+    final eventos = tester.getTopLeft(find.text('Próximos eventos')).dy;
+    final resumen = tester
+        .getTopLeft(find.text('Últimos 30 días en la comunidad'))
+        .dy;
+    final preguntas = tester.getTopLeft(find.text('¿Tenés una duda?')).dy;
+    expect(eventos, lessThan(resumen));
+    expect(resumen, lessThan(preguntas));
+    expect(find.textContaining('Se arma sola'), findsNothing);
+  });
+
   testWidgets('una noticia abierta desde un banner: "Leer más" registra la '
       'métrica', (tester) async {
     final enlaces = <Uri>[];

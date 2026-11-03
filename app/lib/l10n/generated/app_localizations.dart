@@ -5704,12 +5704,6 @@ abstract class AppLocalizations {
   /// **'Comunidad'**
   String get noticiasSeccionComunidad;
 
-  /// No description provided for @comunidadExplicacion.
-  ///
-  /// In es, this message translates to:
-  /// **'Se arma sola con lo que pasa en la app. Nunca mostramos ubicaciones ni datos de personas.'**
-  String get comunidadExplicacion;
-
   /// No description provided for @comunidadVacio.
   ///
   /// In es, this message translates to:

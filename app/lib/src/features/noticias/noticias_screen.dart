@@ -267,16 +267,6 @@ class _Comunidad extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-          child: Text(t.comunidadExplicacion, style: tema.textTheme.bodySmall),
-        ),
-        // Preguntas de la comunidad (2.3, D134).
-        if (ref.watch(funcionalidadActivaProvider(Funcionalidades.preguntas)))
-          const TarjetaPreguntas(),
-        // Grupos por raza y especie (3.4, D116).
-        if (ref.watch(funcionalidadActivaProvider(Funcionalidades.grupos)))
-          const TarjetaGrupos(),
         if (enResumen.isNotEmpty)
           Card(
             margin: const EdgeInsets.fromLTRB(16, 12, 16, 0),
@@ -312,6 +302,13 @@ class _Comunidad extends ConsumerWidget {
               ),
             ),
           ),
+        // Después del resumen (D140).
+        // Preguntas de la comunidad (2.3, D134).
+        if (ref.watch(funcionalidadActivaProvider(Funcionalidades.preguntas)))
+          const TarjetaPreguntas(),
+        // Grupos por raza y especie (3.4, D116).
+        if (ref.watch(funcionalidadActivaProvider(Funcionalidades.grupos)))
+          const TarjetaGrupos(),
         switch (ref.watch(novedadesProvider)) {
           AsyncData(value: final lista) => () {
             return lista.isEmpty
