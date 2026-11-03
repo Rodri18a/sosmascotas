@@ -1,2 +1,8 @@
 # Ver las reglas compartidas en la raíz del repositorio.
+analyzer:
+  exclude:
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
 include: ../analysis_options.yaml
