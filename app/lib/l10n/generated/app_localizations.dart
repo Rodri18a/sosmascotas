@@ -5716,6 +5716,18 @@ abstract class AppLocalizations {
   /// **'Últimos 30 días en la comunidad'**
   String get comunidadResumenTitulo;
 
+  /// No description provided for @comunidadResumenVolvieron.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =1{volvió a casa} other{volvieron a casa}}'**
+  String comunidadResumenVolvieron(int n);
+
+  /// No description provided for @comunidadResumenBuscando.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =1{sigue en búsqueda} other{siguen en búsqueda}}'**
+  String comunidadResumenBuscando(int n);
+
   /// No description provided for @comunidadResumenReencuentros.
   ///
   /// In es, this message translates to:
@@ -6709,7 +6721,7 @@ abstract class AppLocalizations {
   /// No description provided for @preguntasTarjetaAyuda.
   ///
   /// In es, this message translates to:
-  /// **'Preguntale a la comunidad o buscá si ya la respondieron.'**
+  /// **'Preguntá o buscá respuestas.'**
   String get preguntasTarjetaAyuda;
 
   /// No description provided for @preguntasPreguntar.
@@ -11125,7 +11137,7 @@ abstract class AppLocalizations {
   /// No description provided for @comunidadGruposAyuda.
   ///
   /// In es, this message translates to:
-  /// **'Por raza, especie y temas: preguntas, consejos y experiencias'**
+  /// **'Por raza, especie y temas.'**
   String get comunidadGruposAyuda;
 
   /// No description provided for @comunidadReglas.

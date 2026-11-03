@@ -1345,6 +1345,10 @@
   "noticiasSeccionComunidad": "Comunidad",
   "comunidadVacio": "Todavía no hay novedades. Cuando una mascota vuelva a casa o haya un evento cerca, lo vas a ver acá.",
   "comunidadResumenTitulo": "Últimos 30 días en la comunidad",
+  "comunidadResumenVolvieron": "{n, plural, =1{volvió a casa} other{volvieron a casa}}",
+  "@comunidadResumenVolvieron": {"placeholders": {"n": {"type": "int"}}},
+  "comunidadResumenBuscando": "{n, plural, =1{sigue en búsqueda} other{siguen en búsqueda}}",
+  "@comunidadResumenBuscando": {"placeholders": {"n": {"type": "int"}}},
   "comunidadResumenReencuentros": "{n, plural, =1{1 mascota volvió a casa} other{{n} mascotas volvieron a casa}}",
   "@comunidadResumenReencuentros": {
     "placeholders": {
@@ -1601,7 +1605,7 @@
   "temaOtros": "Otros",
   "preguntasTitulo": "Preguntas",
   "preguntasTarjeta": "¿Tenés una duda?",
-  "preguntasTarjetaAyuda": "Preguntale a la comunidad o buscá si ya la respondieron.",
+  "preguntasTarjetaAyuda": "Preguntá o buscá respuestas.",
   "preguntasPreguntar": "Preguntar",
   "preguntasMotivoCuenta": "Para preguntar o responder necesitás una cuenta.",
   "preguntasBuscar": "Buscar en las preguntas…",
@@ -2445,7 +2449,7 @@
   "comunidadLimite": "Llegaste al máximo por hoy. Probá mañana.",
   "comunidadNoQuiere": "Esa persona no quiere chatear por ahora.",
   "comunidadGrupos": "Grupos",
-  "comunidadGruposAyuda": "Por raza, especie y temas: preguntas, consejos y experiencias",
+  "comunidadGruposAyuda": "Por raza, especie y temas.",
   "comunidadReglas": "Sin ventas ni cruzas de animales, y sin datos de dónde vive tu mascota. De cada persona se ve solo el primer nombre.",
   "comunidadIngresar": "Ingresá para participar en los grupos",
   "comunidadSaludos": "Saludos",

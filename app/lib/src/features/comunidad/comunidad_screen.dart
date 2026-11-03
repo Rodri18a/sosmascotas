@@ -42,7 +42,11 @@ class TarjetaGrupos extends StatelessWidget {
       child: ListTile(
         leading: const Icon(Icons.forum_outlined),
         title: Text(t.comunidadGrupos),
-        subtitle: Text(t.comunidadGruposAyuda),
+        subtitle: Text(
+          t.comunidadGruposAyuda,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
         trailing: const Icon(Icons.chevron_right_outlined),
         onTap: () => context.push(Rutas.grupos),
       ),

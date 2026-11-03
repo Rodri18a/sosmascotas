@@ -237,78 +237,22 @@ class _Comunidad extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final t = context.t;
-    final tema = Theme.of(context);
     final resumen = ref.watch(resumenComunidadProvider).value;
-    final enResumen = resumen == null
-        ? const <(IconData, String)>[]
-        : [
-            if (resumen.reencuentros > 0)
-              (
-                Icons.home_outlined,
-                t.comunidadResumenReencuentros(resumen.reencuentros),
-              ),
-            if (resumen.adopciones > 0)
-              (
-                Icons.favorite_outline,
-                t.comunidadResumenAdopciones(resumen.adopciones),
-              ),
-            if (resumen.perdidasActivas > 0)
-              (
-                Icons.search_outlined,
-                t.comunidadResumenPerdidas(resumen.perdidasActivas),
-              ),
-            if (resumen.lugaresVerificados > 0)
-              (
-                Icons.verified_outlined,
-                t.comunidadResumenLugares(resumen.lugaresVerificados),
-              ),
-          ];
-    final colorResumen = tema.colorScheme.onPrimaryContainer;
+    final hayResumen =
+        resumen != null &&
+        (resumen.reencuentros > 0 || resumen.perdidasActivas > 0);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        if (enResumen.isNotEmpty)
-          Card(
-            margin: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-            color: tema.colorScheme.primaryContainer,
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    t.comunidadResumenTitulo,
-                    style: tema.textTheme.titleMedium?.copyWith(
-                      color: colorResumen,
-                    ),
-                  ),
-                  for (final (icono, texto) in enResumen)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 6),
-                      child: Row(
-                        children: [
-                          Icon(icono, size: 20, color: colorResumen),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Text(
-                              texto,
-                              style: TextStyle(color: colorResumen),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                ],
-              ),
-            ),
-          ),
-        // Después del resumen (D140).
+        // Preguntas y Grupos arriba del resumen (D141).
         // Preguntas de la comunidad (2.3, D134).
         if (ref.watch(funcionalidadActivaProvider(Funcionalidades.preguntas)))
           const TarjetaPreguntas(),
         // Grupos por raza y especie (3.4, D116).
         if (ref.watch(funcionalidadActivaProvider(Funcionalidades.grupos)))
           const TarjetaGrupos(),
+        // Solo reencuentros y perdidas, uno al lado del otro (D141).
+        if (hayResumen) _Resumen(resumen: resumen),
         switch (ref.watch(novedadesProvider)) {
           AsyncData(value: final lista) => () {
             return lista.isEmpty
@@ -354,6 +298,88 @@ class _Comunidad extends ConsumerWidget {
       ],
     );
   }
+}
+
+/// «Últimos 30 días»: las que volvieron a casa a la izquierda y las que se
+/// siguen buscando a la derecha, con el ícono y el número grandes (D141).
+class _Resumen extends StatelessWidget {
+  const _Resumen({required this.resumen});
+
+  final ResumenComunidad resumen;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = context.t;
+    final tema = Theme.of(context);
+    final color = tema.colorScheme.onPrimaryContainer;
+    Widget dato(IconData icono, int n, String texto) => Expanded(
+      child: Semantics(
+        container: true,
+        label: '$n $texto',
+        child: ExcludeSemantics(
+          child: Column(
+            children: [
+              Icon(icono, size: 40, color: color),
+              const SizedBox(height: 4),
+              Text(
+                '$n',
+                style: tema.textTheme.headlineSmall?.copyWith(color: color),
+              ),
+              Text(
+                texto,
+                textAlign: TextAlign.center,
+                style: tema.textTheme.bodySmall?.copyWith(color: color),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    return Card(
+      margin: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+      color: tema.colorScheme.primaryContainer,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            Text(
+              t.comunidadResumenTitulo,
+              style: tema.textTheme.titleMedium?.copyWith(color: color),
+            ),
+            const SizedBox(height: 12),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                dato(
+                  Icons.home_outlined,
+                  resumen.reencuentros,
+                  t.comunidadResumenVolvieron(resumen.reencuentros),
+                ),
+                dato(
+                  Icons.search_outlined,
+                  resumen.perdidasActivas,
+                  t.comunidadResumenBuscando(resumen.perdidasActivas),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Bajada corta para la tarjeta del muro (D141): una línea, sin el
+/// agradecimiento ni la invitación, que quedan en el detalle.
+String bajadaBreve(BuildContext context, Novedad n) {
+  final t = context.t;
+  return switch (n.tipo) {
+    TipoNovedad.reencuentro when n.eraPerdida =>
+      n.cantidad == null ? '' : t.comunidadDiasPerdida(n.cantidad!),
+    TipoNovedad.reencuentro || TipoNovedad.adopcion => '',
+    TipoNovedad.perdida => t.comunidadPerdidaDias(n.cantidad ?? 0),
+    _ => textosNovedad(context, n).$2,
+  };
 }
 
 /// Título y bajada de una novedad, armados con los textos de la app.
@@ -421,11 +447,15 @@ class TarjetaNovedad extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final tema = Theme.of(context);
     final n = novedad;
-    final (titulo, bajada) = textosNovedad(context, n);
+    final (titulo, _) = textosNovedad(context, n);
+    final linea = [
+      bajadaBreve(context, n),
+      MaterialLocalizations.of(context).formatShortMonthDay(n.fecha),
+    ].where((x) => x.isNotEmpty).join(' · ');
     final url = ref.watch(noticiasRepositorioProvider).urlFoto(n.fotoPath);
     final perdida = n.tipo == TipoNovedad.perdida;
     return Card(
-      margin: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+      margin: const EdgeInsets.fromLTRB(16, 8, 16, 0),
       child: InkWell(
         // Una perdida abre su reporte (para avisar o "Seguirlo", D74); lo
         // demás, el detalle con las reacciones.
@@ -441,16 +471,16 @@ class TarjetaNovedad extends ConsumerWidget {
           _ => () => abrirNovedad(context, ref, n),
         },
         child: Padding(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CircleAvatar(
-                radius: 28,
+                radius: 20,
                 backgroundColor: tema.colorScheme.secondaryContainer,
                 foregroundImage: url == null ? null : NetworkImage(url),
                 child: Icon(
                   _icono(n.tipo),
+                  size: 20,
                   color: tema.colorScheme.onSecondaryContainer,
                 ),
               ),
@@ -459,16 +489,16 @@ class TarjetaNovedad extends ConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(titulo, style: tema.textTheme.titleMedium),
-                    if (bajada.isNotEmpty) ...[
-                      const SizedBox(height: 2),
-                      Text(bajada),
-                    ],
-                    const SizedBox(height: 6),
                     Text(
-                      MaterialLocalizations.of(
-                        context,
-                      ).formatMediumDate(n.fecha),
+                      titulo,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: tema.textTheme.titleSmall,
+                    ),
+                    Text(
+                      linea,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: tema.textTheme.bodySmall,
                     ),
                     if (n.admiteReacciones) TotalesReacciones(id: n.id),

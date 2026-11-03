@@ -175,8 +175,8 @@ void main() {
     expect(find.textContaining('Todavía no hay novedades'), findsOneWidget);
   });
 
-  testWidgets('Inicio (D140): eventos, después el resumen y después las '
-      'preguntas; sin la explicación de la Comunidad', (tester) async {
+  testWidgets('Inicio (D140, D141): eventos, preguntas y después el resumen; '
+      'sin la explicación de la Comunidad', (tester) async {
     tester.view
       ..physicalSize = const Size(1080, 2400)
       ..devicePixelRatio = 3;
@@ -199,8 +199,8 @@ void main() {
         .getTopLeft(find.text('Últimos 30 días en la comunidad'))
         .dy;
     final preguntas = tester.getTopLeft(find.text('¿Tenés una duda?')).dy;
-    expect(eventos, lessThan(resumen));
-    expect(resumen, lessThan(preguntas));
+    expect(eventos, lessThan(preguntas));
+    expect(preguntas, lessThan(resumen));
     expect(find.textContaining('Se arma sola'), findsNothing);
   });
 
@@ -271,12 +271,23 @@ void main() {
     );
 
     expect(find.text('Últimos 30 días en la comunidad'), findsOneWidget);
-    expect(find.text('2 mascotas volvieron a casa'), findsOneWidget);
-    expect(find.text('1 lugar verificado en el mapa'), findsOneWidget);
+    // Solo reencuentros y perdidas, uno al lado del otro (D141).
+    expect(find.text('volvieron a casa'), findsOneWidget);
+    expect(find.text('siguen en búsqueda'), findsOneWidget);
+    expect(
+      tester.getCenter(find.text('volvieron a casa')).dx,
+      lessThan(tester.getCenter(find.text('siguen en búsqueda')).dx),
+    );
+    expect(find.textContaining('lugar verificado en el mapa'), findsNothing);
     expect(find.textContaining('adopciones concretadas'), findsNothing);
 
     expect(find.text('¡Lola volvió a casa! 🎉'), findsOneWidget);
     expect(find.textContaining('Estuvo 3 días perdida.'), findsOneWidget);
+    expect(
+      find.textContaining('Gracias a todos'),
+      findsNothing,
+      reason: 'la tarjeta va en una línea; el agradecimiento queda en el detalle',
+    );
     expect(
       find.text('Una mascota encontrada volvió con su familia 🏡'),
       findsOneWidget,

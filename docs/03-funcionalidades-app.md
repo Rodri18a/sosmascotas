@@ -129,7 +129,7 @@ Pantalla inicial: el logo de la marca (D122) sobre el fondo claro `#EAF4FA` (osc
 
 ## 10. Noticias — desde el lanzamiento (patrocinadas: Fase 2)
 
-**Desde el 03/11/2026 (D139):** Inicio no tiene más el selector Noticias · Comunidad ni los chips de especie. Arriba va el **carrusel de banners** (D128), que maneja la administración: las noticias se muestran ahí, con un banner que abre la noticia. Abajo, **Comunidad** sin filtros, en este orden (D140): próximos eventos, el resumen de los últimos 30 días, las tarjetas de Preguntas y Grupos, y las novedades (con una promoción cada 6). Lo que sigue describe cómo era antes.
+**Desde el 03/11/2026 (D139):** Inicio no tiene más el selector Noticias · Comunidad ni los chips de especie. Arriba va el **carrusel de banners** (D128), que maneja la administración: las noticias se muestran ahí, con un banner que abre la noticia. Abajo, **Comunidad** sin filtros, en este orden (D141): próximos eventos, las tarjetas de Preguntas y Grupos (con una bajada de un renglón), el resumen de los últimos 30 días (solo las que volvieron a casa y las que siguen en búsqueda, una al lado de la otra) y las novedades en tarjetas cortas de título y una línea (con una promoción cada 6). Lo que sigue describe cómo era antes.
 
 - Grilla de tarjetas filtrada por la especie de la mascota activa.
 - Mezcla novedades de la comunidad, eventos y **promociones de marcas** con la etiqueta "Promocionado".

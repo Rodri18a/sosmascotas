@@ -3311,6 +3311,28 @@ class AppLocalizationsEs extends AppLocalizations {
   String get comunidadResumenTitulo => 'Últimos 30 días en la comunidad';
 
   @override
+  String comunidadResumenVolvieron(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'volvieron a casa',
+      one: 'volvió a casa',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String comunidadResumenBuscando(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'siguen en búsqueda',
+      one: 'sigue en búsqueda',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String comunidadResumenReencuentros(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
@@ -3948,8 +3970,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get preguntasTarjeta => '¿Tenés una duda?';
 
   @override
-  String get preguntasTarjetaAyuda =>
-      'Preguntale a la comunidad o buscá si ya la respondieron.';
+  String get preguntasTarjetaAyuda => 'Preguntá o buscá respuestas.';
 
   @override
   String get preguntasPreguntar => 'Preguntar';
@@ -6690,8 +6711,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get comunidadGrupos => 'Grupos';
 
   @override
-  String get comunidadGruposAyuda =>
-      'Por raza, especie y temas: preguntas, consejos y experiencias';
+  String get comunidadGruposAyuda => 'Por raza, especie y temas.';
 
   @override
   String get comunidadReglas =>

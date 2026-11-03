@@ -52,7 +52,11 @@ class TarjetaPreguntas extends StatelessWidget {
       child: ListTile(
         leading: const Icon(Icons.contact_support_outlined),
         title: Text(t.preguntasTarjeta),
-        subtitle: Text(t.preguntasTarjetaAyuda),
+        subtitle: Text(
+          t.preguntasTarjetaAyuda,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
         trailing: const Icon(Icons.chevron_right_outlined),
         onTap: () => context.push(Rutas.preguntas),
       ),
