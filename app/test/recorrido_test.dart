@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sosmascota/src/features/shell/app_shell.dart';
 import 'package:sosmascota/src/recorrido/recorrido.dart';
 import 'package:sosmascota/src/router.dart';
@@ -126,5 +127,33 @@ void main() {
       );
       expect(find.byIcon(Icons.settings_outlined), findsNothing);
     }
+  });
+
+  testWidgets('las pantallas de adentro también tienen su recorrido (D144)', (
+    tester,
+  ) async {
+    final almacen = AlmacenRecorridosFalso()
+      ..vistos.add(PantallaRecorrido.inicio);
+    final metricas = await _abrir(tester, almacen);
+    final router = GoRouter.of(tester.element(find.byType(Scaffold).first));
+
+    router.go(Rutas.ajustes);
+    await tester.pumpAndSettle();
+    await tester.pump(const Duration(seconds: 1));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('la zona para enterarte'), findsOneWidget);
+    expect(almacen.vistos, contains(PantallaRecorrido.ajustes));
+    await tester.tap(find.text('Siguiente'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Listo'));
+    await tester.pumpAndSettle();
+    expect(_de(metricas, 'tour_finish'), [
+      {'screen': 'ajustes'},
+    ]);
+
+    // Con el ? se repite.
+    await tester.tap(find.byTooltip('Cómo funciona esta pantalla'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('la zona para enterarte'), findsOneWidget);
   });
 }

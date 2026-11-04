@@ -7,6 +7,7 @@ import '../../../l10n/l10n.dart';
 import '../../comercios/comercios_repositorio.dart';
 import '../../comercios/textos_comercio.dart';
 import '../../cuenta/servicio_cuenta.dart';
+import '../../dos_apps/dos_apps.dart';
 import '../../funcionalidades/funcionalidades_activas.dart';
 import '../../mapa/mapa_vista.dart';
 import '../../metricas/metricas.dart';
@@ -181,8 +182,8 @@ Future<void> _hojaSinReclamar(
   context: context,
   useRootNavigator: true,
   showDragHandle: true,
-  builder: (context) {
-    final t = context.t;
+  builder: (hoja) {
+    final t = hoja.t;
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
@@ -213,9 +214,12 @@ Future<void> _hojaSinReclamar(
                 padding: const EdgeInsets.only(top: 8),
                 child: FilledButton.icon(
                   onPressed: () {
-                    Navigator.pop(context);
-                    context.push(
-                      Rutas.altaNegocio(
+                    Navigator.pop(hoja);
+                    // Se reclama en Huellitas Comercios (D143).
+                    irAMiNegocio(
+                      context,
+                      ref,
+                      ruta: Rutas.altaNegocio(
                         rubro: lugar.categoria,
                         punto: lugar.punto,
                       ),

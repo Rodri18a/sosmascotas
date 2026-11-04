@@ -8,8 +8,38 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 import '../../l10n/l10n.dart';
 import '../metricas/metricas.dart';
 
-/// Pantallas con recorrido guiado (onboarding, plan de mejoras 1.3, D130).
-enum PantallaRecorrido { inicio, sos, mapa, mascotas, urgencias, negocio }
+/// Pantallas con recorrido guiado (onboarding, plan de mejoras 1.3, D130):
+/// las pestañas, las pantallas principales de cada sección (D144) y cada
+/// sección del panel del negocio.
+enum PantallaRecorrido {
+  inicio,
+  sos,
+  mapa,
+  mascotas,
+  urgencias,
+  negocio,
+  ficha,
+  chapitaQr,
+  sosDetalle,
+  preguntas,
+  grupos,
+  grupo,
+  mensajes,
+  avisos,
+  adopcion,
+  transito,
+  turnos,
+  pedidos,
+  cuidados,
+  perfil,
+  hogar,
+  ajustes,
+  negocioAgenda,
+  negocioCatalogo,
+  negocioPedidos,
+  negocioFicha,
+  negocioEquipo,
+}
 
 /// Un paso del recorrido: ilumina la parte marcada con [marca] (o, sin marca,
 /// va al centro de la pantalla) y la explica en una línea.

@@ -135,7 +135,7 @@ class _NegocioScreenState extends ConsumerState<NegocioScreen> {
         final ancho = MediaQuery.sizeOf(context).width;
         final grande = ancho >= 900;
         final volver = ref.watch(esAppComercioProvider)
-            ? t.irAHuellitas
+            ? t.comerciosMiCuenta
             : t.volverModoDueno;
         final secciones = [
           (Icons.insights_outlined, t.negocioPanel),
@@ -148,9 +148,22 @@ class _NegocioScreenState extends ConsumerState<NegocioScreen> {
           else
             (Icons.badge_outlined, t.equipoTitulo),
         ];
+        // Cada sección tiene su recorrido, que sale la primera vez que se
+        // entra (D144).
+        final guia = switch (_seccion) {
+          _Seccion.panel => PantallaRecorrido.negocio,
+          _Seccion.agenda => PantallaRecorrido.negocioAgenda,
+          _Seccion.catalogo => PantallaRecorrido.negocioCatalogo,
+          _Seccion.pedidos => PantallaRecorrido.negocioPedidos,
+          _Seccion.negocio =>
+            negocio.esTitular
+                ? PantallaRecorrido.negocioFicha
+                : PantallaRecorrido.negocioEquipo,
+        };
         return ZonaRecorrido(
-          pantalla: PantallaRecorrido.negocio,
-          pasos: PasosRecorrido.negocio,
+          key: ValueKey(guia),
+          pantalla: guia,
+          pasos: (context) => PasosRecorrido.de(context, guia),
           child: Scaffold(
             appBar: AppBar(
               // En Huellitas Comercios el panel es el inicio: sin flecha.
@@ -188,20 +201,32 @@ class _NegocioScreenState extends ConsumerState<NegocioScreen> {
                       overflow: TextOverflow.ellipsis,
                     ),
               actions: [
-                // En Huellitas Comercios, a la app de las personas (D129).
+                // Huellitas Comercios es otra app (D143): en vez de pasar a
+                // la de las personas, la cuenta (Ajustes, cerrar sesión).
                 MarcaRecorrido(
                   'volver',
-                  child: ancho >= 600
-                      ? TextButton.icon(
-                          onPressed: () => irAHuellitas(context, ref),
-                          icon: const Icon(Icons.pets_outlined),
-                          label: Text(volver),
-                        )
-                      : IconButton(
-                          onPressed: () => irAHuellitas(context, ref),
-                          icon: const Icon(Icons.pets_outlined),
-                          tooltip: volver,
-                        ),
+                  child: () {
+                    final comercio = ref.watch(esAppComercioProvider);
+                    final icono = Icon(
+                      comercio
+                          ? Icons.account_circle_outlined
+                          : Icons.pets_outlined,
+                    );
+                    void alTocar() => comercio
+                        ? context.push(Rutas.ajustes)
+                        : context.go(Rutas.inicio);
+                    return ancho >= 600
+                        ? TextButton.icon(
+                            onPressed: alTocar,
+                            icon: icono,
+                            label: Text(volver),
+                          )
+                        : IconButton(
+                            onPressed: alTocar,
+                            icon: icono,
+                            tooltip: volver,
+                          );
+                  }(),
                 ),
                 const BotonAyuda(),
               ],

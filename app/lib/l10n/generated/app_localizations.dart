@@ -4375,7 +4375,7 @@ abstract class AppLocalizations {
   /// No description provided for @negocioMiAyuda.
   ///
   /// In es, this message translates to:
-  /// **'Sumá tu comercio o servicio al mapa (gratis).'**
+  /// **'Se maneja en Huellitas Comercios, una app aparte.'**
   String get negocioMiAyuda;
 
   /// No description provided for @negocioAltaTitulo.
@@ -4521,6 +4521,36 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Ir a Huellitas'**
   String get irAHuellitas;
+
+  /// No description provided for @appComerciosTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Huellitas Comercios'**
+  String get appComerciosTitulo;
+
+  /// No description provided for @appComerciosTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Los negocios se manejan en Huellitas Comercios, una app aparte. Entrás con la misma cuenta y la podés instalar en tu celular.'**
+  String get appComerciosTexto;
+
+  /// No description provided for @appComerciosProximamente.
+  ///
+  /// In es, this message translates to:
+  /// **'Muy pronto vas a poder bajarla de la tienda de tu celular.'**
+  String get appComerciosProximamente;
+
+  /// No description provided for @appComerciosAbrir.
+  ///
+  /// In es, this message translates to:
+  /// **'Abrir Huellitas Comercios'**
+  String get appComerciosAbrir;
+
+  /// No description provided for @comerciosMiCuenta.
+  ///
+  /// In es, this message translates to:
+  /// **'Mi cuenta'**
+  String get comerciosMiCuenta;
 
   /// No description provided for @negocioPanel.
   ///
@@ -6001,13 +6031,13 @@ abstract class AppLocalizations {
   /// No description provided for @recAvisosTitulo.
   ///
   /// In es, this message translates to:
-  /// **'Mensajes y avisos'**
+  /// **'Tus avisos'**
   String get recAvisosTitulo;
 
   /// No description provided for @recAvisosTexto.
   ///
   /// In es, this message translates to:
-  /// **'Acá te llegan los mensajes y los avisos, por ejemplo si alguien escanea la chapita QR de tu mascota.'**
+  /// **'Lo que te dejan quienes vieron a tu mascota o escanearon su QR. Antes de pagar algo, desconfiá.'**
   String get recAvisosTexto;
 
   /// No description provided for @recCarruselTitulo.
@@ -6045,6 +6075,270 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'SOS para perdidos y encontrados, el Mapa en el medio, tus mascotas y Urgencias.'**
   String get recBarraTexto;
+
+  /// No description provided for @recFichaTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'La ficha de tu mascota'**
+  String get recFichaTitulo;
+
+  /// No description provided for @recFichaTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Sus datos, la libreta de salud, los recordatorios, el historial de vida y la chapita QR. Bajá para ver todo.'**
+  String get recFichaTexto;
+
+  /// No description provided for @recChapitaQrTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'La chapita QR'**
+  String get recChapitaQrTitulo;
+
+  /// No description provided for @recChapitaQrTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Quien la escanea ve la foto y te deja un aviso, sin ver tu teléfono. Podés descargar la etiqueta o pedir una chapita.'**
+  String get recChapitaQrTexto;
+
+  /// No description provided for @recSosDetalleTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Un reporte de SOS'**
+  String get recSosDetalleTitulo;
+
+  /// No description provided for @recSosDetalleTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Si la viste, tocá «Avisar al dueño»: le llegan tus datos y decide. También podés compartirlo o imprimir el cartel.'**
+  String get recSosDetalleTexto;
+
+  /// No description provided for @recPreguntasTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Preguntas de la comunidad'**
+  String get recPreguntasTitulo;
+
+  /// No description provided for @recPreguntasTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Buscá si alguien ya preguntó lo mismo o filtrá por tema. Las veterinarias firman sus respuestas.'**
+  String get recPreguntasTexto;
+
+  /// No description provided for @recGruposTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Grupos'**
+  String get recGruposTitulo;
+
+  /// No description provided for @recGruposTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Grupos de tu zona y de cada raza para charlar, organizar paseos y ayudarse.'**
+  String get recGruposTexto;
+
+  /// No description provided for @recGrupoTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Un grupo'**
+  String get recGrupoTitulo;
+
+  /// No description provided for @recGrupoTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Leé lo que publican, comentá y saludá a otros. No se permite vender ni cruzar animales.'**
+  String get recGrupoTexto;
+
+  /// No description provided for @recMensajesTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Tus mensajes'**
+  String get recMensajesTitulo;
+
+  /// No description provided for @recMensajesTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Las charlas con comercios, paseadores, refugios y otras personas. Nadie ve tu teléfono.'**
+  String get recMensajesTexto;
+
+  /// No description provided for @recAdopcionTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Adopción'**
+  String get recAdopcionTitulo;
+
+  /// No description provided for @recAdopcionTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Animales que buscan hogar, de refugios y personas. Filtrá por especie y tamaño, o publicá uno.'**
+  String get recAdopcionTexto;
+
+  /// No description provided for @recTransitoTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Hogar de tránsito'**
+  String get recTransitoTitulo;
+
+  /// No description provided for @recTransitoTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Anotate para cuidar un animal por unos días mientras un refugio le busca familia. Nunca se muestra tu dirección.'**
+  String get recTransitoTexto;
+
+  /// No description provided for @recTurnosTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Tus turnos'**
+  String get recTurnosTitulo;
+
+  /// No description provided for @recTurnosTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Los turnos que reservaste en veterinarias, peluquerías y otros comercios. Desde acá los podés cancelar.'**
+  String get recTurnosTexto;
+
+  /// No description provided for @recPedidosTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Tus pedidos'**
+  String get recPedidosTitulo;
+
+  /// No description provided for @recPedidosTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Lo que pediste a los pet shops y en qué estado está. El comercio te avisa cuando cambia.'**
+  String get recPedidosTexto;
+
+  /// No description provided for @recCuidadosTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Paseos y estadías'**
+  String get recCuidadosTitulo;
+
+  /// No description provided for @recCuidadosTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Los paseos, guarderías y estadías que pediste, y su estado.'**
+  String get recCuidadosTexto;
+
+  /// No description provided for @recPerfilTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu perfil'**
+  String get recPerfilTitulo;
+
+  /// No description provided for @recPerfilTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu nombre, tus mascotas y tus huellas: lo que ayudaste a la comunidad. Solo vos ves tus huellas.'**
+  String get recPerfilTexto;
+
+  /// No description provided for @recHogarTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu hogar'**
+  String get recHogarTitulo;
+
+  /// No description provided for @recHogarTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Sumá a tu familia para cuidar juntos a las mascotas: todos ven la ficha y los recordatorios.'**
+  String get recHogarTexto;
+
+  /// No description provided for @recAjustesTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Ajustes'**
+  String get recAjustesTitulo;
+
+  /// No description provided for @recAjustesTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu nombre, los avisos, la zona para enterarte de mascotas perdidas y tu cuenta.'**
+  String get recAjustesTexto;
+
+  /// No description provided for @recNegocioAgendaTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu agenda'**
+  String get recNegocioAgendaTitulo;
+
+  /// No description provided for @recNegocioAgendaTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Los turnos que te reservan. Configurá tus servicios y horarios para que te puedan pedir.'**
+  String get recNegocioAgendaTexto;
+
+  /// No description provided for @recNegocioCatalogoTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu catálogo'**
+  String get recNegocioCatalogoTitulo;
+
+  /// No description provided for @recNegocioCatalogoTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Tus productos con foto y precio. Las personas te los piden desde la ficha de tu negocio.'**
+  String get recNegocioCatalogoTexto;
+
+  /// No description provided for @recNegocioPedidosTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Tus pedidos'**
+  String get recNegocioPedidosTitulo;
+
+  /// No description provided for @recNegocioPedidosTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Los pedidos que te hacen. Aceptalos y avisá cuando estén listos: a la persona le llega un aviso.'**
+  String get recNegocioPedidosTexto;
+
+  /// No description provided for @recNegocioFichaTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'La ficha de tu negocio'**
+  String get recNegocioFichaTitulo;
+
+  /// No description provided for @recNegocioFichaTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Los datos que ven las personas: horario, contacto, fotos, tu plan y tu equipo.'**
+  String get recNegocioFichaTexto;
+
+  /// No description provided for @recNegocioEquipoTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu equipo'**
+  String get recNegocioEquipoTitulo;
+
+  /// No description provided for @recNegocioEquipoTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'El negocio en el que trabajás y lo que podés hacer en él.'**
+  String get recNegocioEquipoTexto;
+
+  /// No description provided for @recPreguntasAccionTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Preguntá'**
+  String get recPreguntasAccionTitulo;
+
+  /// No description provided for @recPreguntasAccionTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegí el tema y escribí tu pregunta. Te avisamos cuando te respondan.'**
+  String get recPreguntasAccionTexto;
+
+  /// No description provided for @recGrupoAccionTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Publicá'**
+  String get recGrupoAccionTitulo;
+
+  /// No description provided for @recGrupoAccionTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Contá algo o compartí una foto con el grupo.'**
+  String get recGrupoAccionTexto;
 
   /// No description provided for @recAyudaTitulo.
   ///
@@ -6253,13 +6547,13 @@ abstract class AppLocalizations {
   /// No description provided for @recNegocioVolverTitulo.
   ///
   /// In es, this message translates to:
-  /// **'Volver a Huellitas'**
+  /// **'Tu cuenta'**
   String get recNegocioVolverTitulo;
 
   /// No description provided for @recNegocioVolverTexto.
   ///
   /// In es, this message translates to:
-  /// **'Para usar la app como dueño o dueña de mascotas.'**
+  /// **'Tus datos, los avisos y cerrar sesión. Tus mascotas se manejan en Huellitas, la otra app.'**
   String get recNegocioVolverTexto;
 
   /// No description provided for @explicacionVerMas.

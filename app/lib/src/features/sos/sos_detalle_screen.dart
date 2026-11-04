@@ -20,6 +20,7 @@ import '../../router.dart';
 import '../../sos/cartel_sos_pdf.dart';
 import '../../sos/sos_repositorio.dart';
 import '../../utiles/descargar.dart';
+import '../../widgets/boton_ayuda.dart';
 import '../chat/chat_screen.dart';
 
 /// Detalle de un SOS: fotos, datos, zona aproximada y cómo ayudar.
@@ -32,7 +33,10 @@ class SosDetalleScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final t = context.t;
     return Scaffold(
-      appBar: AppBar(title: Text(t.sosDetalleTitulo)),
+      appBar: AppBar(
+        title: Text(t.sosDetalleTitulo),
+        actions: const [BotonAyuda()],
+      ),
       body: switch (ref.watch(sosDetalleProvider(sosId))) {
         AsyncData(value: final detalle?) => _Detalle(detalle: detalle),
         AsyncData() => Center(child: Text(t.sosNoEncontrado)),

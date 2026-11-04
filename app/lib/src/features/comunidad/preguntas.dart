@@ -9,7 +9,9 @@ import '../../comunidad/comunidad_repositorio.dart';
 import '../../cuenta/con_cuenta.dart';
 import '../../funcionalidades/funcionalidades_activas.dart';
 import '../../metricas/metricas.dart';
+import '../../recorrido/recorrido.dart';
 import '../../router.dart';
+import '../../widgets/boton_ayuda.dart';
 import '../../widgets/volver.dart';
 import '../noticias/tarjeta_promocion.dart';
 import 'comunidad_screen.dart' show textoErrorComunidad;
@@ -102,16 +104,20 @@ class _PreguntasScreenState extends ConsumerState<PreguntasScreen> {
       appBar: AppBar(
         leading: volverSiNoHayAtras(context),
         title: Text(t.preguntasTitulo),
+        actions: const [BotonAyuda()],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => abrirConCuenta(
-          context,
-          ref,
-          destino: Rutas.nuevaPregunta,
-          motivo: t.preguntasMotivoCuenta,
+      floatingActionButton: MarcaRecorrido(
+        'accion',
+        child: FloatingActionButton.extended(
+          onPressed: () => abrirConCuenta(
+            context,
+            ref,
+            destino: Rutas.nuevaPregunta,
+            motivo: t.preguntasMotivoCuenta,
+          ),
+          icon: const Icon(Icons.add_comment_outlined),
+          label: Text(t.preguntasPreguntar),
         ),
-        icon: const Icon(Icons.add_comment_outlined),
-        label: Text(t.preguntasPreguntar),
       ),
       body: RefreshIndicator(
         onRefresh: () async => ref.invalidate(preguntasProvider),

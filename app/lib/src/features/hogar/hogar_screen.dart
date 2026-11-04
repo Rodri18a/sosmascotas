@@ -11,6 +11,7 @@ import '../../hogar/hogar_repositorio.dart';
 import '../../mascotas/mascotas_repositorio.dart';
 import '../../metricas/metricas.dart';
 import '../../router.dart';
+import '../../widgets/boton_ayuda.dart';
 import '../../widgets/explicacion_corta.dart';
 import '../../widgets/volver.dart';
 
@@ -31,6 +32,7 @@ class HogarScreen extends ConsumerWidget {
       appBar: AppBar(
         leading: volverSiNoHayAtras(context),
         title: Text(t.hogarTitulo),
+        actions: const [BotonAyuda()],
       ),
       body: switch (integrantes) {
         AsyncData(value: final lista) => _Contenido(lista: lista, yo: yo),

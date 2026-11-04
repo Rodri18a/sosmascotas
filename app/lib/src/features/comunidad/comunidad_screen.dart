@@ -11,7 +11,9 @@ import '../../fotos/elegir_foto.dart';
 import '../../mascotas/catalogo.dart';
 import '../../mascotas/mascotas_repositorio.dart';
 import '../../metricas/metricas.dart';
+import '../../recorrido/recorrido.dart';
 import '../../router.dart';
+import '../../widgets/boton_ayuda.dart';
 import '../../widgets/volver.dart';
 import 'preguntas.dart';
 
@@ -153,6 +155,7 @@ class GruposScreen extends ConsumerWidget {
                 child: const Icon(Icons.waving_hand_outlined),
               ),
             ),
+          const BotonAyuda(),
         ],
       ),
       body: RefreshIndicator(
@@ -295,13 +298,17 @@ class GrupoScreen extends ConsumerWidget {
                 ),
               ],
             ),
+          const BotonAyuda(),
         ],
       ),
       floatingActionButton: miembro
-          ? FloatingActionButton.extended(
-              onPressed: () => context.push(Rutas.publicarEnGrupo(grupoId)),
-              icon: const Icon(Icons.edit_outlined),
-              label: Text(t.comunidadPublicar),
+          ? MarcaRecorrido(
+              'accion',
+              child: FloatingActionButton.extended(
+                onPressed: () => context.push(Rutas.publicarEnGrupo(grupoId)),
+                icon: const Icon(Icons.edit_outlined),
+                label: Text(t.comunidadPublicar),
+              ),
             )
           : null,
       body: RefreshIndicator(

@@ -10,6 +10,7 @@ import '../../funcionalidades/funcionalidades_activas.dart';
 import '../../hogar/hogar_repositorio.dart';
 import '../../mascotas/mascotas_repositorio.dart';
 import '../../router.dart';
+import '../../widgets/boton_ayuda.dart';
 import '../../widgets/foto_mascota.dart';
 import '../../widgets/volver.dart';
 import '../ajustes/ajustes_screen.dart';
@@ -44,6 +45,7 @@ class PerfilScreen extends ConsumerWidget {
       appBar: AppBar(
         leading: volverSiNoHayAtras(context),
         title: Text(t.perfilTitulo),
+        actions: const [BotonAyuda()],
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),

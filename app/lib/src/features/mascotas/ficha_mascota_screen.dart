@@ -12,6 +12,7 @@ import '../../mascotas/mascotas_repositorio.dart';
 import '../../mascotas/textos_mascota.dart';
 import '../../router.dart';
 import '../../sos/sos_repositorio.dart';
+import '../../widgets/boton_ayuda.dart';
 import '../../widgets/foto_mascota.dart';
 import '../historial/compartir_historial.dart';
 import '../historial/historial.dart';
@@ -95,6 +96,7 @@ class _Ficha extends ConsumerWidget {
             icon: const Icon(Icons.edit_outlined),
             onPressed: () => context.push(Rutas.editarMascota(mascota.id)),
           ),
+          const BotonAyuda(),
         ],
       ),
       body: ListView(

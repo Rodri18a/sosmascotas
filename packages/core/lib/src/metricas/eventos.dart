@@ -79,6 +79,7 @@ abstract final class Eventos {
 
   /// Opción tocada en el menú ☰ (`item`: cuál), para ver qué se usa.
   static const menuItemOpen = 'menu_item_open';
+  static const appComerciosAviso = 'business_app_prompt';
 
   /// Recorrido guiado de una pantalla (D130): `screen`, y si arrancó solo
   /// (`auto`) o desde el botón ?. Al saltarlo se anota en qué paso (`step`).

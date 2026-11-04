@@ -11,6 +11,7 @@ import '../../metricas/metricas.dart';
 import '../../router.dart';
 import '../../tienda/tienda_repositorio.dart';
 import '../../utiles/enlaces.dart';
+import '../../widgets/boton_ayuda.dart';
 import '../../widgets/volver.dart';
 import '../chat/chat_screen.dart';
 import 'pedidos.dart';
@@ -696,6 +697,7 @@ class MisPedidosScreen extends ConsumerWidget {
       appBar: AppBar(
         leading: volverSiNoHayAtras(context),
         title: Text(t.misPedidos),
+        actions: const [BotonAyuda()],
       ),
       body: RefreshIndicator(
         onRefresh: () async {

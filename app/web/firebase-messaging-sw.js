@@ -38,13 +38,18 @@ self.addEventListener('push', (event) => {
 
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
-  const destino = new URL(event.notification.data?.ruta || '/', self.location.origin);
+  let ruta = event.notification.data?.ruta || '/';
+  // Lo del negocio se abre en Huellitas Comercios, que es otra app (D143).
+  if (ruta.startsWith('/negocio')) ruta = '/comercios' + ruta;
+  const destino = new URL(ruta, self.location.origin);
   // Solo rutas de la propia app.
   if (destino.origin !== self.location.origin) return;
+  const esComercios = (url) => new URL(url).pathname.startsWith('/comercios/');
 
   event.waitUntil((async () => {
     const ventanas = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
-    const abierta = ventanas.find((v) => new URL(v.url).origin === destino.origin);
+    const abierta = ventanas.find((v) => new URL(v.url).origin === destino.origin
+      && esComercios(v.url) === esComercios(destino.href));
     if (abierta) {
       try {
         // navigate() solo funciona en ventanas que controla este service

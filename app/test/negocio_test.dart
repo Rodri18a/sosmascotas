@@ -95,8 +95,7 @@ void main() {
     final negocios = NegociosFalsos();
     final eventos = <Map<String, Object?>>[];
     await _abrir(tester, negocios: negocios, eventos: eventos);
-    await _ir(tester, '/ajustes');
-    await _tocar(tester, find.text('Mi negocio'));
+    await _ir(tester, '/negocio');
 
     expect(find.widgetWithText(AppBar, 'Sumar mi negocio'), findsOneWidget);
     await _tocar(tester, find.widgetWithText(FilledButton, 'Sumar al mapa'));
@@ -237,9 +236,9 @@ void main() {
     expect(datos.containsKey('promo'), isFalse, reason: 'plan Básico');
   });
 
-  testWidgets('lugar sin reclamar: "¿Es tu negocio?" lleva al alta', (
-    tester,
-  ) async {
+  testWidgets('lugar sin reclamar: "¿Es tu negocio?" lleva al alta en '
+      'Huellitas Comercios (D143)', (tester) async {
+    final abiertas = <String>[];
     final comercios = ComerciosFalsos()
       ..sinReclamar = [
         const LugarSinReclamar(
@@ -250,7 +249,12 @@ void main() {
         ),
       ];
     final eventos = <Map<String, Object?>>[];
-    await _abrir(tester, comercios: comercios, eventos: eventos);
+    await _abrir(
+      tester,
+      comercios: comercios,
+      eventos: eventos,
+      otraAppAbierta: abiertas,
+    );
     await tester.tap(find.byKey(const ValueKey('mapa-mover')));
     await tester.pumpAndSettle();
 
@@ -264,6 +268,17 @@ void main() {
     expect(apertura['target_id'], '1');
     expect(apertura['props'], {'tipo': 'trainer'});
     await _tocar(tester, find.text('¿Es tu negocio? Dalo de alta'));
+    await _tocar(tester, find.text('Abrir Huellitas Comercios'));
+    expect(abiertas, [
+      '/comercios/negocio/alta?rubro=trainer&lat=-34.72&lng=-55.95',
+    ]);
+  });
+
+  testWidgets('en Huellitas Comercios, el alta toma el rubro del enlace', (
+    tester,
+  ) async {
+    await _abrir(tester, appComercio: true);
+    await _ir(tester, '/negocio/alta?rubro=trainer&lat=-34.72&lng=-55.95');
     expect(find.widgetWithText(AppBar, 'Sumar mi negocio'), findsOneWidget);
     final chip = tester.widget<ChoiceChip>(
       find.widgetWithText(ChoiceChip, 'Adiestrador'),
@@ -323,21 +338,44 @@ void main() {
     expect(find.textContaining('Recibimos tu reclamo'), findsOneWidget);
   });
 
-  testWidgets('dos apps (D129): en la web, «Mi negocio» abre Huellitas '
-      'Comercios', (tester) async {
+  testWidgets('dos apps separadas (D143): en la web, «Mi negocio» avisa y '
+      'abre Huellitas Comercios', (tester) async {
     final abiertas = <String>[];
+    final eventos = <Map<String, Object?>>[];
     await _abrir(
       tester,
       negocios: NegociosFalsos([_negocio()]),
       otraAppAbierta: abiertas,
+      eventos: eventos,
     );
     await _ir(tester, '/ajustes');
     await _tocar(tester, find.text('Mi negocio'));
-    expect(abiertas, ['/comercios/']);
+    expect(find.textContaining('una app aparte'), findsWidgets);
+    await _tocar(tester, find.text('Cancelar'));
+    expect(abiertas, isEmpty);
+    expect(find.widgetWithText(AppBar, 'Peluquería Luna'), findsNothing);
+
+    await _tocar(tester, find.text('Mi negocio'));
+    await _tocar(tester, find.text('Abrir Huellitas Comercios'));
+    expect(abiertas, ['/comercios/negocio']);
+    expect(
+      eventos.where((e) => e['name'] == 'business_app_prompt'),
+      hasLength(2),
+    );
   });
 
-  testWidgets('dos apps (D129): Huellitas Comercios abre en el panel, en '
-      'azul, y vuelve a Huellitas', (tester) async {
+  testWidgets('dos apps separadas (D143): en el celular, sin la otra app, '
+      '«Mi negocio» solo explica', (tester) async {
+    await _abrir(tester, negocios: NegociosFalsos([_negocio()]));
+    await _ir(tester, '/ajustes');
+    await _tocar(tester, find.text('Mi negocio'));
+    expect(find.textContaining('Muy pronto'), findsOneWidget);
+    await _tocar(tester, find.text('Entendido'));
+    expect(find.widgetWithText(AppBar, 'Peluquería Luna'), findsNothing);
+  });
+
+  testWidgets('dos apps separadas (D143): Huellitas Comercios abre en el '
+      'panel, en azul, y no pasa a la de personas', (tester) async {
     final abiertas = <String>[];
     await _abrir(
       tester,
@@ -351,7 +389,20 @@ void main() {
       Theme.of(tester.element(find.byType(AppBar))).colorScheme.primary,
       Paleta.comercios.claro.primario,
     );
-    await _tocar(tester, find.byTooltip('Ir a Huellitas'));
-    expect(abiertas, ['/']);
+    expect(find.byTooltip('Ir a Huellitas'), findsNothing);
+
+    // «Mi cuenta» abre Ajustes, sin lo de las mascotas.
+    await _tocar(tester, find.byTooltip('Mi cuenta'));
+    expect(find.widgetWithText(AppBar, 'Ajustes'), findsOneWidget);
+    expect(find.text('Mi negocio'), findsNothing);
+    expect(find.text('Mis pedidos'), findsNothing);
+    expect(find.text('Cerrar sesión'), findsOneWidget);
+
+    // Lo de las personas lleva al panel, aunque llegue por un enlace.
+    await _ir(tester, '/mascotas');
+    expect(find.widgetWithText(AppBar, 'Peluquería Luna'), findsOneWidget);
+    await _ir(tester, '/mapa');
+    expect(find.widgetWithText(AppBar, 'Peluquería Luna'), findsOneWidget);
+    expect(abiertas, isEmpty);
   });
 }

@@ -139,6 +139,135 @@ abstract final class PasosRecorrido {
     ];
   }
 
+  /// Los pasos de [pantalla]. Las pantallas de adentro tienen una
+  /// explicación, a veces su acción principal, y el botón ? (D144).
+  static List<PasoRecorrido> de(
+    BuildContext context,
+    PantallaRecorrido pantalla,
+  ) {
+    final t = context.t;
+    return switch (pantalla) {
+      PantallaRecorrido.inicio => inicio(context),
+      PantallaRecorrido.sos => sos(context),
+      PantallaRecorrido.mapa => mapa(context),
+      PantallaRecorrido.mascotas => mascotas(context),
+      PantallaRecorrido.urgencias => urgencias(context),
+      PantallaRecorrido.negocio => negocio(context),
+      PantallaRecorrido.ficha => [
+        PasoRecorrido(titulo: t.recFichaTitulo, texto: t.recFichaTexto),
+        _ayuda(t),
+      ],
+      PantallaRecorrido.chapitaQr => [
+        PasoRecorrido(titulo: t.recChapitaQrTitulo, texto: t.recChapitaQrTexto),
+        _ayuda(t),
+      ],
+      PantallaRecorrido.sosDetalle => [
+        PasoRecorrido(
+          titulo: t.recSosDetalleTitulo,
+          texto: t.recSosDetalleTexto,
+        ),
+        _ayuda(t),
+      ],
+      PantallaRecorrido.preguntas => [
+        PasoRecorrido(titulo: t.recPreguntasTitulo, texto: t.recPreguntasTexto),
+        PasoRecorrido(
+          marca: 'accion',
+          titulo: t.recPreguntasAccionTitulo,
+          texto: t.recPreguntasAccionTexto,
+        ),
+        _ayuda(t),
+      ],
+      PantallaRecorrido.grupos => [
+        PasoRecorrido(titulo: t.recGruposTitulo, texto: t.recGruposTexto),
+        _ayuda(t),
+      ],
+      PantallaRecorrido.grupo => [
+        PasoRecorrido(titulo: t.recGrupoTitulo, texto: t.recGrupoTexto),
+        PasoRecorrido(
+          marca: 'accion',
+          titulo: t.recGrupoAccionTitulo,
+          texto: t.recGrupoAccionTexto,
+        ),
+        _ayuda(t),
+      ],
+      PantallaRecorrido.mensajes => [
+        PasoRecorrido(titulo: t.recMensajesTitulo, texto: t.recMensajesTexto),
+        _ayuda(t),
+      ],
+      PantallaRecorrido.avisos => [
+        PasoRecorrido(titulo: t.recAvisosTitulo, texto: t.recAvisosTexto),
+        _ayuda(t),
+      ],
+      PantallaRecorrido.adopcion => [
+        PasoRecorrido(titulo: t.recAdopcionTitulo, texto: t.recAdopcionTexto),
+        _ayuda(t),
+      ],
+      PantallaRecorrido.transito => [
+        PasoRecorrido(titulo: t.recTransitoTitulo, texto: t.recTransitoTexto),
+        _ayuda(t),
+      ],
+      PantallaRecorrido.turnos => [
+        PasoRecorrido(titulo: t.recTurnosTitulo, texto: t.recTurnosTexto),
+        _ayuda(t),
+      ],
+      PantallaRecorrido.pedidos => [
+        PasoRecorrido(titulo: t.recPedidosTitulo, texto: t.recPedidosTexto),
+        _ayuda(t),
+      ],
+      PantallaRecorrido.cuidados => [
+        PasoRecorrido(titulo: t.recCuidadosTitulo, texto: t.recCuidadosTexto),
+        _ayuda(t),
+      ],
+      PantallaRecorrido.perfil => [
+        PasoRecorrido(titulo: t.recPerfilTitulo, texto: t.recPerfilTexto),
+        _ayuda(t),
+      ],
+      PantallaRecorrido.hogar => [
+        PasoRecorrido(titulo: t.recHogarTitulo, texto: t.recHogarTexto),
+        _ayuda(t),
+      ],
+      PantallaRecorrido.ajustes => [
+        PasoRecorrido(titulo: t.recAjustesTitulo, texto: t.recAjustesTexto),
+        _ayuda(t),
+      ],
+      PantallaRecorrido.negocioAgenda => [
+        PasoRecorrido(
+          titulo: t.recNegocioAgendaTitulo,
+          texto: t.recNegocioAgendaTexto,
+        ),
+        _ayuda(t),
+      ],
+      PantallaRecorrido.negocioCatalogo => [
+        PasoRecorrido(
+          titulo: t.recNegocioCatalogoTitulo,
+          texto: t.recNegocioCatalogoTexto,
+        ),
+        _ayuda(t),
+      ],
+      PantallaRecorrido.negocioPedidos => [
+        PasoRecorrido(
+          titulo: t.recNegocioPedidosTitulo,
+          texto: t.recNegocioPedidosTexto,
+        ),
+        _ayuda(t),
+      ],
+      PantallaRecorrido.negocioFicha => [
+        PasoRecorrido(
+          titulo: t.recNegocioFichaTitulo,
+          texto: t.recNegocioFichaTexto,
+        ),
+        _ayuda(t),
+      ],
+      PantallaRecorrido.negocioEquipo => [
+        PasoRecorrido(
+          titulo: t.recNegocioEquipoTitulo,
+          texto: t.recNegocioEquipoTexto,
+        ),
+        _ayuda(t),
+      ],
+    };
+  }
+
   static PasoRecorrido _ayuda(AppLocalizations t) => PasoRecorrido(
     marca: 'ayuda',
     titulo: t.recAyudaTitulo,

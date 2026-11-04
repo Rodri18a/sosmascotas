@@ -2537,7 +2537,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get negocioMi => 'Mi negocio';
 
   @override
-  String get negocioMiAyuda => 'Sumá tu comercio o servicio al mapa (gratis).';
+  String get negocioMiAyuda =>
+      'Se maneja en Huellitas Comercios, una app aparte.';
 
   @override
   String get negocioAltaTitulo => 'Sumar mi negocio';
@@ -2612,6 +2613,23 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get irAHuellitas => 'Ir a Huellitas';
+
+  @override
+  String get appComerciosTitulo => 'Huellitas Comercios';
+
+  @override
+  String get appComerciosTexto =>
+      'Los negocios se manejan en Huellitas Comercios, una app aparte. Entrás con la misma cuenta y la podés instalar en tu celular.';
+
+  @override
+  String get appComerciosProximamente =>
+      'Muy pronto vas a poder bajarla de la tienda de tu celular.';
+
+  @override
+  String get appComerciosAbrir => 'Abrir Huellitas Comercios';
+
+  @override
+  String get comerciosMiCuenta => 'Mi cuenta';
 
   @override
   String get negocioPanel => 'Panel';
@@ -3537,11 +3555,11 @@ class AppLocalizationsEs extends AppLocalizations {
       'Todas las secciones: tus mascotas, adopción, turnos, tu cuenta y más.';
 
   @override
-  String get recAvisosTitulo => 'Mensajes y avisos';
+  String get recAvisosTitulo => 'Tus avisos';
 
   @override
   String get recAvisosTexto =>
-      'Acá te llegan los mensajes y los avisos, por ejemplo si alguien escanea la chapita QR de tu mascota.';
+      'Lo que te dejan quienes vieron a tu mascota o escanearon su QR. Antes de pagar algo, desconfiá.';
 
   @override
   String get recCarruselTitulo => 'Destacados';
@@ -3563,6 +3581,160 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get recBarraTexto =>
       'SOS para perdidos y encontrados, el Mapa en el medio, tus mascotas y Urgencias.';
+
+  @override
+  String get recFichaTitulo => 'La ficha de tu mascota';
+
+  @override
+  String get recFichaTexto =>
+      'Sus datos, la libreta de salud, los recordatorios, el historial de vida y la chapita QR. Bajá para ver todo.';
+
+  @override
+  String get recChapitaQrTitulo => 'La chapita QR';
+
+  @override
+  String get recChapitaQrTexto =>
+      'Quien la escanea ve la foto y te deja un aviso, sin ver tu teléfono. Podés descargar la etiqueta o pedir una chapita.';
+
+  @override
+  String get recSosDetalleTitulo => 'Un reporte de SOS';
+
+  @override
+  String get recSosDetalleTexto =>
+      'Si la viste, tocá «Avisar al dueño»: le llegan tus datos y decide. También podés compartirlo o imprimir el cartel.';
+
+  @override
+  String get recPreguntasTitulo => 'Preguntas de la comunidad';
+
+  @override
+  String get recPreguntasTexto =>
+      'Buscá si alguien ya preguntó lo mismo o filtrá por tema. Las veterinarias firman sus respuestas.';
+
+  @override
+  String get recGruposTitulo => 'Grupos';
+
+  @override
+  String get recGruposTexto =>
+      'Grupos de tu zona y de cada raza para charlar, organizar paseos y ayudarse.';
+
+  @override
+  String get recGrupoTitulo => 'Un grupo';
+
+  @override
+  String get recGrupoTexto =>
+      'Leé lo que publican, comentá y saludá a otros. No se permite vender ni cruzar animales.';
+
+  @override
+  String get recMensajesTitulo => 'Tus mensajes';
+
+  @override
+  String get recMensajesTexto =>
+      'Las charlas con comercios, paseadores, refugios y otras personas. Nadie ve tu teléfono.';
+
+  @override
+  String get recAdopcionTitulo => 'Adopción';
+
+  @override
+  String get recAdopcionTexto =>
+      'Animales que buscan hogar, de refugios y personas. Filtrá por especie y tamaño, o publicá uno.';
+
+  @override
+  String get recTransitoTitulo => 'Hogar de tránsito';
+
+  @override
+  String get recTransitoTexto =>
+      'Anotate para cuidar un animal por unos días mientras un refugio le busca familia. Nunca se muestra tu dirección.';
+
+  @override
+  String get recTurnosTitulo => 'Tus turnos';
+
+  @override
+  String get recTurnosTexto =>
+      'Los turnos que reservaste en veterinarias, peluquerías y otros comercios. Desde acá los podés cancelar.';
+
+  @override
+  String get recPedidosTitulo => 'Tus pedidos';
+
+  @override
+  String get recPedidosTexto =>
+      'Lo que pediste a los pet shops y en qué estado está. El comercio te avisa cuando cambia.';
+
+  @override
+  String get recCuidadosTitulo => 'Paseos y estadías';
+
+  @override
+  String get recCuidadosTexto =>
+      'Los paseos, guarderías y estadías que pediste, y su estado.';
+
+  @override
+  String get recPerfilTitulo => 'Tu perfil';
+
+  @override
+  String get recPerfilTexto =>
+      'Tu nombre, tus mascotas y tus huellas: lo que ayudaste a la comunidad. Solo vos ves tus huellas.';
+
+  @override
+  String get recHogarTitulo => 'Tu hogar';
+
+  @override
+  String get recHogarTexto =>
+      'Sumá a tu familia para cuidar juntos a las mascotas: todos ven la ficha y los recordatorios.';
+
+  @override
+  String get recAjustesTitulo => 'Ajustes';
+
+  @override
+  String get recAjustesTexto =>
+      'Tu nombre, los avisos, la zona para enterarte de mascotas perdidas y tu cuenta.';
+
+  @override
+  String get recNegocioAgendaTitulo => 'Tu agenda';
+
+  @override
+  String get recNegocioAgendaTexto =>
+      'Los turnos que te reservan. Configurá tus servicios y horarios para que te puedan pedir.';
+
+  @override
+  String get recNegocioCatalogoTitulo => 'Tu catálogo';
+
+  @override
+  String get recNegocioCatalogoTexto =>
+      'Tus productos con foto y precio. Las personas te los piden desde la ficha de tu negocio.';
+
+  @override
+  String get recNegocioPedidosTitulo => 'Tus pedidos';
+
+  @override
+  String get recNegocioPedidosTexto =>
+      'Los pedidos que te hacen. Aceptalos y avisá cuando estén listos: a la persona le llega un aviso.';
+
+  @override
+  String get recNegocioFichaTitulo => 'La ficha de tu negocio';
+
+  @override
+  String get recNegocioFichaTexto =>
+      'Los datos que ven las personas: horario, contacto, fotos, tu plan y tu equipo.';
+
+  @override
+  String get recNegocioEquipoTitulo => 'Tu equipo';
+
+  @override
+  String get recNegocioEquipoTexto =>
+      'El negocio en el que trabajás y lo que podés hacer en él.';
+
+  @override
+  String get recPreguntasAccionTitulo => 'Preguntá';
+
+  @override
+  String get recPreguntasAccionTexto =>
+      'Elegí el tema y escribí tu pregunta. Te avisamos cuando te respondan.';
+
+  @override
+  String get recGrupoAccionTitulo => 'Publicá';
+
+  @override
+  String get recGrupoAccionTexto =>
+      'Contá algo o compartí una foto con el grupo.';
 
   @override
   String get recAyudaTitulo => '¿Alguna duda?';
@@ -3681,11 +3853,11 @@ class AppLocalizationsEs extends AppLocalizations {
       'Panel con tus números, Agenda de turnos, Catálogo, Pedidos y la Ficha del negocio.';
 
   @override
-  String get recNegocioVolverTitulo => 'Volver a Huellitas';
+  String get recNegocioVolverTitulo => 'Tu cuenta';
 
   @override
   String get recNegocioVolverTexto =>
-      'Para usar la app como dueño o dueña de mascotas.';
+      'Tus datos, los avisos y cerrar sesión. Tus mascotas se manejan en Huellitas, la otra app.';
 
   @override
   String get explicacionVerMas => 'Ver más';

@@ -15,6 +15,7 @@ import '../../metricas/metricas.dart';
 import '../../qr/cartel_qr.dart';
 import '../../qr/qr_repositorio.dart';
 import '../../utiles/descargar.dart';
+import '../../widgets/boton_ayuda.dart';
 import '../../widgets/explicacion_corta.dart';
 import '../chapitas/pedido_chapita.dart';
 
@@ -31,7 +32,10 @@ class QrMascotaScreen extends ConsumerWidget {
     final mascota = ref.watch(mascotaProvider(mascotaId)).value;
     final qr = ref.watch(qrActivoProvider(mascotaId));
     return Scaffold(
-      appBar: AppBar(title: Text(t.fichaQrTitulo)),
+      appBar: AppBar(
+        title: Text(t.fichaQrTitulo),
+        actions: const [BotonAyuda()],
+      ),
       body: switch (qr) {
         AsyncData(value: final tag?) when mascota != null => _Contenido(
           mascota: mascota,

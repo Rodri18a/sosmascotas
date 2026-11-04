@@ -14,6 +14,7 @@ import '../../metricas/metricas.dart';
 import '../../recordatorios/recordatorios_repositorio.dart';
 import '../../router.dart';
 import '../../utiles/enlaces.dart';
+import '../../widgets/boton_ayuda.dart';
 import '../../widgets/explicacion_corta.dart';
 import '../../widgets/volver.dart';
 import '../legal/legal_screen.dart';
@@ -101,6 +102,7 @@ class AdopcionScreen extends ConsumerWidget {
                 onPressed: () => context.push('${Rutas.adopcion}/perfil'),
                 icon: const Icon(Icons.badge_outlined),
               ),
+            const BotonAyuda(),
           ],
           bottom: TabBar(
             tabs: [

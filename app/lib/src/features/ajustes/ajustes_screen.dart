@@ -15,6 +15,7 @@ import '../../push/servicio_push.dart';
 import '../../router.dart';
 import '../../theme/tema_elegido.dart';
 import '../../ubicacion/control_ubicacion.dart';
+import '../../widgets/boton_ayuda.dart';
 import '../../widgets/volver.dart';
 import '../ingresar/ingresar_screen.dart';
 import '../instalar/instalar.dart';
@@ -33,6 +34,7 @@ class AjustesScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(t.ajustes),
         leading: volverSiNoHayAtras(context),
+        actions: const [BotonAyuda()],
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(vertical: 8),
@@ -153,6 +155,9 @@ class _SeccionCuenta extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final t = context.t;
     final perfil = ref.watch(perfilProvider).value;
+    // En Huellitas Comercios, solo lo de la cuenta y los avisos: lo de las
+    // mascotas y las compras se maneja en Huellitas (D143).
+    final personas = !ref.watch(esAppComercioProvider);
     return Column(
       children: [
         ListTile(
@@ -168,77 +173,79 @@ class _SeccionCuenta extends ConsumerWidget {
               ? null
               : () => editarNombre(context, ref, perfil),
         ),
-        SiFuncionalidad(
-          Funcionalidades.perfil,
-          child: ListTile(
-            leading: const Icon(Icons.badge_outlined),
-            title: Text(t.perfilAbrir),
-            subtitle: Text(t.perfilAbrirAyuda),
-            trailing: const Icon(Icons.chevron_right_outlined),
-            onTap: () => context.push(Rutas.perfil),
+        if (personas) ...[
+          SiFuncionalidad(
+            Funcionalidades.perfil,
+            child: ListTile(
+              leading: const Icon(Icons.badge_outlined),
+              title: Text(t.perfilAbrir),
+              subtitle: Text(t.perfilAbrirAyuda),
+              trailing: const Icon(Icons.chevron_right_outlined),
+              onTap: () => context.push(Rutas.perfil),
+            ),
           ),
-        ),
-        ListTile(
-          leading: const Icon(Icons.shopping_bag_outlined),
-          title: Text(t.misPedidos),
-          subtitle: Text(t.misPedidosAyuda),
-          trailing: const Icon(Icons.chevron_right_outlined),
-          onTap: () => context.push(Rutas.misPedidos),
-        ),
-        SiFuncionalidad(
-          Funcionalidades.agenda,
-          child: ListTile(
-            leading: const Icon(Icons.event_available_outlined),
-            title: Text(t.misTurnos),
-            subtitle: Text(t.misTurnosAyuda),
+          ListTile(
+            leading: const Icon(Icons.shopping_bag_outlined),
+            title: Text(t.misPedidos),
+            subtitle: Text(t.misPedidosAyuda),
             trailing: const Icon(Icons.chevron_right_outlined),
-            onTap: () => context.push(Rutas.misTurnos),
+            onTap: () => context.push(Rutas.misPedidos),
           ),
-        ),
-        SiFuncionalidad(
-          Funcionalidades.cuidados,
-          child: ListTile(
-            leading: const Icon(Icons.pets_outlined),
-            title: Text(t.misCuidados),
-            subtitle: Text(t.misCuidadosAyuda),
-            trailing: const Icon(Icons.chevron_right_outlined),
-            onTap: () => context.push(Rutas.misCuidados),
+          SiFuncionalidad(
+            Funcionalidades.agenda,
+            child: ListTile(
+              leading: const Icon(Icons.event_available_outlined),
+              title: Text(t.misTurnos),
+              subtitle: Text(t.misTurnosAyuda),
+              trailing: const Icon(Icons.chevron_right_outlined),
+              onTap: () => context.push(Rutas.misTurnos),
+            ),
           ),
-        ),
-        SiFuncionalidad(
-          Funcionalidades.comercios,
-          child: ListTile(
-            leading: const Icon(Icons.storefront_outlined),
-            title: Text(t.negocioMi),
-            subtitle: Text(t.negocioMiAyuda),
-            trailing: const Icon(Icons.chevron_right_outlined),
-            onTap: () => irAMiNegocio(context, ref),
+          SiFuncionalidad(
+            Funcionalidades.cuidados,
+            child: ListTile(
+              leading: const Icon(Icons.pets_outlined),
+              title: Text(t.misCuidados),
+              subtitle: Text(t.misCuidadosAyuda),
+              trailing: const Icon(Icons.chevron_right_outlined),
+              onTap: () => context.push(Rutas.misCuidados),
+            ),
           ),
-        ),
-        SiFuncionalidad(
-          Funcionalidades.planesUsuario,
-          child: ListTile(
-            leading: const Icon(Icons.workspace_premium_outlined),
-            title: Text(t.miPlanTitulo),
-            subtitle: Text(t.miPlanAyuda),
-            trailing: const Icon(Icons.chevron_right_outlined),
-            onTap: () => context.push(Rutas.miPlan),
+          SiFuncionalidad(
+            Funcionalidades.comercios,
+            child: ListTile(
+              leading: const Icon(Icons.storefront_outlined),
+              title: Text(t.negocioMi),
+              subtitle: Text(t.negocioMiAyuda),
+              trailing: const Icon(Icons.chevron_right_outlined),
+              onTap: () => irAMiNegocio(context, ref),
+            ),
           ),
-        ),
-        SiFuncionalidad(
-          Funcionalidades.hogar,
-          child: ListTile(
-            leading: const Icon(Icons.family_restroom_outlined),
-            title: Text(t.ajustesHogar),
-            subtitle: Text(t.ajustesHogarAyuda),
-            trailing: const Icon(Icons.chevron_right_outlined),
-            onTap: () => context.push(Rutas.hogar),
+          SiFuncionalidad(
+            Funcionalidades.planesUsuario,
+            child: ListTile(
+              leading: const Icon(Icons.workspace_premium_outlined),
+              title: Text(t.miPlanTitulo),
+              subtitle: Text(t.miPlanAyuda),
+              trailing: const Icon(Icons.chevron_right_outlined),
+              onTap: () => context.push(Rutas.miPlan),
+            ),
           ),
-        ),
+          SiFuncionalidad(
+            Funcionalidades.hogar,
+            child: ListTile(
+              leading: const Icon(Icons.family_restroom_outlined),
+              title: Text(t.ajustesHogar),
+              subtitle: Text(t.ajustesHogarAyuda),
+              trailing: const Icon(Icons.chevron_right_outlined),
+              onTap: () => context.push(Rutas.hogar),
+            ),
+          ),
+        ],
         const InterruptorPush(),
-        if (perfil != null) TileZonaAvisos(perfil: perfil),
-        if (perfil != null) _RadioAvisos(perfil: perfil),
-        if (ref.watch(tienePlanConTemasProvider)) ...[
+        if (personas && perfil != null) TileZonaAvisos(perfil: perfil),
+        if (personas && perfil != null) _RadioAvisos(perfil: perfil),
+        if (personas && ref.watch(tienePlanConTemasProvider)) ...[
           const SiFuncionalidad(Funcionalidades.temasPro, child: TileTema()),
           const TileLetra(),
         ],

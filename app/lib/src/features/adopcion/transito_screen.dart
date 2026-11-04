@@ -9,6 +9,7 @@ import '../../adopcion/transito_repositorio.dart';
 import '../../mascotas/catalogo.dart';
 import '../../metricas/metricas.dart';
 import '../../router.dart';
+import '../../widgets/boton_ayuda.dart';
 import '../../widgets/explicacion_corta.dart';
 import '../../widgets/volver.dart';
 
@@ -191,6 +192,7 @@ class _HogarTransitoState extends ConsumerState<HogarTransitoScreen> {
       appBar: AppBar(
         leading: volverSiNoHayAtras(context),
         title: Text(t.transitoTitulo),
+        actions: const [BotonAyuda()],
       ),
       body: !_cargado
           ? const Center(child: CircularProgressIndicator())

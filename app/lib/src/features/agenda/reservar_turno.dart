@@ -11,6 +11,7 @@ import '../../mascotas/mascotas_repositorio.dart';
 import '../../metricas/metricas.dart';
 import '../../router.dart';
 import '../../utiles/enlaces.dart';
+import '../../widgets/boton_ayuda.dart';
 import '../../widgets/volver.dart';
 
 /// Texto de cada estado de un turno.
@@ -347,6 +348,7 @@ class MisTurnosScreen extends ConsumerWidget {
       appBar: AppBar(
         leading: volverSiNoHayAtras(context),
         title: Text(t.misTurnos),
+        actions: const [BotonAyuda()],
       ),
       body: RefreshIndicator(
         onRefresh: () => ref.refresh(misTurnosProvider.future),

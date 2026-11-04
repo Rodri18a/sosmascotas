@@ -11,6 +11,7 @@ import '../../mascotas/mascotas_repositorio.dart';
 import '../../metricas/metricas.dart';
 import '../../router.dart';
 import '../../utiles/enlaces.dart';
+import '../../widgets/boton_ayuda.dart';
 import '../../widgets/volver.dart';
 
 String textoTipoCuidado(AppLocalizations t, TipoCuidado x) => switch (x) {
@@ -411,6 +412,7 @@ class MisCuidadosScreen extends ConsumerWidget {
       appBar: AppBar(
         leading: volverSiNoHayAtras(context),
         title: Text(t.misCuidados),
+        actions: const [BotonAyuda()],
       ),
       body: RefreshIndicator(
         onRefresh: () => ref.refresh(misCuidadosProvider.future),

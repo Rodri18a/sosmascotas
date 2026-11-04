@@ -9,6 +9,7 @@ import '../../avisos/avisos_repositorio.dart';
 import '../../mascotas/mascotas_repositorio.dart';
 import '../../metricas/metricas.dart';
 import '../../push/control_push.dart';
+import '../../widgets/boton_ayuda.dart';
 import '../../widgets/volver.dart';
 
 /// Bandeja "Avisos": lo que dejaron quienes encontraron o vieron a tu mascota.
@@ -51,6 +52,7 @@ class _AvisosScreenState extends ConsumerState<AvisosScreen> {
       appBar: AppBar(
         leading: volverSiNoHayAtras(context),
         title: Text(t.avisosTitulo),
+        actions: const [BotonAyuda()],
       ),
       body: RefreshIndicator(
         onRefresh: () => ref.refresh(avisosProvider.future),

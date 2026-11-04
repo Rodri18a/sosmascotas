@@ -13,6 +13,7 @@ import '../../fotos/elegir_foto.dart';
 import '../../metricas/metricas.dart';
 import '../../router.dart';
 import '../../utiles/enlaces.dart';
+import '../../widgets/boton_ayuda.dart';
 import '../../widgets/volver.dart';
 import '../recordatorios/recordatorios.dart';
 
@@ -49,6 +50,7 @@ class ConversacionesScreen extends ConsumerWidget {
       appBar: AppBar(
         leading: volverSiNoHayAtras(context),
         title: Text(t.chatMensajes),
+        actions: const [BotonAyuda()],
       ),
       body: switch (conversaciones) {
         AsyncData(value: final lista) when lista.isEmpty => Padding(

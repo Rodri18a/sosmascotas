@@ -7,6 +7,7 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'cuenta/perfil_repositorio.dart';
 import 'cuenta/servicio_cuenta.dart';
+import 'dos_apps/dos_apps.dart';
 import 'features/adopcion/adopcion_screen.dart';
 import 'features/adopcion/apadrinamiento_screen.dart';
 import 'features/adopcion/pack_screen.dart';
@@ -55,6 +56,8 @@ import 'features/tienda/servicios.dart';
 import 'features/veterinarias/socios_screen.dart';
 import 'funcionalidades/funcionalidades_activas.dart';
 import 'legal/legal.dart';
+import 'recorrido/pasos.dart';
+import 'recorrido/recorrido.dart';
 import 'redireccion.dart';
 import 'sos/sos_repositorio.dart';
 
@@ -271,6 +274,51 @@ GoRoute _hija(String ruta, Widget pantalla) =>
     GoRoute(path: ruta.split('/').last, builder: (_, _) => pantalla);
 
 /// Pantalla donde abre la app: el muro (D127). Las pruebas del mapa la cambian.
+/// Pantallas que son solo de Huellitas (las personas y sus mascotas). En
+/// Huellitas Comercios llevan al panel del negocio (D143).
+bool esDePersonas(String ruta) {
+  if (ruta == '/' || ruta.isEmpty) return true;
+  const raices = {
+    Rutas.noticias,
+    Rutas.sos,
+    Rutas.mapa,
+    Rutas.mascotas,
+    Rutas.ayuda,
+    Rutas.libreta,
+    Rutas.recordatorios,
+    Rutas.historial,
+    Rutas.hogar,
+    Rutas.unirme,
+    Rutas.activar,
+    Rutas.perfil,
+    Rutas.adopcion,
+    Rutas.misPedidos,
+    Rutas.miPlan,
+    Rutas.misTurnos,
+    Rutas.misCuidados,
+    Rutas.grupos,
+    Rutas.preguntas,
+    Rutas.saludos,
+    Rutas.buscarLugares,
+    Rutas.guiaRenac,
+    Rutas.descuentosPro,
+    '/publicacion',
+    '/tienda',
+    '/lugares',
+    '/chapitas',
+  };
+  final raiz = '/${ruta.split('/').where((p) => p.isNotEmpty).first}';
+  return raices.contains(raiz);
+}
+
+/// Envuelve una pantalla con su recorrido guiado (D130, D144): sale solo la
+/// primera vez y se repite con el botón ?.
+Widget _conGuia(PantallaRecorrido pantalla, Widget hijo) => ZonaRecorrido(
+  pantalla: pantalla,
+  pasos: (context) => PasosRecorrido.de(context, pantalla),
+  child: hijo,
+);
+
 final rutaInicialProvider = Provider<String>((_) => Rutas.inicio);
 
 final routerProvider = Provider<GoRouter>((ref) {
@@ -316,12 +364,18 @@ final routerProvider = Provider<GoRouter>((ref) {
   final router = GoRouter(
     initialLocation: ref.read(rutaInicialProvider),
     refreshListenable: cambio,
-    redirect: (context, state) => redirigir(
-      conectado: ref.read(conectadoProvider),
-      necesitaConsentimiento: ref.read(necesitaConsentimientoProvider),
-      uri: state.uri,
-      funcionalidadActiva: ref.read(funcionalidadesProvider).activa,
-    ),
+    redirect: (context, state) =>
+        redirigir(
+          conectado: ref.read(conectadoProvider),
+          necesitaConsentimiento: ref.read(necesitaConsentimientoProvider),
+          uri: state.uri,
+          funcionalidadActiva: ref.read(funcionalidadesProvider).activa,
+        ) ??
+        // Huellitas Comercios es otra app (D143): lo de las personas no se
+        // abre ahí, ni por un enlace ni por un aviso.
+        (ref.read(esAppComercioProvider) && esDePersonas(state.uri.path)
+            ? Rutas.negocio
+            : null),
     routes: [
       StatefulShellRoute.indexedStack(
         builder: (context, state, shell) => AppShell(navigationShell: shell),
@@ -329,10 +383,7 @@ final routerProvider = Provider<GoRouter>((ref) {
           // El orden es el de `Pestana` en la barra inferior (D94).
           StatefulShellBranch(
             routes: [
-              _pestana(
-                Rutas.noticias,
-                (_, _) => const NoticiasScreen(),
-              ),
+              _pestana(Rutas.noticias, (_, _) => const NoticiasScreen()),
             ],
           ),
           StatefulShellBranch(
@@ -349,8 +400,10 @@ final routerProvider = Provider<GoRouter>((ref) {
                   ),
                   GoRoute(
                     path: ':id',
-                    builder: (_, state) =>
-                        SosDetalleScreen(sosId: state.pathParameters['id']!),
+                    builder: (_, state) => _conGuia(
+                      PantallaRecorrido.sosDetalle,
+                      SosDetalleScreen(sosId: state.pathParameters['id']!),
+                    ),
                   ),
                 ],
               ),
@@ -376,8 +429,11 @@ final routerProvider = Provider<GoRouter>((ref) {
                   _hija(Rutas.mascotaNueva, const MascotaFormScreen()),
                   GoRoute(
                     path: ':id',
-                    builder: (_, state) => FichaMascotaScreen(
-                      mascotaId: state.pathParameters['id']!,
+                    builder: (_, state) => _conGuia(
+                      PantallaRecorrido.ficha,
+                      FichaMascotaScreen(
+                        mascotaId: state.pathParameters['id']!,
+                      ),
                     ),
                     routes: [
                       GoRoute(
@@ -388,8 +444,11 @@ final routerProvider = Provider<GoRouter>((ref) {
                       ),
                       GoRoute(
                         path: 'qr',
-                        builder: (_, state) => QrMascotaScreen(
-                          mascotaId: state.pathParameters['id']!,
+                        builder: (_, state) => _conGuia(
+                          PantallaRecorrido.chapitaQr,
+                          QrMascotaScreen(
+                            mascotaId: state.pathParameters['id']!,
+                          ),
                         ),
                       ),
                     ],
@@ -405,11 +464,13 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: Rutas.ajustes,
-        builder: (context, state) => const AjustesScreen(),
+        builder: (context, state) =>
+            _conGuia(PantallaRecorrido.ajustes, const AjustesScreen()),
       ),
       GoRoute(
         path: Rutas.avisos,
-        builder: (context, state) => const AvisosScreen(),
+        builder: (context, state) =>
+            _conGuia(PantallaRecorrido.avisos, const AvisosScreen()),
       ),
       GoRoute(
         path: Rutas.consentimiento,
@@ -464,8 +525,16 @@ final routerProvider = Provider<GoRouter>((ref) {
           recordatorioId: state.pathParameters['id'],
         ),
       ),
-      GoRoute(path: Rutas.hogar, builder: (_, _) => const HogarScreen()),
-      GoRoute(path: Rutas.perfil, builder: (_, _) => const PerfilScreen()),
+      GoRoute(
+        path: Rutas.hogar,
+        builder: (_, _) =>
+            _conGuia(PantallaRecorrido.hogar, const HogarScreen()),
+      ),
+      GoRoute(
+        path: Rutas.perfil,
+        builder: (_, _) =>
+            _conGuia(PantallaRecorrido.perfil, const PerfilScreen()),
+      ),
       GoRoute(
         path: Rutas.negocio,
         builder: (_, state) =>
@@ -539,7 +608,8 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: Rutas.adopcion,
-        builder: (_, _) => const AdopcionScreen(),
+        builder: (_, _) =>
+            _conGuia(PantallaRecorrido.adopcion, const AdopcionScreen()),
         routes: [
           GoRoute(
             path: 'animal/:id',
@@ -553,7 +623,10 @@ final routerProvider = Provider<GoRouter>((ref) {
           GoRoute(path: 'guia', builder: (_, _) => const GuiaAdopcionScreen()),
           GoRoute(
             path: 'transito',
-            builder: (_, _) => const HogarTransitoScreen(),
+            builder: (_, _) => _conGuia(
+              PantallaRecorrido.transito,
+              const HogarTransitoScreen(),
+            ),
           ),
           GoRoute(path: 'pack', builder: (_, _) => const PackAdopcionScreen()),
           GoRoute(
@@ -603,7 +676,8 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: Rutas.misTurnos,
-        builder: (_, _) => const MisTurnosScreen(),
+        builder: (_, _) =>
+            _conGuia(PantallaRecorrido.turnos, const MisTurnosScreen()),
         routes: [
           GoRoute(
             path: 'reservar/:id',
@@ -614,12 +688,15 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: Rutas.grupos,
-        builder: (_, _) => const GruposScreen(),
+        builder: (_, _) =>
+            _conGuia(PantallaRecorrido.grupos, const GruposScreen()),
         routes: [
           GoRoute(
             path: ':id',
-            builder: (_, state) =>
-                GrupoScreen(grupoId: state.pathParameters['id']!),
+            builder: (_, state) => _conGuia(
+              PantallaRecorrido.grupo,
+              GrupoScreen(grupoId: state.pathParameters['id']!),
+            ),
             routes: [
               GoRoute(
                 path: 'publicar',
@@ -633,7 +710,8 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: Rutas.preguntas,
-        builder: (_, _) => const PreguntasScreen(),
+        builder: (_, _) =>
+            _conGuia(PantallaRecorrido.preguntas, const PreguntasScreen()),
         routes: [
           GoRoute(
             path: 'nueva',
@@ -649,7 +727,8 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: Rutas.saludos, builder: (_, _) => const SaludosScreen()),
       GoRoute(
         path: Rutas.misCuidados,
-        builder: (_, _) => const MisCuidadosScreen(),
+        builder: (_, _) =>
+            _conGuia(PantallaRecorrido.cuidados, const MisCuidadosScreen()),
         routes: [
           GoRoute(
             path: 'pedir/:id',
@@ -660,7 +739,8 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: Rutas.misPedidos,
-        builder: (_, _) => const MisPedidosScreen(),
+        builder: (_, _) =>
+            _conGuia(PantallaRecorrido.pedidos, const MisPedidosScreen()),
       ),
       GoRoute(path: Rutas.miPlan, builder: (_, _) => const PlanUsuarioScreen()),
       GoRoute(
@@ -685,7 +765,8 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: Rutas.chats,
-        builder: (_, _) => const ConversacionesScreen(),
+        builder: (_, _) =>
+            _conGuia(PantallaRecorrido.mensajes, const ConversacionesScreen()),
         routes: [
           GoRoute(
             path: ':id',
