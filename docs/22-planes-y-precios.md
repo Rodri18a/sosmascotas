@@ -23,7 +23,7 @@
 | **Portal de administración** | El equipo de Huellitas | Computadora | Moderación, verificación, planes y pagos, indicadores | Interno |
 
 - Las dos apps usan **la misma cuenta**: quien tiene un comercio y también mascotas entra con el mismo correo en las dos.
-- La app de comercios y la web de comercios son **lo mismo** en distinto tamaño de pantalla (D114, D129): se instala desde `/comercios/` y, en la computadora, es la web de comercios.
+- La app de comercios y la web de comercios son **lo mismo** en distinto tamaño de pantalla (D114, D129): se instala desde `/comercios/` y, en la computadora, es la web de comercios. Desde el 04/11/2026 (D143) las dos apps son **independientes**: misma cuenta, pero desde Huellitas no se abre el panel ni desde Comercios se vuelve a Huellitas.
 
 ## 3. Lo que es gratis siempre
 

@@ -24,7 +24,7 @@
 | PM-06 | 📱1 | Entrá a Mi hogar o a Hogar de tránsito | La explicación de arriba es **una línea** con «Ver más», que despliega el texto completo |
 | PM-07 | 📱1 | Mascotas → en la fila de una mascota tocá el ícono **QR** | Abre su chapita QR directo |
 | PM-08 | 📱1 | En la fila de la mascota tocá **⋮** | Aparecen «Agregar al historial», «Agregar a la libreta», «Nuevo recordatorio» y «Reportar que se perdió»; cada uno abre su pantalla |
-| PM-09 | 📱1 | Abrí https://sosmascota-dev.vercel.app/comercios/ | Abre **Huellitas Comercios** (en azul) en el panel del negocio; se puede instalar aparte. «Ir a Huellitas» vuelve a la app de personas |
+| PM-09 | 📱1 | Abrí https://sosmascota-dev.vercel.app/comercios/ | Abre **Huellitas Comercios** (en azul) en el panel del negocio; se puede instalar aparte. Arriba a la derecha, **Mi cuenta** abre Ajustes (sin lo de las mascotas). **No** hay forma de pasar a Huellitas (D143). En Huellitas, ☰ → «Mi negocio» muestra el aviso «Los negocios se manejan en Huellitas Comercios…» con «Abrir Huellitas Comercios» |
 
 ## Ronda 2 · Historial de vida y compartir (etapa 2)
 
@@ -76,6 +76,14 @@
 | PM-38 | 📱1 | Después de PM-25 (te marcaron «Me sirvió»), mirá Mi perfil | Ganaste **«Buena respuesta»** |
 
 ---
+
+## Resultados
+
+| Fecha | Casos | Resultado |
+|---|---|---|
+| 03/11/2026 | PM-01 a PM-10 | ✅ (en el iPhone, app instalada) |
+| 03/11/2026 | PM-11 | ❌ en el iPhone (app instalada): no se podía adjuntar el PDF ni abrir el adjunto. **Arreglado el 04/11:** selector de PDF propio en la web (el de `file_picker` daba por cancelado el pedido antes de que el iPhone entregara el archivo) y el enlace del adjunto se pide de antemano (el iPhone frena las ventanas que se abren después de esperar al servidor). Volver a probar PM-11 y PM-12 |
+| 03/11/2026 | Observaciones | Hogar de tránsito: los chips de tamaño se pisaban con «Máximo de días» (arreglado). Menú sin «Mis mascotas» (D142). Dos apps independientes (D143, ver PM-09). Recorrido guiado en las pantallas de adentro (D144): volver a probar PM-02 a PM-04 en una ventana de incógnito y entrar a la ficha, Preguntas, Ajustes y las secciones del negocio |
 
 ## Si algo falla
 
