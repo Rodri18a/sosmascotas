@@ -27,15 +27,15 @@ Future<Uint8List?> elegirPdf() {
   campo
     ..addEventListener(
       'change',
-      ((web.Event _) async {
+      ((web.Event _) {
         final archivo = campo.files?.item(0);
         if (archivo == null) return terminar(null);
-        try {
-          final datos = await archivo.arrayBuffer().toDart;
-          terminar(datos.toDart.asUint8List());
-        } on Object {
-          terminar(null);
-        }
+        unawaited(
+          archivo.arrayBuffer().toDart.then(
+            (datos) => terminar(datos.toDart.asUint8List()),
+            onError: (Object _) => terminar(null),
+          ),
+        );
       }).toJS,
     )
     ..addEventListener('cancel', ((web.Event _) => terminar(null)).toJS)
