@@ -1,20 +1,16 @@
 import 'dart:typed_data';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'selector_pdf_otro.dart'
+    if (dart.library.js_interop) 'selector_pdf_web.dart';
 
 /// Elige un PDF del celular o la computadora (historial de vida, D131).
 /// Se reemplaza en las pruebas. Devuelve `null` si la persona cancela.
 typedef SelectorDocumento = Future<Uint8List?> Function();
 
 final selectorDocumentoProvider = Provider<SelectorDocumento>(
-  (ref) => () async {
-    final archivo = await FilePicker.pickFile(
-      type: FileType.custom,
-      allowedExtensions: const ['pdf'],
-    );
-    return archivo?.readAsBytes();
-  },
+  (ref) => elegirPdf,
 );
 
 /// Si los bytes son de verdad un PDF (empiezan con «%PDF-»).

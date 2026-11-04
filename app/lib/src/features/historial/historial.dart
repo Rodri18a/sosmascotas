@@ -33,12 +33,28 @@ String textoAcontecimiento(AppLocalizations t, TipoAcontecimiento tipo) =>
       TipoAcontecimiento.other => t.vidaTipoOtro,
     };
 
-/// Abre un adjunto con un enlace que vence (el bucket es privado).
+/// Enlace firmado de un adjunto (el bucket es privado; vence en 1 hora).
+/// Se pide apenas se muestra el adjunto: el iPhone frena las ventanas que se
+/// abren después de esperar al servidor, así que al tocar ya tiene que estar.
+final urlAdjuntoProvider = FutureProvider.autoDispose.family<String?, String>(
+  (ref, ruta) => ref.watch(historialRepositorioProvider).urlAdjunto(ruta),
+);
+
+/// Abre un adjunto con su enlace firmado.
 Future<void> abrirAdjunto(
   BuildContext context,
   WidgetRef ref,
   String ruta,
 ) async {
+  final abrir = ref.read(abrirEnlaceProvider);
+  if (ref.read(urlAdjuntoProvider(ruta)).value case final listo?) {
+    // Sin esperas antes de abrir. Después se pide uno nuevo, por si la
+    // pantalla queda abierta más de una hora.
+    final abierto = abrir(Uri.parse(listo));
+    ref.invalidate(urlAdjuntoProvider(ruta));
+    await abierto;
+    return;
+  }
   final mensajes = ScaffoldMessenger.of(context);
   final error = context.t.errorSinConexion;
   final url = await ref.read(historialRepositorioProvider).urlAdjunto(ruta);
@@ -46,7 +62,7 @@ Future<void> abrirAdjunto(
     mensajes.showSnackBar(SnackBar(content: Text(error)));
     return;
   }
-  await ref.read(abrirEnlaceProvider)(Uri.parse(url));
+  await abrir(Uri.parse(url));
 }
 
 /// Historial de vida dentro de la ficha (plan de mejoras 2.1, D131): una
@@ -129,6 +145,10 @@ class _Linea extends ConsumerWidget {
     final t = context.t;
     final tema = Theme.of(context);
     final a = acontecimiento;
+    // Pide los enlaces de antemano, para abrirlos al tocar (iPhone).
+    for (final ruta in a.adjuntos) {
+      ref.watch(urlAdjuntoProvider(ruta));
+    }
     return InkWell(
       onTap: () => context.push(Rutas.editarAcontecimiento(a.mascotaId, a.id)),
       child: Padding(
@@ -184,17 +204,19 @@ class _Linea extends ConsumerWidget {
                           spacing: 6,
                           children: [
                             for (final (i, ruta) in a.adjuntos.indexed)
-                              ActionChip(
-                                avatar: Icon(
-                                  AcontecimientoVida.esPdf(ruta)
-                                      ? Icons.picture_as_pdf_outlined
-                                      : Icons.image_outlined,
-                                  size: 18,
+                              // Pide el enlace de antemano (iPhone).
+                              if (ref.watch(urlAdjuntoProvider(ruta)) case _)
+                                ActionChip(
+                                  avatar: Icon(
+                                    AcontecimientoVida.esPdf(ruta)
+                                        ? Icons.picture_as_pdf_outlined
+                                        : Icons.image_outlined,
+                                    size: 18,
+                                  ),
+                                  label: Text(t.vidaAdjuntoN(i + 1)),
+                                  onPressed: () =>
+                                      abrirAdjunto(context, ref, ruta),
                                 ),
-                                label: Text(t.vidaAdjuntoN(i + 1)),
-                                onPressed: () =>
-                                    abrirAdjunto(context, ref, ruta),
-                              ),
                           ],
                         ),
                     ],
@@ -430,6 +452,9 @@ class _FormularioState extends ConsumerState<_Formulario> {
     final tema = Theme.of(context);
     final fechas = MaterialLocalizations.of(context);
     final lleno = _cantidad >= AcontecimientoVida.maxAdjuntos;
+    for (final ruta in _guardados) {
+      ref.watch(urlAdjuntoProvider(ruta));
+    }
 
     return Scaffold(
       appBar: AppBar(
