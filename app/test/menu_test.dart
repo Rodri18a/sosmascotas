@@ -87,13 +87,12 @@ void main() {
     await _abrir(tester, almacen: almacen, metricas: metricas);
     expect(find.text('ana@correo.com'), findsOneWidget);
     expect(find.text('Ver todo para'), findsOneWidget);
-    expect(find.text('Ver su ficha'), findsNothing, reason: 'son todas');
 
     await _tocar(tester, find.text('Luna'));
     expect(find.textContaining('para la especie de Luna'), findsOneWidget);
-    expect(find.text('Ver su ficha'), findsOneWidget);
-    expect(find.text('Chapita QR'), findsOneWidget);
-    expect(find.text('Reportar que se perdió'), findsOneWidget);
+    // Sin «Mis mascotas» en el menú: está en la fila de cada mascota (D142).
+    expect(find.text('Ver su ficha'), findsNothing);
+    expect(find.text('Reportar que se perdió'), findsNothing);
     expect(almacen.guardadas['u1'], 'm2', reason: 'queda guardada');
     expect(
       metricas.map((e) => e['name']),
@@ -109,16 +108,15 @@ void main() {
       tester,
       find.descendant(of: find.byType(Drawer), matching: find.text('Todas')),
     );
-    expect(find.text('Ver su ficha'), findsNothing);
+    expect(find.textContaining('lo de todas tus mascotas'), findsOneWidget);
   });
 
   testWidgets('una opción cierra el menú y abre la sección', (tester) async {
     await _abrir(tester);
-    await _tocar(tester, find.text('Ver todo para'));
-    await _tocar(tester, find.text('Toby'));
-    await _tocar(tester, find.text('Ver su ficha'));
+    await bajarEnMenu(tester, find.text('Hogar de tránsito'));
+    await _tocar(tester, find.text('Hogar de tránsito'));
     expect(find.byType(Drawer), findsNothing);
-    expect(find.text('Toby'), findsWidgets);
+    expect(find.text('Hogar de tránsito'), findsWidgets);
   });
 
   testWidgets('las secciones van en grupos con título (1.2)', (tester) async {

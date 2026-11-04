@@ -74,42 +74,10 @@ class _MenuPrincipalState extends ConsumerState<MenuPrincipal> {
         opcion(item, icono, texto, () => _ir(ruta));
 
     // Grupos con título (paso 1.2 del plan de mejoras): todo a 2 toques.
-    // Un grupo sin opciones prendidas no se muestra.
+    // Un grupo sin opciones prendidas no se muestra. Sin «Mis mascotas»: la
+    // ficha, la chapita y el SOS están en la fila de cada mascota, en la
+    // pestaña de al lado del Mapa (D142).
     final grupos = <(String, List<Widget>)>[
-      (
-        t.menuGrupoMascotas,
-        [
-          pestana(
-            'mascotas',
-            Icons.pets_outlined,
-            t.pestanaMascotas,
-            Rutas.mascotas,
-          ),
-          if (mascotas.isNotEmpty)
-            _ElegirMascota(mascotas: mascotas, elegida: elegida),
-          if (elegida != null) ...[
-            pantalla(
-              'ficha',
-              Icons.badge_outlined,
-              t.menuFicha,
-              Rutas.fichaMascota(elegida.id),
-            ),
-            pantalla(
-              'qr',
-              Icons.qr_code_2_outlined,
-              t.fichaQrTitulo,
-              Rutas.qrMascota(elegida.id),
-            ),
-            if (elegida.esDe(ref.watch(usuarioActualProvider).value?.id))
-              pantalla(
-                'reportar',
-                Icons.sos_outlined,
-                t.menuReportarPerdida,
-                Rutas.reportarMascota(elegida.id),
-              ),
-          ],
-        ],
-      ),
       (
         t.menuGrupoMapa,
         [
@@ -270,6 +238,9 @@ class _MenuPrincipalState extends ConsumerState<MenuPrincipal> {
               ),
             ),
             _Cabecera(onIr: (ruta) => _tocar('perfil', () => _ir(ruta))),
+            // Filtro de todo el contenido, no un lugar al que ir (D142).
+            if (mascotas.isNotEmpty)
+              _ElegirMascota(mascotas: mascotas, elegida: elegida),
             for (final (titulo, opciones) in grupos)
               if (opciones.isNotEmpty) ...[
                 const Divider(),
