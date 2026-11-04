@@ -20,8 +20,12 @@ echo "▶ Huellitas (personas)"
 flutter build web "${comun[@]}" --target="$app/lib/main.dart" --output="$app/build/web"
 
 echo "▶ Huellitas Comercios"
-flutter build web "${comun[@]}" --target="$app/lib/main_comercio.dart" \
-  --base-href=/comercios/ --output="$app/build/web_comercios"
+# Rutas relativas y sin conversión: en Git Bash (Windows), /comercios/ se
+# volvía una ruta de Windows.
+MSYS_NO_PATHCONV=1 flutter build web --release --no-wasm-dry-run \
+  "--dart-define-from-file=config/$entorno.json" \
+  --target=lib/main_comercio.dart --base-href=/comercios/ \
+  --output=build/web_comercios
 
 destino="$app/build/web/comercios"
 rm -rf "$destino"
