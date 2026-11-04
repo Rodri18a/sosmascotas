@@ -226,6 +226,7 @@ class _HogarTransitoState extends ConsumerState<HogarTransitoScreen> {
                 Text(t.transitoEspecies, style: tema.textTheme.titleSmall),
                 Wrap(
                   spacing: 8,
+                  runSpacing: 8,
                   children: [
                     for (final e in especies)
                       FilterChip(
@@ -238,10 +239,11 @@ class _HogarTransitoState extends ConsumerState<HogarTransitoScreen> {
                       ),
                   ],
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 16),
                 Text(t.transitoTamanos, style: tema.textTheme.titleSmall),
                 Wrap(
                   spacing: 8,
+                  runSpacing: 8,
                   children: [
                     for (final v in tamanosTransito)
                       FilterChip(
@@ -253,6 +255,7 @@ class _HogarTransitoState extends ConsumerState<HogarTransitoScreen> {
                       ),
                   ],
                 ),
+                const SizedBox(height: 16),
                 TextField(
                   controller: _dias,
                   keyboardType: TextInputType.number,
@@ -653,6 +656,7 @@ class _PedirTransitoState extends ConsumerState<_PedirTransito> {
             if (mios.isNotEmpty)
               Wrap(
                 spacing: 8,
+                runSpacing: 8,
                 children: [
                   for (final a in mios)
                     ActionChip(
@@ -667,6 +671,7 @@ class _PedirTransitoState extends ConsumerState<_PedirTransito> {
                     ),
                 ],
               ),
+            if (mios.isNotEmpty) const SizedBox(height: 12),
             TextField(
               controller: _nombre,
               maxLength: 40,
