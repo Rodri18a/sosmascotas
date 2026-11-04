@@ -12,6 +12,7 @@ import 'mapa_maplibre.dart';
 class MapaVista extends ConsumerWidget {
   const MapaVista({
     required this.centro,
+    this.vueltaAlCentro = 0,
     this.zoom = 13,
     this.pins = const [],
     this.seleccion,
@@ -21,7 +22,10 @@ class MapaVista extends ConsumerWidget {
     super.key,
   });
 
+  /// El mapa se mueve hasta [centro] cuando cambia el centro o este número
+  /// (así «📍 Donde estoy» vuelve aunque la posición sea la misma, D145).
   final Punto centro;
+  final int vueltaAlCentro;
   final double zoom;
   final List<Pin> pins;
 

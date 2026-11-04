@@ -75,9 +75,7 @@ void main() {
     expect(find.text('Cómo llegar'), findsOneWidget);
   });
 
-  testWidgets('Inicio: próximos eventos, para todos', (
-    tester,
-  ) async {
+  testWidgets('Inicio: próximos eventos, para todos', (tester) async {
     tester.view
       ..physicalSize = const Size(1080, 2400)
       ..devicePixelRatio = 3;

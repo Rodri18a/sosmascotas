@@ -98,7 +98,6 @@ void main() {
       metricas.map((e) => e['name']),
       containsAll(['menu_open', 'pet_select']),
     );
-
   });
 
   testWidgets('la elegida se recuerda al volver a abrir', (tester) async {

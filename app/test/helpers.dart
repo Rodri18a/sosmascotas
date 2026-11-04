@@ -13,7 +13,6 @@ import 'package:sosmascota/src/app.dart';
 import 'package:sosmascota/src/avisos/avisos_repositorio.dart';
 import 'package:sosmascota/src/ayuda/ayuda_repositorio.dart';
 import 'package:sosmascota/src/chat/chat_repositorio.dart';
-import 'package:sosmascota/src/chat/posicion.dart';
 import 'package:sosmascota/src/comercios/comercios_repositorio.dart';
 import 'package:sosmascota/src/comercios/descuentos_repositorio.dart';
 import 'package:sosmascota/src/comercios/equipo_repositorio.dart';
@@ -57,6 +56,7 @@ import 'package:sosmascota/src/router.dart';
 import 'package:sosmascota/src/sos/sos_repositorio.dart';
 import 'package:sosmascota/src/theme/tema_elegido.dart';
 import 'package:sosmascota/src/tienda/tienda_repositorio.dart';
+import 'package:sosmascota/src/ubicacion/mi_posicion.dart';
 import 'package:sosmascota/src/ubicacion/servicio_ubicacion.dart';
 import 'package:sosmascota/src/utiles/enlaces.dart';
 import 'package:sosmascota/src/utiles/respaldo.dart';
@@ -149,6 +149,7 @@ Widget appDePrueba({
   DescuentosRepositorio? descuentos,
   EquipoRepositorio? equipo,
   Posicion? posicion,
+  Posicion? posicionSinPreguntar,
   SelectorFoto? selectorFoto,
   QrRepositorio? qr,
   PedidosChapitaRepositorio? pedidosChapita,
@@ -284,6 +285,9 @@ Widget appDePrueba({
       misLugares ?? MisLugaresFalsos(),
     ),
     posicionActualProvider.overrideWithValue(() async => posicion),
+    posicionSinPreguntarProvider.overrideWithValue(
+      () async => posicionSinPreguntar,
+    ),
     almacenRespaldoProvider.overrideWithValue(
       respaldo ?? AlmacenRespaldoFalso(),
     ),

@@ -23,6 +23,7 @@ import '../../recorrido/pasos.dart';
 import '../../recorrido/recorrido.dart';
 import '../../router.dart';
 import '../../sos/sos_repositorio.dart';
+import '../../ubicacion/mi_posicion.dart';
 import '../../utiles/enlaces.dart';
 import '../../widgets/boton_ayuda.dart';
 import '../eventos/eventos.dart';
@@ -71,12 +72,52 @@ class _MapaScreenState extends ConsumerState<MapaScreen> {
   Map<String, Comercio> _comercios = const {};
 
   var _vista = _Vista.mapa;
+
+  /// Donde está la persona, si dio permiso (D145); si no, su zona.
+  Punto? _centro;
+  int _vueltas = 0;
+  bool _buscandoPosicion = false;
   late var _filtros = FiltrosMapa(colocaMicrochip: widget.colocaMicrochip);
 
   @override
   void initState() {
     super.initState();
     unawaited(_cargarMisFiltros());
+    unawaited(_centrarSinPreguntar());
+  }
+
+  /// Al abrir: si el permiso ya está dado, el mapa va a donde está la persona
+  /// (sin preguntar nada; el botón 📍 es el que pide el permiso).
+  Future<void> _centrarSinPreguntar() async {
+    final p = await ref.read(posicionSinPreguntarProvider)();
+    if (p == null || !mounted) return;
+    setState(() => _centro = Punto(p.lat, p.lng));
+  }
+
+  Future<void> _irADondeEstoy() async {
+    setState(() => _buscandoPosicion = true);
+    final p = await ref.read(posicionActualProvider)();
+    if (!mounted) return;
+    setState(() => _buscandoPosicion = false);
+    ref
+        .read(metricasProvider)
+        .track(
+          Eventos.locationMe,
+          props: {
+            'pantalla': 'mapa',
+            'resultado': p == null ? 'sin_posicion' : 'gps',
+          },
+        );
+    if (p == null) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t.mapaSinPosicion)));
+      return;
+    }
+    setState(() {
+      _centro = Punto(p.lat, p.lng);
+      _vueltas++;
+    });
   }
 
   /// Con Pro, el mapa abre con «mis filtros» (2.11, D112).
@@ -247,12 +288,28 @@ class _MapaScreenState extends ConsumerState<MapaScreen> {
     final mapa = Stack(
       children: [
         MapaVista(
-          centro: ref.watch(miZonaProvider),
+          centro: _centro ?? ref.watch(miZonaProvider),
+          vueltaAlCentro: _vueltas,
           pins: _pins(),
           onCamaraQuieta: _alQuedarQuieto,
           onTocarPin: _alTocarPin,
         ),
         const Positioned(left: 8, bottom: 8, child: _Leyenda()),
+        Positioned(
+          right: 12,
+          bottom: puedeMarcar ? 76 : 12,
+          child: FloatingActionButton.small(
+            heroTag: 'donde-estoy',
+            tooltip: t.mapaIrADondeEstoy,
+            onPressed: _buscandoPosicion ? null : _irADondeEstoy,
+            child: _buscandoPosicion
+                ? const SizedBox.square(
+                    dimension: 18,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  )
+                : const Icon(Icons.my_location_outlined),
+          ),
+        ),
         if (puedeMarcar)
           Positioned(
             right: 12,

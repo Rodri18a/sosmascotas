@@ -45,6 +45,15 @@ abstract final class Eventos {
   static const mapView = 'map_view';
   static const search = 'search';
   static const placeMark = 'place_mark';
+
+  /// Un formulario dejó el punto marcado donde está la persona (D145).
+  static const locationPrefill = 'location_prefill';
+
+  /// Después de eso, la persona tocó el mapa en otro lugar.
+  static const locationChanged = 'location_changed';
+
+  /// Se tocó «📍 Donde estoy» (en un formulario o en el Mapa).
+  static const locationMe = 'location_me';
   static const unclaimedOpen = 'unclaimed_open';
   static const businessCreate = 'business_create';
   static const businessClaim = 'business_claim';

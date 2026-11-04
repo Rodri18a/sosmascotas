@@ -7,11 +7,11 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
 import '../../chat/chat_repositorio.dart';
-import '../../chat/posicion.dart';
 import '../../cuenta/servicio_cuenta.dart';
 import '../../fotos/elegir_foto.dart';
 import '../../metricas/metricas.dart';
 import '../../router.dart';
+import '../../ubicacion/mi_posicion.dart';
 import '../../utiles/enlaces.dart';
 import '../../widgets/boton_ayuda.dart';
 import '../../widgets/volver.dart';

@@ -1267,7 +1267,7 @@ abstract class AppLocalizations {
   /// No description provided for @sosUbicacionAyuda.
   ///
   /// In es, this message translates to:
-  /// **'Tocá el mapa en el lugar. Al publicar se muestra una zona aproximada, nunca el punto exacto.'**
+  /// **'Si no fue donde estás, tocá el mapa en el lugar. Al publicar se muestra una zona aproximada, nunca el punto exacto.'**
   String get sosUbicacionAyuda;
 
   /// No description provided for @sosUbicacionMarcada.
@@ -1275,6 +1275,42 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Lugar marcado ✔'**
   String get sosUbicacionMarcada;
+
+  /// No description provided for @ubicacionDondeEstoy.
+  ///
+  /// In es, this message translates to:
+  /// **'Donde estoy'**
+  String get ubicacionDondeEstoy;
+
+  /// No description provided for @ubicacionBuscando.
+  ///
+  /// In es, this message translates to:
+  /// **'Buscando dónde estás…'**
+  String get ubicacionBuscando;
+
+  /// No description provided for @ubicacionMarcadaDondeEstas.
+  ///
+  /// In es, this message translates to:
+  /// **'📍 Marcado donde estás. Tocá el mapa si fue en otro lugar.'**
+  String get ubicacionMarcadaDondeEstas;
+
+  /// No description provided for @ubicacionSinPosicion.
+  ///
+  /// In es, this message translates to:
+  /// **'No pudimos saber dónde estás. Tocá el mapa en el lugar.'**
+  String get ubicacionSinPosicion;
+
+  /// No description provided for @mapaIrADondeEstoy.
+  ///
+  /// In es, this message translates to:
+  /// **'Ir a donde estoy'**
+  String get mapaIrADondeEstoy;
+
+  /// No description provided for @mapaSinPosicion.
+  ///
+  /// In es, this message translates to:
+  /// **'No pudimos saber dónde estás. Revisá el permiso de ubicación.'**
+  String get mapaSinPosicion;
 
   /// No description provided for @sosNombreSiLoSabes.
   ///
@@ -4219,7 +4255,7 @@ abstract class AppLocalizations {
   /// No description provided for @marcarToca.
   ///
   /// In es, this message translates to:
-  /// **'Tocá el mapa donde queda el lugar.'**
+  /// **'¿Dónde queda? Si no estás ahí, tocá el mapa en el lugar.'**
   String get marcarToca;
 
   /// No description provided for @marcarEnlace.

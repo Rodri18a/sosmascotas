@@ -32,6 +32,9 @@ class _MapaMapLibreState extends State<MapaMapLibre> {
   final _gruposPorNumero = <String, Circle>{};
   Circle? _circuloSeleccion;
 
+  /// Centro con el que se creó el mapa (la cámara inicial no cambia después).
+  Punto? _centroInicial;
+
   /// Pines con ícono (D82): son símbolos con una imagen dibujada por la app.
   final _iconos = <Symbol>[];
   final _pinsPorIcono = <String, Pin>{};
@@ -53,6 +56,16 @@ class _MapaMapLibreState extends State<MapaMapLibre> {
     }
     if (anterior.config.seleccion != widget.config.seleccion) {
       unawaited(_dibujarSeleccion());
+    }
+    // Cambiar el centro mueve el mapa hasta ahí («📍 Donde estoy», D145).
+    final centro = widget.config.centro;
+    if (anterior.config.centro != centro ||
+        anterior.config.vueltaAlCentro != widget.config.vueltaAlCentro) {
+      unawaited(
+        _control?.animateCamera(
+          CameraUpdate.newLatLng(LatLng(centro.lat, centro.lng)),
+        ),
+      );
     }
   }
 
@@ -234,10 +247,11 @@ class _MapaMapLibreState extends State<MapaMapLibre> {
   Widget build(BuildContext context) {
     final c = widget.config;
     _densidad = MediaQuery.devicePixelRatioOf(context);
+    final inicial = _centroInicial ??= c.centro;
     return MapLibreMap(
       styleString: estiloMapa,
       initialCameraPosition: CameraPosition(
-        target: LatLng(c.centro.lat, c.centro.lng),
+        target: LatLng(inicial.lat, inicial.lng),
         zoom: c.zoom,
       ),
       compassEnabled: false,
@@ -248,6 +262,16 @@ class _MapaMapLibreState extends State<MapaMapLibre> {
         _control = control;
         control.onCircleTapped.add(_alTocarCirculo);
         control.onSymbolTapped.add(_alTocarNumero);
+        // Si el centro cambió mientras el mapa se creaba (la posición llegó
+        // antes), se va hasta ahí: la cámara inicial ya quedó en el anterior.
+        final centro = widget.config.centro;
+        if (centro != _centroInicial) {
+          unawaited(
+            control.animateCamera(
+              CameraUpdate.newLatLng(LatLng(centro.lat, centro.lng)),
+            ),
+          );
+        }
       },
       onStyleLoadedCallback: () async {
         _estiloListo = true;

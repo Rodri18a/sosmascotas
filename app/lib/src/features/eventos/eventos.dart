@@ -6,9 +6,8 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 import '../../../l10n/l10n.dart';
 import '../../eventos/eventos_repositorio.dart';
 import '../../fotos/elegir_foto.dart';
-import '../../mapa/mapa_vista.dart';
 import '../../metricas/metricas.dart';
-import '../../sos/sos_repositorio.dart';
+import '../../ubicacion/elegir_punto.dart';
 import '../../utiles/enlaces.dart';
 import '../../widgets/volver.dart';
 import '../adopcion/apadrinamiento_screen.dart';
@@ -297,17 +296,11 @@ class _EventoFormState extends ConsumerState<EventoFormScreen> {
             ),
             Text(t.eventoLugar),
             const SizedBox(height: 8),
-            SizedBox(
-              height: 200,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: MapaVista(
-                  centro: _punto ?? ref.watch(miZonaProvider),
-                  zoom: 15,
-                  seleccion: _punto,
-                  onTocarMapa: (p) => setState(() => _punto = p),
-                ),
-              ),
+            ElegirPunto(
+              pantalla: 'evento',
+              alto: 200,
+              seleccion: _punto,
+              onCambio: (p) => setState(() => _punto = p),
             ),
             TextField(
               controller: _direccion,
@@ -443,17 +436,12 @@ class _DenunciaState extends ConsumerState<DenunciaScreen> {
             ),
             Text(t.denunciaUbicacion),
             const SizedBox(height: 8),
-            SizedBox(
-              height: 200,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: MapaVista(
-                  centro: _punto ?? ref.watch(miZonaProvider),
-                  zoom: 14,
-                  seleccion: _punto,
-                  onTocarMapa: (p) => setState(() => _punto = p),
-                ),
-              ),
+            ElegirPunto(
+              pantalla: 'denuncia',
+              alto: 200,
+              zoom: 14,
+              seleccion: _punto,
+              onCambio: (p) => setState(() => _punto = p),
             ),
             TextField(
               controller: _direccion,

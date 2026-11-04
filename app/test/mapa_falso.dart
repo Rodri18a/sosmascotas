@@ -19,7 +19,11 @@ class MapaFalso extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Column(
     children: [
-      Text('mapa: ${config.pins.length} pines'),
+      // El centro va en la clave, para no ocupar lugar en los mapas chicos.
+      Text(
+        'mapa: ${config.pins.length} pines',
+        key: ValueKey('centro: ${config.centro.lat},${config.centro.lng}'),
+      ),
       if (config.seleccion case final s?) Text('marcado: ${s.lat},${s.lng}'),
       for (final pin in config.pins)
         TextButton(

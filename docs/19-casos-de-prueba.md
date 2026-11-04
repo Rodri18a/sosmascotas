@@ -8,14 +8,14 @@
 
 ## Avance
 
-Actualizado el 29/10/2026. **35 ✅ · 135 ⬜ · 0 ❌ · 2 ➖** (de 172 casos). Las rondas del 28 y 29/10 se hicieron con dos teléfonos (cuenta A y cuenta B).
+Actualizado el 04/11/2026. **38 ✅ · 132 ⬜ · 0 ❌ · 2 ➖** (de 172 casos). Las rondas del 28 y 29/10 se hicieron con dos teléfonos (cuenta A y cuenta B).
 
 | Sección | ✅ | ⬜ |
 |---|---|---|
 | 1. Cuentas y acceso | 11 | 0 |
 | 2. Mascotas | 4 | 0 |
 | 3. Chapita QR | 9 | 5 (QR-10 a QR-14) |
-| 4. SOS | 4 | 11 |
+| 4. SOS | 7 | 8 |
 | 7. Libreta, recordatorios y hogar | 3 | 9 |
 | 14. Veterinarias, adopción, eventos y noticias | 3 | 9 |
 | 17. Privacidad y seguridad | 1 | 5 |
@@ -93,11 +93,11 @@ Si a una cuenta no le llega el código de ingreso, se genera un enlace de un uso
 
 | ID | Caso | Pasos | Resultado esperado | Estado |
 |---|---|---|---|---|
-| SO-01 | Reportar perdida | Ficha → «Se perdió» → foto y ubicación tocando el mapa → publicar | Aparece en el mapa **corrida 150–200 m** del punto real | ⬜ |
+| SO-01 | Reportar perdida | Ficha → «Se perdió» → foto y ubicación tocando el mapa → publicar | Aparece en el mapa **corrida 150–200 m** del punto real | ✅ |
 | SO-02 | Reportar encontrada | SOS → Reportar → Encontrada | Aparece con su pin propio | ⬜ |
 | SO-03 | Mapa por zona | Mover el mapa | Carga solo los reportes de la zona visible | ⬜ |
-| SO-04 | Detalle y compartir | Abrir un reporte → Compartir | La página `/s/<id>` se abre sin sesión, con vista previa al compartir | ⬜ |
-| SO-05 | Avisar al dueño | Con B: «Avisar al dueño» en el reporte de A | A recibe el aviso con los datos que dejó B; B nunca ve el teléfono de A | ⬜ |
+| SO-04 | Detalle y compartir | Abrir un reporte → Compartir | La página `/s/<id>` se abre sin sesión, con vista previa al compartir | ✅ |
+| SO-05 | Avisar al dueño | Con B: «Avisar al dueño» en el reporte de A | A recibe el aviso con los datos que dejó B; B nunca ve el teléfono de A | ✅ |
 | SO-06 | WhatsApp opcional | Activar el WhatsApp directo en el reporte | Muestra la advertencia; por defecto está apagado | ⬜ |
 | SO-07 | ¡Apareció! | Marcar «¡Apareció!» | Se archiva, sale del mapa y pregunta «¿Compartís la buena noticia?» | ⬜ |
 | SO-08 | Reportar publicación | Con 3 cuentas distintas, reportar el mismo SOS | Se oculta solo y aparece en la moderación del portal | ⬜ |

@@ -280,7 +280,7 @@ En **los dos teléfonos**:
 
 **📱1**
 1. Mascotas → una mascota **sin** reporte abierto → **«Se perdió: reportarla»**.
-2. Revisá que esté la foto de la ficha. En **«¿Dónde la viste por última vez?»** tocá el mapa en un punto que conozcas (anotalo: por ejemplo, una esquina) → «Lugar marcado ✔».
+2. Revisá que esté la foto de la ficha. En **«¿Dónde la viste por última vez?»** el punto ya arranca **donde estás** («📍 Marcado donde estás…», D145). Para la prueba, tocá el mapa en un punto que conozcas (anotalo: por ejemplo, una esquina) → «Lugar marcado ✔»; **«📍 Donde estoy»** lo vuelve a tu posición.
 3. Completá la descripción. Dejá **apagado** «Mostrar mi WhatsApp en este reporte» → **«Publicar»**.
 
 ✅ Esperado: «¡Publicado! Los vecinos de la zona ya pueden verlo.». En el Mapa aparece el pin **corrido unos 150–200 m** del punto que tocaste (no encima).

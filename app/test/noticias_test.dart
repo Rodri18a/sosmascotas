@@ -286,7 +286,8 @@ void main() {
     expect(
       find.textContaining('Gracias a todos'),
       findsNothing,
-      reason: 'la tarjeta va en una línea; el agradecimiento queda en el detalle',
+      reason:
+          'la tarjeta va en una línea; el agradecimiento queda en el detalle',
     );
     expect(
       find.text('Una mascota encontrada volvió con su familia 🏡'),

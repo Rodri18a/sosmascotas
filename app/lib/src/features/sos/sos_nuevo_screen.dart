@@ -8,12 +8,12 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
 import '../../fotos/elegir_foto.dart';
-import '../../mapa/mapa_vista.dart';
 import '../../mascotas/catalogo.dart';
 import '../../mascotas/mascotas_repositorio.dart';
 import '../../router.dart';
 import '../../sos/difusion_sos.dart';
 import '../../sos/sos_repositorio.dart';
+import '../../ubicacion/elegir_punto.dart';
 import '../../widgets/foto_mascota.dart';
 
 /// Reportar una mascota perdida o encontrada.
@@ -310,22 +310,14 @@ class _SosNuevoScreenState extends ConsumerState<SosNuevoScreen> {
                 ),
                 Text(t.sosUbicacionAyuda, style: tema.textTheme.bodySmall),
                 const SizedBox(height: 8),
-                SizedBox(
-                  height: 260,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: MapaVista(
-                      centro: _ubicacion ?? centroPando,
-                      zoom: 14,
-                      seleccion: _ubicacion,
-                      onTocarMapa: (punto) =>
-                          setState(() => _ubicacion = punto),
-                    ),
-                  ),
+                ElegirPunto(
+                  pantalla: 'sos',
+                  marcarAlAbrir: true,
+                  zoom: 14,
+                  seleccion: _ubicacion,
+                  onCambio: (punto) => setState(() => _ubicacion = punto),
                 ),
-                if (_ubicacion != null)
-                  Text(t.sosUbicacionMarcada, style: tema.textTheme.bodySmall),
-                const SizedBox(height: 16),
+                const SizedBox(height: 8),
                 Text(t.mascotaEspecie, style: tema.textTheme.titleSmall),
                 const SizedBox(height: 8),
                 Wrap(

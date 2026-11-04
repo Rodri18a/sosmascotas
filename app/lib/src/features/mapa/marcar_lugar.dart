@@ -12,7 +12,7 @@ import '../../funcionalidades/funcionalidades_activas.dart';
 import '../../mapa/mapa_vista.dart';
 import '../../metricas/metricas.dart';
 import '../../router.dart';
-import '../../sos/sos_repositorio.dart';
+import '../../ubicacion/elegir_punto.dart';
 import '../../utiles/enlaces.dart';
 import '../../widgets/explicacion_corta.dart';
 import '../../widgets/volver.dart';
@@ -120,17 +120,11 @@ class _MarcarLugarScreenState extends ConsumerState<MarcarLugarScreen> {
             const SizedBox(height: 16),
             Text(t.marcarToca),
             const SizedBox(height: 8),
-            SizedBox(
-              height: 260,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: MapaVista(
-                  centro: ref.watch(miZonaProvider),
-                  zoom: 15,
-                  seleccion: _punto,
-                  onTocarMapa: (p) => setState(() => _punto = p),
-                ),
-              ),
+            ElegirPunto(
+              pantalla: 'marcar_lugar',
+              marcarAlAbrir: true,
+              seleccion: _punto,
+              onCambio: (p) => setState(() => _punto = p),
             ),
             const SizedBox(height: 12),
             TextField(

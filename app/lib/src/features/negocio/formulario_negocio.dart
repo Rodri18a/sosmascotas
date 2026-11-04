@@ -6,7 +6,7 @@ import '../../../l10n/l10n.dart';
 import '../../comercios/textos_comercio.dart';
 import '../../mapa/mapa_vista.dart';
 import '../../mascotas/catalogo.dart';
-import '../../sos/sos_repositorio.dart';
+import '../../ubicacion/elegir_punto.dart';
 
 /// Datos con los que arranca un alta (por ejemplo, desde un lugar marcado).
 typedef PrecargaNegocio = ({Categoria? rubro, Punto? punto});
@@ -249,17 +249,11 @@ class _FormularioNegocioState extends ConsumerState<FormularioNegocio> {
         if (_modalidad == Modalidad.local) ...[
           Text(t.negocioUbicacionToca),
           const SizedBox(height: 8),
-          SizedBox(
-            height: 220,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: MapaVista(
-                centro: _punto ?? ref.watch(miZonaProvider),
-                zoom: 15,
-                seleccion: _punto,
-                onTocarMapa: (p) => setState(() => _punto = p),
-              ),
-            ),
+          ElegirPunto(
+            pantalla: 'negocio',
+            alto: 220,
+            seleccion: _punto,
+            onCambio: (p) => setState(() => _punto = p),
           ),
           const SizedBox(height: 8),
           _texto(_direccion, t.negocioDireccion),

@@ -703,10 +703,31 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get sosUbicacionAyuda =>
-      'Tocá el mapa en el lugar. Al publicar se muestra una zona aproximada, nunca el punto exacto.';
+      'Si no fue donde estás, tocá el mapa en el lugar. Al publicar se muestra una zona aproximada, nunca el punto exacto.';
 
   @override
   String get sosUbicacionMarcada => 'Lugar marcado ✔';
+
+  @override
+  String get ubicacionDondeEstoy => 'Donde estoy';
+
+  @override
+  String get ubicacionBuscando => 'Buscando dónde estás…';
+
+  @override
+  String get ubicacionMarcadaDondeEstas =>
+      '📍 Marcado donde estás. Tocá el mapa si fue en otro lugar.';
+
+  @override
+  String get ubicacionSinPosicion =>
+      'No pudimos saber dónde estás. Tocá el mapa en el lugar.';
+
+  @override
+  String get mapaIrADondeEstoy => 'Ir a donde estoy';
+
+  @override
+  String get mapaSinPosicion =>
+      'No pudimos saber dónde estás. Revisá el permiso de ubicación.';
 
   @override
   String get sosNombreSiLoSabes =>
@@ -2443,7 +2464,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get marcarRubro => 'Rubro';
 
   @override
-  String get marcarToca => 'Tocá el mapa donde queda el lugar.';
+  String get marcarToca =>
+      '¿Dónde queda? Si no estás ahí, tocá el mapa en el lugar.';
 
   @override
   String get marcarEnlace => 'Enlace de Google Maps (opcional)';
