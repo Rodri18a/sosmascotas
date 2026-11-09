@@ -102,6 +102,9 @@ abstract final class Rutas {
   static const misCuidados = '/cuidados';
   static const grupos = '/grupos';
   static const preguntas = '/preguntas';
+
+  /// Todas las novedades de la comunidad (D147).
+  static const novedades = '/novedades';
   static const nuevaPregunta = '$preguntas/nueva';
   static String grupo(String id) => '$grupos/$id';
   static String publicarEnGrupo(String id) => '$grupos/$id/publicar';
@@ -298,6 +301,7 @@ bool esDePersonas(String ruta) {
     Rutas.misCuidados,
     Rutas.grupos,
     Rutas.preguntas,
+    Rutas.novedades,
     Rutas.saludos,
     Rutas.buscarLugares,
     Rutas.guiaRenac,
@@ -707,6 +711,10 @@ final routerProvider = Provider<GoRouter>((ref) {
             ],
           ),
         ],
+      ),
+      GoRoute(
+        path: Rutas.novedades,
+        builder: (_, _) => const NovedadesScreen(),
       ),
       GoRoute(
         path: Rutas.preguntas,

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
@@ -18,6 +19,7 @@ import '../../recorrido/recorrido.dart';
 import '../../router.dart';
 import '../../utiles/enlaces.dart';
 import '../../widgets/boton_ayuda.dart';
+import '../../widgets/volver.dart';
 import '../comunidad/comunidad_screen.dart';
 import '../comunidad/preguntas.dart';
 import '../eventos/eventos.dart';
@@ -253,51 +255,136 @@ class _Comunidad extends ConsumerWidget {
           const TarjetaGrupos(),
         // Solo reencuentros y perdidas, uno al lado del otro (D141).
         if (hayResumen) _Resumen(resumen: resumen),
-        switch (ref.watch(novedadesProvider)) {
-          AsyncData(value: final lista) => () {
-            return lista.isEmpty
-                ? Padding(
-                    padding: const EdgeInsets.all(32),
-                    child: Text(t.comunidadVacio, textAlign: TextAlign.center),
-                  )
-                : Column(
-                    children: [
-                      // Una promoción cada 6 novedades (3.2, D137).
-                      for (final x in intercalarPromociones(
-                        lista,
-                        ref.watch(
-                              funcionalidadActivaProvider(
-                                Funcionalidades.promociones,
-                              ),
-                            )
-                            ? ref.watch(promocionesCercaProvider).value ??
-                                  const <Promocion>[]
-                            : const <Promocion>[],
-                        cada: 6,
-                      ))
-                        switch (x) {
-                          final Promocion p => TarjetaPromocion(
-                            key: ValueKey('promo-c-${p.id}'),
-                            promocion: p,
-                          ),
-                          final Novedad n => TarjetaNovedad(novedad: n),
-                          _ => const SizedBox.shrink(),
-                        },
-                    ],
-                  );
-          }(),
-          AsyncError() => Padding(
-            padding: const EdgeInsets.all(32),
-            child: Text(t.errorSinConexion, textAlign: TextAlign.center),
+        // Solo las últimas 5, con título y «Ver todas» (D147).
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
+          child: Text(
+            t.comunidadUltimasTitulo,
+            style: Theme.of(context).textTheme.titleMedium,
           ),
-          _ => const Padding(
-            padding: EdgeInsets.all(32),
-            child: Center(child: CircularProgressIndicator()),
-          ),
-        },
+        ),
+        const ListaNovedades(limite: NovedadesScreen.enInicio),
       ],
     );
   }
+}
+
+/// Novedades de la comunidad con promociones intercaladas. Con [limite],
+/// solo las más recientes, una promoción después de la 3.ª y el botón
+/// «Ver todas» si hay más (Inicio, D147); sin él, todas, con una promoción
+/// cada 6 (D137).
+class ListaNovedades extends ConsumerWidget {
+  const ListaNovedades({this.limite, super.key});
+
+  final int? limite;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = context.t;
+    final limite = this.limite;
+    return switch (ref.watch(novedadesProvider)) {
+      AsyncData(value: final todas) => () {
+        if (todas.isEmpty) {
+          return Padding(
+            padding: const EdgeInsets.all(32),
+            child: Text(t.comunidadVacio, textAlign: TextAlign.center),
+          );
+        }
+        final lista = limite == null ? todas : todas.take(limite).toList();
+        final promociones =
+            ref.watch(funcionalidadActivaProvider(Funcionalidades.promociones))
+            ? ref.watch(promocionesCercaProvider).value ?? const <Promocion>[]
+            : const <Promocion>[];
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            for (final x in intercalarPromociones(
+              lista,
+              promociones,
+              cada: limite == null ? 6 : 3,
+              maximo: limite == null ? 3 : 1,
+            ))
+              switch (x) {
+                final Promocion p => TarjetaPromocion(
+                  key: ValueKey('promo-c-${p.id}'),
+                  promocion: p,
+                ),
+                final Novedad n => TarjetaNovedad(novedad: n),
+                _ => const SizedBox.shrink(),
+              },
+            if (limite != null && todas.length > limite)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
+                child: OutlinedButton.icon(
+                  onPressed: () {
+                    ref.read(metricasProvider).track(Eventos.communitySeeAll);
+                    context.push(Rutas.novedades);
+                  },
+                  icon: const Icon(Icons.list_alt_outlined),
+                  label: Text(t.comunidadVerTodas),
+                ),
+              ),
+          ],
+        );
+      }(),
+      AsyncError() => Padding(
+        padding: const EdgeInsets.all(32),
+        child: Text(t.errorSinConexion, textAlign: TextAlign.center),
+      ),
+      _ => const Padding(
+        padding: EdgeInsets.all(32),
+        child: Center(child: CircularProgressIndicator()),
+      ),
+    };
+  }
+}
+
+/// Todas las novedades de la comunidad, desde «Ver todas» del Inicio (D147).
+class NovedadesScreen extends ConsumerStatefulWidget {
+  const NovedadesScreen({super.key});
+
+  /// Cuántas se ven en el Inicio.
+  static const enInicio = 5;
+
+  @override
+  ConsumerState<NovedadesScreen> createState() => _NovedadesScreenState();
+}
+
+class _NovedadesScreenState extends ConsumerState<NovedadesScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Si se entra por un enlace, los totales de reacciones no están cargados.
+    ref.listenManual(novedadesProvider, (_, s) {
+      if (s.value case final lista?) {
+        ref.read(reaccionesProvider.notifier).cargar([
+          for (final n in lista)
+            if (n.admiteReacciones) n.id,
+        ]);
+      }
+    }, fireImmediately: true);
+  }
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    appBar: AppBar(
+      leading: volverSiNoHayAtras(context),
+      title: Text(context.t.comunidadUltimasTitulo),
+    ),
+    body: RefreshIndicator(
+      onRefresh: () async {
+        ref
+          ..invalidate(reaccionesProvider)
+          ..invalidate(promocionesCercaProvider)
+          ..invalidate(novedadesProvider);
+        await ref.read(novedadesProvider.future);
+      },
+      child: ListView(
+        padding: const EdgeInsets.only(bottom: 24),
+        children: const [ListaNovedades()],
+      ),
+    ),
+  );
 }
 
 /// «Últimos 30 días»: las que volvieron a casa a la izquierda y las que se

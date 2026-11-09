@@ -5776,6 +5776,18 @@ abstract class AppLocalizations {
   /// **'Todavía no hay novedades. Cuando una mascota vuelva a casa o haya un evento cerca, lo vas a ver acá.'**
   String get comunidadVacio;
 
+  /// No description provided for @comunidadUltimasTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Últimas novedades de la comunidad'**
+  String get comunidadUltimasTitulo;
+
+  /// No description provided for @comunidadVerTodas.
+  ///
+  /// In es, this message translates to:
+  /// **'Ver todas'**
+  String get comunidadVerTodas;
+
   /// No description provided for @comunidadResumenTitulo.
   ///
   /// In es, this message translates to:

@@ -84,6 +84,8 @@ abstract final class Eventos {
   static const communityShare = 'community_share';
   static const communityUnshare = 'community_unshare';
   static const newsReaction = 'news_reaction';
+  /// «Ver todas» las novedades desde el Inicio (D147).
+  static const communitySeeAll = 'community_see_all';
   static const menuOpen = 'menu_open';
 
   /// Opción tocada en el menú ☰ (`item`: cuál), para ver qué se usa.

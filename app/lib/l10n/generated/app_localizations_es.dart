@@ -3348,6 +3348,12 @@ class AppLocalizationsEs extends AppLocalizations {
       'Todavía no hay novedades. Cuando una mascota vuelva a casa o haya un evento cerca, lo vas a ver acá.';
 
   @override
+  String get comunidadUltimasTitulo => 'Últimas novedades de la comunidad';
+
+  @override
+  String get comunidadVerTodas => 'Ver todas';
+
+  @override
   String get comunidadResumenTitulo => 'Últimos 30 días en la comunidad';
 
   @override

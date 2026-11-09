@@ -117,11 +117,17 @@ void main() {
     );
     expect(etiqueta, findsOneWidget);
     expect(find.text('10% en alimento'), findsOneWidget);
-    // En Inicio va después de la sexta novedad de la Comunidad (D139).
+    // En Inicio va después de la tercera de las 5 novedades (D147).
     expect(
       tester.getTopLeft(etiqueta).dy,
       greaterThan(
-        tester.getTopLeft(find.text('Nuevo lugar verificado: Lugar 5')).dy,
+        tester.getTopLeft(find.text('Nuevo lugar verificado: Lugar 2')).dy,
+      ),
+    );
+    expect(
+      tester.getTopLeft(etiqueta).dy,
+      lessThan(
+        tester.getTopLeft(find.text('Nuevo lugar verificado: Lugar 3')).dy,
       ),
     );
     final vistas = eventos.where((e) => e['name'] == 'promo_view').toList();

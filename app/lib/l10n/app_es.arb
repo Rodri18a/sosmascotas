@@ -1355,6 +1355,8 @@
   "noticiasSeccionNoticias": "Noticias",
   "noticiasSeccionComunidad": "Comunidad",
   "comunidadVacio": "Todavía no hay novedades. Cuando una mascota vuelva a casa o haya un evento cerca, lo vas a ver acá.",
+  "comunidadUltimasTitulo": "Últimas novedades de la comunidad",
+  "comunidadVerTodas": "Ver todas",
   "comunidadResumenTitulo": "Últimos 30 días en la comunidad",
   "comunidadResumenVolvieron": "{n, plural, =1{volvió a casa} other{volvieron a casa}}",
   "@comunidadResumenVolvieron": {"placeholders": {"n": {"type": "int"}}},

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
+import 'package:sosmascota/src/features/noticias/noticias_screen.dart';
 import 'package:sosmascota/src/features/sos/sos_detalle_screen.dart';
 import 'package:sosmascota/src/router.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
@@ -389,5 +390,63 @@ void main() {
     await _tocar(tester, find.text('Se busca a Toby'));
     expect(find.byType(SosDetalleScreen), findsOneWidget);
     expect(find.text('¿Qué te pareció?'), findsNothing);
+  });
+  testWidgets('Inicio (D147): las últimas 5 novedades con título y «Ver todas» '
+      'abre la lista completa', (tester) async {
+    final metricas = <Map<String, Object?>>[];
+    await _abrir(
+      tester,
+      metricas: metricas,
+      novedades: [
+        for (var i = 1; i <= 8; i++)
+          Novedad(
+            id: 'c$i',
+            tipo: TipoNovedad.comercio,
+            fecha: DateTime(2026, 10, 30 - i),
+            nombre: 'Vet $i',
+            detalle: 'vet',
+          ),
+      ],
+    );
+
+    expect(find.text('Últimas novedades de la comunidad'), findsOneWidget);
+    for (var i = 1; i <= 5; i++) {
+      expect(find.text('Nuevo lugar verificado: Vet $i'), findsOneWidget);
+    }
+    expect(find.text('Nuevo lugar verificado: Vet 6'), findsNothing);
+
+    await _tocar(tester, find.text('Ver todas'));
+    expect(find.byType(NovedadesScreen), findsOneWidget);
+    expect(
+      metricas.where((e) => e['name'] == 'community_see_all'),
+      hasLength(1),
+    );
+    for (var i = 1; i <= 8; i++) {
+      await tester.scrollUntilVisible(
+        find.text('Nuevo lugar verificado: Vet $i'),
+        200,
+        scrollable: find.byType(Scrollable).last,
+      );
+    }
+    expect(find.text('Ver todas'), findsNothing);
+  });
+
+  testWidgets('Inicio (D147): con 5 novedades o menos no hay «Ver todas»', (
+    tester,
+  ) async {
+    await _abrir(
+      tester,
+      novedades: [
+        Novedad(
+          id: 'c1',
+          tipo: TipoNovedad.comercio,
+          fecha: DateTime(2026, 10, 20),
+          nombre: 'Vet Pando',
+          detalle: 'vet',
+        ),
+      ],
+    );
+    expect(find.text('Nuevo lugar verificado: Vet Pando'), findsOneWidget);
+    expect(find.text('Ver todas'), findsNothing);
   });
 }
