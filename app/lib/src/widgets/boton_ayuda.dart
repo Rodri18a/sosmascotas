@@ -34,5 +34,20 @@ List<Widget> accionesPestana({List<Widget> antes = const []}) => [
   const BotonAyuda(),
 ];
 
+/// Título de una pestaña: si no entra (pantalla angosta o letra agrandada),
+/// se achica en lugar de cortarse (D152).
+class TituloPestana extends StatelessWidget {
+  const TituloPestana(this.texto, {super.key});
+
+  final String texto;
+
+  @override
+  Widget build(BuildContext context) => FittedBox(
+    fit: BoxFit.scaleDown,
+    alignment: AlignmentDirectional.centerStart,
+    child: Text(texto, maxLines: 1),
+  );
+}
+
 /// El botón ☰, marcado para el recorrido.
 const botonMenu = MarcaRecorrido('menu', child: DrawerButton());

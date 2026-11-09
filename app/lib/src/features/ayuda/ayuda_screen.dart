@@ -40,7 +40,7 @@ class AyudaScreen extends ConsumerWidget {
         drawer: const MenuPrincipal(),
         appBar: AppBar(
           leading: botonMenu,
-          title: Text(t.pestanaAyuda),
+          title: TituloPestana(t.pestanaAyuda),
           actions: accionesPestana(),
         ),
         body: RefreshIndicator(

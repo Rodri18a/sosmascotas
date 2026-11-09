@@ -344,7 +344,7 @@ class _MapaScreenState extends ConsumerState<MapaScreen> {
         drawer: const MenuPrincipal(),
         appBar: AppBar(
           leading: botonMenu,
-          title: Text(t.pestanaMapa),
+          title: TituloPestana(t.pestanaMapa),
           actions: accionesPestana(
             antes: [
               SiFuncionalidad(

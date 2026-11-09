@@ -67,7 +67,7 @@ class _NoticiasScreenState extends ConsumerState<NoticiasScreen> {
         drawer: const MenuPrincipal(),
         appBar: AppBar(
           leading: botonMenu,
-          title: Text(t.noticiasTitulo),
+          title: TituloPestana(t.noticiasTitulo),
           actions: accionesPestana(),
         ),
         body: RefreshIndicator(

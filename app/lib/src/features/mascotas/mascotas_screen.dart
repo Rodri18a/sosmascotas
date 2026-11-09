@@ -85,7 +85,7 @@ class MascotasScreen extends ConsumerWidget {
         drawer: const MenuPrincipal(),
         appBar: AppBar(
           leading: botonMenu,
-          title: Text(t.pestanaMascotas),
+          title: TituloPestana(t.pestanaMascotas),
           actions: accionesPestana(),
         ),
         body: cuerpo,

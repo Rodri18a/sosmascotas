@@ -133,7 +133,7 @@ abstract class AppLocalizations {
   /// No description provided for @pestanaMascotas.
   ///
   /// In es, this message translates to:
-  /// **'Mis mascotas'**
+  /// **'Mascotas'**
   String get pestanaMascotas;
 
   /// No description provided for @pestanaAyuda.
@@ -3283,7 +3283,7 @@ abstract class AppLocalizations {
   /// No description provided for @unirmeListo.
   ///
   /// In es, this message translates to:
-  /// **'¡Listo! Ya ves sus mascotas en «Mis mascotas».'**
+  /// **'¡Listo! Ya ves sus mascotas en «Mascotas».'**
   String get unirmeListo;
 
   /// No description provided for @unirmeNoSirve.
@@ -6829,7 +6829,7 @@ abstract class AppLocalizations {
   /// No description provided for @pasarMensaje.
   ///
   /// In es, this message translates to:
-  /// **'Te paso a {nombre} en Huellamy. En Mis mascotas tocá «Tengo un código» y escribí: {codigo}'**
+  /// **'Te paso a {nombre} en Huellamy. En Mascotas tocá «Tengo un código» y escribí: {codigo}'**
   String pasarMensaje(String nombre, String codigo);
 
   /// No description provided for @pasarCancelar.
@@ -8149,7 +8149,7 @@ abstract class AppLocalizations {
   /// No description provided for @adopcionBienvenida.
   ///
   /// In es, this message translates to:
-  /// **'¡Bienvenida a casa! Ya está en «Mis mascotas» con sus recordatorios.'**
+  /// **'¡Bienvenida a casa! Ya está en «Mascotas» con sus recordatorios.'**
   String get adopcionBienvenida;
 
   /// No description provided for @adopcionSeguimiento.

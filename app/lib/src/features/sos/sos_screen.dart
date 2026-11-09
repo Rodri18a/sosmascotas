@@ -35,7 +35,7 @@ class _SosScreenState extends ConsumerState<SosScreen> {
         drawer: const MenuPrincipal(),
         appBar: AppBar(
           leading: botonMenu,
-          title: Text(t.pestanaSos),
+          title: TituloPestana(t.pestanaSos),
           actions: accionesPestana(),
         ),
         floatingActionButton: MarcaRecorrido(

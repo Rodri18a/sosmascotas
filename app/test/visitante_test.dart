@@ -54,7 +54,7 @@ void main() {
     await tester.tap(find.text('Ahora no'));
     await tester.pumpAndSettle();
 
-    expect(find.widgetWithText(AppBar, 'Mis mascotas'), findsOneWidget);
+    expect(find.widgetWithText(AppBar, 'Mascotas'), findsOneWidget);
     expect(find.text('Necesitás una cuenta'), findsNothing);
   });
 

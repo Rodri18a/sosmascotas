@@ -231,7 +231,7 @@ void main() {
       await _tocar(tester, find.text('Unirme'));
       expect(hogar.unidos, ['K7M2QX9PAB']);
       expect(eventos.map((e) => e['name']), contains('household_join'));
-      expect(find.widgetWithText(AppBar, 'Mis mascotas'), findsOneWidget);
+      expect(find.widgetWithText(AppBar, 'Mascotas'), findsOneWidget);
     });
 
     testWidgets('explica por qué no sirve', (tester) async {

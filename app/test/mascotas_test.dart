@@ -1,10 +1,12 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image/image.dart' as img;
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
 import 'package:sosmascota/src/features/shell/app_shell.dart';
+import 'package:sosmascota/src/router.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'cuenta_falsa.dart';
@@ -204,7 +206,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(mascotas.mascotas, isEmpty);
-    expect(find.widgetWithText(AppBar, 'Mis mascotas'), findsOneWidget);
+    expect(find.widgetWithText(AppBar, 'Mascotas'), findsOneWidget);
   });
 
   testWidgets('salir con una foto sin guardar pregunta antes', (tester) async {
@@ -324,5 +326,34 @@ void main() {
           .map((e) => (e['props']! as Map)['action']),
       ['recordatorio', 'qr'],
     );
+  });
+
+  testWidgets('el título entra en 360 px con la letra agrandada (D152)', (
+    tester,
+  ) async {
+    tester.view
+      ..physicalSize = const Size(1080, 2400)
+      ..devicePixelRatio = 3;
+    tester.platformDispatcher.textScaleFactorTestValue = 1.3;
+    addTearDown(tester.view.reset);
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    await tester.pumpWidget(
+      appDePrueba(
+        inicio: Rutas.mascotas,
+        cuenta: ServicioCuentaFalso(conectado: _ana),
+      ),
+    );
+    await tester.pumpAndSettle();
+    final titulo = find.descendant(
+      of: find.byType(AppBar),
+      matching: find.text('Mascotas'),
+    );
+    expect(titulo, findsOneWidget);
+    expect(
+      tester.renderObject<RenderParagraph>(titulo).didExceedMaxLines,
+      isFalse,
+      reason: 'se achica en lugar de cortarse',
+    );
+    expect(tester.takeException(), isNull);
   });
 }

@@ -27,7 +27,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get pestanaSos => 'SOS';
 
   @override
-  String get pestanaMascotas => 'Mis mascotas';
+  String get pestanaMascotas => 'Mascotas';
 
   @override
   String get pestanaAyuda => 'Urgencias';
@@ -1931,7 +1931,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get unirmeBoton => 'Unirme';
 
   @override
-  String get unirmeListo => '¡Listo! Ya ves sus mascotas en «Mis mascotas».';
+  String get unirmeListo => '¡Listo! Ya ves sus mascotas en «Mascotas».';
 
   @override
   String get unirmeNoSirve =>
@@ -4036,7 +4036,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String pasarMensaje(String nombre, String codigo) {
-    return 'Te paso a $nombre en Huellamy. En Mis mascotas tocá «Tengo un código» y escribí: $codigo';
+    return 'Te paso a $nombre en Huellamy. En Mascotas tocá «Tengo un código» y escribí: $codigo';
   }
 
   @override
@@ -4858,7 +4858,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get adopcionBienvenida =>
-      '¡Bienvenida a casa! Ya está en «Mis mascotas» con sus recordatorios.';
+      '¡Bienvenida a casa! Ya está en «Mascotas» con sus recordatorios.';
 
   @override
   String adopcionSeguimiento(String nombre) {
