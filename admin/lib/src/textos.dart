@@ -385,18 +385,8 @@ abstract final class T {
     'published': 'Publicada',
     'hidden': 'Oculta',
   };
-  static const especies = {
-    1: 'Perro',
-    2: 'Gato',
-    3: 'Ave',
-    4: 'Conejo',
-    5: 'Roedor',
-    6: 'Tortuga',
-    7: 'Reptil',
-    8: 'Pez',
-    9: 'Caballo',
-    10: 'Otro',
-  };
+  /// Especies habilitadas (D149: la primera versión es de perros y gatos).
+  static const especies = {1: 'Perro', 2: 'Gato'};
 
   // Prospectos
   static const nuevoProspecto = 'Nuevo prospecto';

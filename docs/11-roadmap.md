@@ -75,6 +75,7 @@ Las fechas son objetivos. **La fecha real sale de las horas que se vayan complet
 - Pagos dentro de la app con **Mercado Pago** + comisión
 - Tienda tipo marketplace
 - Expansión a otras zonas y países, portugués e inglés, varias monedas
+- **Ecosistema completo de mascotas** (D149): sumar de a una las especies apagadas (aves, conejos, roedores, tortugas, reptiles, peces, caballos), con sus razas, grupos y comercios especializados. Se prende con `update public.species set enabled = true where slug = '…'`, sin cambiar la app
 
 ---
 

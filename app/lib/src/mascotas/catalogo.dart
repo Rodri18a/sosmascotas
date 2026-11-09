@@ -21,6 +21,8 @@ class SupabaseCatalogoRepositorio implements CatalogoRepositorio {
     final filas = await _cliente
         .from('species')
         .select('id, slug, name, icon')
+        // Solo las habilitadas: la primera versión es de perros y gatos (D149).
+        .eq('enabled', true)
         // En supabase_flutter `order` es descendente si no se aclara.
         .order('sort', ascending: true);
     return filas.map(Especie.fromJson).toList();

@@ -2,6 +2,8 @@
 
 Cada función indica la **fase** en la que se construye (ver `11-roadmap.md`) y si es **gratis** o de un **plan pago** (ver `06-reglas-negocio.md`).
 
+> **Desde el 09/11/2026 (D149): la primera versión es solo para perros y gatos.** Las demás especies (aves, conejos, roedores, tortugas, reptiles, peces, caballos) quedan en la base, apagadas (`species.enabled`), y se suman de a una más adelante para llegar al ecosistema completo de mascotas. Todos los selectores y filtros de especie (mascotas, SOS, adopción, tránsito, grupos, comercios, catálogo, noticias) muestran solo Perro y Gato.
+
 ## Navegación (modo dueño)
 
 Barra inferior: **Explorar** (mapa) · **Noticias** · **SOS** (en rojo) · **Mascotas** · **Ajustes**. Arriba, una fila con las mascotas del usuario, la opción "Todas" y "＋".

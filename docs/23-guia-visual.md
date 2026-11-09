@@ -13,6 +13,7 @@
 | Simple y clara | Recargada |
 | Confiable con los datos | Fría o de clínica |
 | Calma en una urgencia | Alarmista (Ami y Michi nunca asustan) |
+| Para perros y gatos (primera versión, D149) | Cerrada a otras mascotas en el futuro |
 
 ## 2. Ícono y logo
 

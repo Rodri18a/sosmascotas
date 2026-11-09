@@ -10,6 +10,8 @@
 
 Una app que conecta a **dueños de mascotas** con **empresas del rubro**, con un **mapa** como centro: veterinarias, petshops, servicios, lugares que aceptan mascotas, y mascotas **perdidas y encontradas**. Arranca en **Pando** y crece por zonas.
 
+> **Desde el 09/11/2026 (D149): la primera versión es solo para perros y gatos.** Las demás especies (aves, conejos, roedores, tortugas, reptiles, peces, caballos) quedan en la base, apagadas (`species.enabled`), y se suman de a una más adelante para llegar al ecosistema completo de mascotas.
+
 ## Lo más importante de cada parte
 
 | Tema | En una línea | Detalle |

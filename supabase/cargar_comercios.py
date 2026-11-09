@@ -14,6 +14,7 @@ Columnas (la primera fila es el encabezado):
   mie jue vie sab dom. Si un día no figura, cerrado. Vacío si es 24 h.
 - urgencias / 24h: "si" o vacío.
 - especies: nombres de la app separados por coma ("Perro, Gato"); vacío = todas.
+  Solo las habilitadas (D149: perro y gato); otra da "especie desconocida".
 - rubro (opcional, por defecto veterinaria): veterinaria, petshop, farmacia,
   peluqueria, paseador, hotel, adiestrador, acepta_mascotas, refugio,
   agropecuaria (o agroveterinaria).
@@ -174,7 +175,7 @@ def main():
     secreta = next(c['api_key'] for c in claves if c.get('type') == 'secret' or c.get('name') == 'service_role')
     admin = {'apikey': secreta, 'Authorization': f'Bearer {secreta}'}
 
-    _, especies = pedir('GET', f'{url}/rest/v1/species?select=id,name', headers=admin)
+    _, especies = pedir('GET', f'{url}/rest/v1/species?select=id,name&enabled=eq.true', headers=admin)
     _, zonas = pedir('GET', f'{url}/rest/v1/zones?select=id&slug=eq.pando', headers=admin)
     filas, errores = filas_del_csv(argumentos[0], {e['name'].lower(): e['id'] for e in especies}, ejemplo)
     if errores:

@@ -135,6 +135,10 @@ def main():
 
         print('species / breeds')
         caso('un visitante ve las especies', len(filas(rest('GET', 'species?select=id'))) >= 10)
+        caso('solo perro y gato están habilitadas (D149)',
+             sorted(e['id'] for e in filas(rest('GET', 'species?select=id&enabled=eq.true'))) == [1, 2])
+        caso('A no puede habilitar una especie',
+             bloqueado(rest('PATCH', 'species?id=eq.3', {'enabled': True}, a)))
         caso('un visitante ve las razas de perro', len(filas(rest('GET', 'breeds?select=id&species_id=eq.1'))) > 20)
         caso('A no puede crear especies', bloqueado(rest('POST', 'species', {'slug': 'x', 'name': 'x', 'icon': 'x'}, a)))
         caso('A no puede cambiar razas', bloqueado(rest('PATCH', 'breeds?id=eq.1', {'name': 'x'}, a)))
