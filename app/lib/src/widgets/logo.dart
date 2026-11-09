@@ -3,13 +3,14 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../l10n/l10n.dart';
 
-/// Logo completo: isotipo (globo con huella), «Huellitas» y la frase de la
-/// marca (D126).
+/// Logo de Huellamy (D146).
 ///
-/// [horizontal]: el isotipo a la izquierda (cabeceras); si no, arriba
-/// (pantallas de bienvenida). Con [tinta], todo de un solo color.
-class LogoHuellitas extends StatelessWidget {
-  const LogoHuellitas({
+/// Vertical (pantallas de bienvenida): el logo ilustrado con Ami y Michi
+/// (`assets/marca/logo.jpg`) y la frase debajo. [horizontal] (cabeceras y
+/// menú): el isotipo a la izquierda y «Huellamy» en letras, «Huell» en azul
+/// profundo y «amy» en azul brillante. Con [tinta], todo de un solo color.
+class LogoHuellamy extends StatelessWidget {
+  const LogoHuellamy({
     this.horizontal = false,
     this.conFrase = true,
     this.alto = 40,
@@ -17,10 +18,13 @@ class LogoHuellitas extends StatelessWidget {
     super.key,
   });
 
+  /// Logo ilustrado. Tiene fondo blanco (no hay versión transparente).
+  static const imagen = 'assets/marca/logo.jpg';
+
   final bool horizontal;
   final bool conFrase;
 
-  /// Alto de las letras de «Huellitas»; el resto se calcula a partir de él.
+  /// Alto de las letras de «Huellamy»; el resto se calcula a partir de él.
   final double alto;
   final Color? tinta;
 
@@ -29,28 +33,48 @@ class LogoHuellitas extends StatelessWidget {
     final t = context.t;
     final tema = Theme.of(context);
     final oscuro = tema.brightness == Brightness.dark;
-    final color =
+    final colorTexto =
         tinta ?? (oscuro ? tema.colorScheme.onSurface : ColoresLogo.nombre);
-    final titulos = tema.textTheme.displaySmall;
-    final nombre = Text(
-      t.logoNombre,
-      textAlign: horizontal ? TextAlign.start : TextAlign.center,
-      style: titulos?.copyWith(
-        color: color,
-        fontSize: alto,
-        fontWeight: FontWeight.w900,
-        height: 1,
-        letterSpacing: -0.3,
-      ),
-    );
     final frase = Text(
       t.logoFrase,
       textAlign: horizontal ? TextAlign.start : TextAlign.center,
       style: tema.textTheme.titleMedium?.copyWith(
-        color: color,
+        color: colorTexto,
         fontSize: alto * 0.42,
         fontWeight: FontWeight.w700,
       ),
+    );
+
+    if (!horizontal && tinta == null) {
+      return Semantics(
+        label: t.appNombre,
+        excludeSemantics: true,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(alto * 0.8),
+              child: Image.asset(
+                imagen,
+                width: alto * 5,
+                height: alto * 5,
+                fit: BoxFit.cover,
+              ),
+            ),
+            if (conFrase) ...[SizedBox(height: alto * 0.3), frase],
+          ],
+        ),
+      );
+    }
+
+    final nombre = _Nombre(
+      texto: t.logoNombre,
+      alto: alto,
+      color: colorTexto,
+      acento:
+          tinta ??
+          (oscuro ? const Color(0xFF7CC4F5) : ColoresLogo.nombreAcento),
+      centrado: !horizontal,
     );
     final texto = Column(
       mainAxisSize: MainAxisSize.min,
@@ -86,6 +110,48 @@ class LogoHuellitas extends StatelessWidget {
                 texto,
               ],
             ),
+    );
+  }
+}
+
+/// «Huellamy» en dos colores: la parte después de «Huell» va en [acento].
+class _Nombre extends StatelessWidget {
+  const _Nombre({
+    required this.texto,
+    required this.alto,
+    required this.color,
+    required this.acento,
+    required this.centrado,
+  });
+
+  final String texto;
+  final double alto;
+  final Color color;
+  final Color acento;
+  final bool centrado;
+
+  @override
+  Widget build(BuildContext context) {
+    final estilo = Theme.of(context).textTheme.displaySmall?.copyWith(
+      color: color,
+      fontSize: alto,
+      fontWeight: FontWeight.w900,
+      height: 1,
+      letterSpacing: -0.3,
+    );
+    final corte = texto.startsWith('Huell') ? 5 : texto.length;
+    return Text.rich(
+      TextSpan(
+        style: estilo,
+        children: [
+          TextSpan(text: texto.substring(0, corte)),
+          TextSpan(
+            text: texto.substring(corte),
+            style: TextStyle(color: acento),
+          ),
+        ],
+      ),
+      textAlign: centrado ? TextAlign.center : TextAlign.start,
     );
   }
 }

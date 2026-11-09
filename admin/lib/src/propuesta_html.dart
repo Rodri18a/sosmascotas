@@ -16,7 +16,7 @@ String htmlDePropuesta(Propuesta p, {required DateTime fecha}) {
   final rubro = T.rubros[p.rubro] ?? p.rubro;
   final zona = _e(p.zona ?? 'todas las zonas');
   final nombre = p.negocio?['nombre'] as String?;
-  final titulo = 'Huellitas para ${_e(nombre ?? rubro)}';
+  final titulo = 'Huellamy para ${_e(nombre ?? rubro)}';
   final aperturas = p.numeroDelNegocio('aperturas');
   final contactos = p.numeroDelNegocio('contactos');
   final favoritos = p.numeroDelNegocio('favoritos');
@@ -64,7 +64,7 @@ String htmlDePropuesta(Propuesta p, {required DateTime fecha}) {
 <title>$titulo</title>
 <style>
   @page { size: A4; margin: 16mm; }
-  :root { --primario: #126FA3; --celeste: #1E9BD7; --fondo: #F2F8FC; --tinta: #13294B; --gris: #4A5B72; }
+  :root { --primario: #0B4F94; --celeste: #1AA0EA; --fondo: #F0F8FE; --tinta: #13294B; --gris: #4A5B72; }
   * { box-sizing: border-box; }
   body { margin: 0; padding: 24px; background: #fff; color: var(--tinta);
          font: 15px/1.45 "Nunito Sans", "Segoe UI", system-ui, sans-serif; }
@@ -106,7 +106,7 @@ ${mascotas.isEmpty ? '' : '  <li>Mascotas registradas: $mascotas</li>'}
 
 ${casos.isEmpty ? '' : '<h2>Lo que dicen otros comercios</h2>\n$casos'}
 
-<p class="nota pie">Huellitas · Pando, Uruguay. Son cantidades de la app: nunca se comparte quién fue (Ley 18.331).</p>
+<p class="nota pie">Huellamy · Pando, Uruguay. Son cantidades de la app: nunca se comparte quién fue (Ley 18.331).</p>
 </body>
 </html>
 ''';

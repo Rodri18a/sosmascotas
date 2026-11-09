@@ -166,7 +166,7 @@ class _NegocioScreenState extends ConsumerState<NegocioScreen> {
           pasos: (context) => PasosRecorrido.de(context, guia),
           child: Scaffold(
             appBar: AppBar(
-              // En Huellitas Comercios el panel es el inicio: sin flecha.
+              // En Huellamy Comercios el panel es el inicio: sin flecha.
               leading: ref.watch(esAppComercioProvider)
                   ? null
                   : volverSiNoHayAtras(context),
@@ -201,7 +201,7 @@ class _NegocioScreenState extends ConsumerState<NegocioScreen> {
                       overflow: TextOverflow.ellipsis,
                     ),
               actions: [
-                // Huellitas Comercios es otra app (D143): en vez de pasar a
+                // Huellamy Comercios es otra app (D143): en vez de pasar a
                 // la de las personas, la cuenta (Ajustes, cerrar sesión).
                 MarcaRecorrido(
                   'volver',

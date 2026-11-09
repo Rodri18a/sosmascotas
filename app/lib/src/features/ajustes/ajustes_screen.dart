@@ -155,8 +155,8 @@ class _SeccionCuenta extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final t = context.t;
     final perfil = ref.watch(perfilProvider).value;
-    // En Huellitas Comercios, solo lo de la cuenta y los avisos: lo de las
-    // mascotas y las compras se maneja en Huellitas (D143).
+    // En Huellamy Comercios, solo lo de la cuenta y los avisos: lo de las
+    // mascotas y las compras se maneja en Huellamy (D143).
     final personas = !ref.watch(esAppComercioProvider);
     return Column(
       children: [

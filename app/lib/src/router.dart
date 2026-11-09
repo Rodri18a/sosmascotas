@@ -274,8 +274,8 @@ GoRoute _hija(String ruta, Widget pantalla) =>
     GoRoute(path: ruta.split('/').last, builder: (_, _) => pantalla);
 
 /// Pantalla donde abre la app: el muro (D127). Las pruebas del mapa la cambian.
-/// Pantallas que son solo de Huellitas (las personas y sus mascotas). En
-/// Huellitas Comercios llevan al panel del negocio (D143).
+/// Pantallas que son solo de Huellamy (las personas y sus mascotas). En
+/// Huellamy Comercios llevan al panel del negocio (D143).
 bool esDePersonas(String ruta) {
   if (ruta == '/' || ruta.isEmpty) return true;
   const raices = {
@@ -371,7 +371,7 @@ final routerProvider = Provider<GoRouter>((ref) {
           uri: state.uri,
           funcionalidadActiva: ref.read(funcionalidadesProvider).activa,
         ) ??
-        // Huellitas Comercios es otra app (D143): lo de las personas no se
+        // Huellamy Comercios es otra app (D143): lo de las personas no se
         // abre ahí, ni por un enlace ni por un aviso.
         (ref.read(esAppComercioProvider) && esDePersonas(state.uri.path)
             ? Rutas.negocio

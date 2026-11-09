@@ -209,7 +209,7 @@ Future<void> _hojaSinReclamar(
                 child: FilledButton.icon(
                   onPressed: () {
                     Navigator.pop(hoja);
-                    // Se reclama en Huellitas Comercios (D143).
+                    // Se reclama en Huellamy Comercios (D143).
                     irAMiNegocio(
                       context,
                       ref,

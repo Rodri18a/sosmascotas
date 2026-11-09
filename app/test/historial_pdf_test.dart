@@ -80,7 +80,7 @@ void main() {
         grupo: (t) => 'Vacunas',
         fecha: (f) => '${f.day}/${f.month}/${f.year}',
         proxima: (f) => 'Próxima: $f',
-        pie: 'Hecho con Huellitas',
+        pie: 'Hecho con Huellamy',
         vidaTitulo: 'Historial de vida',
         tipoVida: (t) => 'Operación',
         adjuntos: (n) => '$n adjuntos',

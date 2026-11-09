@@ -1,5 +1,6 @@
-// Genera los íconos de la app desde el isotipo (guía visual de Huellitas, D126),
-// también los de Huellitas Comercios (globo azul, `web_comercios/`, D129).
+// Genera los íconos de la app desde el isotipo (guía de Huellamy, D146): huella
+// azul profundo sobre celeste; los de Huellamy Comercios (`web_comercios/`,
+// D129) al revés, huella blanca sobre azul profundo.
 // No corre con las pruebas: se usa a mano cuando cambia el logo, desde app/:
 //   flutter test tool/iconos_marca_test.dart
 import 'dart:io';
@@ -8,9 +9,6 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
-
-/// Fondo del ícono de la app: blanco, con el globo celeste encima.
-const _fondo = Color(0xFFFFFFFF);
 
 enum _Forma {
   /// Cuadrado redondeado (web, favicon, Android).
@@ -27,9 +25,13 @@ Future<void> _escribir(
   String ruta,
   int lado,
   _Forma forma, {
-  Color globo = ColoresLogo.globo,
+  Color huella = ColoresLogo.huella,
+  Color fondo = ColoresLogo.fondo,
 }) async {
-  final pintor = PintorIsotipo(color: globo);
+  // En los íconos el color llena todo el cuadrado: la mancha no hace falta.
+  final pintor = forma == _Forma.isotipo
+      ? PintorIsotipo(color: huella, fondo: fondo)
+      : PintorIsotipo(color: huella, fondo: null);
   final grabador = ui.PictureRecorder();
   final lienzo = Canvas(grabador);
   final l = lado.toDouble();
@@ -37,17 +39,17 @@ Future<void> _escribir(
   if (forma == _Forma.isotipo) {
     pintor.paint(lienzo, todo.size);
   } else {
-    final fondo = Paint()..color = _fondo;
+    final pintura = Paint()..color = fondo;
     if (forma == _Forma.redondeado) {
       lienzo.drawRRect(
         RRect.fromRectAndRadius(todo, Radius.circular(l * 0.22)),
-        fondo,
+        pintura,
       );
     } else {
-      lienzo.drawRect(todo, fondo);
+      lienzo.drawRect(todo, pintura);
     }
     // En los «llenos» el sistema recorta: el dibujo va en la zona segura.
-    final margen = l * (forma == _Forma.lleno ? 0.18 : 0.1);
+    final margen = l * (forma == _Forma.lleno ? 0.16 : 0.08);
     lienzo
       ..save()
       ..translate(margen, margen);
@@ -98,13 +100,14 @@ void main() {
     ];
     for (final (ruta, lado, forma) in archivos) {
       await _escribir(ruta, lado, forma);
-      // Los mismos de la web, en azul, para Huellitas Comercios.
+      // Los mismos de la web, al revés, para Huellamy Comercios.
       if (ruta.startsWith('web/')) {
         await _escribir(
           ruta.replaceFirst('web/', 'web_comercios/'),
           lado,
           forma,
-          globo: ColoresLogo.globoComercio,
+          huella: ColoresLogo.huellaComercio,
+          fondo: ColoresLogo.fondoComercio,
         );
       }
     }

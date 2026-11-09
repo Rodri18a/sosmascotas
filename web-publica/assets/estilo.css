@@ -1,5 +1,5 @@
-/* Web pública de Huellitas: liviana, legible al sol y en celulares de gama baja. */
-/* Identidad Huellitas (D126, docs/23-guia-visual.md). Fuentes propias: sin pedidos a terceros. */
+/* Web pública de Huellamy: liviana, legible al sol y en celulares de gama baja. */
+/* Identidad Huellamy (D146, docs/23-guia-visual.md). Fuentes propias: sin pedidos a terceros. */
 @font-face {
   font-family: 'Nunito'; font-style: normal; font-weight: 700 900; font-display: swap;
   src: url(/assets/fuentes/nunito-latin.woff2) format('woff2');
@@ -9,25 +9,25 @@
   src: url(/assets/fuentes/nunito-sans-latin.woff2) format('woff2');
 }
 :root {
-  --primario: #126fa3;
+  --primario: #0b4f94;
   --sobre-primario: #ffffff;
-  --primario-claro: #e0eef7;
-  --acento: #ff6150;
+  --primario-claro: #dcefff;
+  --acento: #e8923a;
   --sobre-acento: #13294b;
   --error: #b3261e;
   --texto: #13294b;
   --suave: #4a5b72;
-  --fondo: #f2f8fc;
+  --fondo: #f0f8fe;
   --tarjeta: #ffffff;
   --borde: #d9e6ef;
   color-scheme: light dark;
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --primario: #5cc8f0;
+    --primario: #7cc4f5;
     --sobre-primario: #0e1a26;
     --primario-claro: #17304a;
-    --acento: #ff8a7d;
+    --acento: #f5a75a;
     --sobre-acento: #0e1a26;
     --error: #ff8a80;
     --texto: #e8f1f8;
@@ -45,6 +45,7 @@ body {
   background: var(--fondo);
 }
 main { max-width: 520px; margin: 0 auto; padding: 16px 16px 48px; }
+.logo-ilustrado { display: block; margin: 0 auto 16px; width: 240px; height: auto; border-radius: 28px; }
 header.marca { display: flex; align-items: center; gap: 8px; font-size: 20px; color: var(--primario); font-family: "Nunito", sans-serif; font-weight: 900; margin-bottom: 12px; }
 .tarjeta { background: var(--tarjeta); border: 1px solid var(--borde); border-radius: 16px; padding: 16px; margin-bottom: 16px; }
 .foto { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 12px; background: var(--primario-claro); display: block; }

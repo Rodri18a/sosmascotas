@@ -1,4 +1,4 @@
-/// Lógica compartida de Huellitas: la usan la app y el portal de administración.
+/// Lógica compartida de Huellamy: la usan la app y el portal de administración.
 library;
 
 export 'src/adopcion/adopcion.dart';

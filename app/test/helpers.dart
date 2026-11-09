@@ -171,7 +171,7 @@ Widget appDePrueba({
   // La mayoría de las pruebas se escribieron arrancando en el Mapa; las de
   // navegación arrancan donde abre la app de verdad (Rutas.inicio, D127).
   String inicio = Rutas.mapa,
-  // Huellitas Comercios (D129) y la otra app que se abrió (en la web).
+  // Huellamy Comercios (D129) y la otra app que se abrió (en la web).
   bool appComercio = false,
   List<String>? otraAppAbierta,
   // Recorridos guiados (D130): por defecto ya vistos, para que no salgan solos.

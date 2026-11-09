@@ -11,7 +11,7 @@ import 'dos_apps/dos_apps.dart';
 import 'metricas/metricas.dart';
 import 'router.dart';
 
-/// Arranca Huellitas o, con [comercio], Huellitas Comercios (D129).
+/// Arranca Huellamy o, con [comercio], Huellamy Comercios (D129).
 Future<void> arrancar({bool comercio = false}) async {
   WidgetsFlutterBinding.ensureInitialized();
   // Direcciones limpias en la web (/sos en vez de /#/sos). El hosting debe

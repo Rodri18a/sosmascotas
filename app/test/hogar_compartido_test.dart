@@ -113,7 +113,7 @@ void main() {
       await _tocar(tester, find.text('Copiar enlace'));
       expect(
         copiado,
-        'Te invito a cuidar a mis mascotas en Huellitas: '
+        'Te invito a cuidar a mis mascotas en Huellamy: '
         'https://sosmascotas.uy/unirme/K7M2QX9PAB',
       );
       expect(eventos.map((e) => e['name']), contains('household_invite'));

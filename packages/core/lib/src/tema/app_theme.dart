@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'paleta.dart';
 
 /// Tema de la app en modo claro y oscuro (Material 3), armado desde la paleta
-/// de la marca (Huellitas, D126).
+/// de la marca (Huellamy, D146).
 abstract final class AppTheme {
   static ThemeData get claro => tema(Paleta.cielo, Brightness.light);
 

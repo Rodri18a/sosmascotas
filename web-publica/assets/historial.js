@@ -89,7 +89,7 @@ async function urlsDeAdjuntos(token) {
 
 function mostrar(h, urls) {
   const p = h.pet;
-  document.title = `Historial de ${p.name} · Huellitas`;
+  document.title = `Historial de ${p.name} · Huellamy`;
   const foto = urlFoto('pet-photos', p.photo_path);
   const contenedor = document.getElementById('foto-contenedor');
   if (foto) {

@@ -25,5 +25,5 @@ class ConRutasDeLaApp(http.server.SimpleHTTPRequestHandler):
 
 if __name__ == '__main__':
     manejador = functools.partial(ConRutasDeLaApp, directory=os.path.normpath(RAIZ))
-    print(f'Huellitas web en http://localhost:{PUERTO}/  (Ctrl+C para cortar)')
+    print(f'Huellamy web en http://localhost:{PUERTO}/  (Ctrl+C para cortar)')
     http.server.ThreadingHTTPServer(('127.0.0.1', PUERTO), manejador).serve_forever()

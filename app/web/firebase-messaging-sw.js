@@ -1,4 +1,4 @@
-// Avisos push de Huellitas (paso 0.6.1).
+// Avisos push de Huellamy (paso 0.6.1).
 //
 // Firebase registra este archivo al pedir el token. FCM entrega Web Push
 // estándar, así que no hace falta cargar el SDK de Firebase acá (ni su
@@ -20,7 +20,7 @@ self.addEventListener('push', (event) => {
   }
   const notificacion = mensaje.notification || {};
   const datos = mensaje.data || {};
-  const titulo = notificacion.title || datos.titulo || 'Huellitas';
+  const titulo = notificacion.title || datos.titulo || 'Huellamy';
   const ruta = datos.ruta || (mensaje.fcmOptions && mensaje.fcmOptions.link) || '/avisos';
 
   event.waitUntil(
@@ -39,7 +39,7 @@ self.addEventListener('push', (event) => {
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
   let ruta = event.notification.data?.ruta || '/';
-  // Lo del negocio se abre en Huellitas Comercios, que es otra app (D143).
+  // Lo del negocio se abre en Huellamy Comercios, que es otra app (D143).
   if (ruta.startsWith('/negocio')) ruta = '/comercios' + ruta;
   const destino = new URL(ruta, self.location.origin);
   // Solo rutas de la propia app.

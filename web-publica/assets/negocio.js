@@ -81,7 +81,7 @@ function renglon(titulo, detalle, n, que) {
   li.append(texto);
   if (n.whatsapp) {
     li.append(enlace('Consultar', urlWhatsapp(n.whatsapp,
-      `Hola, te escribo desde Huellitas. Quería consultar por: ${que}`), 'consultar'));
+      `Hola, te escribo desde Huellamy. Quería consultar por: ${que}`), 'consultar'));
   }
   return li;
 }
@@ -94,9 +94,9 @@ function mostrarEstado(titulo, texto) {
 
 function mostrarNegocio(n) {
   const rubro = RUBROS[n.business_type] || '';
-  document.title = `${n.name} · Huellitas`;
+  document.title = `${n.name} · Huellamy`;
   document.querySelector('meta[name=description]').content =
-    n.description || `${rubro} en Huellitas: servicios, horario y cómo llegar.`;
+    n.description || `${rubro} en Huellamy: servicios, horario y cómo llegar.`;
 
   const fotos = document.getElementById('fotos');
   for (const ruta of (n.photos || []).slice(0, 6)) {
@@ -135,7 +135,7 @@ function mostrarNegocio(n) {
   document.getElementById('direccion').textContent = n.kind === 'local' ? (n.address || '') : (n.coverage || '');
 
   const acciones = document.getElementById('acciones');
-  if (n.whatsapp) acciones.append(enlace('WhatsApp', urlWhatsapp(n.whatsapp, 'Hola, te escribo desde Huellitas.'), 'boton principal'));
+  if (n.whatsapp) acciones.append(enlace('WhatsApp', urlWhatsapp(n.whatsapp, 'Hola, te escribo desde Huellamy.'), 'boton principal'));
   if (n.phone) {
     const a = el('a', `Llamar · ${n.phone}`, 'boton secundario');
     a.href = `tel:${n.phone.replace(/\s/g, '')}`;

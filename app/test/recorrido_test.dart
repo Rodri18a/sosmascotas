@@ -39,7 +39,7 @@ void main() {
   ) async {
     final almacen = AlmacenRecorridosFalso();
     final metricas = await _abrir(tester, almacen);
-    expect(find.text('¡Te damos la bienvenida a Huellitas!'), findsOneWidget);
+    expect(find.text('¡Te damos la bienvenida a Huellamy!'), findsOneWidget);
     expect(almacen.vistos, {PantallaRecorrido.inicio});
     expect(_de(metricas, 'tour_start'), [
       {'screen': 'inicio', 'auto': true},
@@ -61,7 +61,7 @@ void main() {
       tester,
       AlmacenRecorridosFalso()..vistos.add(PantallaRecorrido.inicio),
     );
-    expect(find.text('¡Te damos la bienvenida a Huellitas!'), findsNothing);
+    expect(find.text('¡Te damos la bienvenida a Huellamy!'), findsNothing);
     expect(_de(metricas, 'tour_start'), isEmpty);
   });
 
@@ -87,7 +87,7 @@ void main() {
       await tester.tapAt(const Offset(4, 300));
       await tester.pumpAndSettle();
     }
-    expect(titulos.first, '¡Te damos la bienvenida a Huellitas!');
+    expect(titulos.first, '¡Te damos la bienvenida a Huellamy!');
     expect(titulos, contains('El menú'));
     expect(titulos, contains('Lo principal, abajo'));
     expect(

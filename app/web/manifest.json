@@ -1,7 +1,7 @@
 {
     "id": "/",
-    "name": "Huellitas",
-    "short_name": "Huellitas",
+    "name": "Huellamy",
+    "short_name": "Huellamy",
     "description": "Encontrá veterinarias, avisá si se pierde tu mascota y ayudá a las de tu barrio.",
     "lang": "es-UY",
     "dir": "ltr",
@@ -9,8 +9,8 @@
     "scope": "/",
     "display": "standalone",
     "orientation": "portrait-primary",
-    "background_color": "#F2F8FC",
-    "theme_color": "#126FA3",
+    "background_color": "#F0F8FE",
+    "theme_color": "#0B4F94",
     "categories": ["lifestyle", "utilities"],
     "prefer_related_applications": false,
     "icons": [

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Arma la web de las dos apps en build/web (D129):
-#   /            Huellitas (personas)
-#   /comercios/  Huellitas Comercios (mismo código, entra por main_comercio.dart)
+#   /            Huellamy (personas)
+#   /comercios/  Huellamy Comercios (mismo código, entra por main_comercio.dart)
 # Mismo sitio: comparten la sesión. Cada una se instala aparte, con su nombre
 # y su ícono. Uso, desde app/:
 #   tool/armar_web.sh [dev|prod]      (por defecto dev)
@@ -16,10 +16,10 @@ config="$app/config/$entorno.json"
 cd "$app"
 comun=(--release --no-wasm-dry-run "--dart-define-from-file=$config")
 
-echo "▶ Huellitas (personas)"
+echo "▶ Huellamy (personas)"
 flutter build web "${comun[@]}" --target="$app/lib/main.dart" --output="$app/build/web"
 
-echo "▶ Huellitas Comercios"
+echo "▶ Huellamy Comercios"
 # Rutas relativas y sin conversión: en Git Bash (Windows), /comercios/ se
 # volvía una ruta de Windows.
 MSYS_NO_PATHCONV=1 flutter build web --release --no-wasm-dry-run \
@@ -35,11 +35,10 @@ cp "$app/web_comercios/manifest.json" "$destino/manifest.json"
 cp "$app/web_comercios/favicon.png" "$destino/favicon.png"
 cp "$app/web_comercios/icons/"*.png "$destino/icons/"
 sed -i \
-  -e 's#<title>Huellitas</title>#<title>Huellitas Comercios</title>#' \
-  -e 's#content="Huellitas">#content="Huellitas Comercios">#' \
-  -e 's#name="theme-color" content="\#126FA3"#name="theme-color" content="\#1F4FD1"#' \
-  -e 's#aria-label="Cargando Huellitas"#aria-label="Cargando Huellitas Comercios"#' \
-  -e 's#<div class="nombre">Huellitas</div>#<div class="nombre">Huellitas Comercios</div>#' \
+  -e 's#<title>Huellamy</title>#<title>Huellamy Comercios</title>#' \
+  -e 's#content="Huellamy">#content="Huellamy Comercios">#' \
+  -e 's#aria-label="Cargando Huellamy"#aria-label="Cargando Huellamy Comercios"#' \
+  -e 's#<img class="logo ilustrado" src="icons/logo.jpg" alt="Huellamy">#<img class="logo" src="icons/isotipo.png" alt=""><div class="nombre">Huellamy Comercios</div>#' \
   "$destino/index.html"
 # Las reglas del sitio van una sola vez, en la raíz.
 rm -f "$destino/vercel.json"

@@ -17,7 +17,7 @@ void main() {
       encabezadoAhora: 'septiembre de 2026',
       filas: const [('Aperturas de la ficha', 340, 200), ('Reseñas', 0, 0)],
       privacidad: 'Solo cantidades: nunca se muestra quién fue.',
-      pie: 'Hecho con Huellitas',
+      pie: 'Hecho con Huellamy',
       normal: fuente('NunitoSans-Regular'),
       negrita: fuente('NunitoSans-Bold'),
     );

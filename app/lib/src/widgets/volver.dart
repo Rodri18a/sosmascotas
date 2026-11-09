@@ -8,7 +8,7 @@ import '../router.dart';
 /// Flecha para volver en las pantallas que se abren fuera de las pestañas.
 /// Si se entró por un enlace directo, un aviso o después de ingresar, no hay
 /// a dónde volver: la flecha lleva a [destino] (el inicio, o el panel del
-/// negocio en Huellitas Comercios, D129, si no se indica).
+/// negocio en Huellamy Comercios, D129, si no se indica).
 /// Con algo detrás devuelve `null` y la barra pone la flecha de siempre.
 Widget? volverSiNoHayAtras(BuildContext context, [String? destino]) {
   if (context.canPop()) return null;

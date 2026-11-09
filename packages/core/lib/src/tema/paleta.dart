@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 /// Colores de un modo (claro u oscuro) de una paleta de la marca.
 ///
 /// Cada par texto/fondo tiene contraste ≥ 4,5:1 (lo verifica `tema_test.dart`).
-/// Detalle y valores en `docs/23-guia-visual.md` (D126); temas Pro en `docs/14-brief-identidad-visual.md` §10.
+/// Detalle y valores en `docs/23-guia-visual.md` (D146); temas Pro en `docs/14-brief-identidad-visual.md` §10.
 @immutable
 class ColoresModo {
   const ColoresModo({
@@ -55,11 +55,11 @@ class ColoresModo {
   Color get barra => _barra ?? primario;
   Color get sobreBarra => _sobreBarra ?? sobrePrimario;
 
-  /// Color del símbolo de la marca (el globo): botón redondo del Mapa y logo.
+  /// Color del símbolo de la marca: botón redondo del Mapa y logo.
   /// Lleva íconos blancos encima; en los temas Pro es el primario.
   Color get simbolo => _simbolo ?? primario;
 
-  /// Íconos sobre [simbolo]: blanco en Huellitas (3:1 o más, como pide un
+  /// Íconos sobre [simbolo]: blanco en Huellamy (3:1 o más, como pide un
   /// ícono); en los temas Pro, el de sobre el primario.
   Color get sobreSimbolo =>
       _simbolo == null ? sobrePrimario : const Color(0xFFFFFFFF);
@@ -101,7 +101,7 @@ class Paleta {
   /// Peso de los títulos: las tipografías de los temas Pro solo traen SemiBold.
   final FontWeight pesoTitulos;
 
-  /// Vacía si las tipografías ya vienen con la app (Huellitas).
+  /// Vacía si las tipografías ya vienen con la app (Huellamy).
   final List<ArchivoFuente> fuentesADescargar;
 
   /// La de la marca primero; el orden es el del selector de Ajustes.
@@ -114,74 +114,76 @@ class Paleta {
   ColoresModo modo(Brightness brillo) =>
       brillo == Brightness.dark ? oscuro : claro;
 
-  /// Identidad de la marca: Huellitas (D126, `docs/23-guia-visual.md`).
+  /// Identidad de la marca: Huellamy (D146, `docs/23-guia-visual.md`).
   /// Conserva el id `cielo` (D62) porque está guardado en los dispositivos.
   static const cielo = Paleta(
     id: 'cielo',
     claro: ColoresModo(
-      fondo: Color(0xFFF2F8FC), // celeste muy claro
+      fondo: Color(0xFFF0F8FE), // celeste muy claro
       texto: Color(0xFF13294B), // azul noche
       textoSuave: Color(0xFF4A5B72),
-      primario: Color(0xFF126FA3), // celeste oscuro: barras y botones
+      primario: Color(0xFF0B4F94), // azul profundo: barras y botones
       sobrePrimario: Color(0xFFFFFFFF),
-      acento: Color(0xFFFF6150), // coral: SOS y destacados
+      acento: Color(0xFFE8923A), // naranja de Ami: SOS y destacados
       sobreAcento: Color(0xFF13294B),
       error: Color(0xFFB3261E),
       sobreError: Color(0xFFFFFFFF),
       exito: Color(0xFF17705F),
       urgencia: Color(0xFF9A4A00),
-      simbolo: Color(0xFF1E9BD7), // celeste profundo del globo
+      // Azul brillante del logo (#1AA0EA), apenas más oscuro para que el
+      // ícono blanco del botón del Mapa llegue a 3:1.
+      simbolo: Color(0xFF1798DF),
     ),
     oscuro: ColoresModo(
       fondo: Color(0xFF0E1A26),
       texto: Color(0xFFE8F1F8),
       textoSuave: Color(0xFFA9BCCB),
-      primario: Color(0xFF5CC8F0),
+      primario: Color(0xFF7CC4F5),
       sobrePrimario: Color(0xFF0E1A26),
-      acento: Color(0xFFFF8A7D),
+      acento: Color(0xFFF5A75A),
       sobreAcento: Color(0xFF0E1A26),
       error: Color(0xFFFF8A80),
       sobreError: Color(0xFF0E1A26),
       exito: Color(0xFF5ED3BF),
       urgencia: Color(0xFFFFB238),
-      simbolo: Color(0xFF1E9BD7),
+      simbolo: Color(0xFF1798DF),
     ),
     fuenteTitulos: 'Nunito',
     fuenteTexto: 'NunitoSans',
     pesoTitulos: FontWeight.w800,
   );
 
-  /// Huellitas Comercios (D129): la de la marca con el azul de los comercios
-  /// en barras, botones y el globo. No se elige en Ajustes (no está en [todas]).
+  /// Huellamy Comercios (D129, D146): la de la marca con el azul profundo
+  /// también en el símbolo. No se elige en Ajustes (no está en [todas]).
   static const comercios = Paleta(
     id: 'comercios',
     claro: ColoresModo(
-      fondo: Color(0xFFF2F8FC),
+      fondo: Color(0xFFF0F8FE),
       texto: Color(0xFF13294B),
       textoSuave: Color(0xFF4A5B72),
-      primario: Color(0xFF1F4FD1), // azul de los comercios
+      primario: Color(0xFF0B4F94),
       sobrePrimario: Color(0xFFFFFFFF),
-      acento: Color(0xFFFF6150),
+      acento: Color(0xFFE8923A),
       sobreAcento: Color(0xFF13294B),
       error: Color(0xFFB3261E),
       sobreError: Color(0xFFFFFFFF),
       exito: Color(0xFF17705F),
       urgencia: Color(0xFF9A4A00),
-      simbolo: Color(0xFF1F4FD1),
+      simbolo: Color(0xFF0B4F94),
     ),
     oscuro: ColoresModo(
       fondo: Color(0xFF0E1A26),
       texto: Color(0xFFE8F1F8),
       textoSuave: Color(0xFFA9BCCB),
-      primario: Color(0xFF8FB0FF),
+      primario: Color(0xFF7CC4F5),
       sobrePrimario: Color(0xFF0E1A26),
-      acento: Color(0xFFFF8A7D),
+      acento: Color(0xFFF5A75A),
       sobreAcento: Color(0xFF0E1A26),
       error: Color(0xFFFF8A80),
       sobreError: Color(0xFF0E1A26),
       exito: Color(0xFF5ED3BF),
       urgencia: Color(0xFFFFB238),
-      simbolo: Color(0xFF1F4FD1),
+      simbolo: Color(0xFF0B4F94),
     ),
     fuenteTitulos: 'Nunito',
     fuenteTexto: 'NunitoSans',

@@ -8,7 +8,7 @@ import '../metricas/metricas.dart';
 import '../router.dart';
 import 'otra_app_otro.dart' if (dart.library.js_interop) 'otra_app_web.dart';
 
-/// Dos apps, un proyecto (D129): Huellitas para las personas y Huellitas
+/// Dos apps, un proyecto (D129): Huellamy para las personas y Huellamy
 /// Comercios para los negocios. Comparten el código y la cuenta, pero se
 /// manejan por separado (D143): la de comercios entra por
 /// `main_comercio.dart`, abre en el panel del negocio y usa el azul de los
@@ -28,9 +28,9 @@ final abrirOtraAppProvider = Provider<void Function(String direccion)?>(
   (_) => abrirOtraApp,
 );
 
-/// «Mi negocio» y «¿Es tu negocio?» desde Huellitas: explica que eso se hace
-/// en Huellitas Comercios y, donde se puede, la abre en [ruta] (D143). En
-/// Huellitas Comercios abre la ruta ahí mismo.
+/// «Mi negocio» y «¿Es tu negocio?» desde Huellamy: explica que eso se hace
+/// en Huellamy Comercios y, donde se puede, la abre en [ruta] (D143). En
+/// Huellamy Comercios abre la ruta ahí mismo.
 Future<void> irAMiNegocio(
   BuildContext context,
   WidgetRef ref, {

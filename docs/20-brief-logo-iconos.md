@@ -1,5 +1,7 @@
 # 20 · Brief de logo e íconos · Huellitas (para el diseñador)
 
+> ⚠️ **09/11/2026: la marca pasó a Huellamy (D146).** Este brief es de Huellitas y queda como antecedente; la referencia vigente es la [Guía visual](23-guia-visual.md) y la guía de marca en `guias/huellamy/`.
+
 > Reescrito el 01/11/2026 para **Huellitas**. La versión anterior (SOS Mascota, resuelta el 30/10/2026 con la guía de marca de la D122) queda en el historial de git. La copia en Claude Docs («SOS Mascota · Brief de logo e íconos») es de esa versión anterior: no mandarla.
 > Hoy el logo y los íconos los dibujamos nosotros en código. Este brief sirve para pasarle el trabajo a un diseñador el día que haga falta un **arte final**. La referencia completa de colores, tipografía y componentes es la [Guía visual](23-guia-visual.md); las propuestas que llevaron a esta elección están en el [brief de identidad](21-brief-huellitas.md) y en la página «Huellitas · Exploración de marca».
 

@@ -193,7 +193,7 @@ class _MenuPrincipalState extends ConsumerState<MenuPrincipal> {
         t.menuGrupoCuenta,
         [
           if (conectado && activa(Funcionalidades.comercios))
-            // En la web abre Huellitas Comercios (D129).
+            // En la web abre Huellamy Comercios (D129).
             opcion(
               'negocio',
               Icons.storefront_outlined,
@@ -234,7 +234,7 @@ class _MenuPrincipalState extends ConsumerState<MenuPrincipal> {
               padding: EdgeInsets.fromLTRB(16, 20, 16, 4),
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: LogoHuellitas(horizontal: true, alto: 22),
+                child: LogoHuellamy(horizontal: true, alto: 22),
               ),
             ),
             _Cabecera(onIr: (ruta) => _tocar('perfil', () => _ir(ruta))),

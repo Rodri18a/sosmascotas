@@ -1,4 +1,4 @@
-# App Huellitas (Flutter)
+# App Huellamy (Flutter)
 
 App de usuarios y modo comercio, para Android, iPhone y web (PWA). La lógica compartida está en `../packages/core`.
 

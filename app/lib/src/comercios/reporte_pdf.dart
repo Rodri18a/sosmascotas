@@ -22,7 +22,7 @@ Future<Uint8List> reporteMensualPdf({
 }) {
   final doc = pw.Document(
     title: titulo,
-    creator: 'Huellitas',
+    creator: 'Huellamy',
     theme: normal == null
         ? null
         : pw.ThemeData.withFont(

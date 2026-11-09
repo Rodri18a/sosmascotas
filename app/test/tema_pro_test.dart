@@ -68,12 +68,12 @@ void main() {
     );
     await _abrirAjustes(tester);
 
-    expect(find.text('Huellitas · beneficio de tu plan Pro'), findsOneWidget);
+    expect(find.text('Huellamy · beneficio de tu plan Pro'), findsOneWidget);
     await tester.tap(find.text('Tema de colores'));
     await tester.pumpAndSettle();
     expect(find.text('Elegí cómo se ve la app'), findsOneWidget);
     for (final nombre in [
-      'Huellitas',
+      'Huellamy',
       'Faro',
       'Vecinos',
       'Pop',
@@ -177,9 +177,9 @@ void main() {
     expect(Paleta.porId('pop'), Paleta.pop);
   });
 
-  test('cada tema Pro trae sus tipografías para descargar; Huellitas no', () {
+  test('cada tema Pro trae sus tipografías para descargar; Huellamy no', () {
     expect(Paleta.cielo.fuentesADescargar, isEmpty);
-    // Las de Huellitas (Nunito y Nunito Sans) ya vienen con la app.
+    // Las de Huellamy (Nunito y Nunito Sans) ya vienen con la app.
     const incluidas = {'Nunito', 'NunitoSans'};
     for (final p in [Paleta.faro, Paleta.vecinos, Paleta.pop]) {
       final familias = p.fuentesADescargar.map((a) => a.familia).toSet();

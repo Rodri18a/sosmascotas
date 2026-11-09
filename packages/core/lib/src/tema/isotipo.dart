@@ -2,40 +2,45 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-/// Colores fijos del logo (guía visual de Huellitas, D126): no cambian con el tema.
+/// Colores fijos del logo (guía de Huellamy, D146): no cambian con el tema.
 abstract final class ColoresLogo {
-  /// Globo de la app de las personas (celeste profundo).
-  static const globo = Color(0xFF1E9BD7);
+  /// Mancha celeste de fondo y huella azul profundo: app de las personas.
+  static const fondo = Color(0xFFBFE3FA);
+  static const huella = Color(0xFF0B4F94);
 
-  /// Globo de la app de los comercios (azul).
-  static const globoComercio = Color(0xFF1F4FD1);
+  /// Al revés para Huellamy Comercios: huella blanca sobre azul profundo.
+  static const fondoComercio = Color(0xFF0B4F94);
+  static const huellaComercio = Color(0xFFFFFFFF);
 
-  static const huella = Color(0xFFFFFFFF);
-  static const nombre = Color(0xFF13294B);
+  /// «Huell» en azul profundo y «amy» en azul brillante, como en el logo.
+  static const nombre = Color(0xFF0B4F94);
+  static const nombreAcento = Color(0xFF1AA0EA);
 }
 
-/// Isotipo de Huellitas: globo de conversación de un solo color con una
-/// huella blanca adentro.
+/// Isotipo de Huellamy: la huella azul sobre una mancha redonda celeste.
 ///
-/// [color] es el del globo (celeste por defecto; [ColoresLogo.globoComercio]
-/// para los comercios). Con [tinta], de una sola tinta con la huella calada.
+/// [color] es el de la huella y [fondo] el de la mancha
+/// ([ColoresLogo.huellaComercio] y [ColoresLogo.fondoComercio] para los
+/// comercios). Con [tinta], solo la huella, de ese color y sin mancha.
 class Isotipo extends StatelessWidget {
   const Isotipo({
     this.tamanio = 48,
-    this.color = ColoresLogo.globo,
+    this.color = ColoresLogo.huella,
+    this.fondo = ColoresLogo.fondo,
     this.tinta,
     super.key,
   });
 
   final double tamanio;
   final Color color;
+  final Color fondo;
   final Color? tinta;
 
   @override
   Widget build(BuildContext context) => SizedBox.square(
     dimension: tamanio,
     child: CustomPaint(
-      painter: PintorIsotipo(color: color, tinta: tinta),
+      painter: PintorIsotipo(color: color, fondo: fondo, tinta: tinta),
     ),
   );
 }
@@ -43,30 +48,34 @@ class Isotipo extends StatelessWidget {
 /// Dibuja el isotipo en un cuadrado (lo usan la app, el portal de administración y el generador de íconos,
 /// `app/tool/iconos_marca_test.dart`).
 class PintorIsotipo extends CustomPainter {
-  const PintorIsotipo({this.color = ColoresLogo.globo, this.tinta});
+  const PintorIsotipo({
+    this.color = ColoresLogo.huella,
+    this.fondo = ColoresLogo.fondo,
+    this.tinta,
+  });
 
   final Color color;
+  final Color? fondo;
   final Color? tinta;
 
   /// El dibujo está pensado en un cuadrado de 200 × 200.
   static const _lado = 200.0;
 
-  /// Globo con esquinas redondeadas y la cola abajo a la izquierda.
-  static Path get globo => Path()
-    ..moveTo(60, 20)
-    ..lineTo(140, 20)
-    ..arcToPoint(const Offset(180, 60), radius: const Radius.circular(40))
-    ..lineTo(180, 120)
-    ..arcToPoint(const Offset(140, 160), radius: const Radius.circular(40))
-    ..lineTo(84, 160)
-    ..lineTo(48, 186)
-    ..lineTo(54, 158)
-    ..arcToPoint(const Offset(20, 120), radius: const Radius.circular(40))
-    ..lineTo(20, 60)
-    ..arcToPoint(const Offset(60, 20), radius: const Radius.circular(40))
-    ..close();
+  /// Mancha redonda de fondo.
+  static Path get mancha =>
+      Path()
+        ..addOval(Rect.fromCircle(center: const Offset(100, 100), radius: 96));
 
-  /// Almohadilla y cuatro dedos, centrados en el globo.
+  /// La huella agrandada y centrada en la mancha.
+  static Path get huellaCentrada => huella.transform(
+    (Matrix4.identity()
+          ..translateByDouble(100, 101, 0, 1)
+          ..scaleByDouble(1.38, 1.38, 1, 1)
+          ..translateByDouble(-100, -90.5, 0, 1))
+        .storage,
+  );
+
+  /// Almohadilla y cuatro dedos (sin agrandar).
   static Path get huella {
     final almohadilla = Path()
       ..moveTo(100, 88)
@@ -98,21 +107,20 @@ class PintorIsotipo extends CustomPainter {
       )
       ..scale(escala);
     final tinta = this.tinta;
-    if (tinta == null) {
-      canvas
-        ..drawPath(globo, Paint()..color = color)
-        ..drawPath(huella, Paint()..color = ColoresLogo.huella);
+    if (tinta != null) {
+      canvas.drawPath(huellaCentrada, Paint()..color = tinta);
     } else {
-      // Una tinta: la huella se cala (deja ver el fondo).
-      canvas.drawPath(
-        Path.combine(PathOperation.difference, globo, huella),
-        Paint()..color = tinta,
-      );
+      if (fondo case final fondo?) {
+        canvas.drawPath(mancha, Paint()..color = fondo);
+      }
+      canvas.drawPath(huellaCentrada, Paint()..color = color);
     }
     canvas.restore();
   }
 
   @override
   bool shouldRepaint(PintorIsotipo anterior) =>
-      anterior.color != color || anterior.tinta != tinta;
+      anterior.color != color ||
+      anterior.fondo != fondo ||
+      anterior.tinta != tinta;
 }

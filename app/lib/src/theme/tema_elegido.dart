@@ -88,7 +88,7 @@ class TemaElegido extends Notifier<String> {
 /// La paleta con la que se dibuja la app. Si el plan Pro vence (o se apaga la
 /// funcionalidad), vuelve a Cielo sin borrar la elección guardada.
 final paletaActivaProvider = Provider<Paleta>((ref) {
-  // Huellitas Comercios va siempre en su azul (D129).
+  // Huellamy Comercios va siempre en su azul (D129).
   if (ref.watch(esAppComercioProvider)) return Paleta.comercios;
   if (!ref.watch(puedeElegirTemaProvider)) return Paleta.cielo;
   return Paleta.porId(ref.watch(temaElegidoProvider));

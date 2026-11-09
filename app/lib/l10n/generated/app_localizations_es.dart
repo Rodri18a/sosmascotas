@@ -9,13 +9,13 @@ class AppLocalizationsEs extends AppLocalizations {
   AppLocalizationsEs([String locale = 'es']) : super(locale);
 
   @override
-  String get appNombre => 'Huellitas';
+  String get appNombre => 'Huellamy';
 
   @override
-  String get appNombreComercios => 'Huellitas Comercios';
+  String get appNombreComercios => 'Huellamy Comercios';
 
   @override
-  String get logoNombre => 'Huellitas';
+  String get logoNombre => 'Huellamy';
 
   @override
   String get logoFrase => 'La comunidad que deja huella';
@@ -202,7 +202,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get consentimientoExplicacion =>
-      'Para usar tu cuenta necesitamos que leas y aceptes cómo funciona Huellitas y cómo cuidamos tus datos. En resumen:';
+      'Para usar tu cuenta necesitamos que leas y aceptes cómo funciona Huellamy y cómo cuidamos tus datos. En resumen:';
 
   @override
   String get consentimientoTelefono =>
@@ -534,7 +534,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String chapitasExplicacion(Object nombre) {
-    return 'Si tenés una chapita de Huellitas, vinculala con $nombre: escaneala con la cámara del celular o escribí el código que tiene impreso.';
+    return 'Si tenés una chapita de Huellamy, vinculala con $nombre: escaneala con la cámara del celular o escribí el código que tiene impreso.';
   }
 
   @override
@@ -998,15 +998,15 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get sosCartelPrivacidadPerdida =>
-      'Vas a ver su reporte y podés dejarle un mensaje a su familia con dónde y cuándo la viste. Huellitas es la comunidad que deja huella.';
+      'Vas a ver su reporte y podés dejarle un mensaje a su familia con dónde y cuándo la viste. Huellamy es la comunidad que deja huella.';
 
   @override
   String get sosCartelPrivacidadEncontrada =>
-      'Vas a ver el reporte y podés dejarle un mensaje a quien lo encontró. Huellitas es la comunidad que deja huella.';
+      'Vas a ver el reporte y podés dejarle un mensaje a quien lo encontró. Huellamy es la comunidad que deja huella.';
 
   @override
   String sosCartelPie(String enlace) {
-    return 'Huellitas · la comunidad que deja huella: encontrar, adoptar, eventos y servicios · $enlace';
+    return 'Huellamy · la comunidad que deja huella: encontrar, adoptar, eventos y servicios · $enlace';
   }
 
   @override
@@ -1128,7 +1128,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get pushNoDisponible =>
-      'Este navegador no admite avisos. En iPhone, primero agregá Huellitas a la pantalla de inicio (Compartir → Agregar a inicio) y abrila desde ahí.';
+      'Este navegador no admite avisos. En iPhone, primero agregá Huellamy a la pantalla de inicio (Compartir → Agregar a inicio) y abrila desde ahí.';
 
   @override
   String get pushBloqueado =>
@@ -1303,7 +1303,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get ayuda911Titulo => '¿Hay una persona en riesgo?';
 
   @override
-  String get ayuda911Texto => 'Llamá al 911. Huellitas es solo para animales.';
+  String get ayuda911Texto => 'Llamá al 911. Huellamy es solo para animales.';
 
   @override
   String get ayuda911Boton => 'Llamar al 911';
@@ -1347,10 +1347,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Cambia los colores y las letras de la app solo en este dispositivo. El mapa, la chapita y lo que ven los demás siguen igual.';
 
   @override
-  String get temaCielo => 'Huellitas';
+  String get temaCielo => 'Huellamy';
 
   @override
-  String get temaCieloDescripcion => 'Celeste y alegre: el de la marca';
+  String get temaCieloDescripcion => 'Azul y celeste: el de la marca';
 
   @override
   String get temaFaro => 'Faro';
@@ -1395,7 +1395,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'Abrila desde la pantalla de inicio, más rápido y con avisos';
 
   @override
-  String get instalarTarjetaTitulo => 'Instalá Huellitas';
+  String get instalarTarjetaTitulo => 'Instalá Huellamy';
 
   @override
   String get instalarTarjetaTexto =>
@@ -1409,7 +1409,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get instalarGracias =>
-      '¡Listo! Ya podés abrir Huellitas desde la pantalla de inicio.';
+      '¡Listo! Ya podés abrir Huellamy desde la pantalla de inicio.';
 
   @override
   String get instalarIphoneTitulo => 'Instalar en el iPhone';
@@ -1848,7 +1848,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String hogarMensajeInvitacion(String enlace) {
-    return 'Te invito a cuidar a mis mascotas en Huellitas: $enlace';
+    return 'Te invito a cuidar a mis mascotas en Huellamy: $enlace';
   }
 
   @override
@@ -1913,7 +1913,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get unirmeTexto =>
-      'Te invitaron a cuidar mascotas en Huellitas. Vas a poder ver y editar sus fichas, la libreta y los recordatorios, y vas a recibir los avisos del QR. Las personas del hogar van a ver tu nombre (nunca tu correo).';
+      'Te invitaron a cuidar mascotas en Huellamy. Vas a poder ver y editar sus fichas, la libreta y los recordatorios, y vas a recibir los avisos del QR. Las personas del hogar van a ver tu nombre (nunca tu correo).';
 
   @override
   String get unirmeBoton => 'Unirme';
@@ -1965,7 +1965,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get perfilRolDueno => 'Dueño o dueña de mascotas';
 
   @override
-  String get perfilRolAdmin => 'Administración de Huellitas';
+  String get perfilRolAdmin => 'Administración de Huellamy';
 
   @override
   String get perfilPlan => 'Plan';
@@ -2158,7 +2158,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get chatQuienEncontro => 'Quien la encontró';
 
   @override
-  String get chatSinNombre => 'Persona de Huellitas';
+  String get chatSinNombre => 'Persona de Huellamy';
 
   @override
   String chatSobreReporte(String nombre) {
@@ -2560,7 +2560,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get negocioMiAyuda =>
-      'Se maneja en Huellitas Comercios, una app aparte.';
+      'Se maneja en Huellamy Comercios, una app aparte.';
 
   @override
   String get negocioAltaTitulo => 'Sumar mi negocio';
@@ -2634,21 +2634,21 @@ class AppLocalizationsEs extends AppLocalizations {
   String get volverModoDueno => 'Volver al modo dueño';
 
   @override
-  String get irAHuellitas => 'Ir a Huellitas';
+  String get irAHuellamy => 'Ir a Huellamy';
 
   @override
-  String get appComerciosTitulo => 'Huellitas Comercios';
+  String get appComerciosTitulo => 'Huellamy Comercios';
 
   @override
   String get appComerciosTexto =>
-      'Los negocios se manejan en Huellitas Comercios, una app aparte. Entrás con la misma cuenta y la podés instalar en tu celular.';
+      'Los negocios se manejan en Huellamy Comercios, una app aparte. Entrás con la misma cuenta y la podés instalar en tu celular.';
 
   @override
   String get appComerciosProximamente =>
       'Muy pronto vas a poder bajarla de la tienda de tu celular.';
 
   @override
-  String get appComerciosAbrir => 'Abrir Huellitas Comercios';
+  String get appComerciosAbrir => 'Abrir Huellamy Comercios';
 
   @override
   String get comerciosMiCuenta => 'Mi cuenta';
@@ -2935,7 +2935,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String catalogoConsultaTexto(String producto) {
-    return 'Hola, te escribo desde Huellitas. Quería consultar por: $producto';
+    return 'Hola, te escribo desde Huellamy. Quería consultar por: $producto';
   }
 
   @override
@@ -3156,7 +3156,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String pedidoMensajeSaludo(int numero) {
-    return 'Hola, te hago un pedido desde Huellitas (#$numero):';
+    return 'Hola, te hago un pedido desde Huellamy (#$numero):';
   }
 
   @override
@@ -3466,7 +3466,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get comunidadAdopcionDetalle => 'Adopción responsable en Huellitas.';
+  String get comunidadAdopcionDetalle => 'Adopción responsable en Huellamy.';
 
   @override
   String comunidadLugarNuevo(String nombre) {
@@ -3564,7 +3564,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get recInicioTitulo => '¡Te damos la bienvenida a Huellitas!';
+  String get recInicioTitulo => '¡Te damos la bienvenida a Huellamy!';
 
   @override
   String get recInicioTexto => 'En pocos pasos te mostramos cómo se usa.';
@@ -3851,7 +3851,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get recUrgencias911Texto =>
-      'Llamá al 911. Huellitas es solo para animales.';
+      'Llamá al 911. Huellamy es solo para animales.';
 
   @override
   String get recUrgenciasGuardiaTitulo => 'Veterinarias de urgencia';
@@ -3861,7 +3861,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'Las que atienden urgencias cerca tuyo. Más abajo, refugios y organismos.';
 
   @override
-  String get recNegocioTitulo => 'Tu negocio en Huellitas';
+  String get recNegocioTitulo => 'Tu negocio en Huellamy';
 
   @override
   String get recNegocioTexto =>
@@ -3879,7 +3879,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get recNegocioVolverTexto =>
-      'Tus datos, los avisos y cerrar sesión. Tus mascotas se manejan en Huellitas, la otra app.';
+      'Tus datos, los avisos y cerrar sesión. Tus mascotas se manejan en Huellamy, la otra app.';
 
   @override
   String get explicacionVerMas => 'Ver más';
@@ -4040,7 +4040,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String pasarMensaje(String nombre, String codigo) {
-    return 'Te paso a $nombre en Huellitas. En Mis mascotas tocá «Tengo un código» y escribí: $codigo';
+    return 'Te paso a $nombre en Huellamy. En Mis mascotas tocá «Tengo un código» y escribí: $codigo';
   }
 
   @override
@@ -4427,7 +4427,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'Compartí tus mascotas con tu familia: hasta 5 personas.';
 
   @override
-  String get unirmeTextoCorta => 'Te invitaron a cuidar mascotas en Huellitas.';
+  String get unirmeTextoCorta => 'Te invitaron a cuidar mascotas en Huellamy.';
 
   @override
   String get transitoIntroCorta =>
@@ -4443,7 +4443,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get unirmeEquipoTextoCorta =>
-      'Te invitaron al equipo de un negocio en Huellitas.';
+      'Te invitaron al equipo de un negocio en Huellamy.';
 
   @override
   String get planillaAyudaCorta =>
@@ -4455,7 +4455,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String chapitasExplicacionCorta(String nombre) {
-    return '¿Tenés una chapita de Huellitas? Vinculala con $nombre.';
+    return '¿Tenés una chapita de Huellamy? Vinculala con $nombre.';
   }
 
   @override
@@ -5333,7 +5333,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get renacGuiaTexto =>
-      '## Qué es el RENAC\nEs el **Registro Nacional de Animales de Compañía** del MGAP (Ley 18.471). Los perros y gatos se identifican con un **microchip** y se registran a nombre de quien los tiene a cargo. Es obligatorio.\n## Cuándo\nA partir de los **90 días de vida**.\n## Cómo se hace\n- Andá a una veterinaria que sea **operador RENAC** (veterinarios acreditados por el INBA).\n- Te coloca el microchip, si no tiene, y carga los datos de tu mascota y los tuyos.\n- Te dan una **constancia** con esos datos. Guardala.\n- El costo lo fija cada veterinaria: preguntá antes.\n## Si se muda o cambia de dueño\nPedile a tu veterinaria que actualice los datos en el RENAC.\n## Si se pierde\nAdemás de publicar el SOS en la app, pedí que la marquen como **extraviada** en el RENAC.\n## Chip y chapita QR\nEl chip solo lo lee una veterinaria con un lector. La chapita QR la lee cualquier celular. **Se complementan.**\n> Huellitas no es parte del RENAC ni del MGAP. Esta guía es orientativa: ante cualquier duda, consultá con tu veterinaria o con el INBA.';
+      '## Qué es el RENAC\nEs el **Registro Nacional de Animales de Compañía** del MGAP (Ley 18.471). Los perros y gatos se identifican con un **microchip** y se registran a nombre de quien los tiene a cargo. Es obligatorio.\n## Cuándo\nA partir de los **90 días de vida**.\n## Cómo se hace\n- Andá a una veterinaria que sea **operador RENAC** (veterinarios acreditados por el INBA).\n- Te coloca el microchip, si no tiene, y carga los datos de tu mascota y los tuyos.\n- Te dan una **constancia** con esos datos. Guardala.\n- El costo lo fija cada veterinaria: preguntá antes.\n## Si se muda o cambia de dueño\nPedile a tu veterinaria que actualice los datos en el RENAC.\n## Si se pierde\nAdemás de publicar el SOS en la app, pedí que la marquen como **extraviada** en el RENAC.\n## Chip y chapita QR\nEl chip solo lo lee una veterinaria con un lector. La chapita QR la lee cualquier celular. **Se complementan.**\n> Huellamy no es parte del RENAC ni del MGAP. Esta guía es orientativa: ante cualquier duda, consultá con tu veterinaria o con el INBA.';
 
   @override
   String get renacVerVeterinarias => 'Ver veterinarias que colocan microchip';
@@ -5362,7 +5362,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String buscarSinRubro(String rubro) {
-    return 'Todavía no hay $rubro cerca en Huellitas.';
+    return 'Todavía no hay $rubro cerca en Huellamy.';
   }
 
   @override
@@ -6458,7 +6458,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String historialPie(String fecha) {
-    return 'Hecho con Huellitas el $fecha';
+    return 'Hecho con Huellamy el $fecha';
   }
 
   @override
@@ -7138,7 +7138,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String equipoMensajeInvitacion(String negocio, String enlace) {
-    return 'Te invito al equipo de $negocio en Huellitas: $enlace';
+    return 'Te invito al equipo de $negocio en Huellamy: $enlace';
   }
 
   @override
@@ -7152,7 +7152,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get unirmeEquipoTexto =>
-      'Te invitaron a ser parte del equipo de un negocio en Huellitas. Vas a atender pedidos, turnos y el catálogo desde el modo comercio. El dueño y el equipo van a ver tu primer nombre (nunca tu correo).';
+      'Te invitaron a ser parte del equipo de un negocio en Huellamy. Vas a atender pedidos, turnos y el catálogo desde el modo comercio. El dueño y el equipo van a ver tu primer nombre (nunca tu correo).';
 
   @override
   String get unirmeEquipoBoton => 'Unirme al equipo';

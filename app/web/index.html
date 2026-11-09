@@ -23,13 +23,13 @@
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Huellitas">
+  <meta name="apple-mobile-web-app-title" content="Huellamy">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <title>Huellitas</title>
+  <title>Huellamy</title>
   <script>
     // Instalar la app (0.8.1): el navegador avisa una sola vez y puede ser
     // antes de que arranque Flutter; se guarda acá y la app lo usa después.
@@ -46,9 +46,9 @@
     });
   </script>
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#126FA3">
+  <meta name="theme-color" content="#0B4F94">
   <style>
-    /* Pantalla de carga con el logo y los colores de la guía visual (D126). */
+    /* Pantalla de carga con el logo y los colores de la guía de Huellamy (D146). */
     @font-face {
       font-family: 'Nunito'; font-weight: 900; font-display: swap;
       src: url(assets/assets/fuentes/Nunito-Black.ttf) format('truetype');
@@ -56,10 +56,11 @@
     #carga {
       position: fixed; inset: 0; display: flex; flex-direction: column;
       align-items: center; justify-content: center; gap: 12px;
-      background: #F2F8FC; color: #13294B;
+      background: #F0F8FE; color: #0B4F94;
       font-family: "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     }
     #carga .logo { width: 112px; height: 112px; animation: latido 1.2s ease-in-out infinite; }
+    #carga .ilustrado { width: 220px; height: 220px; border-radius: 28px; }
     #carga .nombre { font-size: 30px; font-weight: 900; }
     @media (prefers-color-scheme: dark) { #carga { background: #0E1A26; color: #E8F1F8; } }
     @keyframes latido { 50% { transform: scale(1.12); } }
@@ -75,9 +76,8 @@
     For more details:
     * https://docs.flutter.dev/platform-integration/web/initialization
   -->
-  <div id="carga" role="status" aria-label="Cargando Huellitas">
-    <img class="logo" src="icons/isotipo.png" alt="">
-    <div class="nombre">Huellitas</div>
+  <div id="carga" role="status" aria-label="Cargando Huellamy">
+    <img class="logo ilustrado" src="icons/logo.jpg" alt="Huellamy">
   </div>
   <script>
     // Se quita cuando Flutter dibuja la primera pantalla.
