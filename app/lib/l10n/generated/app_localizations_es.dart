@@ -1066,6 +1066,27 @@ class AppLocalizationsEs extends AppLocalizations {
   String get sosMisReportes => 'Mis reportes';
 
   @override
+  String sosMisReportesActivos(int total, int activos) {
+    String _temp0 = intl.Intl.pluralLogic(
+      total,
+      locale: localeName,
+      other: '$total reportes',
+      one: '1 reporte',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      activos,
+      locale: localeName,
+      other: '$activos activos',
+      one: '1 activo',
+      zero: 'ninguno activo',
+    );
+    return '$_temp0 · $_temp1';
+  }
+
+  @override
+  String get sosOtrosCerca => 'Reportes de otros vecinos cerca';
+
+  @override
   String get sosEstadoActivoCorto => 'Activo';
 
   @override

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
 import 'package:sosmascota/src/features/shell/app_shell.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
+import 'cuenta_falsa.dart';
 import 'helpers.dart';
 import 'sos_falso.dart';
 
@@ -103,5 +105,41 @@ void main() {
       find.textContaining('No hay reportes activos cerca'),
       findsOneWidget,
     );
+  });
+
+  testWidgets('Mis reportes (D150): cerrado, en otro color y fuera de la '
+      'lista de los vecinos', (tester) async {
+    final sos = SosFalso(listaCercanos: [_perdida, _encontrada])
+      ..mios = [
+        MiSos(
+          id: 's1',
+          tipo: TipoSos.perdida,
+          estado: EstadoSos.activo,
+          creado: DateTime(2026, 10, 14),
+          ubicacion: const Punto(-34.72, -55.95),
+          nombre: 'Firulais',
+        ),
+      ];
+    await tester.pumpWidget(
+      appDePrueba(
+        cuenta: ServicioCuentaFalso(
+          conectado: const Usuario(id: 'u1', email: 'ana@correo.com'),
+        ),
+        sos: sos,
+      ),
+    );
+    await _irASos(tester);
+
+    final tarjeta = tester.widget<Card>(
+      find.byKey(const ValueKey('mis-reportes')),
+    );
+    expect(tarjeta.color, const Color(0xFFFFF1DC));
+    expect(find.text('1 reporte · 1 activo'), findsOneWidget);
+    expect(find.text('Activo'), findsNothing, reason: 'arranca cerrado');
+    expect(find.text('Reportes de otros vecinos cerca'), findsOneWidget);
+    // El mío (s1, Firulais) no se repite abajo; el de otro vecino sí está.
+    expect(find.text('Se perdió: Firulais'), findsNothing);
+    expect(find.text('Labrador · Negro'), findsNothing);
+    expect(find.text('Encontrada: Gato'), findsOneWidget);
   });
 }

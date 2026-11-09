@@ -427,6 +427,11 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Mis reportes'), findsOneWidget);
+    expect(find.text('1 reporte · 1 activo'), findsOneWidget);
+    // Arranca cerrado (D150): el estado se ve al abrirlo.
+    expect(find.text('Activo'), findsNothing);
+    await tester.tap(find.text('Mis reportes'));
+    await tester.pumpAndSettle();
     expect(find.text('Activo'), findsOneWidget);
   });
 }

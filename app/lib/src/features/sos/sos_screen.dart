@@ -80,6 +80,13 @@ class _SosScreenState extends ConsumerState<SosScreen> {
                 ),
               ),
               const _MisReportes(),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
+                child: Text(
+                  t.sosOtrosCerca,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ),
               ...switch (reportes) {
                 AsyncData(value: final lista) => _tarjetas(context, lista),
                 AsyncError() => [
@@ -106,7 +113,12 @@ class _SosScreenState extends ConsumerState<SosScreen> {
   }
 
   List<Widget> _tarjetas(BuildContext context, List<SosResumen> lista) {
+    // Los míos ya están arriba, en «Mis reportes» (D150).
+    final mios = {
+      for (final s in ref.watch(misSosProvider).value ?? const <MiSos>[]) s.id,
+    };
     final filtrada = lista
+        .where((r) => !mios.contains(r.id))
         .where((r) => _filtro == null || r.tipo == _filtro)
         .toList();
     if (filtrada.isEmpty) {
@@ -193,7 +205,9 @@ class TarjetaSos extends ConsumerWidget {
   }
 }
 
-/// Los reportes propios (para cerrarlos cuando aparece la mascota).
+/// Los reportes propios (para cerrarlos cuando aparece la mascota). Arranca
+/// cerrado y va en otro color, para que no se confunda con los de los
+/// vecinos de abajo (D150).
 class _MisReportes extends ConsumerWidget {
   const _MisReportes();
 
@@ -202,28 +216,46 @@ class _MisReportes extends ConsumerWidget {
     final t = context.t;
     final mios = ref.watch(misSosProvider).value ?? const <MiSos>[];
     if (mios.isEmpty) return const SizedBox.shrink();
-    return ExpansionTile(
-      leading: const Icon(Icons.person_pin_circle_outlined),
-      title: Text(t.sosMisReportes),
-      initiallyExpanded: mios.any((s) => s.estado == EstadoSos.activo),
-      children: [
-        for (final s in mios)
-          ListTile(
-            title: Text(
-              s.tipo == TipoSos.perdida
-                  ? t.sosTituloPerdida(s.nombre ?? '')
-                  : t.sosTituloEncontrada(s.nombre ?? ''),
+    final oscuro = Theme.of(context).brightness == Brightness.dark;
+    final activos = mios.where((s) => s.estado == EstadoSos.activo).length;
+    return Card(
+      key: const ValueKey('mis-reportes'),
+      margin: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+      // Crema de la guía de marca; en oscuro, un marrón que contrasta.
+      color: oscuro ? const Color(0xFF3A2A16) : const Color(0xFFFFF1DC),
+      clipBehavior: Clip.antiAlias,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(color: context.marca.acento, width: 1.5),
+      ),
+      child: ExpansionTile(
+        leading: const Icon(Icons.person_pin_circle_outlined),
+        title: Text(
+          t.sosMisReportes,
+          style: const TextStyle(fontWeight: FontWeight.w700),
+        ),
+        subtitle: Text(t.sosMisReportesActivos(mios.length, activos)),
+        shape: const Border(),
+        collapsedShape: const Border(),
+        children: [
+          for (final s in mios)
+            ListTile(
+              title: Text(
+                s.tipo == TipoSos.perdida
+                    ? t.sosTituloPerdida(s.nombre ?? '')
+                    : t.sosTituloEncontrada(s.nombre ?? ''),
+              ),
+              subtitle: Text(switch (s.estado) {
+                EstadoSos.activo => t.sosEstadoActivoCorto,
+                EstadoSos.resuelto => t.sosEstadoResueltoCorto,
+                EstadoSos.archivado => t.sosEstadoArchivadoCorto,
+                EstadoSos.oculto => t.sosEstadoOcultoCorto,
+              }),
+              trailing: const Icon(Icons.chevron_right_outlined),
+              onTap: () => context.push(Rutas.detalleSos(s.id)),
             ),
-            subtitle: Text(switch (s.estado) {
-              EstadoSos.activo => t.sosEstadoActivoCorto,
-              EstadoSos.resuelto => t.sosEstadoResueltoCorto,
-              EstadoSos.archivado => t.sosEstadoArchivadoCorto,
-              EstadoSos.oculto => t.sosEstadoOcultoCorto,
-            }),
-            trailing: const Icon(Icons.chevron_right_outlined),
-            onTap: () => context.push(Rutas.detalleSos(s.id)),
-          ),
-      ],
+        ],
+      ),
     );
   }
 }

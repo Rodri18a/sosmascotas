@@ -1834,6 +1834,18 @@ abstract class AppLocalizations {
   /// **'Mis reportes'**
   String get sosMisReportes;
 
+  /// No description provided for @sosMisReportesActivos.
+  ///
+  /// In es, this message translates to:
+  /// **'{total, plural, =1{1 reporte} other{{total} reportes}} · {activos, plural, =0{ninguno activo} =1{1 activo} other{{activos} activos}}'**
+  String sosMisReportesActivos(int total, int activos);
+
+  /// No description provided for @sosOtrosCerca.
+  ///
+  /// In es, this message translates to:
+  /// **'Reportes de otros vecinos cerca'**
+  String get sosOtrosCerca;
+
   /// No description provided for @sosEstadoActivoCorto.
   ///
   /// In es, this message translates to:
