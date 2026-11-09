@@ -68,28 +68,9 @@ class _MenuPrincipalState extends ConsumerState<MenuPrincipal> {
     // Grupos con título (paso 1.2 del plan de mejoras): todo a 2 toques.
     // Un grupo sin opciones prendidas no se muestra. Sin «Mis mascotas»: la
     // ficha, la chapita y el SOS están en la fila de cada mascota, en la
-    // pestaña de al lado del Mapa (D142).
+    // pestaña de al lado del Mapa (D142). Sin «Mapa y lugares»: el Mapa es el
+    // botón del medio de la barra y buscar y marcar están en el mapa (D153).
     final grupos = <(String, List<Widget>)>[
-      (
-        t.menuGrupoMapa,
-        [
-          pestana('mapa', Icons.map_outlined, t.pestanaMapa, Rutas.mapa),
-          if (activa(Funcionalidades.busqueda))
-            pantalla(
-              'buscar',
-              Icons.search_outlined,
-              t.buscarLugares,
-              Rutas.buscarLugares,
-            ),
-          if (conectado && activa(Funcionalidades.comercios))
-            pantalla(
-              'marcar_lugar',
-              Icons.add_location_alt_outlined,
-              t.marcarLugar,
-              Rutas.marcarLugar,
-            ),
-        ],
-      ),
       (
         t.menuGrupoComunidad,
         [

@@ -3532,9 +3532,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get menuGrupoMascotas => 'Mis mascotas';
 
   @override
-  String get menuGrupoMapa => 'Mapa y lugares';
-
-  @override
   String get menuGrupoComunidad => 'Comunidad';
 
   @override

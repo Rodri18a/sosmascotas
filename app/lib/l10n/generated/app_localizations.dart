@@ -5956,12 +5956,6 @@ abstract class AppLocalizations {
   /// **'Mis mascotas'**
   String get menuGrupoMascotas;
 
-  /// No description provided for @menuGrupoMapa.
-  ///
-  /// In es, this message translates to:
-  /// **'Mapa y lugares'**
-  String get menuGrupoMapa;
-
   /// No description provided for @menuGrupoComunidad.
   ///
   /// In es, this message translates to:

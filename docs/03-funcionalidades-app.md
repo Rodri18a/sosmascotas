@@ -13,6 +13,7 @@ Barra inferior: **Explorar** (mapa) · **Noticias** · **SOS** (en rojo) · **Ma
 **Hecho hasta ahora (D88, D94):** la barra inferior es **Noticias · SOS · (Mapa) · Mascotas · Ayuda**. El Mapa va en el medio, como un botón redondo que sobresale de la barra (que se curva para dejarle lugar), y es donde abre la app. La barra reserva el lugar del botón, así que nunca tapa el contenido, y las hojas que se abren desde abajo quedan por encima de la barra. Cada pestaña tiene un **menú ☰** con:
 - **Mis datos** (nombre, correo; abre Mi perfil o Ajustes) o "Ingresá o creá tu cuenta" para un visitante.
 - ~~**Ver todo para**~~: se sacó del menú (D148). Adopción arranca en «Todas» y se filtra con sus chips.
+- ~~**Mapa y lugares**~~: se sacó del menú (D153). El Mapa es el botón del medio de la barra; «Buscar lugares» (lupa) y «Marcar un lugar» están en el propio mapa.
 - **Secciones:** Adopción, Mensajes, Avisos, Mi hogar, Mis pedidos, Mi negocio y Ajustes, cada una según su funcionalidad gradual y si hace falta cuenta.
 Ayuda queda para urgencias (911, guardias, refugios y denuncias). Los **próximos eventos** de la zona están arriba de Noticias → Comunidad (D94).
 

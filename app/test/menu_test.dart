@@ -99,13 +99,7 @@ void main() {
 
   testWidgets('las secciones van en grupos con título (1.2)', (tester) async {
     await _abrir(tester);
-    final enMenu = find.descendant(
-      of: find.byType(Drawer),
-      matching: find.text('Mapa'),
-    );
-    expect(enMenu, findsOneWidget);
     for (final texto in [
-      'Mapa y lugares',
       'Comunidad',
       'Adopción',
       'Hogar de tránsito',
@@ -128,6 +122,17 @@ void main() {
     );
   });
 
+  testWidgets('el menú no tiene «Mapa y lugares» (D153)', (tester) async {
+    await _abrir(tester);
+    for (final texto in ['Mapa y lugares', 'Mapa', 'Buscar lugares']) {
+      expect(
+        find.descendant(of: find.byType(Drawer), matching: find.text(texto)),
+        findsNothing,
+        reason: texto,
+      );
+    }
+  });
+
   testWidgets('un visitante no ve los grupos que piden cuenta', (tester) async {
     await _abrir(tester, visitante: true);
     await bajarEnMenu(tester, find.text('Ajustes'));
@@ -137,12 +142,12 @@ void main() {
     expect(find.text('Mensajes'), findsNothing);
   });
 
-  testWidgets('tocar Mapa cambia de pestaña y anota la opción', (tester) async {
+  testWidgets('tocar Inicio cambia de pestaña y anota la opción', (tester) async {
     final metricas = <Map<String, Object?>>[];
     await _abrir(tester, metricas: metricas);
     await _tocar(
       tester,
-      find.descendant(of: find.byType(Drawer), matching: find.text('Mapa')),
+      find.descendant(of: find.byType(Drawer), matching: find.text('Inicio')),
     );
     expect(find.byType(Drawer), findsNothing);
     expect(
@@ -150,7 +155,7 @@ void main() {
           .where((e) => e['name'] == 'menu_item_open')
           .map((e) => e['props']),
       [
-        {'item': 'mapa'},
+        {'item': 'inicio'},
       ],
     );
   });
