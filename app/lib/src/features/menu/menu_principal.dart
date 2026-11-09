@@ -8,12 +8,8 @@ import '../../cuenta/perfil_repositorio.dart';
 import '../../cuenta/servicio_cuenta.dart';
 import '../../dos_apps/dos_apps.dart';
 import '../../funcionalidades/funcionalidades_activas.dart';
-import '../../mascotas/catalogo.dart';
-import '../../mascotas/mascota_elegida.dart';
-import '../../mascotas/mascotas_repositorio.dart';
 import '../../metricas/metricas.dart';
 import '../../router.dart';
-import '../../widgets/foto_mascota.dart';
 import '../../widgets/logo.dart';
 
 /// Menú ☰ de las pestañas (D88): mis datos y todas las secciones en grupos
@@ -52,10 +48,6 @@ class _MenuPrincipalState extends ConsumerState<MenuPrincipal> {
     final t = context.t;
     final conectado = ref.watch(conectadoProvider);
     bool activa(String clave) => ref.watch(funcionalidadActivaProvider(clave));
-    final mascotas = conectado
-        ? ref.watch(misMascotasProvider).value ?? const <Mascota>[]
-        : const <Mascota>[];
-    final elegida = ref.watch(mascotaElegidaProvider);
 
     Widget opcion(
       String item,
@@ -238,9 +230,6 @@ class _MenuPrincipalState extends ConsumerState<MenuPrincipal> {
               ),
             ),
             _Cabecera(onIr: (ruta) => _tocar('perfil', () => _ir(ruta))),
-            // Filtro de todo el contenido, no un lugar al que ir (D142).
-            if (mascotas.isNotEmpty)
-              _ElegirMascota(mascotas: mascotas, elegida: elegida),
             for (final (titulo, opciones) in grupos)
               if (opciones.isNotEmpty) ...[
                 const Divider(),
@@ -313,70 +302,6 @@ class _Cabecera extends ConsumerWidget {
       subtitle: Text(usuario.email ?? ''),
       trailing: const Icon(Icons.chevron_right_outlined),
       onTap: () => onIr(conPerfil ? Rutas.perfil : Rutas.ajustes),
-    );
-  }
-}
-
-/// "Ver todo para": Todas o una de mis mascotas. Se guarda en el dispositivo.
-class _ElegirMascota extends ConsumerWidget {
-  const _ElegirMascota({required this.mascotas, required this.elegida});
-
-  final List<Mascota> mascotas;
-  final Mascota? elegida;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final t = context.t;
-    final tema = Theme.of(context);
-    final especies = {
-      for (final e in ref.watch(especiesProvider).value ?? const <Especie>[])
-        e.id: e,
-    };
-    void elegir(Mascota? m) {
-      ref.read(mascotaElegidaIdProvider.notifier).elegir(m?.id);
-      ref
-          .read(metricasProvider)
-          .track(Eventos.petSelect, props: {'todas': m == null});
-    }
-
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(t.menuVerPara, style: tema.textTheme.titleSmall),
-          const SizedBox(height: 8),
-          Wrap(
-            spacing: 6,
-            runSpacing: 6,
-            children: [
-              ChoiceChip(
-                label: Text(t.menuTodas),
-                selected: elegida == null,
-                onSelected: (_) => elegir(null),
-              ),
-              for (final m in mascotas)
-                ChoiceChip(
-                  avatar: FotoMascota(
-                    ruta: m.fotoPath,
-                    radio: 12,
-                    icono: especies[m.especieId]?.icono,
-                  ),
-                  label: Text(m.nombre),
-                  selected: elegida?.id == m.id,
-                  onSelected: (_) => elegir(m),
-                ),
-            ],
-          ),
-          const SizedBox(height: 4),
-          Text(
-            elegida == null
-                ? t.menuTodasAyuda
-                : t.menuElegidaAyuda(elegida!.nombre),
-            style: tema.textTheme.bodySmall,
-          ),
-        ],
-      ),
     );
   }
 }

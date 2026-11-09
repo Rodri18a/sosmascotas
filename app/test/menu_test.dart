@@ -7,7 +7,6 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 import 'cuenta_falsa.dart';
 import 'funcionalidades_falsas.dart';
 import 'helpers.dart';
-import 'mascota_elegida_falsa.dart';
 import 'mascotas_falsas.dart';
 import 'noticias_falsas.dart';
 
@@ -33,7 +32,6 @@ final _paraGatos = Noticia(
 Future<void> _abrir(
   WidgetTester tester, {
   bool visitante = false,
-  AlmacenMascotaElegidaFalso? almacen,
   List<Map<String, Object?>>? metricas,
 }) async {
   tester.view
@@ -46,7 +44,6 @@ Future<void> _abrir(
       cuenta: ServicioCuentaFalso(conectado: visitante ? null : _ana),
       mascotas: MascotasFalsas([_toby, _luna]),
       noticias: NoticiasFalsas([_paraPerros, _paraGatos]),
-      almacenMascotaElegida: almacen,
       eventos: metricas,
       funcionalidades: FuncionalidadesFalsas({
         Funcionalidades.noticias,
@@ -81,33 +78,15 @@ void main() {
     await bajarEnMenu(tester, find.text('Ajustes'));
   });
 
-  testWidgets('con cuenta: mis datos y elegir una mascota', (tester) async {
-    final almacen = AlmacenMascotaElegidaFalso();
-    final metricas = <Map<String, Object?>>[];
-    await _abrir(tester, almacen: almacen, metricas: metricas);
+  testWidgets('con cuenta: mis datos, sin filtro de mascota (D148)', (
+    tester,
+  ) async {
+    await _abrir(tester);
     expect(find.text('ana@correo.com'), findsOneWidget);
-    expect(find.text('Ver todo para'), findsOneWidget);
-
-    await _tocar(tester, find.text('Luna'));
-    expect(find.textContaining('para la especie de Luna'), findsOneWidget);
+    expect(find.text('Ver todo para'), findsNothing);
     // Sin «Mis mascotas» en el menú: está en la fila de cada mascota (D142).
     expect(find.text('Ver su ficha'), findsNothing);
     expect(find.text('Reportar que se perdió'), findsNothing);
-    expect(almacen.guardadas['u1'], 'm2', reason: 'queda guardada');
-    expect(
-      metricas.map((e) => e['name']),
-      containsAll(['menu_open', 'pet_select']),
-    );
-  });
-
-  testWidgets('la elegida se recuerda al volver a abrir', (tester) async {
-    await _abrir(tester, almacen: AlmacenMascotaElegidaFalso({'u1': 'm1'}));
-    expect(find.textContaining('para la especie de Toby'), findsOneWidget);
-    await _tocar(
-      tester,
-      find.descendant(of: find.byType(Drawer), matching: find.text('Todas')),
-    );
-    expect(find.textContaining('lo de todas tus mascotas'), findsOneWidget);
   });
 
   testWidgets('una opción cierra el menú y abre la sección', (tester) async {

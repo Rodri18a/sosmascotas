@@ -6,7 +6,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../config/supabase_providers.dart';
 import '../cuenta/servicio_cuenta.dart';
-import '../mascotas/mascota_elegida.dart';
 
 /// Por qué no se pudo publicar o pedir.
 enum ErrorAdopcion { limite, noDisponible, datos, sinConexion }
@@ -259,10 +258,10 @@ final especieAdopcionProvider = NotifierProvider<EspecieAdopcion, int?>(
   EspecieAdopcion.new,
 );
 
-/// Arranca con la especie de la mascota elegida en el menú (D88).
+/// Arranca en «Todas»; se filtra con los chips de la pantalla (D148).
 class EspecieAdopcion extends Notifier<int?> {
   @override
-  int? build() => ref.watch(especieElegidaProvider);
+  int? build() => null;
 
   void elegir(int? especie) => state = especie;
 }

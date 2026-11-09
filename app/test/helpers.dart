@@ -41,7 +41,6 @@ import 'package:sosmascota/src/mascotas/catalogo.dart';
 import 'package:sosmascota/src/mascotas/enlaces_historial_repositorio.dart';
 import 'package:sosmascota/src/mascotas/historial_repositorio.dart';
 import 'package:sosmascota/src/mascotas/libreta_repositorio.dart';
-import 'package:sosmascota/src/mascotas/mascota_elegida.dart';
 import 'package:sosmascota/src/mascotas/mascotas_repositorio.dart';
 import 'package:sosmascota/src/mascotas/transferencias_repositorio.dart';
 import 'package:sosmascota/src/metricas/metricas.dart';
@@ -84,7 +83,6 @@ import 'hogar_falso.dart';
 import 'instalacion_falsa.dart';
 import 'libreta_falsa.dart';
 import 'mapa_falso.dart';
-import 'mascota_elegida_falsa.dart';
 import 'mascotas_falsas.dart';
 import 'noticias_falsas.dart';
 import 'pack_falso.dart';
@@ -166,7 +164,6 @@ Widget appDePrueba({
   CacheFuncionalidades? cacheFuncionalidades,
   ServicioInstalacion? instalacion,
   AlmacenInstalacion? almacenInstalacion,
-  AlmacenMascotaElegida? almacenMascotaElegida,
   String urlPublica = 'https://sosmascotas.uy',
   // La mayoría de las pruebas se escribieron arrancando en el Mapa; las de
   // navegación arrancan donde abre la app de verdad (Rutas.inicio, D127).
@@ -193,9 +190,6 @@ Widget appDePrueba({
     ),
     cacheFuncionalidadesProvider.overrideWithValue(
       cacheFuncionalidades ?? CacheFuncionalidadesFalsa(),
-    ),
-    almacenMascotaElegidaProvider.overrideWithValue(
-      almacenMascotaElegida ?? AlmacenMascotaElegidaFalso(),
     ),
     almacenTemaProvider.overrideWithValue(almacenTema ?? AlmacenTemaFalso()),
     almacenRecorridosProvider.overrideWithValue(

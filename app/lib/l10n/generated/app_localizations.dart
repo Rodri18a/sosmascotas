@@ -5950,30 +5950,6 @@ abstract class AppLocalizations {
   /// **'Para cargar tus mascotas y recibir avisos.'**
   String get menuIngresarAyuda;
 
-  /// No description provided for @menuVerPara.
-  ///
-  /// In es, this message translates to:
-  /// **'Ver todo para'**
-  String get menuVerPara;
-
-  /// No description provided for @menuTodas.
-  ///
-  /// In es, this message translates to:
-  /// **'Todas'**
-  String get menuTodas;
-
-  /// No description provided for @menuTodasAyuda.
-  ///
-  /// In es, this message translates to:
-  /// **'Noticias y adopción muestran lo de todas tus mascotas.'**
-  String get menuTodasAyuda;
-
-  /// No description provided for @menuElegidaAyuda.
-  ///
-  /// In es, this message translates to:
-  /// **'La adopción se muestra para la especie de {nombre}.'**
-  String menuElegidaAyuda(String nombre);
-
   /// No description provided for @menuFicha.
   ///
   /// In es, this message translates to:

@@ -3514,21 +3514,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get menuIngresarAyuda => 'Para cargar tus mascotas y recibir avisos.';
 
   @override
-  String get menuVerPara => 'Ver todo para';
-
-  @override
-  String get menuTodas => 'Todas';
-
-  @override
-  String get menuTodasAyuda =>
-      'Noticias y adopción muestran lo de todas tus mascotas.';
-
-  @override
-  String menuElegidaAyuda(String nombre) {
-    return 'La adopción se muestra para la especie de $nombre.';
-  }
-
-  @override
   String get menuFicha => 'Ver su ficha';
 
   @override
