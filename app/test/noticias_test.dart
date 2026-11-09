@@ -449,4 +449,41 @@ void main() {
     expect(find.text('Nuevo lugar verificado: Vet Pando'), findsOneWidget);
     expect(find.text('Ver todas'), findsNothing);
   });
+
+  testWidgets('Inicio (D154): acceso a Adopción si está prendida, con '
+      'métrica', (tester) async {
+    tester.view
+      ..physicalSize = const Size(1080, 2400)
+      ..devicePixelRatio = 3;
+    addTearDown(tester.view.reset);
+    final metricas = <Map<String, Object?>>[];
+    await tester.pumpWidget(
+      appDePrueba(
+        inicio: Rutas.inicio,
+        cuenta: ServicioCuentaFalso(conectado: _ana),
+        noticias: NoticiasFalsas(const [], const [], const ResumenComunidad()),
+        eventos: metricas,
+        funcionalidades: FuncionalidadesFalsas({Funcionalidades.adopcion}),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('Adopción y hogar de tránsito'), findsOneWidget);
+    await _tocar(tester, find.byKey(const Key('acceso-adopcion')));
+    expect(find.text('Adopción responsable'), findsOneWidget);
+    expect(
+      metricas
+          .where((e) => e['name'] == 'adoption_shortcut')
+          .map((e) => e['props']),
+      [
+        {'desde': 'inicio'},
+      ],
+    );
+  });
+
+  testWidgets('Inicio (D154): sin Adopción prendida no hay acceso', (
+    tester,
+  ) async {
+    await _abrir(tester);
+    expect(find.byKey(const Key('acceso-adopcion')), findsNothing);
+  });
 }

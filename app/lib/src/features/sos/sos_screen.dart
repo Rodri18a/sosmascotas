@@ -11,6 +11,7 @@ import '../../router.dart';
 import '../../sos/sos_repositorio.dart';
 import '../../utiles/tiempo.dart';
 import '../../widgets/boton_ayuda.dart';
+import '../adopcion/acceso_adopcion.dart';
 import '../menu/menu_principal.dart';
 
 /// Pestaña SOS: reportes activos ordenados por cercanía, y botón para reportar.
@@ -105,6 +106,9 @@ class _SosScreenState extends ConsumerState<SosScreen> {
                   ),
                 ],
               },
+              // Al final y separado de los reportes: un perdido tiene dueño,
+              // no está en adopción (D154).
+              const AccesoAdopcion(desde: 'sos'),
             ],
           ),
         ),

@@ -20,6 +20,7 @@ import '../../router.dart';
 import '../../utiles/enlaces.dart';
 import '../../widgets/boton_ayuda.dart';
 import '../../widgets/volver.dart';
+import '../adopcion/acceso_adopcion.dart';
 import '../comunidad/comunidad_screen.dart';
 import '../comunidad/preguntas.dart';
 import '../eventos/eventos.dart';
@@ -253,6 +254,8 @@ class _Comunidad extends ConsumerWidget {
         // Grupos por raza y especie (3.4, D116).
         if (ref.watch(funcionalidadActivaProvider(Funcionalidades.grupos)))
           const TarjetaGrupos(),
+        // Adopción y tránsito, fuera del menú (D154).
+        const AccesoAdopcion(desde: 'inicio'),
         // Solo reencuentros y perdidas, uno al lado del otro (D141).
         if (hayResumen) _Resumen(resumen: resumen),
         // Solo las últimas 5, con título y «Ver todas» (D147).

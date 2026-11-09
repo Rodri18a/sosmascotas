@@ -144,6 +144,8 @@ Pantalla inicial: el logo de la marca (D122) sobre el fondo claro `#EAF4FA` (osc
 
 El objetivo no es solo publicar animales: es que **la adopción salga bien y el animal no vuelva a la calle**.
 
+**Accesos (D154):** además del menú ☰, una tarjeta «Adopción y hogar de tránsito» en el Inicio (debajo de Preguntas y Grupos) y, al final de la pestaña SOS y separado de los reportes, «¿Querés sumar una mascota a tu familia? Ver mascotas en adopción». Adopción **no** va dentro de SOS: SOS es urgencia y un animal perdido o encontrado tiene dueño, no está en adopción. Queda para charlar con refugios el puente desde «Encontré» (ofrecer tránsito y, si no aparece el dueño, sugerir adopción).
+
 **Fase 1:** el directorio de Ayuda enlaza a las adopciones de cada refugio de la zona (sin desarrollo propio).
 
 **Fase 2 — el proceso completo:**

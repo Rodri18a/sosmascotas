@@ -5,6 +5,7 @@ import 'package:sosmascota/src/features/shell/app_shell.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import 'cuenta_falsa.dart';
+import 'funcionalidades_falsas.dart';
 import 'helpers.dart';
 import 'sos_falso.dart';
 
@@ -141,5 +142,45 @@ void main() {
     expect(find.text('Se perdió: Firulais'), findsNothing);
     expect(find.text('Labrador · Negro'), findsNothing);
     expect(find.text('Encontrada: Gato'), findsOneWidget);
+  });
+
+  testWidgets('SOS (D154): al final, aparte, el enlace a Adopción', (
+    tester,
+  ) async {
+    final metricas = <Map<String, Object?>>[];
+    await tester.pumpWidget(
+      appDePrueba(
+        sos: SosFalso(listaCercanos: [_perdida]),
+        eventos: metricas,
+        funcionalidades: FuncionalidadesFalsas({Funcionalidades.adopcion}),
+      ),
+    );
+    await _irASos(tester);
+    final enlace = find.byKey(const Key('acceso-adopcion'));
+    await tester.scrollUntilVisible(enlace, 200);
+    expect(
+      tester.getTopLeft(enlace).dy,
+      greaterThan(tester.getTopLeft(find.text('Se perdió: Firulais')).dy),
+      reason: 'va después de los reportes',
+    );
+    await tester.tap(enlace);
+    await tester.pumpAndSettle();
+    expect(find.text('Adopción responsable'), findsOneWidget);
+    expect(
+      metricas
+          .where((e) => e['name'] == 'adoption_shortcut')
+          .map((e) => e['props']),
+      [
+        {'desde': 'sos'},
+      ],
+    );
+  });
+
+  testWidgets('SOS (D154): sin Adopción prendida no hay enlace', (
+    tester,
+  ) async {
+    await tester.pumpWidget(appDePrueba());
+    await _irASos(tester);
+    expect(find.byKey(const Key('acceso-adopcion')), findsNothing);
   });
 }

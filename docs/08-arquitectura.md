@@ -173,6 +173,7 @@ Tabla `events` (append-only), escrita por el cliente con `ref.read(metricasProvi
 | `news_open` / `news_link` | abrir una noticia y tocar "Leer más", con `patrocinada` (D83) |
 | `banner_open` | tocar un banner del carrusel de Inicio, con `patrocinado` (D128) |
 | `menu_open` / `pet_select` | se abre el menú ☰; se elige una mascota o "Todas" para filtrar (D88) |
+| `adoption_shortcut` | se toca el acceso a Adopción fuera del menú (`desde`: `inicio` o `sos`, D154) |
 | `menu_item_open` | se toca una opción del menú ☰ (`item`: `mapa`, `adopcion`, `pedidos`…), para ver qué se usa (plan de mejoras 1.2) |
 | `business_app_prompt` | en Huellitas se toca «Mi negocio» o «¿Es tu negocio?» y sale el aviso de que eso va en Huellitas Comercios (D143) |
 | `tour_start` / `tour_finish` / `tour_skip` | recorrido guiado de una pantalla (D130): `screen`, si arrancó solo (`auto`) o con el botón ?, y en qué paso se saltó (`step`) |

@@ -4565,6 +4565,19 @@ class AppLocalizationsEs extends AppLocalizations {
   String get adopcionEntrada => 'Adoptar o dar en adopción';
 
   @override
+  String get adopcionAccesoTitulo => 'Adopción y hogar de tránsito';
+
+  @override
+  String get adopcionAccesoAyuda => 'Mascotas que buscan familia cerca tuyo';
+
+  @override
+  String get adopcionAccesoSosPregunta =>
+      '¿Querés sumar una mascota a tu familia?';
+
+  @override
+  String get adopcionAccesoSosBoton => 'Ver mascotas en adopción';
+
+  @override
   String get adopcionEntradaAyuda =>
       'Siempre gratis. Con guía, compatibilidad y seguimiento.';
 

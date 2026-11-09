@@ -86,6 +86,9 @@ abstract final class Eventos {
   static const newsReaction = 'news_reaction';
   /// «Ver todas» las novedades desde el Inicio (D147).
   static const communitySeeAll = 'community_see_all';
+
+  /// Acceso a Adopción fuera del menú (`desde`: `inicio` o `sos`, D154).
+  static const adoptionShortcut = 'adoption_shortcut';
   static const menuOpen = 'menu_open';
 
   /// Opción tocada en el menú ☰ (`item`: cuál), para ver qué se usa.

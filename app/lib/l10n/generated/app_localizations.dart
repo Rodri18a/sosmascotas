@@ -7648,6 +7648,30 @@ abstract class AppLocalizations {
   /// **'Adoptar o dar en adopción'**
   String get adopcionEntrada;
 
+  /// No description provided for @adopcionAccesoTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Adopción y hogar de tránsito'**
+  String get adopcionAccesoTitulo;
+
+  /// No description provided for @adopcionAccesoAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Mascotas que buscan familia cerca tuyo'**
+  String get adopcionAccesoAyuda;
+
+  /// No description provided for @adopcionAccesoSosPregunta.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Querés sumar una mascota a tu familia?'**
+  String get adopcionAccesoSosPregunta;
+
+  /// No description provided for @adopcionAccesoSosBoton.
+  ///
+  /// In es, this message translates to:
+  /// **'Ver mascotas en adopción'**
+  String get adopcionAccesoSosBoton;
+
   /// No description provided for @adopcionEntradaAyuda.
   ///
   /// In es, this message translates to:
