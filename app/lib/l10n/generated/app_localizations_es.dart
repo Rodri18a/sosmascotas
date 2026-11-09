@@ -1321,15 +1321,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get diaDomingo => 'domingo';
 
   @override
-  String get ayuda911Titulo => '¿Hay una persona en riesgo?';
-
-  @override
-  String get ayuda911Texto => 'Llamá al 911. Huellamy es solo para animales.';
-
-  @override
-  String get ayuda911Boton => 'Llamar al 911';
-
-  @override
   String get ayudaUrgencias => 'Veterinarias de urgencia';
 
   @override
@@ -3857,13 +3848,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get recUrgenciasTexto => 'Para cuando hace falta ayuda ya.';
-
-  @override
-  String get recUrgencias911Titulo => 'Si hay una persona en riesgo';
-
-  @override
-  String get recUrgencias911Texto =>
-      'Llamá al 911. Huellamy es solo para animales.';
 
   @override
   String get recUrgenciasGuardiaTitulo => 'Veterinarias de urgencia';

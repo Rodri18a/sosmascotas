@@ -108,11 +108,6 @@ abstract final class PasosRecorrido {
     return [
       PasoRecorrido(titulo: t.recUrgenciasTitulo, texto: t.recUrgenciasTexto),
       PasoRecorrido(
-        marca: '911',
-        titulo: t.recUrgencias911Titulo,
-        texto: t.recUrgencias911Texto,
-      ),
-      PasoRecorrido(
         marca: 'guardia',
         titulo: t.recUrgenciasGuardiaTitulo,
         texto: t.recUrgenciasGuardiaTexto,

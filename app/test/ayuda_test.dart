@@ -57,60 +57,57 @@ Future<void> _irAAyuda(WidgetTester tester) async {
 }
 
 void main() {
-  testWidgets('un visitante ve el 911, las urgencias y el directorio', (
-    tester,
-  ) async {
-    _pantallaDeCelular(tester);
-    final enlaces = <Uri>[];
-    final eventos = <Map<String, Object?>>[];
-    await tester.pumpWidget(
-      appDePrueba(
-        ayuda: AyudaFalsa([_refugio, _grupo]),
-        comercios: ComerciosFalsos([_guardia, _comun]),
-        enlacesAbiertos: enlaces,
-        eventos: eventos,
-      ),
-    );
-    await _irAAyuda(tester);
+  testWidgets(
+    'un visitante ve las urgencias y el directorio, sin el 911 (D151)',
+    (tester) async {
+      _pantallaDeCelular(tester);
+      final enlaces = <Uri>[];
+      final eventos = <Map<String, Object?>>[];
+      await tester.pumpWidget(
+        appDePrueba(
+          ayuda: AyudaFalsa([_refugio, _grupo]),
+          comercios: ComerciosFalsos([_guardia, _comun]),
+          enlacesAbiertos: enlaces,
+          eventos: eventos,
+        ),
+      );
+      await _irAAyuda(tester);
 
-    expect(find.text('¿Hay una persona en riesgo?'), findsOneWidget);
-    await tester.tap(find.text('Llamar al 911'));
-    await tester.pumpAndSettle();
-    expect(enlaces.last.toString(), 'tel:911');
+      expect(find.text('¿Hay una persona en riesgo?'), findsNothing);
+      expect(find.text('Llamar al 911'), findsNothing);
 
-    // Solo las de urgencia o 24 h, con su estado.
-    expect(find.text('Clínica Ejemplo 24 h'), findsOneWidget);
-    expect(find.text('Abierto las 24 h'), findsOneWidget);
-    expect(find.text('Veterinaria Ejemplo Sur'), findsNothing);
+      // Solo las de urgencia o 24 h, con su estado.
+      expect(find.text('Clínica Ejemplo 24 h'), findsOneWidget);
+      expect(find.text('Abierto las 24 h'), findsOneWidget);
+      expect(find.text('Veterinaria Ejemplo Sur'), findsNothing);
 
-    expect(find.text('Refugios y protectoras'), findsOneWidget);
-    await tester.scrollUntilVisible(
-      find.text('Grupos para difundir'),
-      200,
-      scrollable: find.byType(Scrollable).first,
-    );
-    expect(find.text('Grupos para difundir'), findsOneWidget);
-    expect(find.text('Organismos'), findsNothing, reason: 'no hay ninguno');
-    expect(find.text('Ejemplo'), findsOneWidget);
+      expect(find.text('Refugios y protectoras'), findsOneWidget);
+      await tester.scrollUntilVisible(
+        find.text('Grupos para difundir'),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
+      expect(find.text('Grupos para difundir'), findsOneWidget);
+      expect(find.text('Organismos'), findsNothing, reason: 'no hay ninguno');
+      expect(find.text('Ejemplo'), findsOneWidget);
 
-    await tester.tap(find.text('WhatsApp'));
-    await tester.ensureVisible(find.text('Abrir'));
-    await tester.tap(find.text('Abrir'));
-    await tester.pumpAndSettle();
-    expect(enlaces.map((u) => u.toString()), [
-      'tel:911',
-      'https://wa.me/59899000011',
-      'https://example.com/grupo',
-    ]);
-    expect(
-      eventos.where((e) => e['name'] == 'help_click').map((e) => e['props']),
-      [
-        {'tipo': '911'},
-        {'tipo': 'whatsapp', 'kind': 'refugio'},
-        {'tipo': 'enlace', 'kind': 'grupo'},
-      ],
-    );
-  });
+      await tester.tap(find.text('WhatsApp'));
+      await tester.ensureVisible(find.text('Abrir'));
+      await tester.tap(find.text('Abrir'));
+      await tester.pumpAndSettle();
+      expect(enlaces.map((u) => u.toString()), [
+        'https://wa.me/59899000011',
+        'https://example.com/grupo',
+      ]);
+      expect(
+        eventos.where((e) => e['name'] == 'help_click').map((e) => e['props']),
+        [
+          {'tipo': 'whatsapp', 'kind': 'refugio'},
+          {'tipo': 'enlace', 'kind': 'grupo'},
+        ],
+      );
+    },
+  );
 
   testWidgets('tocar una veterinaria de urgencia abre su ficha', (
     tester,
@@ -131,7 +128,6 @@ void main() {
     await tester.pumpWidget(appDePrueba());
     await _irAAyuda(tester);
 
-    expect(find.text('Llamar al 911'), findsOneWidget);
     expect(
       find.textContaining('no hay veterinarias de urgencia'),
       findsOneWidget,

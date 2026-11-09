@@ -2254,24 +2254,6 @@ abstract class AppLocalizations {
   /// **'domingo'**
   String get diaDomingo;
 
-  /// No description provided for @ayuda911Titulo.
-  ///
-  /// In es, this message translates to:
-  /// **'¿Hay una persona en riesgo?'**
-  String get ayuda911Titulo;
-
-  /// No description provided for @ayuda911Texto.
-  ///
-  /// In es, this message translates to:
-  /// **'Llamá al 911. Huellamy es solo para animales.'**
-  String get ayuda911Texto;
-
-  /// No description provided for @ayuda911Boton.
-  ///
-  /// In es, this message translates to:
-  /// **'Llamar al 911'**
-  String get ayuda911Boton;
-
   /// No description provided for @ayudaUrgencias.
   ///
   /// In es, this message translates to:
@@ -6531,18 +6513,6 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Para cuando hace falta ayuda ya.'**
   String get recUrgenciasTexto;
-
-  /// No description provided for @recUrgencias911Titulo.
-  ///
-  /// In es, this message translates to:
-  /// **'Si hay una persona en riesgo'**
-  String get recUrgencias911Titulo;
-
-  /// No description provided for @recUrgencias911Texto.
-  ///
-  /// In es, this message translates to:
-  /// **'Llamá al 911. Huellamy es solo para animales.'**
-  String get recUrgencias911Texto;
 
   /// No description provided for @recUrgenciasGuardiaTitulo.
   ///

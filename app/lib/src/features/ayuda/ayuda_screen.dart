@@ -15,8 +15,9 @@ import '../../widgets/boton_ayuda.dart';
 import '../mapa/ficha_comercio.dart';
 import '../menu/menu_principal.dart';
 
-/// Pestaña Ayuda (también para visitantes): 911, veterinarias de urgencia y
-/// directorio de refugios, protectoras y grupos de la zona.
+/// Pestaña Urgencias (también para visitantes): veterinarias de urgencia y
+/// directorio de refugios, protectoras y grupos de la zona. Sin la tarjeta
+/// del 911 (D151).
 class AyudaScreen extends ConsumerWidget {
   const AyudaScreen({super.key});
 
@@ -52,8 +53,6 @@ class AyudaScreen extends ConsumerWidget {
           child: ListView(
             padding: const EdgeInsets.all(16),
             children: [
-              const MarcaRecorrido('911', child: _Tarjeta911()),
-              const SizedBox(height: 16),
               // Denuncias de maltrato (2.7, D80). Los próximos eventos están en
               // Noticias → Comunidad (D94).
               SiFuncionalidad(
@@ -116,49 +115,6 @@ void _abrir(WidgetRef ref, Uri enlace, String tipo, {String? kind}) {
       .read(metricasProvider)
       .track(Eventos.helpClick, props: {'tipo': tipo, 'kind': ?kind});
   ref.read(abrirEnlaceProvider)(enlace);
-}
-
-class _Tarjeta911 extends ConsumerWidget {
-  const _Tarjeta911();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final t = context.t;
-    final colores = Theme.of(context).colorScheme;
-    return Card(
-      color: colores.errorContainer,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              t.ayuda911Titulo,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: colores.onErrorContainer,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              t.ayuda911Texto,
-              style: TextStyle(color: colores.onErrorContainer),
-            ),
-            const SizedBox(height: 12),
-            FilledButton.icon(
-              style: FilledButton.styleFrom(
-                backgroundColor: colores.error,
-                foregroundColor: colores.onError,
-              ),
-              onPressed: () =>
-                  _abrir(ref, Uri(scheme: 'tel', path: '911'), '911'),
-              icon: const Icon(Icons.call_outlined),
-              label: Text(t.ayuda911Boton),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }
 
 class _Titulo extends StatelessWidget {
