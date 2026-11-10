@@ -107,14 +107,14 @@ void main() {
       await _tocar(tester, find.text('Invitar a alguien'));
       expect(find.text('Invitación lista'), findsOneWidget);
       expect(
-        find.text('https://sosmascotas.uy/unirme/K7M2QX9PAB'),
+        find.text('https://huellamy.com/unirme/K7M2QX9PAB'),
         findsOneWidget,
       );
       await _tocar(tester, find.text('Copiar enlace'));
       expect(
         copiado,
         'Te invito a cuidar a mis mascotas en Huellamy: '
-        'https://sosmascotas.uy/unirme/K7M2QX9PAB',
+        'https://huellamy.com/unirme/K7M2QX9PAB',
       );
       expect(eventos.map((e) => e['name']), contains('household_invite'));
     });

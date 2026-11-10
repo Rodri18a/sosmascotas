@@ -12,8 +12,8 @@
 | Firebase (push) | Gratis | Al programar los avisos |
 | Google Cloud (clave de mapas) | Gratis en el mapa nativo móvil; **pide tarjeta** igual | Al programar el mapa móvil (Fase 1) |
 | Proveedor de teselas para el mapa web | Gratis en su cupo | Al programar el mapa web (Fase 0) |
-| Hosting web (Cloudflare Pages / Vercel) | Gratis | Al publicar |
-| **Dominio `sosmascotas.uy`** | Entre €43 y más de €220 por año según el registrador. Comparar en nic.org.uy y preguntar por `.com.uy` | Al publicar la Fase 0 (opcional antes, para asegurarlo) |
+| Hosting de la app y la web pública (Vercel) | Gratis | Al publicar |
+| **Dominio `huellamy.com` + Hostinger Premium Web Hosting** | ✅ **US$42 por un año, los dos juntos** (pagado el 10/11/2026, D155). Vence aprox. el **10/11/2027**: revisar el precio de renovación, que suele ser más alto que el del primer año | Ya pagado |
 | **Supabase Pro** | US$25/mes | Cuando haya usuarios reales |
 | **Google Play** | US$25 una vez | **3–4 semanas antes** de querer estar en la tienda (prueba cerrada de 14 días con 12 testers) |
 | **Apple Developer** | US$99/año | Fase 1, al publicar en iPhone |
@@ -25,11 +25,19 @@
 | Comisión de tiendas por suscripciones | ~15% | Desde el primer cobro dentro de la app |
 | Comisión de cobro (link de pago / Mercado Pago) | Según el medio | Desde el primer cobro |
 
+## Gastos hechos
+
+| Fecha | Concepto | Monto | Vence |
+|---|---|---|---|
+| 10/11/2026 | Dominio `huellamy.com` + Hostinger Premium Web Hosting (1 año) | US$42 | ~10/11/2027 |
+
+**Total gastado:** US$42.
+
 ## Por fase (estimado)
 
 | Fase | Gasto único | Gasto mensual |
 |---|---|---|
-| 0 · SOS (PWA) | Dominio (+ Google Play opcional) | $0 – US$25 |
+| 0 · SOS (PWA) | Dominio + hosting (✅ US$42, pagado) (+ Google Play opcional) | $0 – US$25 |
 | 1 · MVP | Apple US$99, asesoría legal | US$25–40 |
 | 2 · Monetización | Chapitas, marca | US$25–60 + contador + publicidad |
 | 3–4 | Según el crecimiento | Supabase según el uso |

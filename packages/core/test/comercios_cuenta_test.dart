@@ -144,7 +144,7 @@ void main() {
   });
 
   test('enlace de la página pública del comercio (D90)', () {
-    expect(urlPaginaComercio('n1'), 'https://sosmascotas.uy/n/n1');
+    expect(urlPaginaComercio('n1'), 'https://huellamy.com/n/n1');
     expect(
       urlPaginaComercio('n1', base: 'https://sosmascota-web.vercel.app/'),
       'https://sosmascota-web.vercel.app/n/n1',

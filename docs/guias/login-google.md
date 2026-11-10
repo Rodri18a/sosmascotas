@@ -37,4 +37,4 @@ La app ya tiene el botón: aparece solo cuando Google está activado en Supabase
    ```
 2. Decirle a Claude "listo": corre `python3 -I supabase/configurar_auth.py --aplicar` y el botón aparece solo.
 
-> Cuando exista el dominio (0.8.6), sumar `https://sosmascotas.uy` a los orígenes autorizados y a `uri_allow_list` del script. Para Android/iPhone nativos (Fase 1) se crean clientes aparte.
+> Cuando exista el dominio (0.8.6), sumar `https://huellamy.com` a los orígenes autorizados y a `uri_allow_list` del script. Para Android/iPhone nativos (Fase 1) se crean clientes aparte.

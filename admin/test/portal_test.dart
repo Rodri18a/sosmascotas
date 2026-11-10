@@ -660,14 +660,14 @@ class RepoFalso implements AdminRepositorio {
   Future<List<Map<String, Object?>>> equipo() async => [
     {
       'user_id': 'u0',
-      'email': 'admin@sosmascotas.uy',
+      'email': 'admin@huellamy.com',
       'rol': 'admin',
       'yo': true,
       'ultima_accion': '2026-10-26T12:00:00Z',
     },
     {
       'user_id': 'u7',
-      'email': 'mod@sosmascotas.uy',
+      'email': 'mod@huellamy.com',
       'rol': 'moderator',
       'zonas': [
         for (final id in zonasDe['u7'] ?? const <int>[])
@@ -732,13 +732,13 @@ class RepoFalso implements AdminRepositorio {
         'target_type': 'user',
         'target_id': 'u9',
         'detail': {'ahora': 'sales'},
-        'quien': 'admin@sosmascotas.uy',
+        'quien': 'admin@huellamy.com',
       },
       {
         'id': 2,
         'created_at': '2026-10-26T11:00:00Z',
         'action': 'moderar_aprobar',
-        'quien': 'mod@sosmascotas.uy',
+        'quien': 'mod@huellamy.com',
       },
     ])
       if (accion == null || a['action'] == accion) a,
@@ -804,9 +804,9 @@ void main() {
     await tester.pumpWidget(_portal(sesion: sesion, repo: RepoFalso()));
     await tester.pumpAndSettle();
 
-    await tester.enterText(find.byType(TextField), 'admin@sosmascotas.uy');
+    await tester.enterText(find.byType(TextField), 'admin@huellamy.com');
     await _tocar(tester, find.text('Enviarme el código'));
-    expect(sesion.codigosPedidos, ['admin@sosmascotas.uy']);
+    expect(sesion.codigosPedidos, ['admin@huellamy.com']);
     await tester.enterText(find.byType(TextField).last, '000000');
     await _tocar(tester, find.text('Entrar'));
     expect(find.textContaining('No se pudo'), findsOneWidget);
@@ -1341,8 +1341,8 @@ void main() {
 
   test('el CSV de un lote lleva el código y el enlace de la página del QR', () {
     expect(
-      csvDeLote(['ABCD2345'], 'https://sosmascotas.uy/'),
-      'codigo,enlace\nABCD2345,https://sosmascotas.uy/m/ABCD2345',
+      csvDeLote(['ABCD2345'], 'https://huellamy.com/'),
+      'codigo,enlace\nABCD2345,https://huellamy.com/m/ABCD2345',
     );
   });
 
@@ -1354,7 +1354,7 @@ void main() {
     final descargas = <(String, String)>[];
     await tester.pumpWidget(
       _portal(
-        sesion: SesionFalsa('admin@sosmascotas.uy'),
+        sesion: SesionFalsa('admin@huellamy.com'),
         repo: repo,
         descargas: descargas,
       ),
@@ -1400,7 +1400,7 @@ void main() {
     _pantallaGrande(tester);
     final repo = RepoFalso();
     await tester.pumpWidget(
-      _portal(sesion: SesionFalsa('admin@sosmascotas.uy'), repo: repo),
+      _portal(sesion: SesionFalsa('admin@huellamy.com'), repo: repo),
     );
     await _tocar(tester, find.text('Chapitas'));
     expect(find.text('N.º 7 · Toby · grabado «Toby»'), findsOneWidget);
@@ -1462,7 +1462,7 @@ void main() {
     final descargas = <(String, String)>[];
     await tester.pumpWidget(
       _portal(
-        sesion: SesionFalsa('admin@sosmascotas.uy'),
+        sesion: SesionFalsa('admin@huellamy.com'),
         repo: repo,
         descargas: descargas,
       ),
@@ -1530,7 +1530,7 @@ void main() {
       );
     await repo.crearLote(cantidad: 50);
     await tester.pumpWidget(
-      _portal(sesion: SesionFalsa('admin@sosmascotas.uy'), repo: repo),
+      _portal(sesion: SesionFalsa('admin@huellamy.com'), repo: repo),
     );
     await _tocar(tester, find.text('Chapitas'));
     expect(
@@ -1634,12 +1634,12 @@ void main() {
     _pantallaGrande(tester);
     final repo = RepoFalso();
     await tester.pumpWidget(
-      _portal(sesion: SesionFalsa('admin@sosmascotas.uy'), repo: repo),
+      _portal(sesion: SesionFalsa('admin@huellamy.com'), repo: repo),
     );
     await _tocar(tester, find.text('Equipo'));
     expect(find.textContaining('Sin zonas: no ve nada'), findsOneWidget);
 
-    await _tocar(tester, find.byTooltip('Zonas de mod@sosmascotas.uy'));
+    await _tocar(tester, find.byTooltip('Zonas de mod@huellamy.com'));
     await _tocar(tester, find.widgetWithText(CheckboxListTile, 'Pando'));
     await _tocar(tester, find.widgetWithText(FilledButton, 'Guardar'));
     expect(repo.zonasDe['u7'], [1]);
@@ -1650,10 +1650,10 @@ void main() {
     _pantallaGrande(tester);
     final repo = RepoFalso();
     await tester.pumpWidget(
-      _portal(sesion: SesionFalsa('admin@sosmascotas.uy'), repo: repo),
+      _portal(sesion: SesionFalsa('admin@huellamy.com'), repo: repo),
     );
     await _tocar(tester, find.text('Equipo'));
-    expect(find.text('admin@sosmascotas.uy (vos)'), findsOneWidget);
+    expect(find.text('admin@huellamy.com (vos)'), findsOneWidget);
 
     await _tocar(tester, find.text('Sumar o cambiar rol'));
     final correo = find.descendant(
@@ -1684,7 +1684,7 @@ void main() {
     _pantallaGrande(tester);
     final repo = RepoFalso();
     await tester.pumpWidget(
-      _portal(sesion: SesionFalsa('admin@sosmascotas.uy'), repo: repo),
+      _portal(sesion: SesionFalsa('admin@huellamy.com'), repo: repo),
     );
     await _tocar(tester, find.text('Zonas'));
     expect(
@@ -1719,8 +1719,8 @@ void main() {
     });
 
     await _tocar(tester, find.text('Auditoría'));
-    expect(find.text('poner_rol · admin@sosmascotas.uy'), findsOneWidget);
-    expect(find.text('moderar_aprobar · mod@sosmascotas.uy'), findsOneWidget);
+    expect(find.text('poner_rol · admin@huellamy.com'), findsOneWidget);
+    expect(find.text('moderar_aprobar · mod@huellamy.com'), findsOneWidget);
   });
 
   testWidgets('lugares: los sin reclamar con su tracción', (tester) async {

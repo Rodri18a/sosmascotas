@@ -48,7 +48,7 @@ Pantalla inicial: el logo de la marca (D122) sobre el fondo claro `#EAF4FA` (osc
 
 ## 3. Chapita QR — Fase 0
 
-- Cada mascota tiene un **código QR único** (enlace a `sosmascotas.uy/m/<código>`).
+- Cada mascota tiene un **código QR único** (enlace a `huellamy.com/m/<código>`).
 - El dueño puede **descargar o imprimir** el QR gratis.
 - **Chapitas físicas pre-codificadas:** se fabrican por **lotes** con códigos únicos sin mascota asignada. El dueño **escanea la chapita y la vincula** a su mascota ("Activar chapita"). Si la pierde, la desvincula y activa otra. Así se pueden repartir en veterinarias, ferias de adopción o eventos sin saber de quién va a ser cada una. ✅ 1.8b.2 (D95): se escanea con la cámara del celular → página "Activar con la app" → `/activar/<código>` (elige cuál de sus mascotas), o se escribe el código en **Chapita QR → Chapitas físicas**; ahí también se ven las vinculadas y se **desvinculan** (quedan inactivas para siempre). Solo el dueño activa y desvincula; el hogar las ve.
 - **Formas de conseguir la chapita física:**

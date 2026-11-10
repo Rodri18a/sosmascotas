@@ -2,5 +2,5 @@
   "APP_FLAVOR": "prod",
   "SUPABASE_URL": "https://<proyecto>.supabase.co",
   "SUPABASE_PUBLISHABLE_KEY": "<clave publishable (sb_publishable_…) del proyecto de producción>",
-  "PUBLIC_BASE_URL": "https://sosmascotas.uy"
+  "PUBLIC_BASE_URL": "https://huellamy.com"
 }

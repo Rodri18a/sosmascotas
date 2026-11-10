@@ -82,8 +82,8 @@ Revisado de nuevo el **30/10/2026**: las **82 migraciones** sirven tal cual para
    SUPABASE_ACCESS_TOKEN=…        # el mismo token de la cuenta
    SUPABASE_DB_PASSWORD=…         # la de producción
    SOSM_PROJECT_REF=<ref de prod>
-   SOSM_APP_URL=https://sosmascotas.uy
-   SOSM_ADMIN_URL=https://<dirección del portal de prod>
+   SOSM_APP_URL=https://huellamy.com
+   SOSM_ADMIN_URL=https://admin.huellamy.com   # propuesta (D155)
    ```
 3. Si se separan los avisos: proyecto de **Firebase de producción** (cuenta de servicio y configuración web) y un sitio de **Turnstile** para el dominio de producción.
 4. Decidir qué funcionalidades se prenden en el lanzamiento (ver el paso 9).

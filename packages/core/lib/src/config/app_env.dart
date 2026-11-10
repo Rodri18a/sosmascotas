@@ -12,7 +12,7 @@ class AppEnv {
     required this.flavor,
     required this.supabaseUrl,
     required this.supabasePublishableKey,
-    this.urlPublica = 'https://sosmascotas.uy',
+    this.urlPublica = 'https://huellamy.com',
     this.firebase,
   });
 
@@ -25,7 +25,7 @@ class AppEnv {
     ),
     urlPublica: const String.fromEnvironment(
       'PUBLIC_BASE_URL',
-      defaultValue: 'https://sosmascotas.uy',
+      defaultValue: 'https://huellamy.com',
     ),
     firebase: ConfigFirebase.fromEnvironment(),
   );
@@ -36,7 +36,7 @@ class AppEnv {
     required String flavor,
     required String supabaseUrl,
     required String supabasePublishableKey,
-    String urlPublica = 'https://sosmascotas.uy',
+    String urlPublica = 'https://huellamy.com',
     ConfigFirebase? firebase,
   }) {
     final parsedFlavor = AppFlavor.values.asNameMap()[flavor.trim()];

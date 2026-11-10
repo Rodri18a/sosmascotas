@@ -72,6 +72,6 @@ void main() {
     });
     expect(d.tieneMicrochip, isTrue);
     expect(d.esMio, isFalse);
-    expect(urlPaginaSos('s1'), 'https://sosmascotas.uy/s/s1');
+    expect(urlPaginaSos('s1'), 'https://huellamy.com/s/s1');
   });
 }

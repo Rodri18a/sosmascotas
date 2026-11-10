@@ -12,7 +12,7 @@ Las fechas son objetivos. **La fecha real sale de las horas que se vayan complet
 
 **Objetivo:** salir en Pando con lo mínimo útil y juntar los primeros usuarios.
 
-**Plataforma:** PWA en `sosmascotas.uy` (no depende de las tiendas). En paralelo, opcionalmente, arranca la prueba cerrada de Google Play.
+**Plataforma:** PWA en `huellamy.com` (no depende de las tiendas). En paralelo, opcionalmente, arranca la prueba cerrada de Google Play.
 
 **Incluye:**
 - Validación previa (competencia, lista de comercios, entrevistas)

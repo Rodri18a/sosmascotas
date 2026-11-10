@@ -923,4 +923,4 @@ final stockProvider = FutureProvider<List<Map<String, Object?>>>(
 
 /// Dirección de la web pública: va dentro de cada chapita (`<base>/m/<código>`).
 /// Se sobrescribe en `main.dart` con `PUBLIC_BASE_URL`.
-final urlPublicaProvider = Provider<String>((ref) => 'https://sosmascotas.uy');
+final urlPublicaProvider = Provider<String>((ref) => 'https://huellamy.com');

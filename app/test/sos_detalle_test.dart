@@ -204,7 +204,7 @@ void main() {
       await tester.pumpAndSettle();
       // (El aviso "Enlace copiado" depende de la respuesta del portapapeles,
       // que en las pruebas no llega dentro del ciclo de pumpAndSettle.)
-      expect(copiado, 'https://sosmascotas.uy/s/s1');
+      expect(copiado, 'https://huellamy.com/s/s1');
       // Compartir cuenta para «Difusor» en Tus huellas (D138).
       expect(
         eventos.where((e) => e['name'] == 'sos_share').single['target_id'],

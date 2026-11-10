@@ -164,7 +164,7 @@ Widget appDePrueba({
   CacheFuncionalidades? cacheFuncionalidades,
   ServicioInstalacion? instalacion,
   AlmacenInstalacion? almacenInstalacion,
-  String urlPublica = 'https://sosmascotas.uy',
+  String urlPublica = 'https://huellamy.com',
   // La mayoría de las pruebas se escribieron arrancando en el Mapa; las de
   // navegación arrancan donde abre la app de verdad (Rutas.inicio, D127).
   String inicio = Rutas.mapa,

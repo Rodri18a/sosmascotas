@@ -59,5 +59,5 @@ Cada vez más personas viven solas y dedican tiempo y dinero a sus mascotas, tra
 ## Datos del proyecto
 
 - **Nombre de trabajo:** "SOS Mascota". Hay que confirmar el nombre definitivo (ver `13-riesgos-pendientes.md`).
-- **Dominio elegido:** `sosmascotas.uy` (confirmar disponibilidad al momento de comprarlo).
+- **Dominio:** `huellamy.com`, comprado el 10/11/2026 en Hostinger junto con el hosting (D155).
 - **Autor:** Rodrigo (Uruguay). Trabaja solo.

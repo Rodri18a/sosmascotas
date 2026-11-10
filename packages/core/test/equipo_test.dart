@@ -46,11 +46,11 @@ void main() {
     test('código: acepta el enlace, minúsculas y espacios', () {
       expect(codigoEquipo('abcd 2345'), 'ABCD2345');
       expect(
-        codigoEquipo('https://app.sosmascotas.uy/equipo/ABCD2345'),
+        codigoEquipo('https://app.huellamy.com/equipo/ABCD2345'),
         'ABCD2345',
       );
       expect(
-        codigoEquipo('https://app.sosmascotas.uy/equipo/ABCD2345/'),
+        codigoEquipo('https://app.huellamy.com/equipo/ABCD2345/'),
         'ABCD2345',
       );
       expect(codigoEquipo('ABCD-2345'), 'ABCD2345');

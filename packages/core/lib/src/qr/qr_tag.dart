@@ -32,7 +32,7 @@ class QrTag {
 }
 
 /// Dirección pública por defecto de las páginas del QR y de los SOS.
-const urlPublicaPorDefecto = 'https://sosmascotas.uy';
+const urlPublicaPorDefecto = 'https://huellamy.com';
 
 /// Enlace que va dentro del QR: `<base>/m/<código>`.
 String urlPaginaQr(String codigo, {String base = urlPublicaPorDefecto}) =>

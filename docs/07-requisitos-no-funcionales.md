@@ -4,7 +4,7 @@
 
 | Pieza | Plataforma | Fase |
 |---|---|---|
-| App de usuarios y modo comercio | **Web instalable (PWA)** en `sosmascotas.uy` | 0 |
+| App de usuarios y modo comercio | **Web instalable (PWA)** en `huellamy.com` | 0 |
 | | **Android** (Google Play) | Fase 0 en paralelo → publicada a inicios de la Fase 1 |
 | | **iPhone** (App Store) | 1 |
 | Página pública de QR y de reportes | Web liviana (sin instalar nada) | 0 |

@@ -4,7 +4,7 @@
 
 | # | Tema | Estado / propuesta |
 |---|---|---|
-| P1 | **Nombre definitivo**: "SOS Mascota" o "SOS Mascotas" (el dominio es `sosmascotas.uy`) | "SOS" sugiere solo emergencias y "Mascotas" está en español. Opción: un nombre más amplio y "SOS" como función. Verificar en DNPI, en las tiendas y en los dominios |
+| P1 | **Nombre definitivo**: "SOS Mascota" o "SOS Mascotas" (el nombre pasó a ser **Huellamy**, D146, y el dominio es `huellamy.com`, D155) | "SOS" sugiere solo emergencias y "Mascotas" está en español. Opción: un nombre más amplio y "SOS" como función. Verificar en DNPI, en las tiendas y en los dominios |
 | P2 | **Horas por semana** disponibles | No definido (el brief decía 20; recomendación: 10–15 sostenibles). Las fechas salen de `PROGRESO.md` |
 | P3 | Tecnologías que se usan en el trabajo actual | Para reutilizar conocimiento |
 | P4 | **Precios** de Pro, Familia, Destacado y Plus | Validar en las entrevistas de la Fase 0 |
