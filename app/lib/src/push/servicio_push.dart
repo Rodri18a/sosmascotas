@@ -11,6 +11,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../config/env_provider.dart';
 import '../config/supabase_providers.dart';
 import '../cuenta/servicio_cuenta.dart';
+import '../dos_apps/dos_apps.dart';
 import '../metricas/metricas.dart';
 
 /// Estado de los avisos push en este dispositivo.
@@ -54,9 +55,13 @@ abstract interface class ServicioPush {
 }
 
 class FirebasePush implements ServicioPush {
-  FirebasePush(this._cliente, this._config);
+  FirebasePush(this._cliente, this._config, {this.comercio = false});
 
   final SupabaseClient _cliente;
+
+  /// Huellamy Comercios: sus dispositivos reciben los avisos del negocio y
+  /// los de Huellamy, el resto (D156).
+  final bool comercio;
   final ConfigFirebase _config;
 
   static const _claveApagado = 'push.apagado';
@@ -89,7 +94,11 @@ class FirebasePush implements ServicioPush {
     }
     await _cliente.rpc<void>(
       'guardar_push_token',
-      params: {'p_token': token, 'p_platform': plataformaActual()},
+      params: {
+        'p_token': token,
+        'p_platform': plataformaActual(),
+        'p_app': comercio ? 'comercios' : 'personas',
+      },
     );
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_claveToken, token);
@@ -187,7 +196,11 @@ final servicioPushProvider = Provider<ServicioPush>((ref) {
   final cliente = ref.watch(supabaseClientProvider);
   final config = ref.watch(appEnvProvider).firebase;
   if (cliente == null || config == null) return const PushNoDisponible();
-  final servicio = FirebasePush(cliente, config);
+  final servicio = FirebasePush(
+    cliente,
+    config,
+    comercio: ref.watch(esAppComercioProvider),
+  );
   ref.onDispose(servicio.cerrar);
   return servicio;
 });

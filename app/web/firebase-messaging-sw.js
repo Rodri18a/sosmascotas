@@ -36,27 +36,37 @@ self.addEventListener('push', (event) => {
   );
 });
 
+// Cada app vive en su dirección (D156): Huellamy en app.huellamy.com y
+// Huellamy Comercios en comercios.huellamy.com. tool/armar_web.sh cambia estas
+// marcas por la dirección de la otra app y por si esta es la de comercios;
+// sin cambiar (flutter run), todo se abre acá mismo.
+const OTRA_APP = '__OTRA_APP_URL__';
+const ES_COMERCIOS = '__ES_COMERCIOS__' === 'si';
+
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
-  let ruta = event.notification.data?.ruta || '/';
-  // Lo del negocio se abre en Huellamy Comercios, que es otra app (D143).
-  if (ruta.startsWith('/negocio')) ruta = '/comercios' + ruta;
-  const destino = new URL(ruta, self.location.origin);
-  // Solo rutas de la propia app.
-  if (destino.origin !== self.location.origin) return;
-  const esComercios = (url) => new URL(url).pathname.startsWith('/comercios/');
+  const ruta = event.notification.data?.ruta || '/';
+  // Lo del negocio se abre en Huellamy Comercios y lo demás en Huellamy (D143).
+  const delNegocio = ruta.startsWith('/negocio');
+  const base = OTRA_APP.startsWith('http') && delNegocio !== ES_COMERCIOS
+    ? OTRA_APP
+    : self.location.origin;
+  const destino = new URL(ruta, base);
+  // Solo rutas de las apps propias.
+  if (destino.origin !== new URL(base).origin) return;
 
   event.waitUntil((async () => {
-    const ventanas = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
-    const abierta = ventanas.find((v) => new URL(v.url).origin === destino.origin
-      && esComercios(v.url) === esComercios(destino.href));
-    if (abierta) {
-      try {
-        // navigate() solo funciona en ventanas que controla este service
-        // worker; si no, se abre una nueva con la ruta.
-        await abierta.navigate(destino.href);
-        return abierta.focus();
-      } catch (_) { /* sigue abajo */ }
+    if (destino.origin === self.location.origin) {
+      const ventanas = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+      const abierta = ventanas.find((v) => new URL(v.url).origin === destino.origin);
+      if (abierta) {
+        try {
+          // navigate() solo funciona en ventanas que controla este service
+          // worker; si no, se abre una nueva con la ruta.
+          await abierta.navigate(destino.href);
+          return abierta.focus();
+        } catch (_) { /* sigue abajo */ }
+      }
     }
     return self.clients.openWindow(destino.href);
   })());

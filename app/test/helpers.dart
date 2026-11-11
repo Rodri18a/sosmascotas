@@ -178,6 +178,7 @@ Widget appDePrueba({
     rutaInicialProvider.overrideWithValue(inicio),
     esAppComercioProvider.overrideWithValue(appComercio),
     abrirOtraAppProvider.overrideWithValue(otraAppAbierta?.add),
+    urlComerciosProvider.overrideWithValue('https://comercios.huellamy.com'),
     // Por defecto, como si ya estuviera instalada: no se ofrece nada.
     servicioInstalacionProvider.overrideWithValue(
       instalacion ?? const InstalacionNoDisponible(),

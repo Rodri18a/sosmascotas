@@ -4,7 +4,7 @@
 // Privacidad: nadie recibe datos de quién publicó ni la ubicación exacta;
 // la distancia del aviso sale de la ubicación pública y se redondea.
 import { createClient } from 'npm:@supabase/supabase-js@2.117.2';
-import { cuentaFcm, enviarPush } from '../_shared/fcm.ts';
+import { type AppDeDispositivo, appsDeDispositivos, cuentaFcm, elegirDispositivos, enviarPush } from '../_shared/fcm.ts';
 import { textoDelAviso } from './texto.ts';
 
 const CORS = {
@@ -75,10 +75,21 @@ Deno.serve(async (req) => {
   const especie = (sos.species as { slug?: string } | null)?.slug ?? null;
   let dispositivos = 0;
   const invalidos: string[] = [];
-  for (const d of (destinatarios ?? []) as { distancia_m: number; tokens: string[] }[]) {
+  const lista = (destinatarios ?? []) as { distancia_m: number; tokens: string[] }[];
+  // Solo a los dispositivos de Huellamy, no a los de Comercios (D156).
+  let apps = new Map<string, AppDeDispositivo>();
+  try {
+    apps = await appsDeDispositivos(admin, lista.flatMap((d) => d.tokens));
+  } catch (e) {
+    console.error('No se pudo leer la app de los dispositivos', (e as Error).message);
+  }
+  for (const d of lista) {
     const texto = textoDelAviso(sos.kind, especie, sos.name, d.distancia_m);
+    const ruta = `/sos/${sosId}`;
+    const tokens = elegirDispositivos(d.tokens, apps, ruta);
+    if (tokens.length === 0) continue;
     try {
-      const r = await enviarPush(d.tokens, { titulo: texto.titulo, cuerpo: texto.cuerpo, ruta: `/sos/${sosId}` });
+      const r = await enviarPush(tokens, { titulo: texto.titulo, cuerpo: texto.cuerpo, ruta });
       dispositivos += r.enviados;
       invalidos.push(...r.tokensInvalidos);
     } catch (e) {

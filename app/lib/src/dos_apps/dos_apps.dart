@@ -15,11 +15,16 @@ import 'otra_app_otro.dart' if (dart.library.js_interop) 'otra_app_web.dart';
 /// comercios; desde ninguna de las dos se pasa a la otra.
 final esAppComercioProvider = Provider<bool>((_) => false);
 
-/// Dónde vive cada app en la web (mismo sitio: comparten la sesión).
-abstract final class DireccionesApps {
-  static const personas = '/';
-  static const comercios = '/comercios/';
-}
+/// Dirección de Huellamy Comercios en la web (D156: cada app en su
+/// subdominio, `comercios.huellamy.com` en producción). Llega con
+/// `COMERCIOS_URL` en `config/<entorno>.json`; vacía, no se ofrece abrirla.
+final urlComerciosProvider = Provider<String>(
+  (_) => const String.fromEnvironment('COMERCIOS_URL'),
+);
+
+/// Dirección completa de [ruta] (`/negocio…`) en Huellamy Comercios.
+String enComercios(String base, String ruta) =>
+    '${base.replaceAll(RegExp(r'/+$'), '')}$ruta';
 
 /// Abre la otra app (en la web, cambiando de dirección). `null` donde
 /// todavía no hay otra app instalable (Android y iPhone). Se reemplaza en las
@@ -41,7 +46,8 @@ Future<void> irAMiNegocio(
     return;
   }
   final t = context.t;
-  final abrir = ref.read(abrirOtraAppProvider);
+  final base = ref.read(urlComerciosProvider);
+  final abrir = base.isEmpty ? null : ref.read(abrirOtraAppProvider);
   ref.read(metricasProvider).track(Eventos.appComerciosAviso);
   final si = await showDialog<bool>(
     context: context,
@@ -67,7 +73,6 @@ Future<void> irAMiNegocio(
     ),
   );
   if (si == true && abrir != null) {
-    // Las rutas de la otra app cuelgan de su dirección: /comercios/negocio…
-    abrir('${DireccionesApps.comercios}${ruta.substring(1)}');
+    abrir(enComercios(base, ruta));
   }
 }

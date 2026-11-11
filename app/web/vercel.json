@@ -1,11 +1,10 @@
 {
   "rewrites": [
-    { "source": "/comercios/((?!.*\\.).*)", "destination": "/comercios/index.html" },
     { "source": "/((?!.*\\.).*)", "destination": "/index.html" }
   ],
   "headers": [
     {
-      "source": "/(comercios/)?(index.html|flutter_service_worker.js|flutter_bootstrap.js|firebase-messaging-sw.js|manifest.json)",
+      "source": "/(index.html|flutter_service_worker.js|flutter_bootstrap.js|firebase-messaging-sw.js|manifest.json)",
       "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
     }
   ]

@@ -740,6 +740,13 @@ def main():
              rest('DELETE', f'push_tokens?token=eq.{token}', quien=b)[1] == [])
         caso('no se aceptan plataformas inventadas',
              rest('POST', 'rpc/guardar_push_token', {'p_token': token, 'p_platform': 'tv'}, a)[0] >= 400)
+        caso('sin app, el dispositivo queda como de Huellamy (D156)',
+             [t['app'] for t in filas(rest('GET', 'push_tokens?select=app', quien=a))] == ['personas'])
+        caso('Huellamy Comercios guarda su dispositivo como de comercios',
+             rest('POST', 'rpc/guardar_push_token', {'p_token': token, 'p_platform': 'web', 'p_app': 'comercios'}, a)[0] in (200, 204)
+             and [t['app'] for t in filas(rest('GET', 'push_tokens?select=app', quien=a))] == ['comercios'])
+        caso('no se aceptan apps inventadas',
+             rest('POST', 'rpc/guardar_push_token', {'p_token': token, 'p_platform': 'web', 'p_app': 'otra'}, a)[0] >= 400)
         caso('celular compartido: si B ingresa en el mismo dispositivo, el token pasa a B',
              guardar(b) in (200, 204)
              and filas(rest('GET', 'push_tokens?select=token', quien=a)) == []

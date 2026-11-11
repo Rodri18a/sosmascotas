@@ -1,7 +1,7 @@
 // Prueba el envío sin red: clave RSA generada al vuelo y fetch simulado.
 // Correr con: npx deno test --allow-env supabase/functions/_shared/fcm_test.ts
 import { assert, assertEquals } from 'jsr:@std/assert@1.0.13';
-import { cuentaFcm, enviarPush } from './fcm.ts';
+import { cuentaFcm, elegirDispositivos, enviarPush } from './fcm.ts';
 
 Deno.test('firma el JWT, manda una push por token y detecta los tokens vencidos', async () => {
   const par = await crypto.subtle.generateKey(
@@ -54,4 +54,15 @@ Deno.test('firma el JWT, manda una push por token y detecta los tokens vencidos'
   } finally {
     globalThis.fetch = original;
   }
+});
+
+Deno.test('elige los dispositivos según la app (D156): sin avisos dobles', () => {
+  const apps = new Map([['p1', 'personas'], ['c1', 'comercios']] as const);
+  // Lo del negocio va a Huellamy Comercios…
+  assertEquals(elegirDispositivos(['p1', 'c1'], apps, '/negocio?seccion=pedidos'), ['c1']);
+  // …y si no activó los avisos ahí, a Huellamy (al tocarlo se abre Comercios).
+  assertEquals(elegirDispositivos(['p1', 'x'], apps, '/negocio/estadisticas/1'), ['p1', 'x']);
+  // Lo demás, solo a Huellamy; un token desconocido cuenta como de Huellamy.
+  assertEquals(elegirDispositivos(['p1', 'c1', 'x'], apps, '/sos/1'), ['p1', 'x']);
+  assertEquals(elegirDispositivos(['c1'], apps, '/pedidos'), []);
 });

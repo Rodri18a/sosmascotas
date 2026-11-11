@@ -3,7 +3,8 @@
     { "source": "/m/:codigo", "destination": "/m.html" },
     { "source": "/s/:id", "destination": "/s.html" },
     { "source": "/n/:id", "destination": "/n.html" },
-    { "source": "/h/:token", "destination": "/h.html" }
+    { "source": "/h/:token", "destination": "/h.html" },
+    { "source": "/unirme/:codigo", "destination": "/unirme.html" }
   ],
   "headers": [
     {

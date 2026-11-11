@@ -270,7 +270,7 @@ void main() {
     await _tocar(tester, find.text('¿Es tu negocio? Dalo de alta'));
     await _tocar(tester, find.text('Abrir Huellamy Comercios'));
     expect(abiertas, [
-      '/comercios/negocio/alta?rubro=trainer&lat=-34.72&lng=-55.95',
+      'https://comercios.huellamy.com/negocio/alta?rubro=trainer&lat=-34.72&lng=-55.95',
     ]);
   });
 
@@ -357,7 +357,7 @@ void main() {
 
     await _tocar(tester, find.text('Mi negocio'));
     await _tocar(tester, find.text('Abrir Huellamy Comercios'));
-    expect(abiertas, ['/comercios/negocio']);
+    expect(abiertas, ['https://comercios.huellamy.com/negocio']);
     expect(
       eventos.where((e) => e['name'] == 'business_app_prompt'),
       hasLength(2),

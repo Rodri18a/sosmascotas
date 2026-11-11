@@ -120,6 +120,46 @@ export async function enviarPush(tokens: string[], push: Push): Promise<Resultad
   return resultado;
 }
 
+/** De qué app es cada dispositivo (D156): `personas` o `comercios`. */
+export type AppDeDispositivo = 'personas' | 'comercios';
+
+/**
+ * Elige a qué dispositivos va una push (D156). Huellamy y Huellamy Comercios
+ * viven en direcciones distintas y cada una guarda su token, así que quien
+ * tiene las dos recibiría el aviso dos veces. Lo del negocio (`/negocio…`) va
+ * a los de Comercios y, si todavía no activó los avisos ahí, a los de
+ * Huellamy (al tocarlo se abre Comercios). Lo demás va solo a los de
+ * Huellamy. Un token sin app conocida cuenta como de Huellamy.
+ */
+export function elegirDispositivos(
+  tokens: string[],
+  apps: Map<string, AppDeDispositivo>,
+  ruta: string,
+): string[] {
+  const deComercios = (t: string) => apps.get(t) === 'comercios';
+  if (ruta.startsWith('/negocio')) {
+    const comercios = tokens.filter(deComercios);
+    return comercios.length > 0 ? comercios : tokens;
+  }
+  return tokens.filter((t) => !deComercios(t));
+}
+
+/** Lee de push_tokens a qué app pertenece cada token. */
+export async function appsDeDispositivos(
+  // deno-lint-ignore no-explicit-any
+  admin: { from: (tabla: string) => any },
+  tokens: string[],
+): Promise<Map<string, AppDeDispositivo>> {
+  const apps = new Map<string, AppDeDispositivo>();
+  if (tokens.length === 0) return apps;
+  const { data, error } = await admin.from('push_tokens').select('token, app').in('token', tokens);
+  if (error) throw new Error(error.message);
+  for (const fila of (data ?? []) as { token: string; app: AppDeDispositivo }[]) {
+    apps.set(fila.token, fila.app);
+  }
+  return apps;
+}
+
 /**
  * Manda la push a los dispositivos de una persona y borra de push_tokens los
  * que ya no existen. Nunca lanza: una push que no sale no debe romper el aviso
@@ -133,7 +173,9 @@ export async function avisarDispositivos(
 ): Promise<number> {
   if (tokens.length === 0 || !cuentaFcm()) return 0;
   try {
-    const r = await enviarPush(tokens, push);
+    const elegidos = elegirDispositivos(tokens, await appsDeDispositivos(admin, tokens), push.ruta);
+    if (elegidos.length === 0) return 0;
+    const r = await enviarPush(elegidos, push);
     if (r.tokensInvalidos.length > 0) {
       await admin.from('push_tokens').delete().in('token', r.tokensInvalidos);
     }
