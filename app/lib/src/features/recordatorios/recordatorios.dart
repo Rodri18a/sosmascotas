@@ -11,6 +11,7 @@ import '../../recordatorios/avisador.dart';
 import '../../recordatorios/recordatorios_repositorio.dart';
 import '../../router.dart';
 import '../../utiles/enlaces.dart';
+import '../../widgets/ilustracion.dart';
 import '../../widgets/volver.dart';
 
 /// "hoy a las 20:00", "mañana a las 8:00", "sáb., 24 oct. a las 9:30".
@@ -72,7 +73,13 @@ class TarjetaRecordatorios extends ConsumerWidget {
             switch (recordatorios) {
               AsyncData(value: final lista) when lista.isEmpty => Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(t.recordatoriosVacio),
+                child: Center(
+                  child: VacioIlustrado(
+                    Ilustracion.salud,
+                    t.recordatoriosVacio,
+                    alto: 100,
+                  ),
+                ),
               ),
               AsyncData(value: final lista) => Column(
                 children: [

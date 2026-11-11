@@ -5,8 +5,8 @@ import '../../l10n/l10n.dart';
 
 /// Logo de Huellamy (D146).
 ///
-/// Vertical (pantallas de bienvenida): el logo ilustrado con Ami y Michi
-/// (`assets/marca/logo.jpg`) y la frase debajo. [horizontal] (cabeceras y
+/// Vertical (pantallas de bienvenida): el logo ilustrado con Ami y Mishi
+/// (`assets/marca/logo.png`) y la frase debajo. [horizontal] (cabeceras y
 /// menú): el isotipo a la izquierda y «Huellamy» en letras, «Huell» en azul
 /// profundo y «amy» en azul brillante. Con [tinta], todo de un solo color.
 class LogoHuellamy extends StatelessWidget {
@@ -18,8 +18,9 @@ class LogoHuellamy extends StatelessWidget {
     super.key,
   });
 
-  /// Logo ilustrado. Tiene fondo blanco (no hay versión transparente).
-  static const imagen = 'assets/marca/logo.jpg';
+  /// Logo ilustrado, con fondo transparente (D157,
+  /// `tool/recortar_ilustraciones.dart`).
+  static const imagen = 'assets/marca/logo.png';
 
   final bool horizontal;
   final bool conFrase;
@@ -52,14 +53,11 @@ class LogoHuellamy extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(alto * 0.8),
-              child: Image.asset(
-                imagen,
-                width: alto * 5,
-                height: alto * 5,
-                fit: BoxFit.cover,
-              ),
+            Image.asset(
+              imagen,
+              width: alto * 5,
+              height: alto * 5,
+              fit: BoxFit.contain,
             ),
             if (conFrase) ...[SizedBox(height: alto * 0.3), frase],
           ],

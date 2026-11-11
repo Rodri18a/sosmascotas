@@ -1,6 +1,6 @@
 # Huellamy en 2 minutos
 
-> Desde el 09/11/2026 la marca es **Huellamy**, con sus mascotas Ami y Michi (D146; antes Huellitas, D126, y SOS Mascotas). Los nombres técnicos del proyecto siguen como `sosmascota` hasta decidir el dominio. Guía: [23 · Guía visual](23-guia-visual.md).
+> Desde el 09/11/2026 la marca es **Huellamy**, con sus mascotas Ami y Mishi (D146; antes Huellitas, D126, y SOS Mascotas). Los nombres técnicos del proyecto siguen como `sosmascota` hasta decidir el dominio. Guía: [23 · Guía visual](23-guia-visual.md).
 
 <div id="estado">Cargando el progreso…</div>
 

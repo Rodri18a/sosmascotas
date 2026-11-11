@@ -10,6 +10,7 @@ import '../../mascotas/mascotas_repositorio.dart';
 import '../../metricas/metricas.dart';
 import '../../push/control_push.dart';
 import '../../widgets/boton_ayuda.dart';
+import '../../widgets/ilustracion.dart';
 import '../../widgets/volver.dart';
 
 /// Bandeja "Avisos": lo que dejaron quienes encontraron o vieron a tu mascota.
@@ -66,7 +67,10 @@ class _AvisosScreenState extends ConsumerState<AvisosScreen> {
               if (lista.isEmpty)
                 Padding(
                   padding: const EdgeInsets.only(top: 32),
-                  child: Text(t.avisosVacio, textAlign: TextAlign.center),
+                  child: VacioIlustrado(
+                    Ilustracion.amiSaludando,
+                    t.avisosVacio,
+                  ),
                 )
               else
                 for (final aviso in lista) _TarjetaAviso(aviso: aviso),

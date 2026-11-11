@@ -45,7 +45,7 @@ body {
   background: var(--fondo);
 }
 main { max-width: 520px; margin: 0 auto; padding: 16px 16px 48px; }
-.logo-ilustrado { display: block; margin: 0 auto 16px; width: 240px; height: auto; border-radius: 28px; }
+.logo-ilustrado { display: block; margin: 0 auto 16px; width: 240px; height: auto; }
 header.marca { display: flex; align-items: center; gap: 8px; font-size: 20px; color: var(--primario); font-family: "Nunito", sans-serif; font-weight: 900; margin-bottom: 12px; }
 .tarjeta { background: var(--tarjeta); border: 1px solid var(--borde); border-radius: 16px; padding: 16px; margin-bottom: 16px; }
 .foto { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 12px; background: var(--primario-claro); display: block; }

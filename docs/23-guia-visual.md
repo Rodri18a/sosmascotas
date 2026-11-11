@@ -1,25 +1,25 @@
 # 23 · Guía visual de Huellamy (look and feel)
 
-> **Desde el 09/11/2026 la marca es Huellamy (D146)**, con sus mascotas **Ami** (perrito shiba, collar azul) y **Michi** (gatita, collar rosa). Reemplaza a Huellitas (D126). La guía del dueño, con personalidad, poses y el prompt para generar más imágenes, está en [`guias/huellamy/guia-de-marca-e-iconografia.md`](guias/huellamy/guia-de-marca-e-iconografia.md) y el logo original en `guias/huellamy/logo-huellamy.png`. Esta página es la referencia para **dibujar y programar**: logo, ícono, colores, tipografía, íconos, pines, componentes y tono.
+> **Desde el 09/11/2026 la marca es Huellamy (D146)**, con sus mascotas **Ami** (perrito shiba, collar azul) y **Mishi** (gatita, collar rosa). Reemplaza a Huellitas (D126). La guía del dueño, con personalidad, poses y el prompt para generar más imágenes, está en [`guias/huellamy/guia-de-marca-e-iconografia.md`](guias/huellamy/guia-de-marca-e-iconografia.md) y el logo original en `guias/huellamy/logo-huellamy.png`. Esta página es la referencia para **dibujar y programar**: logo, ícono, colores, tipografía, íconos, pines, componentes y tono.
 > Si cambia algo de esta guía, actualizar también el brief del diseñador ([20](20-brief-logo-iconos.md)) y anotar la decisión en [12](12-decisiones.md).
 
 ## 1. La idea en una línea
 
-**Huellamy es un lugar para quienes aman a los animales:** cálida, alegre, cercana y familiar. La huella es el vínculo y las mascotas (Ami y Michi) son los guías. Amistosa y simple, sin infantilizar, y confiable cuando hay una urgencia.
+**Huellamy es un lugar para quienes aman a los animales:** cálida, alegre, cercana y familiar. La huella es el vínculo y las mascotas (Ami y Mishi) son los guías. Amistosa y simple, sin infantilizar, y confiable cuando hay una urgencia.
 
 | Se siente | No se siente |
 |---|---|
 | Cálida, alegre, de barrio | Infantil |
 | Simple y clara | Recargada |
 | Confiable con los datos | Fría o de clínica |
-| Calma en una urgencia | Alarmista (Ami y Michi nunca asustan) |
+| Calma en una urgencia | Alarmista (Ami y Mishi nunca asustan) |
 | Para perros y gatos (primera versión, D149) | Cerrada a otras mascotas en el futuro |
 
 ## 2. Ícono y logo
 
 | Pieza | Cómo es | Dónde |
 |---|---|---|
-| **Logo ilustrado** | Ami y Michi saludando sobre «Huellamy» («Huell» azul profundo, «amy» azul brillante, la «a» es una huella). Solo hay versión con **fondo blanco**: va en un recuadro redondeado | Ingreso, pantalla de carga, inicio de la web pública (`app/assets/marca/logo.jpg`, `app/web/icons/logo.jpg`, `web-publica/assets/logo.jpg`) |
+| **Logo ilustrado** | Ami y Mishi saludando sobre «Huellamy» («Huell» azul profundo, «amy» azul brillante, la «a» es una huella). Con **fondo transparente** (D157), sin recuadro | Ingreso, pantalla de carga, inicio de la web pública (`app/assets/marca/logo.png`, `app/web/icons/logo.png`, `web-publica/assets/logo.png`) |
 | **Isotipo** | **Huella azul profundo `#0B4F94` sobre una mancha redonda celeste `#BFE3FA`**, dibujado en código | Menú ☰, portal, PDF, favicon |
 | **Ícono de la app de personas** | La huella azul profundo sobre fondo celeste | Web, Android, iPhone |
 | **Ícono de Huellamy Comercios** | Al revés: huella blanca sobre azul profundo | `web_comercios/` |
@@ -74,7 +74,7 @@ Igual que la de personas, con la **marca también en azul profundo** `#0B4F94` (
 
 Para ilustraciones, campañas, insignias y tarjetas de noticias. **Nunca** como color de texto ni con letras blancas: van de relleno con texto azul noche encima. Proporción sugerida: 60 % blanco y celeste, 25 % azules, 15 % acentos.
 
-| Celeste | Naranja Ami | Crema | Gris lila Michi | Rosa (favoritos, «me gusta») | Amarillo (destellos) | Marrón (contorno de las mascotas) |
+| Celeste | Naranja Ami | Crema | Gris lila Mishi | Rosa (favoritos, «me gusta») | Amarillo (destellos) | Marrón (contorno de las mascotas) |
 |---|---|---|---|---|---|---|
 | `#BFE3FA` | `#E8923A` | `#FFF1DC` | `#A59BA6` | `#F28B8B` | `#FBC02D` | `#4A2418` |
 
@@ -133,15 +133,28 @@ Se distinguen también por luminosidad (daltonismo), son gotas con la punta en e
 
 ## 7. Ilustraciones y fotos
 
-- **Ami y Michi** acompañan los momentos de la app (⏳ falta generar las poses con el prompt de la guía de marca, §8):
+- **Ami y Mishi** acompañan los momentos de la app. Desde el 11/11/2026 (D157) hay 8 ilustraciones recortadas de las láminas de `guias/huellamy/` con `app/tool/recortar_ilustraciones.dart` (fondo transparente), en `app/assets/ilustraciones/`, y se usan con `ImagenIlustracion` / `VacioIlustrado` (`app/lib/src/widgets/ilustracion.dart`):
+
+| Ilustración | Dónde está |
+|---|---|
+| Ami saludando | Avisos vacíos |
+| Mishi festejando | Tarjeta «Tus huellas» |
+| Mishi jugando con la pluma | Mascotas vacías |
+| Ami paseando | Mis cuidados (paseos, guardería, estadías) vacíos |
+| Salud (calendario) | Libreta, recordatorios y Mis turnos vacíos |
+| Comunidad | Comunidad, Preguntas y Conversaciones vacías |
+| Tienda (carrito) | Mis pedidos y catálogo vacíos |
+| Ami y Mishi juntos | Disponible (sin uso todavía) |
+
+- ⏳ Faltan poses para cargando, éxito con los dos y error (Ami con orejas caídas, Mishi tapándose los ojos): generarlas con el prompt de la guía de marca (§8) y sumarlas a la herramienta. Momentos que se buscan:
 
 | Momento | Mascota y pose |
 |---|---|
-| Bienvenida | Ami saludando con la patita; Michi asomada |
-| Pantalla vacía | Michi curiosa, con cara de duda |
+| Bienvenida | Ami saludando con la patita; Mishi asomada |
+| Pantalla vacía | Mishi curiosa, con cara de duda |
 | Cargando | Ami corriendo o moviendo la cola |
 | Éxito / publicación hecha | Los dos celebrando, con destellos amarillos |
-| Error / sin conexión | Ami con orejas caídas; Michi tapándose los ojos (tierno, nunca alarmante) |
+| Error / sin conexión | Ami con orejas caídas; Mishi tapándose los ojos (tierno, nunca alarmante) |
 | Perfil y logros | Insignias con chapitas azules y rosas |
 
 - Estilo de las ilustraciones: chibi, contorno marrón oscuro grueso, cabeza grande y cuerpo chico, fondo de manchas celestes. Personajes nuevos: de a uno, con un collar de color propio y una función concreta.
@@ -170,7 +183,8 @@ Se distinguen también por luminosidad (daltonismo), son gotas con la punta en e
 | Qué | Archivo |
 |---|---|
 | Paleta, tema e isotipo (app y portal) | `packages/core/lib/src/tema/` (`paleta.dart`, `app_theme.dart`, `isotipo.dart`) |
-| Logo con textos (`LogoHuellamy`) e imagen del logo | `app/lib/src/widgets/logo.dart`, `app/assets/marca/logo.jpg` |
+| Logo con textos (`LogoHuellamy`) e imagen del logo | `app/lib/src/widgets/logo.dart`, `app/assets/marca/logo.png` |
+| Ilustraciones de Ami y Mishi | `app/assets/ilustraciones/` (se recortan con `dart run tool/recortar_ilustraciones.dart` desde `app/`), `app/lib/src/widgets/ilustracion.dart` |
 | Íconos de la app (web, favicon, Android, iPhone, PDF, web pública) | Se generan con `flutter test tool/iconos_marca_test.dart` desde `app/` |
 | Colores de los pines | `coloresPin` en `app/lib/src/mapa/mapa_vista.dart` |
 | Web pública | `web-publica/assets/estilo.css` |

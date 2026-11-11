@@ -17,6 +17,7 @@ import '../../metricas/metricas.dart';
 import '../../router.dart';
 import '../../utiles/descargar.dart';
 import '../../utiles/enlaces.dart';
+import '../../widgets/ilustracion.dart';
 import '../../widgets/volver.dart';
 import '../historial/historial.dart';
 
@@ -57,7 +58,13 @@ class TarjetaLibreta extends ConsumerWidget {
             switch (libreta) {
               AsyncData(value: final grupos) when grupos.isEmpty => Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(t.libretaVacia),
+                child: Center(
+                  child: VacioIlustrado(
+                    Ilustracion.salud,
+                    t.libretaVacia,
+                    alto: 100,
+                  ),
+                ),
               ),
               AsyncData(value: final grupos) => _Registros(
                 mascotaId: mascotaId,

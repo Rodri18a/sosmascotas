@@ -12,7 +12,7 @@
   - [Habilitación gradual de funcionalidades](15-funcionalidades-graduales.md)
   - [Brief de identidad visual](14-brief-identidad-visual.md)
   - [Guía visual de Huellamy (look and feel)](23-guia-visual.md)
-  - [Guía de marca Huellamy (Ami y Michi)](guias/huellamy/guia-de-marca-e-iconografia.md)
+  - [Guía de marca Huellamy (Ami y Mishi)](guias/huellamy/guia-de-marca-e-iconografia.md)
   - [Brief de logo e íconos (diseñador)](20-brief-logo-iconos.md)
   - [Brief de identidad · HUELLITAS (exploración, reemplazada por Huellamy)](21-brief-huellitas.md)
   - [Ideas para el futuro](16-ideas-futuras.md)

@@ -12,6 +12,7 @@ import '../../metricas/metricas.dart';
 import '../../router.dart';
 import '../../utiles/enlaces.dart';
 import '../../widgets/boton_ayuda.dart';
+import '../../widgets/ilustracion.dart';
 import '../../widgets/volver.dart';
 
 String textoTipoCuidado(AppLocalizations t, TipoCuidado x) => switch (x) {
@@ -419,7 +420,9 @@ class MisCuidadosScreen extends ConsumerWidget {
         child: switch (ref.watch(misCuidadosProvider)) {
           AsyncData(value: final lista) when lista.isEmpty => ListView(
             padding: const EdgeInsets.all(24),
-            children: [Text(t.misCuidadosVacio, textAlign: TextAlign.center)],
+            children: [
+              VacioIlustrado(Ilustracion.amiPaseando, t.misCuidadosVacio),
+            ],
           ),
           AsyncData(value: final lista) => ListView(
             padding: const EdgeInsets.all(8),

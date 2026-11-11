@@ -12,6 +12,7 @@ import '../../router.dart';
 import '../../tienda/tienda_repositorio.dart';
 import '../../utiles/enlaces.dart';
 import '../../widgets/boton_ayuda.dart';
+import '../../widgets/ilustracion.dart';
 import '../../widgets/volver.dart';
 import '../chat/chat_screen.dart';
 import 'pedidos.dart';
@@ -41,7 +42,7 @@ class CatalogoScreen extends ConsumerWidget {
         AsyncData(value: final lista) when lista.isEmpty => Center(
           child: Padding(
             padding: const EdgeInsets.all(24),
-            child: Text(t.catalogoVacio, textAlign: TextAlign.center),
+            child: VacioIlustrado(Ilustracion.tienda, t.catalogoVacio),
           ),
         ),
         AsyncData(value: final lista) => ListView(
@@ -709,7 +710,7 @@ class MisPedidosScreen extends ConsumerWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.all(32),
-                child: Text(t.misPedidosVacio, textAlign: TextAlign.center),
+                child: VacioIlustrado(Ilustracion.tienda, t.misPedidosVacio),
               ),
             ],
           ),

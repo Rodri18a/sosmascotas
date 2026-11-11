@@ -19,6 +19,7 @@ import '../../recorrido/recorrido.dart';
 import '../../router.dart';
 import '../../utiles/enlaces.dart';
 import '../../widgets/boton_ayuda.dart';
+import '../../widgets/ilustracion.dart';
 import '../../widgets/volver.dart';
 import '../adopcion/acceso_adopcion.dart';
 import '../comunidad/comunidad_screen.dart';
@@ -290,7 +291,7 @@ class ListaNovedades extends ConsumerWidget {
         if (todas.isEmpty) {
           return Padding(
             padding: const EdgeInsets.all(32),
-            child: Text(t.comunidadVacio, textAlign: TextAlign.center),
+            child: VacioIlustrado(Ilustracion.comunidad, t.comunidadVacio),
           );
         }
         final lista = limite == null ? todas : todas.take(limite).toList();

@@ -12,6 +12,7 @@ import '../../metricas/metricas.dart';
 import '../../recorrido/recorrido.dart';
 import '../../router.dart';
 import '../../widgets/boton_ayuda.dart';
+import '../../widgets/ilustracion.dart';
 import '../../widgets/volver.dart';
 import '../noticias/tarjeta_promocion.dart';
 import 'comunidad_screen.dart' show textoErrorComunidad;
@@ -175,9 +176,9 @@ class _PreguntasScreenState extends ConsumerState<PreguntasScreen> {
             switch (lista) {
               AsyncData(value: final ps) when ps.isEmpty => Padding(
                 padding: const EdgeInsets.all(32),
-                child: Text(
+                child: VacioIlustrado(
+                  Ilustracion.comunidad,
                   _texto.isEmpty ? t.preguntasVacio : t.preguntasSinResultados,
-                  textAlign: TextAlign.center,
                 ),
               ),
               AsyncData(value: final ps) => Column(

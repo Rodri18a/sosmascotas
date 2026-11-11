@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../l10n/l10n.dart';
+import 'ilustracion.dart';
 
 /// Contenido provisorio de una pantalla que todavía no está hecha.
 class EnConstruccion extends StatelessWidget {
@@ -10,18 +11,22 @@ class EnConstruccion extends StatelessWidget {
     required String this.paso,
     this.accion,
     super.key,
-  });
+  }) : ilustracion = null;
 
   /// Estado vacío (pantalla hecha, pero sin contenido todavía).
   const EnConstruccion.vacio({
     required this.icono,
     required this.descripcion,
     this.accion,
+    this.ilustracion,
     super.key,
   }) : paso = null;
 
   final IconData icono;
   final String descripcion;
+
+  /// Dibujo de Ami o Mishi en lugar del ícono (D157).
+  final Ilustracion? ilustracion;
 
   /// Paso de `PROGRESO.md` en el que se construye esta pantalla.
   final String? paso;
@@ -39,7 +44,10 @@ class EnConstruccion extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icono, size: 64, color: tema.colorScheme.primary),
+            if (ilustracion case final ilustracion?)
+              ImagenIlustracion(ilustracion, alto: 160)
+            else
+              Icon(icono, size: 64, color: tema.colorScheme.primary),
             const SizedBox(height: 16),
             Text(
               descripcion,

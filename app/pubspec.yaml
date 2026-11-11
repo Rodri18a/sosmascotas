@@ -46,6 +46,7 @@ flutter:
   assets:
     - assets/legal/
     - assets/marca/
+    - assets/ilustraciones/
   # Tipografías de la identidad Cielo (D62), licencia OFL (ver assets/fuentes/).
   fonts:
     - family: Nunito

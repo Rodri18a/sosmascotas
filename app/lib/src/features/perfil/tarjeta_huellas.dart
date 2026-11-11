@@ -5,6 +5,7 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 import '../../../l10n/l10n.dart';
 import '../../cuenta/huellas_repositorio.dart';
 import '../../metricas/metricas.dart';
+import '../../widgets/ilustracion.dart';
 
 (String, String, String) _textos(AppLocalizations t, Insignia i) => switch (i) {
   Insignia.perfil => ('🐾', t.huellaPerfil, t.huellaPerfilComo),
@@ -44,10 +45,31 @@ class _TarjetaHuellasState extends ConsumerState<TarjetaHuellas> {
           AsyncData(value: final h) => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(t.huellasTitulo, style: tema.textTheme.titleMedium),
-              const SizedBox(height: 4),
-              Text(
-                h.ayudas == 0 ? t.huellasSinAyudas : t.huellasAyudas(h.ayudas),
+              Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          t.huellasTitulo,
+                          style: tema.textTheme.titleMedium,
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          h.ayudas == 0
+                              ? t.huellasSinAyudas
+                              : t.huellasAyudas(h.ayudas),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  const ImagenIlustracion(
+                    Ilustracion.mishiFestejando,
+                    alto: 72,
+                  ),
+                ],
               ),
               const SizedBox(height: 12),
               for (final i in Insignia.values)

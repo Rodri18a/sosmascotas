@@ -21,6 +21,7 @@ import '../../router.dart';
 import '../../widgets/boton_ayuda.dart';
 import '../../widgets/en_construccion.dart';
 import '../../widgets/foto_mascota.dart';
+import '../../widgets/ilustracion.dart';
 import '../menu/menu_principal.dart';
 import 'pasar_mascota.dart';
 
@@ -51,11 +52,13 @@ class MascotasScreen extends ConsumerWidget {
       _ when !conectado => EnConstruccion.vacio(
         icono: Icons.pets_outlined,
         descripcion: t.mascotasDescripcion,
+        ilustracion: Ilustracion.mishiJugando,
         accion: agregar(),
       ),
       AsyncData(value: final lista) when lista.isEmpty => EnConstruccion.vacio(
         icono: Icons.pets_outlined,
         descripcion: t.mascotasVacio,
+        ilustracion: Ilustracion.mishiJugando,
         accion: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

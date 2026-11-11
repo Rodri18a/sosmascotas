@@ -46,7 +46,7 @@ sed -i \
   -e 's#<title>Huellamy</title>#<title>Huellamy Comercios</title>#' \
   -e 's#content="Huellamy">#content="Huellamy Comercios">#' \
   -e 's#aria-label="Cargando Huellamy"#aria-label="Cargando Huellamy Comercios"#' \
-  -e 's#<img class="logo ilustrado" src="icons/logo.jpg" alt="Huellamy">#<img class="logo" src="icons/isotipo.png" alt=""><div class="nombre">Huellamy Comercios</div>#' \
+  -e 's#<img class="logo ilustrado" src="icons/logo.png" alt="Huellamy">#<img class="logo" src="icons/isotipo.png" alt=""><div class="nombre">Huellamy Comercios</div>#' \
   "$destino/index.html"
 grep -q "Huellamy Comercios</title>" "$destino/index.html" || { echo "No se pudo poner el nombre de Comercios en index.html" >&2; exit 1; }
 echo "✅ build/web (Huellamy) y build/web_comercios (Huellamy Comercios) listos"

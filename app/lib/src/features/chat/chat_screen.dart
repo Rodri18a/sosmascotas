@@ -14,6 +14,7 @@ import '../../router.dart';
 import '../../ubicacion/mi_posicion.dart';
 import '../../utiles/enlaces.dart';
 import '../../widgets/boton_ayuda.dart';
+import '../../widgets/ilustracion.dart';
 import '../../widgets/volver.dart';
 import '../recordatorios/recordatorios.dart';
 
@@ -55,7 +56,9 @@ class ConversacionesScreen extends ConsumerWidget {
       body: switch (conversaciones) {
         AsyncData(value: final lista) when lista.isEmpty => Padding(
           padding: const EdgeInsets.all(24),
-          child: Center(child: Text(t.chatVacio, textAlign: TextAlign.center)),
+          child: Center(
+            child: VacioIlustrado(Ilustracion.comunidad, t.chatVacio),
+          ),
         ),
         AsyncData(value: final lista) => RefreshIndicator(
           onRefresh: () => ref.refresh(conversacionesProvider.future),
