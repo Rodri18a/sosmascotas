@@ -30,7 +30,7 @@
 | Recordatorios | Notificaciones locales (`flutter_local_notifications` o similar) |
 | Mapa móvil | `google_maps_flutter` (mapa nativo) |
 | Mapa web | `flutter_map` / MapLibre con teselas de OpenStreetMap a través de un proveedor con plan gratis |
-| Hosting web | Cloudflare Pages o Vercel (verificar condiciones de uso comercial) |
+| Hosting web | Vercel (app, Comercios, portal y web pública; direcciones en «Dominios», D156) |
 | Pagos (Fase 4) | Mercado Pago |
 | Suscripciones de usuarios (Fase 2) | Compras dentro de la app (Google Play / App Store) |
 
@@ -75,19 +75,33 @@ sosmascotas/
 
 **Control:** alerta de presupuesto y tope diario de cuota en Google Cloud. Si se llega al tope, mostrar la **lista** en lugar del mapa.
 
+## Dominios (D156)
+
+| Dirección | Qué hay | Proyecto |
+|---|---|---|
+| `huellamy.com` | Landing de la marca con formulario de contacto + páginas públicas (`/m/`, `/s/`, `/n/`, `/h/`). Es la `PUBLIC_BASE_URL`: los enlaces de las chapitas QR y los SOS **no cambian nunca** | `web-publica/` |
+| `app.huellamy.com` | Huellamy, app de dueños (PWA) | `app/`, `lib/main.dart` |
+| `comercios.huellamy.com` | Huellamy Comercios (PWA) | `app/`, `lib/main_comercio.dart` |
+| `admin.huellamy.com` | Portal de administración (no indexable) | `admin/` |
+
+- Todo en Vercel; los DNS están en Hostinger (D155), que también da el correo `soporte@huellamy.com`.
+- Cada app en la raíz de su subdominio, con su manifest e íconos. Son orígenes distintos: la sesión no se comparte (misma cuenta, se ingresa en cada una, D143).
+- Supabase Auth y Google tienen que tener las cuatro direcciones como orígenes o redirecciones permitidas (`configurar_auth.py`).
+
 ## Web pública (`web-publica/`)
 
 Páginas livianas en **HTML + JavaScript sin frameworks** (cargan rápido en cualquier celular, sin instalar nada):
 
 | Ruta | Archivo | Qué muestra |
 |---|---|---|
+| `/` | `index.html` | Landing de Huellamy (D156): qué es, para dueños y para comercios, enlaces a `app.` y `comercios.`, y formulario de contacto (tabla con RLS, solo insertar). *Pendiente: 0.8.6d* |
 | `/m/<código>` | `m.html` + `assets/qr.js` | Página del QR: foto, nombre, especie/raza, señas, nota del dueño, si tiene chip, "Estoy perdido 🆘" y **"Avisar a mi familia"** (contacto inverso) |
 | `/s/<id>` | `s.html` + `assets/sos.js` | Página pública de un SOS para compartir: fotos, datos, zona aproximada (enlace a Google Maps) y "Avisar a su familia" (mismo formulario que el QR, `assets/aviso.js`) |
 | `/n/<id>` | `n.html` + `assets/negocio.js` | Página pública de un comercio **Plus** (2.10b, D90): fotos, rubro, insignias, "abierto ahora", promoción, contactos públicos, "Cómo llegar", servicios y productos con "Consultar" por WhatsApp, y horario. Datos con `pagina_comercio()`; registra `business_page_open`. La vista previa al compartir es genérica (sin el nombre del comercio) hasta tener dominio propio, P25 |
 
 - Datos: funciones RPC públicas (`public_pet_page`) que devuelven solo lo pensado para quien encuentra a la mascota.
 - Seguridad: todo el texto se inserta con `textContent` (nunca HTML), CSP estricta, `_headers` con `X-Frame-Options: DENY`.
-- Hosting: Cloudflare Pages (`_redirects` reescribe `/m/*` y `/s/*`). Local: `python3 web-publica/servir.py` → `http://localhost:3002`.
+- Hosting: Vercel en `huellamy.com` (reglas en `vercel.json`; `_redirects` y `_headers` quedan por si se vuelve a Cloudflare Pages). Local: `python3 web-publica/servir.py` → `http://localhost:3002`.
 - Configuración en `web-publica/config.js` (ignorado por git; copiar de `config.example.js`).
 
 ## Edge Functions
