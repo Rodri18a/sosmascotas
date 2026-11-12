@@ -158,6 +158,52 @@ class RepoFalso implements AdminRepositorio {
   Future<void> guardarProspecto(Prospecto prospecto) async =>
       prospectosGuardados.add(prospecto);
 
+  final estadosContacto = <(String, String)>[];
+  var contactosLanding = <ContactoLanding>[
+    ContactoLanding(
+      id: 'c1',
+      tipo: 'business',
+      nombre: 'Laura',
+      correo: 'laura@vetepando.uy',
+      comercio: 'Veterinaria del Centro',
+      mensaje: 'Quiero sumar la veterinaria',
+      estado: 'new',
+      creado: DateTime(2026, 11, 12, 10),
+    ),
+    ContactoLanding(
+      id: 'c2',
+      tipo: 'owner',
+      nombre: 'Pedro',
+      correo: 'pedro@correo.uy',
+      mensaje: 'Una consulta vieja',
+      estado: 'archived',
+      creado: DateTime(2026, 11, 1, 9),
+    ),
+  ];
+
+  @override
+  Future<List<ContactoLanding>> contactos() async => contactosLanding;
+
+  @override
+  Future<void> estadoContacto(String id, String estado) async {
+    estadosContacto.add((id, estado));
+    contactosLanding = [
+      for (final c in contactosLanding)
+        c.id == id
+            ? ContactoLanding(
+                id: c.id,
+                tipo: c.tipo,
+                nombre: c.nombre,
+                correo: c.correo,
+                comercio: c.comercio,
+                mensaje: c.mensaje,
+                estado: estado,
+                creado: c.creado,
+              )
+            : c,
+    ];
+  }
+
   @override
   Future<List<EntradaAyuda>> ayuda() async => const [];
 
@@ -1132,6 +1178,49 @@ void main() {
     await _tocar(tester, find.text('Guardar'));
     expect(repo.prospectosGuardados.single.nombre, 'Peluquería Canina Pando');
     expect(repo.prospectosGuardados.single.toJson()['stage'], 'prospect');
+  });
+
+  testWidgets('contactos de la landing: un comercio pasa a prospectos', (
+    tester,
+  ) async {
+    _pantallaGrande(tester);
+    final repo = RepoFalso();
+    await tester.pumpWidget(
+      _portal(sesion: SesionFalsa('admin@x.uy'), repo: repo),
+    );
+    await tester.pumpAndSettle();
+    await _tocar(tester, find.text('Contactos'));
+    expect(find.text('Nuevos: 1'), findsOneWidget);
+    expect(find.text('Una consulta vieja'), findsNothing);
+    expect(
+      find.text('Comercio · Laura · Veterinaria del Centro'),
+      findsOneWidget,
+    );
+
+    await _tocar(tester, find.text('Pasar a prospectos'));
+    final prospecto = repo.prospectosGuardados.single;
+    expect(prospecto.nombre, 'Veterinaria del Centro');
+    expect(prospecto.contacto, 'Laura · laura@vetepando.uy');
+    expect(prospecto.toJson()['stage'], 'contacted');
+    expect(repo.estadosContacto.single, ('c1', 'answered'));
+    expect(find.text('Nuevos: 0'), findsOneWidget);
+
+    await _tocar(tester, find.text('Archivados: 1'));
+    expect(find.text('Una consulta vieja'), findsOneWidget);
+    await _tocar(tester, find.text('Volver a nuevo'));
+    expect(repo.estadosContacto.last, ('c2', 'new'));
+  });
+
+  testWidgets('ventas ve los contactos de la landing', (tester) async {
+    _pantallaGrande(tester);
+    await tester.pumpWidget(
+      _portal(
+        sesion: SesionFalsa('ventas@x.uy'),
+        repo: RepoFalso(rol: 'sales'),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('Contactos'), findsWidgets);
   });
 
   testWidgets('Ayuda: cargar un refugio con el enlace de adopciones', (

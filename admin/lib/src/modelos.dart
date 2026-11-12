@@ -185,6 +185,54 @@ class Prospecto {
       t == null || t.trim().isEmpty ? null : t.trim();
 }
 
+/// Mensaje del formulario de la landing (0.8.6d, D158).
+class ContactoLanding {
+  const ContactoLanding({
+    required this.id,
+    required this.tipo,
+    required this.nombre,
+    required this.correo,
+    required this.mensaje,
+    required this.estado,
+    required this.creado,
+    this.comercio,
+  });
+
+  factory ContactoLanding.fromJson(Map<String, Object?> json) =>
+      ContactoLanding(
+        id: json['id']! as String,
+        tipo: json['kind']! as String,
+        nombre: json['name']! as String,
+        correo: json['email']! as String,
+        comercio: json['business'] as String?,
+        mensaje: json['message']! as String,
+        estado: json['status']! as String,
+        creado: DateTime.parse(json['created_at']! as String).toLocal(),
+      );
+
+  final String id;
+
+  /// `owner`, `business` u `other`.
+  final String tipo;
+  final String nombre;
+  final String correo;
+  final String? comercio;
+  final String mensaje;
+
+  /// `new`, `answered` o `archived`.
+  final String estado;
+  final DateTime creado;
+
+  /// Para pasarlo al embudo de ventas: el comercio entra como contactado.
+  Prospecto comoProspecto() => Prospecto(
+    id: '',
+    nombre: (comercio?.trim().isNotEmpty ?? false) ? comercio!.trim() : nombre,
+    contacto: '$nombre · $correo',
+    etapa: 'contacted',
+    notas: 'Desde la landing: $mensaje',
+  );
+}
+
 /// Una entrada del directorio de Ayuda (1.8.8).
 class EntradaAyuda {
   const EntradaAyuda({

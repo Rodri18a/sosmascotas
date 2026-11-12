@@ -104,3 +104,56 @@ h3 { font-size: 15px; margin: 12px 0 4px; color: var(--primario); }
 .adjuntos { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
 .adjunto { color: var(--primario); font-weight: 600; }
 .adjunto img { width: 96px; height: 96px; object-fit: cover; border-radius: 8px; display: block; }
+
+/* Landing de huellamy.com (0.8.6d, D156): más ancha que las otras páginas. */
+.barra-landing { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 16px; background: var(--tarjeta); border-bottom: 1px solid var(--borde); }
+.barra-landing .marca { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--primario); font-family: "Nunito", sans-serif; font-weight: 900; font-size: 20px; }
+.barra-landing nav { display: flex; gap: 16px; }
+.barra-landing nav a { color: var(--texto); text-decoration: none; font-weight: 600; font-size: 15px; }
+.landing-main { max-width: 1040px; padding: 24px 16px 32px; }
+.portada { display: grid; gap: 16px; align-items: center; padding: 16px 0 32px; }
+.portada h1 { font-size: 36px; line-height: 1.15; margin: 4px 0 12px; color: var(--primario); }
+.sobretitulo { margin: 0; font-weight: 700; color: var(--acento); text-transform: uppercase; letter-spacing: .04em; font-size: 14px; }
+.bajada { color: var(--suave); margin: 0 0 16px; }
+.botones-portada { display: grid; gap: 8px; }
+.botones-portada .boton.secundario { margin-top: 0; }
+.logo-portada { width: 100%; max-width: 320px; height: auto; justify-self: center; }
+.bloque { padding: 24px 0; border-top: 1px solid var(--borde); }
+.bloque > h2 { font-size: 28px; color: var(--primario); }
+.grilla { display: grid; gap: 12px; }
+.grilla .tarjeta { margin: 0; }
+.grilla h3 { font-family: "Nunito", sans-serif; font-weight: 800; font-size: 18px; color: var(--texto); margin: 0 0 4px; }
+.grilla p { margin: 0; color: var(--suave); }
+.tarjeta.destacada { background: var(--primario-claro); border-color: var(--primario); }
+.ilustracion { display: block; width: 100%; max-width: 360px; height: auto; margin: 20px auto 0; }
+.contacto form { max-width: 560px; }
+.tipos { border: 0; padding: 0; margin: 0 0 4px; }
+.tipos legend { font-weight: 600; margin-bottom: 4px; padding: 0; }
+.opcion { display: flex; align-items: center; gap: 8px; font-weight: 400; margin: 6px 0; }
+.opcion input { width: 20px; height: 20px; margin: 0; }
+input[type=email] { width: 100%; padding: 12px; font: inherit; border-radius: 10px; border: 1px solid var(--borde); background: var(--fondo); color: var(--texto); }
+.trampa { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+#antibots { margin: 12px 0; min-height: 0; }
+.contacto .ok { display: flex; align-items: center; gap: 12px; max-width: 560px; }
+.contacto .ok img { flex: none; width: 80px; height: auto; }
+.contacto .ok p { margin: 0; }
+.contacto .aviso-911 { text-align: left; }
+.landing a { color: var(--primario); }
+.landing .boton.principal { color: var(--sobre-primario); }
+.pie { text-align: center; color: var(--suave); font-size: 14px; padding: 24px 16px 40px; border-top: 1px solid var(--borde); }
+.pie img { width: 80px; height: auto; }
+.pie p { margin: 4px 0; }
+@media (min-width: 720px) {
+  .portada { grid-template-columns: 1.2fr 1fr; padding: 32px 0 48px; }
+  .portada h1 { font-size: 48px; }
+  .botones-portada { grid-template-columns: auto auto; justify-content: start; }
+  .botones-portada .boton { padding: 14px 24px; }
+  .grilla { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 980px) {
+  .grilla { grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 420px) {
+  .barra-landing nav { gap: 10px; }
+  .barra-landing nav a { font-size: 14px; }
+}

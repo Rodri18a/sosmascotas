@@ -427,6 +427,11 @@ verify_jwt = false
 [functions.historial-adjuntos]
 verify_jwt = false
 
+# 0.8.6d (D158): formulario de contacto de la landing (sin cuenta). Valida
+# anti-bots, campo trampa y límites.
+[functions.landing-contact]
+verify_jwt = false
+
 # Paso 0.6.3: la llama la app al publicar un SOS. Valida la sesión por su cuenta.
 [functions.sos-zone-alert]
 verify_jwt = false

@@ -94,10 +94,10 @@ Revisado de nuevo el **30/10/2026**: las **82 migraciones** sirven tal cual para
 ### Lo que hace Claude después, en orden
 
 1. `set -a; . ~/.config/sosmascotas/supabase-prod.env; set +a`, después `supabase link --project-ref $SOSM_PROJECT_REF` y `supabase db push --linked --dry-run`. Mostrar el resultado, esperar el visto bueno y aplicar sin `--dry-run`.
-2. **Edge Functions** (las 9): `delete-account`, `owner-alert`, `qr-scan-alert`, `sos-follow-alert`, `sos-zone-alert`, `order-status-alert`, `booking-alert`, `care-alert` y `monthly-report`, con `supabase functions deploy <nombre> --use-api`. Todas llevan `verify_jwt = false` (está en `config.toml`) y controlan quién las llama por dentro.
+2. **Edge Functions** (las 11): `delete-account`, `owner-alert`, `historial-adjuntos`, `landing-contact`, `qr-scan-alert`, `sos-follow-alert`, `sos-zone-alert`, `order-status-alert`, `booking-alert`, `care-alert` y `monthly-report`, con `supabase functions deploy <nombre> --use-api`. Todas llevan `verify_jwt = false` (está en `config.toml`) y controlan quién las llama por dentro.
 3. **Secretos de las funciones** (`supabase secrets set`; en Windows, los que tienen JSON con `--env-file`):
    - `FIREBASE_SERVICE_ACCOUNT`: todas las que mandan push (`_shared/fcm.ts`).
-   - `TURNSTILE_SECRET`: `owner-alert` (el anti-bots de la página del QR).
+   - `TURNSTILE_SECRET`: `owner-alert` (el anti-bots de la página del QR) y `landing-contact` (el formulario de la landing, D158).
    - `CRON_SECRET`: `booking-alert` (recordatorio de turnos).
    - `MONTHLY_REPORT_SECRET`: `monthly-report`.
    - `SUPABASE_URL` y `SUPABASE_SERVICE_ROLE_KEY` los pone Supabase.

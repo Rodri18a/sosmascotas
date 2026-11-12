@@ -94,7 +94,7 @@ Páginas livianas en **HTML + JavaScript sin frameworks** (cargan rápido en cua
 
 | Ruta | Archivo | Qué muestra |
 |---|---|---|
-| `/` | `index.html` | Landing de Huellamy (D156): qué es, para dueños y para comercios, enlaces a `app.` y `comercios.`, y formulario de contacto (tabla con RLS, solo insertar). *Pendiente: 0.8.6d* |
+| `/` | `index.html` + `assets/landing.js` | Landing de Huellamy (D156, ✅ 0.8.6d): qué es, para dueños y para comercios (con Socios Fundadores), enlaces a `app.` y `comercios.` (de `config.js`), y **formulario de contacto** (nombre, correo, si escribe por su mascota, su comercio u otra cosa, y el mensaje; sin teléfonos). El envío pasa por la Edge Function `landing-contact` (anti-bots Turnstile, campo trampa, 3 por hora por dispositivo y 60 por hora en total) y queda en `contact_messages`, que nadie lee ni escribe desde afuera (D158). Registra `landing_view`, `landing_cta` y `landing_contact` |
 | `/m/<código>` | `m.html` + `assets/qr.js` | Página del QR: foto, nombre, especie/raza, señas, nota del dueño, si tiene chip, "Estoy perdido 🆘" y **"Avisar a mi familia"** (contacto inverso) |
 | `/s/<id>` | `s.html` + `assets/sos.js` | Página pública de un SOS para compartir: fotos, datos, zona aproximada (enlace a Google Maps) y "Avisar a su familia" (mismo formulario que el QR, `assets/aviso.js`) |
 | `/n/<id>` | `n.html` + `assets/negocio.js` | Página pública de un comercio **Plus** (2.10b, D90): fotos, rubro, insignias, "abierto ahora", promoción, contactos públicos, "Cómo llegar", servicios y productos con "Consultar" por WhatsApp, y horario. Datos con `pagina_comercio()`; registra `business_page_open`. La vista previa al compartir es genérica (sin el nombre del comercio) hasta tener dominio propio, P25 |
@@ -217,6 +217,7 @@ Tabla `events` (append-only), escrita por el cliente con `ref.read(metricasProvi
 | `booking_create` / `booking_status` / `agenda_save` | business_id; con_servicio / estado y quién / duración y a la vez: turnos (D104). La Edge Function suma `booking_push` y `booking_reminder` |
 | `team_invite` / `team_join` / `team_leave` | business_id; `team_leave` con quién (`yo` o `duenio`): equipo de la empresa (D117) |
 | `plan_request` | business_id, plan: el comercio pidió un plan pago desde «Tu plan» (D103) |
+| `landing_view` / `landing_cta` / `landing_contact` | landing de `huellamy.com`: visita (con el sitio de donde viene), toque en un botón a las apps (`destino`: `app`/`comercios`) y mensaje enviado (`tipo`: `owner`/`business`/`other`), sin datos de la persona (D158) |
 | `business_page_share` / `business_page_open` | página pública del comercio: el comercio copia su enlace (app) y alguien la abre (web pública, sin cuenta) (D90) |
 | `adoption_publish` / `adoption_interest` / `adoption_stage` / `adoption_commit` / `adoption_followup` | cantidad de animales, etapa o día del seguimiento; sin datos de nadie (D79) |
 | `review_create` / `review_reply` | business_id; `review_create` con las estrellas (D78) |

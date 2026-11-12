@@ -63,6 +63,7 @@ Por cada empresa:
 - **Lugares sin reclamar con tracción:** cuántos usuarios lo marcaron y cuántas veces se abrió su ficha. Ejemplo: *"Marcado por 23 usuarios, 140 aperturas de ficha"*. ✅ 1.8.5 (D99): Lugares → «Sin reclamar con tracción», con `admin_sin_reclamar()` y «Ver en Google Maps».
 - **Audiencia por zona y especie:** usuarios y mascotas (*"1.200 perros, 400 gatos"*). Sirve para comercios y para **marcas** (noticias patrocinadas).
 - **Embudo de ventas (mini CRM):** prospecto → contactado → demo → Socio Fundador → pagando → renovó / perdido. Con notas, responsable y fecha del próximo contacto.
+- **Contactos de la landing:** ✅ 0.8.6d (D158): sección **Contactos** (administración y ventas) con los mensajes del formulario de `huellamy.com`, en Nuevos · Respondidos · Archivados. Se responden desde el correo del equipo y se marcan; los de un comercio se pasan a Prospectos como «contactado» con un toque.
 - **Generador de propuesta:** PDF de una página con los datos de su zona y rubro, listo para mostrar en una visita. ✅ 2.4 (D102): portal → Propuestas, con `admin_propuesta()`; se descarga una página para imprimir o guardar como PDF.
 
 ### 7. Planes y cobros — Fase 2

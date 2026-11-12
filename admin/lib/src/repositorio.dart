@@ -49,6 +49,12 @@ abstract interface class AdminRepositorio {
 
   Future<void> guardarProspecto(Prospecto prospecto);
 
+  /// Mensajes del formulario de la landing, los últimos primero (D158).
+  Future<List<ContactoLanding>> contactos();
+
+  /// [estado]: `new`, `answered` o `archived`.
+  Future<void> estadoContacto(String id, String estado);
+
   Future<List<EntradaAyuda>> ayuda();
 
   /// Reclamos, disputas, verificaciones y pedidos de RENAC (1.3, D77).
@@ -361,6 +367,24 @@ class SupabaseAdminRepositorio implements AdminRepositorio {
             .from('prospects')
             .update(prospecto.toJson())
             .eq('id', prospecto.id);
+
+  @override
+  Future<List<ContactoLanding>> contactos() async =>
+      (await _cliente
+              .from('contact_messages')
+              .select(
+                'id, kind, name, email, business, message, status, created_at',
+              )
+              .order('created_at', ascending: false)
+              .limit(300))
+          .map(ContactoLanding.fromJson)
+          .toList();
+
+  @override
+  Future<void> estadoContacto(String id, String estado) => _cliente
+      .from('contact_messages')
+      .update({'status': estado})
+      .eq('id', id);
 
   @override
   Future<List<PendienteComercio>> pendientesComercios() async => _filas(
@@ -871,6 +895,10 @@ final pendientesComerciosProvider = FutureProvider<List<PendienteComercio>>(
 
 final adopcionesEnRevisionProvider = FutureProvider<List<Map<String, Object?>>>(
   (ref) => ref.watch(adminRepositorioProvider).adopcionesEnRevision(),
+);
+
+final contactosProvider = FutureProvider<List<ContactoLanding>>(
+  (ref) => ref.watch(adminRepositorioProvider).contactos(),
 );
 
 final denunciasProvider = FutureProvider<List<Map<String, Object?>>>(

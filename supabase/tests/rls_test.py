@@ -1296,6 +1296,52 @@ def main():
             caso('X carga un prospecto', rest('POST', 'prospects', {'name': 'Peluquería Prueba RLS', 'stage': 'contacted'}, x, 'return=minimal')[0] == 201)
             caso('A no puede cargar prospectos', bloqueado(rest('POST', 'prospects', {'name': 'X'}, a, 'return=minimal')))
             pedir('DELETE', f'{URL}/rest/v1/prospects?name=eq.Peluquer%C3%ADa%20Prueba%20RLS', headers=ADMIN)
+
+            print('contacto de la landing (0.8.6d, D158)')
+            contacto_url = f'{URL}/functions/v1/landing-contact'
+            ua_c = {'apikey': PUBLICA, 'User-Agent': f'prueba-{uuid.uuid4()}'}  # dispositivo nuevo
+            base_c = {'kind': 'business', 'name': 'Prueba RLS contacto', 'email': 'prueba-rls@example.com',
+                      'business': 'Vete Prueba RLS', 'message': 'Quiero sumar mi veterinaria', 'consent': True,
+                      'turnstile_token': 'XXXX.DUMMY.TOKEN.XXXX', 'anon_id': str(uuid.uuid4())}
+            caso('contacto: sin aceptar se rechaza', pedir('POST', contacto_url, {**base_c, 'consent': False}, ua_c)[0] == 400)
+            caso('contacto: un correo inválido se rechaza',
+                 pedir('POST', contacto_url, {**base_c, 'email': 'sin-arroba'}, ua_c)[0] == 400)
+            caso('contacto: sin anti-bots se rechaza',
+                 pedir('POST', contacto_url, {k: v for k, v in base_c.items() if k != 'turnstile_token'}, ua_c)[0] == 400)
+            s_t, _ = pedir('POST', contacto_url, {**base_c, 'name': 'Robot RLS', 'website': 'http://spam'}, ua_c)
+            caso('contacto: el campo trampa responde ok sin guardar',
+                 s_t == 200 and filas(pedir('GET', f'{URL}/rest/v1/contact_messages?select=id&name=eq.Robot%20RLS',
+                                            headers=ADMIN)) == [])
+            s_c, r_c = pedir('POST', contacto_url, base_c, ua_c)
+            caso('contacto: un visitante deja un mensaje (sin cuenta)', s_c == 200 and r_c.get('ok') is True)
+            caso('contacto: un visitante no lee los mensajes', bloqueado(rest('GET', 'contact_messages?select=id')))
+            caso('contacto: nadie inserta directo en la tabla (solo la función)',
+                 bloqueado(rest('POST', 'contact_messages', {'kind': 'other', 'name': 'Directo', 'email': 'a@b.uy',
+                                                             'message': 'hola hola'}, prefer='return=minimal'))
+                 and bloqueado(rest('POST', 'contact_messages', {'kind': 'other', 'name': 'Directo', 'email': 'a@b.uy',
+                                                                 'message': 'hola hola'}, a, 'return=minimal')))
+            caso('contacto: A (sin rol) no lee los mensajes', filas(rest('GET', 'contact_messages?select=id', quien=a)) == [])
+            mensajes = filas(rest('GET', 'contact_messages?select=*&name=eq.Prueba%20RLS%20contacto', quien=x))
+            caso('contacto: X (admin) lee el mensaje con el correo',
+                 len(mensajes) == 1 and mensajes[0]['email'] == 'prueba-rls@example.com' and mensajes[0]['status'] == 'new')
+            m_id = mensajes[0]['id'] if mensajes else ''
+            caso('contacto: A no lo puede marcar', filas(rest('PATCH', f'contact_messages?id=eq.{m_id}',
+                                                             {'status': 'archived'}, a)) == [])
+            marcado = filas(rest('PATCH', f'contact_messages?id=eq.{m_id}', {'status': 'answered'}, x))
+            caso('contacto: X lo marca respondido y queda quién lo atendió',
+                 len(marcado) == 1 and marcado[0]['handled_by'] == x_id and marcado[0]['handled_at'] is not None)
+            caso('contacto: X no puede cambiar lo que escribió la persona',
+                 rechazado(rest('PATCH', f'contact_messages?id=eq.{m_id}', {'email': 'otro@example.com'}, x)))
+            eventos_c = filas(pedir('GET', f"{URL}/rest/v1/events?select=props,user_id&name=eq.landing_contact"
+                                           f"&anon_id=eq.{base_c['anon_id']}", headers=ADMIN))
+            caso('contacto: el envío deja un evento anónimo (solo el tipo, sin datos de la persona)',
+                 eventos_c == [{'props': {'tipo': 'business'}, 'user_id': None}])
+            otro_c = {'apikey': PUBLICA, 'User-Agent': f'prueba-{uuid.uuid4()}'}
+            res_c = [pedir('POST', contacto_url, {**base_c, 'name': 'Prueba RLS límite'}, otro_c)[0] for _ in range(4)]
+            caso('contacto: más de 3 mensajes por hora desde el mismo dispositivo se frenan',
+                 res_c[:3] == [200] * 3 and res_c[3] == 429)
+            pedir('DELETE', f'{URL}/rest/v1/contact_messages?email=eq.prueba-rls@example.com', headers=ADMIN)
+            pedir('DELETE', f"{URL}/rest/v1/events?anon_id=eq.{base_c['anon_id']}", headers=ADMIN)
             caso('A no puede cargar en la Ayuda',
                  bloqueado(rest('POST', 'help_directory', {'kind': 'grupo', 'name': 'Prueba RLS', 'status': 'hidden'}, a, 'return=minimal')))
             caso('X carga en la Ayuda (oculto) y lo ve',

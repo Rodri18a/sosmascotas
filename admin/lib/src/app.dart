@@ -6,6 +6,7 @@ import 'package:sosmascota_core/sosmascota_core.dart';
 import 'pantallas/ayuda.dart';
 import 'pantallas/chapitas.dart';
 import 'pantallas/comercios.dart';
+import 'pantallas/contactos.dart';
 import 'pantallas/denuncias.dart';
 import 'pantallas/equipo.dart';
 import 'pantallas/espacios.dart';
@@ -132,6 +133,7 @@ class _PortalState extends ConsumerState<Portal> {
     (Icons.forum_outlined, T.grupos, GruposScreen(), {'moderator'}),
     (Icons.storefront_outlined, T.lugares, LugaresScreen(), {'sales'}),
     (Icons.verified_outlined, T.comercios, ComerciosScreen(), {}),
+    (Icons.mail_outline, T.contactos, ContactosScreen(), {'sales'}),
     (Icons.handshake_outlined, T.prospectos, ProspectosScreen(), {'sales'}),
     (Icons.description_outlined, T.propuestas, PropuestasScreen(), {'sales'}),
     (Icons.campaign_outlined, T.espacios, EspaciosScreen(), {'sales'}),

@@ -388,6 +388,27 @@ abstract final class T {
   /// Especies habilitadas (D149: la primera versión es de perros y gatos).
   static const especies = {1: 'Perro', 2: 'Gato'};
 
+  // Contactos de la landing (D158)
+  static const contactos = 'Contactos';
+  static const sinContactos = 'No hay mensajes acá.';
+  static const marcarRespondido = 'Marcar respondido';
+  static const archivar = 'Archivar';
+  static const volverANuevo = 'Volver a nuevo';
+  static const pasarAProspectos = 'Pasar a prospectos';
+  static const pasadoAProspectos = 'Quedó en Prospectos como contactado.';
+  static const responderPorCorreo =
+      'Respondé desde el correo del equipo y después marcalo respondido.';
+  static const tiposContacto = {
+    'owner': 'Dueño',
+    'business': 'Comercio',
+    'other': 'Otro',
+  };
+  static const estadosContacto = {
+    'new': 'Nuevos',
+    'answered': 'Respondidos',
+    'archived': 'Archivados',
+  };
+
   // Prospectos
   static const nuevoProspecto = 'Nuevo prospecto';
   static const contacto = 'Contacto';

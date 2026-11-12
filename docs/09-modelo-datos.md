@@ -161,6 +161,7 @@ Trigger: con 3 `flags` de usuarios distintos, el contenido pasa a `hidden`.
 | `success_stories` | id, business_id, business_name, business_type, zone_id, quote, author, numbers, consent, status (`draft`, `published`) — ✅ creada en 2.4 (D102): casos de éxito para ventas; solo administración con `admin_casos()`, `admin_guardar_caso()`, `admin_borrar_caso()`; publicado solo con `consent` | 2 |
 | `team_zones` | user_id, zone_id, created_by, created_at — ✅ 3.6 (D110): zonas de cada integrante de moderación o ventas; sin acceso directo (se asignan con `admin_zonas_integrante()`) | 3 |
 | `prospects` | id, name, business_type, zone_id (✅ D110: la del lugar o la primera de quien lo carga; ventas ve solo los de sus zonas), location, contact, stage (`prospect`, `contacted`, `demo`, `founder`, `paying`, `renewed`, `lost`), business_id, next_contact_at, owner_admin_id | 1 |
+| `contact_messages` | id, kind (`owner`, `business`, `other`), name, email, business, message, status (`new`, `answered`, `archived`), device_hash, handled_by, handled_at, created_at — ✅ 0.8.6d (D158): formulario de la landing. Entra solo por la Edge Function `landing-contact`; administración y ventas lo leen y cambian solo `status` (quién y cuándo lo pone la base) | 0 |
 | `prospect_notes` | id, prospect_id, admin_id, note, created_at | 1 |
 | `admin_audit_log` | id, admin_id, action, target, data, created_at | 3 |
 

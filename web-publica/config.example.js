@@ -7,6 +7,8 @@ window.SOS_CONFIG = {
   // Cloudflare Turnstile (anti-bots). Clave de PRUEBA que siempre pasa:
   // reemplazar por la real antes del lanzamiento (ver docs/guias).
   turnstileSiteKey: '1x00000000000000000000AA',
-  // Dirección de la app (botón "Conocé Huellamy" de la página del comercio).
+  // Direcciones de las dos apps (D156): botones de la landing y "Conocé
+  // Huellamy" de la página del comercio. En prod: app. y comercios.huellamy.com.
   appUrl: 'https://sosmascota-dev.vercel.app',
+  comerciosUrl: 'https://sosmascota-comercios-dev.vercel.app',
 };

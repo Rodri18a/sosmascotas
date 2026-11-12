@@ -4,18 +4,145 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0B4F94">
-  <title>Huellamy</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; connect-src 'self' https://*.supabase.co; img-src 'self' data:; style-src 'self'">
+  <title>Huellamy · Todo para tu mascota, en un mapa</title>
+  <meta name="description" content="Huellamy reúne veterinarias, pet shops y servicios cerca tuyo, avisos de mascotas perdidas, la chapita QR y los recordatorios de salud. Arrancamos en Pando, Uruguay.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Huellamy · Todo para tu mascota, en un mapa">
+  <meta property="og:description" content="Veterinarias y servicios cerca tuyo, mascotas perdidas, chapita QR y recordatorios de salud. Para dueños y para comercios.">
+  <meta property="og:image" content="https://huellamy.com/assets/logo.png">
+  <meta property="og:url" content="https://huellamy.com/">
+  <link rel="canonical" href="https://huellamy.com/">
   <link rel="stylesheet" href="/assets/estilo.css">
   <link rel="icon" type="image/png" href="/assets/isotipo.png">
 </head>
-<body>
-  <main>
-    <header class="marca"><img src="/assets/isotipo.png" alt="" width="36" height="36"> Huellamy</header>
-    <img class="logo-ilustrado" src="/assets/logo.png" alt="Huellamy, con Ami y Mishi" width="240" height="240">
-    <div class="tarjeta">
-      <h1>Mascotas perdidas, encontradas y su chapita QR</h1>
-      <p>Arrancamos en Pando. Muy pronto.</p>
-    </div>
+<body class="landing">
+  <header class="barra-landing">
+    <a class="marca" href="/"><img src="/assets/isotipo.png" alt="" width="32" height="32"> Huellamy</a>
+    <nav>
+      <a href="#duenos">Dueños</a>
+      <a href="#comercios">Comercios</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+  </header>
+
+  <main class="landing-main">
+    <section class="portada">
+      <div>
+        <p class="sobretitulo">Arrancamos en Pando, Uruguay</p>
+        <h1>Todo para tu mascota, en un mapa</h1>
+        <p class="bajada">Veterinarias, pet shops y servicios cerca tuyo, avisos de mascotas perdidas y encontradas, la chapita QR y los recordatorios de salud. Gratis para lo que hace a su seguridad y su salud.</p>
+        <div class="botones-portada">
+          <a class="boton principal" data-destino="app" href="https://app.huellamy.com">Abrir Huellamy</a>
+          <a class="boton secundario" data-destino="comercios" href="https://comercios.huellamy.com">Soy un comercio</a>
+        </div>
+      </div>
+      <img class="logo-portada" src="/assets/logo.png" alt="Huellamy, con Ami y Mishi" width="320" height="266">
+    </section>
+
+    <section id="duenos" class="bloque">
+      <h2>Para dueños</h2>
+      <div class="grilla">
+        <article class="tarjeta">
+          <h3>🆘 Si se pierde</h3>
+          <p>Publicás el aviso y les llega a los vecinos de la zona. Quien la encuentra te avisa sin ver tu teléfono: vos decidís a quién contestar.</p>
+        </article>
+        <article class="tarjeta">
+          <h3>🏷️ Chapita QR</h3>
+          <p>Quien la escanea ve su foto y su nombre y te deja un aviso con su ubicación. Tu número y tu dirección no se muestran nunca.</p>
+        </article>
+        <article class="tarjeta">
+          <h3>🗺️ El mapa</h3>
+          <p>Veterinarias, urgencias, pet shops, paseadores, guarderías y lugares que aceptan mascotas, con horarios y reseñas.</p>
+        </article>
+        <article class="tarjeta">
+          <h3>💉 Su salud al día</h3>
+          <p>Vacunas, desparasitaciones y medicación con recordatorios, y su libreta para compartir con el veterinario.</p>
+        </article>
+      </div>
+      <img class="ilustracion" src="/assets/ilustraciones/salud.png" alt="" width="473" height="297" loading="lazy">
+    </section>
+
+    <section id="comercios" class="bloque">
+      <h2>Para comercios</h2>
+      <p class="bajada">Veterinarias, pet shops, peluquerías, paseadores, guarderías y todos los que trabajan con mascotas.</p>
+      <div class="grilla">
+        <article class="tarjeta">
+          <h3>📍 Tu ficha en el mapa</h3>
+          <p>Que te encuentren los dueños de tu zona, con dirección, horario, fotos y las especies que atendés. Básica y sin costo.</p>
+        </article>
+        <article class="tarjeta">
+          <h3>🛍️ Catálogo y reservas</h3>
+          <p>Mostrá tus productos y servicios, recibí pedidos, paseos y estadías, y publicá promociones.</p>
+        </article>
+        <article class="tarjeta">
+          <h3>📊 Cómo te va</h3>
+          <p>Cuánta gente vio tu ficha, cuántos te llamaron o pidieron cómo llegar, y un resumen cada mes.</p>
+        </article>
+        <article class="tarjeta destacada">
+          <h3>⭐ Socios Fundadores</h3>
+          <p>Los primeros comercios de Pando tienen el plan Destacado gratis por 6 meses y precio congelado después. Escribinos.</p>
+        </article>
+      </div>
+      <img class="ilustracion" src="/assets/ilustraciones/tienda.png" alt="" width="480" height="305" loading="lazy">
+    </section>
+
+    <section id="contacto" class="bloque contacto">
+      <h2>Escribinos</h2>
+      <p class="bajada">¿Tenés un comercio, una idea o una consulta? Dejanos tu correo y te respondemos.</p>
+
+      <form id="formulario" class="tarjeta" novalidate>
+        <fieldset class="tipos">
+          <legend>Escribís por…</legend>
+          <label class="opcion"><input type="radio" name="tipo" value="owner" checked> Mi mascota</label>
+          <label class="opcion"><input type="radio" name="tipo" value="business"> Mi comercio o servicio</label>
+          <label class="opcion"><input type="radio" name="tipo" value="other"> Otra cosa</label>
+        </fieldset>
+
+        <label for="nombre">Tu nombre</label>
+        <input id="nombre" type="text" maxlength="80" autocomplete="name" required>
+
+        <div id="campo-comercio" hidden>
+          <label for="comercio">Nombre del comercio</label>
+          <input id="comercio" type="text" maxlength="80" autocomplete="organization">
+        </div>
+
+        <label for="correo">Tu correo</label>
+        <input id="correo" type="email" maxlength="120" autocomplete="email" inputmode="email" required>
+
+        <label for="mensaje">Mensaje</label>
+        <textarea id="mensaje" maxlength="2000" required></textarea>
+
+        <!-- Trampa para robots: una persona no la ve. -->
+        <div class="trampa" aria-hidden="true">
+          <label for="sitio">No completar</label>
+          <input id="sitio" type="text" tabindex="-1" autocomplete="off">
+        </div>
+
+        <label class="casilla"><input id="consentimiento" type="checkbox" required> Acepto que Huellamy guarde estos datos para responderme.</label>
+        <div id="antibots"></div>
+        <p id="error" class="error" role="alert" hidden></p>
+        <button id="enviar" class="boton principal" type="submit">Enviar</button>
+      </form>
+
+      <div id="enviado" class="ok" role="status" hidden>
+        <img src="/assets/ilustraciones/mishi_festejando.png" alt="" width="112" height="103">
+        <p><strong>¡Gracias! Recibimos tu mensaje.</strong> Te respondemos al correo que dejaste.</p>
+      </div>
+
+      <p class="aviso-911">¿Tu mascota se perdió? <a data-destino="app" href="https://app.huellamy.com">Publicá el aviso en Huellamy</a>.</p>
+    </section>
   </main>
+
+  <footer class="pie">
+    <img src="/assets/ilustraciones/ami_saludando.png" alt="" width="94" height="90" loading="lazy">
+    <p>Huellamy · Hecho en Pando, Uruguay</p>
+    <p><a data-destino="app" href="https://app.huellamy.com">Huellamy</a> · <a data-destino="comercios" href="https://comercios.huellamy.com">Huellamy Comercios</a></p>
+  </footer>
+
+  <script src="/config.js"></script>
+  <script src="/assets/comun.js"></script>
+  <script src="/assets/landing.js"></script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 </body>
 </html>
