@@ -373,3 +373,77 @@ Guiones (lo que se dice), qué se muestra en pantalla y la descripción para pub
 `#SociosFundadores #ComerciosDePando #Emprendedores`
 
 > Revisar antes de publicar que las condiciones de Socios Fundadores sigan iguales (`22-planes-y-precios.md`).
+
+---
+
+## Anexo · Ilustraciones de Ami y Mishi para los videos
+
+Las indicaciones para generar las tomas ilustradas de cada video, con el mismo estilo de la guía de marca (`guias/huellamy/guia-de-marca-e-iconografia.md`, sección 8).
+
+### Cómo generarlas
+
+1. Abrir el generador (Gemini, ChatGPT u otro) y adjuntar **la imagen de referencia**: `docs/guias/huellamy/logo-huellamy.png` o `app/assets/ilustraciones/ami_y_mishi.png`.
+2. Pegar el **prompt base** y cambiar `[POSE]` por la pose de la tabla. Van en inglés porque los generadores respetan mejor el estilo así.
+3. Pedir el **formato vertical 9:16** (1080 × 1920) para las escenas de fondo completo, o **fondo transparente** para las que van encima de la grabación de pantalla (marcadas «PNG»).
+4. Si una salida cambia los colores de los collares o las proporciones, descartarla: no se retoca a mano (guía de marca, sección 9).
+5. Para darles movimiento, subir la imagen a un generador de imagen a video (por ejemplo, Veo o Kling) con la indicación de la columna **Movimiento**. Clips de 2 a 4 segundos alcanzan.
+6. Guardar los archivos en `docs/guias/huellamy/videos/` con el nombre `vNN_<escena>.png` (por ejemplo, `v02_apertura.png`).
+
+**Prompt base:**
+
+> Same characters as the reference image: Ami, an orange and cream shiba inu puppy with a blue collar and blue paw-print tag, and Mishi, a gray and cream kitten with a pink collar and pink paw-print tag. Cute chibi sticker style, thick dark brown outlines, soft cel shading, big head and small body, expressive eyes, light blue paw-print background accents. Pose: [POSE]. Keep the exact same character design, colors and proportions as the reference. No text, no letters, no numbers.
+
+- Se cambió «happy closed eyes» por «expressive eyes» para que también sirva en las escenas serenas (perdido, urgencias). En las alegres, sumar `happy closed eyes` al final de la pose.
+- Se agregó «No text, no letters, no numbers»: los textos se ponen en la edición, así quedan en voseo, sin errores y sin números de teléfono inventados.
+- Para escenas de fondo completo sumar: `Vertical 9:16 composition, soft light blue background (#EAF4FA), leave the top third empty for on-screen text.`
+- Para los PNG que van encima de la pantalla sumar: `Transparent background, white sticker border.`
+
+### Cierre fijo (todos los videos)
+
+| Escena | Pose | Formato | Movimiento |
+|---|---|---|---|
+| Cierre | `Ami and Mishi sitting side by side facing the viewer, Ami waving with one paw, Mishi leaning gently against him, both smiling, a big blue paw print behind them, happy closed eyes` | 9:16, dejar libre el tercio de abajo para el logo y «huellamy.com» | `Ami waves his paw twice, Mishi blinks slowly, subtle sparkles appear` |
+
+Se genera una sola vez y se usa en los 16 videos.
+
+### Por video
+
+**Ya existen** en `app/assets/ilustraciones/` y se pueden usar tal cual: `ami_saludando`, `ami_y_mishi`, `ami_paseando`, `mishi_festejando`, `mishi_jugando`, `salud`, `tienda` y `comunidad`. Donde alcanza con una de ellas, la tabla lo dice y no hace falta generar nada.
+
+| Video | Escena | Pose (`[POSE]`) | Formato | Movimiento |
+|---|---|---|---|---|
+| 1 · Huellamy en 30 s | Apertura | Usar `ami_saludando.png` + Mishi asomada: `Ami waving hello with his paw, Mishi peeking curiously from behind him, happy closed eyes` | 9:16 | `Ami waves, Mishi pops her head out from behind him` |
+| 1 | Seguridad y salud | `Ami and Mishi hugging a big blue heart with a paw print inside, happy closed eyes` | PNG | `the heart pulses gently` |
+| 2 · Se perdió | Apertura | `Mishi sitting alone next to an empty blue collar on the floor, looking toward an open garden gate, calm and a little worried, soft evening light` | 9:16 | `slow zoom in, Mishi's ears twitch` |
+| 2 | Vecinos avisados | `Ami holding a smartphone with a red bell notification icon above it, alert and determined expression` | PNG | `the bell shakes, small signal waves` |
+| 2 | ¡Apareció! | Usar `mishi_festejando.png` o: `Ami and Mishi jumping together celebrating with confetti and yellow sparkles, happy closed eyes` | 9:16 | `confetti falls, both jump once` |
+| 3 · Encontré | Apertura | `Ami sniffing the ground and looking at a big magnifying glass with a paw print inside, curious expression` | PNG | `Ami moves the magnifying glass left to right` |
+| 3 | Seña guardada | `Mishi with a finger-on-lips "secret" gesture, winking, holding a small notebook` | PNG | `Mishi winks` |
+| 4 · Tu número | Apertura | `Mishi holding a big padlock with a paw print on it in front of a smartphone, protective and calm expression` | PNG | `the padlock clicks closed with a small shine` |
+| 4 | Anti estafa | `Ami raising one paw in a "stop" gesture, serious but friendly expression, a small shield with a paw print next to him` | PNG | `Ami raises his paw` |
+| 5 · Chapita QR | Apertura | `close-up of Ami proudly showing the blue paw-print tag on his collar to the viewer, the tag shining, happy closed eyes` | 9:16 | `the tag sparkles, Ami tilts his head` |
+| 5 | Escaneo | `Mishi holding a smartphone toward Ami's collar tag as if scanning it, a soft light beam between them` | PNG | `light beam scans the tag` |
+| 5 | Aviso al dueño | Usar `ami_y_mishi.png` | PNG | — |
+| 6 · Cartel | Apertura | `Ami and Mishi sticking a blank paper poster on a street lamp post with tape, teamwork, small neighborhood background` | 9:16 | `the poster flaps slightly in the wind` |
+| 7 · Mapa | Apertura | `Ami and Mishi standing on top of a big folded paper map with colorful location pins around them, Ami pointing at one pin, happy closed eyes` | 9:16 | `pins drop onto the map one by one` |
+| 7 | Marcar un lugar | `Mishi placing a big blue location pin with a paw print into the ground` | PNG | `the pin bounces into place` |
+| 8 · Urgencias | Apertura | `Ami lying in a cozy dog bed at night with a little blanket, slightly tired, Mishi sitting next to him watching over him, calm and tender, moonlight through a window` | 9:16 | `Mishi gently puts a paw on Ami, slow zoom` |
+| 8 | Guardala hoy | `Ami with a small bandage on his paw, smiling again, giving a thumbs up with the other paw` | PNG | `Ami raises his paw` |
+| 9 · Libreta | Apertura | Usar `salud.png` o: `Mishi with tiny round glasses reading a little blue health booklet with a paw print on the cover` | PNG | `Mishi turns a page` |
+| 9 | Ya se la di | `Ami holding a smartphone showing a big green check mark, proud, happy closed eyes` | PNG | `the check mark pops in` |
+| 10 · Hogar | Apertura | `Ami and Mishi looking at each other confused, each holding the same small pill, question marks above their heads` | 9:16 | `question marks bounce` |
+| 10 | Juntos | `Ami and Mishi inside a little house outline with a heart roof, cozy, happy closed eyes` | PNG | `a heart floats up from the roof` |
+| 11 · Adopción | Apertura | `Mishi sitting inside an open cardboard box, looking up hopefully at the viewer, soft warm light` | 9:16 | `Mishi blinks slowly and tilts her head` |
+| 11 | Cierre | `Ami and Mishi hugging warmly, small hearts around them, happy closed eyes` | 9:16 | `hearts float up` |
+| 12 · Turnos y pedidos | Apertura | `Ami holding a big calendar page with a paw print marked on one day` | PNG | `the paw print stamps onto the calendar` |
+| 12 | Pedido | Usar `tienda.png` | PNG | — |
+| 13 · Paseos | Apertura | `Ami sitting by a front door holding a leash in his mouth, eager eyes looking at the viewer` | 9:16 | `Ami's tail wags fast` |
+| 13 | Vuelta del paseo | Usar `ami_paseando.png` | PNG | `walking in place` |
+| 14 · Comercios: ficha | Apertura | `Ami wearing a small shop apron standing in front of a tiny pet shop storefront with a blank sign, welcoming pose` | 9:16 | `Ami waves at the viewer` |
+| 14 | Verificado | `Mishi placing a big location pin with a blue check mark badge on a small map` | PNG | `the check badge shines` |
+| 15 · Catálogo | Apertura | `Mishi overwhelmed by many floating speech bubbles and small papers around her, funny and a little dizzy` | 9:16 | `bubbles swirl around her` |
+| 15 | Ordenado | `Mishi happily organizing small boxes on neat shelves, happy closed eyes` | PNG | `boxes slide into place` |
+| 16 · Socios Fundadores | Apertura | `Ami looking at a bar chart going up, amazed expression` | PNG | `the bars grow one by one` |
+| 16 | Fundadores | `Ami and Mishi holding a big golden star together, celebrating with yellow sparkles, happy closed eyes` | 9:16 | `the star shines, sparkles twinkle` |
+
+**En total:** 1 cierre + 30 escenas, de las que 6 se cubren con ilustraciones que ya existen. Conviene generar primero el cierre y las aperturas de los videos 1, 2, 5 y 14, que son los del lanzamiento.
