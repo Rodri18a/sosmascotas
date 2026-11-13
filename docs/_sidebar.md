@@ -18,6 +18,7 @@
   - [Ideas para el futuro](16-ideas-futuras.md)
   - [Propuestas: perfil y gamificación](17-propuestas-perfil-gamificacion.md)
   - [Campaña de fin de año 2027](18-campana-fin-de-anio.md)
+  - [Guiones de videos cortos](25-guiones-videos.md)
 
 - **Portales**
   - [Portal de empresas](04-portal-empresas.md)
