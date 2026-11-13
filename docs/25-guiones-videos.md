@@ -446,4 +446,4 @@ Se genera una sola vez y se usa en los 16 videos.
 | 16 · Socios Fundadores | Apertura | `Ami looking at a bar chart going up, amazed expression` | PNG | `the bars grow one by one` |
 | 16 | Fundadores | `Ami and Mishi holding a big golden star together, celebrating with yellow sparkles, happy closed eyes` | 9:16 | `the star shines, sparkles twinkle` |
 
-**En total:** 1 cierre + 30 escenas, de las que 6 se cubren con ilustraciones que ya existen. Conviene generar primero el cierre y las aperturas de los videos 1, 2, 5 y 14, que son los del lanzamiento.
+**En total:** 1 cierre + 34 escenas, de las que 6 se cubren con ilustraciones que ya existen. Conviene generar primero el cierre y las aperturas de los videos 1, 2, 5 y 14, que son los del lanzamiento.
