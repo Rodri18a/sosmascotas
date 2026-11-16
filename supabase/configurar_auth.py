@@ -10,8 +10,8 @@ Uso (desde la raíz del repo):
     python3 -I supabase/configurar_auth.py            # muestra los cambios
     python3 -I supabase/configurar_auth.py --aplicar  # los aplica
 
-Producción (0.8.5): el archivo de credenciales de prod define SOSM_APP_URL y
-SOSM_ADMIN_URL; con ellas se usan esas direcciones y no se permite localhost.
+Producción (0.8.5): el archivo de credenciales de prod define SOSM_APP_URL,
+SOSM_ADMIN_URL y SOSM_COMERCIOS_URL; con ellas se usan esas direcciones y no se permite localhost.
 Si además define SOSM_PROJECT_REF, el script se niega a correr contra otro
 proyecto (por ejemplo, con dev todavía vinculado).
 """
@@ -48,13 +48,24 @@ CORREO = """<div style="font-family:system-ui,-apple-system,'Segoe UI',Roboto,sa
 APP_ONLINE = os.environ.get('SOSM_APP_URL', 'https://sosmascota-dev.vercel.app')
 # Portal de administración (etapa 1.8, D76): el enlace del correo vuelve ahí.
 ADMIN_ONLINE = os.environ.get('SOSM_ADMIN_URL', 'https://sosmascota-admin.vercel.app')
+# Huellamy Comercios (D156): otra app, otro origen; el login vuelve ahí.
+COMERCIOS_ONLINE = os.environ.get('SOSM_COMERCIOS_URL', 'https://sosmascota-comercios-dev.vercel.app')
 PRODUCCION = 'SOSM_APP_URL' in os.environ
 LOCALES = [] if PRODUCCION else ['http://localhost:3001/**', 'http://127.0.0.1:3001/**']
+# Mientras no haya producción (0.8.5), los subdominios de huellamy.com apuntan a
+# los proyectos de dev (0.8.6e, D159). Al pasarlos a prod, sacar esta lista.
+DOMINIOS_EN_DEV = [] if PRODUCCION else [
+    'https://app.huellamy.com/**',
+    'https://comercios.huellamy.com/**',
+    'https://admin.huellamy.com/**',
+]
 DESEADO = {
     'site_url': APP_ONLINE,
     'uri_allow_list': ','.join([
         f'{APP_ONLINE}/**',
         f'{ADMIN_ONLINE}/**',
+        f'{COMERCIOS_ONLINE}/**',
+        *DOMINIOS_EN_DEV,
         *LOCALES,
     ]),
     'mailer_otp_length': 6,

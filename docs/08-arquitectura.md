@@ -84,7 +84,7 @@ sosmascotas/
 | `comercios.huellamy.com` | Huellamy Comercios (PWA) | `app/`, `lib/main_comercio.dart` |
 | `admin.huellamy.com` | Portal de administración (no indexable) | `admin/` |
 
-- Todo en Vercel; los DNS están en Hostinger (D155), que también da el correo `soporte@huellamy.com`.
+- Todo en Vercel; los DNS están en Hostinger (D155), que también da el correo `soporte@huellamy.com`. Se cargan por la API de Hostinger (D159). Hasta tener producción, cada dirección apunta al proyecto de dev (D159).
 - Cada app en la raíz de su subdominio, con su manifest e íconos. Son orígenes distintos: la sesión no se comparte (misma cuenta, se ingresa en cada una, D143).
 - Supabase Auth y Google tienen que tener las cuatro direcciones como orígenes o redirecciones permitidas (`configurar_auth.py`).
 

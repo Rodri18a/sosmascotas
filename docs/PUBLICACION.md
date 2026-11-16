@@ -30,6 +30,8 @@ El **login** (Supabase Auth de dev) tiene como dirección principal la app onlin
 
 El **portal de administración** (D76) está en **`sosmascota-admin`** → <https://sosmascota-admin.vercel.app> (no indexable; los datos solo los ve el rol `admin`, verificado en la base). Se sube con `npx --yes vercel@latest deploy --prod --yes` desde `admin/build/web` después de `flutter build web --release --no-wasm-dry-run --dart-define-from-file=config/dev.json` (en `admin/`) y de copiar `web/vercel.json` a `build/web/`. Si `vercel link` crea un `.env.local` en esa carpeta, **borrarlo antes de subir** (tiene un token).
 
+**Dominio (D159, 16/11/2026):** `huellamy.com` y `www` → `sosmascota-web-dev`, `app.huellamy.com` → `sosmascota-dev`, `comercios.huellamy.com` → `sosmascota-comercios-dev`, `admin.huellamy.com` → `sosmascota-admin` (apuntan a dev hasta tener producción; al pasar, cambiar el proyecto de cada dominio en Vercel → Settings → Domains, sin tocar los DNS). DNS en Hostinger, por la API: `set -a; . ~/.config/sosmascotas/hostinger.env; set +a` y `curl -H "Authorization: Bearer $HOSTINGER_API_TOKEN" https://developers.hostinger.com/api/dns/v1/zones/huellamy.com` (lee la zona; `POST …/validate` y `PUT` con `{"overwrite":true,"zone":[…]}` la cambian). Los registros que pide cada dominio: `npx --yes vercel@latest domains verify <dominio>`.
+
 **Dos apps (D156):** `tool/armar_web.sh dev` (desde `app/`) arma `build/web` (Huellamy → **`sosmascota-dev`**) y `build/web_comercios` (Huellamy Comercios → **`sosmascota-comercios-dev`** → <https://sosmascota-comercios-dev.vercel.app>). Cada carpeta se sube por separado con `vercel link --yes --project <proyecto>` (borrar el `.env.local` que crea) y `vercel deploy --prod --yes`. `config/dev.json` tiene que traer `APP_URL` y `COMERCIOS_URL`.
 
 La app de prueba (base de dev) está en **`sosmascota-dev`** → <https://sosmascota-dev.vercel.app> (pública: es la app, no tiene nada privado). Se sube con `npx --yes vercel@latest deploy --prod --yes` desde `app/build/web` después de `flutter build web --release --no-wasm-dry-run --dart-define-from-file=config/dev.json` (`--no-wasm-dry-run` evita una segunda compilación de prueba a WebAssembly: con poca memoria, como en la PC de casa con 3,4 GB, el sistema cortaba la compilación). **Nunca** correr `vercel` desde la raíz del repo: publicaría la documentación en esa dirección pública. Ninguno de los dos proyectos tiene que estar **conectado a GitHub** (`vercel git disconnect`): si lo está, cada push publica la raíz del repo (la documentación) encima de la app. Pasó el 16/10 y se desconectó.
@@ -85,7 +87,7 @@ Revisado de nuevo el **30/10/2026**: las **82 migraciones** sirven tal cual para
    SUPABASE_DB_PASSWORD=…         # la de producción
    SOSM_PROJECT_REF=<ref de prod>
    SOSM_APP_URL=https://app.huellamy.com
-   SOSM_COMERCIOS_URL=https://comercios.huellamy.com   # a sumar en configurar_auth.py (0.8.6e)
+   SOSM_COMERCIOS_URL=https://comercios.huellamy.com   # D156
    SOSM_ADMIN_URL=https://admin.huellamy.com           # D156
    ```
 3. Si se separan los avisos: proyecto de **Firebase de producción** (cuenta de servicio y configuración web) y un sitio de **Turnstile** para el dominio de producción.
