@@ -9,6 +9,6 @@ window.SOS_CONFIG = {
   turnstileSiteKey: '1x00000000000000000000AA',
   // Direcciones de las dos apps (D156): botones de la landing y "Conocé
   // Huellamy" de la página del comercio. En prod: app. y comercios.huellamy.com.
-  appUrl: 'https://sosmascota-dev.vercel.app',
-  comerciosUrl: 'https://sosmascota-comercios-dev.vercel.app',
+  appUrl: 'https://app.huellamy.com',
+  comerciosUrl: 'https://comercios.huellamy.com',
 };
