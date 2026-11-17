@@ -41,8 +41,12 @@ class _SoporteScreenState extends ConsumerState<SoporteScreen> {
     super.dispose();
   }
 
-  Future<void> _abrir(String evento, Uri enlace) async {
-    ref.read(metricasProvider).track(evento);
+  Future<void> _abrir(
+    String evento,
+    Uri enlace, {
+    Map<String, Object?> props = const {},
+  }) async {
+    ref.read(metricasProvider).track(evento, props: props);
     await ref.read(abrirEnlaceProvider)(enlace);
   }
 
@@ -156,6 +160,29 @@ class _SoporteScreenState extends ConsumerState<SoporteScreen> {
                 Uri.https('wa.me', '/$numero'),
               ),
             ),
+          // Redes de Huellamy (D163).
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.photo_camera_outlined),
+            title: Text(t.soporteInstagram),
+            subtitle: Text(t.soporteInstagramCuenta),
+            onTap: () => _abrir(
+              Eventos.socialOpen,
+              Uri.https('www.instagram.com', '/huellamy.app/'),
+              props: const {'red': 'instagram'},
+            ),
+          ),
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.facebook_outlined),
+            title: Text(t.soporteFacebook),
+            subtitle: Text(t.soporteFacebookCuenta),
+            onTap: () => _abrir(
+              Eventos.socialOpen,
+              Uri.https('www.facebook.com', '/huellamy'),
+              props: const {'red': 'facebook'},
+            ),
+          ),
           const Divider(height: 32),
           Text(
             t.soporteFormTitulo,

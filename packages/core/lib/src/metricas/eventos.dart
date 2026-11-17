@@ -84,6 +84,7 @@ abstract final class Eventos {
   static const communityShare = 'community_share';
   static const communityUnshare = 'community_unshare';
   static const newsReaction = 'news_reaction';
+
   /// «Ver todas» las novedades desde el Inicio (D147).
   static const communitySeeAll = 'community_see_all';
 
@@ -195,6 +196,9 @@ abstract final class Eventos {
   static const supportEmail = 'support_email';
   static const supportWhatsapp = 'support_whatsapp';
   static const supportMessage = 'support_message';
+
+  /// Se toca Instagram o Facebook de Huellamy (D163), con `red`.
+  static const socialOpen = 'social_open';
 
   /// Lo registra la web pública al abrir `/n/<id>` (no la app).
   static const businessPageOpen = 'business_page_open';

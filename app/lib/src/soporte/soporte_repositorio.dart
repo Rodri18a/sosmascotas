@@ -4,7 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../config/supabase_providers.dart';
 
 /// Correo de soporte si la base no responde (el mismo que carga la migración).
-const correoSoporteDefecto = 'soporte@huellamy.com';
+const correoSoporteDefecto = 'contacto@huellamy.com';
 
 /// Cómo contactar a soporte (0.8.6b, D160). Sale de `app_settings`, así el
 /// WhatsApp se suma más adelante sin compilar: si no está, no se muestra.

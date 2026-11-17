@@ -1344,7 +1344,7 @@ def main():
             print('soporte (0.8.6b, D160)')
             ajustes = filas(rest('GET', 'app_settings?select=key,value'))
             caso('soporte: un visitante lee el correo de soporte',
-                 {'key': 'support_email', 'value': 'soporte@huellamy.com'} in ajustes)
+                 {'key': 'support_email', 'value': 'contacto@huellamy.com'} in ajustes)
             caso('soporte: nadie cambia los ajustes públicos desde afuera',
                  bloqueado(rest('POST', 'app_settings', {'key': 'support_whatsapp', 'value': '59800000000'}, a, 'return=minimal'))
                  and filas(rest('PATCH', 'app_settings?key=eq.support_email', {'value': 'otro@x.com'}, x)) == []

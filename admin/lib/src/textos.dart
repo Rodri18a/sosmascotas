@@ -399,7 +399,7 @@ abstract final class T {
   static const pasarAProspectos = 'Pasar a prospectos';
   static const pasadoAProspectos = 'Quedó en Prospectos como contactado.';
   static const responderPorCorreo =
-      'Respondé desde soporte@huellamy.com (al correo de cada mensaje) y '
+      'Respondé desde contacto@huellamy.com (al correo de cada mensaje) y '
       'después marcalo respondido. Soporte: en menos de 24 horas.';
   static const tiposContacto = {
     'owner': 'Dueño',

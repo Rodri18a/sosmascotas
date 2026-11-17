@@ -11938,6 +11938,30 @@ abstract class AppLocalizations {
   /// **'Mandanos un correo'**
   String get soporteCorreo;
 
+  /// No description provided for @soporteInstagram.
+  ///
+  /// In es, this message translates to:
+  /// **'Seguinos en Instagram'**
+  String get soporteInstagram;
+
+  /// No description provided for @soporteFacebook.
+  ///
+  /// In es, this message translates to:
+  /// **'Seguinos en Facebook'**
+  String get soporteFacebook;
+
+  /// No description provided for @soporteInstagramCuenta.
+  ///
+  /// In es, this message translates to:
+  /// **'@huellamy.app'**
+  String get soporteInstagramCuenta;
+
+  /// No description provided for @soporteFacebookCuenta.
+  ///
+  /// In es, this message translates to:
+  /// **'facebook.com/huellamy'**
+  String get soporteFacebookCuenta;
+
   /// No description provided for @soporteWhatsapp.
   ///
   /// In es, this message translates to:

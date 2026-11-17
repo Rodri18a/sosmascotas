@@ -7220,6 +7220,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get soporteCorreo => 'Mandanos un correo';
 
   @override
+  String get soporteInstagram => 'Seguinos en Instagram';
+
+  @override
+  String get soporteFacebook => 'Seguinos en Facebook';
+
+  @override
+  String get soporteInstagramCuenta => '@huellamy.app';
+
+  @override
+  String get soporteFacebookCuenta => 'facebook.com/huellamy';
+
+  @override
   String get soporteWhatsapp => 'Escribinos por WhatsApp';
 
   @override

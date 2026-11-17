@@ -74,9 +74,9 @@ En **Zero Trust → Access → Aplicaciones → sosmascotas → Política**, agr
 
 ## Soporte (paso 0.8.6b, D160)
 
-**Canales:** `soporte@huellamy.com` (reenvía al correo del dueño) y **Ajustes → Ayuda y soporte → «Escribinos»** en la app, que deja el mensaje en el portal → **Contactos** (filtro «Soporte (desde la app)»), con el correo de la cuenta para responder. El correo también está en la página del QR y en el pie de la landing. **Meta: responder en menos de 24 horas.**
+**Canales:** `contacto@huellamy.com` (reenvía al correo del dueño) y **Ajustes → Ayuda y soporte → «Escribinos»** en la app, que deja el mensaje en el portal → **Contactos** (filtro «Soporte (desde la app)»), con el correo de la cuenta para responder. El correo también está en la página del QR y en el pie de la landing. **Meta: responder en menos de 24 horas.**
 
-**Correo:** el reenvío se arma en Hostinger (el plan Premium trae correo). La primera activación del correo para `huellamy.com` la hace el dueño en hPanel → Correos; después se puede manejar por la API (`/api/mail/v1/…`, con el mismo token de `hostinger.env`). Responder **desde** `soporte@` (no desde el correo personal), así no se expone una dirección personal.
+**Correo (17/11/2026):** casilla **`contacto@huellamy.com`** en Hostinger (correo Business gratis del plan, 2 casillas, vence el 17/11/2027: renovar o pasar a otro plan antes). Es el correo de soporte y de contacto (no se armó `soporte@`: la API de Hostinger solo lee reenvíos y casillas, `GET /api/mail/v1/orders/{id}/mailboxes`; crearlos es desde hPanel). Responder **desde** `contacto@` (no desde el correo personal), así no se expone una dirección personal. **Redes:** Instagram [@huellamy.app](https://www.instagram.com/huellamy.app/) y Facebook [huellamy](https://www.facebook.com/huellamy), enlazadas en la landing y en Ayuda y soporte.
 
 **Sumar el WhatsApp (después del lanzamiento):** número de la empresa, nunca uno personal de otra persona. Con las credenciales de siempre:
 
@@ -94,7 +94,7 @@ Son las semanas de los fuegos artificiales: más mascotas perdidas y más gente 
 - Si alguien escribe por una mascota perdida: primero, que publique el SOS (no se resuelve por soporte).
 - Anotar acá quién cubre cada día si el dueño no está.
 
-**Respuestas armadas** (copiar, completar y responder desde `soporte@`):
+**Respuestas armadas** (copiar, completar y responder desde `contacto@`):
 
 - **Se perdió mi mascota:** «¡Hola! Lo más rápido es publicar el aviso en la app: SOS → Publicar. Les llega a los vecinos de la zona y a las veterinarias y protectoras de la zona. Si tu mascota tiene la chapita QR, quien la encuentre te avisa sin ver tu teléfono. Cualquier cosa, escribinos de nuevo.»
 - **Encontré una mascota:** «¡Gracias por ayudar! Si tiene chapita, escaneá el QR y avisale a la familia desde ahí. Si no, publicala en SOS → Encontré una mascota. Si está lastimada, en la app está la lista de veterinarias de Urgencias.»

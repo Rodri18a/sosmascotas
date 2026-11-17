@@ -12,7 +12,7 @@ const _ana = Usuario(id: 'u1', email: 'ana@correo.com');
 Future<void> _abrirSoporte(WidgetTester tester) async {
   // La ilustración de arriba (D162) empuja el formulario: se baja hasta él.
   tester.view
-    ..physicalSize = const Size(1080, 2400)
+    ..physicalSize = const Size(1080, 3900)
     ..devicePixelRatio = 3;
   addTearDown(tester.view.reset);
   await tester.pumpAndSettle();
@@ -39,17 +39,43 @@ void main() {
     );
     await _abrirSoporte(tester);
 
-    expect(find.text('soporte@huellamy.com'), findsOneWidget);
+    expect(find.text('contacto@huellamy.com'), findsOneWidget);
     expect(find.text('Escribinos por WhatsApp'), findsNothing);
     await tester.tap(find.text('Mandanos un correo'));
     await tester.pumpAndSettle();
 
     expect(enlaces.single.scheme, 'mailto');
-    expect(enlaces.single.path, 'soporte@huellamy.com');
+    expect(enlaces.single.path, 'contacto@huellamy.com');
     expect(
       eventos.map((e) => e['name']),
       containsAll(['support_open', 'support_email']),
     );
+  });
+
+  testWidgets('Instagram y Facebook de Huellamy abren su página (D163)', (
+    tester,
+  ) async {
+    final enlaces = <Uri>[];
+    final eventos = <Map<String, Object?>>[];
+    await tester.pumpWidget(
+      appDePrueba(
+        cuenta: ServicioCuentaFalso(conectado: _ana),
+        enlacesAbiertos: enlaces,
+        eventos: eventos,
+      ),
+    );
+    await _abrirSoporte(tester);
+
+    await tester.ensureVisible(find.text('Seguinos en Instagram'));
+    await tester.tap(find.text('Seguinos en Instagram'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Seguinos en Facebook'));
+    await tester.pumpAndSettle();
+    expect(enlaces.map((e) => e.toString()), [
+      'https://www.instagram.com/huellamy.app/',
+      'https://www.facebook.com/huellamy',
+    ]);
+    expect(eventos.where((e) => e['name'] == 'social_open'), hasLength(2));
   });
 
   testWidgets('con WhatsApp cargado en la base, se muestra y abre wa.me', (
@@ -137,7 +163,7 @@ void main() {
     await tester.pumpWidget(appDePrueba());
     await _abrirSoporte(tester);
 
-    expect(find.text('soporte@huellamy.com'), findsOneWidget);
+    expect(find.text('contacto@huellamy.com'), findsOneWidget);
     expect(find.byType(TextField), findsNothing);
     expect(
       find.text('Ingresá para escribirnos desde la app, o mandanos un correo.'),
@@ -149,7 +175,7 @@ void main() {
     tester,
   ) async {
     tester.view
-      ..physicalSize = const Size(1080, 2400)
+      ..physicalSize = const Size(1080, 3900)
       ..devicePixelRatio = 3;
     addTearDown(tester.view.reset);
     await tester.pumpWidget(
@@ -161,7 +187,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('soporte@huellamy.com'), findsOneWidget);
+    expect(find.text('contacto@huellamy.com'), findsOneWidget);
     expect(find.text('Ir a SOS'), findsNothing);
   });
 }
