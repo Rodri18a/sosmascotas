@@ -216,6 +216,7 @@ Tabla `events` (append-only), escrita por el cliente con `ref.read(metricasProvi
 | `service_ask` / `service_save` | servicios del comercio: consultar por uno desde la ficha y cargarlo o editarlo (D90) |
 | `booking_create` / `booking_status` / `agenda_save` | business_id; con_servicio / estado y quién / duración y a la vez: turnos (D104). La Edge Function suma `booking_push` y `booking_reminder` |
 | `team_invite` / `team_join` / `team_leave` | business_id; `team_leave` con quién (`yo` o `duenio`): equipo de la empresa (D117) |
+| `support_open` / `support_email` / `support_whatsapp` / `support_message` | — (sin el texto del mensaje): Ayuda y soporte (D160) |
 | `plan_request` | business_id, plan: el comercio pidió un plan pago desde «Tu plan» (D103) |
 | `landing_view` / `landing_cta` / `landing_contact` | landing de `huellamy.com`: visita (con el sitio de donde viene), toque en un botón a las apps (`destino`: `app`/`comercios`) y mensaje enviado (`tipo`: `owner`/`business`/`other`), sin datos de la persona (D158) |
 | `business_page_share` / `business_page_open` | página pública del comercio: el comercio copia su enlace (app) y alguien la abre (web pública, sin cuenta) (D90) |

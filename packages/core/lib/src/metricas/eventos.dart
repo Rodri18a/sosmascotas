@@ -189,6 +189,13 @@ abstract final class Eventos {
   static const teamJoin = 'team_join';
   static const teamLeave = 'team_leave';
 
+  // Soporte (0.8.6b, D160): se abre la pantalla, se toca el correo o el
+  // WhatsApp, o se manda un mensaje. Sin el contenido del mensaje.
+  static const supportOpen = 'support_open';
+  static const supportEmail = 'support_email';
+  static const supportWhatsapp = 'support_whatsapp';
+  static const supportMessage = 'support_message';
+
   /// Lo registra la web pública al abrir `/n/<id>` (no la app).
   static const businessPageOpen = 'business_page_open';
 }

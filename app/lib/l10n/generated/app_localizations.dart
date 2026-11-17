@@ -11859,6 +11859,96 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Este código es de tu propio negocio: mandáselo a quien quieras sumar.'**
   String get equipoErrorDuenio;
+
+  /// No description provided for @soporteTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Ayuda y soporte'**
+  String get soporteTitulo;
+
+  /// No description provided for @soporteAjustesAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Algo no anda o tenés una duda? Escribinos.'**
+  String get soporteAjustesAyuda;
+
+  /// No description provided for @soporteIntro.
+  ///
+  /// In es, this message translates to:
+  /// **'Te respondemos en menos de 24 horas, al correo de tu cuenta.'**
+  String get soporteIntro;
+
+  /// No description provided for @soporteUrgencia.
+  ///
+  /// In es, this message translates to:
+  /// **'Si se perdió tu mascota, no esperes: publicá el aviso en SOS. Y si está lastimada, mirá las veterinarias de Urgencias.'**
+  String get soporteUrgencia;
+
+  /// No description provided for @soporteIrASos.
+  ///
+  /// In es, this message translates to:
+  /// **'Ir a SOS'**
+  String get soporteIrASos;
+
+  /// No description provided for @soporteCorreo.
+  ///
+  /// In es, this message translates to:
+  /// **'Mandanos un correo'**
+  String get soporteCorreo;
+
+  /// No description provided for @soporteWhatsapp.
+  ///
+  /// In es, this message translates to:
+  /// **'Escribinos por WhatsApp'**
+  String get soporteWhatsapp;
+
+  /// No description provided for @soporteFormTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'Escribinos desde acá'**
+  String get soporteFormTitulo;
+
+  /// No description provided for @soporteMensaje.
+  ///
+  /// In es, this message translates to:
+  /// **'Contanos qué pasó'**
+  String get soporteMensaje;
+
+  /// No description provided for @soporteMensajeAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Si es sobre una mascota o un aviso, decinos cuál. No pongas teléfonos ni contraseñas.'**
+  String get soporteMensajeAyuda;
+
+  /// No description provided for @soporteEnviar.
+  ///
+  /// In es, this message translates to:
+  /// **'Enviar'**
+  String get soporteEnviar;
+
+  /// No description provided for @soporteEnviado.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Listo! Te respondemos al correo de tu cuenta.'**
+  String get soporteEnviado;
+
+  /// No description provided for @soporteMuyCorto.
+  ///
+  /// In es, this message translates to:
+  /// **'Escribí un poco más, así te podemos ayudar.'**
+  String get soporteMuyCorto;
+
+  /// No description provided for @soporteDemasiados.
+  ///
+  /// In es, this message translates to:
+  /// **'Ya nos mandaste varios mensajes. Te respondemos pronto; si es urgente, escribinos al correo.'**
+  String get soporteDemasiados;
+
+  /// No description provided for @soporteIngresar.
+  ///
+  /// In es, this message translates to:
+  /// **'Ingresá para escribirnos desde la app, o mandanos un correo.'**
+  String get soporteIngresar;
 }
 
 class _AppLocalizationsDelegate

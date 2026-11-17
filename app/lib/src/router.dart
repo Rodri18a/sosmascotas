@@ -59,6 +59,7 @@ import 'legal/legal.dart';
 import 'recorrido/pasos.dart';
 import 'recorrido/recorrido.dart';
 import 'redireccion.dart';
+import 'soporte/soporte_screen.dart';
 import 'sos/sos_repositorio.dart';
 
 /// Direcciones de la app. También son las direcciones web (enlaces compartibles).
@@ -74,6 +75,7 @@ abstract final class Rutas {
   static const legal = '/legal';
   static const terminos = '/legal/terminos';
   static const privacidad = '/legal/privacidad';
+  static const soporte = '/soporte';
   static const sosNuevo = '/sos/nuevo';
   static const mascotaNueva = '/mascotas/nueva';
   static const noDisponible = '/no-disponible';
@@ -481,6 +483,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state) =>
             ConsentimientoScreen(volver: state.uri.queryParameters['volver']),
       ),
+      GoRoute(path: Rutas.soporte, builder: (_, _) => const SoporteScreen()),
       GoRoute(
         path: Rutas.terminos,
         builder: (_, _) =>

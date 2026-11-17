@@ -51,6 +51,13 @@ class AjustesScreen extends ConsumerWidget {
           const TileInstalar(),
           const Divider(),
           ListTile(
+            leading: const Icon(Icons.support_agent_outlined),
+            title: Text(t.soporteTitulo),
+            subtitle: Text(t.soporteAjustesAyuda),
+            trailing: const Icon(Icons.chevron_right_outlined),
+            onTap: () => context.push(Rutas.soporte),
+          ),
+          ListTile(
             leading: const Icon(Icons.description_outlined),
             title: Text(t.legalTerminos),
             onTap: () => context.push(Rutas.terminos),

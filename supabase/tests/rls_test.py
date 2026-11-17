@@ -1340,6 +1340,51 @@ def main():
             res_c = [pedir('POST', contacto_url, {**base_c, 'name': 'Prueba RLS límite'}, otro_c)[0] for _ in range(4)]
             caso('contacto: más de 3 mensajes por hora desde el mismo dispositivo se frenan',
                  res_c[:3] == [200] * 3 and res_c[3] == 429)
+
+            print('soporte (0.8.6b, D160)')
+            ajustes = filas(rest('GET', 'app_settings?select=key,value'))
+            caso('soporte: un visitante lee el correo de soporte',
+                 {'key': 'support_email', 'value': 'soporte@huellamy.com'} in ajustes)
+            caso('soporte: nadie cambia los ajustes públicos desde afuera',
+                 bloqueado(rest('POST', 'app_settings', {'key': 'support_whatsapp', 'value': '59800000000'}, a, 'return=minimal'))
+                 and filas(rest('PATCH', 'app_settings?key=eq.support_email', {'value': 'otro@x.com'}, x)) == []
+                 and filas(rest('PATCH', 'app_settings?key=eq.support_email', {'value': 'otro@x.com'})) == [])
+            caso('soporte: un visitante no puede escribir (hay que ingresar)',
+                 rest('POST', 'rpc/enviar_soporte', {'p_mensaje': 'Hola, no anda'})[0] >= 400)
+            caso('soporte: un mensaje muy corto se rechaza',
+                 rest('POST', 'rpc/enviar_soporte', {'p_mensaje': 'hey'}, a)[0] >= 400)
+            caso('soporte: A escribe desde la app',
+                 rest('POST', 'rpc/enviar_soporte', {'p_mensaje': 'Prueba RLS soporte: no me llega el código'}, a)[0] in (200, 204))
+            sop = filas(pedir('GET', f'{URL}/rest/v1/contact_messages?select=*&kind=eq.support&user_id=eq.{a_id}', headers=ADMIN))
+            caso('soporte: queda con el correo y el nombre de la cuenta de A (los pone la base)',
+                 len(sop) == 1 and sop[0]['email'].startswith('prueba-rls-a-') and sop[0]['name'] == 'Ana'
+                 and sop[0]['status'] == 'new')
+            caso('soporte: A no lee ni su propio mensaje en la bandeja',
+                 filas(rest('GET', 'contact_messages?select=id&kind=eq.support', quien=a)) == [])
+            mod_id, mod = crear_usuario('moderador')
+            ven_id, ven = crear_usuario('ventas')
+            try:
+                pedir('PATCH', f'{URL}/rest/v1/profiles?id=eq.{mod_id}', {'role': 'moderator'}, ADMIN)
+                pedir('PATCH', f'{URL}/rest/v1/profiles?id=eq.{ven_id}', {'role': 'sales'}, ADMIN)
+                pedir('POST', contacto_url, {**base_c, 'name': 'Prueba RLS landing 2'},
+                      {'apikey': PUBLICA, 'User-Agent': f'prueba-{uuid.uuid4()}'})
+                vistos_mod = {f['kind'] for f in filas(rest('GET', 'contact_messages?select=kind', quien=mod))}
+                vistos_ven = {f['kind'] for f in filas(rest('GET', 'contact_messages?select=kind', quien=ven))}
+                caso('soporte: moderación ve los de soporte y no los de la landing',
+                     'support' in vistos_mod and 'business' not in vistos_mod)
+                caso('soporte: ventas ve los de la landing y no los de soporte',
+                     'business' in vistos_ven and 'support' not in vistos_ven)
+                caso('soporte: ventas no puede marcar uno de soporte',
+                     filas(rest('PATCH', f"contact_messages?id=eq.{sop[0]['id'] if sop else ''}", {'status': 'archived'}, ven)) == [])
+                caso('soporte: moderación lo marca respondido',
+                     len(filas(rest('PATCH', f"contact_messages?id=eq.{sop[0]['id'] if sop else ''}", {'status': 'answered'}, mod))) == 1)
+            finally:
+                for uid in (mod_id, ven_id):
+                    pedir('DELETE', f'{URL}/auth/v1/admin/users/{uid}', headers=ADMIN)
+            res_s = [rest('POST', 'rpc/enviar_soporte', {'p_mensaje': f'Prueba RLS soporte {i}'}, b)[0] for i in range(6)]
+            caso('soporte: más de 5 mensajes por hora por cuenta se frenan',
+                 all(r in (200, 204) for r in res_s[:5]) and res_s[5] >= 400)
+            pedir('DELETE', f'{URL}/rest/v1/contact_messages?kind=eq.support&message=like.Prueba%20RLS%20soporte*', headers=ADMIN)
             pedir('DELETE', f'{URL}/rest/v1/contact_messages?email=eq.prueba-rls@example.com', headers=ADMIN)
             pedir('DELETE', f"{URL}/rest/v1/events?anon_id=eq.{base_c['anon_id']}", headers=ADMIN)
             caso('A no puede cargar en la Ayuda',

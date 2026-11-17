@@ -5,8 +5,8 @@ import '../modelos.dart';
 import '../repositorio.dart';
 import '../textos.dart';
 
-/// Mensajes del formulario de la landing (0.8.6d, D158): se responden desde el
-/// correo del equipo y acá se marcan respondidos o se archivan. Los de
+/// Mensajes del formulario de la landing (0.8.6d, D158) y de soporte desde la
+/// app (0.8.6b, D160): se responden desde el correo del equipo y acá se marcan respondidos o se archivan. Los de
 /// comercios se pueden pasar al embudo de ventas.
 class ContactosScreen extends ConsumerStatefulWidget {
   const ContactosScreen({super.key});

@@ -7173,4 +7173,55 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get equipoErrorDuenio =>
       'Este código es de tu propio negocio: mandáselo a quien quieras sumar.';
+
+  @override
+  String get soporteTitulo => 'Ayuda y soporte';
+
+  @override
+  String get soporteAjustesAyuda =>
+      '¿Algo no anda o tenés una duda? Escribinos.';
+
+  @override
+  String get soporteIntro =>
+      'Te respondemos en menos de 24 horas, al correo de tu cuenta.';
+
+  @override
+  String get soporteUrgencia =>
+      'Si se perdió tu mascota, no esperes: publicá el aviso en SOS. Y si está lastimada, mirá las veterinarias de Urgencias.';
+
+  @override
+  String get soporteIrASos => 'Ir a SOS';
+
+  @override
+  String get soporteCorreo => 'Mandanos un correo';
+
+  @override
+  String get soporteWhatsapp => 'Escribinos por WhatsApp';
+
+  @override
+  String get soporteFormTitulo => 'Escribinos desde acá';
+
+  @override
+  String get soporteMensaje => 'Contanos qué pasó';
+
+  @override
+  String get soporteMensajeAyuda =>
+      'Si es sobre una mascota o un aviso, decinos cuál. No pongas teléfonos ni contraseñas.';
+
+  @override
+  String get soporteEnviar => 'Enviar';
+
+  @override
+  String get soporteEnviado => '¡Listo! Te respondemos al correo de tu cuenta.';
+
+  @override
+  String get soporteMuyCorto => 'Escribí un poco más, así te podemos ayudar.';
+
+  @override
+  String get soporteDemasiados =>
+      'Ya nos mandaste varios mensajes. Te respondemos pronto; si es urgente, escribinos al correo.';
+
+  @override
+  String get soporteIngresar =>
+      'Ingresá para escribirnos desde la app, o mandanos un correo.';
 }

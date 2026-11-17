@@ -72,6 +72,37 @@ Ya está casi todo preparado:
 
 En **Zero Trust → Access → Aplicaciones → sosmascotas → Política**, agregar su email.
 
+## Soporte (paso 0.8.6b, D160)
+
+**Canales:** `soporte@huellamy.com` (reenvía al correo del dueño) y **Ajustes → Ayuda y soporte → «Escribinos»** en la app, que deja el mensaje en el portal → **Contactos** (filtro «Soporte (desde la app)»), con el correo de la cuenta para responder. El correo también está en la página del QR y en el pie de la landing. **Meta: responder en menos de 24 horas.**
+
+**Correo:** el reenvío se arma en Hostinger (el plan Premium trae correo). La primera activación del correo para `huellamy.com` la hace el dueño en hPanel → Correos; después se puede manejar por la API (`/api/mail/v1/…`, con el mismo token de `hostinger.env`). Responder **desde** `soporte@` (no desde el correo personal), así no se expone una dirección personal.
+
+**Sumar el WhatsApp (después del lanzamiento):** número de la empresa, nunca uno personal de otra persona. Con las credenciales de siempre:
+
+```sh
+supabase db query --linked "insert into public.app_settings (key, value) values ('support_whatsapp', '598XXXXXXXX') on conflict (key) do update set value = excluded.value, updated_at = now()"
+```
+
+Aparece solo en la app (sin compilar). Para sacarlo: `delete from public.app_settings where key = 'support_whatsapp'`. En la web pública (`m.html`, `index.html`) hay que sumarlo a mano.
+
+### Guardia de fin de año (24/12 al 2/1)
+
+Son las semanas de los fuegos artificiales: más mascotas perdidas y más gente nueva en la app.
+
+- Mirar el portal → Contactos y el correo **dos veces por día** (mañana y noche), y el portal → Moderación (avisos reportados).
+- Si alguien escribe por una mascota perdida: primero, que publique el SOS (no se resuelve por soporte).
+- Anotar acá quién cubre cada día si el dueño no está.
+
+**Respuestas armadas** (copiar, completar y responder desde `soporte@`):
+
+- **Se perdió mi mascota:** «¡Hola! Lo más rápido es publicar el aviso en la app: SOS → Publicar. Les llega a los vecinos de la zona y a las veterinarias y protectoras de la zona. Si tu mascota tiene la chapita QR, quien la encuentre te avisa sin ver tu teléfono. Cualquier cosa, escribinos de nuevo.»
+- **Encontré una mascota:** «¡Gracias por ayudar! Si tiene chapita, escaneá el QR y avisale a la familia desde ahí. Si no, publicala en SOS → Encontré una mascota. Si está lastimada, en la app está la lista de veterinarias de Urgencias.»
+- **No me llega el código para ingresar:** «Revisá la carpeta de spam o promociones; el correo llega de Huellamy. Si en 5 minutos no llegó, pedí uno nuevo desde la misma pantalla. Si sigue sin llegar, respondenos y lo resolvemos.»
+- **La chapita no funciona:** «Contanos qué pasa al escanearla (si no abre nada, si dice que no está vinculada, etc.) y, si podés, mandanos una foto de la chapita. Si dice "todavía no tiene una mascota vinculada", se activa desde la app: Mascotas → tu mascota → Chapita QR.»
+- **Quiero borrar mi cuenta:** «Lo podés hacer vos desde Ajustes → Borrar mi cuenta: se borran tus datos y los de tus mascotas. Si tenés algún problema, decinos.»
+- **Soy un comercio y quiero aparecer:** «¡Qué bueno! Entrá a Huellamy Comercios (comercios.huellamy.com), creá tu cuenta y reclamá o cargá tu negocio. Si preferís, respondenos con el nombre y la dirección y te ayudamos.»
+
 ## Producción (paso 0.8.5) — lista para cuando se cree el proyecto
 
 Revisado de nuevo el **30/10/2026**: las **82 migraciones** sirven tal cual para producción. No traen datos de ejemplo (van en `supabase/seeds/` y en los cargadores con `--ejemplo`), ni direcciones de dev, ni correos o ids de usuarios. La única funcionalidad gradual que crean es `temas_pro` (en beta); las otras 23 que hay en dev (`comercios`, `chat`, `cuidados`, etc.) se crean con `funcionalidades.py`, así que en producción quedan **apagadas** hasta crearlas. Las migraciones también prenden `pg_cron` y `pg_net` y programan 4 tareas (`resumir-estadisticas`, `reporte-mensual`, `vencer-planes`, `recordar-turnos`).

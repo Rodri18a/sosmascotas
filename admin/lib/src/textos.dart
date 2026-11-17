@@ -210,6 +210,7 @@ abstract final class T {
     'payment_link': 'Link de pago',
     'cash': 'Efectivo',
     'other': 'Otro',
+    'support': 'Soporte (desde la app)',
   };
   static const referencia = 'Referencia (n.º de transferencia…)';
   static const mesesPagados = 'Meses que paga';
@@ -385,10 +386,11 @@ abstract final class T {
     'published': 'Publicada',
     'hidden': 'Oculta',
   };
+
   /// Especies habilitadas (D149: la primera versión es de perros y gatos).
   static const especies = {1: 'Perro', 2: 'Gato'};
 
-  // Contactos de la landing (D158)
+  // Contactos de la landing (D158) y soporte desde la app (D160)
   static const contactos = 'Contactos';
   static const sinContactos = 'No hay mensajes acá.';
   static const marcarRespondido = 'Marcar respondido';
@@ -397,7 +399,8 @@ abstract final class T {
   static const pasarAProspectos = 'Pasar a prospectos';
   static const pasadoAProspectos = 'Quedó en Prospectos como contactado.';
   static const responderPorCorreo =
-      'Respondé desde el correo del equipo y después marcalo respondido.';
+      'Respondé desde soporte@huellamy.com (al correo de cada mensaje) y '
+      'después marcalo respondido. Soporte: en menos de 24 horas.';
   static const tiposContacto = {
     'owner': 'Dueño',
     'business': 'Comercio',

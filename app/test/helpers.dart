@@ -52,6 +52,7 @@ import 'package:sosmascota/src/recordatorios/avisador.dart';
 import 'package:sosmascota/src/recordatorios/recordatorios_repositorio.dart';
 import 'package:sosmascota/src/recorrido/recorrido.dart';
 import 'package:sosmascota/src/router.dart';
+import 'package:sosmascota/src/soporte/soporte_repositorio.dart';
 import 'package:sosmascota/src/sos/sos_repositorio.dart';
 import 'package:sosmascota/src/theme/tema_elegido.dart';
 import 'package:sosmascota/src/tienda/tienda_repositorio.dart';
@@ -94,6 +95,7 @@ import 'qr_falso.dart';
 import 'recordatorios_falsos.dart';
 import 'resenas_falsas.dart';
 import 'respaldo_falso.dart';
+import 'soporte_falso.dart';
 import 'sos_falso.dart';
 import 'tareas_falsas.dart';
 import 'tema_falso.dart';
@@ -143,6 +145,7 @@ Widget appDePrueba({
   CuidadosRepositorio? cuidados,
   ComunidadRepositorio? comunidad,
   PlanUsuarioRepositorio? planUsuario,
+  SoporteRepositorio? soporte,
   AlmacenFiltros? almacenFiltros,
   DescuentosRepositorio? descuentos,
   EquipoRepositorio? equipo,
@@ -276,6 +279,7 @@ Widget appDePrueba({
     planUsuarioRepositorioProvider.overrideWithValue(
       planUsuario ?? PlanUsuarioFalso(),
     ),
+    soporteRepositorioProvider.overrideWithValue(soporte ?? SoporteFalso()),
     misLugaresRepositorioProvider.overrideWithValue(
       misLugares ?? MisLugaresFalsos(),
     ),

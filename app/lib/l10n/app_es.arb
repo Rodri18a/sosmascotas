@@ -2585,5 +2585,20 @@
   "unirmeEquipoBoton": "Unirme al equipo",
   "unirmeEquipoListo": "¡Listo! Ya sos parte del equipo.",
   "equipoErrorCodigo": "Este código no existe, ya se usó o venció. Pedile uno nuevo al dueño.",
-  "equipoErrorDuenio": "Este código es de tu propio negocio: mandáselo a quien quieras sumar."
+  "equipoErrorDuenio": "Este código es de tu propio negocio: mandáselo a quien quieras sumar.",
+  "soporteTitulo": "Ayuda y soporte",
+  "soporteAjustesAyuda": "¿Algo no anda o tenés una duda? Escribinos.",
+  "soporteIntro": "Te respondemos en menos de 24 horas, al correo de tu cuenta.",
+  "soporteUrgencia": "Si se perdió tu mascota, no esperes: publicá el aviso en SOS. Y si está lastimada, mirá las veterinarias de Urgencias.",
+  "soporteIrASos": "Ir a SOS",
+  "soporteCorreo": "Mandanos un correo",
+  "soporteWhatsapp": "Escribinos por WhatsApp",
+  "soporteFormTitulo": "Escribinos desde acá",
+  "soporteMensaje": "Contanos qué pasó",
+  "soporteMensajeAyuda": "Si es sobre una mascota o un aviso, decinos cuál. No pongas teléfonos ni contraseñas.",
+  "soporteEnviar": "Enviar",
+  "soporteEnviado": "¡Listo! Te respondemos al correo de tu cuenta.",
+  "soporteMuyCorto": "Escribí un poco más, así te podemos ayudar.",
+  "soporteDemasiados": "Ya nos mandaste varios mensajes. Te respondemos pronto; si es urgente, escribinos al correo.",
+  "soporteIngresar": "Ingresá para escribirnos desde la app, o mandanos un correo."
 }

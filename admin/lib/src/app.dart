@@ -133,7 +133,13 @@ class _PortalState extends ConsumerState<Portal> {
     (Icons.forum_outlined, T.grupos, GruposScreen(), {'moderator'}),
     (Icons.storefront_outlined, T.lugares, LugaresScreen(), {'sales'}),
     (Icons.verified_outlined, T.comercios, ComerciosScreen(), {}),
-    (Icons.mail_outline, T.contactos, ContactosScreen(), {'sales'}),
+    // Ventas ve los de la landing y moderación los de soporte (la base filtra).
+    (
+      Icons.mail_outline,
+      T.contactos,
+      ContactosScreen(),
+      {'sales', 'moderator'},
+    ),
     (Icons.handshake_outlined, T.prospectos, ProspectosScreen(), {'sales'}),
     (Icons.description_outlined, T.propuestas, PropuestasScreen(), {'sales'}),
     (Icons.campaign_outlined, T.espacios, EspaciosScreen(), {'sales'}),
