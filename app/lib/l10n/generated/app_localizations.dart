@@ -4471,7 +4471,7 @@ abstract class AppLocalizations {
   /// No description provided for @negocioCoberturaAyuda.
   ///
   /// In es, this message translates to:
-  /// **'Por ejemplo: Pando y alrededores.'**
+  /// **'Por ejemplo: tu barrio y alrededores.'**
   String get negocioCoberturaAyuda;
 
   /// No description provided for @negocioTelefono.

@@ -106,7 +106,7 @@ ${mascotas.isEmpty ? '' : '  <li>Mascotas registradas: $mascotas</li>'}
 
 ${casos.isEmpty ? '' : '<h2>Lo que dicen otros comercios</h2>\n$casos'}
 
-<p class="nota pie">Huellamy · Pando, Uruguay. Son cantidades de la app: nunca se comparte quién fue (Ley 18.331).</p>
+<p class="nota pie">Huellamy · Hecho en Uruguay. Son cantidades de la app: nunca se comparte quién fue (Ley 18.331).</p>
 </body>
 </html>
 ''';

@@ -22,7 +22,7 @@ const C = {
 
 // Escenas: inicio, duración, título, subtítulos [texto, desde (s, relativo)]
 const ESCENAS = [
-  { d: 4.2, titulo: ['Todo para tu mascota,', 'en un mapa'], subs: [['¿Tenés perro o gato en Pando? Esto es para vos.', 0]] },
+  { d: 4.2, titulo: ['Todo para tu mascota,', 'en un mapa'], subs: [['¿Tenés perro o gato? Esto es para vos.', 0]] },
   { d: 9.4, titulo: ['Veterinarias, pet shops', 'y mucho más'], subs: [['Huellamy junta en un mapa todo lo que tu mascota necesita:', 0], ['veterinarias, pet shops, paseadores, guarderías y lugares que aceptan mascotas.', 3.9]] },
   { d: 5.1, titulo: ['¿Se perdió?', 'Avisás a tus vecinos'], subs: [['Si se pierde, publicás el aviso y les llega a los vecinos de la zona.', 0]] },
   { d: 5.7, titulo: ['Chapita QR', 'y su salud al día'], subs: [['Tiene su chapita QR y sus vacunas y remedios al día, con recordatorios.', 0]] },
@@ -332,8 +332,8 @@ function escena5(ctx, lt) { // cierre fijo
   ctx.restore();
   const pp = easeOut(prog(lt, 0.9, 0.5));
   ctx.save(); ctx.globalAlpha = pp;
-  textoCentrado(ctx, 'Hecho en Pando, Uruguay', W / 2 - 30, 1490, '46px NunitoXB', C.texto);
-  ctx.font = '46px NunitoXB'; const tw = ctx.measureText('Hecho en Pando, Uruguay').width;
+  textoCentrado(ctx, 'Hecho en Uruguay', W / 2 - 30, 1490, '46px NunitoXB', C.texto);
+  ctx.font = '46px NunitoXB'; const tw = ctx.measureText('Hecho en Uruguay').width;
   corazon(ctx, W / 2 - 30 + tw / 2 + 45, 1492, 50, C.brillante);
   ctx.restore();
 }

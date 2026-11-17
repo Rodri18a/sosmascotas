@@ -11,11 +11,11 @@ Guiones (lo que se dice), qué se muestra en pantalla y la descripción para pub
 - **Imagen:** grabación de pantalla de la app (dev, con los ejemplos de `supabase/seeds/`) más tomas reales del perro o el gato. Ami y Mishi abren y cierran (guía de marca: Ami saluda y celebra, Mishi asoma y observa).
 - **Privacidad en la grabación:** nada de teléfonos, correos ni direcciones reales en pantalla. Usar cuentas y mascotas de prueba.
 - **No prometer lo que no está:** mientras no estén las apps en las tiendas (1.1), el cierre es **«Entrá a huellamy.com»**, no «descargala». Antes de publicar cada video, revisar que su funcionalidad gradual esté prendida en producción (`supabase/funcionalidades.py listar`).
-- **Cierre fijo (3 s):** logo de Huellamy con Ami y Mishi + «huellamy.com» + «Hecho en Pando, Uruguay».
+- **Cierre fijo (3 s):** logo de Huellamy con Ami y Mishi + «huellamy.com» + «Hecho en Uruguay».
 - **Ya armados** (17/11/2026): el **video 1** en `guias/huellamy/videos/` (con voz y solo con música), animado en código con el generador de `guias/huellamy/videos/generador/` (ver su `LEEME.md`). La voz es la de Windows (acento de España): sirve de borrador; para publicar, mejor la versión solo con música o grabar una voz propia.
 - **Tono:** cálido, simple y cercano, sin infantilizar. En los videos de SOS, sereno: acompaña, no asusta.
 
-**Hashtags base** (sumar 3–5 propios de cada video): `#Huellamy #Pando #Canelones #Uruguay #Mascotas #Perros #Gatos`
+**Hashtags base** (sumar 3–5 propios de cada video): `#Huellamy #Uruguay #Mascotas #Perros #Gatos`
 
 ## Índice
 
@@ -46,7 +46,7 @@ Guiones (lo que se dice), qué se muestra en pantalla y la descripción para pub
 
 | Tiempo | En pantalla | Voz en off |
 |---|---|---|
-| 0–3 s | Ami saluda con la patita, Mishi asoma. Texto: **«Todo para tu mascota, en un mapa»** | «¿Tenés perro o gato en Pando? Esto es para vos.» |
+| 0–3 s | Ami saluda con la patita, Mishi asoma. Texto: **«Todo para tu mascota, en un mapa»** | «¿Tenés perro o gato? Esto es para vos.» |
 | 3–10 s | El mapa con pines de veterinarias, pet shops y paseadores | «Huellamy junta en un mapa todo lo que tu mascota necesita: veterinarias, pet shops, paseadores, guarderías y lugares que aceptan mascotas.» |
 | 10–17 s | Pestaña SOS con un aviso de perdido | «Si se pierde, publicás el aviso y les llega a los vecinos de la zona.» |
 | 17–23 s | Chapita QR + recordatorio «Ya se la di» | «Tiene su chapita QR y sus vacunas y remedios al día, con recordatorios.» |
@@ -55,7 +55,7 @@ Guiones (lo que se dice), qué se muestra en pantalla y la descripción para pub
 
 **Descripción:**
 > Veterinarias, pet shops, paseadores, mascotas perdidas y encontradas, la chapita QR y los recordatorios de salud: todo en un mapa 🐶🐱
-> Lo que hace a la seguridad y la salud de tu mascota es gratis. Arrancamos en Pando 💙
+> Lo que hace a la seguridad y la salud de tu mascota es gratis. Hecho en Uruguay 💙
 > 👉 huellamy.com
 
 `#AppParaMascotas #MascotasPerdidas #Veterinaria`
@@ -180,7 +180,7 @@ Guiones (lo que se dice), qué se muestra en pantalla y la descripción para pub
 | 25–30 s | «Marcar un lugar» + cierre | «¿Falta alguno? Lo marcás vos y lo sumamos. Entrá a huellamy.com.» |
 
 **Descripción:**
-> Veterinarias, pet shops, paseadores, guarderías y lugares que aceptan mascotas en Pando, en un solo mapa 🗺️ Filtrá por «abierto ahora», mirá reseñas y cómo llegar.
+> Veterinarias, pet shops, paseadores, guarderías y lugares que aceptan mascotas cerca tuyo, en un solo mapa 🗺️ Filtrá por «abierto ahora», mirá reseñas y cómo llegar.
 > ¿Falta un lugar? Marcalo vos.
 > 👉 huellamy.com
 
@@ -196,15 +196,15 @@ Guiones (lo que se dice), qué se muestra en pantalla y la descripción para pub
 |---|---|---|
 | 0–3 s | Perro decaído en su cama (tono sereno). Texto: **«¿Una urgencia de noche?»** | «Son las tres de la mañana y tu perro no está bien.» |
 | 3–12 s | Pestaña Urgencias → veterinarias de urgencia 24 h | «En Urgencias tenés las veterinarias de guardia de la zona, a un toque.» |
-| 12–19 s | Directorio: refugios, protectoras y grupos de Pando | «Y también refugios, protectoras y grupos que ayudan.» |
+| 12–19 s | Directorio: refugios, protectoras y grupos de tu zona | «Y también refugios, protectoras y grupos que ayudan.» |
 | 19–25 s | Texto: **«Si hay una persona en riesgo, llamá al 911»** + cierre | «Guardala hoy, para no buscar cuando más la necesitás.» |
 
 **Descripción:**
-> En Huellamy, la pestaña Urgencias tiene las veterinarias de guardia y los refugios y protectoras de Pando, a un toque 🚑
+> En Huellamy, la pestaña Urgencias tiene las veterinarias de guardia y los refugios y protectoras de tu zona, a un toque 🚑
 > Guardala hoy, para no tener que buscar en el peor momento.
 > 👉 huellamy.com
 
-`#VeterinariaDeUrgencia #Veterinaria24hs #Pando`
+`#VeterinariaDeUrgencia #Veterinaria24hs #Uruguay`
 
 ---
 
@@ -264,7 +264,7 @@ Guiones (lo que se dice), qué se muestra en pantalla y la descripción para pub
 | 25–30 s | Ami y Mishi abrazados + cierre | «Adoptar es para siempre. Que salga bien.» |
 
 **Descripción:**
-> Perros y gatos en adopción en Pando, con todo lo que necesitás saber antes de decidir: cómo es cada uno, cuánto cuesta por mes y si estás listo 🐾
+> Perros y gatos en adopción cerca tuyo, con todo lo que necesitás saber antes de decidir: cómo es cada uno, cuánto cuesta por mes y si estás listo 🐾
 > Adoptar es para siempre. ¿Te sumás como hogar de tránsito?
 > 👉 huellamy.com
 
@@ -320,7 +320,7 @@ Guiones (lo que se dice), qué se muestra en pantalla y la descripción para pub
 
 | Tiempo | En pantalla | Voz en off |
 |---|---|---|
-| 0–3 s | Vidriera de un pet shop de Pando. Texto: **«¿Tenés un comercio de mascotas?»** | «¿Trabajás con mascotas en Pando?» |
+| 0–3 s | Vidriera de un pet shop de barrio. Texto: **«¿Tenés un comercio de mascotas?»** | «¿Trabajás con mascotas?» |
 | 3–10 s | Mapa de Huellamy con el pin gris «sin reclamar» del comercio | «Puede que tu local ya esté en el mapa de Huellamy, marcado por tus clientes.» |
 | 10–19 s | Huellamy Comercios → reclamar el lugar → nombre, horario, fotos, especies | «Lo reclamás, cargás tu horario, tus fotos y las especies que atendés.» |
 | 19–27 s | Pin verificado ✔️ en el mapa de un dueño | «Y te encuentran los dueños de tu zona, justo cuando buscan.» |
@@ -331,7 +331,7 @@ Guiones (lo que se dice), qué se muestra en pantalla y la descripción para pub
 > La ficha básica no tiene costo.
 > 👉 comercios.huellamy.com
 
-`#Emprendedores #ComerciosDePando #PetShop #Veterinaria`
+`#Emprendedores #ComerciosUruguayos #PetShop #Veterinaria`
 
 ---
 
@@ -363,15 +363,15 @@ Guiones (lo que se dice), qué se muestra en pantalla y la descripción para pub
 |---|---|---|
 | 0–3 s | Panel del comercio con el número de vistas subiendo | «¿Cuánta gente vio tu comercio este mes?» |
 | 3–12 s | Estadísticas: vistas, llamadas, «cómo llegar», comparación mensual | «En tu panel ves cuántos vieron tu ficha, cuántos te llamaron o pidieron cómo llegar, y cómo vas mes a mes.» |
-| 12–22 s | Texto: **«Socios Fundadores: plan Destacado gratis por 6 meses»** | «Y si sos de los primeros comercios de Pando, tenés el plan Destacado gratis por 6 meses y el precio congelado después.» |
+| 12–22 s | Texto: **«Socios Fundadores: plan Destacado gratis por 6 meses»** | «Y si sos de los primeros comercios en sumarte, tenés el plan Destacado gratis por 6 meses y el precio congelado después.» |
 | 22–30 s | Ami celebrando + cierre con «huellamy.com · Soy un comercio» | «Escribinos desde huellamy.com y sumate.» |
 
 **Descripción:**
-> Los primeros comercios de Pando que se suman a Huellamy son Socios Fundadores: plan Destacado gratis por 6 meses y precio congelado después ⭐
+> Los primeros comercios que se suman a Huellamy son Socios Fundadores: plan Destacado gratis por 6 meses y precio congelado después ⭐
 > Mirá cuánta gente ve tu ficha y te contacta, mes a mes.
 > 👉 huellamy.com → «Soy un comercio»
 
-`#SociosFundadores #ComerciosDePando #Emprendedores`
+`#SociosFundadores #ComerciosUruguayos #Emprendedores`
 
 > Revisar antes de publicar que las condiciones de Socios Fundadores sigan iguales (`22-planes-y-precios.md`).
 

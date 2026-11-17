@@ -2606,7 +2606,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get negocioCobertura => 'Zona donde trabajás';
 
   @override
-  String get negocioCoberturaAyuda => 'Por ejemplo: Pando y alrededores.';
+  String get negocioCoberturaAyuda => 'Por ejemplo: tu barrio y alrededores.';
 
   @override
   String get negocioTelefono => 'Teléfono';

@@ -4,7 +4,7 @@
 
 ## Qué es Huellamy
 
-Huellamy es una app para dueños de mascotas y comercios del rubro, que arranca en Pando (Uruguay). Te ayuda a encontrar veterinarias y servicios, reportar mascotas perdidas o encontradas, identificar a tu mascota con una chapita QR y cuidar su salud.
+Huellamy es una app para dueños de mascotas y comercios del rubro, hecha en Uruguay. Te ayuda a encontrar veterinarias y servicios, reportar mascotas perdidas o encontradas, identificar a tu mascota con una chapita QR y cuidar su salud.
 
 ## Tu cuenta
 
