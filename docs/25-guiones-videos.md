@@ -12,6 +12,7 @@ Guiones (lo que se dice), qué se muestra en pantalla y la descripción para pub
 - **Privacidad en la grabación:** nada de teléfonos, correos ni direcciones reales en pantalla. Usar cuentas y mascotas de prueba.
 - **No prometer lo que no está:** mientras no estén las apps en las tiendas (1.1), el cierre es **«Entrá a huellamy.com»**, no «descargala». Antes de publicar cada video, revisar que su funcionalidad gradual esté prendida en producción (`supabase/funcionalidades.py listar`).
 - **Cierre fijo (3 s):** logo de Huellamy con Ami y Mishi + «huellamy.com» + «Hecho en Pando, Uruguay».
+- **Ya armados** (17/11/2026): el **video 1** en `guias/huellamy/videos/` (con voz y solo con música), animado en código con el generador de `guias/huellamy/videos/generador/` (ver su `LEEME.md`). La voz es la de Windows (acento de España): sirve de borrador; para publicar, mejor la versión solo con música o grabar una voz propia.
 - **Tono:** cálido, simple y cercano, sin infantilizar. En los videos de SOS, sereno: acompaña, no asusta.
 
 **Hashtags base** (sumar 3–5 propios de cada video): `#Huellamy #Pando #Canelones #Uruguay #Mascotas #Perros #Gatos`
