@@ -117,7 +117,7 @@ h3 { font-size: 15px; margin: 12px 0 4px; color: var(--primario); }
 .bajada { color: var(--suave); margin: 0 0 16px; }
 .botones-portada { display: grid; gap: 8px; }
 .botones-portada .boton.secundario { margin-top: 0; }
-.logo-portada { width: 100%; max-width: 320px; height: auto; justify-self: center; }
+.logo-portada { width: 100%; max-width: 420px; height: auto; justify-self: center; }
 .bloque { padding: 24px 0; border-top: 1px solid var(--borde); }
 .bloque > h2 { font-size: 28px; color: var(--primario); }
 .grilla { display: grid; gap: 12px; }
@@ -144,6 +144,30 @@ input[type=email] { width: 100%; padding: 12px; font: inherit; border-radius: 10
 .pie img { width: 80px; height: auto; }
 .pie p { margin: 4px 0; }
 .soporte { text-align: center; margin-top: 24px; }
+
+/* Estilo ilustrado de la landing (D162): tarjetas blancas bien redondeadas con
+   sombra suave, títulos azul marino, botones en píldora y huellitas sueltas. */
+.landing { --huella: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='%231aa0ea'%3E%3Cellipse cx='32' cy='42' rx='14' ry='12'/%3E%3Cellipse cx='14' cy='26' rx='6' ry='8'/%3E%3Cellipse cx='26' cy='14' rx='6' ry='8'/%3E%3Cellipse cx='38' cy='14' rx='6' ry='8'/%3E%3Cellipse cx='50' cy='26' rx='6' ry='8'/%3E%3C/svg%3E"); }
+.landing .barra-landing { box-shadow: 0 2px 12px rgba(11, 79, 148, .08); border-bottom: 0; }
+.landing .tarjeta { border: 0; border-radius: 24px; padding: 20px; box-shadow: 0 6px 24px rgba(11, 79, 148, .10); }
+.landing .tarjeta.destacada { border: 2px solid var(--primario); }
+.landing .boton { border-radius: 999px; }
+.landing .boton.principal { background: linear-gradient(180deg, #1677c9, #0b4f94); box-shadow: 0 4px 12px rgba(11, 79, 148, .25); }
+.landing .bloque { position: relative; border-top: 0; }
+.landing .bloque > h2 { text-align: center; }
+.landing .bloque > .bajada { text-align: center; }
+.landing .bloque::before, .landing .bloque::after { content: ""; position: absolute; width: 36px; height: 36px; background: var(--huella) no-repeat center / contain; opacity: .18; pointer-events: none; }
+.landing .bloque::before { top: 18px; left: 4%; transform: rotate(-18deg); }
+.landing .bloque::after { top: 40px; right: 6%; width: 28px; height: 28px; transform: rotate(14deg); }
+.landing .contacto form, .landing .contacto .ok { margin-left: auto; margin-right: auto; }
+.landing .contacto .aviso-911 { text-align: center; }
+.grilla.ilustrada .tarjeta { text-align: center; }
+.grilla.ilustrada img { border-radius: 16px; display: block; height: 120px; width: auto; max-width: 100%; margin: 0 auto 12px; object-fit: contain; }
+.grilla.ilustrada h3 { color: var(--primario); font-size: 20px; }
+@media (prefers-color-scheme: dark) {
+  .landing .tarjeta { box-shadow: none; border: 1px solid var(--borde); }
+  .landing .boton.principal { background: var(--primario); }
+}
 @media (min-width: 720px) {
   .portada { grid-template-columns: 1.2fr 1fr; padding: 32px 0 48px; }
   .portada h1 { font-size: 48px; }
@@ -153,6 +177,7 @@ input[type=email] { width: 100%; padding: 12px; font: inherit; border-radius: 10
 }
 @media (min-width: 980px) {
   .grilla { grid-template-columns: repeat(4, 1fr); }
+  .grilla.ilustrada { grid-template-columns: repeat(3, 1fr); }
 }
 @media (max-width: 420px) {
   .barra-landing nav { gap: 10px; }

@@ -16,6 +16,7 @@ import '../../router.dart';
 import '../../utiles/enlaces.dart';
 import '../../widgets/boton_ayuda.dart';
 import '../../widgets/explicacion_corta.dart';
+import '../../widgets/ilustracion.dart';
 import '../../widgets/volver.dart';
 import '../legal/legal_screen.dart';
 import 'pack_screen.dart';
@@ -181,7 +182,10 @@ class _Disponibles extends ConsumerWidget {
         Expanded(
           child: switch (ref.watch(disponiblesProvider)) {
             AsyncData(value: final lista) when lista.isEmpty => Center(
-              child: Text(t.adopcionVacio),
+              child: Padding(
+                padding: const EdgeInsets.all(32),
+                child: VacioIlustrado(Ilustracion.adopcion, t.adopcionVacio),
+              ),
             ),
             AsyncData(value: final lista) => ListView(
               padding: const EdgeInsets.all(12),

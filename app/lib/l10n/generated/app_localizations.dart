@@ -7660,6 +7660,48 @@ abstract class AppLocalizations {
   /// **'Mascotas que buscan familia cerca tuyo'**
   String get adopcionAccesoAyuda;
 
+  /// No description provided for @adopcionAccesoBoton.
+  ///
+  /// In es, this message translates to:
+  /// **'Ver mascotas en adopción'**
+  String get adopcionAccesoBoton;
+
+  /// No description provided for @inicioBienvenidaTitulo.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Hola! Somos Huellamy'**
+  String get inicioBienvenidaTitulo;
+
+  /// No description provided for @inicioBienvenidaTexto.
+  ///
+  /// In es, this message translates to:
+  /// **'Todo lo que tu mascota necesita, en un solo lugar.'**
+  String get inicioBienvenidaTexto;
+
+  /// No description provided for @inicioBienvenidaBoton.
+  ///
+  /// In es, this message translates to:
+  /// **'Empezar'**
+  String get inicioBienvenidaBoton;
+
+  /// No description provided for @inicioHola.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Hola, {nombre}!'**
+  String inicioHola(String nombre);
+
+  /// No description provided for @inicioHolaSinNombre.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Hola!'**
+  String get inicioHolaSinNombre;
+
+  /// No description provided for @inicioSumarMascota.
+  ///
+  /// In es, this message translates to:
+  /// **'Sumar'**
+  String get inicioSumarMascota;
+
   /// No description provided for @adopcionAccesoSosPregunta.
   ///
   /// In es, this message translates to:

@@ -142,7 +142,9 @@ void main() {
     expect(find.text('Mensajes'), findsNothing);
   });
 
-  testWidgets('tocar Inicio cambia de pestaña y anota la opción', (tester) async {
+  testWidgets('tocar Inicio cambia de pestaña y anota la opción', (
+    tester,
+  ) async {
     final metricas = <Map<String, Object?>>[];
     await _abrir(tester, metricas: metricas);
     await _tocar(

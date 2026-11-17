@@ -9,6 +9,7 @@ import '../dos_apps/dos_apps.dart';
 import '../metricas/metricas.dart';
 import '../router.dart';
 import '../utiles/enlaces.dart';
+import '../widgets/ilustracion.dart';
 import '../widgets/volver.dart';
 import 'soporte_repositorio.dart';
 
@@ -99,6 +100,11 @@ class _SoporteScreenState extends ConsumerState<SoporteScreen> {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
+          // Ami con lentes (D162).
+          const Center(
+            child: ImagenIlustracion(Ilustracion.consejo, alto: 120),
+          ),
+          const SizedBox(height: 12),
           Text(t.soporteIntro),
           if (personas) ...[
             const SizedBox(height: 12),

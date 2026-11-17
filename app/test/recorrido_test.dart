@@ -79,7 +79,10 @@ void main() {
       titulos.add(
         (tester.widget<Text>(
           find
-              .descendant(of: find.byType(Card), matching: find.byType(Text))
+              .descendant(
+                of: find.byType(Card).last,
+                matching: find.byType(Text),
+              )
               .first,
         )).data!,
       );

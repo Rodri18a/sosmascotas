@@ -123,9 +123,9 @@ Se distinguen también por luminosidad (daltonismo), son gotas con la punta en e
 
 | Elemento | Regla |
 |---|---|
-| Esquinas | Botones y campos 12 px · tarjetas y hojas de abajo 16 px · ícono de la app 22 % |
-| Botones | Alto mínimo 48 px. Principal: relleno primario. Secundario: borde. SOS: relleno naranja con texto azul noche |
-| Tarjetas | Superficie blanca sobre el fondo celeste muy claro |
+| Esquinas | Botones en **píldora** (D162) · campos 12 px · tarjetas 20 px (landing 24 px) · hojas de abajo 16 px · ícono de la app 22 % |
+| Botones | Alto mínimo 48 px, en píldora. Principal: relleno primario (en la landing, degradé azul de `#1677C9` a `#0B4F94`). Secundario: borde. SOS: relleno naranja con texto azul noche |
+| Tarjetas | Superficie blanca sobre el fondo celeste muy claro, con sombra suave azulada (D162). Las de acceso (Adopción, bienvenida) llevan su ilustración arriba, título azul centrado y botón en píldora |
 | Toques | Todo lo que se toca mide al menos 48 × 48 px |
 | Barra de arriba | Color primario con texto e íconos blancos; flecha para volver en toda pantalla fuera de las pestañas |
 | Hojas de abajo | Por encima de la barra de abajo, con la manija arriba |
@@ -144,7 +144,16 @@ Se distinguen también por luminosidad (daltonismo), son gotas con la punta en e
 | Salud (calendario) | Libreta, recordatorios y Mis turnos vacíos |
 | Comunidad | Comunidad, Preguntas y Conversaciones vacías |
 | Tienda (carrito) | Mis pedidos y catálogo vacíos |
-| Ami y Mishi juntos | Disponible (sin uso todavía) |
+| Ami y Mishi juntos | Landing (chapita QR) |
+| Bienvenida (los dos saludando, D162) | Inicio de un visitante y portada de la landing |
+| Cachorro y gatito (D162) | Tarjeta de Adopción del Inicio y landing |
+| Grupo con la cucha (D162) | Adopción sin publicaciones |
+| Perrito con megáfono (D162) | SOS sin reportes cerca y landing («Si se pierde») |
+| Ami con lentes (D162) | Ayuda y soporte |
+| Mishi con termómetro (D162) | Libreta: vacuna o control vencido (tierna, no alarmante) |
+| Caritas de Ami y de Mishi (D162) | Perro o gato sin foto (saludo del Inicio, listas de mascotas) |
+
+- **Láminas de pantallas del 17/11/2026 (D162):** `guias/huellamy/Gemini_Generated_Image_{g4ze…,h9ut…,ms5v…}.jpg`. De ahí salen el estilo (tarjetas blancas, botones en píldora, huellitas sueltas) y las ilustraciones de arriba. No se copian: los textos (están en «tú»; van en voseo), las funciones que no existen (registro de actividades, consejo del día, foro) ni el banner con otras especies.
 
 - ⏳ Faltan poses para cargando, éxito con los dos y error (Ami con orejas caídas, Mishi tapándose los ojos): generarlas con el prompt de la guía de marca (§8) y sumarlas a la herramienta. Momentos que se buscan:
 

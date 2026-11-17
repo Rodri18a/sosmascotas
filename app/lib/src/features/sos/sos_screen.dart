@@ -11,6 +11,7 @@ import '../../router.dart';
 import '../../sos/sos_repositorio.dart';
 import '../../utiles/tiempo.dart';
 import '../../widgets/boton_ayuda.dart';
+import '../../widgets/ilustracion.dart';
 import '../adopcion/acceso_adopcion.dart';
 import '../menu/menu_principal.dart';
 
@@ -129,7 +130,11 @@ class _SosScreenState extends ConsumerState<SosScreen> {
       return [
         Padding(
           padding: const EdgeInsets.all(32),
-          child: Text(context.t.sosNingunoCerca, textAlign: TextAlign.center),
+          child: VacioIlustrado(
+            Ilustracion.perdida,
+            context.t.sosNingunoCerca,
+            alto: 110,
+          ),
         ),
       ];
     }

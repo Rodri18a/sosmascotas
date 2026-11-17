@@ -34,6 +34,10 @@ class _Pieza {
 
 const _y321 = 'Gemini_Generated_Image_y3211iy3211iy321.jpg';
 const _gfs3 = 'Gemini_Generated_Image_gfs3sygfs3sygfs3.jpg';
+// Láminas de pantallas del 17/11/2026 (D162).
+const _g4ze = 'Gemini_Generated_Image_g4zea5g4zea5g4ze.jpg';
+const _h9ut = 'Gemini_Generated_Image_h9utjgh9utjgh9ut.jpg';
+const _ms5v = 'Gemini_Generated_Image_ms5vjmms5vjmms5v.jpg';
 
 const _piezas = [
   // Bienvenida: Ami saludando con la patita.
@@ -52,6 +56,21 @@ const _piezas = [
   _Pieza('salud', _gfs3, 30, 645, 475, 300),
   // Comunidad, Preguntas y Grupos.
   _Pieza('comunidad', _gfs3, 640, 400, 355, 195),
+  // D162: bienvenida con los dos saludando.
+  _Pieza('bienvenida', _g4ze, 55, 125, 420, 240),
+  // D162: adopción (grupo con la cucha).
+  _Pieza('adopcion', _g4ze, 565, 112, 285, 278),
+  // D162: mascota perdida (megáfono y mapa).
+  _Pieza('perdida', _g4ze, 378, 945, 195, 140),
+  // D162: «Adoptá»: cachorro y gatito.
+  _Pieza('adopta', _h9ut, 125, 650, 270, 175),
+  // D162: caritas para la mascota sin foto (perro y gato).
+  _Pieza('carita_perro', _h9ut, 683, 490, 85, 90),
+  _Pieza('carita_gato', _h9ut, 778, 490, 88, 90),
+  // D162: Ami con lentes (consejos y novedades).
+  _Pieza('consejo', _ms5v, 615, 100, 345, 240),
+  // D162: Mishi con termómetro (vacunas y alertas de salud).
+  _Pieza('alerta_salud', _ms5v, 105, 600, 320, 210),
 ];
 
 void main() {

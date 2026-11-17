@@ -26,7 +26,31 @@ enum Ilustracion {
   salud('salud'),
 
   /// Ami, un perro y Mishi: comunidad, preguntas y conversaciones.
-  comunidad('comunidad');
+  comunidad('comunidad'),
+
+  /// Los dos saludando (D162): bienvenida del Inicio para visitantes.
+  bienvenida('bienvenida'),
+
+  /// Grupo con la cucha (D162): lista de adopción vacía.
+  adopcion('adopcion'),
+
+  /// Cachorro y gatito (D162): tarjeta de Adopción del Inicio.
+  adopta('adopta'),
+
+  /// Perrito con megáfono y mapa (D162): SOS sin reportes cerca.
+  perdida('perdida'),
+
+  /// Ami con lentes (D162): consejos y ayuda.
+  consejo('consejo'),
+
+  /// Mishi con termómetro (D162): vacunas o controles vencidos.
+  alertaSalud('alerta_salud'),
+
+  /// Carita de Ami (D162): mascota perro sin foto.
+  caritaPerro('carita_perro'),
+
+  /// Carita de Mishi (D162): mascota gato sin foto.
+  caritaGato('carita_gato');
 
   const Ilustracion(this._archivo, {this.escena = false});
 

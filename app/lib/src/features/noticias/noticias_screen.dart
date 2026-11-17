@@ -28,6 +28,7 @@ import '../eventos/eventos.dart';
 import '../menu/menu_principal.dart';
 import '../sos/sos_detalle_screen.dart';
 import 'carrusel_banners.dart';
+import 'saludo_inicio.dart';
 import 'tarjeta_promocion.dart';
 
 /// Inicio (D139): arriba, el carrusel de banners que maneja la
@@ -86,7 +87,9 @@ class _NoticiasScreenState extends ConsumerState<NoticiasScreen> {
           child: ListView(
             padding: const EdgeInsets.only(bottom: 24),
             children: const [
-              // Banners del carrusel, arriba de todo (D128).
+              // «¡Hola!» y tus mascotas, o la bienvenida (D162).
+              SaludoInicio(),
+              // Banners del carrusel (D128).
               MarcaRecorrido('carrusel', child: CarruselBanners()),
               // Próximos eventos de la zona, arriba de las novedades (D94).
               Padding(

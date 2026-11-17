@@ -179,6 +179,6 @@ void main() {
 
     await tester.tap(find.text('Términos y condiciones'));
     await tester.pumpAndSettle();
-    expect(find.textContaining('arranca en Pando'), findsOneWidget);
+    expect(find.textContaining('hecha en Uruguay'), findsOneWidget);
   });
 }

@@ -14,6 +14,7 @@ abstract final class AppTheme {
     final colores = esquema(c, brillo);
     const radio = BorderRadius.all(Radius.circular(12));
     const tamanoBoton = Size(64, 48); // Áreas táctiles cómodas (accesibilidad).
+    final oscuro = brillo == Brightness.dark;
 
     final base = ThemeData(
       colorScheme: colores,
@@ -35,23 +36,29 @@ abstract final class AppTheme {
         dividerColor: Colors.transparent,
       ),
       // 8 px entre tarjetas seguidas: con margen cero quedaban pegadas en
-      // las pantallas que no agregaban el espacio a mano.
-      cardTheme: const CardThemeData(
-        margin: EdgeInsets.symmetric(vertical: 4),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(16)),
+      // las pantallas que no agregaban el espacio a mano. Tarjetas blancas
+      // bien redondeadas con sombra suave azulada (D162).
+      cardTheme: CardThemeData(
+        margin: const EdgeInsets.symmetric(vertical: 4),
+        elevation: oscuro ? 1 : 2,
+        shadowColor: colores.primary.withValues(alpha: 0.25),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
       ),
+      // Botones en píldora (D162).
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
           minimumSize: tamanoBoton,
-          shape: const RoundedRectangleBorder(borderRadius: radio),
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          shape: const StadiumBorder(),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           minimumSize: tamanoBoton,
-          shape: const RoundedRectangleBorder(borderRadius: radio),
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          shape: const StadiumBorder(),
         ),
       ),
       inputDecorationTheme: const InputDecorationTheme(

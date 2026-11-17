@@ -316,7 +316,10 @@ class _AvisoUrgente extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
           ),
           child: ListTile(
-            leading: Icon(Icons.event_busy_outlined, color: color),
+            // Vencido: Mishi con termómetro (D162), tierna, no alarmante.
+            leading: semaforoDe(proxima, hoy) == Semaforo.vencido
+                ? const ImagenIlustracion(Ilustracion.alertaSalud, alto: 44)
+                : Icon(Icons.event_busy_outlined, color: color),
             title: Text(registro.nombre),
             subtitle: Text(
               textoSemaforo(t, proxima, hoy),

@@ -4571,6 +4571,30 @@ class AppLocalizationsEs extends AppLocalizations {
   String get adopcionAccesoAyuda => 'Mascotas que buscan familia cerca tuyo';
 
   @override
+  String get adopcionAccesoBoton => 'Ver mascotas en adopción';
+
+  @override
+  String get inicioBienvenidaTitulo => '¡Hola! Somos Huellamy';
+
+  @override
+  String get inicioBienvenidaTexto =>
+      'Todo lo que tu mascota necesita, en un solo lugar.';
+
+  @override
+  String get inicioBienvenidaBoton => 'Empezar';
+
+  @override
+  String inicioHola(String nombre) {
+    return '¡Hola, $nombre!';
+  }
+
+  @override
+  String get inicioHolaSinNombre => '¡Hola!';
+
+  @override
+  String get inicioSumarMascota => 'Sumar';
+
+  @override
   String get adopcionAccesoSosPregunta =>
       '¿Querés sumar una mascota a tu familia?';
 

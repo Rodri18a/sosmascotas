@@ -7,6 +7,7 @@ import '../../../l10n/l10n.dart';
 import '../../funcionalidades/funcionalidades_activas.dart';
 import '../../metricas/metricas.dart';
 import '../../router.dart';
+import '../../widgets/ilustracion.dart';
 
 /// Acceso a Adopción fuera del menú ☰ (D154): una tarjeta en el Inicio y un
 /// enlace discreto al final de SOS, sin mezclar las listas. [desde] va en la
@@ -49,19 +50,37 @@ class AccesoAdopcion extends ConsumerWidget {
         ),
       );
     }
+    // Tarjeta ilustrada con el cachorro y el gatito (D162).
+    final tema = Theme.of(context);
     return Card(
       key: const Key('acceso-adopcion'),
       margin: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-      child: ListTile(
-        leading: const Icon(Icons.volunteer_activism_outlined),
-        title: Text(t.adopcionAccesoTitulo),
-        subtitle: Text(
-          t.adopcionAccesoAyuda,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-        trailing: const Icon(Icons.chevron_right_outlined),
+      child: InkWell(
         onTap: () => _abrir(context, ref),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              Text(
+                t.adopcionAccesoTitulo,
+                textAlign: TextAlign.center,
+                style: tema.textTheme.titleMedium?.copyWith(
+                  color: tema.colorScheme.primary,
+                ),
+              ),
+              const SizedBox(height: 8),
+              const ImagenIlustracion(Ilustracion.adopta, alto: 110),
+              const SizedBox(height: 8),
+              Text(t.adopcionAccesoAyuda, textAlign: TextAlign.center),
+              const SizedBox(height: 12),
+              FilledButton.icon(
+                onPressed: () => _abrir(context, ref),
+                icon: const Icon(Icons.favorite_outline),
+                label: Text(t.adopcionAccesoBoton),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

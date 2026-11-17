@@ -10,6 +10,7 @@ import 'soporte_falso.dart';
 const _ana = Usuario(id: 'u1', email: 'ana@correo.com');
 
 Future<void> _abrirSoporte(WidgetTester tester) async {
+  // La ilustración de arriba (D162) empuja el formulario: se baja hasta él.
   tester.view
     ..physicalSize = const Size(1080, 2400)
     ..devicePixelRatio = 3;
@@ -18,6 +19,10 @@ Future<void> _abrirSoporte(WidgetTester tester) async {
   await abrirAjustesDesdeMenu(tester);
   await tester.tap(find.text('Ayuda y soporte'));
   await tester.pumpAndSettle();
+  if (find.byType(TextField).evaluate().isNotEmpty) {
+    await tester.ensureVisible(find.byType(TextField));
+    await tester.pumpAndSettle();
+  }
 }
 
 void main() {
@@ -78,6 +83,7 @@ void main() {
     await _abrirSoporte(tester);
 
     await tester.enterText(find.byType(TextField), 'hola');
+    await tester.ensureVisible(find.text('Enviar'));
     await tester.tap(find.text('Enviar'));
     await tester.pumpAndSettle();
     expect(soporte.enviados, isEmpty);
@@ -90,6 +96,7 @@ void main() {
       find.byType(TextField),
       '  No me llega el código para ingresar  ',
     );
+    await tester.ensureVisible(find.text('Enviar'));
     await tester.tap(find.text('Enviar'));
     await tester.pumpAndSettle();
     expect(soporte.enviados, ['No me llega el código para ingresar']);
@@ -115,6 +122,7 @@ void main() {
       find.byType(TextField),
       'Tengo una duda con la chapita',
     );
+    await tester.ensureVisible(find.text('Enviar'));
     await tester.tap(find.text('Enviar'));
     await tester.pumpAndSettle();
     expect(
