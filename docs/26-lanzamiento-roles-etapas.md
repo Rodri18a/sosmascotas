@@ -1,6 +1,6 @@
 # 26 · Lanzamiento: quién hace qué, por etapa
 
-> Propuesta del 17/11/2026 para discutir entre Rodrigo (desarrollo y producto) y la socia que se sumó ese día (marketing, marca y empresas). Versión editable compartida: [documento en Claude](https://claude.ai/artifact/PM2yJ7N8gmUCfSYbHe6PAK) · PDF: [informes/26-lanzamiento-roles-etapas.pdf](informes/26-lanzamiento-roles-etapas.pdf ':ignore')
+> Propuesta del 17/11/2026 para discutir entre Rodrigo (desarrollo y producto) y Flavia (marketing, marca y empresas), que se sumó ese día. Versión editable compartida: [documento en Claude](https://claude.ai/artifact/PM2yJ7N8gmUCfSYbHe6PAK) · PDF: [informes/26-lanzamiento-roles-etapas.pdf](informes/26-lanzamiento-roles-etapas.pdf ':ignore')
 
 ## Resumen
 
@@ -9,7 +9,7 @@ El código de Huellamy va muy adelantado; lo que frena el lanzamiento de diciemb
 | Rol | Quién | Se encarga de |
 | --- | --- | --- |
 | Desarrollo y producto | Rodrigo | La app, Huellamy Comercios, el portal, la base, la publicación, las tiendas, la seguridad y las métricas. Gestiones técnicas y de proveedores (correo, producción, Google Play, Apple) |
-| Marketing, marca y empresas | Socia | Nombre y marca, redes, videos y piezas, landing, investigación (competencia, entrevistas), relación con comercios, refugios y grupos, Socios Fundadores, difusión del lanzamiento |
+| Marketing, marca y empresas | Flavia | Nombre y marca, redes, videos y piezas, landing, investigación (competencia, entrevistas), relación con comercios, refugios y grupos, Socios Fundadores, difusión del lanzamiento |
 | Juntos | Los dos | Decisiones de negocio (precios, qué se lanza, formalización), revisión legal, soporte en la guardia de fin de año, lectura de métricas |
 
 Cómo leerlo: cada etapa dice **qué sale** y después **qué le toca a cada uno**. Los códigos entre paréntesis (0.8.5, D160…) remiten a `docs/PROGRESO.md` y `docs/12-decisiones.md`. Las etapas siguen las fases del roadmap: **Etapa 1 = Fase 0**, **Etapa 2 = Fase 1**, **Etapa 3 = Fases 2 y 3**.
@@ -80,7 +80,7 @@ Más adelante (2028, fuera de este plan): pagos con Mercado Pago, tienda, otras 
 
 ## Etapa 1 · Pendientes por rol (hasta diciembre 2026)
 
-Quedan unas 5 semanas hasta Navidad: el camino crítico es **datos reales de Pando + legal + producción**. Casi todo lo de la socia arranca ya, en paralelo a lo técnico.
+Quedan unas 5 semanas hasta Navidad: el camino crítico es **datos reales de Pando + legal + producción**. Casi todo lo de Flavia arranca ya, en paralelo a lo técnico.
 
 ### Rodrigo · desarrollo y producto
 
@@ -90,8 +90,8 @@ Quedan unas 5 semanas hasta Navidad: el camino crítico es **datos reales de Pan
 | Terminar el soporte | Subir la web pública con el correo nuevo | 0.8.6b |
 | Revisar la marca en el celular | Huellamy y Huellamy Comercios instaladas; poses de Ami y Mishi para carga, éxito y error | 0.8.3f, 0.8.3d |
 | Cerrar pruebas pendientes | PM-11 en iPhone y seguir desde PM-12; funcionamiento sin internet; pruebas de seguridad con token nuevo; subir las 8 funciones de avisos | 0.8.3e, 1.5.6, 0.8.6c |
-| Prueba con 5–10 conocidos | Corregir lo que reporten (la socia consigue y acompaña a los testers) | 0.8.3 |
-| Cargar los datos reales | Veterinarias y directorio de ayuda que junta la socia, con los scripts de carga | 0.0.4, 0.0.5 |
+| Prueba con 5–10 conocidos | Corregir lo que reporten (Flavia consigue y acompaña a los testers) | 0.8.3 |
+| Cargar los datos reales | Veterinarias y directorio de ayuda que junta Flavia, con los scripts de carga | 0.0.4, 0.0.5 |
 | Proyecto de producción | Crear Supabase de producción, migraciones, respaldo; apuntar los dominios a producción | 0.8.5 |
 | Prender lo que se lanza | Interruptores según lo que decidamos juntos | 0.8.5 |
 | Chapitas de prueba | 3–5 muestras con el amigo de impresión 3D, prueba de durabilidad, primer lote de 30–50 | 0.0.10, 0.0.11, 0.8.7 |
@@ -99,7 +99,7 @@ Quedan unas 5 semanas hasta Navidad: el camino crítico es **datos reales de Pan
 | (Opcional) Google Play | Crear la cuenta e iniciar la prueba cerrada para publicar Android en enero | 0.8.9 |
 | Tablero de métricas | Sacar cada semana registros, SOS, QR e instalaciones para leerlos juntos | 0.9.1 |
 
-### Socia · marketing, marca y empresas
+### Flavia · marketing, marca y empresas
 
 | Tarea | Detalle | Paso |
 | --- | --- | --- |
@@ -118,7 +118,7 @@ Quedan unas 5 semanas hasta Navidad: el camino crítico es **datos reales de Pan
 
 ## Etapa 2 · Pendientes por rol (enero a abril 2027)
 
-Lo técnico de la Etapa 2 es sobre todo publicar en las tiendas: el código ya está. El peso pasa a la socia: **sumar comercios y Socios Fundadores** con los números de la Etapa 1.
+Lo técnico de la Etapa 2 es sobre todo publicar en las tiendas: el código ya está. El peso pasa a Flavia: **sumar comercios y Socios Fundadores** con los números de la Etapa 1.
 
 ### Rodrigo · desarrollo y producto
 
@@ -129,12 +129,12 @@ Lo técnico de la Etapa 2 es sobre todo publicar en las tiendas: el código ya e
 | Huellamy Comercios en tiendas | Publicar la app de comercios en Android y iPhone | 0.8.3d |
 | Mapa nativo | Google Cloud con tope de presupuesto; Google Maps en el celular | 1.2.1, 1.2.2 |
 | Prender funciones de la Etapa 2 | Comercios, chat, libreta y recordatorios, hogar compartido, reseñas, chapitas físicas, adopción | — |
-| Cargar comercios | Fichas de los comercios que consiga la socia; verificar reclamos desde el portal | 1.3 |
+| Cargar comercios | Fichas de los comercios que consiga Flavia; verificar reclamos desde el portal | 1.3 |
 | Pruebas de los flujos nuevos | Recorridos completos antes de abrir cada función | 1.9.2 |
 | Supabase Pro | Pasar al plan pago si el uso lo pide (unos US$25/mes) | 1.9.3 |
 | Datos para Zoonosis | Datos agregados y anónimos de la Etapa 1 para la propuesta | 0.9.3 |
 
-### Socia · marketing, marca y empresas
+### Flavia · marketing, marca y empresas
 
 | Tarea | Detalle | Paso |
 | --- | --- | --- |
@@ -161,7 +161,7 @@ La Etapa 3 empieza a cobrar, así que antes hay que **formalizar la empresa**. L
 | Estadísticas y reportes | Reporte mensual para comercios; tablero para los indicadores de la etapa | — |
 | Programar la campaña de fin de año | Las 6 piezas de la propuesta (unas 11 h) si se aprueban | 3.7 |
 
-### Socia · marketing, marca y empresas
+### Flavia · marketing, marca y empresas
 
 | Tarea | Detalle | Paso |
 | --- | --- | --- |
@@ -174,15 +174,15 @@ La Etapa 3 empieza a cobrar, así que antes hay que **formalizar la empresa**. L
 
 ## Tareas compartidas y temas para discutir juntos
 
-Lo más urgente para charlar es cómo entra la socia a la empresa: cambia la formalización y la revisión legal, que pueden llevar semanas.
+Lo más urgente para charlar es cómo entra Flavia a la empresa: cambia la formalización y la revisión legal, que pueden llevar semanas.
 
 ### Tareas de los dos
 
 | Tarea | Quién lidera | Etapa | Paso |
 | --- | --- | --- | --- |
-| Asesoría legal: términos, privacidad, registro URCDP, compromiso de adopción. Arrancar ya | Rodrigo (la socia revisa el tono) | 1 | 0.0.9c, 0.8.4 |
+| Asesoría legal: términos, privacidad, registro URCDP, compromiso de adopción. Arrancar ya | Rodrigo (Flavia revisa el tono) | 1 | 0.0.9c, 0.8.4 |
 | Contador: forma de la empresa (SAS u otra) con dos socios, DGI, BPS, facturación | Los dos | 1 (consulta), 2–3 (formalizar) | 0.0.9d, 1.9.0 |
-| Leer las entrevistas y aplicar los criterios de corte (¿seguimos con empresas pagas?) | Socia trae los datos, deciden juntos | 1 | 0.0.8b |
+| Leer las entrevistas y aplicar los criterios de corte (¿seguimos con empresas pagas?) | Flavia trae los datos, deciden juntos | 1 | 0.0.8b |
 | Guardia de soporte del 24/12 al 2/1 (respuesta en menos de 24 h) | Turnos entre los dos | 1 | 0.8.6b |
 | Revisar las métricas cada semana y decidir si se pasa de etapa | Rodrigo saca los números, leen juntos | Todas | 0.9.1, 0.9.2 |
 | Accesos: rol en el portal de administración (ventas y moderación), acceso a redes y al correo `contacto@` | Rodrigo los da | 1 | D109 |
@@ -194,7 +194,7 @@ Lo más urgente para charlar es cómo entra la socia a la empresa: cambia la for
 - [ ] ¿Comercios desde la Etapa 1 (fichas gratis y Socios Fundadores ya) o recién en la Etapa 2?
 - [ ] Fecha exacta del lanzamiento y mensaje principal (¿SOS y fuegos artificiales?)
 - [ ] Presupuesto de marketing: hoy el único gasto es el dominio (US$42); ¿publicidad paga, impresión de volantes, chapitas?
-- [ ] Precios de Destacado, Plus, Pro y Familia: ¿los ajusta la socia con lo que digan los comercios?
+- [ ] Precios de Destacado, Plus, Pro y Familia: ¿los ajusta Flavia con lo que digan los comercios?
 - [ ] Diferencial frente a Taponto: competir con foco local y salud, o proponer una alianza (P22)
 - [ ] ¿Se suma WhatsApp Business al soporte? Hoy se sale solo con correo (D160)
 - [ ] Horas por semana de cada uno (P2)
