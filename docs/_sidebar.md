@@ -30,6 +30,7 @@
   - [Modelo de datos](09-modelo-datos.md)
 
 - **Plan y negocio**
+  - [Lanzamiento: quién hace qué, por etapa](26-lanzamiento-roles-etapas.md)
   - [Hoja de ruta](11-roadmap.md)
   - [Costos](10-costos.md)
   - [Decisiones](12-decisiones.md)
