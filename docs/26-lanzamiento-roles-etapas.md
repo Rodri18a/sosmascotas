@@ -114,6 +114,7 @@ Diciembre para la Etapa 1 es posible, pero solo si la asesoría legal arranca es
 | 2 | Apple Developer | US$99 por año |
 | 2 | Supabase Pro, si el uso lo pide | Unos US$25 por mes |
 | 2 o 3 | Constituir la empresa y contador | A cotizar; unos $3.000 por mes |
+| 3, o antes si se venden chapitas | Facturación electrónica: certificado digital y programa | A cotizar (ver «Facturación») |
 | 3 | Comisión de las tiendas sobre Pro y Familia | 15 % para desarrolladores chicos (30 % en el caso general) |
 
 ### Licencia de Claude
@@ -222,6 +223,41 @@ La Etapa 3 empieza a cobrar, así que antes hay que **formalizar la empresa**. L
 | Campaña de fin de año 2027 | Ejecutar de octubre 2027 a enero 2028 | `18-campana-fin-de-anio.md` |
 | Próximas zonas | Elegir la siguiente zona a abrir e INBA / RENAC | P14 |
 
+## Cómo repartir lo que genere (para conversar)
+
+Si para los dos el desarrollo y el marketing valen lo mismo, lo habitual es **repartir la empresa en partes iguales** y escribirlo en un **pacto de socios** al formar la SAS. Lo que cada uno pone de dinero se anota aparte y se devuelve antes de repartir ganancias.
+
+| Opción | Cómo funciona | A favor | En contra |
+| --- | --- | --- | --- |
+| Mitad y mitad | 50 % cada uno de la empresa y de las ganancias | Refleja que las dos partes valen lo mismo; es simple | No reconoce lo hecho antes de que Flavia se sumara (la idea, la app ya programada, el dominio) |
+| Mitad y mitad, reconociendo lo ya hecho | 50 % cada uno, pero Rodrigo recupera primero lo invertido hasta hoy, o recibe un porcentaje extra fijo los primeros años | Equilibra el origen de la idea sin romper la igualdad hacia adelante | Hay que ponerle número a lo ya hecho |
+| Proporción distinta (por ejemplo, 60/40) | Más para quien trajo la idea y el producto | Reconoce el origen | Puede desmotivar si el aporte de Flavia termina pesando igual o más |
+
+Reglas que conviene escribir, sea cual sea la opción:
+
+- **Participación que se gana con el tiempo**, por ejemplo en 3 o 4 años: si alguien se va antes, se lleva solo la parte ganada.
+- **El dinero que pone cada uno** (dominio, tiendas, legal, licencias) se anota con comprobantes y se devuelve antes de repartir ganancias.
+- **Retiros**: ninguno hasta cubrir los gastos del mes; después, reinvertir un porcentaje acordado.
+- **Decisiones que necesitan a los dos**: precios, gastos grandes, nuevos socios o inversores.
+- **Qué pasa con la marca, el dominio, el código y las tiendas** (hoy a nombre de Rodrigo) cuando exista la empresa.
+- **Qué pasa si alguien se va** o si entra un inversor.
+
+Esto es una base para conversar, no asesoramiento: el pacto lo redacta el abogado, junto con el contador, al formar la empresa.
+
+## Facturación: qué hace falta para empezar a cobrar
+
+Hoy no hay facturación. Para vender planes, chapitas o sponsors hace falta una empresa con RUT y **factura electrónica**: desde el 1/1/2025 todos los contribuyentes de IVA, incluso los de IVA mínimo, emiten comprobantes electrónicos ([DGI](https://www.gub.uy/direccion-general-impositiva/guia-ingreso-facturacion-electronica)).
+
+| Pieza | Qué es | Costo |
+| --- | --- | --- |
+| Empresa con RUT, inscripta en DGI y BPS | SAS u otra forma: la recomienda el contador | Honorarios de constitución, a cotizar |
+| Certificado digital | Firma los comprobantes; lo emiten Abitab, el Correo o Antel, por 1 o 2 años | Varía según el tipo de empresa; a cotizar |
+| Programa de facturación | Un proveedor habilitado por la DGI; elegir uno de la lista da acceso a un ingreso simplificado y a beneficios fiscales | Mensualidad según la cantidad de comprobantes; la DGI no cobra por comprobante |
+| Contador | Liquida IVA y BPS cada mes y arma los balances | Unos $3.000 por mes (supuesto de `10-costos.md`) |
+| Impuestos | IVA sobre lo que se venda; puede haber un régimen de pequeña empresa | Según las ventas; lo define el contador |
+
+Cuándo arrancar: **1 a 2 meses antes del primer cobro**. Es en la Etapa 3, o antes si se venden chapitas o sponsors. Pedir al contador que cotice todo junto: constitución, certificado, programa y mensualidad.
+
 ## Tareas compartidas y temas para discutir juntos
 
 Lo más urgente para charlar es cómo entra Flavia a la empresa: cambia la formalización y la revisión legal, que pueden llevar semanas.
@@ -247,4 +283,17 @@ Lo más urgente para charlar es cómo entra Flavia a la empresa: cambia la forma
 - [ ] Precios de Destacado, Plus, Pro y Familia: ¿los ajusta Flavia con lo que digan los comercios?
 - [ ] Diferencial frente a Taponto: competir con foco local y salud, o proponer una alianza (P22)
 - [ ] ¿Se suma WhatsApp Business al soporte? Hoy se sale solo con correo (D160)
+- [ ] Reparto entre socios: ¿mitad y mitad?, ¿cómo se reconoce lo hecho antes?, y pedir el pacto de socios al formar la empresa
+- [ ] Cuándo arrancar con la facturación: ¿se venden chapitas o sponsors antes de la Etapa 3?
 - [ ] Horas por semana de cada uno (P2)
+
+## Ideas a futuro
+
+Estas ideas surgieron conversando con Flavia. No están en ninguna etapa: se evalúan cuando las etapas avancen, y la lista queda abierta para sumar las que vayan apareciendo. El detalle técnico está en `16-ideas-futuras.md`.
+
+| Idea | Qué sería | Estado |
+| --- | --- | --- |
+| Funciones por rubro, por ejemplo para paseadores | Además de sumar especies, herramientas propias de cada rubro. Ejemplo: el paseador marca «Empiezo el paseo» y, si lo permite, el dueño ve el recorrido por GPS mientras dura (solo el dueño y solo durante el paseo) | Anotada (I1). Encaja con las contrataciones de paseos de la Etapa 3 |
+| Chapita que se pueda ubicar | Que la chapita QR se pueda encontrar por ubicación. Un GPS propio es caro (US$50–100 más US$5–10 por mes); lo realista es sumarse a rastreadores que ya existen (AirTag, SmartTag) o vender una funda para ellos | Anotada (I2), para una versión futura |
+| Juegos con Ami y Mishi | Un juego dentro de la app con las mascotas de la marca, para que la gente vuelva a entrar y se encariñe con Huellamy | Nueva (I6): solo la idea, sin diseño |
+| Lo que vaya surgiendo | Cada idea nueva se anota con la fecha y quién la propuso | Abierta |

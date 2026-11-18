@@ -34,7 +34,7 @@ while i < len(lines):
             rows.append([c.strip() for c in lines[i].strip().strip("|").split("|")])
             i += 1
         head, data = rows[0], rows[2:]
-        cls = {"Etapa": "plazos" if len(head) == 4 else "gastos", "Trámite": "tramites"}.get(head[0], "")
+        cls = {"Etapa": "plazos" if len(head) == 4 else "gastos", "Trámite": "tramites", "Opción": "opciones", "Pieza": "piezas", "Idea": "ideas"}.get(head[0], "")
         if cls == "": cls = "matriz" if head[0] == "" else (("pasos cuatro" if len(head) == 4 else "pasos") if head[-1] == "Paso" else ("fechas" if head[0] == "Fecha" else ("roles" if head[0] == "Rol" else "")))
         h = "".join(f"<th>{inline(c)}</th>" for c in head)
         d = "".join("<tr>" + "".join(f"<td>{inline(c)}</td>" for c in r) + "</tr>" for r in data)
@@ -103,6 +103,9 @@ table.plazos th:first-child{{width:30mm}} table.plazos th:nth-child(2){{width:26
 table.tramites th:first-child{{width:42mm}} table.tramites th:last-child{{width:32mm}}
 table.gastos th:first-child{{width:24mm}} table.gastos th:last-child{{width:50mm}}
 ol{{margin:0 0 3mm;padding-left:6mm}}
+table.opciones th:first-child{{width:32mm}}
+table.piezas th:first-child{{width:38mm}} table.piezas th:last-child{{width:48mm}}
+table.ideas th:first-child{{width:38mm}} table.ideas th:last-child{{width:46mm}}
 table.matriz td:first-child{{font-weight:700;color:var(--azul)}}
 ul{{margin:0 0 3mm;padding-left:6mm}} li{{margin-bottom:1mm}}
 ul.check{{list-style:none;padding-left:0}}

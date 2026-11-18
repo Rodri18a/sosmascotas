@@ -9,6 +9,7 @@
 | I3 | Collar que informa datos de salud (como un reloj biométrico) | Idea del dueño | 16/10/2026 | 💡 Para investigar |
 | I4 | "Con quién me cruzo" por las mascotas | Idea del dueño | 17/10/2026 | 📝 Propuesta en `17-propuestas-perfil-gamificacion.md` §2 |
 | I5 | Gamificación con logros concretos (protección, libreta al día, tratamiento completo, vecino solidario) | Idea del dueño | 17/10/2026 | 📝 Propuesta en `17-propuestas-perfil-gamificacion.md` §3 |
+| I6 | Juegos con Ami y Mishi dentro de la app | Idea del dueño y Flavia | 18/11/2026 | 💡 Para evaluar |
 
 ---
 
@@ -74,3 +75,10 @@
 
 **Cómo encajaría:** el QR lleva al mismo enlace de un uso que ya existe (`/unirme/<código>`, vence a los 7 días), así que no cambia la seguridad; es otra forma de mostrar la invitación. Lo mismo serviría para el **equipo de una empresa** (`/equipo/<código>`, D117).
 
+---
+
+## I6 · Juegos con Ami y Mishi
+
+**La idea** (18/11/2026, el dueño y Flavia): aprovechar a las mascotas de la marca, Ami (perrito) y Mishi (gatita), para un juego sencillo dentro de la app relacionado con las mascotas. Sirve para que la gente vuelva a entrar y se encariñe con Huellamy.
+
+**Para pensar cuando se evalúe:** qué tipo de juego (cuidar, buscar una mascota perdida en el mapa, preguntas de tenencia responsable), si suma a «Tus huellas» (insignias, sin rankings) y que nunca tape lo urgente (SOS, Urgencias). Por ahora es solo la idea, sin diseño ni fase.
