@@ -14,7 +14,7 @@
 | Proveedor de teselas para el mapa web | Gratis en su cupo | Al programar el mapa web (Fase 0) |
 | Hosting de la app y la web pública (Vercel) | Gratis | Al publicar |
 | **Dominio `huellamy.com` + Hostinger Premium Web Hosting** | ✅ **US$42 por un año, los dos juntos** (pagado el 10/11/2026, D155). Vence aprox. el **10/11/2027**: revisar el precio de renovación, que suele ser más alto que el del primer año | Ya pagado |
-| **Licencia propia de Claude** (herramienta de desarrollo) | US$100/mes (Max); [precios](https://claude.com/pricing) | Más adelante: hoy se usa la licencia que paga Caamepa, el trabajo del dueño (D165) |
+| **Licencia propia de Claude** (herramienta de desarrollo) | US$100/mes (Max); [precios](https://claude.com/pricing) | Más adelante: hoy se usa la licencia que paga CAAMEPA, el trabajo del dueño (D165) |
 | **Supabase Pro** | US$25/mes | Cuando haya usuarios reales |
 | **Google Play** | US$25 una vez | **3–4 semanas antes** de querer estar en la tienda (prueba cerrada de 14 días con 12 testers) |
 | **Apple Developer** | US$99/año | Fase 1, al publicar en iPhone |

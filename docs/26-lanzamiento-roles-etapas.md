@@ -107,7 +107,7 @@ Diciembre para la Etapa 1 es posible, pero solo si la asesoría legal arranca es
 | Etapa | Gasto | Monto |
 | --- | --- | --- |
 | Ya pagado | Dominio y hosting | US$42 |
-| Más adelante, todos los meses | Licencia propia de Claude (hoy se usa la que paga Caamepa) | US$100 por mes (plan Max) |
+| Más adelante, todos los meses | Licencia propia de Claude (hoy se usa la que paga CAAMEPA) | US$100 por mes (plan Max) |
 | 1 | Asesoría legal | US$150–400 |
 | 1 | Chapitas (primer lote) y volantes | US$50–150 + impresión a cotizar |
 | 1 o 2 | Google Play | US$25 una vez |
@@ -118,7 +118,7 @@ Diciembre para la Etapa 1 es posible, pero solo si la asesoría legal arranca es
 
 ### Licencia de Claude
 
-Hoy la app se programa con una licencia paga de Claude que Rodrigo usa en su trabajo y paga Caamepa. Más adelante el proyecto va a necesitar una propia: el plan Max cuesta US$100 por mes ([precios de Claude](https://claude.com/pricing)).
+Hoy la app se programa con una licencia paga de Claude que Rodrigo usa en su trabajo y paga CAAMEPA. Más adelante el proyecto va a necesitar una propia: el plan Max cuesta US$100 por mes ([precios de Claude](https://claude.com/pricing)).
 
 ### Lo que más mueve las fechas
 
