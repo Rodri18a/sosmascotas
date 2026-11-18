@@ -107,7 +107,7 @@ Diciembre para la Etapa 1 es posible, pero solo si la asesoría legal arranca es
 | Etapa | Gasto | Monto |
 | --- | --- | --- |
 | Ya pagado | Dominio y hosting | US$42 |
-| Desde ya, todos los meses | Licencia de Claude (la herramienta con la que se programa la app) | US$100 por mes (plan Max, recomendado); mínimo US$20 por mes (Pro) |
+| Más adelante, todos los meses | Licencia propia de Claude (hoy se usa la que paga Caamepa) | US$100 por mes (plan Max) |
 | 1 | Asesoría legal | US$150–400 |
 | 1 | Chapitas (primer lote) y volantes | US$50–150 + impresión a cotizar |
 | 1 o 2 | Google Play | US$25 una vez |
@@ -116,16 +116,9 @@ Diciembre para la Etapa 1 es posible, pero solo si la asesoría legal arranca es
 | 2 o 3 | Constituir la empresa y contador | A cotizar; unos $3.000 por mes |
 | 3 | Comisión de las tiendas sobre Pro y Familia | 15 % para desarrolladores chicos (30 % en el caso general) |
 
-### La licencia de Claude es un gasto de la empresa
+### Licencia de Claude
 
-Hasta hoy la app se programó con una licencia de Claude prestada del trabajo de Rodrigo. Para seguir en serio hace falta una propia, y corresponde que sea un **gasto de la empresa, no personal**:
-
-- **Es la herramienta con la que se hace el producto**: cumple el papel de un programador. Gracias a ella el desarrollo lleva entre 4 y 5 veces menos horas que las estimadas (calibración de `PROGRESO.md`); sin ella, el ritmo cae.
-- **Cuesta mucho menos que la alternativa**: US$100 por mes contra pagar horas de programación.
-- **Separa el emprendimiento del trabajo**: el proyecto deja de depender de una licencia prestada.
-- **Mientras no exista la empresa**, la paga Rodrigo y se anota como aporte, con las facturas guardadas, para reconocérselo o devolvérselo al formalizar. A confirmar con el contador, junto con el IVA de los servicios digitales del exterior.
-
-Qué plan conviene: **Max (US$100 por mes)** para programar todos los días con Claude Code; Pro (US$20 por mes) tiene límites de uso más bajos y se queda corto en jornadas largas. Si Flavia la usa para textos y redes, le alcanza con un Pro. Cuando exista la empresa, el plan Team pone las cuentas a su nombre (desde 2 personas: US$25 por persona y por mes, o US$125 la de uso alto).
+Hoy la app se programa con una licencia paga de Claude que Rodrigo usa en su trabajo y paga Caamepa. Más adelante el proyecto va a necesitar una propia: el plan Max cuesta US$100 por mes ([precios de Claude](https://claude.com/pricing)).
 
 ### Lo que más mueve las fechas
 
@@ -254,5 +247,4 @@ Lo más urgente para charlar es cómo entra Flavia a la empresa: cambia la forma
 - [ ] Precios de Destacado, Plus, Pro y Familia: ¿los ajusta Flavia con lo que digan los comercios?
 - [ ] Diferencial frente a Taponto: competir con foco local y salud, o proponer una alianza (P22)
 - [ ] ¿Se suma WhatsApp Business al soporte? Hoy se sale solo con correo (D160)
-- [ ] ¿Quién paga la licencia de Claude hasta que exista la empresa, y cómo se le reconoce a Rodrigo?
 - [ ] Horas por semana de cada uno (P2)
