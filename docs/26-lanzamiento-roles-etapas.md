@@ -12,16 +12,16 @@ El código de Huellamy va muy adelantado; lo que frena el lanzamiento de diciemb
 | Marketing, marca y empresas | Flavia | Nombre y marca, redes, videos y piezas, landing, investigación (competencia, entrevistas), relación con comercios, refugios y grupos, Socios Fundadores, difusión del lanzamiento |
 | Juntos | Los dos | Decisiones de negocio (precios, qué se lanza, formalización), revisión legal, soporte en la guardia de fin de año, lectura de métricas |
 
-Cómo leerlo: cada etapa dice **qué sale** y después **qué le toca a cada uno**. Los códigos entre paréntesis (0.8.5, D160…) remiten a `docs/PROGRESO.md` y `docs/12-decisiones.md`. Las etapas siguen las fases del roadmap: **Etapa 1 = Fase 0**, **Etapa 2 = Fase 1**, **Etapa 3 = Fases 2 y 3**.
+Cómo leerlo: cada etapa dice **qué sale** y después **qué le toca a cada uno**. Los números de la columna «Paso» (como 0.8.5) y los códigos como D160 o P22 son el número de cada tarea, decisión o tema pendiente en el plan de trabajo que lleva Rodrigo: sirven para ubicarlos cuando lo repasen juntos, y no hace falta conocerlos para leer este informe. Las etapas siguen las fases del roadmap: **Etapa 1 = Fase 0**, **Etapa 2 = Fase 1**, **Etapa 3 = Fases 2 y 3**.
 
 ## Dónde estamos hoy
 
-Las dos apps, el portal y la web pública funcionan en dev, ya bajo `huellamy.com`; casi todo lo de las Fases 1 a 3 está programado y **apagado** detrás de interruptores, listo para prenderse cuando se decida. Lo que no está hecho es la validación con gente real (3 de 16 pasos) y la puesta en producción.
+Las dos apps, el portal de administración (el panel interno para moderar, gestionar comercios y ver indicadores) y la web pública funcionan en una versión de prueba, ya bajo `huellamy.com`; casi todo lo de las Fases 1 a 3 está programado y **apagado**: cada función se puede prender cuando se decida, sin volver a programar. Lo que no está hecho es la validación con gente real (3 de 16 pasos) y la puesta en producción.
 
 | Fecha | Qué se hizo |
 | --- | --- |
 | 17/11/2026 | Soporte: Ajustes → Ayuda y soporte, correo `contacto@huellamy.com`, redes Instagram `@huellamy.app` y Facebook `huellamy` (D160, D163). Diseño más ilustrado en la app y la landing (D162). «Hecho en Uruguay» en vez de Pando (D161) |
-| 16/11/2026 | Dominios `huellamy.com`, `app.`, `comercios.` y `admin.` funcionando con HTTPS (por ahora apuntan a dev) |
+| 16/11/2026 | Dominios `huellamy.com`, `app.`, `comercios.` y `admin.` funcionando con HTTPS (por ahora muestran la versión de prueba) |
 | 12/11/2026 | Landing de `huellamy.com` con formulario de contacto que llega al portal → Contactos |
 | 11–12/11/2026 | Ilustraciones de Ami y Mishi en la app. Guiones de 16 videos cortos y el video 1 «Huellamy en 30 segundos» |
 | 10/11/2026 | Dominio y hosting comprados en Hostinger (US$42, primer gasto) |
@@ -127,7 +127,7 @@ Hoy la app se programa con una licencia paga de Claude que Rodrigo usa en su tra
 2. **Decidido (18/11/2026): las tiendas van a nombre de Rodrigo.** Se sale antes porque no hace falta el número D-U-N-S de una empresa; a cambio, Google exige la prueba cerrada. Los ingresos de Pro y Familia por las tiendas van a entrar a su nombre: hablarlo con el contador al formalizar.
 3. **Crear la cuenta de Google Play en diciembre** y que Flavia junte a los 12 testers (conocidos que la usen 14 días seguidos). Así Android puede estar en la tienda a fines de enero o en febrero.
 
-Fuentes (consultadas el 18/11/2026): [prueba cerrada de Google Play](https://support.google.com/googleplay/android-developer/answer/14151465?hl=es), [tiempos de revisión de App Store](https://developer.apple.com/distribute/app-review/), [inscripción de bases de datos (URCDP)](https://www.gub.uy/tramites/inscripcion-bases-datos-personales), [inscripción de una SAS](https://www.gub.uy/tramites/inscripcion-sociedad-acciones-simplificadas-sas), [precios de Claude](https://claude.com/pricing). Los costos de legal, chapitas y contador salen de `10-costos.md`.
+Fuentes (consultadas el 18/11/2026): [prueba cerrada de Google Play](https://support.google.com/googleplay/android-developer/answer/14151465?hl=es), [tiempos de revisión de App Store](https://developer.apple.com/distribute/app-review/), [inscripción de bases de datos (URCDP)](https://www.gub.uy/tramites/inscripcion-bases-datos-personales), [inscripción de una SAS](https://www.gub.uy/tramites/inscripcion-sociedad-acciones-simplificadas-sas), [precios de Claude](https://claude.com/pricing). Los costos de legal, chapitas y contador son estimaciones iniciales del proyecto, a confirmar con presupuestos.
 
 ## Etapa 1 · Pendientes por rol (hasta diciembre 2026)
 
@@ -156,7 +156,7 @@ Quedan unas 5 semanas hasta Navidad: el camino crítico es **datos reales de Pan
 | --- | --- | --- |
 | Verificar el nombre Huellamy | Registro en DNPI, disponibilidad en tiendas y redes; decidir si se registra la marca | 0.0.9, 0.8.3f |
 | Redes sociales | Armar Instagram `@huellamy.app` y Facebook `huellamy`: biografía, primeras publicaciones, calendario hasta el lanzamiento | D163 |
-| Videos cortos | Revisar los 16 guiones y priorizar los de la Etapa 1 (1 al 8: qué es, se perdió, encontré, tu número no se muestra, chapita, cartel, mapa, urgencias) | `25-guiones-videos.md` |
+| Videos cortos | Ya hay 16 guiones escritos, con textos, escenas e ilustraciones de Ami y Mishi, y el primer video hecho. Revisarlos y priorizar los de la Etapa 1 (1 al 8: qué es, se perdió, encontré, tu número no se muestra, chapita, cartel, mapa, urgencias) | — |
 | Revisar la landing | Textos, tono, propuesta para dueños y para comercios | 0.8.6d |
 | Competencia | Probar Taponto y uno o dos más; qué hacen bien y mal, en qué nos diferenciamos | 0.0.2 |
 | Lista de 30 comercios de Pando | Nombre, rubro, dirección, horario, contacto; marcar los que atienden urgencias | 0.0.3, 0.0.4 |
@@ -190,7 +190,7 @@ Lo técnico de la Etapa 2 es sobre todo publicar en las tiendas: el código ya e
 | Tarea | Detalle | Paso |
 | --- | --- | --- |
 | Socios Fundadores | Visitar comercios con los datos de la Etapa 1; meta: 15 socios (hasta 20–30 lugares) | 1.9.1 |
-| Material para comercios | Folleto y presentación de Huellamy Comercios; videos 14 a 16 | `22-planes-y-precios.md` |
+| Material para comercios | Folleto y presentación de Huellamy Comercios; videos 14 a 16. Base ya escrita: aparecer en el mapa es gratis; Destacado (unos $600 por mes) sale primero y con promociones; Plus (unos $1.200 por mes) suma catálogo, pedidos y turnos | — |
 | Fichas de las tiendas | Textos, capturas y video de Google Play y App Store | 1.1.2, 1.1.4 |
 | Lanzamiento de las apps nativas | Campaña «ya está en tu tienda»; videos 9 a 13 (libreta, hogar, adopción, turnos, paseos) | — |
 | Protectoras y adopción | Redactar con ellas el compromiso de adopción; sumar refugios | P13 |
@@ -217,10 +217,10 @@ La Etapa 3 empieza a cobrar, así que antes hay que **formalizar la empresa**. L
 | Tarea | Detalle | Paso |
 | --- | --- | --- |
 | Vender planes a comercios | Pasar Socios Fundadores a pago (meta: 70 % renueva) y sumar Destacado y Plus | — |
-| Comunicar Pro y Familia | Qué se paga y qué es siempre gratis (regla de oro); meta: 3 % de conversión | `22-planes-y-precios.md` |
+| Comunicar Pro y Familia | Qué se paga y qué es siempre gratis, según la regla de oro: lo que hace a la seguridad y la salud del animal no se cobra (SOS, chapita QR, foto, recordatorios). Meta: que el 3 % pase a un plan pago | — |
 | Sponsors | Conseguir marcas que patrocinen lotes de chapitas | 2.9 |
 | Contenido patrocinado | Noticias y espacios de publicidad para comercios | — |
-| Campaña de fin de año 2027 | Ejecutar de octubre 2027 a enero 2028 | `18-campana-fin-de-anio.md` |
+| Campaña de fin de año 2027 | Ejecutar de octubre 2027 a enero 2028. Ya hay una propuesta escrita con metas, calendario y piezas a preparar | 3.7 |
 | Próximas zonas | Elegir la siguiente zona a abrir e INBA / RENAC | P14 |
 
 ## Cómo repartir lo que genere (para conversar)
@@ -253,7 +253,7 @@ Hoy no hay facturación. Para vender planes, chapitas o sponsors hace falta una 
 | Empresa con RUT, inscripta en DGI y BPS | SAS u otra forma: la recomienda el contador | Honorarios de constitución, a cotizar |
 | Certificado digital | Firma los comprobantes; lo emiten Abitab, el Correo o Antel, por 1 o 2 años | Varía según el tipo de empresa; a cotizar |
 | Programa de facturación | Un proveedor habilitado por la DGI; elegir uno de la lista da acceso a un ingreso simplificado y a beneficios fiscales | Mensualidad según la cantidad de comprobantes; la DGI no cobra por comprobante |
-| Contador | Liquida IVA y BPS cada mes y arma los balances | Unos $3.000 por mes (supuesto de `10-costos.md`) |
+| Contador | Liquida IVA y BPS cada mes y arma los balances | Unos $3.000 por mes (estimación inicial) |
 | Impuestos | IVA sobre lo que se venda; puede haber un régimen de pequeña empresa | Según las ventas; lo define el contador |
 
 Cuándo arrancar: **1 a 2 meses antes del primer cobro**. Es en la Etapa 3, o antes si se venden chapitas o sponsors. Pedir al contador que cotice todo junto: constitución, certificado, programa y mensualidad.
@@ -289,7 +289,7 @@ Lo más urgente para charlar es cómo entra Flavia a la empresa: cambia la forma
 
 ## Ideas a futuro
 
-Estas ideas surgieron conversando con Flavia. No están en ninguna etapa: se evalúan cuando las etapas avancen, y la lista queda abierta para sumar las que vayan apareciendo. El detalle técnico está en `16-ideas-futuras.md`.
+Estas ideas surgieron conversando con Flavia. No están en ninguna etapa: se evalúan cuando las etapas avancen, y la lista queda abierta para sumar las que vayan apareciendo. Cada idea tiene una ficha con más detalle técnico, que Rodrigo puede compartir.
 
 | Idea | Qué sería | Estado |
 | --- | --- | --- |
