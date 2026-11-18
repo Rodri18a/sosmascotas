@@ -78,6 +78,52 @@ La Etapa 1 sale en diciembre de 2026 en Pando, gratis y desde el navegador; las 
 
 Más adelante (2028, fuera de este plan): pagos con Mercado Pago, tienda, otras especies, otras zonas y países.
 
+## Plazos: lo pensado y lo estimado
+
+Diciembre para la Etapa 1 es posible, pero solo si la asesoría legal arranca esta semana: lo realista es un **lanzamiento público entre el 15 y el 20 de diciembre**. Marzo–abril para la Etapa 2 también es realista, siempre que la cuenta de Google Play se cree a más tardar a principios de enero.
+
+| Etapa | Fecha pensada | Fecha estimada | Qué la puede atrasar |
+| --- | --- | --- | --- |
+| 1 · Lanzamiento SOS | Diciembre 2026 | Prueba con conocidos del 1 al 7/12; lanzamiento público del 15 al 20/12, antes de la guardia del 24/12 | Asesoría legal (3–5 semanas en total), datos reales de Pando sin cargar, chapitas físicas sin probar |
+| 2 · App completa y comercios | Marzo–abril 2027 | Android a fines de febrero; iPhone en marzo; comercios y Socios Fundadores entre marzo y abril | Prueba cerrada de Google (14 días + revisión), primera revisión de Apple, número D-U-N-S si las cuentas son de la empresa, no llegar a las metas de la Etapa 1 |
+| 3 · Ingresos y servicios | Mediados a fin de 2027 | Primeros cobros no antes de julio 2027 | Formalización y facturación electrónica, configurar los cobros en las tiendas, metas de la Etapa 2 |
+
+### Trámites y esperas que no dependen de nosotros
+
+| Trámite | Tiempo estimado | Cuándo arrancar | Costo |
+| --- | --- | --- | --- |
+| Asesoría legal: términos, privacidad, compromiso de adopción | 1 semana para el presupuesto + 2–4 semanas de revisión | Esta semana | US$150–400 (estimado) |
+| Registro de la base de datos en la URCDP | En línea y gratis; el plazo de respuesta no está publicado | Con la asesoría legal, antes de lanzar | Gratis |
+| Proveedor de correo (correos de ingreso en español) | 1–2 días, con los registros DNS | Ya | Gratis en el plan inicial |
+| Proyecto de producción en Supabase | 1–2 días | Primera semana de diciembre | Gratis hasta pasar a Pro (unos US$25/mes) |
+| Chapitas: muestras y prueba de durabilidad | 1 semana de muestras + 2–3 semanas de uso | Ya. Si no llegan, se lanza con la chapita digital y las físicas salen en enero | US$50–150 el lote de 100 |
+| Cuenta de Google Play personal | Verificación de identidad: unos días. Prueba cerrada: 14 días seguidos con 12 testers. Revisión para producción: hasta 7 días. Total: unas 4 semanas | Diciembre o principios de enero | US$25 una vez |
+| Cuentas de Google Play o Apple a nombre de la empresa | Piden un número D-U-N-S: hasta 30 días, gratis. Google no les exige la prueba cerrada | Apenas exista la empresa | Gratis |
+| Apple Developer | Alta: 1–2 días como persona (con empresa, más el D-U-N-S) | Enero | US$99 por año |
+| Revisión de App Store | La mayoría en 1–2 días; una app nueva puede esperar 2–5 días y el primer envío suele volver con observaciones. Contar 1–2 semanas | Febrero | Incluido |
+| Constituir la empresa (SAS) | Unos días hábiles para constituirla; con inscripciones y facturación electrónica, calcular 3–6 semanas (estimación propia, confirmar con el contador) | Consulta en diciembre. Constituirla antes de la Etapa 2 si las tiendas van a nombre de la empresa, y sí o sí antes del primer cobro | Honorarios a cotizar; contador unos $3.000/mes desde el primer cobro (supuesto) |
+
+### Gastos por etapa
+
+| Etapa | Gasto | Monto |
+| --- | --- | --- |
+| Ya pagado | Dominio y hosting | US$42 |
+| 1 | Asesoría legal | US$150–400 |
+| 1 | Chapitas (primer lote) y volantes | US$50–150 + impresión a cotizar |
+| 1 o 2 | Google Play | US$25 una vez |
+| 2 | Apple Developer | US$99 por año |
+| 2 | Supabase Pro, si el uso lo pide | Unos US$25 por mes |
+| 2 o 3 | Constituir la empresa y contador | A cotizar; unos $3.000 por mes |
+| 3 | Comisión de las tiendas sobre Pro y Familia | 15 % para desarrolladores chicos (30 % en el caso general) |
+
+### Lo que más mueve las fechas
+
+1. **Pedir el presupuesto legal esta semana.** Es lo único que hoy puede correr el lanzamiento a enero.
+2. **Decidir si las tiendas van a nombre personal o de la empresa** antes de crear las cuentas: pasar una app de una cuenta a otra después es engorroso. Con cuenta personal se sale antes; con la empresa hace falta el D-U-N-S, pero Google no pide la prueba cerrada.
+3. **Crear la cuenta de Google Play en diciembre** y que Flavia junte a los 12 testers (conocidos que la usen 14 días seguidos). Así Android puede estar en la tienda a fines de enero o en febrero.
+
+Fuentes (consultadas el 18/11/2026): [prueba cerrada de Google Play](https://support.google.com/googleplay/android-developer/answer/14151465?hl=es), [tiempos de revisión de App Store](https://developer.apple.com/distribute/app-review/), [inscripción de bases de datos (URCDP)](https://www.gub.uy/tramites/inscripcion-bases-datos-personales), [inscripción de una SAS](https://www.gub.uy/tramites/inscripcion-sociedad-acciones-simplificadas-sas). Los costos de legal, chapitas y contador salen de `10-costos.md`.
+
 ## Etapa 1 · Pendientes por rol (hasta diciembre 2026)
 
 Quedan unas 5 semanas hasta Navidad: el camino crítico es **datos reales de Pando + legal + producción**. Casi todo lo de Flavia arranca ya, en paralelo a lo técnico.

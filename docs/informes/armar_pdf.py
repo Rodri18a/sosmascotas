@@ -34,10 +34,18 @@ while i < len(lines):
             rows.append([c.strip() for c in lines[i].strip().strip("|").split("|")])
             i += 1
         head, data = rows[0], rows[2:]
-        cls = "matriz" if head[0] == "" else (("pasos cuatro" if len(head) == 4 else "pasos") if head[-1] == "Paso" else ("fechas" if head[0] == "Fecha" else ("roles" if head[0] == "Rol" else "")))
+        cls = {"Etapa": "plazos" if len(head) == 4 else "gastos", "Trámite": "tramites"}.get(head[0], "")
+        if cls == "": cls = "matriz" if head[0] == "" else (("pasos cuatro" if len(head) == 4 else "pasos") if head[-1] == "Paso" else ("fechas" if head[0] == "Fecha" else ("roles" if head[0] == "Rol" else "")))
         h = "".join(f"<th>{inline(c)}</th>" for c in head)
         d = "".join("<tr>" + "".join(f"<td>{inline(c)}</td>" for c in r) + "</tr>" for r in data)
         body.append(f'<table class="{cls}"><thead><tr>{h}</tr></thead><tbody>{d}</tbody></table>')
+        continue
+    elif re.match(r"\d+\. ", l):
+        items = []
+        while i < len(lines) and re.match(r"\d+\. ", lines[i]):
+            items.append(inline(lines[i].split(". ", 1)[1]))
+            i += 1
+        body.append("<ol>" + "".join(f"<li>{x}</li>" for x in items) + "</ol>")
         continue
     elif l.startswith("- "):
         items = []
@@ -91,6 +99,10 @@ table.cuatro th:first-child{{width:70mm}} table.cuatro th:nth-child(3){{width:26
 table.fechas th:first-child{{width:24mm}}
 table.roles th:first-child{{width:40mm}} table.roles th:nth-child(2){{width:20mm}}
 table.matriz th:first-child{{width:26mm}}
+table.plazos th:first-child{{width:30mm}} table.plazos th:nth-child(2){{width:26mm}}
+table.tramites th:first-child{{width:42mm}} table.tramites th:last-child{{width:32mm}}
+table.gastos th:first-child{{width:24mm}} table.gastos th:last-child{{width:50mm}}
+ol{{margin:0 0 3mm;padding-left:6mm}}
 table.matriz td:first-child{{font-weight:700;color:var(--azul)}}
 ul{{margin:0 0 3mm;padding-left:6mm}} li{{margin-bottom:1mm}}
 ul.check{{list-style:none;padding-left:0}}
