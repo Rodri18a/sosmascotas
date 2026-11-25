@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -49,51 +50,59 @@ class _BienvenidaScreenState extends ConsumerState<BienvenidaScreen> {
   Widget build(BuildContext context) {
     final t = context.t;
     final tema = Theme.of(context);
-    return Scaffold(
-      key: const Key('bienvenida'),
-      body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(24, 24, 24, 32),
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 480),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const ImagenIlustracion(Ilustracion.bienvenida, alto: 220),
-                  const SizedBox(height: 24),
-                  Text(
-                    t.inicioBienvenidaTitulo,
-                    textAlign: TextAlign.center,
-                    style: tema.textTheme.headlineSmall?.copyWith(
-                      color: tema.colorScheme.primary,
+    // Sin barra de arriba: la de estado, transparente sobre el fondo (si
+    // no, Android pone una franja gris).
+    final barraSistema = tema.brightness == Brightness.dark
+        ? SystemUiOverlayStyle.light
+        : SystemUiOverlayStyle.dark;
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: barraSistema.copyWith(statusBarColor: Colors.transparent),
+      child: Scaffold(
+        key: const Key('bienvenida'),
+        body: SafeArea(
+          child: Center(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.fromLTRB(24, 24, 24, 32),
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 480),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const ImagenIlustracion(Ilustracion.bienvenida, alto: 220),
+                    const SizedBox(height: 24),
+                    Text(
+                      t.inicioBienvenidaTitulo,
+                      textAlign: TextAlign.center,
+                      style: tema.textTheme.headlineSmall?.copyWith(
+                        color: tema.colorScheme.primary,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    t.inicioBienvenidaTexto,
-                    textAlign: TextAlign.center,
-                    style: tema.textTheme.titleMedium,
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    t.inicioBienvenidaAyuda,
-                    textAlign: TextAlign.center,
-                    style: tema.textTheme.bodyMedium?.copyWith(
-                      color: tema.colorScheme.onSurfaceVariant,
+                    const SizedBox(height: 8),
+                    Text(
+                      t.inicioBienvenidaTexto,
+                      textAlign: TextAlign.center,
+                      style: tema.textTheme.titleMedium,
                     ),
-                  ),
-                  const SizedBox(height: 32),
-                  FilledButton(
-                    onPressed: () => _seguir(conCuenta: true),
-                    child: Text(t.inicioBienvenidaCuenta),
-                  ),
-                  const SizedBox(height: 8),
-                  TextButton(
-                    onPressed: () => _seguir(conCuenta: false),
-                    child: Text(t.inicioBienvenidaSinCuenta),
-                  ),
-                ],
+                    const SizedBox(height: 12),
+                    Text(
+                      t.inicioBienvenidaAyuda,
+                      textAlign: TextAlign.center,
+                      style: tema.textTheme.bodyMedium?.copyWith(
+                        color: tema.colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                    FilledButton(
+                      onPressed: () => _seguir(conCuenta: true),
+                      child: Text(t.inicioBienvenidaCuenta),
+                    ),
+                    const SizedBox(height: 8),
+                    TextButton(
+                      onPressed: () => _seguir(conCuenta: false),
+                      child: Text(t.inicioBienvenidaSinCuenta),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

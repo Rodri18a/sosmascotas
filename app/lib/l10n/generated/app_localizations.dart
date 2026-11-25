@@ -2341,7 +2341,7 @@ abstract class AppLocalizations {
   /// No description provided for @temaModernoDescripcion.
   ///
   /// In es, this message translates to:
-  /// **'Blanco, azul y verde, con letra Manrope. Limpio y luminoso.'**
+  /// **'Blanco y azul, con letra Manrope. Limpio y luminoso.'**
   String get temaModernoDescripcion;
 
   /// No description provided for @temaFaro.
