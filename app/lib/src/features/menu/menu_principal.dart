@@ -197,19 +197,27 @@ class _MenuPrincipalState extends ConsumerState<MenuPrincipal> {
       ),
     ];
 
+    final conDegradado = context.marca.degradado != null;
     return Drawer(
+      // Con el degradé (Moderno), que llegue hasta arriba de todo.
       child: SafeArea(
+        top: !conDegradado,
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
             _ConDegradado(
               children: [
                 // Logo de la marca arriba del menú (guía de marca, D122).
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(16, 20, 16, 4),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 20, 16, 4),
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: LogoHuellamy(horizontal: true, alto: 22),
+                    // Sobre el degradé, el logo en blanco.
+                    child: LogoHuellamy(
+                      horizontal: true,
+                      alto: 22,
+                      tinta: conDegradado ? const Color(0xFFFFFFFF) : null,
+                    ),
                   ),
                 ),
                 _Cabecera(onIr: (ruta) => _tocar('perfil', () => _ir(ruta))),
@@ -259,7 +267,10 @@ class _ConDegradado extends StatelessWidget {
           child: IconTheme.merge(
             data: const IconThemeData(color: blanco),
             child: Padding(
-              padding: const EdgeInsets.only(bottom: 8),
+              padding: EdgeInsets.only(
+                top: MediaQuery.paddingOf(context).top,
+                bottom: 8,
+              ),
               child: Column(children: children),
             ),
           ),
