@@ -396,7 +396,7 @@ class _NovedadesScreenState extends ConsumerState<NovedadesScreen> {
 }
 
 /// «Últimos 30 días»: las que volvieron a casa a la izquierda y las que se
-/// siguen buscando a la derecha, con el ícono y el número grandes (D141).
+/// siguen buscando a la derecha (D141), en una línea cada uno (D170).
 class _Resumen extends StatelessWidget {
   const _Resumen({required this.resumen});
 
