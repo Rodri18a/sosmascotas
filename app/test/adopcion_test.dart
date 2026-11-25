@@ -129,7 +129,7 @@ void main() {
     await _tocar(tester, find.widgetWithText(FilledButton, 'Me interesa'));
 
     expect(
-      find.widgetWithText(AppBar, 'Mi perfil de adoptante'),
+      find.widgetWithText(AppBar, 'Perfil adoptante'),
       findsOneWidget,
     );
     await _tocar(tester, find.text('Apartamento'));

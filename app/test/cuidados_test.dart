@@ -129,7 +129,7 @@ void main() {
       'dias': 1,
       'mascotas': 2,
     });
-    expect(find.text('Mis paseos y estadías'), findsOneWidget);
+    expect(find.text('Paseos y estadías'), findsOneWidget);
   });
 
   testWidgets('sin lugar: lo dice antes de pedir y no deja enviar', (

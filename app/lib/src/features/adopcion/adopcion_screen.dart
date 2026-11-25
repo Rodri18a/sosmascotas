@@ -745,7 +745,7 @@ class _CompromisoAdopcionScreenState
     return Scaffold(
       appBar: AppBar(
         leading: volverSiNoHayAtras(context),
-        title: Text(t.adopcionCompromisoTitulo),
+        title: Text(t.barraCompromiso),
       ),
       body: Column(
         children: [
@@ -832,7 +832,7 @@ class _PerfilAdoptanteScreenState extends ConsumerState<PerfilAdoptanteScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: volverSiNoHayAtras(context),
-        title: Text(t.adopcionMiPerfil),
+        title: Text(t.barraPerfilAdoptante),
       ),
       body: guardado.isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -999,7 +999,7 @@ class _CalculadoraCostosState extends State<CalculadoraCostosScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: volverSiNoHayAtras(context),
-        title: Text(t.adopcionCalculadora),
+        title: Text(t.barraCalculadora),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),

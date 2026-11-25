@@ -15,9 +15,9 @@ class LegalScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final t = context.t;
     final titulo = switch (documento) {
-      DocumentoLegal.terminos => t.legalTerminos,
-      DocumentoLegal.privacidad => t.legalPrivacidad,
-      DocumentoLegal.compromisoAdopcion => t.adopcionCompromisoTitulo,
+      DocumentoLegal.terminos => t.barraTerminos,
+      DocumentoLegal.privacidad => t.barraPrivacidad,
+      DocumentoLegal.compromisoAdopcion => t.barraCompromiso,
     };
     return Scaffold(
       appBar: AppBar(leading: volverSiNoHayAtras(context), title: Text(titulo)),

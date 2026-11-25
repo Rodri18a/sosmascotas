@@ -121,7 +121,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(
-      find.widgetWithText(AppBar, 'Política de privacidad'),
+      find.widgetWithText(AppBar, 'Privacidad'),
       findsOneWidget,
     );
     expect(find.textContaining('Ley 18.331'), findsWidgets);

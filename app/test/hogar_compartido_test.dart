@@ -227,7 +227,7 @@ void main() {
       );
       await _ir(tester, '/unirme/K7M2QX9PAB');
 
-      expect(find.text('Invitación a un hogar'), findsOneWidget);
+      expect(find.text('Invitación'), findsOneWidget);
       await _tocar(tester, find.text('Unirme'));
       expect(hogar.unidos, ['K7M2QX9PAB']);
       expect(eventos.map((e) => e['name']), contains('household_join'));

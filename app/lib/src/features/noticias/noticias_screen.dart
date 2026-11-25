@@ -377,7 +377,7 @@ class _NovedadesScreenState extends ConsumerState<NovedadesScreen> {
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
       leading: volverSiNoHayAtras(context),
-      title: Text(context.t.comunidadUltimasTitulo),
+      title: Text(context.t.barraNovedades),
     ),
     body: RefreshIndicator(
       onRefresh: () async {

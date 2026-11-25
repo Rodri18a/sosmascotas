@@ -3277,7 +3277,7 @@ abstract class AppLocalizations {
   /// No description provided for @unirmeTitulo.
   ///
   /// In es, this message translates to:
-  /// **'Invitación a un hogar'**
+  /// **'Invitación'**
   String get unirmeTitulo;
 
   /// No description provided for @unirmeTexto.
@@ -6655,13 +6655,13 @@ abstract class AppLocalizations {
   /// No description provided for @vidaNuevo.
   ///
   /// In es, this message translates to:
-  /// **'Nuevo en el historial'**
+  /// **'Sumar al historial'**
   String get vidaNuevo;
 
   /// No description provided for @vidaEditar.
   ///
   /// In es, this message translates to:
-  /// **'Editar del historial'**
+  /// **'Editar historial'**
   String get vidaEditar;
 
   /// No description provided for @vidaTipo.
@@ -8401,7 +8401,7 @@ abstract class AppLocalizations {
   /// No description provided for @guiaTitulo.
   ///
   /// In es, this message translates to:
-  /// **'¿Estoy listo para adoptar?'**
+  /// **'¿Listo para adoptar?'**
   String get guiaTitulo;
 
   /// No description provided for @guiaTexto.
@@ -9031,7 +9031,7 @@ abstract class AppLocalizations {
   /// No description provided for @renacGuiaTitulo.
   ///
   /// In es, this message translates to:
-  /// **'Cómo registrar a tu mascota'**
+  /// **'Registro nacional'**
   String get renacGuiaTitulo;
 
   /// No description provided for @renacGuiaTexto.
@@ -11893,7 +11893,7 @@ abstract class AppLocalizations {
   /// No description provided for @unirmeEquipoTitulo.
   ///
   /// In es, this message translates to:
-  /// **'Invitación a un equipo'**
+  /// **'Invitación'**
   String get unirmeEquipoTitulo;
 
   /// No description provided for @unirmeEquipoTexto.
@@ -12039,6 +12039,54 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Ingresá para escribirnos desde la app, o mandanos un correo.'**
   String get soporteIngresar;
+
+  /// No description provided for @barraNovedades.
+  ///
+  /// In es, this message translates to:
+  /// **'Novedades'**
+  String get barraNovedades;
+
+  /// No description provided for @barraRetiro.
+  ///
+  /// In es, this message translates to:
+  /// **'Punto de retiro'**
+  String get barraRetiro;
+
+  /// No description provided for @barraCompromiso.
+  ///
+  /// In es, this message translates to:
+  /// **'Compromiso'**
+  String get barraCompromiso;
+
+  /// No description provided for @barraPerfilAdoptante.
+  ///
+  /// In es, this message translates to:
+  /// **'Perfil adoptante'**
+  String get barraPerfilAdoptante;
+
+  /// No description provided for @barraCalculadora.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Cuánto cuesta?'**
+  String get barraCalculadora;
+
+  /// No description provided for @barraCuidados.
+  ///
+  /// In es, this message translates to:
+  /// **'Paseos y estadías'**
+  String get barraCuidados;
+
+  /// No description provided for @barraTerminos.
+  ///
+  /// In es, this message translates to:
+  /// **'Términos'**
+  String get barraTerminos;
+
+  /// No description provided for @barraPrivacidad.
+  ///
+  /// In es, this message translates to:
+  /// **'Privacidad'**
+  String get barraPrivacidad;
 }
 
 class _AppLocalizationsDelegate

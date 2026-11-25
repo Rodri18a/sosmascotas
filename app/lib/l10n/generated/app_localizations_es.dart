@@ -1928,7 +1928,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get hogarSoloVos => 'Todavía no invitaste a nadie.';
 
   @override
-  String get unirmeTitulo => 'Invitación a un hogar';
+  String get unirmeTitulo => 'Invitación';
 
   @override
   String get unirmeTexto =>
@@ -3928,10 +3928,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get vidaTipoOtro => 'Otro';
 
   @override
-  String get vidaNuevo => 'Nuevo en el historial';
+  String get vidaNuevo => 'Sumar al historial';
 
   @override
-  String get vidaEditar => 'Editar del historial';
+  String get vidaEditar => 'Editar historial';
 
   @override
   String get vidaTipo => '¿Qué pasó?';
@@ -5002,7 +5002,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get publicarDatos => 'Revisá los datos.';
 
   @override
-  String get guiaTitulo => '¿Estoy listo para adoptar?';
+  String get guiaTitulo => '¿Listo para adoptar?';
 
   @override
   String get guiaTexto =>
@@ -5374,7 +5374,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get renacGuardado => 'Listo, quedó como registrada.';
 
   @override
-  String get renacGuiaTitulo => 'Cómo registrar a tu mascota';
+  String get renacGuiaTitulo => 'Registro nacional';
 
   @override
   String get renacGuiaTexto =>
@@ -7193,7 +7193,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get equipoCodigo => 'Código o enlace';
 
   @override
-  String get unirmeEquipoTitulo => 'Invitación a un equipo';
+  String get unirmeEquipoTitulo => 'Invitación';
 
   @override
   String get unirmeEquipoTexto =>
@@ -7275,4 +7275,28 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get soporteIngresar =>
       'Ingresá para escribirnos desde la app, o mandanos un correo.';
+
+  @override
+  String get barraNovedades => 'Novedades';
+
+  @override
+  String get barraRetiro => 'Punto de retiro';
+
+  @override
+  String get barraCompromiso => 'Compromiso';
+
+  @override
+  String get barraPerfilAdoptante => 'Perfil adoptante';
+
+  @override
+  String get barraCalculadora => '¿Cuánto cuesta?';
+
+  @override
+  String get barraCuidados => 'Paseos y estadías';
+
+  @override
+  String get barraTerminos => 'Términos';
+
+  @override
+  String get barraPrivacidad => 'Privacidad';
 }

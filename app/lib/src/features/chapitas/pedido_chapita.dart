@@ -337,7 +337,7 @@ class _ChapitasNegocioState extends ConsumerState<ChapitasNegocioScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: volverSiNoHayAtras(context),
-        title: Text(t.retiroTitulo),
+        title: Text(t.barraRetiro),
       ),
       body: switch (ref.watch(
         pedidosChapitaNegocioProvider(widget.negocioId),

@@ -412,7 +412,7 @@ class MisCuidadosScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         leading: volverSiNoHayAtras(context),
-        title: Text(t.misCuidados),
+        title: Text(t.barraCuidados),
         actions: const [BotonAyuda()],
       ),
       body: RefreshIndicator(
