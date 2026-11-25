@@ -352,6 +352,18 @@ Future<void> bajarEnMenu(WidgetTester tester, Finder objetivo) async {
   await tester.pumpAndSettle();
 }
 
+/// Baja en la pantalla abierta (por ejemplo Ajustes) hasta que se vea
+/// [objetivo] y lo toca.
+Future<void> tocarBajando(WidgetTester tester, Finder objetivo) async {
+  await tester.scrollUntilVisible(
+    objetivo,
+    200,
+    scrollable: find.byType(Scrollable).last,
+  );
+  await tester.pumpAndSettle();
+  await tester.tap(objetivo);
+}
+
 /// Recorridos vistos, en memoria.
 class AlmacenRecorridosFalso implements AlmacenRecorridos {
   AlmacenRecorridosFalso({this.todosVistos = false});

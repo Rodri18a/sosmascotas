@@ -16,7 +16,8 @@
 | Filtros guardados (los favoritos son gratis, D112) | | ✅ | ✅ |
 | Descuentos en comercios adheridos (D113: código que se canjea en el local, una vez por día) | | ✅ | ✅ |
 | Historial de salud en PDF | | ✅ | ✅ |
-| Personalización: temas Faro, Vecinos y Pop (`14-brief-identidad-visual.md` §10) y tamaño de letra | | ✅ | ✅ |
+| Tema: Moderno (por defecto) o Huellamy, para todos (D172) | ✅ | ✅ | ✅ |
+| Personalización: temas Faro, Vecinos, Pop y Blanco y negro (`14-brief-identidad-visual.md` §10) y tamaño de letra | | ✅ | ✅ |
 | Hogar compartido (hasta 5 integrantes), tareas, cuidador temporal | | | ✅ |
 | **Precio de ejemplo (a validar)** | $0 | ~$60/mes | ~$120/mes |
 

@@ -102,23 +102,33 @@ abstract final class AppTheme {
     const radio16 = BorderRadius.all(Radius.circular(16));
     const radio24 = BorderRadius.all(Radius.circular(24));
     const tamanoBoton = Size(64, 52);
-    const textoBoton = TextStyle(fontSize: 17, fontWeight: FontWeight.w800);
-    TextStyle estilo(double tam, FontWeight peso, {double? alto}) => TextStyle(
+    // Solo tamaño, peso e interlineado, para sumarle a un estilo completo.
+    TextStyle ajuste(double tam, FontWeight peso, {double? alto}) => TextStyle(
       fontFamily: 'Manrope',
       fontSize: tam,
       fontWeight: peso,
       height: alto == null ? null : alto / tam,
     );
     final t = base.textTheme;
+    // Los estilos de las piezas parten de uno completo, con la geometría de
+    // la tipografía, como arma Material los suyos (no heredan): si no, los
+    // botones fallan al animar su letra cuando se cambia de tema (D172).
+    TextStyle estilo(double tam, FontWeight peso) => base
+        .typography
+        .englishLike
+        .bodyMedium!
+        .merge(t.bodyMedium)
+        .merge(ajuste(tam, peso));
+    final textoBoton = estilo(17, FontWeight.w800);
     final texto = t.copyWith(
-      headlineMedium: t.headlineMedium?.merge(estilo(28, FontWeight.w800)),
-      headlineSmall: t.headlineSmall?.merge(estilo(22, FontWeight.w800)),
-      titleLarge: t.titleLarge?.merge(estilo(20, FontWeight.w800)),
-      titleMedium: t.titleMedium?.merge(estilo(17, FontWeight.w700)),
-      titleSmall: t.titleSmall?.merge(estilo(15, FontWeight.w700)),
-      bodyLarge: t.bodyLarge?.merge(estilo(16, FontWeight.w400, alto: 23)),
-      bodyMedium: t.bodyMedium?.merge(estilo(14, FontWeight.w400, alto: 20)),
-      labelLarge: t.labelLarge?.merge(estilo(15, FontWeight.w600)),
+      headlineMedium: t.headlineMedium?.merge(ajuste(28, FontWeight.w800)),
+      headlineSmall: t.headlineSmall?.merge(ajuste(22, FontWeight.w800)),
+      titleLarge: t.titleLarge?.merge(ajuste(20, FontWeight.w800)),
+      titleMedium: t.titleMedium?.merge(ajuste(17, FontWeight.w700)),
+      titleSmall: t.titleSmall?.merge(ajuste(15, FontWeight.w700)),
+      bodyLarge: t.bodyLarge?.merge(ajuste(16, FontWeight.w400, alto: 23)),
+      bodyMedium: t.bodyMedium?.merge(ajuste(14, FontWeight.w400, alto: 20)),
+      labelLarge: t.labelLarge?.merge(ajuste(15, FontWeight.w600)),
     );
     final barraSistema = oscuro
         ? SystemUiOverlayStyle.light
@@ -221,11 +231,11 @@ abstract final class AppTheme {
         focusedErrorBorder: campoBorde.copyWith(
           borderSide: BorderSide(color: colores.error, width: 2),
         ),
-        labelStyle: TextStyle(color: c.textoSuave),
-        floatingLabelStyle: TextStyle(
-          color: c.texto,
-          fontWeight: FontWeight.w600,
-        ),
+        labelStyle: estilo(16, FontWeight.w400).copyWith(color: c.textoSuave),
+        floatingLabelStyle: estilo(
+          16,
+          FontWeight.w600,
+        ).copyWith(color: c.texto),
       ),
       chipTheme: ChipThemeData(
         backgroundColor: s.chip,

@@ -54,7 +54,8 @@ final puedeElegirTemaProvider = Provider<bool>(
       ref.watch(funcionalidadActivaProvider(Funcionalidades.temasPro)),
 );
 
-/// Id del tema que la persona eligió en este dispositivo (Cielo si nunca eligió).
+/// Id del tema que la persona eligió en este dispositivo (Moderno si nunca
+/// eligió, D172).
 final temaElegidoProvider = NotifierProvider<TemaElegido, String>(
   TemaElegido.new,
 );
@@ -63,7 +64,7 @@ class TemaElegido extends Notifier<String> {
   @override
   String build() {
     unawaited(_cargar());
-    return Paleta.cielo.id;
+    return Paleta.porDefecto.id;
   }
 
   Future<void> _cargar() async {
@@ -85,13 +86,16 @@ class TemaElegido extends Notifier<String> {
   }
 }
 
-/// La paleta con la que se dibuja la app. Si el plan Pro vence (o se apaga la
-/// funcionalidad), vuelve a Cielo sin borrar la elección guardada.
+/// La paleta con la que se dibuja la app. Huellamy y Moderno, para todos
+/// (D172); un tema Pro, solo con el plan y la funcionalidad: si el plan vence
+/// (o se apaga), vuelve al de por defecto sin borrar la elección guardada.
 final paletaActivaProvider = Provider<Paleta>((ref) {
   // Huellamy Comercios va siempre en su azul (D129).
   if (ref.watch(esAppComercioProvider)) return Paleta.comercios;
-  if (!ref.watch(puedeElegirTemaProvider)) return Paleta.cielo;
-  return Paleta.porId(ref.watch(temaElegidoProvider));
+  final elegida = Paleta.porId(ref.watch(temaElegidoProvider));
+  if (elegida.esGratis) return elegida;
+  if (!ref.watch(puedeElegirTemaProvider)) return Paleta.porDefecto;
+  return elegida;
 });
 
 /// Descarga las tipografías de un tema Pro (Cielo ya viene con la app).

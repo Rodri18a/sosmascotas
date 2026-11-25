@@ -3,10 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
+import '../../funcionalidades/funcionalidades_activas.dart';
 import '../../theme/tema_elegido.dart';
 import '../../widgets/explicacion_corta.dart';
 
-/// Fila "Tema de colores" de Ajustes (solo con plan Pro o Familia, D62).
+/// Fila "Tema de colores" de Ajustes: Huellamy y Moderno para todos; los
+/// demás temas, con plan Pro o Familia (D62, D172).
 class TileTema extends ConsumerWidget {
   const TileTema({super.key});
 
@@ -17,7 +19,11 @@ class TileTema extends ConsumerWidget {
     return ListTile(
       leading: const Icon(Icons.palette_outlined),
       title: Text(t.ajustesTema),
-      subtitle: Text(t.ajustesTemaPro(nombreTema(t, elegida))),
+      subtitle: Text(
+        elegida.esGratis
+            ? nombreTema(t, elegida)
+            : t.ajustesTemaPro(nombreTema(t, elegida)),
+      ),
       trailing: const Icon(Icons.chevron_right_outlined),
       onTap: () => showModalBottomSheet<void>(
         context: context,
@@ -73,22 +79,45 @@ class _SelectorTema extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: 12),
-            for (final paleta in Paleta.todas)
-              ListTile(
-                contentPadding: EdgeInsets.zero,
-                selected: paleta.id == elegida.id,
-                leading: _Muestra(paleta.modo(tema.brightness)),
-                title: Text(nombreTema(t, paleta)),
-                subtitle: Text(_descripcionTema(t, paleta)),
-                trailing: paleta.id == elegida.id
-                    ? const Icon(Icons.check_circle)
-                    : null,
-                onTap: () =>
-                    ref.read(temaElegidoProvider.notifier).elegir(paleta),
+            for (final paleta in Paleta.gratuitas)
+              _OpcionTema(paleta: paleta, elegida: elegida),
+            // Los demás, del plan Pro y con la funcionalidad prendida.
+            if (ref.watch(tienePlanConTemasProvider))
+              SiFuncionalidad(
+                Funcionalidades.temasPro,
+                child: Column(
+                  children: [
+                    for (final paleta in Paleta.todas)
+                      if (!paleta.esGratis)
+                        _OpcionTema(paleta: paleta, elegida: elegida),
+                  ],
+                ),
               ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class _OpcionTema extends ConsumerWidget {
+  const _OpcionTema({required this.paleta, required this.elegida});
+
+  final Paleta paleta;
+  final Paleta elegida;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = context.t;
+    final elegido = paleta.id == elegida.id;
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      selected: elegido,
+      leading: _Muestra(paleta.modo(Theme.of(context).brightness)),
+      title: Text(nombreTema(t, paleta)),
+      subtitle: Text(_descripcionTema(t, paleta)),
+      trailing: elegido ? const Icon(Icons.check_circle) : null,
+      onTap: () => ref.read(temaElegidoProvider.notifier).elegir(paleta),
     );
   }
 }

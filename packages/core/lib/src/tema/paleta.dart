@@ -162,6 +162,15 @@ class Paleta {
   /// La de la marca primero; el orden es el del selector de Ajustes.
   static const todas = [cielo, moderno, faro, vecinos, pop, blancoNegro];
 
+  /// Las que puede elegir cualquiera (D172): Moderno y la de la marca. Las
+  /// demás son del plan Pro.
+  static const gratuitas = [moderno, cielo];
+
+  /// La que trae la app si la persona nunca eligió (D172).
+  static const porDefecto = moderno;
+
+  bool get esGratis => gratuitas.any((p) => p.id == id);
+
   /// La paleta con ese id, o la de la marca si no existe (por ejemplo, un id viejo).
   static Paleta porId(String? id) =>
       todas.firstWhere((p) => p.id == id, orElse: () => cielo);

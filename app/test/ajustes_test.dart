@@ -120,7 +120,7 @@ void main() {
     );
     await _abrirAjustes(tester);
 
-    await tester.tap(find.text('Borrar mi cuenta'));
+    await tocarBajando(tester, find.text('Borrar mi cuenta'));
     await tester.pumpAndSettle();
     expect(find.text('¿Borrar tu cuenta?'), findsOneWidget);
 
@@ -139,7 +139,7 @@ void main() {
     await tester.pumpWidget(appDePrueba(cuenta: cuenta));
     await _abrirAjustes(tester);
 
-    await tester.tap(find.text('Borrar mi cuenta'));
+    await tocarBajando(tester, find.text('Borrar mi cuenta'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Cancelar'));
     await tester.pumpAndSettle();
@@ -157,7 +157,7 @@ void main() {
     await _abrirAjustes(tester);
     cuenta.fallarCon = ErrorCuenta.sinConexion;
 
-    await tester.tap(find.text('Borrar mi cuenta'));
+    await tocarBajando(tester, find.text('Borrar mi cuenta'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Sí, borrar todo'));
     await tester.pumpAndSettle();

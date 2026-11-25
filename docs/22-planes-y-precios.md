@@ -47,7 +47,8 @@ Regla de oro: **lo que hace a la seguridad y la salud del animal no se cobra.**
 | Descuentos en comercios adheridos (código que se canjea en el local, uno por día) | | ✅ | ✅ |
 | Historial de salud en PDF | | ✅ | ✅ |
 | Filtros guardados en el mapa | | ✅ | ✅ |
-| Temas de colores y tamaño de letra | | ✅ | ✅ |
+| Tema Moderno (el de entrada) o Huellamy (D172) | ✅ | ✅ | ✅ |
+| Otros temas de colores y tamaño de letra | | ✅ | ✅ |
 | No te vuelve a preguntar «¿buscás veterinaria?» | | ✅ | ✅ |
 | Hogar compartido (hasta 5 personas), tareas y cuidador temporal | | | ✅ |
 | **Para quién** | Quien tiene 1 o 2 mascotas | Quien tiene varias o quiere comodidad | La casa entera cuida a las mascotas |

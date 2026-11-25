@@ -91,6 +91,9 @@ void main() {
           .onPressed,
       isNull,
     );
+    // Con la letra del tema Moderno, el aviso queda más abajo.
+    await tester.drag(find.text('Plan Básico'), const Offset(0, -500));
+    await tester.pumpAndSettle();
     expect(find.textContaining('Ya pediste un plan'), findsWidgets);
   });
 

@@ -429,11 +429,16 @@ class _FormularioProductoState extends ConsumerState<FormularioProducto> {
                         errorBuilder: (_, _, _) => const SizedBox.shrink(),
                       ),
                     ),
-                  TextButton.icon(
-                    onPressed: _elegirFoto,
-                    icon: const Icon(Icons.add_a_photo_outlined),
-                    label: Text(
-                      _foto == null ? t.productoFoto : t.productoCambiarFoto,
+                  // Flexible: con letra grande (Moderno) no entraba en el
+                  // diálogo angosto.
+                  Flexible(
+                    child: TextButton.icon(
+                      onPressed: _elegirFoto,
+                      icon: const Icon(Icons.add_a_photo_outlined),
+                      label: Text(
+                        _foto == null ? t.productoFoto : t.productoCambiarFoto,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   ),
                 ],

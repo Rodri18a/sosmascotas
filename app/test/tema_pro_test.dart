@@ -26,6 +26,11 @@ void _pantallaDeCelular(WidgetTester tester) {
 Color _primario(WidgetTester tester) =>
     Theme.of(tester.element(find.byType(Scaffold).first)).colorScheme.primary;
 
+/// Un texto dentro del selector de temas (la fila de Ajustes también dice
+/// el nombre del tema elegido).
+Finder _enSelector(String texto) =>
+    find.descendant(of: find.byType(BottomSheet), matching: find.text(texto));
+
 Future<void> _abrirAjustes(WidgetTester tester) async {
   await tester.pumpAndSettle();
   await abrirAjustesDesdeMenu(tester);
@@ -33,9 +38,8 @@ Future<void> _abrirAjustes(WidgetTester tester) async {
 }
 
 void main() {
-  testWidgets('con plan Gratis no aparece el tema y se ve Cielo', (
-    tester,
-  ) async {
+  testWidgets('con plan Gratis se elige entre Moderno y Huellamy; un tema '
+      'Pro guardado vuelve al de por defecto (Moderno)', (tester) async {
     _pantallaDeCelular(tester);
     await tester.pumpWidget(
       appDePrueba(
@@ -47,7 +51,64 @@ void main() {
     );
     await _abrirAjustes(tester);
 
-    expect(find.text('Tema de colores'), findsNothing);
+    expect(_primario(tester), Paleta.moderno.claro.primario);
+    await tester.tap(find.text('Tema de colores'));
+    await tester.pumpAndSettle();
+    expect(_enSelector('Huellamy'), findsOneWidget);
+    expect(_enSelector('Moderno'), findsOneWidget);
+    for (final pro in ['Faro', 'Vecinos', 'Pop', 'Blanco y negro']) {
+      expect(find.text(pro), findsNothing);
+    }
+  });
+
+  testWidgets('Moderno viene por defecto (D172) y sin plan se puede volver '
+      'a Huellamy, sin «beneficio de tu plan Pro»', (tester) async {
+    _pantallaDeCelular(tester);
+    final almacen = AlmacenTemaFalso();
+    await tester.pumpWidget(
+      appDePrueba(
+        cuenta: ServicioCuentaFalso(conectado: _ana),
+        almacenTema: almacen,
+      ),
+    );
+    await _abrirAjustes(tester);
+    await tester.tap(find.text('Tema de colores'));
+    await tester.pumpAndSettle();
+    expect(_primario(tester), Paleta.moderno.claro.primario);
+    await tester.tap(_enSelector('Huellamy'));
+    await tester.pumpAndSettle();
+
+    expect(_primario(tester), Paleta.cielo.claro.primario);
+    expect(almacen.guardado, 'cielo');
+    await tester.tapAt(const Offset(20, 20));
+    await tester.pumpAndSettle();
+    expect(find.text('Huellamy'), findsOneWidget);
+    expect(find.textContaining('beneficio de tu plan Pro'), findsNothing);
+  });
+
+  testWidgets('un visitante también elige el tema desde Ajustes', (
+    tester,
+  ) async {
+    _pantallaDeCelular(tester);
+    final almacen = AlmacenTemaFalso();
+    await tester.pumpWidget(appDePrueba(almacenTema: almacen));
+    await _abrirAjustes(tester);
+    await tester.tap(find.text('Tema de colores'));
+    await tester.pumpAndSettle();
+    await tester.tap(_enSelector('Huellamy'));
+    await tester.pumpAndSettle();
+
+    expect(_primario(tester), Paleta.cielo.claro.primario);
+    expect(almacen.guardado, 'cielo');
+  });
+
+  testWidgets('quien eligió Huellamy arranca con Huellamy', (tester) async {
+    _pantallaDeCelular(tester);
+    await tester.pumpWidget(
+      appDePrueba(almacenTema: AlmacenTemaFalso('cielo')),
+    );
+    await tester.pumpAndSettle();
+
     expect(_primario(tester), Paleta.cielo.claro.primario);
   });
 
@@ -68,21 +129,22 @@ void main() {
     );
     await _abrirAjustes(tester);
 
-    expect(find.text('Huellamy · beneficio de tu plan Pro'), findsOneWidget);
+    expect(find.text('Moderno'), findsOneWidget);
     await tester.tap(find.text('Tema de colores'));
     await tester.pumpAndSettle();
     expect(find.text('Elegí cómo se ve la app'), findsOneWidget);
     for (final nombre in [
       'Huellamy',
+      'Moderno',
       'Faro',
       'Vecinos',
       'Pop',
       'Blanco y negro',
     ]) {
-      expect(find.text(nombre), findsOneWidget);
+      expect(_enSelector(nombre), findsOneWidget);
     }
 
-    await tester.tap(find.text('Faro'));
+    await tester.tap(_enSelector('Faro'));
     await tester.pumpAndSettle();
 
     expect(_primario(tester), Paleta.faro.claro.primario);
@@ -132,9 +194,8 @@ void main() {
     expect(_primario(tester), Paleta.vecinos.claro.primario);
   });
 
-  testWidgets('con plan Pro pero temas_pro apagada no aparece y se ve Cielo', (
-    tester,
-  ) async {
+  testWidgets('con plan Pro pero temas_pro apagada solo están Huellamy y '
+      'Moderno, y un tema Pro guardado vuelve a Moderno', (tester) async {
     _pantallaDeCelular(tester);
     final eventos = <Map<String, Object?>>[];
     await tester.pumpWidget(
@@ -147,8 +208,11 @@ void main() {
     );
     await _abrirAjustes(tester);
 
-    expect(find.text('Tema de colores'), findsNothing);
-    expect(_primario(tester), Paleta.cielo.claro.primario);
+    expect(_primario(tester), Paleta.moderno.claro.primario);
+    await tester.tap(find.text('Tema de colores'));
+    await tester.pumpAndSettle();
+    expect(_enSelector('Moderno'), findsOneWidget);
+    expect(find.text('Pop'), findsNothing);
     // Ajustes muestra otras funcionalidades graduales: solo la de temas.
     final exposicion = eventos.singleWhere(
       (e) =>
@@ -158,7 +222,9 @@ void main() {
     expect(exposicion['props'], {'key': 'temas_pro', 'variante': 'apagada'});
   });
 
-  testWidgets('un visitante ve Cielo', (tester) async {
+  testWidgets('un visitante con un tema Pro guardado ve Moderno', (
+    tester,
+  ) async {
     _pantallaDeCelular(tester);
     await tester.pumpWidget(
       appDePrueba(
@@ -168,7 +234,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(_primario(tester), Paleta.cielo.claro.primario);
+    expect(_primario(tester), Paleta.moderno.claro.primario);
   });
 
   test('un id desconocido vuelve a Cielo', () {

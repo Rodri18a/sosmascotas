@@ -146,7 +146,7 @@ void main() {
       150,
       scrollable: find.byType(Scrollable).first,
     );
-    await tester.tap(find.text('Cerrar sesión'));
+    await tocarBajando(tester, find.text('Cerrar sesión'));
     await tester.pumpAndSettle();
 
     expect(push.olvidos, 1);

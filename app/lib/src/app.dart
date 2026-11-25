@@ -52,6 +52,10 @@ class SosMascotaApp extends ConsumerWidget {
       darkTheme: AppTheme.tema(paleta, Brightness.dark),
       // Sigue el modo claro u oscuro del celular.
       themeMode: ThemeMode.system,
+      // El cambio de tema es inmediato: Moderno arma botones, campos y chips
+      // con estilos que Huellamy no define, y la animación entre los dos
+      // falla al mezclar esos estilos (D172).
+      themeAnimationDuration: Duration.zero,
       routerConfig: router,
       builder: (context, child) {
         final contenido = env.isProd

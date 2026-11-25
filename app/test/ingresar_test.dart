@@ -91,7 +91,7 @@ void main() {
     await abrirAjustesDesdeMenu(tester);
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Cerrar sesión'));
+    await tocarBajando(tester, find.text('Cerrar sesión'));
     await tester.pumpAndSettle();
 
     // Se descarta la navegación y arranca de nuevo en el Mapa (CU-07).

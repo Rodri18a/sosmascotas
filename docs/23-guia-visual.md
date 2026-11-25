@@ -203,7 +203,7 @@ Se distinguen también por luminosidad (daltonismo), son gotas con la punta en e
 
 ## Tema Moderno (D171)
 
-Tema opcional del selector de Ajustes (con las condiciones de los otros temas), con el estilo de la app de CAAMEPA. La marca, los pines del mapa y el naranja de Ami para el SOS no cambian.
+**Tema por defecto de la app (D172)**, con el estilo de la app de CAAMEPA. En Ajustes → Tema de colores cualquiera puede elegir entre Moderno y Huellamy; los demás temas son del plan Pro. La marca, los pines del mapa y el naranja de Ami para el SOS no cambian.
 
 | Pieza | Claro | Oscuro |
 |---|---|---|
