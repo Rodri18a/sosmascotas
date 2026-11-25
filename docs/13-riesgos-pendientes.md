@@ -20,8 +20,8 @@
 | P12 | Ampliar "Busco veterinaria" a otros rubros | Evaluar después de medir la aceptación con las veterinarias |
 | P14 | **Contactar al INBA** (renac@mgap.gub.uy): confirmar la nueva plataforma RENAC (migrada el 01/12/2025), preguntar por una API o alianza, y presentar SOS Mascota | Después de tener la Fase 0 publicada (para mostrar algo concreto) |
 | P17 | **Contactar a Zoonosis de la Intendencia de Canelones** con una propuesta concreta (jornadas en el mapa, encontrados, datos anónimos) | Después de la Fase 0, con métricas en la mano |
-| P15 | **Prototipo de chapita** con el amigo: material, método de impresión del QR, costo por unidad, tiempo por lote | Paso 0.0.10 |
-| P16 | Precio de venta de la chapita y precio del patrocinio por lote | Con el costo real del prototipo |
+| P15 | **Prototipo de chapita** con el amigo: material, método de impresión del QR, costo por unidad, tiempo por lote. Incluye 2–3 muestras con NFC (D166) | Paso 0.0.10 |
+| P16 | Precio de venta de la chapita (con QR y con QR + NFC, D166) y precio del patrocinio por lote. La de NFC tiene que recuperar su inversión | Con el costo real del prototipo |
 | P20 | ~~**Identidad visual**~~ | ✅ C · Cielo, con Faro, Vecinos y Pop como temas Pro (D62). Falta generar el logo y las piezas con el prompt de `14-brief-identidad-visual.md` §8 |
 | P21 | ~~**Habilitación gradual de funcionalidades**~~ | ✅ Aprobada tal cual el 16/10 (D64); pasos 0.8.0b–e en `PROGRESO.md` |
 | P22 | **Diferencial frente a Taponto** (16/10/2026): ya tiene mapa de servicios, tag propio y descuentos con comercios; no se vio libreta ni datos en Pando. Decidir entre competir con foco local + salud + veterinarias, proponer una alianza o replantear. Ver `investigacion/competencia.md` | Antes de seguir con la Etapa 0.8 |

@@ -123,7 +123,8 @@ Un lugar, producto o noticia **coincide** con la mascota activa si la lista de e
 - Un código sin activar muestra una página "Activá esta chapita con la app".
 - **Retiro en la veterinaria:** solo en veterinarias adheridas que aceptaron ser punto de retiro. La veterinaria marca la chapita como entregada en su panel. ✅ 1.8b.4 (D98): solo veterinarias **verificadas**; un pedido abierto por mascota y hasta 3 por cuenta; texto grabado de hasta 20 letras; la administración asigna un código libre de un lote y la manda; la veterinaria marca «Llegó» y «Entregada», y al entregarla queda vinculada sola. La veterinaria ve solo el primer nombre de quien pidió. **Sin cargo** hasta definir el precio (P16) y formalizar (1.9.0).
 - **Sponsors:** el logo va en el reverso de la chapita y, en la página del QR, **chico y abajo** (la página es para una emergencia). El sponsor recibe resultados de su lote: activadas, escaneos y reencuentros.
-- Precios de venta y de patrocinio: a definir con el costo real por unidad del primer lote.
+- **Dos versiones (D166):** chapita con **QR** (se regala, se patrocina o se vende) y chapita con **QR + NFC**, que **solo se vende** y con un precio que recupere su inversión. El NFC lleva la misma dirección que el QR y queda bloqueado contra escritura.
+- Precios de venta y de patrocinio (de las dos versiones): a definir con el costo real por unidad del primer lote.
 
 ## Contacto y chat
 
