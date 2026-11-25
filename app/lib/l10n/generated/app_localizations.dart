@@ -5791,13 +5791,13 @@ abstract class AppLocalizations {
   /// No description provided for @comunidadResumenVolvieron.
   ///
   /// In es, this message translates to:
-  /// **'{n, plural, =1{mascota volvió a casa} other{mascotas volvieron a casa}}'**
+  /// **'{n, plural, =1{volvió a casa} other{volvieron a casa}}'**
   String comunidadResumenVolvieron(int n);
 
   /// No description provided for @comunidadResumenBuscando.
   ///
   /// In es, this message translates to:
-  /// **'{n, plural, =1{mascota se sigue buscando} other{mascotas se siguen buscando}}'**
+  /// **'{n, plural, =1{se sigue buscando} other{se siguen buscando}}'**
   String comunidadResumenBuscando(int n);
 
   /// No description provided for @comunidadResumenReencuentros.

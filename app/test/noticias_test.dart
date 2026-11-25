@@ -279,11 +279,11 @@ void main() {
       findsOneWidget,
     );
     // Solo reencuentros y perdidas, uno al lado del otro (D141).
-    expect(find.text('mascotas volvieron a casa'), findsOneWidget);
-    expect(find.text('mascotas se siguen buscando'), findsOneWidget);
+    expect(find.text('volvieron a casa'), findsOneWidget);
+    expect(find.text('se siguen buscando'), findsOneWidget);
     expect(
-      tester.getCenter(find.text('mascotas volvieron a casa')).dx,
-      lessThan(tester.getCenter(find.text('mascotas se siguen buscando')).dx),
+      tester.getCenter(find.text('volvieron a casa')).dx,
+      lessThan(tester.getCenter(find.text('se siguen buscando')).dx),
     );
     expect(find.textContaining('lugar verificado en el mapa'), findsNothing);
     expect(find.textContaining('adopciones concretadas'), findsNothing);

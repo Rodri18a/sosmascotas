@@ -3374,8 +3374,8 @@ class AppLocalizationsEs extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'mascotas volvieron a casa',
-      one: 'mascota volvió a casa',
+      other: 'volvieron a casa',
+      one: 'volvió a casa',
     );
     return '$_temp0';
   }
@@ -3385,8 +3385,8 @@ class AppLocalizationsEs extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'mascotas se siguen buscando',
-      one: 'mascota se sigue buscando',
+      other: 'se siguen buscando',
+      one: 'se sigue buscando',
     );
     return '$_temp0';
   }

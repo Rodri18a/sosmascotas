@@ -1358,9 +1358,9 @@
   "comunidadUltimasTitulo": "Últimas novedades de la comunidad",
   "comunidadVerTodas": "Ver todas",
   "comunidadResumenTitulo": "Mascotas de la comunidad · últimos 30 días",
-  "comunidadResumenVolvieron": "{n, plural, =1{mascota volvió a casa} other{mascotas volvieron a casa}}",
+  "comunidadResumenVolvieron": "{n, plural, =1{volvió a casa} other{volvieron a casa}}",
   "@comunidadResumenVolvieron": {"placeholders": {"n": {"type": "int"}}},
-  "comunidadResumenBuscando": "{n, plural, =1{mascota se sigue buscando} other{mascotas se siguen buscando}}",
+  "comunidadResumenBuscando": "{n, plural, =1{se sigue buscando} other{se siguen buscando}}",
   "@comunidadResumenBuscando": {"placeholders": {"n": {"type": "int"}}},
   "comunidadResumenReencuentros": "{n, plural, =1{1 mascota volvió a casa} other{{n} mascotas volvieron a casa}}",
   "@comunidadResumenReencuentros": {
