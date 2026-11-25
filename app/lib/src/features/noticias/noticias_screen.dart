@@ -407,23 +407,26 @@ class _Resumen extends StatelessWidget {
     final t = context.t;
     final tema = Theme.of(context);
     final color = tema.colorScheme.onPrimaryContainer;
+    // Compacta (D170): ícono, número y texto en una línea por dato.
     Widget dato(IconData icono, int n, String texto) => Expanded(
       child: Semantics(
         container: true,
         label: '$n $texto',
         child: ExcludeSemantics(
-          child: Column(
+          child: Row(
             children: [
-              Icon(icono, size: 40, color: color),
-              const SizedBox(height: 4),
+              Icon(icono, size: 22, color: color),
+              const SizedBox(width: 6),
               Text(
                 '$n',
-                style: tema.textTheme.headlineSmall?.copyWith(color: color),
+                style: tema.textTheme.titleLarge?.copyWith(color: color),
               ),
-              Text(
-                texto,
-                textAlign: TextAlign.center,
-                style: tema.textTheme.bodySmall?.copyWith(color: color),
+              const SizedBox(width: 6),
+              Expanded(
+                child: Text(
+                  texto,
+                  style: tema.textTheme.bodySmall?.copyWith(color: color),
+                ),
               ),
             ],
           ),
@@ -434,22 +437,23 @@ class _Resumen extends StatelessWidget {
       margin: const EdgeInsets.fromLTRB(16, 12, 16, 0),
       color: tema.colorScheme.primaryContainer,
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.fromLTRB(16, 10, 16, 12),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               t.comunidadResumenTitulo,
-              style: tema.textTheme.titleMedium?.copyWith(color: color),
+              style: tema.textTheme.labelLarge?.copyWith(color: color),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 8),
             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 dato(
                   Icons.home_outlined,
                   resumen.reencuentros,
                   t.comunidadResumenVolvieron(resumen.reencuentros),
                 ),
+                const SizedBox(width: 12),
                 dato(
                   Icons.search_outlined,
                   resumen.perdidasActivas,

@@ -3366,15 +3366,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get comunidadVerTodas => 'Ver todas';
 
   @override
-  String get comunidadResumenTitulo => 'Últimos 30 días en la comunidad';
+  String get comunidadResumenTitulo =>
+      'Mascotas de la comunidad · últimos 30 días';
 
   @override
   String comunidadResumenVolvieron(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'volvieron a casa',
-      one: 'volvió a casa',
+      other: 'mascotas volvieron a casa',
+      one: 'mascota volvió a casa',
     );
     return '$_temp0';
   }
@@ -3384,8 +3385,8 @@ class AppLocalizationsEs extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'siguen en búsqueda',
-      one: 'sigue en búsqueda',
+      other: 'mascotas se siguen buscando',
+      one: 'mascota se sigue buscando',
     );
     return '$_temp0';
   }

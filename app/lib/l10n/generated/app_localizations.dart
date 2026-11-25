@@ -5785,19 +5785,19 @@ abstract class AppLocalizations {
   /// No description provided for @comunidadResumenTitulo.
   ///
   /// In es, this message translates to:
-  /// **'Últimos 30 días en la comunidad'**
+  /// **'Mascotas de la comunidad · últimos 30 días'**
   String get comunidadResumenTitulo;
 
   /// No description provided for @comunidadResumenVolvieron.
   ///
   /// In es, this message translates to:
-  /// **'{n, plural, =1{volvió a casa} other{volvieron a casa}}'**
+  /// **'{n, plural, =1{mascota volvió a casa} other{mascotas volvieron a casa}}'**
   String comunidadResumenVolvieron(int n);
 
   /// No description provided for @comunidadResumenBuscando.
   ///
   /// In es, this message translates to:
-  /// **'{n, plural, =1{sigue en búsqueda} other{siguen en búsqueda}}'**
+  /// **'{n, plural, =1{mascota se sigue buscando} other{mascotas se siguen buscando}}'**
   String comunidadResumenBuscando(int n);
 
   /// No description provided for @comunidadResumenReencuentros.

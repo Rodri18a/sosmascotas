@@ -200,7 +200,7 @@ void main() {
     await tester.pumpAndSettle();
     final eventos = tester.getTopLeft(find.text('Próximos eventos')).dy;
     final resumen = tester
-        .getTopLeft(find.text('Últimos 30 días en la comunidad'))
+        .getTopLeft(find.text('Mascotas de la comunidad · últimos 30 días'))
         .dy;
     final preguntas = tester.getTopLeft(find.text('¿Tenés una duda?')).dy;
     expect(eventos, lessThan(preguntas));
@@ -274,13 +274,16 @@ void main() {
       ],
     );
 
-    expect(find.text('Últimos 30 días en la comunidad'), findsOneWidget);
-    // Solo reencuentros y perdidas, uno al lado del otro (D141).
-    expect(find.text('volvieron a casa'), findsOneWidget);
-    expect(find.text('siguen en búsqueda'), findsOneWidget);
     expect(
-      tester.getCenter(find.text('volvieron a casa')).dx,
-      lessThan(tester.getCenter(find.text('siguen en búsqueda')).dx),
+      find.text('Mascotas de la comunidad · últimos 30 días'),
+      findsOneWidget,
+    );
+    // Solo reencuentros y perdidas, uno al lado del otro (D141).
+    expect(find.text('mascotas volvieron a casa'), findsOneWidget);
+    expect(find.text('mascotas se siguen buscando'), findsOneWidget);
+    expect(
+      tester.getCenter(find.text('mascotas volvieron a casa')).dx,
+      lessThan(tester.getCenter(find.text('mascotas se siguen buscando')).dx),
     );
     expect(find.textContaining('lugar verificado en el mapa'), findsNothing);
     expect(find.textContaining('adopciones concretadas'), findsNothing);
@@ -305,7 +308,10 @@ void main() {
   testWidgets('Comunidad vacía explica qué va a aparecer', (tester) async {
     await _abrir(tester);
     expect(find.textContaining('Todavía no hay novedades'), findsOneWidget);
-    expect(find.text('Últimos 30 días en la comunidad'), findsNothing);
+    expect(
+      find.text('Mascotas de la comunidad · últimos 30 días'),
+      findsNothing,
+    );
   });
 
   testWidgets('reaccionar a una noticia: poner, cambiar y quitar', (
