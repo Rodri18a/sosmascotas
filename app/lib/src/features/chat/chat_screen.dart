@@ -519,7 +519,13 @@ class _FotoChat extends ConsumerWidget {
     builder: (context, url) => switch (url.data) {
       final u? => ClipRRect(
         borderRadius: BorderRadius.circular(10),
-        child: Image.network(u, width: 240, fit: BoxFit.cover),
+        child: Image.network(
+          u,
+          width: 240,
+          fit: BoxFit.cover,
+          errorBuilder: (_, _, _) =>
+              const Icon(Icons.broken_image_outlined, size: 48),
+        ),
       ),
       _ => const SizedBox(
         width: 240,

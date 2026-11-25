@@ -311,7 +311,20 @@ class _Detalle extends ConsumerWidget {
               children: [
                 for (final foto in detalle.fotos)
                   if (repo.urlFoto(foto) case final url?)
-                    Image.network(url, fit: BoxFit.cover)
+                    Image.network(
+                      url,
+                      fit: BoxFit.cover,
+                      // Si la foto no carga, queda el ícono de la especie.
+                      errorBuilder: (_, _, _) => ColoredBox(
+                        color: tema.colorScheme.primaryContainer,
+                        child: Center(
+                          child: Text(
+                            detalle.especieIcono,
+                            style: const TextStyle(fontSize: 72),
+                          ),
+                        ),
+                      ),
+                    )
                   else
                     ColoredBox(
                       color: tema.colorScheme.primaryContainer,

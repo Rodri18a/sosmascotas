@@ -153,6 +153,12 @@ class TarjetaSos extends ConsumerWidget {
     final t = context.t;
     final tema = Theme.of(context);
     final url = ref.watch(sosRepositorioProvider).urlFoto(reporte.foto);
+    final sinFoto = ColoredBox(
+      color: tema.colorScheme.primaryContainer,
+      child: Center(
+        child: Text(reporte.especieIcono, style: const TextStyle(fontSize: 40)),
+      ),
+    );
     final perdida = reporte.tipo == TipoSos.perdida;
     final titulo = perdida
         ? t.sosTituloPerdida(reporte.nombre ?? reporte.especie)
@@ -169,16 +175,13 @@ class TarjetaSos extends ConsumerWidget {
               width: 104,
               height: 104,
               child: url == null
-                  ? ColoredBox(
-                      color: tema.colorScheme.primaryContainer,
-                      child: Center(
-                        child: Text(
-                          reporte.especieIcono,
-                          style: const TextStyle(fontSize: 40),
-                        ),
-                      ),
-                    )
-                  : Image.network(url, fit: BoxFit.cover),
+                  ? sinFoto
+                  : Image.network(
+                      url,
+                      fit: BoxFit.cover,
+                      // Si la foto no carga, queda el ícono de la especie.
+                      errorBuilder: (_, _, _) => sinFoto,
+                    ),
             ),
             Expanded(
               child: Padding(
