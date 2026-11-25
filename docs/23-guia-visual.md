@@ -125,7 +125,8 @@ Se distinguen también por luminosidad (daltonismo), son gotas con la punta en e
 |---|---|
 | Esquinas | Botones en **píldora** (D162) · campos 12 px · tarjetas 20 px (landing 24 px) · hojas de abajo 16 px · ícono de la app 22 % |
 | Botones | Alto mínimo 48 px, en píldora. Principal: relleno primario (en la landing, degradé azul de `#1677C9` a `#0B4F94`). Secundario: borde. SOS: relleno naranja con texto azul noche |
-| Tarjetas | Superficie blanca sobre el fondo celeste muy claro, con sombra suave azulada (D162). Las de acceso (Adopción, bienvenida) llevan su ilustración arriba, título azul centrado y botón en píldora |
+| Novedades de la comunidad | Borde de 2 px: **rojo** (error) si la mascota se sigue buscando, **verde** (éxito) si volvió a casa; las demás sin borde (D167) |
+| Tarjetas | Superficie blanca sobre el fondo celeste muy claro, con sombra suave azulada (D162). Las de acceso (Adopción) llevan su ilustración arriba, título azul centrado y botón en píldora |
 | Toques | Todo lo que se toca mide al menos 48 × 48 px |
 | Barra de arriba | Color primario con texto e íconos blancos; flecha para volver en toda pantalla fuera de las pestañas |
 | Hojas de abajo | Por encima de la barra de abajo, con la manija arriba |
@@ -145,7 +146,7 @@ Se distinguen también por luminosidad (daltonismo), son gotas con la punta en e
 | Comunidad | Comunidad, Preguntas y Conversaciones vacías |
 | Tienda (carrito) | Mis pedidos y catálogo vacíos |
 | Ami y Mishi juntos | Landing (chapita QR) |
-| Bienvenida (los dos saludando, D162) | Inicio de un visitante y portada de la landing |
+| Bienvenida (los dos saludando, D162) | Pantalla de bienvenida de la primera vez (D167) y portada de la landing |
 | Cachorro y gatito (D162) | Tarjeta de Adopción del Inicio y landing |
 | Grupo con la cucha (D162) | Adopción sin publicaciones |
 | Perrito con megáfono (D162) | SOS sin reportes cerca y landing («Si se pierde») |

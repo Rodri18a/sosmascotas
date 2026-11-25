@@ -18,6 +18,7 @@ import 'features/ajustes/ajustes_screen.dart';
 import 'features/ajustes/plan_usuario_screen.dart';
 import 'features/avisos/avisos_screen.dart';
 import 'features/ayuda/ayuda_screen.dart';
+import 'features/bienvenida/bienvenida_screen.dart';
 import 'features/chapitas/pedido_chapita.dart';
 import 'features/chat/chat_screen.dart';
 import 'features/comunidad/comunidad_screen.dart';
@@ -72,6 +73,7 @@ abstract final class Rutas {
   static const ingresar = '/ingresar';
   static const avisos = '/avisos';
   static const consentimiento = '/consentimiento';
+  static const bienvenida = '/bienvenida';
   static const legal = '/legal';
   static const terminos = '/legal/terminos';
   static const privacidad = '/legal/privacidad';
@@ -477,6 +479,10 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: Rutas.avisos,
         builder: (context, state) =>
             _conGuia(PantallaRecorrido.avisos, const AvisosScreen()),
+      ),
+      GoRoute(
+        path: Rutas.bienvenida,
+        builder: (_, _) => const BienvenidaScreen(),
       ),
       GoRoute(
         path: Rutas.consentimiento,

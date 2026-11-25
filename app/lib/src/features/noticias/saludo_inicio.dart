@@ -11,11 +11,10 @@ import '../../mascotas/catalogo.dart';
 import '../../mascotas/mascotas_repositorio.dart';
 import '../../router.dart';
 import '../../widgets/foto_mascota.dart';
-import '../../widgets/ilustracion.dart';
 
 /// Arriba del Inicio (D162). Con sesión: «¡Hola, …!» y las caritas de sus
-/// mascotas (tocar una abre su ficha). Visitante: la bienvenida de Ami y
-/// Mishi con el botón para ingresar.
+/// mascotas (tocar una abre su ficha). Visitante: nada (la bienvenida es
+/// una pantalla aparte que sale una sola vez, `BienvenidaScreen`).
 class SaludoInicio extends ConsumerWidget {
   const SaludoInicio({super.key});
 
@@ -24,47 +23,10 @@ class SaludoInicio extends ConsumerWidget {
     // En Huellamy Comercios el Inicio es del negocio, no de las mascotas.
     if (ref.watch(esAppComercioProvider)) return const SizedBox.shrink();
     final usuario = ref.watch(usuarioActualProvider).value;
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
-      child: usuario == null ? const _Bienvenida() : const _Hola(),
-    );
-  }
-}
-
-class _Bienvenida extends StatelessWidget {
-  const _Bienvenida();
-
-  @override
-  Widget build(BuildContext context) {
-    final t = context.t;
-    final tema = Theme.of(context);
-    return Card(
-      key: const Key('bienvenida-inicio'),
-      margin: EdgeInsets.zero,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 20),
-        child: Column(
-          children: [
-            const ImagenIlustracion(Ilustracion.bienvenida, alto: 130),
-            const SizedBox(height: 12),
-            Text(
-              t.inicioBienvenidaTitulo,
-              textAlign: TextAlign.center,
-              style: tema.textTheme.titleLarge?.copyWith(
-                color: tema.colorScheme.primary,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(t.inicioBienvenidaTexto, textAlign: TextAlign.center),
-            const SizedBox(height: 16),
-            FilledButton(
-              onPressed: () =>
-                  context.push(Rutas.ingresarYVolverA(Rutas.inicio)),
-              child: Text(t.inicioBienvenidaBoton),
-            ),
-          ],
-        ),
-      ),
+    if (usuario == null) return const SizedBox.shrink();
+    return const Padding(
+      padding: EdgeInsets.fromLTRB(16, 12, 16, 4),
+      child: _Hola(),
     );
   }
 }

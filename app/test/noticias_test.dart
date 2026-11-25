@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
+import 'package:sosmascota/src/features/bienvenida/bienvenida_screen.dart';
 import 'package:sosmascota/src/features/noticias/noticias_screen.dart';
 import 'package:sosmascota/src/features/sos/sos_detalle_screen.dart';
 import 'package:sosmascota/src/router.dart';
@@ -485,5 +487,80 @@ void main() {
   ) async {
     await _abrir(tester);
     expect(find.byKey(const Key('acceso-adopcion')), findsNothing);
+  });
+
+  testWidgets('Comunidad: borde rojo si se sigue buscando, verde si volvió a '
+      'casa y sin borde lo demás', (tester) async {
+    await _abrir(
+      tester,
+      novedades: [
+        Novedad(
+          id: 's1',
+          tipo: TipoNovedad.perdida,
+          fecha: DateTime(2026, 10, 20),
+          origenId: 's1',
+          nombre: 'Toby',
+          cantidad: 2,
+        ),
+        Novedad(
+          id: 'r1',
+          tipo: TipoNovedad.reencuentro,
+          fecha: DateTime(2026, 10, 19),
+          nombre: 'Lola',
+          detalle: 'lost',
+        ),
+        Novedad(
+          id: 'c1',
+          tipo: TipoNovedad.comercio,
+          fecha: DateTime(2026, 10, 18),
+          nombre: 'Vet Pando',
+          detalle: 'vet',
+        ),
+      ],
+    );
+    final tema = Theme.of(tester.element(find.text('Se busca a Toby')));
+    BorderSide borde(String tipo) {
+      final tarjeta = tester.widget<Card>(
+        find.byKey(Key('novedad-borde-$tipo')),
+      );
+      return (tarjeta.shape! as RoundedRectangleBorder).side;
+    }
+
+    expect(borde('perdida').color, tema.colorScheme.error);
+    expect(borde('reencuentro').color, tema.extension<ColoresMarca>()!.exito);
+    expect(find.byKey(const Key('novedad-borde-comercio')), findsNothing);
+  });
+
+  testWidgets('Inicio del visitante: sin el bloque de bienvenida', (
+    tester,
+  ) async {
+    await _abrir(tester, visitante: true);
+    expect(find.text('¡Hola! Somos Huellamy'), findsNothing);
+  });
+
+  testWidgets('Bienvenida de la primera vez: se marca vista y «Mirar sin '
+      'cuenta» lleva al Inicio', (tester) async {
+    SharedPreferences.setMockInitialValues({});
+    final metricas = <Map<String, Object?>>[];
+    await tester.pumpWidget(
+      appDePrueba(
+        inicio: Rutas.bienvenida,
+        cuenta: ServicioCuentaFalso(),
+        eventos: metricas,
+        funcionalidades: FuncionalidadesFalsas(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('¡Hola! Somos Huellamy'), findsOneWidget);
+    expect(bienvenidaVista(await SharedPreferences.getInstance()), isTrue);
+
+    await tester.ensureVisible(find.text('Mirar sin cuenta'));
+    await tester.tap(find.text('Mirar sin cuenta'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('bienvenida')), findsNothing);
+    expect(
+      metricas.map((e) => e['name']),
+      containsAllInOrder(['welcome_view', 'welcome_skip']),
+    );
   });
 }

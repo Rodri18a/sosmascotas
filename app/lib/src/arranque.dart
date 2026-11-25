@@ -8,6 +8,7 @@ import 'app.dart';
 import 'config/env_provider.dart';
 import 'config/supabase_providers.dart';
 import 'dos_apps/dos_apps.dart';
+import 'features/bienvenida/bienvenida_screen.dart';
 import 'metricas/metricas.dart';
 import 'router.dart';
 
@@ -22,7 +23,13 @@ Future<void> arrancar({bool comercio = false}) async {
     env.supabaseUrl,
     env.supabasePublishableKey,
   );
-  final anonId = await obtenerAnonId(await SharedPreferences.getInstance());
+  final prefs = await SharedPreferences.getInstance();
+  final anonId = await obtenerAnonId(prefs);
+  // La bienvenida sale una sola vez, al instalar (no a quien ya tiene sesión).
+  final conBienvenida =
+      !comercio &&
+      !bienvenidaVista(prefs) &&
+      supabase?.auth.currentSession == null;
   final metricas = Metricas.conSupabase(supabase, anonId: anonId)
     ..track(Eventos.appOpen, props: {if (comercio) 'app': 'comercios'});
   runApp(
@@ -34,7 +41,8 @@ Future<void> arrancar({bool comercio = false}) async {
         if (comercio) ...[
           esAppComercioProvider.overrideWithValue(true),
           rutaInicialProvider.overrideWithValue(Rutas.negocio),
-        ],
+        ] else if (conBienvenida)
+          rutaInicialProvider.overrideWithValue(Rutas.bienvenida),
       ],
       child: const SosMascotaApp(),
     ),

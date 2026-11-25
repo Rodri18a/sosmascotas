@@ -102,6 +102,12 @@ abstract final class Eventos {
   static const tourFinish = 'tour_finish';
   static const tourSkip = 'tour_skip';
 
+  /// Pantalla de bienvenida de la primera vez: se vio, y qué eligió
+  /// (`welcome_signup`: crear cuenta o ingresar; `welcome_skip`: sin cuenta).
+  static const welcomeView = 'welcome_view';
+  static const welcomeSignup = 'welcome_signup';
+  static const welcomeSkip = 'welcome_skip';
+
   /// «Ver más» de una explicación corta (plan de mejoras 1.4): `item`, cuál.
   static const moreInfoOpen = 'more_info_open';
 

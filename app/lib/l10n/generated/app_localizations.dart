@@ -7678,11 +7678,23 @@ abstract class AppLocalizations {
   /// **'Todo lo que tu mascota necesita, en un solo lugar.'**
   String get inicioBienvenidaTexto;
 
-  /// No description provided for @inicioBienvenidaBoton.
+  /// No description provided for @inicioBienvenidaCuenta.
   ///
   /// In es, this message translates to:
-  /// **'Empezar'**
-  String get inicioBienvenidaBoton;
+  /// **'Crear cuenta o ingresar'**
+  String get inicioBienvenidaCuenta;
+
+  /// No description provided for @inicioBienvenidaSinCuenta.
+  ///
+  /// In es, this message translates to:
+  /// **'Mirar sin cuenta'**
+  String get inicioBienvenidaSinCuenta;
+
+  /// No description provided for @inicioBienvenidaAyuda.
+  ///
+  /// In es, this message translates to:
+  /// **'Podés mirar el mapa, los perdidos y las urgencias sin cuenta. Para cargar tus mascotas y avisar si se pierde una, creá tu cuenta gratis.'**
+  String get inicioBienvenidaAyuda;
 
   /// No description provided for @inicioHola.
   ///

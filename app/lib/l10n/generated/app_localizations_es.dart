@@ -4581,7 +4581,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'Todo lo que tu mascota necesita, en un solo lugar.';
 
   @override
-  String get inicioBienvenidaBoton => 'Empezar';
+  String get inicioBienvenidaCuenta => 'Crear cuenta o ingresar';
+
+  @override
+  String get inicioBienvenidaSinCuenta => 'Mirar sin cuenta';
+
+  @override
+  String get inicioBienvenidaAyuda =>
+      'Podés mirar el mapa, los perdidos y las urgencias sin cuenta. Para cargar tus mascotas y avisar si se pierde una, creá tu cuenta gratis.';
 
   @override
   String inicioHola(String nombre) {

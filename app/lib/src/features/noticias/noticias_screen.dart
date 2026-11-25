@@ -548,8 +548,24 @@ class TarjetaNovedad extends ConsumerWidget {
     ].where((x) => x.isNotEmpty).join(' · ');
     final url = ref.watch(noticiasRepositorioProvider).urlFoto(n.fotoPath);
     final perdida = n.tipo == TipoNovedad.perdida;
+    // Borde rojo si se sigue buscando, verde si volvió a casa.
+    final borde = switch (n.tipo) {
+      TipoNovedad.perdida => tema.colorScheme.error,
+      TipoNovedad.reencuentro => context.marca.exito,
+      _ => null,
+    };
+    final forma = tema.cardTheme.shape;
     return Card(
+      key: borde == null ? null : Key('novedad-borde-${n.tipo.name}'),
       margin: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+      shape: borde == null
+          ? null
+          : (forma is RoundedRectangleBorder
+                    ? forma
+                    : RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ))
+                .copyWith(side: BorderSide(color: borde, width: 2)),
       child: InkWell(
         // Una perdida abre su reporte (para avisar o "Seguirlo", D74); lo
         // demás, el detalle con las reacciones.
