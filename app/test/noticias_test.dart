@@ -5,6 +5,7 @@ import 'package:sosmascota/src/cuenta/servicio_cuenta.dart';
 import 'package:sosmascota/src/features/bienvenida/bienvenida_screen.dart';
 import 'package:sosmascota/src/features/noticias/noticias_screen.dart';
 import 'package:sosmascota/src/features/sos/sos_detalle_screen.dart';
+import 'package:sosmascota/src/mapa/mapa_vista.dart';
 import 'package:sosmascota/src/router.dart';
 import 'package:sosmascota_core/sosmascota_core.dart';
 
@@ -536,6 +537,14 @@ void main() {
       findsOneWidget,
     );
     expect(find.byKey(const Key('novedad-fecha-comercio')), findsNothing);
+    // El pin del mapa en vez de la foto (D168).
+    Color pin(String tipo) => tester
+        .widget<MarcaPin>(find.byKey(Key('novedad-pin-$tipo')))
+        .aspecto
+        .fondo;
+    expect(pin('perdida'), coloresPin[TipoPin.perdido]);
+    expect(pin('reencuentro'), coloresPin[TipoPin.encontrado]);
+    expect(pin('comercio'), coloresPin[TipoPin.veterinaria]);
   });
 
   testWidgets('Inicio del visitante: sin el bloque de bienvenida', (

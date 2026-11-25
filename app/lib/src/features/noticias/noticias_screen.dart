@@ -12,6 +12,7 @@ import '../../cuenta/con_cuenta.dart';
 import '../../cuenta/servicio_cuenta.dart';
 import '../../eventos/eventos_repositorio.dart';
 import '../../funcionalidades/funcionalidades_activas.dart';
+import '../../mapa/mapa_vista.dart';
 import '../../metricas/metricas.dart';
 import '../../noticias/noticias_repositorio.dart';
 import '../../recorrido/pasos.dart';
@@ -524,18 +525,41 @@ String bajadaBreve(BuildContext context, Novedad n) {
   };
 }
 
+/// Pin de una novedad, con los colores e íconos del mapa (D168): perdida en
+/// rojo y reencuentro en verde azulado con la huella, el lugar con el de su
+/// rubro, el evento con el calendario. La adopción no está en el mapa: va con
+/// el naranja de Ami.
+AspectoPin aspectoNovedad(Novedad n) {
+  if (n.tipo == TipoNovedad.adopcion) {
+    const fondo = Color(0xFFE8923A);
+    return AspectoPin(
+      fondo: fondo,
+      borde: bordePin,
+      colorIcono: colorIconoSobre(fondo),
+      icono: Icons.volunteer_activism,
+      diametro: 26,
+    );
+  }
+  final categoria = n.categoria;
+  final tipo = switch (n.tipo) {
+    TipoNovedad.perdida => TipoPin.perdido,
+    TipoNovedad.reencuentro => TipoPin.encontrado,
+    TipoNovedad.evento => TipoPin.evento,
+    _ => switch (categoria) {
+      Categoria.vet => TipoPin.veterinaria,
+      Categoria.petFriendly => TipoPin.aceptaMascotas,
+      _ => TipoPin.comercio,
+    },
+  };
+  return aspectoDePin(
+    Pin(id: n.id, tipo: tipo, punto: const Punto(0, 0), categoria: categoria),
+  )!;
+}
+
 class TarjetaNovedad extends ConsumerWidget {
   const TarjetaNovedad({required this.novedad, super.key});
 
   final Novedad novedad;
-
-  static IconData _icono(TipoNovedad tipo) => switch (tipo) {
-    TipoNovedad.reencuentro => Icons.celebration_outlined,
-    TipoNovedad.adopcion => Icons.volunteer_activism_outlined,
-    TipoNovedad.comercio => Icons.verified_outlined,
-    TipoNovedad.evento => Icons.event_outlined,
-    TipoNovedad.perdida => Icons.search_outlined,
-  };
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -546,7 +570,6 @@ class TarjetaNovedad extends ConsumerWidget {
       bajadaBreve(context, n),
       MaterialLocalizations.of(context).formatShortMonthDay(n.fecha),
     ].where((x) => x.isNotEmpty).join(' · ');
-    final url = ref.watch(noticiasRepositorioProvider).urlFoto(n.fotoPath);
     final perdida = n.tipo == TipoNovedad.perdida;
     // La fecha y los días, sobre fondo rojo si se sigue buscando y verde
     // si volvió a casa (D167); lo demás, texto común.
@@ -575,14 +598,16 @@ class TarjetaNovedad extends ConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           child: Row(
             children: [
-              CircleAvatar(
-                radius: 20,
-                backgroundColor: tema.colorScheme.secondaryContainer,
-                foregroundImage: url == null ? null : NetworkImage(url),
-                child: Icon(
-                  _icono(n.tipo),
-                  size: 20,
-                  color: tema.colorScheme.onSecondaryContainer,
+              // El mismo pin que en el mapa (color e ícono), sin la foto: la
+              // lista se lee igual que el mapa (D168).
+              SizedBox(
+                width: 40,
+                child: Center(
+                  child: MarcaPin(
+                    aspectoNovedad(n),
+                    tamanio: 32,
+                    key: Key('novedad-pin-${n.tipo.name}'),
+                  ),
                 ),
               ),
               const SizedBox(width: 12),
