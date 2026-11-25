@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sosmascota_core/sosmascota_core.dart';
 
 import '../../../l10n/l10n.dart';
 import '../../config/supabase_providers.dart';
@@ -100,126 +101,178 @@ class _IngresarScreenState extends ConsumerState<IngresarScreen> {
         leading: volverSiNoHayAtras(context),
         title: Text(t.ingresarTitulo),
       ),
-      body: SafeArea(
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 480),
-            child: ListView(
-              padding: const EdgeInsets.all(24),
-              children: [
-                if (emailEnviado == null) ...[
-                  // El logo solo en el primer paso: en el del código, el
-                  // aviso de error tiene que quedar a la vista.
-                  const Center(child: LogoHuellamy(alto: 30)),
-                  const SizedBox(height: 28),
-                  if (ref.watch(googleHabilitadoProvider).value ?? false) ...[
-                    OutlinedButton.icon(
-                      onPressed: _ocupado
-                          ? null
-                          : () => _ejecutar(
-                              () => ref
-                                  .read(servicioCuentaProvider)
-                                  .ingresarConGoogle(redirigirA: _redirigirA),
-                            ),
-                      icon: const Icon(Icons.account_circle_outlined),
-                      label: Text(t.ingresarConGoogle),
-                    ),
-                    const SizedBox(height: 24),
-                    Text(
-                      t.ingresarOConCorreo,
-                      textAlign: TextAlign.center,
-                      style: tema.textTheme.labelLarge,
-                    ),
-                    const SizedBox(height: 16),
-                  ],
-                  Text(t.ingresarExplicacion, style: tema.textTheme.bodyLarge),
-                  const SizedBox(height: 24),
-                  TextField(
-                    controller: _email,
-                    enabled: !_ocupado,
-                    keyboardType: TextInputType.emailAddress,
-                    autofillHints: const [AutofillHints.email],
-                    textInputAction: TextInputAction.send,
-                    onSubmitted: (_) => _enviar(),
-                    decoration: InputDecoration(labelText: t.ingresarCorreo),
-                  ),
-                  const SizedBox(height: 16),
-                  FilledButton(
-                    onPressed: _ocupado ? null : _enviar,
-                    child: Text(t.ingresarEnviarCodigo),
-                  ),
-                ] else ...[
-                  Text(
-                    t.ingresarRevisaCorreo(emailEnviado),
-                    style: tema.textTheme.bodyLarge,
-                  ),
-                  const SizedBox(height: 24),
-                  TextField(
-                    controller: _codigo,
-                    enabled: !_ocupado,
-                    keyboardType: TextInputType.number,
-                    autofillHints: const [AutofillHints.oneTimeCode],
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    maxLength: 6,
-                    textInputAction: TextInputAction.done,
-                    onSubmitted: (_) => _verificar(),
-                    decoration: InputDecoration(labelText: t.ingresarCodigo),
-                  ),
-                  const SizedBox(height: 8),
-                  FilledButton(
-                    onPressed: _ocupado ? null : _verificar,
-                    child: Text(t.ingresarConfirmar),
-                  ),
-                  TextButton(
-                    onPressed: _ocupado
-                        ? null
-                        : () => setState(() {
-                            _emailEnviado = null;
-                            _codigo.clear();
-                            _error = null;
-                          }),
-                    child: Text(t.ingresarOtroCorreo),
-                  ),
-                ],
-                if (_ocupado) ...[
-                  const SizedBox(height: 16),
-                  const Center(child: CircularProgressIndicator()),
-                ],
-                if (_error case final error?) ...[
-                  const SizedBox(height: 16),
-                  Text(
-                    error,
-                    style: TextStyle(color: tema.colorScheme.error),
-                    semanticsLabel: error,
-                  ),
-                ],
-                const SizedBox(height: 32),
-                Text(
-                  t.ingresarAvisoTerminos,
-                  style: tema.textTheme.bodySmall?.copyWith(
-                    color: tema.colorScheme.onSurfaceVariant,
-                  ),
-                ),
-                Wrap(
-                  spacing: 8,
+      body: _FondoIngreso(
+        child: SafeArea(
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 480),
+              child: _TarjetaIngreso(
+                child: ListView(
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.all(24),
                   children: [
-                    TextButton(
-                      onPressed: () => context.push(Rutas.terminos),
-                      child: Text(t.legalTerminos),
+                    if (emailEnviado == null) ...[
+                      // El logo solo en el primer paso: en el del código, el
+                      // aviso de error tiene que quedar a la vista.
+                      const Center(child: LogoHuellamy(alto: 30)),
+                      const SizedBox(height: 28),
+                      if (ref.watch(googleHabilitadoProvider).value ??
+                          false) ...[
+                        OutlinedButton.icon(
+                          onPressed: _ocupado
+                              ? null
+                              : () => _ejecutar(
+                                  () => ref
+                                      .read(servicioCuentaProvider)
+                                      .ingresarConGoogle(
+                                        redirigirA: _redirigirA,
+                                      ),
+                                ),
+                          icon: const Icon(Icons.account_circle_outlined),
+                          label: Text(t.ingresarConGoogle),
+                        ),
+                        const SizedBox(height: 24),
+                        Text(
+                          t.ingresarOConCorreo,
+                          textAlign: TextAlign.center,
+                          style: tema.textTheme.labelLarge,
+                        ),
+                        const SizedBox(height: 16),
+                      ],
+                      Text(
+                        t.ingresarExplicacion,
+                        style: tema.textTheme.bodyLarge,
+                      ),
+                      const SizedBox(height: 24),
+                      TextField(
+                        controller: _email,
+                        enabled: !_ocupado,
+                        keyboardType: TextInputType.emailAddress,
+                        autofillHints: const [AutofillHints.email],
+                        textInputAction: TextInputAction.send,
+                        onSubmitted: (_) => _enviar(),
+                        decoration: InputDecoration(
+                          labelText: t.ingresarCorreo,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      FilledButton(
+                        onPressed: _ocupado ? null : _enviar,
+                        child: Text(t.ingresarEnviarCodigo),
+                      ),
+                    ] else ...[
+                      Text(
+                        t.ingresarRevisaCorreo(emailEnviado),
+                        style: tema.textTheme.bodyLarge,
+                      ),
+                      const SizedBox(height: 24),
+                      TextField(
+                        controller: _codigo,
+                        enabled: !_ocupado,
+                        keyboardType: TextInputType.number,
+                        autofillHints: const [AutofillHints.oneTimeCode],
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
+                        maxLength: 6,
+                        textInputAction: TextInputAction.done,
+                        onSubmitted: (_) => _verificar(),
+                        decoration: InputDecoration(
+                          labelText: t.ingresarCodigo,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      FilledButton(
+                        onPressed: _ocupado ? null : _verificar,
+                        child: Text(t.ingresarConfirmar),
+                      ),
+                      TextButton(
+                        onPressed: _ocupado
+                            ? null
+                            : () => setState(() {
+                                _emailEnviado = null;
+                                _codigo.clear();
+                                _error = null;
+                              }),
+                        child: Text(t.ingresarOtroCorreo),
+                      ),
+                    ],
+                    if (_ocupado) ...[
+                      const SizedBox(height: 16),
+                      const Center(child: CircularProgressIndicator()),
+                    ],
+                    if (_error case final error?) ...[
+                      const SizedBox(height: 16),
+                      Text(
+                        error,
+                        style: TextStyle(color: tema.colorScheme.error),
+                        semanticsLabel: error,
+                      ),
+                    ],
+                    const SizedBox(height: 32),
+                    Text(
+                      t.ingresarAvisoTerminos,
+                      style: tema.textTheme.bodySmall?.copyWith(
+                        color: tema.colorScheme.onSurfaceVariant,
+                      ),
                     ),
-                    TextButton(
-                      onPressed: () => context.push(Rutas.privacidad),
-                      child: Text(t.legalPrivacidad),
+                    Wrap(
+                      spacing: 8,
+                      children: [
+                        TextButton(
+                          onPressed: () => context.push(Rutas.terminos),
+                          child: Text(t.legalTerminos),
+                        ),
+                        TextButton(
+                          onPressed: () => context.push(Rutas.privacidad),
+                          child: Text(t.legalPrivacidad),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
+              ),
             ),
           ),
         ),
       ),
     );
   }
+}
+
+/// Tema Moderno (D171): la pantalla de ingreso sobre el degradé azul a
+/// índigo. En los demás temas, el fondo de siempre.
+class _FondoIngreso extends StatelessWidget {
+  const _FondoIngreso({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => switch (context.marca.degradado) {
+    final colores? => DecoratedBox(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: colores,
+        ),
+      ),
+      child: child,
+    ),
+    null => child,
+  };
+}
+
+/// El formulario, en una tarjeta blanca en el centro (solo en Moderno).
+class _TarjetaIngreso extends StatelessWidget {
+  const _TarjetaIngreso({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => context.marca.degradado == null
+      ? child
+      : Card(margin: const EdgeInsets.all(16), child: child);
 }
 
 /// Mensaje para la persona según el tipo de error.

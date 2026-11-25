@@ -202,15 +202,19 @@ class _MenuPrincipalState extends ConsumerState<MenuPrincipal> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            // Logo de la marca arriba del menú (guía de marca, D122).
-            const Padding(
-              padding: EdgeInsets.fromLTRB(16, 20, 16, 4),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: LogoHuellamy(horizontal: true, alto: 22),
-              ),
+            _ConDegradado(
+              children: [
+                // Logo de la marca arriba del menú (guía de marca, D122).
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(16, 20, 16, 4),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: LogoHuellamy(horizontal: true, alto: 22),
+                  ),
+                ),
+                _Cabecera(onIr: (ruta) => _tocar('perfil', () => _ir(ruta))),
+              ],
             ),
-            _Cabecera(onIr: (ruta) => _tocar('perfil', () => _ir(ruta))),
             for (final (titulo, opciones) in grupos)
               if (opciones.isNotEmpty) ...[
                 const Divider(),
@@ -218,6 +222,47 @@ class _MenuPrincipalState extends ConsumerState<MenuPrincipal> {
                 ...opciones,
               ],
           ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Arriba del menú: en el tema Moderno, sobre el degradé azul a índigo con
+/// el texto en blanco (D171); en los demás, tal cual.
+class _ConDegradado extends StatelessWidget {
+  const _ConDegradado({required this.children});
+
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    final marca = context.marca;
+    final degradado = marca.degradado;
+    if (degradado == null) return Column(children: children);
+    final tema = Theme.of(context);
+    const blanco = Color(0xFFFFFFFF);
+    return DecoratedBox(
+      decoration: BoxDecoration(gradient: LinearGradient(colors: degradado)),
+      child: Theme(
+        data: tema.copyWith(
+          listTileTheme: tema.listTileTheme.copyWith(
+            textColor: blanco,
+            iconColor: blanco,
+            subtitleTextStyle: tema.textTheme.bodyMedium?.copyWith(
+              color: marca.sobreDegradadoSuave,
+            ),
+          ),
+        ),
+        child: DefaultTextStyle.merge(
+          style: const TextStyle(color: blanco),
+          child: IconTheme.merge(
+            data: const IconThemeData(color: blanco),
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: Column(children: children),
+            ),
+          ),
         ),
       ),
     );

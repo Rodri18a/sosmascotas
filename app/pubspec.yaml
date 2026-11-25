@@ -57,6 +57,18 @@ flutter:
           weight: 800
         - asset: assets/fuentes/Nunito-Black.ttf
           weight: 900
+    # Tema Moderno (D171): Manrope, licencia OFL (assets/fuentes/OFL-Manrope.txt).
+    - family: Manrope
+      fonts:
+        - asset: assets/fuentes/Manrope-Regular.ttf
+        - asset: assets/fuentes/Manrope-Medium.ttf
+          weight: 500
+        - asset: assets/fuentes/Manrope-SemiBold.ttf
+          weight: 600
+        - asset: assets/fuentes/Manrope-Bold.ttf
+          weight: 700
+        - asset: assets/fuentes/Manrope-ExtraBold.ttf
+          weight: 800
     - family: NunitoSans
       fonts:
         - asset: assets/fuentes/NunitoSans-Regular.ttf

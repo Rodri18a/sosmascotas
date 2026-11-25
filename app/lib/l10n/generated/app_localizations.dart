@@ -2332,6 +2332,18 @@ abstract class AppLocalizations {
   /// **'Azul y celeste: el de la marca'**
   String get temaCieloDescripcion;
 
+  /// No description provided for @temaModerno.
+  ///
+  /// In es, this message translates to:
+  /// **'Moderno'**
+  String get temaModerno;
+
+  /// No description provided for @temaModernoDescripcion.
+  ///
+  /// In es, this message translates to:
+  /// **'Blanco, azul y verde, con letra Manrope. Limpio y luminoso.'**
+  String get temaModernoDescripcion;
+
   /// No description provided for @temaFaro.
   ///
   /// In es, this message translates to:

@@ -1365,6 +1365,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get temaCieloDescripcion => 'Azul y celeste: el de la marca';
 
   @override
+  String get temaModerno => 'Moderno';
+
+  @override
+  String get temaModernoDescripcion =>
+      'Blanco, azul y verde, con letra Manrope. Limpio y luminoso.';
+
+  @override
   String get temaFaro => 'Faro';
 
   @override

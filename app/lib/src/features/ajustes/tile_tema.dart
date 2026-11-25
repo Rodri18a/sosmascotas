@@ -31,6 +31,7 @@ class TileTema extends ConsumerWidget {
 }
 
 String nombreTema(AppLocalizations t, Paleta p) => switch (p.id) {
+  'moderno' => t.temaModerno,
   'faro' => t.temaFaro,
   'vecinos' => t.temaVecinos,
   'pop' => t.temaPop,
@@ -39,6 +40,7 @@ String nombreTema(AppLocalizations t, Paleta p) => switch (p.id) {
 };
 
 String _descripcionTema(AppLocalizations t, Paleta p) => switch (p.id) {
+  'moderno' => t.temaModernoDescripcion,
   'faro' => t.temaFaroDescripcion,
   'vecinos' => t.temaVecinosDescripcion,
   'pop' => t.temaPopDescripcion,

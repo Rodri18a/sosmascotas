@@ -88,59 +88,69 @@ class BarraInferior extends StatelessWidget {
               clipper: const _RecorteBarra(radio: _sobresale + 6),
               // Del mismo color que el botón del Mapa (pedido del dueño),
               // salvo en Blanco y negro, que tiene la barra blanca (D120).
+              // En Moderno, blanca con una línea fina y sin sombra (D171).
               color: context.marca.barra,
-              elevation: 3,
+              elevation: context.marca.bordeBarra == null ? 3 : 0,
               shadowColor: colores.shadow,
-              child: Padding(
-                padding: EdgeInsets.only(bottom: abajo),
-                child: Row(
-                  children: [
-                    item(
-                      Pestana.noticias,
-                      Icons.home_outlined,
-                      Icons.home,
-                      t.noticiasTitulo,
-                    ),
-                    item(
-                      Pestana.sos,
-                      Icons.place_outlined,
-                      Icons.place,
-                      t.pestanaSos,
-                    ),
-                    // Lugar del botón del Mapa, con su nombre debajo (también
-                    // se puede tocar; el lector de pantalla lo anuncia en el
-                    // botón).
-                    Expanded(
-                      child: ExcludeSemantics(
-                        child: GestureDetector(
-                          behavior: HitTestBehavior.opaque,
-                          onTap: () => onElegir(Pestana.mapa),
-                          child: Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 10),
-                              child: _Etiqueta(
-                                texto: t.pestanaMapa,
-                                elegido: actual == Pestana.mapa,
+              child: CustomPaint(
+                foregroundPainter: switch (context.marca.bordeBarra) {
+                  final borde? => _LineaBarra(
+                    color: borde,
+                    radio: _sobresale + 6,
+                  ),
+                  null => null,
+                },
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: abajo),
+                  child: Row(
+                    children: [
+                      item(
+                        Pestana.noticias,
+                        Icons.home_outlined,
+                        Icons.home,
+                        t.noticiasTitulo,
+                      ),
+                      item(
+                        Pestana.sos,
+                        Icons.place_outlined,
+                        Icons.place,
+                        t.pestanaSos,
+                      ),
+                      // Lugar del botón del Mapa, con su nombre debajo (también
+                      // se puede tocar; el lector de pantalla lo anuncia en el
+                      // botón).
+                      Expanded(
+                        child: ExcludeSemantics(
+                          child: GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTap: () => onElegir(Pestana.mapa),
+                            child: Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
+                                child: _Etiqueta(
+                                  texto: t.pestanaMapa,
+                                  elegido: actual == Pestana.mapa,
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    item(
-                      Pestana.mascotas,
-                      Icons.pets_outlined,
-                      Icons.pets,
-                      t.barraMascotas,
-                    ),
-                    item(
-                      Pestana.ayuda,
-                      Icons.emergency_outlined,
-                      Icons.emergency,
-                      t.pestanaAyuda,
-                    ),
-                  ],
+                      item(
+                        Pestana.mascotas,
+                        Icons.pets_outlined,
+                        Icons.pets,
+                        t.barraMascotas,
+                      ),
+                      item(
+                        Pestana.ayuda,
+                        Icons.emergency_outlined,
+                        Icons.emergency,
+                        t.pestanaAyuda,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -157,6 +167,38 @@ class BarraInferior extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Línea fina por el borde de arriba de la barra, con su hueco (Moderno).
+class _LineaBarra extends CustomPainter {
+  const _LineaBarra({required this.color, required this.radio});
+
+  final Color color;
+  final double radio;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final borde = const CircularNotchedRectangle().getOuterPath(
+      Offset.zero & size,
+      Rect.fromCircle(center: Offset(size.width / 2, 0), radius: radio),
+    );
+    canvas
+      ..save()
+      // Solo el borde de arriba: los costados y el de abajo quedan afuera.
+      ..clipRect(Rect.fromLTRB(0, -1, size.width, radio + 1))
+      ..drawPath(
+        borde,
+        Paint()
+          ..color = color
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 1,
+      )
+      ..restore();
+  }
+
+  @override
+  bool shouldRepaint(_LineaBarra anterior) =>
+      anterior.color != color || anterior.radio != radio;
 }
 
 /// Rectángulo de la barra con el hueco curvo arriba, en el medio.
@@ -190,7 +232,13 @@ class _ItemBarra extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sobre = context.marca.sobreBarra;
+    final marca = context.marca;
+    final sobre = elegido ? marca.barraElegido : marca.barraNoElegido;
+    // Huellamy: la píldora es el color sobre la barra con transparencia;
+    // Moderno trae la suya (D171).
+    final pildora = marca.barraIndicador == marca.sobreBarra
+        ? marca.sobreBarra.withValues(alpha: 0.2)
+        : marca.barraIndicador;
     return Semantics(
       button: true,
       selected: elegido,
@@ -211,7 +259,7 @@ class _ItemBarra extends StatelessWidget {
                   vertical: 3,
                 ),
                 decoration: BoxDecoration(
-                  color: elegido ? sobre.withValues(alpha: 0.2) : null,
+                  color: elegido ? pildora : null,
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Icon(icono, color: sobre),
@@ -240,8 +288,12 @@ class _Etiqueta extends StatelessWidget {
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
       style: tema.textTheme.labelMedium?.copyWith(
-        color: context.marca.sobreBarra,
-        fontWeight: elegido ? FontWeight.w700 : FontWeight.w500,
+        color: elegido
+            ? context.marca.barraElegido
+            : context.marca.barraNoElegido,
+        fontWeight: context.marca.bordeBarra != null
+            ? FontWeight.w800
+            : (elegido ? FontWeight.w700 : FontWeight.w500),
       ),
     );
   }

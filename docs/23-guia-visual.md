@@ -200,3 +200,23 @@ Se distinguen también por luminosidad (daltonismo), son gotas con la punta en e
 | Web pública | `web-publica/assets/estilo.css` |
 | Control de contraste | `app/test/tema_test.dart` |
 | Textos | `app/lib/l10n/app_es.arb` |
+
+## Tema Moderno (D171)
+
+Tema opcional del selector de Ajustes (con las condiciones de los otros temas), con el estilo de la app de CAAMEPA. La marca, los pines del mapa y el naranja de Ami para el SOS no cambian.
+
+| Pieza | Claro | Oscuro |
+|---|---|---|
+| Principal | `#0479BA` (texto blanco) | `#4CB4EE` (texto `#04263B`) |
+| Fondo / tarjetas y barras | `#F8FAFC` / `#FFFFFF` | `#0F172A` / `#1E293B` |
+| Texto / secundario | `#0F172A` / `#5B697E` | `#F1F5F9` / `#94A3B8` |
+| Bordes / chips | `#E2E8F0` / `#F1F5F9` | `#334155` / `#273449` |
+| Éxito / error / aviso | `#047857` / `#B91C1C` / `#B45309` | `#34D399` / `#F87171` / `#FBBF24` |
+| Franja e indicador / contenedor principal | `#EFF6FF` / `#DBEAFE` (texto `#0C4A6E`) | `#172554` (texto `#E0F2FE`) |
+| Degradé (menú lateral, ingreso) | `#0479BA` → `#3730A3` | igual |
+
+- **Letra:** Manrope 400 a 800. Títulos de tarjeta 20/800, de sección 22/800, botones 17/800, encabezado 20/800, etiquetas de la barra 12/800, chips 13/600, texto 16 (interlineado 23) y chico 14 (20).
+- **Barras:** blancas, sin sombra, con una línea de 1 px slate-200 (la de abajo sigue el hueco del botón del Mapa). Pestaña elegida en el principal sobre una píldora blue-50; las demás, en el texto secundario.
+- **Tarjetas:** blancas, radio 24, borde de 1 px, sombra casi nula. **Botones:** planos, radio 16, alto 52. **Campos:** fondo slate-50, borde slate-200, radio 16 (con foco, borde principal de 2). **Chips:** slate-100 en píldora. **Diálogos y hojas:** blancos, radio 24.
+- **Menú lateral:** la cabecera sobre el degradé con texto blanco. **Ingreso:** el formulario en una tarjeta blanca sobre el degradé.
+

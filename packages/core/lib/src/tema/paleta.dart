@@ -21,6 +21,7 @@ class ColoresModo {
     Color? barra,
     Color? sobreBarra,
     Color? simbolo,
+    this.superficies,
   }) : _barra = barra,
        _sobreBarra = sobreBarra,
        _simbolo = simbolo;
@@ -50,6 +51,10 @@ class ColoresModo {
   final Color? _sobreBarra;
   final Color? _simbolo;
 
+  /// Superficies y contenedores con colores fijos (tema Moderno, D171). Sin
+  /// ellas, salen del fondo, el texto y la semilla (los demás temas).
+  final Superficies? superficies;
+
   /// Fondo de la barra de arriba y de la de abajo: el primario, salvo en
   /// Blanco y negro, que las tiene blancas.
   Color get barra => _barra ?? primario;
@@ -64,6 +69,53 @@ class ColoresModo {
   Color get sobreSimbolo =>
       _simbolo == null ? sobrePrimario : const Color(0xFFFFFFFF);
 }
+
+/// Superficies fijas de un tema que no las arma de la semilla (Moderno, D171).
+@immutable
+class Superficies {
+  const Superficies({
+    required this.tarjeta,
+    required this.chip,
+    required this.borde,
+    required this.contorno,
+    required this.contenedorPrimario,
+    required this.sobreContenedorPrimario,
+    required this.franja,
+    required this.sobreFranja,
+    required this.degradado,
+    required this.sobreDegradadoSuave,
+  });
+
+  /// Tarjetas, barras, diálogos y hojas.
+  final Color tarjeta;
+
+  /// Chips y bloques secundarios.
+  final Color chip;
+
+  /// Bordes finos de tarjetas, campos y separadores.
+  final Color borde;
+
+  /// Bordes más marcados.
+  final Color contorno;
+
+  final Color contenedorPrimario;
+  final Color sobreContenedorPrimario;
+
+  /// Franjas suaves e indicador de la barra de abajo.
+  final Color franja;
+  final Color sobreFranja;
+
+  /// Degradé del menú lateral y de la pantalla de ingreso (texto blanco).
+  final List<Color> degradado;
+
+  /// Subtítulos sobre el degradé (el título va en blanco).
+  final Color sobreDegradadoSuave;
+}
+
+/// Cómo se arman las piezas del tema: el de Huellamy (barras de color,
+/// tarjetas con sombra, botones en píldora) o el Moderno (barras blancas
+/// con una línea, tarjetas con borde fino, botones de radio 16; D171).
+enum EstiloTema { huellamy, moderno }
 
 /// Archivo de una tipografía que se descarga al elegir un tema Pro
 /// (se sirve desde `app/web/fuentes/`, no viene dentro de la app).
@@ -89,6 +141,7 @@ class Paleta {
     required this.fuenteTexto,
     this.pesoTitulos = FontWeight.w600,
     this.fuentesADescargar = const [],
+    this.estilo = EstiloTema.huellamy,
   });
 
   /// Identificador estable (se guarda en el dispositivo y va en las métricas).
@@ -101,11 +154,13 @@ class Paleta {
   /// Peso de los títulos: las tipografías de los temas Pro solo traen SemiBold.
   final FontWeight pesoTitulos;
 
-  /// Vacía si las tipografías ya vienen con la app (Huellamy).
+  /// Vacía si las tipografías ya vienen con la app (Huellamy, Moderno).
   final List<ArchivoFuente> fuentesADescargar;
 
+  final EstiloTema estilo;
+
   /// La de la marca primero; el orden es el del selector de Ajustes.
-  static const todas = [cielo, faro, vecinos, pop, blancoNegro];
+  static const todas = [cielo, moderno, faro, vecinos, pop, blancoNegro];
 
   /// La paleta con ese id, o la de la marca si no existe (por ejemplo, un id viejo).
   static Paleta porId(String? id) =>
@@ -188,6 +243,73 @@ class Paleta {
     fuenteTitulos: 'Nunito',
     fuenteTexto: 'NunitoSans',
     pesoTitulos: FontWeight.w800,
+  );
+
+  /// Tema Moderno (D171), el de la app de CAAMEPA: azul y verde sobre
+  /// blanco, letra Manrope, barras blancas con una línea y tarjetas con borde
+  /// fino. Dos ajustes por accesibilidad respecto del original: el éxito en
+  /// emerald-700 (el 600 da 3,6:1 como texto) y el texto secundario apenas
+  /// más oscuro que slate-500, para llegar a 4,5:1 sobre los chips.
+  static const moderno = Paleta(
+    id: 'moderno',
+    claro: ColoresModo(
+      fondo: Color(0xFFF8FAFC), // slate-50
+      texto: Color(0xFF0F172A), // slate-900
+      textoSuave: Color(0xFF5B697E), // apenas más oscuro que slate-500
+      primario: Color(0xFF0479BA),
+      sobrePrimario: Color(0xFFFFFFFF),
+      acento: Color(0xFFE8923A), // naranja de Ami: SOS y destacados
+      sobreAcento: Color(0xFF0F172A),
+      error: Color(0xFFB91C1C), // red-700
+      sobreError: Color(0xFFFFFFFF),
+      exito: Color(0xFF047857), // emerald-700
+      urgencia: Color(0xFFB45309), // amber-700
+      barra: Color(0xFFFFFFFF),
+      sobreBarra: Color(0xFF0F172A),
+      superficies: Superficies(
+        tarjeta: Color(0xFFFFFFFF),
+        chip: Color(0xFFF1F5F9), // slate-100
+        borde: Color(0xFFE2E8F0), // slate-200
+        contorno: Color(0xFFCBD5E1), // slate-300
+        contenedorPrimario: Color(0xFFDBEAFE), // blue-100
+        sobreContenedorPrimario: Color(0xFF0C4A6E), // sky-900
+        franja: Color(0xFFEFF6FF), // blue-50
+        sobreFranja: Color(0xFF0C4A6E),
+        degradado: [Color(0xFF0479BA), Color(0xFF3730A3)], // a indigo-800
+        sobreDegradadoSuave: Color(0xFFE0F2FE), // sky-100
+      ),
+    ),
+    oscuro: ColoresModo(
+      fondo: Color(0xFF0F172A),
+      texto: Color(0xFFF1F5F9),
+      textoSuave: Color(0xFF94A3B8),
+      primario: Color(0xFF4CB4EE),
+      sobrePrimario: Color(0xFF04263B),
+      acento: Color(0xFFF5A75A),
+      sobreAcento: Color(0xFF0F172A),
+      error: Color(0xFFF87171),
+      sobreError: Color(0xFF0F172A),
+      exito: Color(0xFF34D399),
+      urgencia: Color(0xFFFBBF24),
+      barra: Color(0xFF1E293B),
+      sobreBarra: Color(0xFFF1F5F9),
+      superficies: Superficies(
+        tarjeta: Color(0xFF1E293B),
+        chip: Color(0xFF273449),
+        borde: Color(0xFF334155),
+        contorno: Color(0xFF475569),
+        contenedorPrimario: Color(0xFF172554),
+        sobreContenedorPrimario: Color(0xFFE0F2FE),
+        franja: Color(0xFF172554),
+        sobreFranja: Color(0xFFE0F2FE),
+        degradado: [Color(0xFF0479BA), Color(0xFF3730A3)],
+        sobreDegradadoSuave: Color(0xFFE0F2FE),
+      ),
+    ),
+    fuenteTitulos: 'Manrope',
+    fuenteTexto: 'Manrope',
+    pesoTitulos: FontWeight.w800,
+    estilo: EstiloTema.moderno,
   );
 
   /// Tema Pro A · Faro: señal de rescate (naranja y azul noche).
@@ -354,18 +476,37 @@ class ColoresMarca extends ThemeExtension<ColoresMarca> {
     required this.sobreBarra,
     required this.simbolo,
     required this.sobreSimbolo,
-  });
+    Color? barraElegido,
+    Color? barraNoElegido,
+    Color? barraIndicador,
+    this.bordeBarra,
+    this.degradado,
+    this.sobreDegradadoSuave,
+  }) : barraElegido = barraElegido ?? sobreBarra,
+       barraNoElegido = barraNoElegido ?? sobreBarra,
+       barraIndicador = barraIndicador ?? sobreBarra;
 
-  factory ColoresMarca.de(ColoresModo c) => ColoresMarca(
-    acento: c.acento,
-    sobreAcento: c.sobreAcento,
-    exito: c.exito,
-    urgencia: c.urgencia,
-    barra: c.barra,
-    sobreBarra: c.sobreBarra,
-    simbolo: c.simbolo,
-    sobreSimbolo: c.sobreSimbolo,
-  );
+  factory ColoresMarca.de(ColoresModo c) {
+    final s = c.superficies;
+    return ColoresMarca(
+      acento: c.acento,
+      sobreAcento: c.sobreAcento,
+      exito: c.exito,
+      urgencia: c.urgencia,
+      barra: c.barra,
+      sobreBarra: c.sobreBarra,
+      simbolo: c.simbolo,
+      sobreSimbolo: c.sobreSimbolo,
+      // Moderno: la pestaña elegida en el primario sobre una píldora suave;
+      // las demás, en el texto secundario.
+      barraElegido: s == null ? null : c.primario,
+      barraNoElegido: s == null ? null : c.textoSuave,
+      barraIndicador: s?.franja,
+      bordeBarra: s?.borde,
+      degradado: s?.degradado,
+      sobreDegradadoSuave: s?.sobreDegradadoSuave,
+    );
+  }
 
   final Color acento;
   final Color sobreAcento;
@@ -379,6 +520,20 @@ class ColoresMarca extends ThemeExtension<ColoresMarca> {
   /// Botón redondo del Mapa y logo.
   final Color simbolo;
   final Color sobreSimbolo;
+
+  /// Ícono y etiqueta de la pestaña elegida y de las demás, y la píldora de
+  /// la elegida. En Huellamy, el color sobre la barra (la píldora, con
+  /// transparencia).
+  final Color barraElegido;
+  final Color barraNoElegido;
+  final Color barraIndicador;
+
+  /// Línea fina que separa las barras blancas del contenido (Moderno).
+  final Color? bordeBarra;
+
+  /// Degradé del menú lateral y de la pantalla de ingreso (Moderno).
+  final List<Color>? degradado;
+  final Color? sobreDegradadoSuave;
 
   @override
   ColoresMarca copyWith({
@@ -399,6 +554,12 @@ class ColoresMarca extends ThemeExtension<ColoresMarca> {
     sobreBarra: sobreBarra ?? this.sobreBarra,
     simbolo: simbolo ?? this.simbolo,
     sobreSimbolo: sobreSimbolo ?? this.sobreSimbolo,
+    barraElegido: barraElegido,
+    barraNoElegido: barraNoElegido,
+    barraIndicador: barraIndicador,
+    bordeBarra: bordeBarra,
+    degradado: degradado,
+    sobreDegradadoSuave: sobreDegradadoSuave,
   );
 
   @override
@@ -413,6 +574,14 @@ class ColoresMarca extends ThemeExtension<ColoresMarca> {
       sobreBarra: Color.lerp(sobreBarra, other.sobreBarra, t)!,
       simbolo: Color.lerp(simbolo, other.simbolo, t)!,
       sobreSimbolo: Color.lerp(sobreSimbolo, other.sobreSimbolo, t)!,
+      barraElegido: Color.lerp(barraElegido, other.barraElegido, t),
+      barraNoElegido: Color.lerp(barraNoElegido, other.barraNoElegido, t),
+      barraIndicador: Color.lerp(barraIndicador, other.barraIndicador, t),
+      bordeBarra: t < 0.5 ? bordeBarra : other.bordeBarra,
+      degradado: t < 0.5 ? degradado : other.degradado,
+      sobreDegradadoSuave: t < 0.5
+          ? sobreDegradadoSuave
+          : other.sobreDegradadoSuave,
     );
   }
 }

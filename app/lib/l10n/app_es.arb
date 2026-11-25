@@ -569,6 +569,8 @@
   "temaExplicacion": "Cambia los colores y las letras de la app solo en este dispositivo. El mapa, la chapita y lo que ven los demás siguen igual.",
   "temaCielo": "Huellamy",
   "temaCieloDescripcion": "Azul y celeste: el de la marca",
+  "temaModerno": "Moderno",
+  "temaModernoDescripcion": "Blanco, azul y verde, con letra Manrope. Limpio y luminoso.",
   "temaFaro": "Faro",
   "temaFaroDescripcion": "Naranja de rescate y azul noche",
   "temaVecinos": "Vecinos",
