@@ -10,7 +10,7 @@
 -- Qué agrega (además de los comercios de ejemplo de cargar_comercios.py):
 --  · un usuario de ejemplo sin login (dueño de los SOS y de las marcas);
 --  · perros y gatos perdidos y encontrados (lupa roja / verde);
---  · eventos: castración, adopción y encuentro (calendario coral);
+--  · eventos: castración, adopción y encuentro (calendario verde);
 --  · lugares marcados sin reclamar de varios rubros (grises con su ícono);
 --  · paseador y adiestrador con local (para ver sus íconos) y una veterinaria
 --    verificada con plan Plus y urgencias 24 h.

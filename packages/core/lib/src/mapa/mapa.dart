@@ -73,7 +73,7 @@ enum TipoPin {
   /// Lugar marcado por usuarios que todavía nadie reclamó (gris, 1.3.2).
   sinReclamar,
 
-  /// Evento (2.7): anillo coral, se distingue por la forma.
+  /// Evento (2.7): blanco con borde e ícono verde (D169), se distingue por la forma.
   evento,
 }
 

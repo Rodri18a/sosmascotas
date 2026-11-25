@@ -65,11 +65,13 @@ const coloresPin = <TipoPin, Color>{
 /// encima contrasta ≥ 3:1.
 const colorSinReclamar = Color(0xFF7A7A7A);
 
-/// Eventos (2.7): centro blanco, borde e ícono coral; se distinguen por la forma.
-const colorEvento = Color(0xFFFF7A59);
+/// Eventos (2.7): centro blanco, borde e ícono verde (D169, antes coral: se
+/// confundía con el rojo de los perdidos); se distinguen por la forma. Verde
+/// hoja, más amarillento que el verde azulado de los encontrados.
+const colorEvento = Color(0xFF3FA34D);
 
-/// Ícono del pin de evento: coral más oscuro, para que contraste sobre blanco.
-const colorIconoEvento = Color(0xFFC4462A);
+/// Ícono del pin de evento: verde más oscuro, para que contraste sobre blanco.
+const colorIconoEvento = Color(0xFF237A31);
 
 /// Color de un pin (los sin reclamar y los eventos van aparte).
 Color colorDePin(TipoPin tipo) =>

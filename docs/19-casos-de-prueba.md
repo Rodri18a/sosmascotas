@@ -258,7 +258,7 @@ Antes: cargar `supabase/seeds/paseador_ejemplo.sql`.
 | AD-02 | Solicitud | B pide adoptar → proceso por etapas → compromiso | Compatibilidad, etapas y seguimiento a 7, 30 y 90 días | ⬜ |
 | AD-03 | Hogar de tránsito | B se ofrece; un refugio verificado acepta | Se abre el chat; el refugio ve primer nombre y barrio | ⬜ |
 | AD-04 | Pack adopción | Quien adoptó usa el código de 6 en un comercio | El comercio lo valida | ⬜ |
-| EV-01 | Evento | Comercio verificado publica un evento | Se ve en el mapa (anillo coral) y en Comunidad | ⬜ |
+| EV-01 | Evento | Comercio verificado publica un evento | Se ve en el mapa (pin blanco con borde verde, D169) y en Comunidad | ⬜ |
 | EV-02 | Denuncia de maltrato | Denunciar con foto | Privada: solo quien denuncia y la administración | ⬜ |
 | NO-01 | Noticias | Abrir Noticias y filtrar por especie | Las patrocinadas dicen «Promocionado · marca» | ✅ 21/10 |
 | NO-02 | Reacciones | Reaccionar a una novedad | Una por persona; se ven solo los totales | ✅ 21/10 |
