@@ -548,24 +548,15 @@ class TarjetaNovedad extends ConsumerWidget {
     ].where((x) => x.isNotEmpty).join(' · ');
     final url = ref.watch(noticiasRepositorioProvider).urlFoto(n.fotoPath);
     final perdida = n.tipo == TipoNovedad.perdida;
-    // Borde rojo si se sigue buscando, verde si volvió a casa.
-    final borde = switch (n.tipo) {
+    // La fecha y los días, sobre fondo rojo si se sigue buscando y verde
+    // si volvió a casa (D167); lo demás, texto común.
+    final fondoFecha = switch (n.tipo) {
       TipoNovedad.perdida => tema.colorScheme.error,
       TipoNovedad.reencuentro => context.marca.exito,
       _ => null,
     };
-    final forma = tema.cardTheme.shape;
     return Card(
-      key: borde == null ? null : Key('novedad-borde-${n.tipo.name}'),
       margin: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-      shape: borde == null
-          ? null
-          : (forma is RoundedRectangleBorder
-                    ? forma
-                    : RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ))
-                .copyWith(side: BorderSide(color: borde, width: 2)),
       child: InkWell(
         // Una perdida abre su reporte (para avisar o "Seguirlo", D74); lo
         // demás, el detalle con las reacciones.
@@ -605,12 +596,45 @@ class TarjetaNovedad extends ConsumerWidget {
                       overflow: TextOverflow.ellipsis,
                       style: tema.textTheme.titleSmall,
                     ),
-                    Text(
-                      linea,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: tema.textTheme.bodySmall,
-                    ),
+                    if (fondoFecha == null)
+                      Text(
+                        linea,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: tema.textTheme.bodySmall,
+                      )
+                    else
+                      Padding(
+                        padding: const EdgeInsets.only(top: 4),
+                        child: DecoratedBox(
+                          key: Key('novedad-fecha-${n.tipo.name}'),
+                          decoration: BoxDecoration(
+                            color: fondoFecha,
+                            borderRadius: BorderRadius.circular(999),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 3,
+                            ),
+                            child: Text(
+                              linea,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: tema.textTheme.labelMedium?.copyWith(
+                                color:
+                                    ThemeData.estimateBrightnessForColor(
+                                          fondoFecha,
+                                        ) ==
+                                        Brightness.dark
+                                    ? Colors.white
+                                    : Colors.black,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     if (n.admiteReacciones) TotalesReacciones(id: n.id),
                   ],
                 ),

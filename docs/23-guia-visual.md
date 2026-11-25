@@ -125,7 +125,7 @@ Se distinguen también por luminosidad (daltonismo), son gotas con la punta en e
 |---|---|
 | Esquinas | Botones en **píldora** (D162) · campos 12 px · tarjetas 20 px (landing 24 px) · hojas de abajo 16 px · ícono de la app 22 % |
 | Botones | Alto mínimo 48 px, en píldora. Principal: relleno primario (en la landing, degradé azul de `#1677C9` a `#0B4F94`). Secundario: borde. SOS: relleno naranja con texto azul noche |
-| Novedades de la comunidad | Borde de 2 px: **rojo** (error) si la mascota se sigue buscando, **verde** (éxito) si volvió a casa; las demás sin borde (D167) |
+| Novedades de la comunidad | Los días y la fecha en una etiqueta en píldora con fondo **rojo** (error) si la mascota se sigue buscando o **verde** (éxito) si volvió a casa, texto blanco en negrita; las demás novedades, texto común (D167) |
 | Tarjetas | Superficie blanca sobre el fondo celeste muy claro, con sombra suave azulada (D162). Las de acceso (Adopción) llevan su ilustración arriba, título azul centrado y botón en píldora |
 | Toques | Todo lo que se toca mide al menos 48 × 48 px |
 | Barra de arriba | Color primario con texto e íconos blancos; flecha para volver en toda pantalla fuera de las pestañas |

@@ -489,8 +489,8 @@ void main() {
     expect(find.byKey(const Key('acceso-adopcion')), findsNothing);
   });
 
-  testWidgets('Comunidad: borde rojo si se sigue buscando, verde si volvió a '
-      'casa y sin borde lo demás', (tester) async {
+  testWidgets('Comunidad: la fecha va sobre fondo rojo si se sigue buscando, '
+      'verde si volvió a casa y sin fondo lo demás', (tester) async {
     await _abrir(
       tester,
       novedades: [
@@ -519,16 +519,23 @@ void main() {
       ],
     );
     final tema = Theme.of(tester.element(find.text('Se busca a Toby')));
-    BorderSide borde(String tipo) {
-      final tarjeta = tester.widget<Card>(
-        find.byKey(Key('novedad-borde-$tipo')),
+    Color fondo(String tipo) {
+      final caja = tester.widget<DecoratedBox>(
+        find.byKey(Key('novedad-fecha-$tipo')),
       );
-      return (tarjeta.shape! as RoundedRectangleBorder).side;
+      return (caja.decoration as BoxDecoration).color!;
     }
 
-    expect(borde('perdida').color, tema.colorScheme.error);
-    expect(borde('reencuentro').color, tema.extension<ColoresMarca>()!.exito);
-    expect(find.byKey(const Key('novedad-borde-comercio')), findsNothing);
+    expect(fondo('perdida'), tema.colorScheme.error);
+    expect(fondo('reencuentro'), tema.extension<ColoresMarca>()!.exito);
+    expect(
+      find.descendant(
+        of: find.byKey(const Key('novedad-fecha-perdida')),
+        matching: find.textContaining('Lleva 2 días perdida.'),
+      ),
+      findsOneWidget,
+    );
+    expect(find.byKey(const Key('novedad-fecha-comercio')), findsNothing);
   });
 
   testWidgets('Inicio del visitante: sin el bloque de bienvenida', (
