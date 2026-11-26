@@ -3572,7 +3572,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get recInicioTitulo => '¡Te damos la bienvenida a Huellamy!';
+  String get recInicioTitulo => 'Un recorrido rápido';
 
   @override
   String get recInicioTexto => 'En pocos pasos te mostramos cómo se usa.';

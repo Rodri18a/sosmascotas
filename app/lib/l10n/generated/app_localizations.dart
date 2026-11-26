@@ -6031,7 +6031,7 @@ abstract class AppLocalizations {
   /// No description provided for @recInicioTitulo.
   ///
   /// In es, this message translates to:
-  /// **'¡Te damos la bienvenida a Huellamy!'**
+  /// **'Un recorrido rápido'**
   String get recInicioTitulo;
 
   /// No description provided for @recInicioTexto.

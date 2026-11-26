@@ -1478,7 +1478,7 @@
   "recorridoListo": "Listo",
   "recorridoPaso": "Paso {actual} de {total}",
   "@recorridoPaso": {"placeholders": {"actual": {"type": "int"}, "total": {"type": "int"}}},
-  "recInicioTitulo": "¡Te damos la bienvenida a Huellamy!",
+  "recInicioTitulo": "Un recorrido rápido",
   "recInicioTexto": "En pocos pasos te mostramos cómo se usa.",
   "recMenuTitulo": "El menú",
   "recMenuTexto": "Todas las secciones: tus mascotas, adopción, turnos, tu cuenta y más.",
