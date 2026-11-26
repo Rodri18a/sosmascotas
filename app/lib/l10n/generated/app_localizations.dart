@@ -12103,7 +12103,7 @@ abstract class AppLocalizations {
   /// No description provided for @dongleTodo.
   ///
   /// In es, this message translates to:
-  /// **'En toda la app'**
+  /// **'En todo'**
   String get dongleTodo;
 }
 

@@ -39,10 +39,14 @@ class LogoHuellamy extends StatelessWidget {
     final frase = Text(
       t.logoFrase,
       textAlign: horizontal ? TextAlign.start : TextAlign.center,
+      // El logo va siempre con su letra (Nunito), aunque el tema use otra
+      // (Dongle en el Moderno, D174): todavía no está definido en el manual.
       style: tema.textTheme.titleMedium?.copyWith(
         color: colorTexto,
+        fontFamily: 'Nunito',
         fontSize: alto * 0.42,
         fontWeight: FontWeight.w700,
+        height: 1.3,
       ),
     );
 
@@ -132,6 +136,7 @@ class _Nombre extends StatelessWidget {
   Widget build(BuildContext context) {
     final estilo = Theme.of(context).textTheme.displaySmall?.copyWith(
       color: color,
+      fontFamily: 'Nunito',
       fontSize: alto,
       fontWeight: FontWeight.w900,
       height: 1,

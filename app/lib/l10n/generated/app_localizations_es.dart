@@ -7307,5 +7307,5 @@ class AppLocalizationsEs extends AppLocalizations {
   String get dongleTitulos => 'En los títulos';
 
   @override
-  String get dongleTodo => 'En toda la app';
+  String get dongleTodo => 'En todo';
 }

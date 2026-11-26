@@ -70,7 +70,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(const Key('tile-dongle')), findsOneWidget);
-    await tester.tap(find.text('En toda la app'));
+    await tester.tap(find.text('En todo'));
     await tester.pumpAndSettle();
 
     final tema = Theme.of(tester.element(find.byType(Scaffold).first));
