@@ -121,10 +121,7 @@ void main() {
     );
 
     await _tocar(tester, find.text('Cómo registrarla'));
-    expect(
-      find.widgetWithText(AppBar, 'Registro nacional'),
-      findsOneWidget,
-    );
+    expect(find.widgetWithText(AppBar, 'Registro nacional'), findsOneWidget);
     expect(eventos.where((e) => e['name'] == 'renac_guide_open'), hasLength(1));
     await _tocar(tester, find.byType(BackButton));
 

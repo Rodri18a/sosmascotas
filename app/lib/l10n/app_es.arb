@@ -570,7 +570,7 @@
   "temaCielo": "Huellamy",
   "temaCieloDescripcion": "Azul y celeste: el de la marca",
   "temaModerno": "Moderno",
-  "temaModernoDescripcion": "Blanco y azul, con letra Manrope. Limpio y luminoso.",
+  "temaModernoDescripcion": "Los colores y la letra del manual de Huellamy. Limpio y luminoso.",
   "temaFaro": "Faro",
   "temaFaroDescripcion": "Naranja de rescate y azul noche",
   "temaVecinos": "Vecinos",
@@ -2624,5 +2624,8 @@
   "barraCalculadora": "¿Cuánto cuesta?",
   "barraCuidados": "Paseos y estadías",
   "barraTerminos": "Términos",
-  "barraPrivacidad": "Privacidad"
+  "barraPrivacidad": "Privacidad",
+  "ajustesDongle": "Letra de la marca",
+  "dongleTitulos": "En los títulos",
+  "dongleTodo": "En toda la app"
 }

@@ -154,6 +154,41 @@ class _Muestra extends StatelessWidget {
   );
 }
 
+/// Fila "Letra" de Ajustes (D174): con el tema Moderno, Dongle (la letra
+/// del manual de marca) solo en los títulos o en toda la app. Para todos.
+class TileDongle extends ConsumerWidget {
+  const TileDongle({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = context.t;
+    if (ref.watch(paletaActivaProvider).estilo != EstiloTema.moderno) {
+      return const SizedBox.shrink();
+    }
+    final elegido = ref.watch(usoDongleProvider);
+    return ListTile(
+      key: const Key('tile-dongle'),
+      leading: const Icon(Icons.text_fields_outlined),
+      title: Text(t.ajustesDongle),
+      subtitle: Padding(
+        padding: const EdgeInsets.only(top: 8),
+        child: SegmentedButton<UsoDongle>(
+          segments: [
+            ButtonSegment(
+              value: UsoDongle.titulos,
+              label: Text(t.dongleTitulos),
+            ),
+            ButtonSegment(value: UsoDongle.todo, label: Text(t.dongleTodo)),
+          ],
+          selected: {elegido},
+          onSelectionChanged: (s) =>
+              ref.read(usoDongleProvider.notifier).elegir(s.first),
+        ),
+      ),
+    );
+  }
+}
+
 /// Fila "Tamaño de letra" de Ajustes (plan Pro, 2.11, D112).
 class TileLetra extends ConsumerWidget {
   const TileLetra({super.key});

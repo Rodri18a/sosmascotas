@@ -195,7 +195,13 @@ Widget appDePrueba({
     cacheFuncionalidadesProvider.overrideWithValue(
       cacheFuncionalidades ?? CacheFuncionalidadesFalsa(),
     ),
-    almacenTemaProvider.overrideWithValue(almacenTema ?? AlmacenTemaFalso()),
+    // Por defecto, con Huellamy: en las pruebas cada letra es un cuadrado del
+    // ancho del tamaño, y los títulos de Dongle (Moderno) van agrandados 1,8
+    // veces (en el celular sus letras son angostas). Moderno tiene sus
+    // pruebas en tema_pro_test.dart y tema_moderno_test.dart (D174).
+    almacenTemaProvider.overrideWithValue(
+      almacenTema ?? AlmacenTemaFalso(Paleta.cielo.id),
+    ),
     almacenRecorridosProvider.overrideWithValue(
       recorridos ?? AlmacenRecorridosFalso(todosVistos: true),
     ),

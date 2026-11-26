@@ -28,6 +28,7 @@ class SosMascotaApp extends ConsumerWidget {
     ref.watch(limpiezaRespaldoProvider);
     final paleta = ref.watch(paletaActivaProvider);
     final factorLetra = ref.watch(factorLetraActivoProvider);
+    final dongle = ref.watch(usoDongleProvider);
     ref
       ..watch(fuentesDelTemaProvider)
       ..watch(renovarPushProvider)
@@ -48,8 +49,8 @@ class SosMascotaApp extends ConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.tema(paleta, Brightness.light),
-      darkTheme: AppTheme.tema(paleta, Brightness.dark),
+      theme: AppTheme.tema(paleta, Brightness.light, dongle: dongle),
+      darkTheme: AppTheme.tema(paleta, Brightness.dark, dongle: dongle),
       // Sigue el modo claro u oscuro del celular.
       themeMode: ThemeMode.system,
       // El cambio de tema es inmediato: Moderno arma botones, campos y chips

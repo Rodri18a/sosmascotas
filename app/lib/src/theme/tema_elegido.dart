@@ -151,6 +151,46 @@ final fuentesDelTemaProvider = Provider<void>((ref) {
   unawaited(ref.read(cargadorFuentesProvider).cargar(paleta));
 });
 
+/// Dónde va Dongle, la letra del manual de marca, en el tema Moderno
+/// (D174): solo en los títulos (por defecto) o en toda la app. Para todos.
+final usoDongleProvider = NotifierProvider<UsoDongleElegido, UsoDongle>(
+  UsoDongleElegido.new,
+);
+
+class UsoDongleElegido extends Notifier<UsoDongle> {
+  static const _clave = 'tema.dongle';
+
+  @override
+  UsoDongle build() {
+    unawaited(_cargar());
+    return UsoDongle.titulos;
+  }
+
+  Future<void> _cargar() async {
+    try {
+      final guardado = (await SharedPreferences.getInstance()).getString(
+        _clave,
+      );
+      state = UsoDongle.values.asNameMap()[guardado] ?? state;
+    } on Exception catch (e) {
+      debugPrint('No se pudo leer dónde va la letra: $e');
+    }
+  }
+
+  Future<void> elegir(UsoDongle uso) async {
+    if (uso == state) return;
+    state = uso;
+    ref
+        .read(metricasProvider)
+        .track(Eventos.fontChange, props: {'use': uso.name});
+    try {
+      await (await SharedPreferences.getInstance()).setString(_clave, uso.name);
+    } on Exception catch (e) {
+      debugPrint('No se pudo guardar dónde va la letra: $e');
+    }
+  }
+}
+
 /// Tamaño de letra de la app (plan Pro, 2.11, D112). Se suma al del sistema,
 /// que sigue siendo gratis.
 enum TamanoLetra {

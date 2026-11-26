@@ -1369,7 +1369,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get temaModernoDescripcion =>
-      'Blanco y azul, con letra Manrope. Limpio y luminoso.';
+      'Los colores y la letra del manual de Huellamy. Limpio y luminoso.';
 
   @override
   String get temaFaro => 'Faro';
@@ -7299,4 +7299,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get barraPrivacidad => 'Privacidad';
+
+  @override
+  String get ajustesDongle => 'Letra de la marca';
+
+  @override
+  String get dongleTitulos => 'En los títulos';
+
+  @override
+  String get dongleTodo => 'En toda la app';
 }

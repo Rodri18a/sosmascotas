@@ -120,10 +120,7 @@ void main() {
     await tester.tap(privacidad);
     await tester.pumpAndSettle();
 
-    expect(
-      find.widgetWithText(AppBar, 'Privacidad'),
-      findsOneWidget,
-    );
+    expect(find.widgetWithText(AppBar, 'Privacidad'), findsOneWidget);
     expect(find.textContaining('Ley 18.331'), findsWidgets);
   });
 

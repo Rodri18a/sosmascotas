@@ -69,6 +69,15 @@ flutter:
           weight: 700
         - asset: assets/fuentes/Manrope-ExtraBold.ttf
           weight: 800
+    # Letra del manual de marca (D174): Dongle, OFL (assets/fuentes/OFL-Dongle.txt),
+    # recortada a las letras latinas con pyftsubset.
+    - family: Dongle
+      fonts:
+        - asset: assets/fuentes/Dongle-Light.ttf
+          weight: 300
+        - asset: assets/fuentes/Dongle-Regular.ttf
+        - asset: assets/fuentes/Dongle-Bold.ttf
+          weight: 700
     - family: NunitoSans
       fonts:
         - asset: assets/fuentes/NunitoSans-Regular.ttf

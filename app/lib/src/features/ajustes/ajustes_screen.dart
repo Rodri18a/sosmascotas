@@ -49,8 +49,10 @@ class AjustesScreen extends ConsumerWidget {
           else
             _SeccionCuenta(usuario: usuario),
           // El tema es para todos (D172): con sesión va en su sección.
-          if (usuario == null && !ref.watch(esAppComercioProvider))
+          if (usuario == null && !ref.watch(esAppComercioProvider)) ...[
             const TileTema(),
+            const TileDongle(),
+          ],
           const TileInstalar(),
           const Divider(),
           ListTile(
@@ -256,7 +258,7 @@ class _SeccionCuenta extends ConsumerWidget {
         if (personas && perfil != null) TileZonaAvisos(perfil: perfil),
         if (personas && perfil != null) _RadioAvisos(perfil: perfil),
         // El tema, para todos (Huellamy o Moderno; los demás, Pro, D172).
-        if (personas) const TileTema(),
+        if (personas) ...[const TileTema(), const TileDongle()],
         if (personas && ref.watch(tienePlanConTemasProvider)) const TileLetra(),
       ],
     );

@@ -128,10 +128,7 @@ void main() {
     await _ir(tester, '/adopcion/animal/a1');
     await _tocar(tester, find.widgetWithText(FilledButton, 'Me interesa'));
 
-    expect(
-      find.widgetWithText(AppBar, 'Perfil adoptante'),
-      findsOneWidget,
-    );
+    expect(find.widgetWithText(AppBar, 'Perfil adoptante'), findsOneWidget);
     await _tocar(tester, find.text('Apartamento'));
     await _tocar(tester, find.text('Guardar perfil'));
     expect(adopcion.perfil!.vivienda, 'apartamento');

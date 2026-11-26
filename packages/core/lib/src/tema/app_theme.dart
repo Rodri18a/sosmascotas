@@ -3,6 +3,19 @@ import 'package:flutter/services.dart';
 
 import 'paleta.dart';
 
+/// Dónde va Dongle, la letra del manual de marca (D174), en el tema Moderno:
+/// solo en títulos, encabezados y botones (los textos en Manrope) o en toda
+/// la app. Lo elige cada persona en Ajustes.
+enum UsoDongle { titulos, todo }
+
+/// Dongle dibuja las letras mucho más bajas que Manrope: con este factor las
+/// mayúsculas quedan del mismo alto (0,72 de Manrope contra 0,40 de Dongle).
+const escalaDongle = 1.8;
+
+/// Interlineado de Dongle (sobre su tamaño ya agrandado): su caja es muy alta
+/// (0,85 arriba y 0,6 abajo) y sin esto cada línea ocupa el doble.
+const altoLineaDongle = 0.85;
+
 /// Tema de la app en modo claro y oscuro (Material 3), armado desde la paleta
 /// de la marca (Huellamy, D146).
 abstract final class AppTheme {
@@ -10,7 +23,11 @@ abstract final class AppTheme {
 
   static ThemeData get oscuro => tema(Paleta.cielo, Brightness.dark);
 
-  static ThemeData tema(Paleta paleta, Brightness brillo) {
+  static ThemeData tema(
+    Paleta paleta,
+    Brightness brillo, {
+    UsoDongle dongle = UsoDongle.titulos,
+  }) {
     final c = paleta.modo(brillo);
     final colores = esquema(c, brillo);
     const radio = BorderRadius.all(Radius.circular(12));
@@ -83,6 +100,7 @@ abstract final class AppTheme {
         c,
         s,
         oscuro,
+        dongle,
       ),
       _ => conTitulos,
     };
@@ -91,44 +109,83 @@ abstract final class AppTheme {
   /// Tema Moderno (D171, estilo de la app de CAAMEPA): barras blancas con una
   /// línea abajo, tarjetas blancas con borde fino y esquinas muy redondeadas,
   /// botones planos de radio 16 y casi sin sombras. Tamaños y pesos de letra
-  /// del lineamiento (títulos y botones en 800).
+  /// del lineamiento. Letra: Dongle (manual de marca, D174) en los títulos,
+  /// encabezados y botones, y Manrope en los textos; con [UsoDongle.todo],
+  /// Dongle en todo.
   static ThemeData _moderno(
     ThemeData base,
     ColoresModo c,
     Superficies s,
     bool oscuro,
+    UsoDongle dongle,
   ) {
     final colores = base.colorScheme;
     const radio16 = BorderRadius.all(Radius.circular(16));
     const radio24 = BorderRadius.all(Radius.circular(24));
     const tamanoBoton = Size(64, 52);
-    // Solo tamaño, peso e interlineado, para sumarle a un estilo completo.
-    TextStyle ajuste(double tam, FontWeight peso, {double? alto}) => TextStyle(
-      fontFamily: 'Manrope',
-      fontSize: tam,
-      fontWeight: peso,
-      height: alto == null ? null : alto / tam,
+    final todoDongle = dongle == UsoDongle.todo;
+    // Solo letra, tamaño, peso e interlineado, para sumarle a un estilo
+    // completo. Los tamaños son los del lineamiento con Manrope; con Dongle se
+    // agrandan para que se vean iguales.
+    TextStyle conDongle(double tam, FontWeight peso) => TextStyle(
+      fontFamily: 'Dongle',
+      fontSize: tam * escalaDongle,
+      fontWeight: peso.value >= 600 ? FontWeight.w700 : FontWeight.w400,
+      height: altoLineaDongle,
     );
+    TextStyle ajusteTitulo(double tam, FontWeight peso) => conDongle(tam, peso);
+    TextStyle ajuste(double tam, FontWeight peso, {double? alto}) => todoDongle
+        ? conDongle(tam, peso)
+        : TextStyle(
+            fontFamily: 'Manrope',
+            fontSize: tam,
+            fontWeight: peso,
+            height: alto == null ? null : alto / tam,
+          );
     final t = base.textTheme;
     // Los estilos de las piezas parten de uno completo, con la geometría de
     // la tipografía, como arma Material los suyos (no heredan): si no, los
     // botones fallan al animar su letra cuando se cambia de tema (D172).
-    TextStyle estilo(double tam, FontWeight peso) => base
+    TextStyle completo(TextStyle ajustes) => base
         .typography
         .englishLike
         .bodyMedium!
         .merge(t.bodyMedium)
-        .merge(ajuste(tam, peso));
-    final textoBoton = estilo(17, FontWeight.w800);
+        .merge(ajustes);
+    TextStyle estilo(double tam, FontWeight peso) =>
+        completo(ajuste(tam, peso));
+    TextStyle estiloTitulo(double tam, FontWeight peso) =>
+        completo(ajusteTitulo(tam, peso));
+    final textoBoton = estiloTitulo(17, FontWeight.w800);
+    // Con Dongle en todo, los demás estilos también (con su tamaño de la
+    // tipografía de Material, que el tema base todavía no trae).
+    final geometria = base.typography.englishLike;
+    TextStyle? resto(TextStyle? e, TextStyle? medida) {
+      final tam = e?.fontSize ?? medida?.fontSize;
+      if (!todoDongle || e == null || tam == null) return e;
+      return e.merge(
+        conDongle(tam, e.fontWeight ?? medida?.fontWeight ?? FontWeight.w400),
+      );
+    }
+
     final texto = t.copyWith(
-      headlineMedium: t.headlineMedium?.merge(ajuste(28, FontWeight.w800)),
-      headlineSmall: t.headlineSmall?.merge(ajuste(22, FontWeight.w800)),
-      titleLarge: t.titleLarge?.merge(ajuste(20, FontWeight.w800)),
-      titleMedium: t.titleMedium?.merge(ajuste(17, FontWeight.w700)),
-      titleSmall: t.titleSmall?.merge(ajuste(15, FontWeight.w700)),
+      displayLarge: resto(t.displayLarge, geometria.displayLarge),
+      displayMedium: resto(t.displayMedium, geometria.displayMedium),
+      displaySmall: resto(t.displaySmall, geometria.displaySmall),
+      headlineLarge: resto(t.headlineLarge, geometria.headlineLarge),
+      headlineMedium: t.headlineMedium?.merge(
+        ajusteTitulo(28, FontWeight.w800),
+      ),
+      headlineSmall: t.headlineSmall?.merge(ajusteTitulo(22, FontWeight.w800)),
+      titleLarge: t.titleLarge?.merge(ajusteTitulo(20, FontWeight.w800)),
+      titleMedium: t.titleMedium?.merge(ajusteTitulo(17, FontWeight.w700)),
+      titleSmall: t.titleSmall?.merge(ajusteTitulo(15, FontWeight.w700)),
       bodyLarge: t.bodyLarge?.merge(ajuste(16, FontWeight.w400, alto: 23)),
       bodyMedium: t.bodyMedium?.merge(ajuste(14, FontWeight.w400, alto: 20)),
+      bodySmall: resto(t.bodySmall, geometria.bodySmall),
       labelLarge: t.labelLarge?.merge(ajuste(15, FontWeight.w600)),
+      labelMedium: resto(t.labelMedium, geometria.labelMedium),
+      labelSmall: resto(t.labelSmall, geometria.labelSmall),
     );
     final barraSistema = oscuro
         ? SystemUiOverlayStyle.light
@@ -150,7 +207,10 @@ abstract final class AppTheme {
         shape: Border(bottom: BorderSide(color: s.borde)),
         iconTheme: IconThemeData(color: c.textoSuave),
         actionsIconTheme: IconThemeData(color: c.textoSuave),
-        titleTextStyle: estilo(20, FontWeight.w800).copyWith(color: c.texto),
+        titleTextStyle: estiloTitulo(
+          20,
+          FontWeight.w800,
+        ).copyWith(color: c.texto),
         systemOverlayStyle: barraSistema.copyWith(
           statusBarColor: Colors.transparent,
           systemNavigationBarColor: Colors.transparent,
@@ -162,7 +222,7 @@ abstract final class AppTheme {
         unselectedLabelColor: c.textoSuave,
         indicatorColor: colores.primary,
         dividerColor: s.borde,
-        labelStyle: estilo(15, FontWeight.w800),
+        labelStyle: estiloTitulo(15, FontWeight.w800),
       ),
       cardTheme: CardThemeData(
         color: s.tarjeta,

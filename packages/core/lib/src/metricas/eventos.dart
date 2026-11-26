@@ -14,6 +14,10 @@ abstract final class Eventos {
   static const placeClick = 'place_click';
   static const helpClick = 'help_click';
   static const themeChange = 'theme_change';
+
+  /// Dónde va la letra Dongle del tema Moderno (D174): `use`
+  /// (`titulos` o `todo`).
+  static const fontChange = 'font_change';
   static const featureExposure = 'feature_exposure';
   static const pwaPrompt = 'pwa_prompt';
   static const pwaInstalled = 'pwa_installed';

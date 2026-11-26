@@ -254,65 +254,66 @@ class Paleta {
     pesoTitulos: FontWeight.w800,
   );
 
-  /// Tema Moderno (D171), el de la app de CAAMEPA: azul y verde sobre
-  /// blanco, letra Manrope, barras blancas con una línea y tarjetas con borde
-  /// fino. Dos ajustes por accesibilidad respecto del original: el éxito en
-  /// emerald-700 (el 600 da 3,6:1 como texto) y el texto secundario apenas
-  /// más oscuro que slate-500, para llegar a 4,5:1 sobre los chips.
+  /// Tema Moderno (D171): la estructura de la app de CAAMEPA (barras blancas
+  /// con una línea, tarjetas con borde fino, botones de radio 16) con los
+  /// colores del manual de marca de Huellamy (D174): verde azulado `#2E7B76`,
+  /// verde profundo `#084847`, azul noche `#12323E` para el texto, celeste
+  /// grisáceo `#ADC5CF` y coral `#F26B69` para el SOS. El rojo de error y el
+  /// ámbar de urgencia no están en el manual: quedan los del lineamiento.
   static const moderno = Paleta(
     id: 'moderno',
     claro: ColoresModo(
-      fondo: Color(0xFFF8FAFC), // slate-50
-      texto: Color(0xFF0F172A), // slate-900
-      textoSuave: Color(0xFF5B697E), // apenas más oscuro que slate-500
-      primario: Color(0xFF0479BA),
+      fondo: Color(0xFFF3F7F8), // fondo del manual
+      texto: Color(0xFF12323E), // azul noche del manual
+      textoSuave: Color(0xFF4D6570),
+      primario: Color(0xFF2E7B76), // verde azulado del manual
       sobrePrimario: Color(0xFFFFFFFF),
-      acento: Color(0xFFE8923A), // naranja de Ami: SOS y destacados
-      sobreAcento: Color(0xFF0F172A),
-      error: Color(0xFFB91C1C), // red-700
+      acento: Color(0xFFF26B69), // coral del manual: SOS y destacados
+      sobreAcento: Color(0xFF12323E),
+      error: Color(0xFFB91C1C),
       sobreError: Color(0xFFFFFFFF),
-      exito: Color(0xFF047857), // emerald-700
-      urgencia: Color(0xFFB45309), // amber-700
+      exito: Color(0xFF2E7B76),
+      urgencia: Color(0xFFB45309),
       barra: Color(0xFFFFFFFF),
-      sobreBarra: Color(0xFF0F172A),
+      sobreBarra: Color(0xFF12323E),
       superficies: Superficies(
         tarjeta: Color(0xFFFFFFFF),
-        chip: Color(0xFFF1F5F9), // slate-100
-        borde: Color(0xFFE2E8F0), // slate-200
-        contorno: Color(0xFFCBD5E1), // slate-300
-        contenedorPrimario: Color(0xFFDBEAFE), // blue-100
-        sobreContenedorPrimario: Color(0xFF0C4A6E), // sky-900
-        franja: Color(0xFFEFF6FF), // blue-50
-        sobreFranja: Color(0xFF0C4A6E),
-        degradado: [Color(0xFF0479BA), Color(0xFF3730A3)], // a indigo-800
-        sobreDegradadoSuave: Color(0xFFE0F2FE), // sky-100
+        chip: Color(0xFFE6EEF0),
+        borde: Color(0xFFD5E1E5),
+        contorno: Color(0xFFADC5CF), // celeste grisáceo del manual
+        contenedorPrimario: Color(0xFFD8EAE8),
+        sobreContenedorPrimario: Color(0xFF084847), // verde profundo
+        franja: Color(0xFFE7F2F1),
+        sobreFranja: Color(0xFF084847),
+        degradado: [Color(0xFF084847), Color(0xFF2E7B76)],
+        sobreDegradadoSuave: Color(0xFFD8EAE8),
       ),
     ),
     oscuro: ColoresModo(
-      fondo: Color(0xFF0F172A),
-      texto: Color(0xFFF1F5F9),
-      textoSuave: Color(0xFF94A3B8),
-      primario: Color(0xFF4CB4EE),
-      sobrePrimario: Color(0xFF04263B),
-      acento: Color(0xFFF5A75A),
-      sobreAcento: Color(0xFF0F172A),
+      fondo: Color(0xFF0C1F26),
+      texto: Color(0xFFF3F7F8),
+      textoSuave: Color(0xFFADC5CF),
+      primario: Color(0xFF5FB3AC),
+      sobrePrimario: Color(0xFF062B2A),
+      acento: Color(0xFFF26B69),
+      sobreAcento: Color(0xFF0C1F26),
       error: Color(0xFFF87171),
-      sobreError: Color(0xFF0F172A),
-      exito: Color(0xFF34D399),
+      sobreError: Color(0xFF0C1F26),
+      exito: Color(0xFF6FD1C4),
       urgencia: Color(0xFFFBBF24),
-      barra: Color(0xFF1E293B),
-      sobreBarra: Color(0xFFF1F5F9),
+      barra: Color(0xFF12323E),
+      sobreBarra: Color(0xFFF3F7F8),
       superficies: Superficies(
-        tarjeta: Color(0xFF1E293B),
-        chip: Color(0xFF273449),
-        borde: Color(0xFF334155),
-        contorno: Color(0xFF475569),
-        contenedorPrimario: Color(0xFF172554),
-        sobreContenedorPrimario: Color(0xFFE0F2FE),
-        franja: Color(0xFF172554),
-        sobreFranja: Color(0xFFE0F2FE),
-        degradado: [Color(0xFF0479BA), Color(0xFF3730A3)],
-        sobreDegradadoSuave: Color(0xFFE0F2FE),
+        tarjeta: Color(0xFF12323E),
+        chip: Color(0xFF1B3A45),
+        borde: Color(0xFF24505E),
+        contorno: Color(0xFF3A6876),
+        contenedorPrimario: Color(0xFF084847),
+        sobreContenedorPrimario: Color(0xFFD8EAE8),
+        franja: Color(0xFF084847),
+        sobreFranja: Color(0xFFD8EAE8),
+        degradado: [Color(0xFF084847), Color(0xFF2E7B76)],
+        sobreDegradadoSuave: Color(0xFFD8EAE8),
       ),
     ),
     fuenteTitulos: 'Manrope',

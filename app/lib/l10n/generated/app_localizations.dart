@@ -2341,7 +2341,7 @@ abstract class AppLocalizations {
   /// No description provided for @temaModernoDescripcion.
   ///
   /// In es, this message translates to:
-  /// **'Blanco y azul, con letra Manrope. Limpio y luminoso.'**
+  /// **'Los colores y la letra del manual de Huellamy. Limpio y luminoso.'**
   String get temaModernoDescripcion;
 
   /// No description provided for @temaFaro.
@@ -12087,6 +12087,24 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Privacidad'**
   String get barraPrivacidad;
+
+  /// No description provided for @ajustesDongle.
+  ///
+  /// In es, this message translates to:
+  /// **'Letra de la marca'**
+  String get ajustesDongle;
+
+  /// No description provided for @dongleTitulos.
+  ///
+  /// In es, this message translates to:
+  /// **'En los títulos'**
+  String get dongleTitulos;
+
+  /// No description provided for @dongleTodo.
+  ///
+  /// In es, this message translates to:
+  /// **'En toda la app'**
+  String get dongleTodo;
 }
 
 class _AppLocalizationsDelegate

@@ -201,22 +201,24 @@ Se distinguen también por luminosidad (daltonismo), son gotas con la punta en e
 | Control de contraste | `app/test/tema_test.dart` |
 | Textos | `app/lib/l10n/app_es.arb` |
 
-## Tema Moderno (D171)
+## Tema Moderno (D171, D172, D174)
 
-**Tema por defecto de la app (D172)**, con el estilo de la app de CAAMEPA. En Ajustes → Tema de colores cualquiera puede elegir entre Moderno y Huellamy; los demás temas son del plan Pro. La marca, los pines del mapa y el naranja de Ami para el SOS no cambian.
+**Tema por defecto de la app.** Estructura del lineamiento de CAAMEPA (barras blancas con una línea, tarjetas con borde fino y radio 24, botones planos de radio 16) con los **colores y la letra del manual de marca de Huellamy** (D174). En Ajustes → Tema de colores cualquiera puede elegir entre Moderno y Huellamy; los demás temas son del plan Pro.
 
 | Pieza | Claro | Oscuro |
 |---|---|---|
-| Principal | `#0479BA` (texto blanco) | `#4CB4EE` (texto `#04263B`) |
-| Fondo / tarjetas y barras | `#F8FAFC` / `#FFFFFF` | `#0F172A` / `#1E293B` |
-| Texto / secundario | `#0F172A` / `#5B697E` | `#F1F5F9` / `#94A3B8` |
-| Bordes / chips | `#E2E8F0` / `#F1F5F9` | `#334155` / `#273449` |
-| Éxito / error / aviso | `#047857` / `#B91C1C` / `#B45309` | `#34D399` / `#F87171` / `#FBBF24` |
-| Franja e indicador / contenedor principal | `#EFF6FF` / `#DBEAFE` (texto `#0C4A6E`) | `#172554` (texto `#E0F2FE`) |
-| Degradé (menú lateral, ingreso) | `#0479BA` → `#3730A3` | igual |
+| Principal | `#2E7B76` verde azulado (texto blanco) | `#5FB3AC` (texto `#062B2A`) |
+| Fondo / tarjetas y barras | `#F3F7F8` / `#FFFFFF` | `#0C1F26` / `#12323E` |
+| Texto / secundario | `#12323E` azul noche / `#4D6570` | `#F3F7F8` / `#ADC5CF` |
+| Bordes / chips / contorno | `#D5E1E5` / `#E6EEF0` / `#ADC5CF` | `#24505E` / `#1B3A45` / `#3A6876` |
+| Acento (SOS) | `#F26B69` coral (texto `#12323E`) | igual (texto `#0C1F26`) |
+| Éxito / error / aviso | `#2E7B76` / `#B91C1C` / `#B45309` | `#6FD1C4` / `#F87171` / `#FBBF24` |
+| Franja e indicador / contenedor principal | `#E7F2F1` / `#D8EAE8` (texto `#084847`) | `#084847` (texto `#D8EAE8`) |
+| Degradé (menú lateral, ingreso) | `#084847` → `#2E7B76` | igual |
+| Pilares de la marca (usos puntuales) | amarillo `#F9C558`, rosa `#F496B8`, celeste `#ADC5CF` | — |
 
-- **Letra:** Manrope 400 a 800. Títulos de tarjeta 20/800, de sección 22/800, botones 17/800, encabezado 20/800, etiquetas de la barra 12/800, chips 13/600, texto 16 (interlineado 23) y chico 14 (20).
-- **Barras:** blancas, sin sombra, con una línea de 1 px slate-200 (la de abajo sigue el hueco del botón del Mapa). Pestaña elegida en el principal sobre una píldora blue-50; las demás, en el texto secundario.
-- **Tarjetas:** blancas, radio 24, borde de 1 px, sombra casi nula. **Botones:** planos, radio 16, alto 52. **Campos:** fondo slate-50, borde slate-200, radio 16 (con foco, borde principal de 2). **Chips:** slate-100 en píldora. **Diálogos y hojas:** blancos, radio 24.
-- **Menú lateral:** la cabecera sobre el degradé con texto blanco. **Ingreso:** el formulario en una tarjeta blanca sobre el degradé.
-
+- **Letra:** **Dongle** (manual de marca) en títulos, encabezados y botones, agrandada 1,8 veces e interlineado 0,85; textos en **Manrope**. En Ajustes → Letra de la marca se puede pasar Dongle a toda la app. Tamaños de referencia (con Manrope): título de tarjeta 20, de sección 22, botones 17, encabezado 20, etiquetas de la barra 12, chips 13, texto 16 y chico 14.
+- **Barras:** blancas, sin sombra, con una línea de 1 px (la de abajo sigue el hueco del botón del Mapa). Pestaña elegida en el principal sobre una píldora suave; las demás, en el texto secundario.
+- **Tarjetas:** blancas, radio 24, borde de 1 px, sombra casi nula. **Botones:** planos, radio 16, alto 52. **Campos:** fondo de pantalla, borde fino, radio 16 (con foco, borde principal de 2). **Chips:** en píldora. **Diálogos y hojas:** blancos, radio 24.
+- **Menú lateral:** la cabecera sobre el degradé con texto y logo en blanco. **Ingreso:** el formulario en una tarjeta blanca sobre el degradé.
+- **Logo:** sin definir todavía en el manual; se mantiene el actual.
